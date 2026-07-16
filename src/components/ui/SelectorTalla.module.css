@@ -1,0 +1,40 @@
+/* ============================================================
+   SELECTOR DE TALLA — Fely Campo
+   ============================================================ */
+
+.lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.talla {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 var(--spacing-3);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-botones);
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease-marca),
+              background-color 0.25s var(--ease-marca),
+              color 0.25s var(--ease-marca);
+}
+.talla:hover { border-color: var(--color-tinta); }
+
+.activa {
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  border-color: var(--color-tinta);
+}
+
+.agotada {
+  color: var(--color-gris-300);
+  border-color: var(--color-gris-200);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.agotada:hover { border-color: var(--color-gris-200); }

@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "links": {
+      "atelier": "Atelier",
+      "pretAPorter": "Ready-to-wear",
+      "elMundoDeFely": "The World of Fely",
+      "visitanos": "Visit Us"
+    },
+    "submenus": {
+      "atelier": {
+        "novias": "Bridal",
+        "fiesta": "Evening Wear"
+      },
+      "pretAPorter": {
+        "vestidos": "Dresses",
+        "faldas": "Skirts"
+      },
+      "elMundoDeFely": {
+        "historia": "Story",
+        "archivo": "Archive",
+        "runway": "Runway"
+      },
+      "visitanos": {
+        "noviasSalamanca": "Atelier Novias Salamanca",
+        "fiestaSalamanca": "Atelier Fiesta Salamanca",
+        "showroomMadrid": "Atelier Showroom Madrid",
+        "fiestaOviedo": "Atelier Fiesta Oviedo"
+      }
+    },
+    "actions": {
+      "wishlist": "Wishlist",
+      "miCuenta": "My Account",
+      "carrito": "Cart"
+    },
+    "aria": {
+      "abrirMenu": "Open menu",
+      "cerrarMenu": "Close menu",
+      "carrito": "Cart"
+    }
+  }
+}

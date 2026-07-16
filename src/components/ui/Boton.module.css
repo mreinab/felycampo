@@ -1,0 +1,95 @@
+/* ============================================================
+   BOTÓN — Fely Campo
+   Cascada real: .boton es la base, los modificadores heredan
+   y sobrescriben. Todos los valores vienen de los tokens
+   definidos en src/styles/global.css (var(--...)).
+   ============================================================ */
+
+.boton {
+  display: inline-block;
+  text-align: center;
+  font-family: var(--font-base);
+  letter-spacing: 0.02rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-marca),
+              color 0.25s var(--ease-marca),
+              border-color 0.25s var(--ease-marca);
+}
+
+.boton:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ---------- Tamaños ---------- */
+.s    { padding: 8px 20px;  font-size: var(--text-caption); }
+.m    { padding: var(--spacing-3) var(--spacing-6); font-size: var(--text-label); }
+.l    { padding: 16px 36px; font-size: var(--text-body); }
+.full { width: 100%; padding: 16px 0; font-size: var(--text-small); }
+
+/* Variante avisa: tamaño fijo, no se combina con .s/.m/.l/.full */
+.avisa {
+  width: 100%;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2);
+  font-size: var(--text-caption);
+  white-space: nowrap;
+  background: none;
+  border: 1px solid var(--color-tinta);
+  color: var(--color-tinta);
+  border-radius: var(--radius-botones);
+}
+.avisa:hover { background: var(--color-tinta); color: var(--color-fondo); }
+
+/* ---------- Variantes ---------- */
+.solido {
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  border-radius: var(--radius-botones);
+}
+.solido:hover { background: var(--color-rosa); }
+
+.contorno {
+  background: transparent;
+  color: var(--color-tinta);
+  border: 1px solid var(--color-tinta);
+  border-radius: var(--radius-botones);
+}
+.contorno:hover {
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+}
+
+.rosa {
+  background: var(--color-rosa);
+  color: var(--color-fondo);
+  border-radius: var(--radius-botones);
+}
+.rosa:hover { background: var(--color-rosa-oscuro); }
+
+/* Variante texto: enlace subrayado, no es una "caja" */
+.texto {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-tinta);
+  font-size: var(--text-small);
+  letter-spacing: 0.02rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-tinta);
+  padding-bottom: 2px;
+  transition: border-color 0.25s var(--ease-marca);
+}
+.texto:hover { border-color: var(--color-rosa); }
+
+/* Modificador: texto en mayúsculas (ej. enlaces legales) — el hover
+   se queda en tinta en vez de virar a rosa como .texto */
+.textoMayusculas {
+  text-transform: uppercase;
+}
+.textoMayusculas:hover { border-color: var(--color-tinta); }

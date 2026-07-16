@@ -1,0 +1,8 @@
+export { default as Boton } from './Boton';
+export { default as Input } from './Input';
+export { default as SelectorTalla } from './SelectorTalla';
+export { default as SelectorCantidad } from './SelectorCantidad';
+export { default as Etiqueta } from './Etiqueta';
+export { default as BotonGuardar } from './BotonGuardar';
+export { default as SelectorColor } from './SelectorColor';
+export { default as Acordeon, FilaAcordeon } from './Acordeon';

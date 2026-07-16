@@ -1,0 +1,38 @@
+/* ============================================================
+   SELECTOR DE COLOR — Fely Campo
+   ============================================================ */
+
+.selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.actual {
+  font-size: var(--text-body);
+  color: var(--color-tinta);
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  outline: 1px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 0.2s var(--ease-marca);
+}
+.swatch:hover,
+.swatch.activo {
+  outline-color: var(--color-tinta);
+}

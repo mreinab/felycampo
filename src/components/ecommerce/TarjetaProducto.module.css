@@ -1,0 +1,88 @@
+/* ============================================================
+   TARJETA DE PRODUCTO — Fely Campo (e-commerce)
+   Sin contenedor/marco: la imagen ocupa toda la columna,
+   radio 0 (fiel al referente), badge como texto plano.
+   Referente: styleguide.html #producto (.sg-prod).
+   ============================================================ */
+
+.tarjeta { position: relative; cursor: pointer; }
+
+.marco {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--color-crema);
+  border-radius: var(--radius-imagenes);
+  overflow: hidden;
+}
+
+.imagen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.6s ease;
+}
+.imagenHover { opacity: 0; }
+.tarjeta:hover .imagenBase { opacity: 0; }
+.tarjeta:hover .imagenHover { opacity: 1; }
+
+.badge {
+  position: absolute;
+  top: var(--spacing-2);
+  left: var(--spacing-2);
+  z-index: 2;
+}
+
+.wishlist {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.tarjeta:hover .wishlist { opacity: 1; pointer-events: auto; }
+
+.nombre {
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  margin-top: var(--spacing-3);
+  margin-bottom: var(--spacing-1);
+}
+
+.precios {
+  display: flex;
+  gap: var(--spacing-2);
+  font-size: var(--text-small);
+}
+
+.precio { color: var(--color-gris-500); }
+.antes { color: var(--color-gris-400); text-decoration: line-through; }
+.ahora { color: var(--color-rosa); }
+
+/* Colores: reservan siempre el alto (14px) para que la tarjeta no salte
+   de tamaño, y solo se revelan en hover — igual que .sg-colores-prod. */
+.colores {
+  height: 14px;
+  margin-top: var(--spacing-1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.tarjeta:hover .colores { opacity: 1; }
+
+.punto {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.75px var(--color-gris-500);
+}
+
+.mas { font-size: var(--text-caption); color: var(--color-gris-700); }
+
+/* Agotado: sustituye a la fila de colores, siempre visible (sin hover) */
+.accion { margin-top: var(--spacing-1); }

@@ -1,0 +1,38 @@
+/* ============================================================
+   BLOQUE DE SECCIÓN (imagen + texto) — Fely Campo
+   ============================================================ */
+
+.seccion {
+  max-width: var(--max-contenido);
+  margin-inline: auto;
+  padding: var(--spacing-10) var(--spacing-7);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .seccion { grid-template-columns: 1fr 1fr; }
+}
+
+.marco {
+  aspect-ratio: 4 / 3;
+  background: var(--color-crema);
+  border-radius: var(--radius-imagenes);
+  overflow: hidden;
+}
+.imagen { width: 100%; height: 100%; object-fit: cover; }
+
+.invertido { order: 2; }
+@media (min-width: 768px) {
+  .invertido { order: 2; }
+  .textoInvertido { order: 1; }
+}
+
+.titulo { margin-bottom: var(--spacing-1); }
+
+.texto {
+  color: var(--color-gris-500);
+  max-width: var(--max-texto);
+  margin-bottom: var(--spacing-5);
+}

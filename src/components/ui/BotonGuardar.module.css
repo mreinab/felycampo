@@ -1,0 +1,45 @@
+/* ============================================================
+   BOTÓN GUARDAR (wishlist) — Fely Campo
+   ============================================================ */
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icono {
+  width: 18px;
+  height: 18px;
+  stroke: var(--color-tinta);
+  color: var(--color-tinta);
+  transition: fill 0.2s var(--ease-marca);
+}
+
+.tooltipTexto {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  font-size: var(--text-caption);
+  padding: var(--spacing-1) var(--spacing-2);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s var(--ease-marca);
+  z-index: 3;
+}
+.tooltip:hover .tooltipTexto { opacity: 1; }
