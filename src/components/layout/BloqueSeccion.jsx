@@ -2,7 +2,7 @@
    BLOQUE DE SECCIÓN (imagen + texto) — Fely Campo
    Uso:
      <BloqueSeccion imagen="/img/atelier.jpg" titulo="Visita el atelier"
-        texto="Costura a medida en Salamanca." enlace="Descubrir más"
+        texto="Costura a medida en Salamanca." enlace="Descubre más"
         invertido={false} />
    ============================================================ */
 
@@ -20,10 +20,10 @@ function BloqueSeccion({ imagen, titulo, texto, enlace, invertido = false }) {
         {imagen && <img src={imagen} alt={titulo} className={styles.imagen} />}
       </div>
 
-      <div className={invertido ? styles.textoInvertido : ''}>
+      <div className={`${styles.contenidoTexto} ${invertido ? styles.textoInvertido : ''}`}>
         <h2 className={styles.titulo}>{titulo}</h2>
         <p className={styles.texto}>{texto}</p>
-        {enlace && <Boton variante="texto">{enlace}</Boton>}
+        {enlace && <Boton variante="texto" className={styles.enlace}>{enlace}</Boton>}
       </div>
     </section>
   );

@@ -41,5 +41,29 @@
   },
   "producto": {
     "anadirWishlist": "Añadir a Wishlist"
+  },
+  "collectionTitle": {
+    "edicionMujer": {
+      "label": "Prêt-à-porter FW27",
+      "title": "La Colección",
+      "description": "La historia de una mujer que diseña para otras mujeres, una atemporalidad que Fely Campo abre ahora, por primera vez, al Prêt-à-porter."
+    }
+  },
+  "mediaBanner": {
+    "label": "La Colección",
+    "titulo": "Otoño-Invierno 2027",
+    "cta": "Descubre la colección"
+  },
+  "splitMedia": {
+    "item1": {
+      "label": "Atelier Novia",
+      "titulo": "Atelier Novia",
+      "cta": "Descubre más"
+    },
+    "item2": {
+      "label": "Atelier Fiesta",
+      "titulo": "Atelier Fiesta",
+      "cta": "Descubre más"
+    }
   }
 }

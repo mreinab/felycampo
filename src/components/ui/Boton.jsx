@@ -8,8 +8,8 @@
      <Boton>Comprar</Boton>
      <Boton variante="contorno">Ver colección</Boton>
      <Boton variante="rosa" tamano="full">Añadir a la cesta</Boton>
-     <Boton variante="texto">Descubrir más</Boton>
-     <Boton variante="texto-crema">Descubrir más</Boton>
+     <Boton variante="texto">Descubre más</Boton>
+     <Boton variante="texto-crema">Descubre más</Boton>
    ============================================================ */
 
 import styles from './Boton.module.css';
@@ -31,12 +31,14 @@ function Boton({
   desactivado = false,
   mayusculas = false,
   tabIndex,
+  className,
 }) {
   if (variante === 'texto' || variante === 'texto-crema') {
     const clases = [
       styles.texto,
       variante === 'texto-crema' && styles.textoCrema,
       mayusculas && styles.textoMayusculas,
+      className,
     ].filter(Boolean).join(' ');
 
     // Con href, es un enlace real; sin él, un <span> que solo dispara onClick.
@@ -59,9 +61,11 @@ function Boton({
   }
 
   // La variante "avisa" tiene un tamaño fijo — no se combina con .s/.m/.l/.full
-  const clase = variante === 'avisa'
-    ? `${styles.boton} ${styles.avisa}`
-    : `${styles.boton} ${styles[variante]} ${styles[tamano]}`;
+  const clase = [
+    styles.boton,
+    variante === 'avisa' ? styles.avisa : `${styles[variante]} ${styles[tamano]}`,
+    className,
+  ].filter(Boolean).join(' ');
 
   return (
     <button type={type} onClick={onClick} disabled={desactivado} className={clase}>

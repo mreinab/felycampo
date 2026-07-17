@@ -1,0 +1,62 @@
+/* ============================================================
+   SPLIT MEDIA — Fely Campo
+   Dos piezas editoriales lado a lado — sin radios, sombras ni
+   bordes. Gap denso (--spacing-1) entre ellas, en desktop y móvil.
+   ============================================================ */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-1);
+}
+
+.pieza {
+  position: relative;
+  display: block;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Abajo, centrado, en las dos variantes — solo cambia el color del
+   texto (--color-fondo en "etiqueta", --color-tinta vía ImageTitle en
+   "imageTitle"), no la posición. */
+.contenido {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--spacing-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+  text-align: center;
+}
+
+.etiqueta {
+  font-size: var(--text-body-lg);
+  color: var(--color-fondo);
+}
+
+/* Selector .contenido .cta (no un solo .cta): sube la especificidad
+   por encima de .texto de Boton.module.css sin !important y sin
+   depender de qué CSS module carga primero. */
+.contenido .cta {
+  color: var(--color-fondo);
+  border-bottom-color: var(--color-fondo);
+}
+
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-1);
+  }
+  .pieza {
+    aspect-ratio: 4 / 3;
+  }
+}

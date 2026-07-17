@@ -9,3 +9,4 @@ export { default as Acordeon, FilaAcordeon } from './Acordeon';
 export { default as MediaLink } from './MediaLink';
 export { default as ImageTitle } from './ImageTitle';
 export { default as PanelLateral } from './PanelLateral';
+export { default as CollectionTitle } from './CollectionTitle';

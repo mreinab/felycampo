@@ -15,7 +15,7 @@ export default {
 export const Oscuro = {
   args: {
     titulo: 'FW27 New Arrivals',
-    ctaTexto: 'Descubrir la colección',
+    ctaTexto: 'Descubre la colección',
     href: '#',
   },
 };
@@ -23,7 +23,7 @@ export const Oscuro = {
 export const Blanco = {
   args: {
     titulo: 'FW27 New Arrivals',
-    ctaTexto: 'Descubrir la colección',
+    ctaTexto: 'Descubre la colección',
     href: '#',
     variante: 'blanco',
   },

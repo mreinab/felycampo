@@ -79,6 +79,13 @@
   margin-bottom: var(--spacing-1);
 }
 
+@media (max-width: 767px) {
+  .encabezado {
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+}
+
 .nombre {
   font-size: var(--text-small);
   color: var(--color-tinta);
@@ -107,6 +114,12 @@
   transition: opacity 0.3s ease;
 }
 .tarjeta:hover .colores { opacity: 1; }
+
+/* En mobile no se muestran los colores: sin hover real, no aportan nada
+   y solo ocupan espacio — se quitan del flujo. */
+@media (max-width: 767px) {
+  .colores { display: none; }
+}
 
 .punto {
   width: 14px;

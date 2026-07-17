@@ -48,7 +48,7 @@ function Footer() {
 
         <div>
           <p className={styles.parrafo}>
-            Suscríbete a nuestra newsletter. Sé la primera en descubrir nuevas colecciones.
+            Suscríbete a nuestra newsletter. Sé la primera en Descubre nuevas colecciones.
           </p>
           <input type="email" placeholder="nombre@email.com" className={styles.input} />
         </div>

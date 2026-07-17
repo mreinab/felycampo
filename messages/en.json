@@ -41,5 +41,29 @@
   },
   "producto": {
     "anadirWishlist": "Add to Wishlist"
+  },
+  "collectionTitle": {
+    "edicionMujer": {
+      "label": "FW27 Collection",
+      "title": "The Collection",
+      "description": "The story of a woman designing for other women, a timelessness Fely Campo now brings, for the first time, to Prêt-à-porter."
+    }
+  },
+  "mediaBanner": {
+    "label": "The AW27 Collection",
+    "titulo": "FW27 New Arrivals",
+    "cta": "Discover the collection"
+  },
+  "splitMedia": {
+    "item1": {
+      "label": "Bridal Atelier",
+      "titulo": "Bridal Atelier",
+      "cta": "Discover more"
+    },
+    "item2": {
+      "label": "Party Atelier",
+      "titulo": "Party Atelier",
+      "cta": "Discover more"
+    }
   }
 }

@@ -5,7 +5,7 @@ const slidesEjemplo = [
     src: '/img/styleguide/prod-tarjeta.webp',
     tipo: 'imagen',
     titulo: 'FW27 New Arrivals',
-    ctaTexto: 'Descubrir la colección',
+    ctaTexto: 'Descubre la colección',
     ctaHref: '/archivo/colecciones',
   },
   {

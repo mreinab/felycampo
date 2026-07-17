@@ -34,7 +34,7 @@ export const Variantes = {
       <Boton variante="solido">Comprar</Boton>
       <Boton variante="contorno">Ver colección</Boton>
       <Boton variante="rosa">Añadir a la cesta</Boton>
-      <Boton variante="texto">Descubrir más</Boton>
+      <Boton variante="texto">Descubre más</Boton>
     </div>
   ),
 };
@@ -66,7 +66,7 @@ export const TextoMayusculas = {
 };
 
 export const TextoCrema = {
-  args: { variante: 'texto-crema', children: 'Descubrir más' },
+  args: { variante: 'texto-crema', children: 'Descubre más' },
   render: (args) => (
     <div style={{ background: '#1a1a1a', padding: '32px', display: 'inline-block' }}>
       <Boton {...args} />

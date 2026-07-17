@@ -4,6 +4,7 @@ import messages from '../../../messages/es.json';
 
 const IMG = '/img/styleguide/prod-tarjeta.webp';
 const IMG_HOVER = '/img/styleguide/prod-tarjeta-hover.webp';
+const VIDEO = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
 
 const coloresAurora = [
   { hex: '#EED3E8', nombre: 'Rosa suave' },
@@ -27,7 +28,17 @@ export default {
     },
     imagenHover: {
       control: 'text',
-      description: 'URL de la imagen que se revela con fundido al pasar el cursor (opcional).',
+      description: 'URL de la imagen (o vídeo, ver tipoHover) que se revela con fundido al pasar el cursor (opcional).',
+    },
+    tipo: {
+      control: 'select',
+      options: ['imagen', 'video'],
+      description: 'Tipo del media base ("imagen") — con "video" renderiza <video autoPlay muted loop playsInline> en vez de <img>.',
+    },
+    tipoHover: {
+      control: 'select',
+      options: ['imagen', 'video'],
+      description: 'Tipo del media de hover, independiente de "tipo" (ej. imagen base + vídeo en hover).',
     },
     nombre: {
       control: 'text',
@@ -129,4 +140,12 @@ export const ConColores = {
 
 export const Agotado = {
   args: { imagen: IMG, imagenHover: IMG_HOVER, nombre: 'Vestido Nube', precio: '690 €', badge: 'Agotado', badgeVariante: 'agotado', agotado: true },
+};
+
+export const VideoEnHover = {
+  args: { imagen: IMG, imagenHover: VIDEO, tipoHover: 'video', nombre: 'Vestido Aurora', precio: '890 €', colores: coloresAurora },
+};
+
+export const VideoBaseYHover = {
+  args: { imagen: VIDEO, tipo: 'video', imagenHover: VIDEO, tipoHover: 'video', nombre: 'Vestido Aurora', precio: '890 €' },
 };
