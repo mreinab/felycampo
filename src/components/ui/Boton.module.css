@@ -93,3 +93,12 @@
   text-transform: uppercase;
 }
 .textoMayusculas:hover { border-color: var(--color-tinta); }
+
+/* Modificador: mismo enlace que .texto pero en --color-crema — para
+   usarlo sobre fondos oscuros o imágenes (ej. HeroCarousel), donde
+   --color-tinta no tendría contraste suficiente. */
+.textoCrema {
+  color: var(--color-crema);
+  border-bottom-color: var(--color-crema);
+}
+.textoCrema:hover { border-bottom-color: var(--color-rosa); }

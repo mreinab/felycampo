@@ -27,11 +27,14 @@
   transition: fill 0.2s var(--ease-marca);
 }
 
+/* Anclado por la derecha (no centrado): el icono vive pegado al borde
+   derecho de la tarjeta (.wishlist), así que un tooltip centrado se
+   sale por la derecha del viewport en la última columna de una fila
+   — creciendo hacia la izquierda se queda siempre dentro de la tarjeta. */
 .tooltipTexto {
   position: absolute;
   top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
   background: var(--color-tinta);
   color: var(--color-fondo);
   font-size: var(--text-caption);

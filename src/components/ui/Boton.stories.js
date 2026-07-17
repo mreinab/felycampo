@@ -6,8 +6,8 @@ export default {
   argTypes: {
     variante: {
       control: 'select',
-      options: ['solido', 'contorno', 'rosa', 'texto', 'avisa'],
-      description: 'Sólido = acción principal. Rosa = solo CTA de compra, máximo una por pantalla. Contorno = acción secundaria. Texto = enlaces. Avisa = tamaño fijo compacto, para "avísame cuando esté disponible".',
+      options: ['solido', 'contorno', 'rosa', 'texto', 'texto-crema', 'avisa'],
+      description: 'Sólido = acción principal. Rosa = solo CTA de compra, máximo una por pantalla. Contorno = acción secundaria. Texto = enlaces. Texto-crema = enlace en --color-crema, para fondos oscuros/imágenes. Avisa = tamaño fijo compacto, para "avísame cuando esté disponible".',
     },
     tamano: {
       control: 'select',
@@ -63,4 +63,13 @@ export const Avisa = {
 
 export const TextoMayusculas = {
   args: { variante: 'texto', mayusculas: true, children: 'Términos y condiciones' },
+};
+
+export const TextoCrema = {
+  args: { variante: 'texto-crema', children: 'Descubrir más' },
+  render: (args) => (
+    <div style={{ background: '#1a1a1a', padding: '32px', display: 'inline-block' }}>
+      <Boton {...args} />
+    </div>
+  ),
 };

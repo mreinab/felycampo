@@ -10,10 +10,12 @@
    ============================================================ */
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Bookmark } from 'lucide-react';
 import styles from './BotonGuardar.module.css';
 
 function BotonGuardar({ guardado: guardadoProp, onToggle }) {
+  const t = useTranslations('producto');
   const [guardadoInterno, setGuardadoInterno] = useState(false);
   const guardado = guardadoProp ?? guardadoInterno;
 
@@ -28,8 +30,7 @@ function BotonGuardar({ guardado: guardadoProp, onToggle }) {
       <button
         type="button"
         aria-pressed={guardado}
-        aria-label="Añadir a wishlist"
-        title="Añadir a wishlist"
+        aria-label={t('anadirWishlist')}
         onClick={alternar}
         className={styles.boton}
       >
@@ -40,7 +41,7 @@ function BotonGuardar({ guardado: guardadoProp, onToggle }) {
           strokeWidth={1}
         />
       </button>
-      <span className={styles.tooltipTexto}>Añadir a wishlist</span>
+      <span className={styles.tooltipTexto}>{t('anadirWishlist')}</span>
     </span>
   );
 }

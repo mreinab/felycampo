@@ -3,11 +3,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { ShoppingBag } from 'lucide-react';
 import styles from './Navbar.module.css';
-import PanelLateral from './PanelLateral';
+import { PanelLateral } from '../../ui';
+import NavbarPanelLateralContent from './NavbarPanelLateralContent';
 
 // Enlaces con submenú (Atelier, Prêt-à-porter — coinciden con las
 // categorías reales del sitemap). El resto son enlaces simples, sin panel.
@@ -38,10 +38,11 @@ const SUBMENU_STRUCTURE = {
   },
   visitanos: {
     items: [
-      { key: 'noviasSalamanca', href: '/visitenos/novias-salamanca' },
-      { key: 'fiestaSalamanca', href: '/visitenos/fiesta-salamanca' },
-      { key: 'showroomMadrid', href: '/visitenos/showroom-madrid' },
-      { key: 'fiestaOviedo', href: '/visitenos/fiesta-oviedo' },
+      { key: 'salamanca', href: '/visitenos/salamanca' },
+      { key: 'madrid', href: '/visitenos/madrid' },
+      { key: 'oviedo', href: '/visitenos/oviedo' },
+      { key: 'puntosDeVenta', href: '/visitenos' },
+      { key: 'reservarCita', href: '/visitenos/cita' },
     ],
     image: '/img/styleguide/prod-tarjeta-hover.webp',
   },
@@ -55,19 +56,33 @@ const NAV_ITEMS = [
 ];
 
 const CLOSE_DELAY_MS = 200;
+const SCROLL_THRESHOLD_PX = 50;
 
-function Navbar() {
+function Navbar({ transparent = false }) {
   const t = useTranslations('nav');
   const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [lastSubmenu, setLastSubmenu] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [headerHovered, setHeaderHovered] = useState(false);
   const closeTimeout = useRef(null);
+  const headerLeaveTimeout = useRef(null);
 
-  useEffect(() => () => clearTimeout(closeTimeout.current), []);
+  useEffect(() => () => {
+    clearTimeout(closeTimeout.current);
+    clearTimeout(headerLeaveTimeout.current);
+  }, []);
+
+  // Solo importa combinado con la prop "transparent" (ver Navbar.module.css):
+  // decide si el fondo pasa de transparente a blanco al hacer scroll.
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD_PX);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const openSubmenu = (key) => {
     clearTimeout(closeTimeout.current);
@@ -82,6 +97,28 @@ function Navbar() {
 
   const cancelSubmenuClose = () => clearTimeout(closeTimeout.current);
 
+  // Cierre inmediato (sin el retardo anti-parpadeo de scheduleSubmenuClose):
+  // es un clic explícito del usuario sobre el overlay, no un hover-out.
+  const closeSubmenu = () => {
+    clearTimeout(closeTimeout.current);
+    setActiveSubmenu(null);
+  };
+
+  // El logo cambia de tamaño con el hover (isLight/solido más abajo), y
+  // eso mueve el propio elemento que se está hovereando: al encoger, el
+  // cursor puede quedar fuera de él, lo que dispara un mouseleave, que
+  // lo vuelve a agrandar, que lo vuelve a poner bajo el cursor... Con
+  // retardo antes de confirmar la salida (igual que scheduleSubmenuClose)
+  // se corta ese bucle.
+  const handleHeaderMouseEnter = () => {
+    clearTimeout(headerLeaveTimeout.current);
+    setHeaderHovered(true);
+  };
+
+  const handleHeaderMouseLeave = () => {
+    headerLeaveTimeout.current = setTimeout(() => setHeaderHovered(false), CLOSE_DELAY_MS);
+  };
+
   const displayedSubmenu = lastSubmenu && SUBMENU_STRUCTURE[lastSubmenu];
 
   // Todos los enlaces internos del Navbar llevan el locale activo por
@@ -90,26 +127,45 @@ function Navbar() {
   // cualquier ruta sin prefijo al locale por defecto (es).
   const withLocale = (href) => (href === '/' ? `/${locale}` : `/${locale}${href}`);
 
-  const otherLocale = locale === 'es' ? 'en' : 'es';
+  // El fondo se vuelve sólido por scroll O por hover (antes esto último
+  // era un :hover puro en CSS). Ahora lo llevamos a JS porque el logo
+  // (un <img src>, no se puede tintar con CSS) tiene que cambiar de
+  // imagen exactamente a la vez que el fondo y el texto.
+  const solido = scrolled || headerHovered;
+  const isLight = transparent && !solido;
 
-  const switchLocale = () => {
-    const segments = pathname.split('/');
-    segments[1] = otherLocale;
-    router.replace(segments.join('/'));
-  };
+  const headerClass = [
+    styles.header,
+    transparent && styles.transparent,
+    transparent && solido && styles.opaco,
+    isLight && styles.light,
+  ].filter(Boolean).join(' ');
+
+  const navLogoClassName = isLight ? `${styles.navLogo} ${styles.navLogoGrande}` : styles.navLogo;
 
   return (
     <>
-    <header className={styles.header}>
+    <header
+      className={headerClass}
+      onMouseEnter={handleHeaderMouseEnter}
+      onMouseLeave={handleHeaderMouseLeave}
+    >
       <div className={styles.navRow}>
 
-        {/* Botón hamburguesa — solo visible en móvil */}
+        {/* Botón hamburguesa — solo visible en móvil. Es el mismo botón que
+            cierra el menú: las dos barras rotan hasta formar una X. Sigue
+            siendo clicable con el menú abierto porque el panel móvil
+            arranca debajo de .navRow, no lo tapa (ver .sobreNavbar en
+            PanelLateral.module.css). */}
         <button
+          type="button"
           className={styles.navToggle}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label={mobileMenuOpen ? t('aria.cerrarMenu') : t('aria.abrirMenu')}
+          aria-expanded={mobileMenuOpen}
         >
-          ☰
+          <span className={`${styles.navToggleBar} ${mobileMenuOpen ? styles.navToggleBarTopOpen : styles.navToggleBarTop}`} />
+          <span className={`${styles.navToggleBar} ${mobileMenuOpen ? styles.navToggleBarBottomOpen : styles.navToggleBarBottom}`} />
         </button>
 
         {/* Enlaces — solo visibles en escritorio. Los que tienen submenú
@@ -131,9 +187,9 @@ function Navbar() {
         {/* Logo, siempre visible, centrado */}
         <a href={withLocale('/')} className={styles.navLogoLink}>
           <img
-            src="/img/logo/logo-felycampo.png"
+            src={isLight ? '/img/logo/logo-white-felycampo.png' : '/img/logo/logo-felycampo.png'}
             alt="Fely Campo"
-            className={styles.navLogo}
+            className={navLogoClassName}
           />
         </a>
 
@@ -142,9 +198,6 @@ function Navbar() {
           <a href={withLocale('/wishlist')} className={styles.navLink}>{t('actions.wishlist')}</a>
           <a href={withLocale('/mi-cuenta')} className={styles.navLink}>{t('actions.miCuenta')}</a>
           <a href={withLocale('/carrito')} className={styles.navLink}>{t('actions.carrito')}</a>
-          <button className={styles.languageSelector} onClick={switchLocale}>
-            {locale.toUpperCase()}
-          </button>
         </div>
 
         {/* Utilidades — móvil: solo el icono del carrito, el resto vive en el menú hamburguesa */}
@@ -162,33 +215,18 @@ function Navbar() {
         abierto={!!activeSubmenu}
         onMouseEnter={cancelSubmenuClose}
         onMouseLeave={scheduleSubmenuClose}
+        onCerrar={closeSubmenu}
       >
         {displayedSubmenu && (
-          <div className={styles.submenuContent}>
-            <ul className={styles.submenuList}>
-              {displayedSubmenu.items.map((link) => (
-                <li key={link.href}>
-                  <a href={withLocale(link.href)} className={styles.submenuLink}>
-                    {t(`submenus.${lastSubmenu}.${link.key}`)}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <div className={styles.submenuImage}>
-              <img src={displayedSubmenu.image} alt="" />
-            </div>
-          </div>
+          <NavbarPanelLateralContent submenuKey={lastSubmenu} submenu={displayedSubmenu} />
         )}
       </PanelLateral>
 
-      {/* Menú móvil: mismo panel lateral, pero a pantalla completa
-          (por encima del navbar) y solo con la lista de enlaces. */}
-      <PanelLateral
-        abierto={mobileMenuOpen}
-        onCerrar={() => setMobileMenuOpen(false)}
-        mostrarCerrar
-        sobreNavbar
-      >
+      {/* Menú móvil: mismo panel lateral, pero a pantalla completa por
+          debajo del navRow y solo con la lista de enlaces. Se cierra con
+          el propio botón hamburguesa/X del header, no tiene botón de
+          cerrar propio. */}
+      <PanelLateral abierto={mobileMenuOpen} sobreNavbar onCerrar={() => setMobileMenuOpen(false)}>
         <nav className={styles.mobileMenu}>
           {NAV_ITEMS.map((item) => (
             <a key={item.href} href={withLocale(item.href)} className={styles.mobileMenuLink}>
@@ -198,9 +236,6 @@ function Navbar() {
           <div className={styles.mobileMenuDivider} />
           <a href={withLocale('/wishlist')} className={styles.mobileMenuLink}>{t('actions.wishlist')}</a>
           <a href={withLocale('/mi-cuenta')} className={styles.mobileMenuLink}>{t('actions.miCuenta')}</a>
-          <button className={styles.languageSelectorMobile} onClick={switchLocale}>
-            {locale.toUpperCase()}
-          </button>
         </nav>
       </PanelLateral>
     </>

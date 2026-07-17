@@ -21,10 +21,11 @@
         "runway": "Runway"
       },
       "visitanos": {
-        "noviasSalamanca": "Atelier Novias Salamanca",
-        "fiestaSalamanca": "Atelier Fiesta Salamanca",
-        "showroomMadrid": "Atelier Showroom Madrid",
-        "fiestaOviedo": "Atelier Fiesta Oviedo"
+        "salamanca": "Salamanca",
+        "madrid": "Madrid",
+        "oviedo": "Oviedo",
+        "puntosDeVenta": "Store Locations",
+        "reservarCita": "Book an Appointment"
       }
     },
     "actions": {
@@ -37,5 +38,8 @@
       "cerrarMenu": "Close menu",
       "carrito": "Cart"
     }
+  },
+  "producto": {
+    "anadirWishlist": "Add to Wishlist"
   }
 }

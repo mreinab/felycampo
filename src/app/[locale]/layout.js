@@ -6,6 +6,7 @@
    ============================================================ */
 
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
@@ -31,6 +32,13 @@ export default async function RootLayout({ children, params }) {
 
   const messages = await getMessages();
 
+  // Home transparente, el resto de páginas con el Navbar blanco de
+  // siempre. El pathname no llega como prop al layout compartido — lo
+  // inyecta middleware.js vía header (x-pathname) para no tener que
+  // renderizar <Navbar /> a mano en cada una de las páginas.
+  const pathname = (await headers()).get('x-pathname') ?? '';
+  const isHome = pathname === `/${locale}` || pathname === `/${locale}/`;
+
   return (
     <html lang={locale}>
       {/* La fuente Inter se carga vía @import en global.css (mismo criterio
@@ -38,7 +46,7 @@ export default async function RootLayout({ children, params }) {
           next/font/google, este es el sitio donde se sustituiría. */}
       <body>
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
+          <Navbar transparent={isHome} />
           <main>{children}</main>
           <Footer />
         </NextIntlClientProvider>

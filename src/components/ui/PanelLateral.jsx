@@ -15,12 +15,11 @@ import styles from './PanelLateral.module.css';
 
 function PanelLateral({
   abierto,
-  onCerrar,
   children,
-  mostrarCerrar = false,
   sobreNavbar = false,
   onMouseEnter,
   onMouseLeave,
+  onCerrar,
 }) {
   const clase = [
     styles.panel,
@@ -28,25 +27,27 @@ function PanelLateral({
     sobreNavbar && styles.sobreNavbar,
   ].filter(Boolean).join(' ');
 
+  const claseOverlay = [
+    styles.overlay,
+    abierto && styles.abierto,
+    sobreNavbar && styles.sobreNavbar,
+  ].filter(Boolean).join(' ');
+
   return (
-    <div
-      className={clase}
-      aria-hidden={!abierto}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      {mostrarCerrar && (
-        <button
-          type="button"
-          className={styles.botonCerrar}
-          onClick={onCerrar}
-          aria-label="Cerrar menú"
-        >
-          ✕
-        </button>
-      )}
-      <div className={styles.contenido}>{children}</div>
-    </div>
+    <>
+      {/* Capa oscura para centrar la atención en el panel — comparte
+          transición/estado con el panel pero es un elemento hermano
+          (así su opacidad no se hereda al contenido). Clic la cierra. */}
+      <div className={claseOverlay} aria-hidden="true" onClick={abierto ? onCerrar : undefined} />
+      <div
+        className={clase}
+        aria-hidden={!abierto}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
+        <div className={styles.contenido}>{children}</div>
+      </div>
+    </>
   );
 }
 

@@ -1,4 +1,6 @@
+import { NextIntlClientProvider } from 'next-intl';
 import TarjetaProducto from './TarjetaProducto';
+import messages from '../../../messages/es.json';
 
 const IMG = '/img/styleguide/prod-tarjeta.webp';
 const IMG_HOVER = '/img/styleguide/prod-tarjeta-hover.webp';
@@ -60,6 +62,13 @@ export default {
       description: 'Texto alternativo de la imagen — si se omite, usa el nombre del producto.',
     },
   },
+  decorators: [
+    (Story) => (
+      <NextIntlClientProvider locale="es" messages={messages}>
+        <Story />
+      </NextIntlClientProvider>
+    ),
+  ],
 };
 
 export const Variantes = {
@@ -92,6 +101,10 @@ export const Variantes = {
       />
     </div>
   ),
+};
+
+export const Base = {
+  args: { imagen: IMG, imagenHover: IMG_HOVER, nombre: 'Falda Vera', precio: '420 €', colores: coloresAurora },
 };
 
 export const ConBadge = {

@@ -9,6 +9,7 @@
      <Boton variante="contorno">Ver colección</Boton>
      <Boton variante="rosa" tamano="full">Añadir a la cesta</Boton>
      <Boton variante="texto">Descubrir más</Boton>
+     <Boton variante="texto-crema">Descubrir más</Boton>
    ============================================================ */
 
 import styles from './Boton.module.css';
@@ -17,25 +18,40 @@ import styles from './Boton.module.css';
  * Botón principal del sistema. 'solido' = acción principal (una
  * por pantalla). 'rosa' se reserva para CTAs de compra — no repetir más de
  * una vez por vista, pierde fuerza. 'contorno' = acción secundaria. 'texto'
- * = enlaces. Esquinas siempre rectas (radio 0).
+ * = enlaces. 'texto-crema' = mismo enlace, en --color-crema (fondos
+ * oscuros/imágenes, ej. HeroCarousel). Esquinas siempre rectas (radio 0).
  */
 function Boton({
   children,
   variante = 'solido',
   tamano = 'm',
+  href,
   onClick,
   type = 'button',
   desactivado = false,
   mayusculas = false,
+  tabIndex,
 }) {
-  if (variante === 'texto') {
-    const clase = mayusculas
-      ? `${styles.texto} ${styles.textoMayusculas}`
-      : styles.texto;
+  if (variante === 'texto' || variante === 'texto-crema') {
+    const clases = [
+      styles.texto,
+      variante === 'texto-crema' && styles.textoCrema,
+      mayusculas && styles.textoMayusculas,
+    ].filter(Boolean).join(' ');
+
+    // Con href, es un enlace real; sin él, un <span> que solo dispara onClick.
+    if (href && !desactivado) {
+      return (
+        <a href={href} onClick={onClick} className={clases} tabIndex={tabIndex}>
+          {children}
+        </a>
+      );
+    }
+
     return (
       <span
         onClick={desactivado ? undefined : onClick}
-        className={clase}
+        className={clases}
       >
         {children}
       </span>

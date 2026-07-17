@@ -43,33 +43,37 @@ function TarjetaProducto({
           <BotonGuardar />
         </span>
 
-        {imagen && (
-          <img
-            src={imagen}
-            alt={alt || nombre}
-            className={`${styles.imagen} ${styles.imagenBase}`}
-          />
-        )}
-        {imagenHover && (
-          <img
-            src={imagenHover}
-            alt=""
-            className={`${styles.imagen} ${styles.imagenHover}`}
-          />
-        )}
+        <div className={styles.recorte}>
+          {imagen && (
+            <img
+              src={imagen}
+              alt={alt || nombre}
+              className={`${styles.imagen} ${styles.imagenBase}`}
+            />
+          )}
+          {imagenHover && (
+            <img
+              src={imagenHover}
+              alt=""
+              className={`${styles.imagen} ${styles.imagenHover}`}
+            />
+          )}
+        </div>
       </div>
 
-      <p className={styles.nombre}>{nombre}</p>
+      <div className={styles.encabezado}>
+        <p className={styles.nombre}>{nombre}</p>
 
-      <div className={styles.precios}>
-        {precioRebajado ? (
-          <>
-            <span className={styles.antes}>{precio}</span>
-            <span className={styles.ahora}>{precioRebajado}</span>
-          </>
-        ) : (
-          <span className={styles.precio}>{precio}</span>
-        )}
+        <div className={styles.precios}>
+          {precioRebajado ? (
+            <>
+              <span className={styles.antes}>{precio}</span>
+              <span className={styles.ahora}>{precioRebajado}</span>
+            </>
+          ) : (
+            <span className={styles.precio}>{precio}</span>
+          )}
+        </div>
       </div>
 
       {agotado ? (

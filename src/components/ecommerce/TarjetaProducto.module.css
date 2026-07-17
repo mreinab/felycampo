@@ -5,12 +5,35 @@
    Referente: styleguide.html #producto (.sg-prod).
    ============================================================ */
 
-.tarjeta { position: relative; cursor: pointer; }
+/* height:100% + flex: si un ancestro le da una altura definida (ej. un
+   grid con filas de altura fija), la tarjeta la ocupa entera y .marco
+   (flex:1, min-height:0) cede el sobrante de la columna en vez de
+   imponer su aspect-ratio — la tarjeta se adapta al contenedor, no al
+   revés. Sin ese ancestro, height:100% se resuelve a auto y todo se
+   comporta exactamente igual que antes (aspect-ratio manda). */
+.tarjeta {
+  position: relative;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
 .marco {
   position: relative;
   aspect-ratio: 3 / 4;
+  flex: 1 1 auto;
+  min-height: 0;
   background: var(--color-crema);
+  border-radius: var(--radius-imagenes);
+}
+
+/* El recorte va aquí, no en .marco: así el tooltip de .wishlist (que
+   también vive dentro de .marco) puede salirse del encuadre en vez de
+   cortarse contra el borde de la tarjeta. */
+.recorte {
+  position: absolute;
+  inset: 0;
   border-radius: var(--radius-imagenes);
   overflow: hidden;
 }
@@ -45,17 +68,27 @@
 }
 .tarjeta:hover .wishlist { opacity: 1; pointer-events: auto; }
 
+/* Nombre y precio en la misma línea, repartidos a los extremos del
+   ancho de la tarjeta (antes iban apilados, el precio debajo). */
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-3);
+  margin-bottom: var(--spacing-1);
+}
+
 .nombre {
   font-size: var(--text-small);
   color: var(--color-tinta);
-  margin-top: var(--spacing-3);
-  margin-bottom: var(--spacing-1);
 }
 
 .precios {
   display: flex;
   gap: var(--spacing-2);
   font-size: var(--text-small);
+  flex-shrink: 0;
 }
 
 .precio { color: var(--color-gris-500); }

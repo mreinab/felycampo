@@ -1,0 +1,76 @@
+/* ============================================================
+   PANEL LATERAL — Fely Campo
+   Anclado a la izquierda, ancho fijo, se desliza con transform
+   (nunca display:none/block a secas).
+   ============================================================ */
+
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 420px;
+  max-width: 90vw;
+  background: var(--color-fondo);
+  z-index: 40;
+  transform: translateX(-100%);
+  transition: transform 0.3s var(--ease-marca);
+  overflow-y: auto;
+}
+
+.panel.abierto {
+  transform: translateX(0);
+}
+
+/* Menú móvil: arranca debajo de .navRow (min-height: 76px en
+   Navbar.module.css) — no debe tapar el header, así que en vez del
+   truco de z-index (ocultarse detrás del header) se le baja el top
+   directamente. Submenú de escritorio: sigue empezando en top:0, oculto
+   tras el header solo por z-index (menor que el del header sticky). */
+.panel.sobreNavbar {
+  top: 76px;
+  width: 100%;
+  max-width: 100%;
+  z-index: 60;
+}
+
+.contenido {
+  height: 100%;
+  padding: var(--spacing-9) var(--spacing-7) var(--spacing-7);
+}
+
+/* Ya arranca debajo del header, no necesita el mismo colchón superior
+   que el submenú de escritorio (que sí sigue tapado por él). */
+.sobreNavbar .contenido {
+  padding-top: var(--spacing-7);
+}
+
+/* ---------- Overlay ---------- */
+/* Un peldaño de z-index por debajo del panel en cada variante, para
+   que se mantenga el mismo orden relativo con el header sticky
+   (z-index: 50 en Navbar.module.css) en los dos casos: detrás en el
+   submenú de escritorio, delante en el menú móvil a pantalla completa. */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-tinta);
+  opacity: 0;
+  z-index: 39;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-marca);
+}
+
+.overlay.abierto {
+  opacity: 0.6;
+  pointer-events: auto;
+}
+
+/* Mismo colchón superior que .panel.sobreNavbar: no tapa el header
+   (el botón hamburguesa debe seguir siendo clicable con el menú abierto). */
+.overlay.sobreNavbar {
+  top: 76px;
+  z-index: 59;
+}

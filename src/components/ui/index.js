@@ -6,3 +6,6 @@ export { default as Etiqueta } from './Etiqueta';
 export { default as BotonGuardar } from './BotonGuardar';
 export { default as SelectorColor } from './SelectorColor';
 export { default as Acordeon, FilaAcordeon } from './Acordeon';
+export { default as MediaLink } from './MediaLink';
+export { default as ImageTitle } from './ImageTitle';
+export { default as PanelLateral } from './PanelLateral';

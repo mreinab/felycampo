@@ -1,0 +1,21 @@
+/* ============================================================
+   CUADRÍCULA DE PRODUCTOS — Fely Campo
+   Banda de altura fija (60vh), fila única en flex — sin columnas
+   fijas por breakpoint: cada tarjeta reparte el ancho disponible a
+   partes iguales (.item, flex:1) y se adapta sola.
+   ============================================================ */
+
+.cuadricula {
+  height: 90vh;
+  display: flex;
+  gap: var(--spacing-4);
+  padding: var(--spacing-8) var(--spacing-4);
+}
+
+/* min-width:0: sin esto, un flex item no encoge por debajo del ancho
+   de su contenido (el texto del nombre/precio), y las 4 tarjetas no
+   repartirían el ancho a partes iguales de verdad. */
+.item {
+  flex: 1 1 0;
+  min-width: 0;
+}
