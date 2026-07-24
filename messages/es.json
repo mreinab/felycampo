@@ -1,19 +1,19 @@
 {
   "nav": {
     "links": {
+      "tienda": "Tienda",
       "atelier": "Atelier",
-      "pretAPorter": "Prêt-à-porter",
       "elMundoDeFely": "El mundo de Fely",
       "visitanos": "Visítanos"
     },
     "submenus": {
+      "tienda": {
+        "vestidos": "Vestidos",
+        "faldas": "Faldas"
+      },
       "atelier": {
         "novias": "Novias",
         "fiesta": "Fiesta"
-      },
-      "pretAPorter": {
-        "vestidos": "Vestidos",
-        "faldas": "Faldas"
       },
       "elMundoDeFely": {
         "historia": "Historia",
@@ -65,5 +65,33 @@
       "titulo": "Atelier Fiesta",
       "cta": "Descubre más"
     }
+  },
+  "cuadriculaTabs": {
+    "titulo": "Un look para cada ocasión",
+    "descripcion": "Piezas pensadas para acompañarte en cada celebración, desde la ceremonia hasta la última copa de la noche.",
+    "tabs": {
+      "diaBoda": "Invitada boda de día",
+      "nocheBoda": "Invitada boda de noche",
+      "comunionesBautizo": "Comuniones y bautizo",
+      "bolsosFiesta": "Bolsos de fiesta"
+    }
+  },
+  "cuadriculaProductos": {
+    "verMas": "Ver más"
+  },
+  "visitaAtelier": {
+    "titulo": "Artesanía, Feminidad y Cercanía",
+    "texto": "Lo que quiero transmitir con mis vestidos es un sentimiento y una pasión por lo que es mi oficio y mi profesión: la moda…",
+    "enlace": "Descubre más"
+  },
+  "clientsReview": {
+    "titulo": "Ellas te lo cuentan",
+    "resenas": [
+      { "texto": "Muchísimas gracias Fely....me hiciste disfrutar del día más importante...y me hiciste la mujer más feliz....cuando tenga fotos de la fotógrafa profesional te mando por si las quieres publicar...te pondré la reseña que te mereces....Muchísimas gracias por todo y una suerte haberte conocido 🥰🥰", "nombre": "Marta G." },
+      { "texto": "La costura a medida marca la diferencia. Se nota en cada puntada.", "nombre": "Elena R." },
+      { "texto": "Un asesoramiento cercano y honesto, nunca me habían escuchado tanto en una tienda.", "nombre": "Carmen L." },
+      { "texto": "Calidad excepcional y un servicio que te hace sentir única.", "nombre": "Beatriz S." },
+      { "texto": "Volvería sin dudarlo. Fely Campo entiende lo que una mujer necesita.", "nombre": "Lucía M." }
+    ]
   }
 }

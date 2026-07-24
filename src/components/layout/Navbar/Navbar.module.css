@@ -6,7 +6,7 @@
   z-index: 50;
   width: 100%;
   background: var(--color-fondo);
-  transition: background-color 0.3s var(--ease-marca);
+  transition: background-color 0.45s var(--ease-marca);
 }
 
 /* Transparente solo mientras no se ha hecho scroll y no está en hover —
@@ -69,7 +69,7 @@
   height: 58px;
   width: auto;
   margin-top: var(--spacing-2);
-  transition: height 0.6s var(--ease-marca);
+  transition: height 0.45s var(--ease-marca);
 }
 
 /* Solo se aplica junto con .light (header transparente, arriba del todo,

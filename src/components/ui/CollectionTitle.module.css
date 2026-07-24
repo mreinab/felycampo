@@ -5,8 +5,10 @@
    (--max-texto) — etiqueta y título ocupan el ancho del bloque.
    ============================================================ */
 
+/* Sin padding-block: el espaciado vertical entre secciones de la
+   landing se controla desde fuera (ver .landing en page.module.css),
+   no aquí — así todas las secciones comparten el mismo ritmo. */
 .bloque {
-  padding-block: var(--spacing-7);
   text-align: center;
 }
 
@@ -28,6 +30,7 @@
   font-size: var(--text-body-lg);
   font-weight: var(--font-weight-medium);
   color: var(--color-tinta);
+  text-transform: uppercase;
 }
 
 .descripcion {
@@ -37,4 +40,40 @@
   font-size: var(--text-small);
   color: var(--color-gris-500);
   line-height: var(--leading-base);
+}
+
+/* variante="tabs": fila de tabs debajo del título, dentro del mismo
+   bloque — plana, sin cajas ni fondos, solo un subrayado que marca
+   el tab activo. */
+.tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-5);
+  margin-top: var(--spacing-5);
+}
+
+.tab {
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  padding: 0 0 var(--spacing-1) 0;
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  letter-spacing: 0.02rem;
+  color: var(--color-gris-500);
+  cursor: pointer;
+  transition: color 0.25s var(--ease-marca), border-color 0.25s var(--ease-marca);
+}
+.tab:hover { color: var(--color-tinta); }
+
+.activa {
+  color: var(--color-tinta);
+  border-bottom-color: var(--color-tinta);
+}
+
+@media (max-width: 767px) {
+  .tabs {
+    gap: var(--spacing-3);
+  }
 }

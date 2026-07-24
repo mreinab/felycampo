@@ -5,12 +5,11 @@
    Referente: styleguide.html #producto (.sg-prod).
    ============================================================ */
 
-/* height:100% + flex: si un ancestro le da una altura definida (ej. un
-   grid con filas de altura fija), la tarjeta la ocupa entera y .marco
-   (flex:1, min-height:0) cede el sobrante de la columna en vez de
-   imponer su aspect-ratio — la tarjeta se adapta al contenedor, no al
-   revés. Sin ese ancestro, height:100% se resuelve a auto y todo se
-   comporta exactamente igual que antes (aspect-ratio manda). */
+/* .marco sin flex-grow (flex: 0 1 auto): el aspect-ratio 3/4 manda
+   siempre, aunque la fila del grid se estire por una tarjeta vecina
+   con más contenido debajo (badge, precio rebajado en dos líneas...).
+   Así todas las fotos miden igual entre sí — el hueco sobrante, si lo
+   hay, lo absorbe .tarjeta, no la imagen. */
 .tarjeta {
   position: relative;
   cursor: pointer;
@@ -22,7 +21,7 @@
 .marco {
   position: relative;
   aspect-ratio: 3 / 4;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-height: 0;
   background: var(--color-crema);
   border-radius: var(--radius-imagenes);

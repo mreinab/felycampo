@@ -5,3 +5,5 @@ export { default as HeroCarousel } from './HeroCarousel';
 export { default as CuadriculaProductos } from './CuadriculaProductos';
 export { default as MediaBanner } from './MediaBanner';
 export { default as SplitMedia } from './SplitMedia';
+export { default as CuadriculaConTabs } from './CuadriculaConTabs';
+export { default as SectionClientsReview } from './SectionClientsReview';

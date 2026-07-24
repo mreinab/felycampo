@@ -1,6 +1,8 @@
 // CuadriculaProductos.jsx
 
 import TarjetaProducto from '../ecommerce/TarjetaProducto';
+import TarjetaMedia from '../ecommerce/TarjetaMedia';
+import { VerMasOverlay } from '../ui';
 import styles from './CuadriculaProductos.module.css';
 
 /**
@@ -10,15 +12,38 @@ import styles from './CuadriculaProductos.module.css';
  * uno se muestra con TarjetaProducto en su forma base — este componente
  * no le pasa badge/colores/precioRebajado, solo lo que venga en cada
  * objeto de "productos".
+ *
+ * Un objeto con "media: true" rompe esa norma: se renderiza como
+ * TarjetaMedia (solo imagen/gif/vídeo en bucle, sin nombre ni precio)
+ * en vez de TarjetaProducto — para variar el ritmo de la fila sin
+ * que cuente como un producto más.
+ *
+ * "verMasHref" (opcional): añade un VerMasOverlay sobre el último
+ * elemento — tercio derecho de esa tarjeta, enlaza al listado
+ * completo de la colección, solo en desktop (ver VerMasOverlay).
  */
-function CuadriculaProductos({ productos }) {
+function CuadriculaProductos({ productos, verMasHref }) {
+  const ultimoIndex = productos.length - 1;
+
   return (
     <div className={styles.cuadricula}>
-      {productos.map((producto) => (
-        <div key={producto.nombre} className={styles.item}>
-          <TarjetaProducto {...producto} />
-        </div>
-      ))}
+      {productos.map((producto, index) => {
+        const esUltimo = verMasHref && index === ultimoIndex;
+
+        return (
+          <div
+            key={producto.nombre || producto.src}
+            className={`${styles.item} ${esUltimo ? styles.itemConVerMas : ''}`}
+          >
+            {producto.media ? (
+              <TarjetaMedia {...producto} />
+            ) : (
+              <TarjetaProducto {...producto} />
+            )}
+            {esUltimo && <VerMasOverlay href={verMasHref} />}
+          </div>
+        );
+      })}
     </div>
   );
 }

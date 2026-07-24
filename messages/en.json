@@ -1,19 +1,19 @@
 {
   "nav": {
     "links": {
+      "tienda": "Shop",
       "atelier": "Atelier",
-      "pretAPorter": "Ready-to-wear",
       "elMundoDeFely": "The World of Fely",
       "visitanos": "Visit Us"
     },
     "submenus": {
+      "tienda": {
+        "vestidos": "Dresses",
+        "faldas": "Skirts"
+      },
       "atelier": {
         "novias": "Bridal",
         "fiesta": "Evening Wear"
-      },
-      "pretAPorter": {
-        "vestidos": "Dresses",
-        "faldas": "Skirts"
       },
       "elMundoDeFely": {
         "historia": "Story",
@@ -65,5 +65,33 @@
       "titulo": "Party Atelier",
       "cta": "Discover more"
     }
+  },
+  "cuadriculaTabs": {
+    "titulo": "A look for every occasion",
+    "descripcion": "Pieces designed to accompany you through every celebration, from the ceremony to the last dance of the night.",
+    "tabs": {
+      "diaBoda": "Daytime wedding guest",
+      "nocheBoda": "Evening wedding guest",
+      "comunionesBautizo": "Christenings & communions",
+      "bolsosFiesta": "Party bags"
+    }
+  },
+  "cuadriculaProductos": {
+    "verMas": "See more"
+  },
+  "visitaAtelier": {
+    "titulo": "The Fely Campo Atelier",
+    "texto": "Discover made-to-measure couture at our atelier in Salamanca or Madrid. Personalised guidance, hand-picked fabrics, and the same care in every single piece.",
+    "enlace": "Book an appointment"
+  },
+  "clientsReview": {
+    "titulo": "In their own words",
+    "resenas": [
+      { "texto": "I found the perfect dress for my sister's wedding. The service was exquisite from start to finish.", "nombre": "Marta G." },
+      { "texto": "Made-to-measure tailoring makes all the difference. You can feel it in every stitch.", "nombre": "Elena R." },
+      { "texto": "Warm, honest advice — I've never felt so listened to in a store.", "nombre": "Carmen L." },
+      { "texto": "Exceptional quality and a service that makes you feel unique.", "nombre": "Beatriz S." },
+      { "texto": "I'd come back without hesitation. Fely Campo understands what a woman needs.", "nombre": "Lucía M." }
+    ]
   }
 }

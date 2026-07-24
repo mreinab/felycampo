@@ -9,24 +9,24 @@ import styles from './Navbar.module.css';
 import { PanelLateral } from '../../ui';
 import NavbarPanelLateralContent from './NavbarPanelLateralContent';
 
-// Enlaces con submenú (Atelier, Prêt-à-porter — coinciden con las
-// categorías reales del sitemap). El resto son enlaces simples, sin panel.
+// Enlaces con submenú (Tienda, Atelier — coinciden con las categorías
+// reales del sitemap). El resto son enlaces simples, sin panel.
 // Los labels viven en messages/{locale}.json bajo el namespace "nav" —
 // aquí solo se guarda la estructura (hrefs, claves de traducción, imagen).
 const SUBMENU_STRUCTURE = {
+  tienda: {
+    items: [
+      { key: 'vestidos', href: '/pret-a-porter/vestidos' },
+      { key: 'faldas', href: '/pret-a-porter/faldas' },
+    ],
+    image: '/img/styleguide/prod-tarjeta.webp',
+  },
   atelier: {
     items: [
       { key: 'novias', href: '/atelier/novias' },
       { key: 'fiesta', href: '/atelier/fiesta' },
     ],
     image: '/img/styleguide/punto-venta.webp',
-  },
-  pretAPorter: {
-    items: [
-      { key: 'vestidos', href: '/pret-a-porter/vestidos' },
-      { key: 'faldas', href: '/pret-a-porter/faldas' },
-    ],
-    image: '/img/styleguide/prod-tarjeta.webp',
   },
   elMundoDeFely: {
     items: [
@@ -49,8 +49,8 @@ const SUBMENU_STRUCTURE = {
 };
 
 const NAV_ITEMS = [
+  { key: 'tienda', href: '/pret-a-porter', submenu: 'tienda' },
   { key: 'atelier', href: '/atelier', submenu: 'atelier' },
-  { key: 'pretAPorter', href: '/pret-a-porter', submenu: 'pretAPorter' },
   { key: 'elMundoDeFely', href: '/el-mundo-de-fely', submenu: 'elMundoDeFely' },
   { key: 'visitanos', href: '/visitenos', submenu: 'visitanos' },
 ];

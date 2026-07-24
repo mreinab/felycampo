@@ -6,10 +6,11 @@
    ============================================================ */
 
 .cuadricula {
-  height: 90vh;
+  height: 80vh;
+  max-height: 600px;
   display: flex;
   gap: var(--spacing-2);
-  padding: var(--spacing-8) var(--spacing-2);
+  padding-inline: var(--spacing-2);
 }
 
 /* min-width:0: sin esto, un flex item no encoge por debajo del ancho
@@ -20,6 +21,25 @@
   min-width: 0;
 }
 
+/* Última tarjeta con VerMasOverlay: necesita ser el contenedor
+   posicionado del overlay (position:absolute en VerMasOverlay). */
+.itemConVerMas {
+  position: relative;
+}
+
+/* El overlay nace oculto (opacity:0, ver VerMasOverlay.module.css) y
+   solo se revela con el hover de TODA la cuadrícula, no de la tarjeta
+   suelta — :global() porque "vermas-overlay" vive en el CSS module de
+   VerMasOverlay, con su propio hash. Solo opacity, no pointer-events:
+   ese overlay es una caja de referencia del tamaño de la imagen
+   entera pero con pointer-events:none fijo — solo .boton (el botón
+   pequeño de verdad) tiene pointer-events:auto. Si esta regla también
+   activara pointer-events:auto aquí, toda esa caja (imagen entera)
+   bloquearía el :hover de la propia TarjetaProducto de debajo. */
+.cuadricula:hover :global(.vermas-overlay) {
+  opacity: 1;
+}
+
 /* Mobile: en vez de fila única, 2x2 — 4 tarjetas en 2 filas y 2 columnas. */
 @media (max-width: 767px) {
   .cuadricula {
@@ -27,6 +47,6 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    padding: var(--spacing-4);
+    padding-inline: var(--spacing-4);
   }
 }

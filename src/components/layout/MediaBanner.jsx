@@ -2,6 +2,7 @@
 
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Boton, ImageTitle } from '../ui';
 import styles from './MediaBanner.module.css';
@@ -13,20 +14,26 @@ import styles from './MediaBanner.module.css';
  *
  * variante="etiqueta" (default): etiqueta en mayúsculas + CTA, blanco.
  * El CTA no lleva href propio (Boton sin href renderiza un <span>), así
- * que toda la pieza puede ser un único <a> clicable sin problema.
+ * que toda la pieza es un único <a> clicable.
  * variante="imageTitle": la composición de ImageTitle (título + CTA)
  * en --color-tinta. ImageTitle exige href en su CTA y renderiza su
- * propio <a> — por eso aquí el contenedor pasa a ser un <div>, no un
- * <a>: la imagen deja de ser clicable por sí sola, solo el CTA
- * (enlace real) navega. Evita anidar <a> dentro de <a>.
+ * propio <a>, así que el contenedor aquí es un <div> (evita anidar
+ * <a> dentro de <a>) pero navega igualmente al hacer click en
+ * cualquier punto del banner mediante router.push; el click en el
+ * CTA interno corta la propagación para no disparar la navegación
+ * dos veces.
  */
 function MediaBanner({ src, tipo = 'imagen', labelKey, tituloKey, ctaKey, href, variante = 'etiqueta' }) {
   const t = useTranslations();
+  const router = useRouter();
   const esImageTitle = variante === 'imageTitle';
   const Contenedor = esImageTitle ? 'div' : 'a';
 
   return (
-    <Contenedor {...(esImageTitle ? {} : { href })} className={styles.banner}>
+    <Contenedor
+      {...(esImageTitle ? { onClick: () => router.push(href) } : { href })}
+      className={styles.banner}
+    >
       {tipo === 'video' ? (
         <video src={src} className={styles.media} autoPlay muted loop playsInline />
       ) : (
@@ -35,12 +42,14 @@ function MediaBanner({ src, tipo = 'imagen', labelKey, tituloKey, ctaKey, href, 
 
       <div className={styles.contenido}>
         {esImageTitle ? (
-          <ImageTitle
-            titulo={t(tituloKey)}
-            ctaTexto={t(ctaKey)}
-            href={href}
-            variante="oscuro"
-          />
+          <span onClick={(e) => e.stopPropagation()}>
+            <ImageTitle
+              titulo={t(tituloKey)}
+              ctaTexto={t(ctaKey)}
+              href={href}
+              variante="oscuro"
+            />
+          </span>
         ) : (
           <>
             <p className={styles.etiqueta}>{t(labelKey)}</p>

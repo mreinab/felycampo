@@ -57,6 +57,28 @@ export const MixtoImagenVideo = {
   },
 };
 
+export const VarianteLanding = {
+  args: {
+    variante: 'landing',
+    items: [
+      {
+        src: '/img/styleguide/punto-venta.webp',
+        tipo: 'imagen',
+        tituloKey: 'splitMedia.item1.titulo',
+        ctaKey: 'splitMedia.item1.cta',
+        href: '#',
+      },
+      {
+        src: '/img/styleguide/prod-tarjeta-relacionado.webp',
+        tipo: 'imagen',
+        tituloKey: 'splitMedia.item2.titulo',
+        ctaKey: 'splitMedia.item2.cta',
+        href: '#',
+      },
+    ],
+  },
+};
+
 export const VarianteImageTitle = {
   args: {
     variante: 'imageTitle',

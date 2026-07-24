@@ -1,13 +1,15 @@
-/* Placeholder — pendiente de maquetar. Ruta: /atelier/novias */
+import BloqueSeccion from '@/components/layout/BloqueSeccion';
 
-export default function Pagina() {
+export default async function Pagina({ params }) {
+  const { locale } = await params;
+
   return (
-    <section className="seccion contenedor">
-      <p className="text-caption uppercase text-gris-500 mb-16">Fely Campo</p>
-      <h1>Atelier · Novias</h1>
-      <p className="text-gris-500 mt-24 texto-legible">
-        Página pendiente de maquetar. La ruta ya existe y navega.
-      </p>
-    </section>
+    <BloqueSeccion
+      imagen="/img/novias-sección-FelyCampo2.jpg"
+      titulo="Atelier Novia"
+      texto="Reserva tu cita y vive un día único en el Atelier Novia Fely Campo en Salamanca o en Madrid. Disfruta del asesoramiento personalizado de nuestra diseñadora"
+      enlace="Reserva tu cita"
+      href={`/${locale}/visitenos/cita`}
+    />
   );
 }

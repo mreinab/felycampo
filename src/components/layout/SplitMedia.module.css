@@ -10,11 +10,21 @@
   gap: var(--spacing-1);
 }
 
+/* landing: las dos piezas quedan pegadas, sin gap entre ellas. */
+.grid.landing {
+  gap: 0;
+}
+
 .pieza {
   position: relative;
   display: block;
   height: 80vh;
   overflow: hidden;
+}
+
+/* landing: más alto que el resto de variantes (100vh vs 80vh). */
+.grid.landing .pieza {
+  height: 100vh;
 }
 
 .media {
@@ -51,12 +61,56 @@
   border-bottom-color: var(--color-fondo);
 }
 
+/* landing: abajo pero pegado a la izquierda, no centrado — mismo
+   bottom que .contenido, solo cambia el eje horizontal. */
+.contenidoLanding {
+  height: 100%;
+
+  position: absolute;
+  left: var(--spacing-5);
+  right: var(--spacing-5);
+  bottom: var(--spacing-5);
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2);
+  text-align: left;
+}
+
+.tituloLanding {
+  font-size: var(--text-body-lg);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-fondo);
+  letter-spacing: normal;
+}
+
+.contenidoLanding .cta {
+  color: var(--color-fondo);
+  border-bottom-color: var(--color-fondo);
+}
+
 @media (max-width: 767px) {
   .grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-1);
   }
+  .grid.landing {
+    gap: 0;
+  }
   .pieza {
     aspect-ratio: 4 / 3;
+  }
+  /* Los 90vh de desktop, apilados en dos piezas, se irían a 180vh —
+     en mobile vuelve al mismo aspect-ratio 4/3 que el resto. */
+  .grid.landing .pieza {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .contenidoLanding {
+    left: var(--spacing-4);
+    right: var(--spacing-4);
+    bottom: var(--spacing-4);
   }
 }
