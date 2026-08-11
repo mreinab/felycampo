@@ -1,0 +1,25 @@
+.grupo {
+  display: inline-flex;
+  border: var(--border-regular) solid var(--color-tinta);
+  margin-bottom: var(--spacing-3);
+}
+
+.opcion {
+  padding: var(--spacing-1) var(--spacing-4);
+  font-family: var(--font-base);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-tinta);
+}
+
+.opcion + .opcion {
+  border-left: var(--border-regular) solid var(--color-tinta);
+}
+
+.opcionActiva {
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+}

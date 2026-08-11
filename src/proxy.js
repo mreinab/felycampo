@@ -41,5 +41,5 @@ export default function middleware(request) {
 
 export const config = {
   // Corre en todo salvo assets estáticos, _next y api.
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
+  matcher: ['/((?!api|admin|_next|_vercel|.*\\..*).*)'],
 };

@@ -1,0 +1,225 @@
+.pagina {
+  max-width: 760px;
+}
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  width: 100%;
+}
+
+.cabeceraIcono {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--color-gris-500);
+}
+
+.cabeceraTextos {
+  flex: 1;
+  min-width: 0;
+}
+
+.cabeceraLabel {
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.cabeceraTipo {
+  font-size: var(--text-micro);
+  text-transform: uppercase;
+  color: var(--color-gris-400);
+  margin-top: 2px;
+}
+
+.miniaturas {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.miniatura {
+  width: 32px;
+  height: 42px;
+  object-fit: cover;
+}
+
+.editor {
+  padding-top: var(--spacing-2);
+}
+
+.campos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.campoAncho {
+  grid-column: 1 / -1;
+}
+
+.textarea {
+  width: 100%;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: var(--spacing-3);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  resize: vertical;
+  min-height: 70px;
+}
+
+.etiquetaCampo {
+  display: block;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-2);
+}
+
+.selectInput {
+  width: 100%;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: 12px var(--spacing-1);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+}
+
+.imagenPrevia {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-3);
+}
+
+.imagenPreviaMiniatura {
+  width: 64px;
+  height: 84px;
+  object-fit: cover;
+  background: var(--color-gris-100);
+}
+
+.tarjetaSlide {
+  border: var(--border-regular) solid var(--color-hairline);
+  padding: var(--spacing-4);
+  background: var(--color-fondo);
+}
+
+.slideCabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-3);
+}
+
+.slideTitulo {
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  color: var(--color-gris-500);
+}
+
+.bloqueMedia {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-5);
+}
+
+.doble {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-5);
+}
+
+.subtitulo {
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-3);
+  padding-bottom: var(--spacing-2);
+  border-bottom: var(--border-thin) solid var(--color-hairline);
+}
+
+.productos {
+  margin-bottom: var(--spacing-3);
+}
+
+.productoChip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.productoChipImg {
+  width: 40px;
+  height: 54px;
+  object-fit: cover;
+}
+
+.productoChipNombre {
+  flex: 1;
+}
+
+.tab {
+  border: var(--border-regular) solid var(--color-hairline);
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-3);
+}
+
+.tabCabecera {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-3);
+}
+
+.tabCabecera > *:first-child {
+  flex: 1;
+}
+
+.reseñaCard {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  width: 100%;
+}
+
+.reseñaFoto {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-gris-100);
+}
+
+.reseñaTexto {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.reseñaNombre {
+  font-size: var(--text-caption);
+  color: var(--color-tinta);
+}
+
+.reseñaExtracto {
+  font-size: var(--text-micro);
+  color: var(--color-gris-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pickerImagen {
+  width: 100%;
+  display: block;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}

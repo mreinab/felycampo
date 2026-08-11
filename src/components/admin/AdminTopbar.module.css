@@ -1,0 +1,31 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4) var(--spacing-6);
+  border-bottom: var(--border-regular) solid var(--color-hairline);
+}
+
+.titulo {
+  font-size: var(--text-body);
+  color: var(--color-gris-500);
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--text-caption);
+  color: var(--color-tinta);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: var(--border-regular) solid var(--color-tinta);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-medium);
+}

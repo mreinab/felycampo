@@ -1,0 +1,23 @@
+import styles from './FormSeccion.module.css';
+
+/**
+ * Sección numerada de un formulario largo (crear/editar producto,
+ * páginas de Contenido...). Solo maquetación — cada padre decide qué
+ * campos mete dentro.
+ */
+function FormSeccion({ numero, titulo, descripcion, children }) {
+  return (
+    <section className={styles.seccion}>
+      <div className={styles.cabecera}>
+        <p className={styles.titulo}>
+          <span className={styles.numero}>{numero}</span>
+          {titulo}
+        </p>
+        {descripcion && <p className={styles.descripcion}>{descripcion}</p>}
+      </div>
+      <div className={styles.campos}>{children}</div>
+    </section>
+  );
+}
+
+export default FormSeccion;

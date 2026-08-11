@@ -1,0 +1,114 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  flex-shrink: 0;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  border-right: var(--border-regular) solid var(--color-hairline);
+  padding: var(--spacing-5) var(--spacing-4);
+  overflow-y: auto;
+}
+
+.marca {
+  font-size: var(--text-body-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+  padding-bottom: var(--spacing-5);
+  border-bottom: var(--border-thin) solid var(--color-hairline);
+  margin-bottom: var(--spacing-4);
+}
+
+.lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  flex: 1;
+}
+
+.item,
+.itemGrupo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-family: var(--font-base);
+  font-size: var(--text-label);
+  color: var(--color-gris-700);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.item:hover,
+.itemGrupo:hover {
+  color: var(--color-tinta);
+  background: var(--color-gris-100);
+}
+
+.item.activo,
+.itemGrupo.activo {
+  color: var(--color-tinta);
+  background: var(--color-rosa-velo);
+}
+
+.icono {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.label {
+  flex: 1;
+}
+
+.chevron {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.25s var(--ease-marca);
+}
+
+.chevronAbierto {
+  transform: rotate(180deg);
+}
+
+.sublista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding-left: var(--spacing-7);
+  margin-top: var(--spacing-1);
+}
+
+.subitem {
+  display: block;
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+.subitem:hover {
+  color: var(--color-tinta);
+}
+
+.subitem.activo {
+  color: var(--color-rosa);
+}
+
+.verWeb {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  padding: var(--spacing-3);
+  border-top: var(--border-thin) solid var(--color-hairline);
+  margin-top: var(--spacing-4);
+}
+
+.verWeb:hover {
+  color: var(--color-tinta);
+}

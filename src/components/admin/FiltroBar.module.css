@@ -1,0 +1,31 @@
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-5);
+  padding-bottom: var(--spacing-5);
+  border-bottom: var(--border-thin) solid var(--color-hairline);
+}
+
+.select {
+  display: block;
+}
+
+.selectEtiqueta {
+  display: block;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-2);
+}
+
+.selectInput {
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: 12px var(--spacing-1);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  min-width: 160px;
+}

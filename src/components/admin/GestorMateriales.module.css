@@ -1,0 +1,105 @@
+.tabs {
+  display: flex;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-6);
+  border-bottom: var(--border-thin) solid var(--color-hairline);
+}
+
+.tab {
+  padding: var(--spacing-3) var(--spacing-4);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-base);
+  font-size: var(--text-label);
+  color: var(--color-gris-500);
+  cursor: pointer;
+}
+
+.tab.activo {
+  color: var(--color-tinta);
+  border-bottom-color: var(--color-tinta);
+}
+
+.lista {
+  max-width: 560px;
+  margin-bottom: var(--spacing-5);
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) 0;
+  border-bottom: var(--border-thin) solid var(--color-hairline);
+}
+
+.swatch {
+  width: 24px;
+  height: 24px;
+  border: var(--border-thin) solid var(--color-gris-300);
+  flex-shrink: 0;
+}
+
+.nombre {
+  flex: 1;
+}
+
+.hex {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+.composicion {
+  flex: 1;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+.anadirFila {
+  display: flex;
+  gap: var(--spacing-3);
+  align-items: flex-end;
+  max-width: 560px;
+}
+
+.anadirFila > *:first-child {
+  flex: 1;
+}
+
+.campoColor {
+  display: block;
+}
+
+.etiquetaCampo {
+  display: block;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-2);
+}
+
+.inputColor {
+  width: 48px;
+  height: 44px;
+  padding: 2px;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  background: var(--color-fondo);
+  cursor: pointer;
+}
+
+.campoTemporada {
+  display: block;
+  flex: 1;
+}
+
+.selectInput {
+  width: 100%;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: 12px var(--spacing-1);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+}

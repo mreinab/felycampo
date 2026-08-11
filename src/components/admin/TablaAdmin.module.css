@@ -1,0 +1,55 @@
+.contenedor {
+  width: 100%;
+  overflow-x: auto;
+  border: var(--border-regular) solid var(--color-hairline);
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-small);
+}
+
+.th {
+  text-align: left;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  color: var(--color-gris-500);
+  border-bottom: var(--border-regular) solid var(--color-hairline);
+  white-space: nowrap;
+}
+
+.thCheckbox {
+  width: 40px;
+  padding: var(--spacing-3) 0 var(--spacing-3) var(--spacing-4);
+  border-bottom: var(--border-regular) solid var(--color-hairline);
+}
+
+.tr {
+  border-bottom: var(--border-thin) solid var(--color-hairline);
+}
+
+.tr:last-child {
+  border-bottom: none;
+}
+
+.tr:hover {
+  background: var(--color-gris-100);
+}
+
+.td {
+  padding: var(--spacing-3) var(--spacing-4);
+  color: var(--color-tinta);
+  vertical-align: middle;
+}
+
+.tdCheckbox {
+  padding: var(--spacing-3) 0 var(--spacing-3) var(--spacing-4);
+}
+
+.vacio {
+  padding: var(--spacing-7) var(--spacing-4);
+  text-align: center;
+  color: var(--color-gris-400);
+}

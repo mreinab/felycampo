@@ -1,0 +1,236 @@
+.publicacion {
+  grid-column: 1 / -1;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--color-gris-100);
+  margin-top: calc(-1 * var(--spacing-2));
+}
+
+.campoAncho {
+  grid-column: 1 / -1;
+}
+
+.textarea {
+  width: 100%;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: var(--spacing-3);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  resize: vertical;
+  min-height: 80px;
+}
+
+.etiquetaCampo {
+  display: block;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-2);
+}
+
+.selectInput {
+  width: 100%;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: 12px var(--spacing-1);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+}
+
+.galeria {
+  grid-column: 1 / -1;
+}
+
+.imagenesGrid {
+  margin-bottom: var(--spacing-3);
+}
+
+.imagenItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.imagenMiniatura {
+  width: 56px;
+  height: 72px;
+  object-fit: cover;
+}
+
+.imagenQuitar {
+  margin-left: auto;
+}
+
+.tallasGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+}
+
+.tallaBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.tallaBoton {
+  width: 48px;
+  height: 48px;
+  border: var(--border-regular) solid var(--color-hairline);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.tallaBoton:hover {
+  border-color: var(--color-gris-300);
+}
+
+.tallaBoxActiva .tallaBoton {
+  border-color: var(--color-tinta);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  font-weight: var(--font-weight-medium);
+}
+
+.tallaStock {
+  width: 48px;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: var(--spacing-1);
+  font-family: var(--font-base);
+  font-size: var(--text-caption);
+  text-align: center;
+  color: var(--color-tinta);
+  background: var(--color-fondo);
+}
+
+.colorPunto {
+  width: 20px;
+  height: 20px;
+  border: var(--border-thin) solid var(--color-gris-300);
+  flex-shrink: 0;
+}
+
+.coloresGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+}
+
+.colorChip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: var(--border-regular) solid var(--color-hairline);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.colorChip:hover {
+  border-color: var(--color-gris-300);
+}
+
+.colorChipActivo {
+  border-color: var(--color-tinta);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  font-weight: var(--font-weight-medium);
+}
+
+.telasGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+}
+
+.telaChip {
+  display: block;
+  padding: var(--spacing-3);
+  border: var(--border-regular) solid var(--color-hairline);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.telaChip:hover {
+  border-color: var(--color-gris-300);
+}
+
+.telaChipActivo {
+  border-color: var(--color-tinta);
+  background: var(--color-tinta);
+}
+
+.telaChipNombre {
+  display: block;
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  font-weight: var(--font-weight-medium);
+}
+
+.telaChipComposicion {
+  display: block;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-top: var(--spacing-1);
+}
+
+.telaChipActivo .telaChipNombre,
+.telaChipActivo .telaChipComposicion {
+  color: var(--color-fondo);
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-3);
+  padding-top: var(--spacing-6);
+}
+
+.pickerImagen {
+  width: 100%;
+  display: block;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.tipoGrid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-3);
+}
+
+.tipoOpcion {
+  padding: var(--spacing-5);
+  border: var(--border-regular) solid var(--color-hairline);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.tipoOpcion:hover {
+  border-color: var(--color-gris-300);
+}
+
+.tipoOpcionActiva {
+  border-color: var(--color-tinta);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+}

@@ -1,0 +1,38 @@
+.miniatura {
+  width: 44px;
+  height: 60px;
+  object-fit: cover;
+  display: block;
+  background: var(--color-gris-100);
+}
+
+.bulkBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--color-rosa-velo);
+  margin-bottom: var(--spacing-3);
+}
+
+.bulkTexto {
+  font-size: var(--text-caption);
+  color: var(--color-tinta);
+  margin-right: auto;
+}
+
+.acciones {
+  display: flex;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.filaAcciones {
+  display: flex;
+  gap: var(--spacing-3);
+}
+
+.iconoAnadir {
+  vertical-align: text-bottom;
+  margin-right: var(--spacing-1);
+}

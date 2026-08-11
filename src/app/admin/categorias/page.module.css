@@ -1,0 +1,61 @@
+.tabs {
+  display: flex;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-6);
+  border-bottom: var(--border-thin) solid var(--color-hairline);
+}
+
+.tab {
+  padding: var(--spacing-3) var(--spacing-4);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-base);
+  font-size: var(--text-label);
+  color: var(--color-gris-500);
+  cursor: pointer;
+}
+
+.tab.activo {
+  color: var(--color-tinta);
+  border-bottom-color: var(--color-tinta);
+}
+
+.lista {
+  max-width: 480px;
+  margin-bottom: var(--spacing-5);
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) 0;
+  border-bottom: var(--border-thin) solid var(--color-hairline);
+}
+
+.asaFija {
+  color: var(--color-gris-300);
+  flex-shrink: 0;
+}
+
+.nombre {
+  flex: 1;
+}
+
+.avisoFija {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-5);
+}
+
+.anadirFila {
+  display: flex;
+  gap: var(--spacing-3);
+  align-items: flex-end;
+  max-width: 480px;
+}
+
+.anadirFila > *:first-child {
+  flex: 1;
+}
