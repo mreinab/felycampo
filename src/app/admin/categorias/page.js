@@ -7,15 +7,19 @@
    ============================================================ */
 
 import { useState } from 'react';
-import { GripVertical } from 'lucide-react';
-import { PageHeader, DragList, useToast } from '@/components/admin';
+import { GripVertical, Plus } from 'lucide-react';
+import {
+  PageHeader, DragList, useToast, useCategorias,
+} from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
-import { categoriasMock, tiposProducto } from '@/components/admin/mockData';
+import { tiposProducto } from '@/components/admin/mockData';
 import styles from './page.module.css';
 
 export default function CategoriasPage() {
   const { mostrarToast } = useToast();
-  const [categorias, setCategorias] = useState(categoriasMock);
+  const {
+    categorias, anadirCategoria: anadirCategoriaContexto, alternarVisible: alternarVisibleContexto, reordenarCategorias,
+  } = useCategorias();
   const [tab, setTab] = useState('pret-a-porter');
   const [nuevaCategoria, setNuevaCategoria] = useState('');
 
@@ -23,25 +27,27 @@ export default function CategoriasPage() {
   const esFija = tab === 'archivo';
 
   function alternarVisible(id) {
-    setCategorias((actual) => ({
-      ...actual,
-      [tab]: actual[tab].map((c) => (c.id === id ? { ...c, visible: !c.visible } : c)),
-    }));
+    alternarVisibleContexto(tab, id);
   }
 
   function anadirCategoria() {
     if (!nuevaCategoria.trim()) return;
-    setCategorias((actual) => ({
-      ...actual,
-      [tab]: [...actual[tab], { id: `cat${Date.now()}`, nombre: nuevaCategoria, visible: true, orden: actual[tab].length + 1 }],
-    }));
+    anadirCategoriaContexto(tab, nuevaCategoria);
     setNuevaCategoria('');
     mostrarToast('Categoría añadida (demo)');
   }
 
+  function enfocarNuevaCategoria() {
+    document.querySelector('input[name="nuevaCategoria"]')?.focus();
+  }
+
   return (
     <div>
-      <PageHeader titulo="Categorías" subtitulo="Orden y visibilidad en el menú de navegación pública" />
+      <PageHeader titulo="Categorías" subtitulo="Orden y visibilidad en el menú de navegación pública">
+        {!esFija && (
+          <Boton variante="solido" onClick={enfocarNuevaCategoria}><Plus size={14} /> Nueva categoría</Boton>
+        )}
+      </PageHeader>
 
       <div className={styles.tabs}>
         {tiposProducto.map((t) => (
@@ -70,7 +76,7 @@ export default function CategoriasPage() {
           <DragList
             items={lista}
             claveItem={(c) => c.id}
-            onReorder={(nuevo) => setCategorias((actual) => ({ ...actual, [tab]: nuevo }))}
+            onReorder={(nuevo) => reordenarCategorias(tab, nuevo)}
             renderItem={(cat) => (
               <div className={styles.fila}>
                 <span className={styles.nombre}>{cat.nombre}</span>
@@ -83,7 +89,7 @@ export default function CategoriasPage() {
 
       {!esFija && (
         <div className={styles.anadirFila}>
-          <Input etiqueta="Nueva categoría" valor={nuevaCategoria} onChange={(e) => setNuevaCategoria(e.target.value)} />
+          <Input etiqueta="Nueva categoría" nombre="nuevaCategoria" valor={nuevaCategoria} onChange={(e) => setNuevaCategoria(e.target.value)} />
           <Boton variante="contorno" onClick={anadirCategoria}>Añadir</Boton>
         </div>
       )}

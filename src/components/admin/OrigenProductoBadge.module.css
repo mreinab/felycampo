@@ -1,0 +1,23 @@
+.badge {
+  display: inline-block;
+  padding: 1px var(--spacing-2);
+  font-family: var(--font-base);
+  font-size: var(--text-nano);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.atelier {
+  background: #DCE9FB;
+  color: #1D5FA8;
+}
+
+.novias {
+  background: var(--color-rosa-velo);
+  color: var(--color-rosa-oscuro);
+}
+
+.fiesta {
+  background: #FBE3CE;
+  color: #9A4E12;
+}

@@ -45,24 +45,141 @@
   grid-column: 1 / -1;
 }
 
-.imagenesGrid {
-  margin-bottom: var(--spacing-3);
+.subirCaja {
+  width: 100%;
+}
+
+.subirVacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  width: 100%;
+  min-height: 175px;
+  border: var(--border-regular) dashed var(--color-gris-300);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-base);
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  text-align: center;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.subirVacio:hover {
+  border-color: var(--color-tinta);
+  color: var(--color-tinta);
+}
+
+.subirIcono {
+  color: inherit;
+}
+
+.inputArchivo {
+  display: none;
+}
+
+.subirHint {
+  grid-column: 1 / -1;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-top: var(--spacing-2);
+}
+
+.imagenesScroll {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-3);
+  width: 100%;
+  height: 250px;
+  box-sizing: border-box;
+  padding: var(--spacing-3);
+  border: var(--border-regular) dashed var(--color-gris-300);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s ease;
+}
+
+.imagenesScroll:hover {
+  scrollbar-color: var(--color-gris-300) transparent;
+}
+
+.imagenesScroll::-webkit-scrollbar {
+  height: 3px;
+}
+
+.imagenesScroll::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.imagenesScroll::-webkit-scrollbar-track,
+.imagenesScroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.imagenesScroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.imagenesScroll:hover::-webkit-scrollbar-thumb {
+  background: var(--color-gris-300);
+}
+
+.imagenesScroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gris-400);
 }
 
 .imagenItem {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-3);
+  position: relative;
+  width: 150px;
+  height: 100%;
+  flex-shrink: 0;
 }
 
 .imagenMiniatura {
-  width: 56px;
-  height: 72px;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 .imagenQuitar {
-  margin-left: auto;
+  position: absolute;
+  top: var(--spacing-1);
+  right: var(--spacing-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-fondo);
+  border: none;
+  padding: 0;
+  color: var(--color-tinta);
+  cursor: pointer;
+  transition: color 0.25s var(--ease-marca);
+}
+
+.imagenQuitar:hover {
+  color: var(--color-rosa-oscuro);
+}
+
+.imagenEtiqueta {
+  position: absolute;
+  bottom: var(--spacing-2);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--spacing-1) var(--spacing-2);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  font-family: var(--font-base);
+  font-size: var(--text-caption);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .tallasGrid {
@@ -81,7 +198,7 @@
 .tallaBoton {
   width: 48px;
   height: 48px;
-  border: var(--border-regular) solid var(--color-hairline);
+  border: var(--border-regular) solid var(--color-gris-200);
   background: none;
   cursor: pointer;
   font-family: var(--font-base);
@@ -130,7 +247,7 @@
   align-items: center;
   gap: var(--spacing-2);
   padding: var(--spacing-2) var(--spacing-3);
-  border: var(--border-regular) solid var(--color-hairline);
+  border: var(--border-regular) solid var(--color-gris-200);
   background: none;
   cursor: pointer;
   font-family: var(--font-base);
@@ -158,7 +275,7 @@
 .telaChip {
   display: block;
   padding: var(--spacing-3);
-  border: var(--border-regular) solid var(--color-hairline);
+  border: var(--border-regular) solid var(--color-gris-200);
   background: none;
   cursor: pointer;
   text-align: left;
@@ -200,11 +317,34 @@
   padding-top: var(--spacing-6);
 }
 
-.pickerImagen {
-  width: 100%;
-  display: block;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
+.acciones .accionBorrador {
+  background: #DCE9FB;
+  border-color: #DCE9FB;
+  color: #1D5FA8;
+}
+.acciones .accionBorrador:hover {
+  background: #C3DCF7;
+  border-color: #C3DCF7;
+}
+
+.acciones .accionProgramado {
+  background: #FBEFC6;
+  border-color: #FBEFC6;
+  color: #8A6A00;
+}
+.acciones .accionProgramado:hover {
+  background: #F5E3A0;
+  border-color: #F5E3A0;
+}
+
+.acciones .accionPublicar {
+  background: #DCF3E1;
+  border-color: #DCF3E1;
+  color: #1E7B34;
+}
+.acciones .accionPublicar:hover {
+  background: #C7EAD0;
+  border-color: #C7EAD0;
 }
 
 .tipoGrid {
@@ -216,7 +356,7 @@
 
 .tipoOpcion {
   padding: var(--spacing-5);
-  border: var(--border-regular) solid var(--color-hairline);
+  border: var(--border-regular) solid var(--color-gris-200);
   background: none;
   cursor: pointer;
   text-align: left;
@@ -234,3 +374,4 @@
   background: var(--color-tinta);
   color: var(--color-fondo);
 }
+

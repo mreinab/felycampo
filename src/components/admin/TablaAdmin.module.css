@@ -1,13 +1,14 @@
 .contenedor {
   width: 100%;
   overflow-x: auto;
-  border: var(--border-regular) solid var(--color-hairline);
+  border: var(--border-regular) solid var(--color-gris-200);
 }
 
 .tabla {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--text-small);
+  background: var(--color-light-details);
 }
 
 .th {
@@ -16,18 +17,18 @@
   font-size: var(--text-caption);
   text-transform: uppercase;
   color: var(--color-gris-500);
-  border-bottom: var(--border-regular) solid var(--color-hairline);
+  border-bottom: var(--border-regular) solid var(--color-gris-200);
   white-space: nowrap;
 }
 
 .thCheckbox {
   width: 40px;
   padding: var(--spacing-3) 0 var(--spacing-3) var(--spacing-4);
-  border-bottom: var(--border-regular) solid var(--color-hairline);
+  border-bottom: var(--border-regular) solid var(--color-gris-200);
 }
 
 .tr {
-  border-bottom: var(--border-thin) solid var(--color-hairline);
+  border-bottom: var(--border-thin) solid var(--color-gris-200);
 }
 
 .tr:last-child {
@@ -36,6 +37,19 @@
 
 .tr:hover {
   background: var(--color-gris-100);
+}
+
+.filaClicable {
+  cursor: pointer;
+}
+
+.filaClicable:focus-visible {
+  outline: var(--border-regular) solid var(--color-tinta);
+  outline-offset: -2px;
+}
+
+.seleccionada {
+  background: var(--color-hairline);
 }
 
 .td {
@@ -52,4 +66,34 @@
   padding: var(--spacing-7) var(--spacing-4);
   text-align: center;
   color: var(--color-gris-400);
+}
+
+.thCheckbox input[type='checkbox'],
+.tdCheckbox input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: var(--border-regular) solid var(--color-tinta);
+  background: var(--color-fondo);
+  cursor: pointer;
+}
+
+.thCheckbox input[type='checkbox']:checked,
+.tdCheckbox input[type='checkbox']:checked {
+  background: var(--color-tinta);
+}
+
+.thCheckbox input[type='checkbox']:checked::after,
+.tdCheckbox input[type='checkbox']:checked::after {
+  content: '';
+  width: 4px;
+  height: 8px;
+  border: solid var(--color-fondo);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
 }

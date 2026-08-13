@@ -77,6 +77,7 @@ export default function AdminDashboard() {
             { clave: 'estadoEnvio', etiqueta: 'Envío', render: (fila) => <EstadoBadge estado={fila.estadoEnvio} /> },
           ]}
           filas={ultimosPedidos}
+          hrefFila={(fila) => `/admin/pedidos/${fila.id}`}
           renderAcciones={(fila) => <Boton variante="texto" href={`/admin/pedidos/${fila.id}`}>Ver</Boton>}
         />
       </div>

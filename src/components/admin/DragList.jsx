@@ -21,8 +21,10 @@ import styles from './DragList.module.css';
 
 function DragList({ items, claveItem = (item) => item.id, onReorder, renderItem, orientacion = 'vertical' }) {
   const [indiceArrastrado, setIndiceArrastrado] = useState(null);
+  const [indiceSobre, setIndiceSobre] = useState(null);
 
   function soltarSobre(indiceDestino) {
+    setIndiceSobre(null);
     if (indiceArrastrado === null || indiceArrastrado === indiceDestino) return;
     const copia = [...items];
     const [movido] = copia.splice(indiceArrastrado, 1);
@@ -38,10 +40,11 @@ function DragList({ items, claveItem = (item) => item.id, onReorder, renderItem,
           key={claveItem(item)}
           draggable
           onDragStart={() => setIndiceArrastrado(indice)}
+          onDragEnter={() => setIndiceSobre(indice)}
           onDragOver={(e) => e.preventDefault()}
           onDrop={() => soltarSobre(indice)}
-          onDragEnd={() => setIndiceArrastrado(null)}
-          className={`${styles.item} ${indiceArrastrado === indice ? styles.arrastrando : ''}`}
+          onDragEnd={() => { setIndiceArrastrado(null); setIndiceSobre(null); }}
+          className={`${styles.item} ${indiceArrastrado === indice ? styles.arrastrando : ''} ${indiceSobre === indice && indiceSobre !== indiceArrastrado ? styles.sobre : ''}`}
         >
           <GripVertical className={styles.asa} aria-hidden="true" />
           <div className={styles.contenidoItem}>{renderItem(item, indice)}</div>

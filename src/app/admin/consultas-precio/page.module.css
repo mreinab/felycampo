@@ -1,0 +1,26 @@
+.nombreFila {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.etiquetaCliente {
+  display: inline-block;
+  padding: 1px var(--spacing-2);
+  border: var(--border-thin) solid var(--color-tinta);
+  font-size: var(--text-nano);
+  color: var(--color-tinta);
+}
+
+.telefono {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+.recibidaUrgente {
+  color: var(--color-rosa-oscuro);
+}
+
+.origenFila {
+  margin-bottom: var(--spacing-1);
+}

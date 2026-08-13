@@ -18,6 +18,7 @@ const SUBMENU_STRUCTURE = {
     items: [
       { key: 'vestidos', href: '/pret-a-porter/vestidos' },
       { key: 'faldas', href: '/pret-a-porter/faldas' },
+      { key: 'coats', href: '/pret-a-porter/coats' },
     ],
     image: '/img/styleguide/prod-tarjeta.webp',
   },

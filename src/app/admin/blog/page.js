@@ -29,6 +29,7 @@ export default function BlogPage() {
           { clave: 'estado', etiqueta: 'Estado', render: (e) => <EstadoBadge estado={e.estado} /> },
         ]}
         filas={entradas}
+        hrefFila={(e) => `/admin/blog/${e.id}/editar`}
         renderAcciones={(e) => (
           <>
             <Boton variante="texto" href={`/admin/blog/${e.id}/editar`}>Editar</Boton>{' '}

@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding-bottom: var(--spacing-5);
-  border-bottom: var(--border-thin) solid var(--color-hairline);
+  border-bottom: var(--border-thin) solid var(--color-gris-200);
   margin-bottom: var(--spacing-5);
 }
 
@@ -38,7 +38,7 @@
   display: block;
   width: 100%;
   padding: 0;
-  border: var(--border-regular) solid var(--color-hairline);
+  border: var(--border-regular) solid var(--color-gris-200);
   background: none;
   cursor: pointer;
   text-align: left;
@@ -72,5 +72,5 @@
   bottom: 0;
   background: var(--color-fondo);
   padding-top: var(--spacing-4);
-  border-top: var(--border-thin) solid var(--color-hairline);
+  border-top: var(--border-thin) solid var(--color-gris-200);
 }

@@ -1,0 +1,38 @@
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-7);
+}
+
+.kpiTarjeta {
+  border: var(--border-regular) solid var(--color-gris-200);
+  padding: var(--spacing-5);
+}
+
+.kpiEtiqueta {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-2);
+}
+
+.kpiValor {
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-1);
+}
+
+.kpiVariacion {
+  font-size: var(--text-caption);
+  color: var(--color-tinta);
+}
+
+.kpiNegativa {
+  color: var(--color-rosa-oscuro);
+}
+
+.subtitulo {
+  font-size: var(--text-h4);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-4);
+}

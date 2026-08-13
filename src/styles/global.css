@@ -34,6 +34,8 @@
   --color-gris-200:       #D9D9D9;   /* alias: --g200 */
   --color-gris-100:       #F2F2F2;   /* alias: --g100 */
   --color-hairline:       #EFEFEF;   /* alias: --hairline */
+  --color-details:        #f6f6f7;   /* alias: --details */
+  --color-light-details:  #fdfdfd;   /* alias: --light-details */
 
   /* Rosa de marca — ACENTO, nunca superficie grande */
   --color-rosa:           #E92174;   /* alias: --rosa */
@@ -48,6 +50,7 @@
   /* ---------- TIPOGRAFÍA — escala en REM ----------
      El <html> fija font-size:87.5% (1rem = 14px), igual que
      en styleguide.html. Sin letter-spacing en ningún paso. */
+  --text-nano:       0.625rem;   /* 8.75px · más pequeño que --text-micro */
   --text-micro:      0.6875rem;  /* 9.6px  · alias: --text-micro */
   --text-caption:    0.75rem;    /* 10.5px · etiquetas, metadatos */
   --text-label:      0.8125rem;  /* 11.4px · botones, nav */

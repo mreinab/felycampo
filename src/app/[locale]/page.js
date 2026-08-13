@@ -34,12 +34,13 @@ const productosPorOcasion = {
 
 const slidesHero = [
   {
-    src: '/img/FW27-Hero3.mp4',
-    tipo: 'video',
+    // Temporal: sustituye el vídeo mientras dura la campaña de abrigos.
+    src: '/img/abrigos-2026-2.jpg',
+    tipo: 'imagen',
     titulo: 'Prêt-à-porter',
     ctaTexto: 'Explorar',
     ctaHref: '/pret-a-porter',
-  },  
+  },
   {
     src: '/img/HERO-1.jpg',
     tipo: 'imagen',

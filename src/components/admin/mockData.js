@@ -8,22 +8,6 @@
 // tipo: 'pret-a-porter' | 'atelier' | 'archivo'
 // estado: 'Borrador' | 'Activo' | 'Archivado'
 
-export const seccionesWeb = {
-  'pret-a-porter': [
-    { valor: 'vestidos', etiqueta: 'Vestidos', ruta: '/pret-a-porter/vestidos' },
-    { valor: 'faldas', etiqueta: 'Faldas', ruta: '/pret-a-porter/faldas' },
-  ],
-  atelier: [
-    { valor: 'novias', etiqueta: 'Novias', ruta: '/atelier/novias' },
-    { valor: 'fiesta', etiqueta: 'Fiesta', ruta: '/atelier/fiesta' },
-  ],
-  archivo: [
-    { valor: 'runway', etiqueta: 'Runway', ruta: '/archivo/runway' },
-    { valor: 'colecciones-novias', etiqueta: 'Colecciones (Novias)', ruta: '/archivo/colecciones' },
-    { valor: 'colecciones-fiesta', etiqueta: 'Colecciones (Fiesta)', ruta: '/archivo/colecciones' },
-  ],
-};
-
 export const tiposProducto = [
   { valor: 'pret-a-porter', etiqueta: 'Prêt-à-porter' },
   { valor: 'atelier', etiqueta: 'Atelier' },
@@ -72,7 +56,7 @@ export const productosMock = [
   {
     id: 'p1',
     tipo: 'pret-a-porter',
-    seccionWeb: 'vestidos',
+    categoriaId: 'cat1',
     nombre: 'Vestido Aurora',
     descripcionCorta: 'Vestido midi en jacquard con flores en relieve.',
     imagen: '/img/ecommerce/27FW/FW27-Dress-Look02.jpg',
@@ -92,7 +76,7 @@ export const productosMock = [
   {
     id: 'p2',
     tipo: 'pret-a-porter',
-    seccionWeb: 'faldas',
+    categoriaId: 'cat2',
     nombre: 'Falda Vera',
     descripcionCorta: 'Falda evasé en tafetán rosa suave.',
     imagen: '/img/ecommerce/27FW/FW27-Top-Look03.jpg',
@@ -112,7 +96,7 @@ export const productosMock = [
   {
     id: 'p3',
     tipo: 'atelier',
-    seccionWeb: 'novias',
+    categoriaId: 'cat3',
     nombre: 'Vestido Elena',
     descripcionCorta: 'Vestido de novia a medida, encaje francés y cola desmontable.',
     imagen: '/img/novias-sección-FelyCampo2.jpg',
@@ -127,7 +111,7 @@ export const productosMock = [
   {
     id: 'p4',
     tipo: 'atelier',
-    seccionWeb: 'fiesta',
+    categoriaId: 'cat4',
     nombre: 'Vestido Celeste',
     descripcionCorta: 'Vestido de fiesta a medida en gasa de seda.',
     imagen: '/img/invitadas-sección-FelyCampo.jpg',
@@ -142,7 +126,7 @@ export const productosMock = [
   {
     id: 'p5',
     tipo: 'archivo',
-    seccionWeb: 'runway',
+    categoriaId: 'cat5',
     nombre: 'Look Runway 12',
     descripcionCorta: 'Look de pasarela FW27, pieza única de archivo.',
     imagen: '/img/ecommerce/Invitada/LOOK12_2-scaled.webp',
@@ -154,7 +138,7 @@ export const productosMock = [
   {
     id: 'p6',
     tipo: 'archivo',
-    seccionWeb: 'colecciones-novias',
+    categoriaId: 'cat6',
     nombre: 'Colección Bride 25',
     descripcionCorta: 'Colección de novias SS25, editorial completo.',
     imagen: '/img/novias-sección-FelyCampo4.jpg',
@@ -162,6 +146,194 @@ export const productosMock = [
     coleccion: 'ss25',
     estado: 'Archivado',
     sku: 'FC-ARC-B25',
+  },
+  {
+    id: 'p7',
+    tipo: 'pret-a-porter',
+    categoriaId: 'cat1',
+    nombre: 'Abrigo Nieve',
+    descripcionCorta: 'Abrigo oversize en paño de lana, colección Otoño-Invierno 2027.',
+    imagen: '/img/abrigos-2026.jpg',
+    imagenes: ['/img/abrigos-2026.jpg', '/img/abrigos-2026-2.jpg'],
+    precio: '760 €',
+    tallas: [
+      { talla: 'S', stock: 4 },
+      { talla: 'M', stock: 6 },
+      { talla: 'L', stock: 2 },
+    ],
+    colorIds: ['col7', 'col8'],
+    telaIds: ['tel5'],
+    estado: 'Programado',
+    coleccion: 'fw27',
+    sku: 'FC-VES-NIE',
+  },
+  {
+    id: 'p8',
+    tipo: 'pret-a-porter',
+    categoriaId: 'cat2',
+    nombre: 'Falda Invierno',
+    descripcionCorta: 'Falda midi en paño de lana, temporada pasada.',
+    imagen: '/img/ecommerce/27FW/Coat-Look-3.jpg',
+    imagenes: ['/img/ecommerce/27FW/Coat-Look-3.jpg', '/img/ecommerce/27FW/Coat-Look-4.jpg'],
+    precio: '380 €',
+    tallas: [
+      { talla: 'S', stock: 0 },
+      { talla: 'M', stock: 0 },
+    ],
+    colorIds: ['col2'],
+    telaIds: ['tel5'],
+    estado: 'Archivado',
+    coleccion: 'ss25',
+    sku: 'FC-FAL-INV',
+  },
+  {
+    id: 'p9',
+    tipo: 'atelier',
+    categoriaId: 'cat4',
+    nombre: 'Vestido Nube',
+    descripcionCorta: 'Vestido de fiesta a medida, temporada anterior, fuera de catálogo.',
+    imagen: '/img/ecommerce/27FW/invitadas-sección-FelyCampo2.jpg',
+    imagenes: ['/img/ecommerce/27FW/invitadas-sección-FelyCampo2.jpg'],
+    precio: 'Desde 890 €',
+    colorIds: ['col4'],
+    telaIds: ['tel2'],
+    coleccion: 'ss25',
+    estado: 'Archivado',
+    sku: 'FC-ATL-NUB',
+  },
+  {
+    id: 'p10',
+    tipo: 'archivo',
+    categoriaId: 'cat5',
+    nombre: 'Look Runway 18',
+    descripcionCorta: 'Look de pasarela FW27, pendiente de publicar en el archivo.',
+    imagen: '/img/ecommerce/Invitada/LOOK18_1-scaled.webp',
+    imagenes: ['/img/ecommerce/Invitada/LOOK18_1-scaled.webp'],
+    coleccion: 'fw27',
+    estado: 'Programado',
+    sku: 'FC-ARC-R18',
+  },
+  // p11-p18: completan los 3 estados (Publicado/Esperando/Archivado) dentro
+  // de CADA categoría, no solo dentro de cada tipo — así el filtro por
+  // categoría (sidebar → ?categoria=catX) también muestra los 3 colores.
+  {
+    id: 'p11',
+    tipo: 'pret-a-porter',
+    categoriaId: 'cat1',
+    nombre: 'Vestido Otoño',
+    descripcionCorta: 'Vestido largo en punto, temporada retirada.',
+    imagen: '/img/ecommerce/27FW/FW27-Look01.webp',
+    imagenes: ['/img/ecommerce/27FW/FW27-Look01.webp'],
+    precio: '650 €',
+    tallas: [
+      { talla: 'S', stock: 0 },
+      { talla: 'M', stock: 0 },
+    ],
+    colorIds: ['col1'],
+    telaIds: ['tel1'],
+    estado: 'Archivado',
+    coleccion: 'ss25',
+    sku: 'FC-VES-OTO',
+  },
+  {
+    id: 'p12',
+    tipo: 'pret-a-porter',
+    categoriaId: 'cat2',
+    nombre: 'Falda Primavera',
+    descripcionCorta: 'Falda plisada en popelín, próxima temporada.',
+    imagen: '/img/ecommerce/27FW/FW27-Top-Look01.jpg',
+    imagenes: ['/img/ecommerce/27FW/FW27-Top-Look01.jpg'],
+    precio: '340 €',
+    tallas: [
+      { talla: 'S', stock: 5 },
+      { talla: 'M', stock: 5 },
+    ],
+    colorIds: ['col3'],
+    telaIds: ['tel5'],
+    estado: 'Programado',
+    coleccion: 'ss26',
+    sku: 'FC-FAL-PRI',
+  },
+  {
+    id: 'p13',
+    tipo: 'atelier',
+    categoriaId: 'cat3',
+    nombre: 'Vestido Alba',
+    descripcionCorta: 'Vestido de novia a medida, en preparación para el lanzamiento.',
+    imagen: '/img/novias-sección-FelyCampo3.jpg',
+    imagenes: ['/img/novias-sección-FelyCampo3.jpg'],
+    precio: 'Desde 2.100 €',
+    colorIds: ['col5'],
+    telaIds: ['tel4'],
+    coleccion: 'ss26',
+    estado: 'Programado',
+    sku: 'FC-ATL-ALB',
+  },
+  {
+    id: 'p14',
+    tipo: 'atelier',
+    categoriaId: 'cat3',
+    nombre: 'Vestido Perla',
+    descripcionCorta: 'Vestido de novia a medida, colección retirada.',
+    imagen: '/img/ecommerce/Invitada/LOOK1_2-scaled.webp',
+    imagenes: ['/img/ecommerce/Invitada/LOOK1_2-scaled.webp'],
+    precio: 'Desde 1.900 €',
+    colorIds: ['col4'],
+    telaIds: ['tel3'],
+    coleccion: 'ss25',
+    estado: 'Archivado',
+    sku: 'FC-ATL-PER',
+  },
+  {
+    id: 'p15',
+    tipo: 'atelier',
+    categoriaId: 'cat4',
+    nombre: 'Vestido Luna',
+    descripcionCorta: 'Vestido de fiesta a medida en tul bordado.',
+    imagen: '/img/invitadas-sección-FelyCampo2.jpg',
+    imagenes: ['/img/invitadas-sección-FelyCampo2.jpg'],
+    precio: 'Desde 1.050 €',
+    colorIds: ['col2'],
+    telaIds: ['tel1'],
+    coleccion: 'fw26',
+    estado: 'Activo',
+    sku: 'FC-ATL-LUN',
+  },
+  {
+    id: 'p16',
+    tipo: 'archivo',
+    categoriaId: 'cat5',
+    nombre: 'Look Runway 9',
+    descripcionCorta: 'Look de pasarela, temporada retirada del archivo activo.',
+    imagen: '/img/ecommerce/Invitada/LOOK9_1-scaled.webp',
+    imagenes: ['/img/ecommerce/Invitada/LOOK9_1-scaled.webp'],
+    coleccion: 'ss25',
+    estado: 'Archivado',
+    sku: 'FC-ARC-R09',
+  },
+  {
+    id: 'p17',
+    tipo: 'archivo',
+    categoriaId: 'cat6',
+    nombre: 'Colección Fiesta 26',
+    descripcionCorta: 'Colección de fiesta SS26, editorial completo.',
+    imagen: '/img/HERO-1.jpg',
+    imagenes: ['/img/HERO-1.jpg'],
+    coleccion: 'ss26',
+    estado: 'Activo',
+    sku: 'FC-ARC-F26',
+  },
+  {
+    id: 'p18',
+    tipo: 'archivo',
+    categoriaId: 'cat6',
+    nombre: 'Colección Novias 26',
+    descripcionCorta: 'Colección de novias FW26, pendiente de publicar en el archivo.',
+    imagen: '/img/FW27-Hero.jpg',
+    imagenes: ['/img/FW27-Hero.jpg'],
+    coleccion: 'fw26',
+    estado: 'Programado',
+    sku: 'FC-ARC-N26',
   },
 ];
 
@@ -312,6 +484,101 @@ export const consultasMock = [
   },
 ];
 
+// ---------- CONSULTAS DE PRECIO (Atelier — "Precio a consultar") ----------
+// Atelier no lleva precio visible en la ficha pública: en su lugar hay un
+// botón "Precio a consultar" que deja estos datos de contacto. `clienteId`
+// solo se rellena cuando quien pregunta ya es cliente registrado — así la
+// misma consulta aparece también en su ficha (/admin/clientes/[id]). Las
+// demás son visitantes sin cuenta que igualmente dejaron sus datos.
+
+export const consultasPrecioMock = [
+  {
+    id: 'cp1',
+    producto: 'Vestido Elena',
+    color: 'Crema',
+    fecha: '2026-08-05',
+    nombre: 'Marta Ibáñez',
+    email: 'marta.ibanez@example.com',
+    telefono: '+34 611 222 333',
+    clienteId: 'cl1',
+    estado: 'Pendiente',
+    mensaje: 'Me gustaría saber el precio para talla M en color crema.',
+  },
+  {
+    id: 'cp2',
+    producto: 'Vestido Celeste',
+    color: 'Azul marino',
+    fecha: '2026-08-06',
+    nombre: 'Alicia Ferrer',
+    email: 'alicia.ferrer@example.com',
+    telefono: '+34 622 333 444',
+    clienteId: null,
+    estado: 'Pendiente',
+    mensaje: '¿Podríais confirmarme disponibilidad y precio para septiembre?',
+    notasInternas: 'Enviado presupuesto por email, pendiente de respuesta.',
+  },
+  {
+    id: 'cp3',
+    producto: 'Vestido Alba',
+    color: 'Rosa suave',
+    fecha: '2026-08-02',
+    nombre: 'Beatriz Soler',
+    email: 'beatriz.soler@example.com',
+    telefono: '+34 633 444 555',
+    clienteId: 'cl6',
+    estado: 'Contactado',
+    mensaje: '',
+  },
+  {
+    id: 'cp4',
+    producto: 'Vestido Perla',
+    color: null,
+    fecha: '2026-07-28',
+    nombre: 'Noelia Ruiz',
+    email: 'noelia.ruiz@example.com',
+    telefono: '+34 644 555 666',
+    clienteId: null,
+    estado: 'Contactado',
+    mensaje: 'Interesada en la colección de novias 2026.',
+  },
+  {
+    id: 'cp5',
+    producto: 'Vestido Luna',
+    color: 'Burdeos',
+    fecha: '2026-08-09',
+    nombre: 'Carmen Vidal',
+    email: 'carmen.vidal@example.com',
+    telefono: '+34 655 666 777',
+    clienteId: 'cl7',
+    estado: 'Pendiente',
+    mensaje: '',
+  },
+  {
+    id: 'cp6',
+    producto: 'Vestido Nube',
+    color: null,
+    fecha: '2026-08-11',
+    nombre: 'Cristina Ferrer',
+    email: 'cristina.ferrer@example.com',
+    telefono: '+34 666 777 888',
+    clienteId: null,
+    estado: 'Pendiente',
+    mensaje: '¿Este modelo se puede confeccionar en manga larga?',
+  },
+  {
+    id: 'cp7',
+    producto: 'Diseño a medida Atelier',
+    color: null,
+    fecha: '2026-08-12',
+    nombre: 'Irene Vázquez',
+    email: 'irene.vazquez@example.com',
+    telefono: '+34 677 888 999',
+    clienteId: null,
+    estado: 'Pendiente',
+    mensaje: 'Quiero un diseño completamente a medida, no encuentro nada parecido en el catálogo. ¿Podéis ayudarme?',
+  },
+];
+
 // ---------- RESEÑAS ----------
 
 export const resenasMock = [
@@ -367,6 +634,9 @@ export const categoriasMock = {
   'pret-a-porter': [
     { id: 'cat1', nombre: 'Vestidos', visible: true, orden: 1 },
     { id: 'cat2', nombre: 'Faldas', visible: true, orden: 2 },
+    { id: 'cat7', nombre: 'Tops y Camisas', visible: true, orden: 3 },
+    { id: 'cat8', nombre: 'Chaquetas y Abrigos', visible: true, orden: 4 },
+    { id: 'cat9', nombre: 'Accesorios y Zapatos', visible: true, orden: 5 },
   ],
   atelier: [
     { id: 'cat3', nombre: 'Novias', visible: true, orden: 1 },
@@ -435,6 +705,90 @@ export const extrasMock = [
   { id: 'ex3', nombre: 'Control de stock avanzado', activo: false, descripcion: 'Bloquea automáticamente la compra en la web cuando el stock llega a 0.' },
   { id: 'ex4', nombre: 'Mapa de tiendas', activo: false, descripcion: 'Añade una pantalla en /visitenos con las ubicaciones sobre un mapa.' },
 ];
+
+// ---------- CLIENTES ----------
+
+export const clientesMock = [
+  {
+    id: 'cl1', nombre: 'Marta Ibáñez', email: 'marta.ibanez@example.com', pedidos: 3, gastoTotal: '2.140 €', fechaAlta: '2025-11-02', estado: 'Activo', cumpleanos: '03-14',
+  },
+  {
+    id: 'cl2', nombre: 'Laura Gómez', email: 'laura.gomez@example.com', pedidos: 1, gastoTotal: '420 €', fechaAlta: '2026-02-18', estado: 'Activo', cumpleanos: '07-22',
+  },
+  {
+    id: 'cl3', nombre: 'Elena Castro', email: 'elena.castro@example.com', pedidos: 2, gastoTotal: '1.310 €', fechaAlta: '2025-09-27', estado: 'Activo', cumpleanos: '11-05',
+  },
+  {
+    id: 'cl4', nombre: 'Sara Molina', email: 'sara.molina@example.com', pedidos: 1, gastoTotal: '420 €', fechaAlta: '2026-03-05', estado: 'Inactivo', cumpleanos: '01-30',
+  },
+  {
+    id: 'cl5', nombre: 'Nuria Prats', email: 'nuria.prats@example.com', pedidos: 1, gastoTotal: '890 €', fechaAlta: '2026-01-14', estado: 'Activo', cumpleanos: '09-18',
+  },
+  {
+    id: 'cl6', nombre: 'Beatriz Soler', email: 'beatriz.soler@example.com', pedidos: 4, gastoTotal: '3.360 €', fechaAlta: '2025-06-10', estado: 'Activo', cumpleanos: '05-09',
+  },
+  {
+    id: 'cl7', nombre: 'Carmen Vidal', email: 'carmen.vidal@example.com', pedidos: 1, gastoTotal: '890 €', fechaAlta: '2026-04-22', estado: 'Inactivo', cumpleanos: '12-24',
+  },
+];
+
+// ---------- NEWSLETTER ----------
+// Suscriptores: clientas que han marcado "unirme a la newsletter" (origen
+// "Clientes") y visitantes sin cuenta que se apuntaron desde el popup de
+// la home (origen "Popup Home"). Dos orígenes, una sola lista.
+
+export const newsletterMock = [
+  {
+    id: 'nl1', email: 'marta.ibanez@example.com', origen: 'Clientes', fecha: '2025-11-02',
+  },
+  {
+    id: 'nl2', email: 'irene.salas@example.com', origen: 'Popup Home', fecha: '2025-12-14',
+  },
+  {
+    id: 'nl3', email: 'beatriz.soler@example.com', origen: 'Clientes', fecha: '2025-06-10',
+  },
+  {
+    id: 'nl4', email: 'paula.morales@example.com', origen: 'Popup Home', fecha: '2026-01-20',
+  },
+  {
+    id: 'nl5', email: 'nuria.prats@example.com', origen: 'Clientes', fecha: '2026-01-14',
+  },
+  {
+    id: 'nl6', email: 'clara.fernandez@example.com', origen: 'Popup Home', fecha: '2026-03-08',
+  },
+  {
+    id: 'nl7', email: 'sofia.navarro@example.com', origen: 'Popup Home', fecha: '2026-05-02',
+  },
+  {
+    id: 'nl8', email: 'carmen.vidal@example.com', origen: 'Clientes', fecha: '2026-04-22',
+  },
+];
+
+// ---------- ANALÍTICAS ----------
+
+export const kpisAnaliticas = [
+  { id: 'k1', etiqueta: 'Ventas del mes', valor: '8.230 €', variacion: '+12%' },
+  { id: 'k2', etiqueta: 'Pedidos', valor: '27', variacion: '+4%' },
+  { id: 'k3', etiqueta: 'Clientes nuevos', valor: '9', variacion: '+2%' },
+  { id: 'k4', etiqueta: 'Ticket medio', valor: '305 €', variacion: '-3%' },
+];
+
+export const topProductosMock = [
+  { producto: 'Vestido Aurora', unidadesVendidas: 14, ingresos: '12.460 €' },
+  { producto: 'Falda Vera', unidadesVendidas: 11, ingresos: '4.620 €' },
+  { producto: 'Vestido Elena', unidadesVendidas: 3, ingresos: '7.200 €' },
+  { producto: 'Vestido Celeste', unidadesVendidas: 2, ingresos: '1.960 €' },
+];
+
+// ---------- SETTINGS ----------
+
+export const ajustesTiendaMock = {
+  nombreTienda: 'Fely Campo',
+  emailContacto: 'hola@felycampo.com',
+  telefono: '+34 923 000 000',
+  moneda: 'EUR',
+  idiomaPredeterminado: 'Español',
+};
 
 // ---------- DISEÑO (bloques reales de la landing, en orden) ----------
 // kind: 'hero' | 'text' | 'media' | 'productRow' | 'mediaSplit' | 'productRowTabs' | 'mediaText' | 'reviews'

@@ -15,6 +15,7 @@
   justify-content: center;
   padding: var(--spacing-8) var(--spacing-4);
   overflow-y: auto;
+  cursor: pointer;
 }
 
 .panel {
@@ -24,6 +25,7 @@
   max-width: 720px;
   margin: auto;
   padding: var(--spacing-7);
+  cursor: auto;
 }
 
 .cerrar {

@@ -5,15 +5,20 @@ import styles from './FormSeccion.module.css';
  * páginas de Contenido...). Solo maquetación — cada padre decide qué
  * campos mete dentro.
  */
-function FormSeccion({ numero, titulo, descripcion, children }) {
+function FormSeccion({
+  numero, titulo, descripcion, accion, children,
+}) {
   return (
     <section className={styles.seccion}>
       <div className={styles.cabecera}>
-        <p className={styles.titulo}>
-          <span className={styles.numero}>{numero}</span>
-          {titulo}
-        </p>
-        {descripcion && <p className={styles.descripcion}>{descripcion}</p>}
+        <div>
+          <p className={styles.titulo}>
+            <span className={styles.numero}>{numero}</span>
+            {titulo}
+          </p>
+          {descripcion && <p className={styles.descripcion}>{descripcion}</p>}
+        </div>
+        {accion && <div className={styles.accion}>{accion}</div>}
       </div>
       <div className={styles.campos}>{children}</div>
     </section>

@@ -65,6 +65,7 @@ export default function ResenasPage() {
           { clave: 'usadaHome', etiqueta: 'En Home', render: (r) => (r.usadaHome ? 'Sí' : 'No') },
         ]}
         filas={filtradas}
+        hrefFila={(r) => `/admin/resenas/${r.id}/editar`}
         renderAcciones={(r) => (
           <>
             <Boton variante="texto" href={`/admin/resenas/${r.id}/editar`}>Editar</Boton>{' '}

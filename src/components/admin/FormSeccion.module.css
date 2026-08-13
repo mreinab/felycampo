@@ -1,6 +1,6 @@
 .seccion {
   padding: var(--spacing-6) 0;
-  border-bottom: var(--border-thin) solid var(--color-hairline);
+  border-bottom: var(--border-thin) solid var(--color-gris-200);
 }
 
 .seccion:last-child {
@@ -8,7 +8,15 @@
 }
 
 .cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-4);
   margin-bottom: var(--spacing-5);
+}
+
+.accion {
+  flex-shrink: 0;
 }
 
 .titulo {

@@ -9,7 +9,8 @@
     "submenus": {
       "tienda": {
         "vestidos": "Dresses",
-        "faldas": "Skirts"
+        "faldas": "Skirts",
+        "coats": "Coats"
       },
       "atelier": {
         "novias": "Bridal",

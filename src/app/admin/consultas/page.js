@@ -59,6 +59,7 @@ function ConsultasContenido() {
           { clave: 'estado', etiqueta: 'Estado', render: (c) => <EstadoBadge estado={c.estado} /> },
         ]}
         filas={filtradas}
+        hrefFila={(c) => `/admin/consultas/${c.id}`}
         renderAcciones={(c) => <Boton variante="texto" href={`/admin/consultas/${c.id}`}>Ver</Boton>}
       />
     </div>

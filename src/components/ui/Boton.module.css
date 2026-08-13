@@ -47,6 +47,9 @@
 
 /* ---------- Variantes ---------- */
 .solido {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: var(--color-tinta);
   color: var(--color-fondo);
   border-radius: var(--radius-botones);

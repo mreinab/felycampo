@@ -2,7 +2,7 @@
 
 import { use, useState } from 'react';
 import { notFound } from 'next/navigation';
-import { PageHeader, useToast } from '@/components/admin';
+import { PageHeader, BotonVolver, useToast } from '@/components/admin';
 import { Boton } from '@/components/ui';
 import { consultasMock, productosMock } from '@/components/admin/mockData';
 import styles from './page.module.css';
@@ -34,6 +34,7 @@ export default function DetalleConsultaPage({ params }) {
 
   return (
     <div>
+      <BotonVolver href="/admin/consultas" />
       <PageHeader titulo={consultaOriginal.asunto} subtitulo={`${consultaOriginal.tipo} — ${consultaOriginal.cliente.nombre}`} />
 
       <div className={styles.resumen}>

@@ -52,7 +52,7 @@
   flex: 1;
   font-size: var(--text-caption);
   color: var(--color-gris-500);
-  text-align: center;
+  text-align: left;
 }
 
 .etiqueta:last-child {

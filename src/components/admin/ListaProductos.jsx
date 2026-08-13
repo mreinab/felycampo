@@ -12,24 +12,26 @@
    recargar (no hay backend detrás todavía).
    ============================================================ */
 
-import { useMemo, useState } from 'react';
-import { Plus } from 'lucide-react';
+import { Suspense, useMemo, useState } from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { Plus, X } from 'lucide-react';
 import {
-  PageHeader, TablaAdmin, EstadoBadge, FiltroBar, FiltroSelector, ModalOverlay, useToast,
+  PageHeader, TablaAdmin, EstadoPublicacionBadge, FiltroBar, FiltroSelector, TabsFiltro, ModalOverlay, BotonVolver, useToast, useCategorias,
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
-import { productosMock, tiposProducto, seccionesWeb, coleccionesMock } from '@/components/admin/mockData';
+import { productosMock, tiposProducto, coleccionesMock } from '@/components/admin/mockData';
+import { calcularEstadoPublicacion, CONFIG_ESTADO_PUBLICACION } from './EstadoPublicacionBadge';
 import FormularioProducto from './FormularioProducto';
 import styles from './ListaProductos.module.css';
 
-const ESTADOS = ['Todos', 'Borrador', 'Activo', 'Archivado'];
+const OPCIONES_PUBLICACION = [
+  { valor: 'Todos', etiqueta: 'Todos' },
+  ...Object.entries(CONFIG_ESTADO_PUBLICACION).map(([valor, cfg]) => ({ valor, etiqueta: cfg.etiqueta, clase: cfg.clase })),
+];
 
 function etiquetaTipo(tipo) {
   return tiposProducto.find((t) => t.valor === tipo)?.etiqueta || tipo;
-}
-
-function etiquetaSeccion(tipo, seccionWeb) {
-  return seccionesWeb[tipo]?.find((s) => s.valor === seccionWeb)?.etiqueta || seccionWeb;
 }
 
 function etiquetaColeccion(coleccion) {
@@ -41,26 +43,39 @@ function stockTotal(producto) {
   return producto.tallas.reduce((total, t) => total + t.stock, 0);
 }
 
-function ListaProductos({ tipoFijo, titulo }) {
+function ListaProductosContenido({
+  tipoFijo, titulo, agruparPorCategoria = false, iconoCategoria: IconoCategoria,
+}) {
   const { mostrarToast } = useToast();
+  const { categorias } = useCategorias();
+  const searchParams = useSearchParams();
+  const categoriaFija = searchParams.get('categoria') || '';
   const [productos, setProductos] = useState(productosMock);
   const [query, setQuery] = useState('');
   const [filtroTipo, setFiltroTipo] = useState(tipoFijo || 'Todos');
-  const [filtroEstado, setFiltroEstado] = useState('Todos');
+  const [filtroPublicacion, setFiltroPublicacion] = useState('Todos');
   const [filtroColeccion, setFiltroColeccion] = useState('Todas');
   const [seleccionadas, setSeleccionadas] = useState([]);
   const [nuevoAbierto, setNuevoAbierto] = useState(false);
+  const [productoEnEdicion, setProductoEnEdicion] = useState(null);
+
+  const categoriaActual = categoriaFija ? categorias[tipoFijo]?.find((c) => c.id === categoriaFija) : null;
+
+  function etiquetaCategoria(tipo, categoriaId) {
+    return categorias[tipo]?.find((c) => c.id === categoriaId)?.nombre || '—';
+  }
 
   const filtrados = useMemo(() => {
     return productos.filter((p) => {
       if (tipoFijo && p.tipo !== tipoFijo) return false;
       if (!tipoFijo && filtroTipo !== 'Todos' && p.tipo !== filtroTipo) return false;
-      if (filtroEstado !== 'Todos' && p.estado !== filtroEstado) return false;
+      if (categoriaFija && p.categoriaId !== categoriaFija) return false;
+      if (filtroPublicacion !== 'Todos' && calcularEstadoPublicacion(p.estado) !== filtroPublicacion) return false;
       if (filtroColeccion !== 'Todas' && p.coleccion !== filtroColeccion) return false;
       if (query && !`${p.nombre} ${p.sku}`.toLowerCase().includes(query.toLowerCase())) return false;
       return true;
     });
-  }, [productos, tipoFijo, filtroTipo, filtroEstado, filtroColeccion, query]);
+  }, [productos, tipoFijo, categoriaFija, filtroTipo, filtroPublicacion, filtroColeccion, query]);
 
   function alternarSeleccion(id) {
     setSeleccionadas((actual) => (actual.includes(id) ? actual.filter((s) => s !== id) : [...actual, id]));
@@ -76,9 +91,12 @@ function ListaProductos({ tipoFijo, titulo }) {
     setSeleccionadas([]);
   }
 
-  function archivar(id) {
-    setProductos((actual) => actual.map((p) => (p.id === id ? { ...p, estado: 'Archivado' } : p)));
-    mostrarToast('Producto archivado (demo)');
+  function borrarEnBloque() {
+    if (!window.confirm(`¿Seguro que quieres borrar ${seleccionadas.length} producto${seleccionadas.length === 1 ? '' : 's'}?`)) return;
+    if (!window.confirm('Esta acción no se puede deshacer. ¿Confirmas el borrado?')) return;
+    setProductos((actual) => actual.filter((p) => !seleccionadas.includes(p.id)));
+    mostrarToast('Productos eliminados (demo)');
+    setSeleccionadas([]);
   }
 
   function duplicar(producto) {
@@ -90,10 +108,42 @@ function ListaProductos({ tipoFijo, titulo }) {
     setNuevoAbierto(false);
   }
 
+  function abrirEdicion(producto) {
+    setProductoEnEdicion(producto);
+  }
+
+  function guardarEdicion(producto) {
+    setProductos((actual) => actual.map((p) => (p.id === producto.id ? producto : p)));
+    setProductoEnEdicion(null);
+  }
+
+  if (agruparPorCategoria && !categoriaFija) {
+    const categoriasVisibles = (categorias[tipoFijo] || []).filter((c) => c.visible);
+    return (
+      <div>
+        <PageHeader
+          titulo={titulo}
+          subtitulo={`${categoriasVisibles.length} categoría${categoriasVisibles.length === 1 ? '' : 's'} — elige una para ver sus productos`}
+        />
+        <div className={styles.categoriasGrid}>
+          {categoriasVisibles.map((cat) => (
+            <Link key={cat.id} href={`/admin/productos/${tipoFijo}?categoria=${cat.id}`} className={styles.categoriaTarjeta}>
+              {IconoCategoria && <IconoCategoria className={styles.categoriaIcono} aria-hidden="true" />}
+              <span className={styles.categoriaNombre}>{cat.nombre}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
+      {agruparPorCategoria && (
+        <BotonVolver href={`/admin/productos/${tipoFijo}`}>Categorías</BotonVolver>
+      )}
       <PageHeader
-        titulo={titulo}
+        titulo={categoriaActual ? `${titulo} — ${categoriaActual.nombre}` : titulo}
         subtitulo={`${filtrados.length} producto${filtrados.length === 1 ? '' : 's'}`}
       >
         <Boton variante="solido" onClick={() => setNuevoAbierto(true)}>
@@ -113,12 +163,6 @@ function ListaProductos({ tipoFijo, titulo }) {
           />
         )}
         <FiltroSelector
-          etiqueta="Estado"
-          valor={filtroEstado}
-          onChange={(e) => setFiltroEstado(e.target.value)}
-          opciones={ESTADOS.map((e) => ({ valor: e, etiqueta: e }))}
-        />
-        <FiltroSelector
           etiqueta="Colección"
           valor={filtroColeccion}
           onChange={(e) => setFiltroColeccion(e.target.value)}
@@ -126,11 +170,17 @@ function ListaProductos({ tipoFijo, titulo }) {
         />
       </FiltroBar>
 
+      <TabsFiltro opciones={OPCIONES_PUBLICACION} valor={filtroPublicacion} onChange={setFiltroPublicacion} />
+
       {seleccionadas.length > 0 && (
         <div className={styles.bulkBar}>
           <span className={styles.bulkTexto}>{seleccionadas.length} seleccionados</span>
-          <Boton variante="contorno" tamano="s" onClick={() => aplicarEnBloque({ estado: 'Activo' })}>Activar</Boton>
-          <Boton variante="contorno" tamano="s" onClick={() => aplicarEnBloque({ estado: 'Borrador' })}>Desactivar</Boton>
+          <Boton variante="contorno" tamano="s" className={styles.bulkPublicar} onClick={() => aplicarEnBloque({ estado: 'Activo' })}>Publicar</Boton>
+          <Boton variante="contorno" tamano="s" className={styles.bulkDesactivar} onClick={() => aplicarEnBloque({ estado: 'Archivado' })}>Archivar</Boton>
+          <Boton variante="contorno" tamano="s" className={styles.bulkBorrar} onClick={borrarEnBloque}>Borrar</Boton>
+          <button type="button" className={styles.bulkCerrar} aria-label="Deseleccionar todo" onClick={() => setSeleccionadas([])}>
+            <X size={16} />
+          </button>
         </div>
       )}
 
@@ -143,26 +193,38 @@ function ListaProductos({ tipoFijo, titulo }) {
           { clave: 'imagen', etiqueta: '', render: (p) => (p.imagen ? <img src={p.imagen} alt="" className={styles.miniatura} /> : <span className={styles.miniatura} />) },
           { clave: 'nombre', etiqueta: 'Nombre' },
           { clave: 'tipo', etiqueta: 'Tipo', render: (p) => etiquetaTipo(p.tipo) },
-          { clave: 'seccionWeb', etiqueta: 'Sección web', render: (p) => etiquetaSeccion(p.tipo, p.seccionWeb) },
+          { clave: 'categoria', etiqueta: 'Categoría', render: (p) => etiquetaCategoria(p.tipo, p.categoriaId) },
           { clave: 'coleccion', etiqueta: 'Colección', render: (p) => etiquetaColeccion(p.coleccion) },
           { clave: 'precio', etiqueta: 'Precio', render: (p) => p.precio || '—' },
           { clave: 'stock', etiqueta: 'Stock', render: (p) => stockTotal(p) },
-          { clave: 'estado', etiqueta: 'Estado', render: (p) => <EstadoBadge estado={p.estado} /> },
+          { clave: 'estado', etiqueta: 'Estado', render: (p) => <EstadoPublicacionBadge estado={p.estado} /> },
         ]}
         filas={filtrados}
+        onClickFila={abrirEdicion}
         renderAcciones={(p) => (
           <div className={styles.filaAcciones}>
-            <Boton variante="texto" href={`/admin/productos/${p.id}/editar`}>Editar</Boton>
+            <Boton variante="texto" onClick={() => abrirEdicion(p)}>Editar</Boton>
             <Boton variante="texto" onClick={() => duplicar(p)}>Duplicar</Boton>
-            <Boton variante="texto" onClick={() => archivar(p.id)}>Archivar</Boton>
           </div>
         )}
       />
 
       <ModalOverlay abierto={nuevoAbierto} onCerrar={() => setNuevoAbierto(false)}>
-        <FormularioProducto tipoInicial={tipoFijo} onGuardado={crearProducto} />
+        <FormularioProducto tipoInicial={tipoFijo} categoriaInicial={categoriaFija || undefined} onGuardado={crearProducto} />
+      </ModalOverlay>
+
+      <ModalOverlay abierto={!!productoEnEdicion} onCerrar={() => setProductoEnEdicion(null)}>
+        <FormularioProducto productoExistente={productoEnEdicion} onGuardado={guardarEdicion} />
       </ModalOverlay>
     </div>
+  );
+}
+
+function ListaProductos(props) {
+  return (
+    <Suspense fallback={null}>
+      <ListaProductosContenido {...props} />
+    </Suspense>
   );
 }
 

@@ -7,10 +7,12 @@ import styles from './AdminTopbar.module.css';
 function AdminTopbar() {
   return (
     <header className={styles.topbar}>
-      <p className={styles.titulo}>Panel de administración</p>
       <div className={styles.usuario}>
-        <span className={styles.avatar}>JC</span>
-        <span>Jaume Campo</span>
+        <div className={styles.usuarioInfo}>
+          <span className={styles.usuarioNombre}>Miriam Reina</span>
+          <span className={styles.usuarioRol}>Frontend Developer</span>
+        </div>
+        <span className={styles.avatar}>MR</span>
       </div>
     </header>
   );

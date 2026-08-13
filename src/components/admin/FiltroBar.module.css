@@ -5,7 +5,7 @@
   gap: var(--spacing-4);
   margin-bottom: var(--spacing-5);
   padding-bottom: var(--spacing-5);
-  border-bottom: var(--border-thin) solid var(--color-hairline);
+  border-bottom: var(--border-thin) solid var(--color-gris-200);
 }
 
 .select {
@@ -20,12 +20,33 @@
 }
 
 .selectInput {
-  border: 1px solid var(--color-gris-300);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: var(--border-regular) solid var(--color-gris-300);
   border-radius: var(--radius-inputs);
-  padding: 12px var(--spacing-1);
+  padding: 12px var(--spacing-6) 12px var(--spacing-3);
   font-family: var(--font-base);
   font-size: var(--text-small);
-  background: var(--color-fondo);
+  background-color: var(--color-fondo);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23757575' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-3) center;
   color: var(--color-tinta);
   min-width: 160px;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease-marca);
+}
+
+.selectInput:hover {
+  border-color: var(--color-gris-400);
+}
+
+.selectInput:focus {
+  outline: none;
+  border-color: var(--color-tinta);
+}
+
+.selectInput option {
+  cursor: pointer;
 }

@@ -8,28 +8,41 @@
    Solo Español — sin next-intl, sin prefijo de idioma en la URL.
    ============================================================ */
 
+import { Suspense } from 'react';
 import '@/styles/global.css';
-import { AdminSidebar, AdminTopbar, ToastProvider } from '@/components/admin';
+import {
+  AdminSidebar, AdminMarca, AdminTopbar, ToastProvider, CategoriasProvider,
+} from '@/components/admin';
 import styles from './layout.module.css';
 
 export const metadata = {
-  title: 'Panel de administración · Fely Campo',
+  title: 'Admin Panel - Fely Campo',
   description: 'Gestión interna de producto, pedidos, diseño de landing y contenido de Fely Campo.',
+  icons: {
+    icon: '/img/logo/favicon-felycampo-admin.jpg',
+  },
 };
 
 export default function AdminLayout({ children }) {
   return (
     <html lang="es">
       <body>
-        <ToastProvider>
-          <div className={styles.shell}>
-            <AdminSidebar />
-            <div className={styles.principal}>
-              <AdminTopbar />
-              <main className={styles.contenido}>{children}</main>
+        <CategoriasProvider>
+          <ToastProvider>
+            <div className={styles.shell}>
+              <div className={styles.topRow}>
+                <AdminMarca />
+                <AdminTopbar />
+              </div>
+              <div className={styles.body}>
+                <Suspense fallback={null}>
+                  <AdminSidebar />
+                </Suspense>
+                <main className={styles.contenido}>{children}</main>
+              </div>
             </div>
-          </div>
-        </ToastProvider>
+          </ToastProvider>
+        </CategoriasProvider>
       </body>
     </html>
   );

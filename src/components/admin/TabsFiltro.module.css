@@ -1,0 +1,78 @@
+.tabs {
+  display: flex;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-5);
+  border-bottom: var(--border-thin) solid var(--color-gris-200);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-2) var(--spacing-4);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-base);
+  font-size: var(--text-label);
+  color: var(--color-gris-500);
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--color-tinta);
+}
+
+.tab.activo {
+  color: var(--color-tinta);
+  border-bottom-color: var(--color-tinta);
+}
+
+/* Variantes de color — mismos valores que EstadoPublicacionBadge.module.css
+   (no se puede leer un CSS module desde otro, así que si cambia uno hay
+   que cambiar el otro). */
+.publicado {
+  background: #DCF3E1;
+  color: #1E7B34;
+}
+
+.programado {
+  background: #FBEFC6;
+  color: #8A6A00;
+}
+
+.borrador {
+  background: #DCE9FB;
+  color: #1D5FA8;
+}
+
+.archivado {
+  background: var(--color-gris-200);
+  color: var(--color-gris-700);
+}
+
+/* Variantes de color — mismos valores que EstadoPedidoBadge.module.css. */
+.enProceso {
+  background: #DCE9FB;
+  color: #1D5FA8;
+}
+
+.enviado {
+  background: #FBEFC6;
+  color: #8A6A00;
+}
+
+.completado {
+  background: #DCF3E1;
+  color: #1E7B34;
+}
+
+/* Variantes de color — mismos valores que EstadoContactoBadge.module.css. */
+.pendiente {
+  background: #FBEFC6;
+  color: #8A6A00;
+}
+
+.contactado {
+  background: #DCF3E1;
+  color: #1E7B34;
+}

@@ -1,13 +1,22 @@
 .shell {
   display: flex;
-  min-height: 100vh;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.principal {
+.topRow {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  background: var(--color-rosa-oscuro);
+  border-bottom: var(--border-thin) solid var(--color-fondo);
+}
+
+.body {
   flex: 1;
   display: flex;
-  flex-direction: column;
   min-width: 0;
+  min-height: 0;
 }
 
 .contenido {
@@ -15,4 +24,7 @@
   padding: var(--spacing-6);
   max-width: 1200px;
   width: 100%;
+  overflow-y: auto;
+  background: var(--color-fondo);
+  border-left: var(--border-thin) solid var(--color-gris-200);
 }

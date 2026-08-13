@@ -11,7 +11,7 @@
   justify-content: space-between;
   gap: var(--spacing-5);
   padding: var(--spacing-5);
-  border: var(--border-regular) solid var(--color-hairline);
+  border: var(--border-regular) solid var(--color-gris-200);
 }
 
 .nombre {

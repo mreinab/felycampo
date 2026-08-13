@@ -11,14 +11,62 @@
   align-items: center;
   gap: var(--spacing-3);
   padding: var(--spacing-3) var(--spacing-4);
-  background: var(--color-rosa-velo);
+  background: var(--color-tinta);
   margin-bottom: var(--spacing-3);
 }
 
 .bulkTexto {
   font-size: var(--text-caption);
-  color: var(--color-tinta);
+  color: var(--color-fondo);
   margin-right: auto;
+}
+
+.bulkBar button {
+  color: var(--color-fondo);
+  border-color: var(--color-fondo);
+}
+
+.bulkBar .bulkPublicar {
+  background: #1E7B34;
+  border-color: #1E7B34;
+}
+.bulkBar .bulkPublicar:hover {
+  background: #17612A;
+  border-color: #17612A;
+}
+
+.bulkBar .bulkDesactivar {
+  background: var(--color-gris-500);
+  border-color: var(--color-gris-500);
+}
+.bulkBar .bulkDesactivar:hover {
+  background: var(--color-gris-700);
+  border-color: var(--color-gris-700);
+}
+
+.bulkBar .bulkBorrar {
+  background: #C0392B;
+  border-color: #C0392B;
+}
+.bulkBar .bulkBorrar:hover {
+  background: #A5311F;
+  border-color: #A5311F;
+}
+
+.bulkCerrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-fondo);
+  transition: color 0.25s var(--ease-marca);
+}
+
+.bulkCerrar:hover {
+  color: var(--color-rosa);
 }
 
 .acciones {
@@ -34,5 +82,40 @@
 
 .iconoAnadir {
   vertical-align: text-bottom;
-  margin-right: var(--spacing-1);
+}
+
+.categoriasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.categoriaTarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-6) var(--spacing-4);
+  border: var(--border-regular) solid var(--color-gris-200);
+  color: var(--color-tinta);
+  text-align: center;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.categoriaTarjeta:hover {
+  border-color: var(--color-tinta);
+  background: var(--color-rosa-velo);
+}
+
+.categoriaIcono {
+  width: 28px;
+  height: 28px;
+  color: var(--color-rosa-oscuro);
+}
+
+.categoriaNombre {
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
 }

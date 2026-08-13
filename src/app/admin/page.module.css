@@ -6,7 +6,7 @@
 }
 
 .widget {
-  border: var(--border-regular) solid var(--color-hairline);
+  border: var(--border-regular) solid var(--color-gris-200);
   padding: var(--spacing-5);
 }
 
@@ -40,7 +40,7 @@
 
 .acceso {
   display: block;
-  border: var(--border-regular) solid var(--color-hairline);
+  border: var(--border-regular) solid var(--color-gris-200);
   padding: var(--spacing-5);
   transition: border-color 0.2s var(--ease-marca);
 }

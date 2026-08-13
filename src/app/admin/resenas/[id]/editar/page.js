@@ -2,6 +2,7 @@
 
 import { use } from 'react';
 import { notFound } from 'next/navigation';
+import { BotonVolver } from '@/components/admin';
 import { resenasMock } from '@/components/admin/mockData';
 import FormularioResena from '@/components/admin/FormularioResena';
 
@@ -11,5 +12,10 @@ export default function EditarResenaPage({ params }) {
 
   if (!resena) notFound();
 
-  return <FormularioResena resenaExistente={resena} />;
+  return (
+    <div>
+      <BotonVolver href="/admin/resenas" />
+      <FormularioResena resenaExistente={resena} />
+    </div>
+  );
 }

@@ -1,0 +1,68 @@
+.idFila {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.miniaturaFila {
+  position: relative;
+  display: inline-block;
+}
+
+.miniatura {
+  display: block;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  background: var(--color-gris-100);
+}
+
+.miniaturaExtra {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1px var(--spacing-1);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  font-family: var(--font-base);
+  font-size: var(--text-nano);
+  line-height: 1.4;
+}
+
+.notaIcono {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-rosa-oscuro);
+  cursor: help;
+}
+
+.notaTooltip {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + var(--spacing-3));
+  transform: translateY(-50%);
+  z-index: 10;
+  width: max-content;
+  max-width: 240px;
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  font-family: var(--font-base);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--leading-base);
+  text-align: left;
+  white-space: normal;
+  text-transform: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s var(--ease-marca);
+}
+
+.notaIcono:hover .notaTooltip,
+.notaIcono:focus-visible .notaTooltip {
+  opacity: 1;
+  visibility: visible;
+}

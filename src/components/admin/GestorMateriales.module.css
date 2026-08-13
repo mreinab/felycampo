@@ -2,7 +2,7 @@
   display: flex;
   gap: var(--spacing-2);
   margin-bottom: var(--spacing-6);
-  border-bottom: var(--border-thin) solid var(--color-hairline);
+  border-bottom: var(--border-thin) solid var(--color-gris-200);
 }
 
 .tab {
@@ -31,7 +31,7 @@
   align-items: center;
   gap: var(--spacing-3);
   padding: var(--spacing-3) 0;
-  border-bottom: var(--border-thin) solid var(--color-hairline);
+  border-bottom: var(--border-thin) solid var(--color-gris-200);
 }
 
 .swatch {

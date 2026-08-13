@@ -24,6 +24,7 @@ const VARIANTE_POR_ESTADO = {
   Enviado: 'velo',
   Oculta: 'velo',
   Oculto: 'velo',
+  Inactivo: 'velo',
 
   Fallido: 'agotado',
   Agotado: 'agotado',
