@@ -691,77 +691,95 @@ export const categoriasMock = {
   // sustituye al antiguo par genérico Runway/Colecciones. `temporada` es
   // solo para mostrar (p.ej. tarjeta/subtítulo), no participa en filtros.
   // `nombre` en mayúscula-minúscula (no todo mayúsculas) — mismo criterio
-  // de capitalización que el resto de nombres del mock.
+  // de capitalización que el resto de nombres del mock. `numeroLooks: 12`
+  // en las 25 colecciones de archivo (Runway/Novia/Fiesta) para que todas
+  // tengan la misma estructura de rejilla de looks que una creada a mano
+  // desde el modal — sin `looks` (ninguna tiene fotos/nombres/descripción
+  // guardados todavía, todos los huecos empiezan vacíos "Añadir imágenes").
   archivo: [
     {
-      id: 'cat11', nombre: 'La Colección', temporada: 'Otoño-Invierno 26/27', visible: true, orden: 1, fija: true,
+      id: 'cat11', nombre: 'La Colección', temporada: 'Otoño-Invierno 26/27', visible: true, orden: 1, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat12', nombre: 'Dreaming', temporada: 'Primavera-Verano 26', visible: true, orden: 2, fija: true,
+      id: 'cat12', nombre: 'Dreaming', temporada: 'Primavera-Verano 26', visible: true, orden: 2, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat13', nombre: 'Self World', temporada: 'Otoño-Invierno 25/26', visible: true, orden: 3, fija: true,
+      id: 'cat13', nombre: 'Self World', temporada: 'Otoño-Invierno 25/26', visible: true, orden: 3, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat14', nombre: 'Lei Zu', temporada: 'Primavera-Verano 25', visible: true, orden: 4, fija: true,
+      id: 'cat14', nombre: 'Lei Zu', temporada: 'Primavera-Verano 25', visible: true, orden: 4, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat15', nombre: 'The Way Here', temporada: 'Otoño-Invierno 24/25', visible: true, orden: 5, fija: true,
+      id: 'cat15', nombre: 'The Way Here', temporada: 'Otoño-Invierno 24/25', visible: true, orden: 5, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat16', nombre: 'Zigurat', temporada: 'Primavera-Verano 24', visible: true, orden: 6, fija: true,
+      id: 'cat16', nombre: 'Zigurat', temporada: 'Primavera-Verano 24', visible: true, orden: 6, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat17', nombre: 'Tempore', temporada: 'Otoño-Invierno 23/24', visible: true, orden: 7, fija: true,
+      id: 'cat17', nombre: 'Tempore', temporada: 'Otoño-Invierno 23/24', visible: true, orden: 7, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat18', nombre: 'Nagare', temporada: 'Primavera-Verano 23', visible: true, orden: 8, fija: true,
+      id: 'cat18', nombre: 'Nagare', temporada: 'Primavera-Verano 23', visible: true, orden: 8, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat19', nombre: 'Diafonía', temporada: 'Otoño-Invierno 22/23', visible: true, orden: 9, fija: true,
+      id: 'cat19', nombre: 'Diafonía', temporada: 'Otoño-Invierno 22/23', visible: true, orden: 9, fija: true, numeroLooks: 12,
     },
   ],
   // Archivo de colecciones de Novia — mismo criterio que `archivo` (fija,
-  // sin reordenar/añadir desde la UI), pero sin `temporada`: estos nombres
-  // no siguen el patrón limpio "Estación Año" de Runway, así que no llevan
-  // badge AW/SS.
+  // sin reordenar/añadir desde la UI, numeroLooks: 12), pero sin
+  // `temporada`: estos nombres no siguen el patrón limpio "Estación Año"
+  // de Runway, así que no llevan badge AW/SS.
   novia: [
-    { id: 'cat20', nombre: 'Bride 27', visible: true, orden: 1, fija: true },
-    { id: 'cat21', nombre: 'ME', visible: true, orden: 2, fija: true },
     {
-      id: 'cat22', nombre: 'Bambú Novia', visible: true, orden: 3, fija: true,
+      id: 'cat20', nombre: 'Bride 27', visible: true, orden: 1, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat23', nombre: 'Savia Novia', visible: true, orden: 4, fija: true,
+      id: 'cat21', nombre: 'ME', visible: true, orden: 2, fija: true, numeroLooks: 12,
     },
-    { id: 'cat24', nombre: 'Inside', visible: true, orden: 5, fija: true },
     {
-      id: 'cat25', nombre: 'Introspección', visible: true, orden: 6, fija: true,
+      id: 'cat22', nombre: 'Bambú Novia', visible: true, orden: 3, fija: true, numeroLooks: 12,
+    },
+    {
+      id: 'cat23', nombre: 'Savia Novia', visible: true, orden: 4, fija: true, numeroLooks: 12,
+    },
+    {
+      id: 'cat24', nombre: 'Inside', visible: true, orden: 5, fija: true, numeroLooks: 12,
+    },
+    {
+      id: 'cat25', nombre: 'Introspección', visible: true, orden: 6, fija: true, numeroLooks: 12,
     },
   ],
   // Archivo de colecciones de Fiesta — mismo criterio que `novia`.
   fiesta: [
     {
-      id: 'cat26', nombre: 'Primavera Verano 2026', visible: true, orden: 1, fija: true,
+      id: 'cat26', nombre: 'Primavera Verano 2026', visible: true, orden: 1, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat27', nombre: 'Primavera Verano 2025', visible: true, orden: 2, fija: true,
+      id: 'cat27', nombre: 'Primavera Verano 2025', visible: true, orden: 2, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat28', nombre: 'Prêt-à-porter', visible: true, orden: 3, fija: true,
-    },
-    { id: 'cat29', nombre: 'En Madrid', visible: true, orden: 4, fija: true },
-    { id: 'cat30', nombre: 'A Walk', visible: true, orden: 5, fija: true },
-    { id: 'cat31', nombre: 'Bambú', visible: true, orden: 6, fija: true },
-    { id: 'cat32', nombre: 'Savia', visible: true, orden: 7, fija: true },
-    {
-      id: 'cat33', nombre: 'Miscelanea', visible: true, orden: 8, fija: true,
+      id: 'cat28', nombre: 'Prêt-à-porter', visible: true, orden: 3, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat34', nombre: 'Essentielle', visible: true, orden: 9, fija: true,
+      id: 'cat29', nombre: 'En Madrid', visible: true, orden: 4, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat35', nombre: 'Furisode', visible: true, orden: 10, fija: true,
+      id: 'cat30', nombre: 'A Walk', visible: true, orden: 5, fija: true, numeroLooks: 12,
+    },
+    {
+      id: 'cat31', nombre: 'Bambú', visible: true, orden: 6, fija: true, numeroLooks: 12,
+    },
+    {
+      id: 'cat32', nombre: 'Savia', visible: true, orden: 7, fija: true, numeroLooks: 12,
+    },
+    {
+      id: 'cat33', nombre: 'Miscelanea', visible: true, orden: 8, fija: true, numeroLooks: 12,
+    },
+    {
+      id: 'cat34', nombre: 'Essentielle', visible: true, orden: 9, fija: true, numeroLooks: 12,
+    },
+    {
+      id: 'cat35', nombre: 'Furisode', visible: true, orden: 10, fija: true, numeroLooks: 12,
     },
   ],
 };

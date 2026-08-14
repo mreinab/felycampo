@@ -53,23 +53,18 @@
   display: none;
 }
 
-.fila {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-4);
-  margin-top: var(--spacing-5);
+/* FormSeccion.module.css .campos es una grid de 2 columnas por defecto
+   (mismo criterio que FormularioProducto.jsx .galeria) — para contenido
+   que debe ocupar el ancho completo de la sección, no una de las 2
+   columnas. */
+.seccionAncha {
+  grid-column: 1 / -1;
 }
 
-.filaTemporada {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-  margin-top: var(--spacing-5);
-}
-
-.pie {
+.acciones {
   display: flex;
   justify-content: flex-end;
+  gap: var(--spacing-3);
   margin-top: var(--spacing-6);
 }
 

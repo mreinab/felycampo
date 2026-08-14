@@ -15,9 +15,11 @@
 import { Suspense, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Plus, X, Pencil } from 'lucide-react';
 import {
-  PageHeader, TablaAdmin, EstadoPublicacionBadge, FiltroBar, FiltroSelector, TabsFiltro, ModalOverlay, BotonVolver, useToast, useCategorias,
+  Plus, X, Pencil, List, LayoutGrid, Upload, ChevronLeft, ChevronRight, ArrowUpFromLine, Check,
+} from 'lucide-react';
+import {
+  PageHeader, TablaAdmin, EstadoPublicacionBadge, FiltroBar, FiltroSelector, TabsFiltro, ModalOverlay, ConfirmarBorrado, BotonVolver, useToast, useCategorias,
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import {
@@ -26,6 +28,7 @@ import {
 import { calcularEstadoPublicacion, CONFIG_ESTADO_PUBLICACION } from './EstadoPublicacionBadge';
 import FormularioProducto from './FormularioProducto';
 import FormularioColeccion from './FormularioColeccion';
+import FormularioLook from './FormularioLook';
 import styles from './ListaProductos.module.css';
 
 const OPCIONES_PUBLICACION = [
@@ -46,6 +49,73 @@ function stockTotal(producto) {
   return producto.tallas.reduce((total, t) => total + t.stock, 0);
 }
 
+// Tarjeta de un look en la rejilla — necesita su propio estado (índice de
+// la imagen mostrada), así que no puede vivir inline en el .map() de
+// ListaProductosContenido (las reglas de hooks no lo permiten). Mismo
+// patrón de slide que GridPedidos.jsx `Tarjeta`: flechas + puntos, pero
+// aquí desliza entre imágenes del look, no entre items de un pedido.
+function LookTarjeta({
+  look, onEditar, onEliminar,
+}) {
+  const [indice, setIndice] = useState(0);
+  const imagenes = look.imagenes || [];
+  const hayVarias = imagenes.length > 1;
+
+  function irAnterior(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIndice((i) => (i === 0 ? imagenes.length - 1 : i - 1));
+  }
+
+  function irSiguiente(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIndice((i) => (i === imagenes.length - 1 ? 0 : i + 1));
+  }
+
+  return (
+    <div className={styles.lookTarjeta}>
+      <button type="button" className={styles.lookTarjetaBoton} onClick={onEditar}>
+        {imagenes.length > 0 ? (
+          <div className={styles.lookImagenWrap}>
+            <img src={imagenes[indice]} alt="" className={styles.lookImagen} />
+            {hayVarias && (
+              <>
+                <button type="button" className={`${styles.flecha} ${styles.flechaIzq}`} onClick={irAnterior} aria-label="Imagen anterior">
+                  <ChevronLeft size={16} aria-hidden="true" />
+                </button>
+                <button type="button" className={`${styles.flecha} ${styles.flechaDer}`} onClick={irSiguiente} aria-label="Imagen siguiente">
+                  <ChevronRight size={16} aria-hidden="true" />
+                </button>
+                <div className={styles.puntos}>
+                  {imagenes.map((src, i) => (
+                    <span key={src} className={`${styles.punto} ${i === indice ? styles.puntoActivo : ''}`} />
+                  ))}
+                </div>
+              </>
+            )}
+            {hayVarias && <span className={styles.lookContador}>{`+${imagenes.length - 1}`}</span>}
+          </div>
+        ) : (
+          <div className={styles.lookVacio}>
+            <Upload size={20} strokeWidth={1} aria-hidden="true" />
+            <span>Añadir imágenes</span>
+          </div>
+        )}
+        <div className={styles.lookInfo}>
+          <span className={styles.lookNombre}>{look.nombre}</span>
+        </div>
+      </button>
+      <button type="button" className={styles.lookQuitar} aria-label={`Borrar ${look.nombre}`} onClick={onEliminar}>
+        <X size={14} />
+      </button>
+      <button type="button" className={styles.lookEditar} aria-label={`Editar ${look.nombre}`} onClick={onEditar}>
+        <Pencil size={14} />
+      </button>
+    </div>
+  );
+}
+
 function ListaProductosContenido({
   tipoFijo, titulo, agruparPorCategoria = false, iconoCategoria: IconoCategoria, imagenesCategoria,
 }) {
@@ -55,7 +125,9 @@ function ListaProductosContenido({
   // sabe ese mapeo, único sitio que lo sabe.
   const rutaBase = rutaTipoProducto(tipoFijo);
   const { mostrarToast } = useToast();
-  const { categorias, anadirCategoria, editarCategoria } = useCategorias();
+  const {
+    categorias, anadirCategoria, editarCategoria, eliminarCategoria,
+  } = useCategorias();
   const searchParams = useSearchParams();
   const categoriaFija = searchParams.get('categoria') || '';
   const [productos, setProductos] = useState(productosMock);
@@ -64,11 +136,13 @@ function ListaProductosContenido({
   const [filtroPublicacion, setFiltroPublicacion] = useState('Todos');
   const [filtroColeccion, setFiltroColeccion] = useState('Todas');
   const [seleccionadas, setSeleccionadas] = useState([]);
+  const [confirmarBorradoBloqueAbierto, setConfirmarBorradoBloqueAbierto] = useState(false);
   const [nuevoAbierto, setNuevoAbierto] = useState(false);
   const [productoEnEdicion, setProductoEnEdicion] = useState(null);
   const [filtroTemporada, setFiltroTemporada] = useState('Todas');
   const [nuevaColeccionAbierta, setNuevaColeccionAbierta] = useState(false);
   const [coleccionEnEdicion, setColeccionEnEdicion] = useState(null);
+  const [coleccionABorrar, setColeccionABorrar] = useState(null);
 
   function crearColeccion(datos) {
     // La colección nueva es, por definición, la más reciente del archivo
@@ -97,7 +171,65 @@ function ListaProductosContenido({
     setColeccionEnEdicion(null);
   }
 
+  // "Borrar colección" (dentro del formulario de edición) cierra ese modal
+  // y abre la confirmación en su lugar, en vez de anidar un ModalOverlay
+  // dentro de otro — más simple y evita dos fondos oscuros superpuestos.
+  function pedirBorrarColeccion() {
+    setColeccionABorrar(coleccionEnEdicion);
+    setColeccionEnEdicion(null);
+  }
+
+  function confirmarBorrarColeccion() {
+    eliminarCategoria(tipoFijo, coleccionABorrar.id);
+    mostrarToast(`"${coleccionABorrar.nombre}" borrada (demo)`);
+    setColeccionABorrar(null);
+  }
+
   const categoriaActual = categoriaFija ? categorias[tipoFijo]?.find((c) => c.id === categoriaFija) : null;
+
+  // Vista de looks: si la colección se creó con `numeroLooks` (ver
+  // FormularioColeccion), en vez de la tabla/rejilla de productos reales
+  // se pinta una rejilla de N huecos "Look 1"..."Look N" — `looks` es
+  // disperso (`categoriaActual.looks`, un hueco por look ya editado), los
+  // que faltan se rellenan aquí con un placeholder de solo nombre.
+  const looks = categoriaActual?.numeroLooks
+    ? Array.from({ length: categoriaActual.numeroLooks }, (_, i) => categoriaActual.looks?.[i] || { nombre: `Look ${i + 1}` })
+    : [];
+  // "Publicar colección" no se enseña hasta que el primer look esté
+  // completo (al menos una imagen subida) — publicar una colección sin
+  // ni un look con foto no tendría sentido.
+  const hayLookCompleto = looks.some((l) => l.imagenes?.length > 0);
+  const [vistaLooks, setVistaLooks] = useState('rejilla');
+  const [lookEnEdicionIndice, setLookEnEdicionIndice] = useState(null);
+  const [lookAEliminarIndice, setLookAEliminarIndice] = useState(null);
+
+  function guardarLook(datos) {
+    const nuevosLooks = looks.map((l, i) => (i === lookEnEdicionIndice ? datos : l));
+    editarCategoria(tipoFijo, categoriaActual.id, { looks: nuevosLooks });
+    setLookEnEdicionIndice(null);
+    mostrarToast(`"${datos.nombre}" guardado (demo)`);
+  }
+
+  function agregarLook() {
+    editarCategoria(tipoFijo, categoriaActual.id, { numeroLooks: categoriaActual.numeroLooks + 1 });
+    mostrarToast(`Look ${categoriaActual.numeroLooks + 1} añadido (demo)`);
+  }
+
+  function publicarColeccion() {
+    editarCategoria(tipoFijo, categoriaActual.id, { publicada: true });
+    mostrarToast(`"${categoriaActual.nombre}" publicada (demo) — sigue sin haber una web pública real detrás`);
+  }
+
+  function confirmarEliminarLook() {
+    const indice = lookAEliminarIndice;
+    const nuevosLooks = looks.filter((_, i) => i !== indice);
+    editarCategoria(tipoFijo, categoriaActual.id, {
+      numeroLooks: categoriaActual.numeroLooks - 1,
+      looks: nuevosLooks,
+    });
+    setLookAEliminarIndice(null);
+    mostrarToast('Look eliminado (demo)');
+  }
 
   function etiquetaCategoria(tipo, categoriaId) {
     return categorias[tipo]?.find((c) => c.id === categoriaId)?.nombre || '—';
@@ -129,12 +261,11 @@ function ListaProductosContenido({
     setSeleccionadas([]);
   }
 
-  function borrarEnBloque() {
-    if (!window.confirm(`¿Seguro que quieres borrar ${seleccionadas.length} producto${seleccionadas.length === 1 ? '' : 's'}?`)) return;
-    if (!window.confirm('Esta acción no se puede deshacer. ¿Confirmas el borrado?')) return;
+  function confirmarBorrarEnBloque() {
     setProductos((actual) => actual.filter((p) => !seleccionadas.includes(p.id)));
     mostrarToast('Productos eliminados (demo)');
     setSeleccionadas([]);
+    setConfirmarBorradoBloqueAbierto(false);
   }
 
   function duplicar(producto) {
@@ -155,20 +286,125 @@ function ListaProductosContenido({
     setProductoEnEdicion(null);
   }
 
+  if (categoriaActual?.numeroLooks) {
+    return (
+      <div>
+        <div className={styles.cabeceraSuperior}>
+          <BotonVolver href={rutaBase}>Atrás</BotonVolver>
+          <div className={styles.vistaToggle} role="group" aria-label="Cambiar vista">
+            <button
+              type="button"
+              className={`${styles.vistaBoton} ${vistaLooks === 'tabla' ? styles.vistaBotonActiva : ''}`}
+              aria-pressed={vistaLooks === 'tabla'}
+              aria-label="Vista de tabla"
+              onClick={() => setVistaLooks('tabla')}
+            >
+              <List size={16} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className={`${styles.vistaBoton} ${vistaLooks === 'rejilla' ? styles.vistaBotonActiva : ''}`}
+              aria-pressed={vistaLooks === 'rejilla'}
+              aria-label="Vista de rejilla"
+              onClick={() => setVistaLooks('rejilla')}
+            >
+              <LayoutGrid size={16} aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+        <PageHeader
+          titulo={`${titulo} — ${categoriaActual.nombre}`}
+          subtitulo={`${categoriaActual.numeroLooks} look${categoriaActual.numeroLooks === 1 ? '' : 's'}${categoriaActual.publicada ? ' · Publicada' : ''}`}
+        >
+          {hayLookCompleto && (
+            <Boton
+              variante="solido"
+              className={styles.publicarBoton}
+              onClick={publicarColeccion}
+              desactivado={categoriaActual.publicada}
+            >
+              {categoriaActual.publicada ? <Check size={14} /> : <ArrowUpFromLine size={14} />}
+              {categoriaActual.publicada ? 'Colección publicada' : 'Publicar colección'}
+            </Boton>
+          )}
+          <Boton variante="solido" onClick={agregarLook}>
+            <Plus size={14} />
+            Añadir Look
+          </Boton>
+        </PageHeader>
+
+        {vistaLooks === 'rejilla' ? (
+          <div className={styles.looksGrid}>
+            {looks.map((look, indice) => (
+              <LookTarjeta
+                key={look.nombre + indice}
+                look={look}
+                onEditar={() => setLookEnEdicionIndice(indice)}
+                onEliminar={() => setLookAEliminarIndice(indice)}
+              />
+            ))}
+          </div>
+        ) : (
+          <TablaAdmin
+            columnas={[
+              {
+                clave: 'imagen',
+                etiqueta: '',
+                render: (look) => (look.imagenes?.[0]
+                  ? <img src={look.imagenes[0]} alt="" className={styles.miniatura} />
+                  : <span className={styles.miniatura} />),
+              },
+              { clave: 'nombre', etiqueta: 'Look' },
+              {
+                clave: 'imagenes', etiqueta: 'Imágenes', render: (look) => look.imagenes?.length || 0,
+              },
+              { clave: 'descripcion', etiqueta: 'Descripción', render: (look) => look.descripcion || '—' },
+            ]}
+            filas={looks}
+            claveFila={(look) => look.nombre}
+            onClickFila={(look) => setLookEnEdicionIndice(looks.indexOf(look))}
+          />
+        )}
+
+        <ModalOverlay abierto={lookEnEdicionIndice !== null} onCerrar={() => setLookEnEdicionIndice(null)}>
+          {lookEnEdicionIndice !== null && (
+            <FormularioLook
+              key={lookEnEdicionIndice}
+              numero={lookEnEdicionIndice + 1}
+              look={looks[lookEnEdicionIndice]}
+              onGuardado={guardarLook}
+            />
+          )}
+        </ModalOverlay>
+
+        <ConfirmarBorrado
+          abierto={lookAEliminarIndice !== null}
+          titulo={lookAEliminarIndice !== null ? `¿Borrar "${looks[lookAEliminarIndice]?.nombre}"?` : ''}
+          onConfirmar={confirmarEliminarLook}
+          onCancelar={() => setLookAEliminarIndice(null)}
+        />
+      </div>
+    );
+  }
+
   if (agruparPorCategoria && !categoriaFija) {
-    // `orden` ascendente = más reciente primero (así están definidas las
-    // colecciones de Runway/Novia/Fiesta en mockData.js) — sin este sort
-    // una colección añadida desde el modal se pintaría en su posición de
-    // array, no en su sitio cronológico.
-    const todasLasCategorias = (categorias[tipoFijo] || [])
-      .filter((c) => c.visible)
-      .sort((a, b) => a.orden - b.orden);
-    const hayTemporadas = todasLasCategorias.some((c) => c.temporada);
+    const categoriasSinFiltrar = categorias[tipoFijo] || [];
     // Archivos de colecciones (Runway/Novia/Fiesta) tienen categorías fijas
     // (ver categoriasMock en mockData.js) — solo ahí tiene sentido dar de
     // alta una colección nueva desde aquí; Pret-à-porter/Atelier ya tienen
     // su propia alta de categoría en /admin/categorias.
-    const esColeccionFija = todasLasCategorias.some((c) => c.fija);
+    const esColeccionFija = categoriasSinFiltrar.some((c) => c.fija);
+    // `orden` ascendente = más reciente primero (así están definidas las
+    // colecciones de Runway/Novia/Fiesta en mockData.js) — sin este sort
+    // una colección añadida desde el modal se pintaría en su posición de
+    // array, no en su sitio cronológico. Solo para `fija`: Prêt-à-porter/
+    // Atelier se reordenan por drag & drop (`reordenarCategorias`), que
+    // cambia el array pero no toca `orden` — ordenar esos por `orden`
+    // ignoraría el reorden manual del usuario.
+    const todasLasCategorias = esColeccionFija
+      ? categoriasSinFiltrar.filter((c) => c.visible).sort((a, b) => a.orden - b.orden)
+      : categoriasSinFiltrar.filter((c) => c.visible);
+    const hayTemporadas = todasLasCategorias.some((c) => c.temporada);
     const categoriasVisibles = hayTemporadas && filtroTemporada !== 'Todas'
       ? todasLasCategorias.filter((c) => codigoTemporada(c.temporada).startsWith(filtroTemporada))
       : todasLasCategorias;
@@ -259,8 +495,18 @@ function ListaProductosContenido({
               onGuardado={coleccionEnEdicion ? guardarEdicionColeccion : crearColeccion}
               pedirTemporada={hayTemporadas}
               categoriaExistente={coleccionEnEdicion}
+              onBorrar={coleccionEnEdicion ? pedirBorrarColeccion : undefined}
             />
           </ModalOverlay>
+        )}
+
+        {esColeccionFija && (
+          <ConfirmarBorrado
+            abierto={Boolean(coleccionABorrar)}
+            titulo={coleccionABorrar ? `¿Borrar "${coleccionABorrar.nombre}"?` : ''}
+            onConfirmar={confirmarBorrarColeccion}
+            onCancelar={() => setColeccionABorrar(null)}
+          />
         )}
       </div>
     );
@@ -306,7 +552,7 @@ function ListaProductosContenido({
           <span className={styles.bulkTexto}>{seleccionadas.length} seleccionados</span>
           <Boton variante="contorno" tamano="s" className={styles.bulkPublicar} onClick={() => aplicarEnBloque({ estado: 'Activo' })}>Publicar</Boton>
           <Boton variante="contorno" tamano="s" className={styles.bulkDesactivar} onClick={() => aplicarEnBloque({ estado: 'Archivado' })}>Archivar</Boton>
-          <Boton variante="contorno" tamano="s" className={styles.bulkBorrar} onClick={borrarEnBloque}>Borrar</Boton>
+          <Boton variante="contorno" tamano="s" className={styles.bulkBorrar} onClick={() => setConfirmarBorradoBloqueAbierto(true)}>Borrar</Boton>
           <button type="button" className={styles.bulkCerrar} aria-label="Deseleccionar todo" onClick={() => setSeleccionadas([])}>
             <X size={16} />
           </button>
@@ -345,6 +591,13 @@ function ListaProductosContenido({
       <ModalOverlay abierto={!!productoEnEdicion} onCerrar={() => setProductoEnEdicion(null)}>
         <FormularioProducto productoExistente={productoEnEdicion} onGuardado={guardarEdicion} />
       </ModalOverlay>
+
+      <ConfirmarBorrado
+        abierto={confirmarBorradoBloqueAbierto}
+        titulo={`¿Borrar ${seleccionadas.length} producto${seleccionadas.length === 1 ? '' : 's'}?`}
+        onConfirmar={confirmarBorrarEnBloque}
+        onCancelar={() => setConfirmarBorradoBloqueAbierto(false)}
+      />
     </div>
   );
 }

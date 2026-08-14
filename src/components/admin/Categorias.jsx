@@ -53,6 +53,16 @@ function CategoriasProvider({ children }) {
     }));
   }, []);
 
+  // Borra una categoría entera — hoy solo lo usa "Borrar colección" en
+  // FormularioColeccion (Runway/Novia/Fiesta); Prêt-à-porter/Atelier no
+  // tienen flujo de borrado de categoría, solo ocultar (`alternarVisible`).
+  const eliminarCategoria = useCallback((tipo, id) => {
+    setCategorias((actual) => ({
+      ...actual,
+      [tipo]: actual[tipo].filter((c) => c.id !== id),
+    }));
+  }, []);
+
   const alternarVisible = useCallback((tipo, id) => {
     setCategorias((actual) => ({
       ...actual,
@@ -66,7 +76,7 @@ function CategoriasProvider({ children }) {
 
   return (
     <CategoriasContext.Provider value={{
-      categorias, anadirCategoria, editarCategoria, alternarVisible, reordenarCategorias,
+      categorias, anadirCategoria, editarCategoria, eliminarCategoria, alternarVisible, reordenarCategorias,
     }}
     >
       {children}

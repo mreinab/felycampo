@@ -14,6 +14,7 @@ export { CategoriasProvider, useCategorias } from './Categorias';
 export { default as SelectorIdioma } from './SelectorIdioma';
 export { default as PickerDrawer } from './PickerDrawer';
 export { default as ModalOverlay } from './ModalOverlay';
+export { default as ConfirmarBorrado } from './ConfirmarBorrado';
 export { default as DragList } from './DragList';
 export { default as PageHeader } from './PageHeader';
 export { default as FiltroBar, Selector as FiltroSelector } from './FiltroBar';

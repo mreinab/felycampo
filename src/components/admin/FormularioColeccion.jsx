@@ -20,23 +20,29 @@
 
 import { useRef, useState } from 'react';
 import { Upload } from 'lucide-react';
-import { PageHeader } from '@/components/admin';
+import { PageHeader, FormSeccion } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import { comprimirImagen } from './FormularioProducto';
 import styles from './FormularioColeccion.module.css';
 
 // Inverso de la construcción de `temporada` en guardar() — para precargar
-// Estación/Año al editar una colección existente.
+// Estación/Año al editar una colección existente. "Año" es siempre el año
+// que enseña el badge (codigoTemporada() en mockData.js usa el último año
+// del rango en AW) — por eso aquí se coge valorAnio.split('/')[1], no [0]:
+// si "Año" cogiera el primero, escribir 28 generaría "28/29" y el badge
+// mostraría AW29 en vez de AW28, un año más de lo escrito.
 function parsearTemporada(temporada) {
   if (!temporada) return { estacion: '', anio: '' };
   const [etiquetaEstacion, valorAnio] = temporada.split(' ');
   return {
     estacion: etiquetaEstacion === 'Otoño-Invierno' ? 'AW' : 'SS',
-    anio: valorAnio.includes('/') ? valorAnio.split('/')[0] : valorAnio,
+    anio: valorAnio.includes('/') ? valorAnio.split('/')[1] : valorAnio,
   };
 }
 
-function FormularioColeccion({ onGuardado, pedirTemporada = false, categoriaExistente }) {
+function FormularioColeccion({
+  onGuardado, pedirTemporada = false, categoriaExistente, onBorrar,
+}) {
   const [nombre, setNombre] = useState(categoriaExistente?.nombre || '');
   const [numeroLooks, setNumeroLooks] = useState(categoriaExistente?.numeroLooks || '');
   const [imagen, setImagen] = useState(categoriaExistente?.imagen || '');
@@ -63,10 +69,13 @@ function FormularioColeccion({ onGuardado, pedirTemporada = false, categoriaExis
 
   function guardar() {
     if (!nombre.trim() || faltaTemporada) return;
+    // "Año" es el año que va a mostrar el badge (codigoTemporada() usa el
+    // último del rango en AW) — así que en AW el año escrito va DESPUÉS de
+    // la barra, no antes: escribir 28 construye "27/28", no "28/29".
     const anioCorto = String(anio).padStart(2, '0');
     const temporada = pedirTemporada
       ? (estacion === 'AW'
-        ? `Otoño-Invierno ${anioCorto}/${String(Number(anioCorto) + 1).padStart(2, '0')}`
+        ? `Otoño-Invierno ${String(Number(anioCorto) - 1).padStart(2, '0')}/${anioCorto}`
         : `Primavera-Verano ${anioCorto}`)
       : undefined;
     onGuardado({
@@ -84,31 +93,32 @@ function FormularioColeccion({ onGuardado, pedirTemporada = false, categoriaExis
         subtitulo="Portada, nombre y número de looks"
       />
 
-      <label className={styles.etiqueta}>
-        Portada
-        {imagen ? (
-          <button type="button" className={styles.portada} onClick={() => inputArchivoRef.current?.click()}>
-            <img src={imagen} alt="" className={styles.portadaImagen} />
-          </button>
-        ) : (
-          <button type="button" className={styles.subirVacio} onClick={() => inputArchivoRef.current?.click()}>
-            <Upload size={22} strokeWidth={1} aria-hidden="true" />
-            <span>{subiendo ? 'Optimizando…' : 'Añadir portada'}</span>
-          </button>
-        )}
-      </label>
-      <input
-        ref={inputArchivoRef}
-        type="file"
-        accept="image/*"
-        className={styles.inputArchivo}
-        onChange={(e) => {
-          subirPortada(e.target.files?.[0]);
-          e.target.value = '';
-        }}
-      />
+      <FormSeccion numero={1} titulo="Portada" descripcion="Foto de portada de la colección.">
+        <div className={styles.seccionAncha}>
+          {imagen ? (
+            <button type="button" className={styles.portada} onClick={() => inputArchivoRef.current?.click()}>
+              <img src={imagen} alt="" className={styles.portadaImagen} />
+            </button>
+          ) : (
+            <button type="button" className={styles.subirVacio} onClick={() => inputArchivoRef.current?.click()}>
+              <Upload size={22} strokeWidth={1} aria-hidden="true" />
+              <span>{subiendo ? 'Optimizando…' : 'Añadir portada'}</span>
+            </button>
+          )}
+          <input
+            ref={inputArchivoRef}
+            type="file"
+            accept="image/*"
+            className={styles.inputArchivo}
+            onChange={(e) => {
+              subirPortada(e.target.files?.[0]);
+              e.target.value = '';
+            }}
+          />
+        </div>
+      </FormSeccion>
 
-      <div className={styles.fila}>
+      <FormSeccion numero={2} titulo="Datos" descripcion="Nombre, número de looks y, en Runway, temporada.">
         <Input
           etiqueta="Nombre de la colección"
           valor={nombre}
@@ -122,40 +132,43 @@ function FormularioColeccion({ onGuardado, pedirTemporada = false, categoriaExis
           onChange={(e) => setNumeroLooks(e.target.value)}
           placeholder="12"
         />
-      </div>
 
-      {pedirTemporada && (
-        <div className={styles.filaTemporada}>
-          <div>
-            <span className={styles.etiqueta}>Temporada</span>
-            <div className={styles.temporadaSelector}>
-              {[
-                { valor: 'AW', etiqueta: 'Autumn Winter', clase: styles.temporadaBotonAw },
-                { valor: 'SS', etiqueta: 'Spring Summer', clase: styles.temporadaBotonSs },
-              ].map(({ valor, etiqueta, clase }) => (
-                <button
-                  key={valor}
-                  type="button"
-                  className={`${styles.temporadaBoton} ${clase} ${estacion === valor ? styles.temporadaBotonActivo : ''}`}
-                  aria-pressed={estacion === valor}
-                  onClick={() => setEstacion(valor)}
-                >
-                  {etiqueta}
-                </button>
-              ))}
+        {pedirTemporada && (
+          <>
+            <div>
+              <span className={styles.etiqueta}>Temporada</span>
+              <div className={styles.temporadaSelector}>
+                {[
+                  { valor: 'AW', etiqueta: 'Autumn Winter', clase: styles.temporadaBotonAw },
+                  { valor: 'SS', etiqueta: 'Spring Summer', clase: styles.temporadaBotonSs },
+                ].map(({ valor, etiqueta, clase }) => (
+                  <button
+                    key={valor}
+                    type="button"
+                    className={`${styles.temporadaBoton} ${clase} ${estacion === valor ? styles.temporadaBotonActivo : ''}`}
+                    aria-pressed={estacion === valor}
+                    onClick={() => setEstacion(valor)}
+                  >
+                    {etiqueta}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-          <Input
-            etiqueta="Año"
-            tipo="number"
-            valor={anio}
-            onChange={(e) => setAnio(e.target.value)}
-            placeholder="28"
-          />
-        </div>
-      )}
+            <Input
+              etiqueta="Año"
+              tipo="number"
+              valor={anio}
+              onChange={(e) => setAnio(e.target.value)}
+              placeholder="28"
+            />
+          </>
+        )}
+      </FormSeccion>
 
-      <div className={styles.pie}>
+      <div className={styles.acciones}>
+        {categoriaExistente && onBorrar && (
+          <Boton variante="contorno-rosa" onClick={onBorrar}>Borrar colección</Boton>
+        )}
         <Boton onClick={guardar} desactivado={!nombre.trim() || faltaTemporada}>
           {categoriaExistente ? 'Guardar cambios' : 'Crear colección'}
         </Boton>

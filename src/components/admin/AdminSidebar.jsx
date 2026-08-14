@@ -154,7 +154,18 @@ function AdminSidebar() {
   function renderEnlace(item) {
     if (item.tipo) {
       const Icono = item.icono;
-      const categoriasItem = (categorias[item.tipo] || []).filter((c) => c.visible);
+      // Los archivos de colecciones (fija: true) ordenan por `orden`
+      // ascendente = más reciente primero — sin este sort una colección
+      // nueva aparecía al final del array (orden de inserción), no arriba
+      // del todo aunque su `orden` diga que es la más reciente. Solo para
+      // `fija`: Prêt-à-porter/Atelier se reordenan por drag & drop
+      // (`reordenarCategorias` en Categorias.jsx), que cambia el array
+      // pero no toca `orden` — ordenar esos por `orden` ignoraría el
+      // reorden manual del usuario.
+      const categoriasSinFiltrar = categorias[item.tipo] || [];
+      const categoriasItem = categoriasSinFiltrar.some((c) => c.fija)
+        ? categoriasSinFiltrar.filter((c) => c.visible).sort((a, b) => a.orden - b.orden)
+        : categoriasSinFiltrar.filter((c) => c.visible);
       const enRuta = pathname === item.href;
       const tieneCategorias = categoriasItem.length > 0;
       const subAbierto = Boolean(subAbiertos[item.href]);

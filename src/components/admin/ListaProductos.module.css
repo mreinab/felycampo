@@ -6,6 +6,28 @@
   background: var(--color-gris-100);
 }
 
+/* Mismo patrón que pedidos/[id]/page.module.css .cabeceraSuperior (no se
+   puede importar una clase de otro CSS Module) — BotonVolver a la
+   izquierda, un control a la derecha, en vez de meterlo dentro de
+   PageHeader. Usado por la vista de looks: el toggle tabla/rejilla va
+   aquí, "Añadir Look" se queda en PageHeader → children, debajo. */
+.cabeceraSuperior {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
+.publicarBoton {
+  background: var(--color-amarillo-oscuro);
+  border-color: var(--color-amarillo-oscuro);
+}
+
+.publicarBoton:hover {
+  background: var(--color-amarillo);
+  border-color: var(--color-amarillo);
+}
+
 .bulkBar {
   display: flex;
   align-items: center;
@@ -288,4 +310,224 @@
   font-size: var(--text-caption);
   color: var(--color-gris-500);
   white-space: nowrap;
+}
+
+/* Mismo patrón que /admin/metricas page.module.css .vistaToggle/.vistaBoton
+   (no se puede importar una clase de otro CSS Module) — toggle tabla/
+   rejilla de la vista de looks (ver ListaProductos.jsx "Vista de looks"). */
+.vistaToggle {
+  display: inline-flex;
+  border: var(--border-regular) solid var(--color-gris-300);
+}
+
+.vistaBoton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--color-fondo);
+  border: none;
+  color: var(--color-gris-500);
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-marca), color 0.2s var(--ease-marca);
+}
+
+.vistaBoton:not(:last-child) {
+  border-right: var(--border-regular) solid var(--color-gris-300);
+}
+
+.vistaBoton:hover {
+  color: var(--color-tinta);
+}
+
+.vistaBotonActiva {
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+}
+
+.vistaBotonActiva:hover {
+  color: var(--color-fondo);
+}
+
+/* Rejilla de looks — mismas proporciones que .categoriasGridImagenes, pero
+   la tarjeta no es un <Link> (no hay a dónde navegar, abre el modal de
+   edición del look) y el hueco vacío pide "Añadir imágenes" en vez de
+   caer a un rectángulo gris silencioso, porque aquí SIEMPRE hay algo que
+   hacer con un hueco vacío (subir las fotos de ese look). */
+.looksGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-4);
+}
+
+/* Mismo patrón que GridPedidos.module.css .tarjeta (no se puede importar
+   una clase de otro CSS Module) — borde fino gris-200, fondo
+   light-details, hover oscurece el borde. Es un <div>, no un <button>: el
+   click-para-editar, el botón de borrar y el de editar son 3 controles
+   independientes dentro, y un <button> no puede anidar otro <button>
+   (HTML inválido) — igual que las tarjetas de colección resuelven esto
+   con un <Link> + un <button> de editar aparte. */
+.lookTarjeta {
+  position: relative;
+  border: var(--border-thin) solid var(--color-gris-200);
+  background: var(--color-light-details);
+  transition: border-color 0.2s var(--ease-marca);
+}
+
+.lookTarjeta:hover {
+  border-color: var(--color-gris-400);
+}
+
+.lookTarjetaBoton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.lookTarjetaBoton:focus-visible {
+  outline: var(--border-regular) solid var(--color-tinta);
+  outline-offset: -2px;
+}
+
+/* Editar/borrar — mismo criterio que .categoriaEditar (visible solo al
+   hover de la tarjeta o al enfocar por teclado). Borrar a la izquierda,
+   editar a la derecha. */
+.lookQuitar,
+.lookEditar {
+  position: absolute;
+  top: var(--spacing-2);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-marca), color 0.2s var(--ease-marca);
+}
+
+.lookQuitar {
+  left: var(--spacing-2);
+}
+
+.lookEditar {
+  right: var(--spacing-2);
+}
+
+.lookTarjeta:hover .lookQuitar,
+.lookTarjeta:hover .lookEditar,
+.lookQuitar:focus-visible,
+.lookEditar:focus-visible {
+  opacity: 1;
+}
+
+.lookQuitar:hover {
+  color: var(--color-rosa-oscuro);
+}
+
+/* Mismo patrón que GridPedidos.module.css .flecha/.puntos — desliza entre
+   las imágenes de un look que tiene más de una. */
+.flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-marca);
+}
+
+.lookImagenWrap:hover .flecha {
+  opacity: 1;
+}
+
+.flechaIzq { left: var(--spacing-2); }
+.flechaDer { right: var(--spacing-2); }
+
+.puntos {
+  position: absolute;
+  bottom: var(--spacing-2);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.punto {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.puntoActivo {
+  background: var(--color-fondo);
+}
+
+.lookVacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: var(--color-gris-100);
+  color: var(--color-gris-500);
+  font-family: var(--font-base);
+  font-size: var(--text-caption);
+  text-align: center;
+}
+
+.lookImagenWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+.lookImagen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lookContador {
+  position: absolute;
+  bottom: var(--spacing-2);
+  right: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  font-family: var(--font-base);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+}
+
+.lookInfo {
+  padding: var(--spacing-3);
+}
+
+.lookNombre {
+  display: block;
+  font-size: var(--text-small);
+  color: var(--color-tinta);
 }
