@@ -45,26 +45,14 @@
 
 .origenEsquina {
   position: absolute;
-  top: var(--spacing-1);
+  top: var(--spacing-2);
   left: var(--spacing-2);
 }
 
 .estadoEsquina {
   position: absolute;
-  top: var(--spacing-1);
+  top: var(--spacing-2);
   right: var(--spacing-2);
-}
-
-/* EstadoContactoBadge trae su propio tamaño (padding/font-size) para su
-   uso normal en tabla — aquí, junto a OrigenProductoBadge, tiene que
-   verse igual de compacto. Mismos valores que OrigenProductoBadge
-   .badge (no se puede leer un CSS module desde otro); el selector por
-   etiqueta (span dentro de .estadoEsquina) gana en especificidad al
-   .badge de EstadoContactoBadge.module.css sin depender del orden de
-   carga de los CSS modules. */
-.estadoEsquina span {
-  padding: 1px var(--spacing-2);
-  font-size: var(--text-nano);
 }
 
 .info {

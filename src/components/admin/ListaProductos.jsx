@@ -20,7 +20,9 @@ import {
   PageHeader, TablaAdmin, EstadoPublicacionBadge, FiltroBar, FiltroSelector, TabsFiltro, ModalOverlay, BotonVolver, useToast, useCategorias,
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
-import { productosMock, tiposProducto, coleccionesMock } from '@/components/admin/mockData';
+import {
+  productosMock, tiposProducto, coleccionesMock, codigoTemporada,
+} from '@/components/admin/mockData';
 import { calcularEstadoPublicacion, CONFIG_ESTADO_PUBLICACION } from './EstadoPublicacionBadge';
 import FormularioProducto from './FormularioProducto';
 import styles from './ListaProductos.module.css';
@@ -44,8 +46,13 @@ function stockTotal(producto) {
 }
 
 function ListaProductosContenido({
-  tipoFijo, titulo, agruparPorCategoria = false, iconoCategoria: IconoCategoria,
+  tipoFijo, titulo, agruparPorCategoria = false, iconoCategoria: IconoCategoria, imagenesCategoria, slugRuta,
 }) {
+  // La URL de la ruta puede diferir del valor interno de `tipo` (p.ej.
+  // runway usa slugRuta="runway" pero tipoFijo sigue siendo "archivo",
+  // ver docs/adminpanel.md sección 5) — slugRuta cae a tipoFijo cuando
+  // coinciden, como en pret-a-porter/atelier.
+  const rutaTipo = slugRuta || tipoFijo;
   const { mostrarToast } = useToast();
   const { categorias } = useCategorias();
   const searchParams = useSearchParams();
@@ -58,6 +65,7 @@ function ListaProductosContenido({
   const [seleccionadas, setSeleccionadas] = useState([]);
   const [nuevoAbierto, setNuevoAbierto] = useState(false);
   const [productoEnEdicion, setProductoEnEdicion] = useState(null);
+  const [filtroTemporada, setFiltroTemporada] = useState('Todas');
 
   const categoriaActual = categoriaFija ? categorias[tipoFijo]?.find((c) => c.id === categoriaFija) : null;
 
@@ -118,20 +126,67 @@ function ListaProductosContenido({
   }
 
   if (agruparPorCategoria && !categoriaFija) {
-    const categoriasVisibles = (categorias[tipoFijo] || []).filter((c) => c.visible);
+    const todasLasCategorias = (categorias[tipoFijo] || []).filter((c) => c.visible);
+    const hayTemporadas = todasLasCategorias.some((c) => c.temporada);
+    const categoriasVisibles = hayTemporadas && filtroTemporada !== 'Todas'
+      ? todasLasCategorias.filter((c) => codigoTemporada(c.temporada).startsWith(filtroTemporada))
+      : todasLasCategorias;
     return (
       <div>
         <PageHeader
           titulo={titulo}
           subtitulo={`${categoriasVisibles.length} categoría${categoriasVisibles.length === 1 ? '' : 's'} — elige una para ver sus productos`}
-        />
-        <div className={styles.categoriasGrid}>
-          {categoriasVisibles.map((cat) => (
-            <Link key={cat.id} href={`/admin/productos/${tipoFijo}?categoria=${cat.id}`} className={styles.categoriaTarjeta}>
+        >
+          {hayTemporadas && (
+            <div className={styles.temporadaSelector}>
+              {[
+                { valor: 'Todas', etiqueta: 'Todas', clase: '' },
+                { valor: 'AW', etiqueta: 'Autumn Winter', clase: styles.temporadaBotonAw },
+                { valor: 'SS', etiqueta: 'Spring Summer', clase: styles.temporadaBotonSs },
+              ].map(({ valor, etiqueta, clase }) => (
+                <button
+                  key={valor}
+                  type="button"
+                  className={`${styles.temporadaBoton} ${clase} ${filtroTemporada === valor ? styles.temporadaBotonActivo : ''}`}
+                  aria-pressed={filtroTemporada === valor}
+                  onClick={() => setFiltroTemporada(valor)}
+                >
+                  {etiqueta}
+                </button>
+              ))}
+            </div>
+          )}
+        </PageHeader>
+        <div className={`${styles.categoriasGrid} ${imagenesCategoria ? styles.categoriasGridImagenes : ''}`}>
+          {categoriasVisibles.map((cat) => (imagenesCategoria ? (
+            <Link
+              key={cat.id}
+              href={`/admin/productos/${rutaTipo}?categoria=${cat.id}`}
+              className={styles.categoriaTarjetaImagen}
+            >
+              <div className={styles.categoriaImagenWrap}>
+                {imagenesCategoria[cat.id] ? (
+                  <img src={imagenesCategoria[cat.id]} alt="" className={styles.categoriaImagen} />
+                ) : <div className={styles.categoriaImagenVacia} />}
+                {cat.temporada && (
+                  <span className={`${styles.categoriaBadge} ${codigoTemporada(cat.temporada).startsWith('AW') ? styles.categoriaBadgeAw : styles.categoriaBadgeSs}`}>
+                    {codigoTemporada(cat.temporada)}
+                  </span>
+                )}
+              </div>
+              <div className={styles.categoriaInfoFila}>
+                <span className={styles.categoriaNombre}>{cat.nombre}</span>
+                <span className={styles.categoriaContador}>
+                  {productos.filter((p) => p.tipo === tipoFijo && p.categoriaId === cat.id).length}
+                </span>
+              </div>
+            </Link>
+          ) : (
+            <Link key={cat.id} href={`/admin/productos/${rutaTipo}?categoria=${cat.id}`} className={styles.categoriaTarjeta}>
               {IconoCategoria && <IconoCategoria className={styles.categoriaIcono} aria-hidden="true" />}
               <span className={styles.categoriaNombre}>{cat.nombre}</span>
             </Link>
-          ))}
+          )))}
         </div>
       </div>
     );
@@ -140,7 +195,7 @@ function ListaProductosContenido({
   return (
     <div>
       {agruparPorCategoria && (
-        <BotonVolver href={`/admin/productos/${tipoFijo}`}>Categorías</BotonVolver>
+        <BotonVolver href={`/admin/productos/${rutaTipo}`}>Categorías</BotonVolver>
       )}
       <PageHeader
         titulo={categoriaActual ? `${titulo} — ${categoriaActual.nombre}` : titulo}

@@ -83,8 +83,7 @@
   gap: var(--spacing-1);
 }
 
-.item,
-.itemGrupo {
+.item {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
@@ -99,37 +98,34 @@
   text-align: left;
 }
 
-.item:hover,
-.itemGrupo:hover {
+.itemEnlace {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex: 1;
+  min-width: 0;
+  color: inherit;
+}
+
+.item:hover {
   color: var(--color-tinta);
   background: var(--color-rosa-velo);
 }
 
 .item:hover .icono,
-.itemGrupo:hover .icono,
 .item:hover .label,
-.itemGrupo:hover .label,
-.itemGrupo:hover .chevron {
+.item:hover .chevron {
   color: var(--color-rosa-oscuro);
 }
 
-.item.activo,
-.itemGrupo.activo {
+.item.activo {
   color: var(--color-tinta);
   background: var(--color-rosa-oscuro);
 }
 
 .item.activo .icono,
-.itemGrupo.activo .icono {
-  color: var(--color-rosa-velo);
-}
-
 .item.activo .label,
-.itemGrupo.activo .label {
-  color: var(--color-rosa-velo);
-}
-
-.itemGrupo.activo .chevron {
+.item.activo .chevron {
   color: var(--color-rosa-velo);
 }
 
@@ -241,12 +237,6 @@
   padding: 0;
   color: inherit;
   cursor: pointer;
-}
-
-.iconoSub {
-  flex-shrink: 0;
-  width: 14px;
-  height: 14px;
 }
 
 .subitem:hover {

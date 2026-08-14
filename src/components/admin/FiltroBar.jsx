@@ -25,12 +25,19 @@ function FiltroBar({ children, onLimpiar }) {
   );
 }
 
-function Selector({ etiqueta, valor, onChange, opciones }) {
+function Selector({
+  etiqueta, valor, onChange, opciones, compacta, activo,
+}) {
   const seleccionada = opciones.find((opcion) => opcion.valor === valor);
   return (
     <label className={styles.select}>
       {etiqueta && <span className={styles.selectEtiqueta}>{etiqueta}</span>}
-      <select className={styles.selectInput} value={valor} onChange={onChange} style={seleccionada?.estilo}>
+      <select
+        className={`${styles.selectInput} ${compacta ? styles.selectInputCompacta : ''} ${activo ? styles.selectInputActiva : ''}`}
+        value={valor}
+        onChange={onChange}
+        style={seleccionada?.estilo}
+      >
         {opciones.map((opcion) => (
           <option key={opcion.valor} value={opcion.valor} style={opcion.estilo}>{opcion.etiqueta}</option>
         ))}

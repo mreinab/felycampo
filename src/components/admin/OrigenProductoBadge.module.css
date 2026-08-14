@@ -1,8 +1,8 @@
 .badge {
   display: inline-block;
-  padding: 1px var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
   font-family: var(--font-base);
-  font-size: var(--text-nano);
+  font-size: var(--text-caption);
   font-weight: var(--font-weight-medium);
   white-space: nowrap;
 }

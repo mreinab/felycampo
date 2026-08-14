@@ -11,7 +11,7 @@
 export const tiposProducto = [
   { valor: 'pret-a-porter', etiqueta: 'Prêt-à-porter' },
   { valor: 'atelier', etiqueta: 'Atelier' },
-  { valor: 'archivo', etiqueta: 'Archive/Colecciones' },
+  { valor: 'archivo', etiqueta: 'Runway' },
 ];
 
 // Tallas estándar: el admin elige de esta lista fija en vez de escribir
@@ -126,7 +126,7 @@ export const productosMock = [
   {
     id: 'p5',
     tipo: 'archivo',
-    categoriaId: 'cat5',
+    categoriaId: 'cat11',
     nombre: 'Look Runway 12',
     descripcionCorta: 'Look de pasarela FW27, pieza única de archivo.',
     imagen: '/img/ecommerce/Invitada/LOOK12_2-scaled.webp',
@@ -138,7 +138,7 @@ export const productosMock = [
   {
     id: 'p6',
     tipo: 'archivo',
-    categoriaId: 'cat6',
+    categoriaId: 'cat14',
     nombre: 'Colección Bride 25',
     descripcionCorta: 'Colección de novias SS25, editorial completo.',
     imagen: '/img/novias-sección-FelyCampo4.jpg',
@@ -204,7 +204,7 @@ export const productosMock = [
   {
     id: 'p10',
     tipo: 'archivo',
-    categoriaId: 'cat5',
+    categoriaId: 'cat11',
     nombre: 'Look Runway 18',
     descripcionCorta: 'Look de pasarela FW27, pendiente de publicar en el archivo.',
     imagen: '/img/ecommerce/Invitada/LOOK18_1-scaled.webp',
@@ -302,7 +302,7 @@ export const productosMock = [
   {
     id: 'p16',
     tipo: 'archivo',
-    categoriaId: 'cat5',
+    categoriaId: 'cat14',
     nombre: 'Look Runway 9',
     descripcionCorta: 'Look de pasarela, temporada retirada del archivo activo.',
     imagen: '/img/ecommerce/Invitada/LOOK9_1-scaled.webp',
@@ -314,7 +314,7 @@ export const productosMock = [
   {
     id: 'p17',
     tipo: 'archivo',
-    categoriaId: 'cat6',
+    categoriaId: 'cat12',
     nombre: 'Colección Fiesta 26',
     descripcionCorta: 'Colección de fiesta SS26, editorial completo.',
     imagen: '/img/HERO-1.jpg',
@@ -326,7 +326,7 @@ export const productosMock = [
   {
     id: 'p18',
     tipo: 'archivo',
-    categoriaId: 'cat6',
+    categoriaId: 'cat13',
     nombre: 'Colección Novias 26',
     descripcionCorta: 'Colección de novias FW26, pendiente de publicar en el archivo.',
     imagen: '/img/FW27-Hero.jpg',
@@ -635,21 +635,64 @@ export const resenasMock = [
 
 // ---------- CATEGORÍAS ----------
 
+// "Otoño-Invierno 26/27" → "AW27" (último año del rango), "Primavera-Verano
+// 26" → "SS26" — usado por `categoriasMock.archivo[].temporada` en
+// ListaProductos.jsx (badge de tarjeta) y AdminSidebar.jsx (submenú de
+// Runway). Vive aquí, no en un componente, porque ambos lo importan.
+export function codigoTemporada(temporada) {
+  if (!temporada) return '';
+  const [estacion, anio] = temporada.split(' ');
+  const anioFinal = anio.includes('/') ? anio.split('/')[1] : anio;
+  return `${estacion === 'Otoño-Invierno' ? 'AW' : 'SS'}${anioFinal}`;
+}
+
 export const categoriasMock = {
   'pret-a-porter': [
-    { id: 'cat1', nombre: 'Vestidos', visible: true, orden: 1 },
-    { id: 'cat2', nombre: 'Faldas', visible: true, orden: 2 },
-    { id: 'cat7', nombre: 'Tops y Camisas', visible: true, orden: 3 },
-    { id: 'cat8', nombre: 'Chaquetas y Abrigos', visible: true, orden: 4 },
-    { id: 'cat9', nombre: 'Accesorios y Zapatos', visible: true, orden: 5 },
+    { id: 'cat7', nombre: 'Tops y Camisas', visible: true, orden: 1 },
+    { id: 'cat8', nombre: 'Chaquetas y Abrigos', visible: true, orden: 2 },
+    { id: 'cat2', nombre: 'Faldas', visible: true, orden: 3 },
+    { id: 'cat1', nombre: 'Vestidos', visible: true, orden: 4 },
+    { id: 'cat9', nombre: 'Zapatos', visible: true, orden: 5 },
+    { id: 'cat10', nombre: 'Accesorios', visible: true, orden: 6 },
   ],
   atelier: [
     { id: 'cat3', nombre: 'Novias', visible: true, orden: 1 },
     { id: 'cat4', nombre: 'Fiesta', visible: true, orden: 2 },
   ],
+  // Cada colección de pasarela es una "categoría" fija de Runway (no
+  // añadible/reordenable desde /admin/categorias, igual que antes) —
+  // sustituye al antiguo par genérico Runway/Colecciones. `temporada` es
+  // solo para mostrar (p.ej. tarjeta/subtítulo), no participa en filtros.
+  // `nombre` en mayúscula-minúscula (no todo mayúsculas) — mismo criterio
+  // de capitalización que el resto de nombres del mock.
   archivo: [
-    { id: 'cat5', nombre: 'Runway', visible: true, orden: 1, fija: true },
-    { id: 'cat6', nombre: 'Colecciones', visible: true, orden: 2, fija: true },
+    {
+      id: 'cat11', nombre: 'La Colección', temporada: 'Otoño-Invierno 26/27', visible: true, orden: 1, fija: true,
+    },
+    {
+      id: 'cat12', nombre: 'Dreaming', temporada: 'Primavera-Verano 26', visible: true, orden: 2, fija: true,
+    },
+    {
+      id: 'cat13', nombre: 'Self World', temporada: 'Otoño-Invierno 25/26', visible: true, orden: 3, fija: true,
+    },
+    {
+      id: 'cat14', nombre: 'Lei Zu', temporada: 'Primavera-Verano 25', visible: true, orden: 4, fija: true,
+    },
+    {
+      id: 'cat15', nombre: 'The Way Here', temporada: 'Otoño-Invierno 24/25', visible: true, orden: 5, fija: true,
+    },
+    {
+      id: 'cat16', nombre: 'Zigurat', temporada: 'Primavera-Verano 24', visible: true, orden: 6, fija: true,
+    },
+    {
+      id: 'cat17', nombre: 'Tempore', temporada: 'Otoño-Invierno 23/24', visible: true, orden: 7, fija: true,
+    },
+    {
+      id: 'cat18', nombre: 'Nagare', temporada: 'Primavera-Verano 23', visible: true, orden: 8, fija: true,
+    },
+    {
+      id: 'cat19', nombre: 'Diafonía', temporada: 'Otoño-Invierno 22/23', visible: true, orden: 9, fija: true,
+    },
   ],
 };
 
@@ -771,19 +814,213 @@ export const newsletterMock = [
 
 // ---------- ANALÍTICAS ----------
 
+// `clave` referencia una serie de `metricasMensualesMock` (abajo) — la usa
+// el detalle de cada KPI (`/admin/metricas/kpi/:id`) para saber qué
+// calcular. `formato` decide cómo se imprime esa serie ahí (`moneda` añade
+// " €", `numero` no). El `valor`/`variacion` de aquí siguen siendo el
+// resumen estático de "Resumen del mes en curso" — están alineados a mano
+// con el mes 08 de `metricasMensualesMock['2026']` para que la tarjeta y el
+// detalle no se contradigan.
 export const kpisAnaliticas = [
-  { id: 'k1', etiqueta: 'Ventas del mes', valor: '8.230 €', variacion: '+12%' },
-  { id: 'k2', etiqueta: 'Pedidos', valor: '27', variacion: '+4%' },
-  { id: 'k3', etiqueta: 'Clientes nuevos', valor: '9', variacion: '+2%' },
-  { id: 'k4', etiqueta: 'Ticket medio', valor: '305 €', variacion: '-3%' },
+  {
+    id: 'k1', clave: 'ventas', formato: 'moneda', etiqueta: 'Ventas del mes', valor: '8.230 €', variacion: '+12%',
+  },
+  {
+    id: 'k2', clave: 'pedidos', formato: 'numero', etiqueta: 'Pedidos', valor: '27', variacion: '+4%',
+  },
+  {
+    id: 'k3', clave: 'clientesNuevos', formato: 'numero', etiqueta: 'Clientes nuevos', valor: '9', variacion: '+2%',
+  },
+  {
+    id: 'k4', clave: 'ticketMedio', formato: 'moneda', etiqueta: 'Ticket medio', valor: '305 €', variacion: '-3%',
+  },
 ];
 
-export const topProductosMock = [
-  { producto: 'Vestido Aurora', unidadesVendidas: 14, ingresos: '12.460 €' },
-  { producto: 'Falda Vera', unidadesVendidas: 11, ingresos: '4.620 €' },
-  { producto: 'Vestido Elena', unidadesVendidas: 3, ingresos: '7.200 €' },
-  { producto: 'Vestido Celeste', unidadesVendidas: 2, ingresos: '1.960 €' },
+// Serie mensual por año para los gráficos de detalle de cada KPI
+// (`/admin/metricas/kpi/:id`) — una entrada por mes con datos reales
+// (no se inventan meses futuros: hoy es agosto de 2026, así que solo hay
+// enero-agosto). `porProducto` desglosa ventas/pedidos por tipo
+// (`pret-a-porter`/`novias`/`fiesta`) para el filtro "Producto" de ese
+// detalle; `ticketMedio` no se guarda, se deriva de ventas/pedidos para no
+// duplicar la fuente de verdad. `clientesNuevos` no se desglosa por
+// producto — un cliente nuevo no se atribuye a un tipo de prenda.
+export const metricasMensualesMock = {
+  2026: [
+    {
+      mes: '01',
+      clientesNuevos: 4,
+      porProducto: {
+        'pret-a-porter': { ventas: 2800, pedidos: 10 },
+        novias: { ventas: 900, pedidos: 3 },
+        fiesta: { ventas: 500, pedidos: 2 },
+      },
+    },
+    {
+      mes: '02',
+      clientesNuevos: 5,
+      porProducto: {
+        'pret-a-porter': { ventas: 3200, pedidos: 12 },
+        novias: { ventas: 1100, pedidos: 3 },
+        fiesta: { ventas: 500, pedidos: 2 },
+      },
+    },
+    {
+      mes: '03',
+      clientesNuevos: 5,
+      porProducto: {
+        'pret-a-porter': { ventas: 3600, pedidos: 13 },
+        novias: { ventas: 1300, pedidos: 4 },
+        fiesta: { ventas: 500, pedidos: 2 },
+      },
+    },
+    {
+      mes: '04',
+      clientesNuevos: 6,
+      porProducto: {
+        'pret-a-porter': { ventas: 3900, pedidos: 14 },
+        novias: { ventas: 1400, pedidos: 4 },
+        fiesta: { ventas: 600, pedidos: 2 },
+      },
+    },
+    {
+      mes: '05',
+      clientesNuevos: 6,
+      porProducto: {
+        'pret-a-porter': { ventas: 4300, pedidos: 15 },
+        novias: { ventas: 1600, pedidos: 5 },
+        fiesta: { ventas: 600, pedidos: 2 },
+      },
+    },
+    {
+      mes: '06',
+      clientesNuevos: 7,
+      porProducto: {
+        'pret-a-porter': { ventas: 4700, pedidos: 16 },
+        novias: { ventas: 1800, pedidos: 5 },
+        fiesta: { ventas: 600, pedidos: 2 },
+      },
+    },
+    {
+      mes: '07',
+      clientesNuevos: 8,
+      porProducto: {
+        'pret-a-porter': { ventas: 5000, pedidos: 18 },
+        novias: { ventas: 1900, pedidos: 5 },
+        fiesta: { ventas: 700, pedidos: 2 },
+      },
+    },
+    {
+      // Ancla con el resumen estático de kpisAnaliticas: ventas 8.230 €,
+      // pedidos 27, clientesNuevos 9, ticketMedio 305 € (8230/27 ≈ 304,8).
+      mes: '08',
+      clientesNuevos: 9,
+      porProducto: {
+        'pret-a-porter': { ventas: 5230, pedidos: 19 },
+        novias: { ventas: 2000, pedidos: 4 },
+        fiesta: { ventas: 1000, pedidos: 4 },
+      },
+    },
+  ],
+};
+
+// Nombres de mes completos para el selector "Mes" de /admin/metricas — los
+// 12 son siempre seleccionables, aunque `topProductosPorMesMock` (abajo)
+// solo tenga filas para los 3 meses más recientes; el resto de combinaciones
+// mes/año se resuelven a un estado vacío en la página, no a un error.
+export const NOMBRES_MES = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
 ];
+
+// Primer año con datos en `topProductosPorMesMock`. El selector "Año" de
+// /admin/metricas construye el resto de opciones desde aquí hasta el año
+// real actual (`new Date()`), así que un año nuevo (2027, 2028...) aparece
+// solo con el paso del tiempo, sin tocar código.
+export const ANIO_INICIO_METRICAS_MOCK = 2026;
+
+// Un array por clave `AAAA-MM` para poder filtrar "Productos más vendidos"
+// por mes/año en /admin/metricas — la entrada `2026-08` es la que antes era
+// el único `topProductosMock`. `porTalla` (opcional) desglosa esas mismas
+// unidades/ingresos por talla, para el filtro "Talla" de esa página — solo
+// lo llevan los productos de Prêt-à-porter (`tallas` en `productosMock`);
+// Atelier (Vestido Elena, Vestido Celeste) es a medida, sin tallas
+// estándar, así que no aparece al filtrar por una talla concreta, solo en
+// "Todas las tallas". Las sumas de `porTalla` cuadran con `unidadesVendidas`
+// / `ingresos` de cada fila.
+export const topProductosPorMesMock = {
+  '2026-08': [
+    {
+      producto: 'Vestido Aurora',
+      unidadesVendidas: 14,
+      ingresos: '12.460 €',
+      porTalla: [
+        { talla: 'S', unidadesVendidas: 4, ingresos: '3.560 €' },
+        { talla: 'M', unidadesVendidas: 7, ingresos: '6.230 €' },
+        { talla: 'L', unidadesVendidas: 3, ingresos: '2.670 €' },
+      ],
+    },
+    {
+      producto: 'Falda Vera',
+      unidadesVendidas: 11,
+      ingresos: '4.620 €',
+      porTalla: [
+        { talla: 'S', unidadesVendidas: 3, ingresos: '1.260 €' },
+        { talla: 'M', unidadesVendidas: 5, ingresos: '2.100 €' },
+        { talla: 'L', unidadesVendidas: 3, ingresos: '1.260 €' },
+      ],
+    },
+    { producto: 'Vestido Elena', unidadesVendidas: 3, ingresos: '7.200 €' },
+    { producto: 'Vestido Celeste', unidadesVendidas: 2, ingresos: '1.960 €' },
+  ],
+  '2026-07': [
+    {
+      producto: 'Falda Vera',
+      unidadesVendidas: 16,
+      ingresos: '6.720 €',
+      porTalla: [
+        { talla: 'S', unidadesVendidas: 5, ingresos: '2.100 €' },
+        { talla: 'M', unidadesVendidas: 7, ingresos: '2.940 €' },
+        { talla: 'L', unidadesVendidas: 4, ingresos: '1.680 €' },
+      ],
+    },
+    {
+      producto: 'Vestido Aurora',
+      unidadesVendidas: 9,
+      ingresos: '8.010 €',
+      porTalla: [
+        { talla: 'S', unidadesVendidas: 2, ingresos: '1.780 €' },
+        { talla: 'M', unidadesVendidas: 5, ingresos: '4.450 €' },
+        { talla: 'L', unidadesVendidas: 2, ingresos: '1.780 €' },
+      ],
+    },
+    { producto: 'Vestido Celeste', unidadesVendidas: 5, ingresos: '4.900 €' },
+    { producto: 'Vestido Elena', unidadesVendidas: 1, ingresos: '2.400 €' },
+  ],
+  '2026-06': [
+    { producto: 'Vestido Elena', unidadesVendidas: 7, ingresos: '16.800 €' },
+    {
+      producto: 'Vestido Aurora',
+      unidadesVendidas: 6,
+      ingresos: '5.340 €',
+      porTalla: [
+        { talla: 'S', unidadesVendidas: 1, ingresos: '890 €' },
+        { talla: 'M', unidadesVendidas: 3, ingresos: '2.670 €' },
+        { talla: 'L', unidadesVendidas: 2, ingresos: '1.780 €' },
+      ],
+    },
+    {
+      producto: 'Falda Vera',
+      unidadesVendidas: 4,
+      ingresos: '1.680 €',
+      porTalla: [
+        { talla: 'S', unidadesVendidas: 1, ingresos: '420 €' },
+        { talla: 'M', unidadesVendidas: 2, ingresos: '840 €' },
+        { talla: 'L', unidadesVendidas: 1, ingresos: '420 €' },
+      ],
+    },
+    { producto: 'Vestido Celeste', unidadesVendidas: 3, ingresos: '2.940 €' },
+  ],
+};
 
 // ---------- SETTINGS ----------
 

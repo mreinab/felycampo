@@ -25,7 +25,7 @@ import {
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import {
-  tiposProducto, coleccionesMock, coloresMock, telasMock, tallasEstandar,
+  tiposProducto, coleccionesMock, coloresMock, telasMock, tallasEstandar, ajustesTiendaMock,
 } from '@/components/admin/mockData';
 import styles from './FormularioProducto.module.css';
 
@@ -36,6 +36,34 @@ import styles from './FormularioProducto.module.css';
 const IMAGEN_DIMENSION_MAXIMA = 2000;
 const IMAGEN_CALIDAD_JPEG = 0.82;
 const IMAGEN_AVISO_BYTES = 1.5 * 1024 * 1024;
+
+function extensionDeMime(mime) {
+  if (mime === 'image/png') return 'png';
+  if (mime === 'image/webp') return 'webp';
+  return 'jpg';
+}
+
+// Esquema "Nombre - Color - TIPO _ Marca" (p.ej. "Sandalias de tacón con
+// pompón - Beige - MUJER _ H&M") aplicado al `File` que se sube — nombre
+// del producto tal cual lo ha escrito el usuario en este formulario,
+// primer color elegido (si hay), y el tipo de producto en mayúsculas
+// haciendo de "categoría". Solo cambia el nombre del archivo (metadata),
+// no genera ni sube nada — ver aviso de imágenes 100% cliente en
+// docs/adminpanel.md sección 5.
+function nombreArchivoImagen({
+  nombre, colorIds, tipo, posicion, total, mime,
+}) {
+  const partes = [nombre?.es?.trim() || 'Producto'];
+
+  const colorPrincipal = coloresMock.find((c) => c.id === colorIds[0])?.nombre;
+  if (colorPrincipal) partes.push(colorPrincipal);
+
+  const tipoEtiqueta = tiposProducto.find((t) => t.valor === tipo)?.etiqueta;
+  if (tipoEtiqueta) partes.push(tipoEtiqueta.toUpperCase());
+
+  const sufijoPosicion = total > 1 ? ` (${posicion})` : '';
+  return `${partes.join(' - ')}${sufijoPosicion} _ ${ajustesTiendaMock.nombreTienda}.${extensionDeMime(mime)}`;
+}
 
 function comprimirImagen(archivo) {
   return new Promise((resolve, reject) => {
@@ -96,6 +124,7 @@ function FormularioProducto({
   const [colorIds, setColorIds] = useState(productoExistente?.colorIds || []);
   const [telaIds, setTelaIds] = useState(productoExistente?.telaIds || []);
   const [coleccion, setColeccion] = useState(productoExistente?.coleccion || '');
+  const [nombresArchivos, setNombresArchivos] = useState({});
 
   const inputArchivoRef = useRef(null);
 
@@ -106,8 +135,13 @@ function FormularioProducto({
     let pesoOriginal = 0;
     let pesoComprimido = 0;
     let algunaPesada = false;
+    let posicion = imagenes.length;
+    const total = imagenes.length + lista.length;
+    const nombresNuevos = {};
 
     const nuevas = await Promise.all(lista.map(async (archivo) => {
+      posicion += 1;
+      const miPosicion = posicion;
       pesoOriginal += archivo.size;
       let blobFinal;
       try {
@@ -117,10 +151,21 @@ function FormularioProducto({
       }
       pesoComprimido += blobFinal.size;
       if (blobFinal.size > IMAGEN_AVISO_BYTES) algunaPesada = true;
-      return URL.createObjectURL(blobFinal);
+
+      const archivoNombrado = new File(
+        [blobFinal],
+        nombreArchivoImagen({
+          nombre, colorIds, tipo, posicion: miPosicion, total, mime: blobFinal.type,
+        }),
+        { type: blobFinal.type }
+      );
+      const url = URL.createObjectURL(archivoNombrado);
+      nombresNuevos[url] = archivoNombrado.name;
+      return url;
     }));
 
     setImagenes((actual) => [...actual, ...nuevas]);
+    setNombresArchivos((actual) => ({ ...actual, ...nombresNuevos }));
 
     const enMb = (bytes) => (bytes / (1024 * 1024)).toFixed(1);
     const resumen = `Imágenes optimizadas: ${enMb(pesoOriginal)} MB → ${enMb(pesoComprimido)} MB (demo)`;
@@ -214,13 +259,13 @@ function FormularioProducto({
             ) : (
               <div className={styles.imagenesScroll}>
                 <DragList
-                  items={imagenes.map((src) => ({ src }))}
+                  items={imagenes.map((src) => ({ src, nombreArchivo: nombresArchivos[src] }))}
                   claveItem={(item) => item.src}
                   onReorder={(nuevo) => setImagenes(nuevo.map((i) => i.src))}
                   orientacion="horizontal"
                   renderItem={(item, indice) => (
                     <div className={styles.imagenItem}>
-                      <img src={item.src} alt="" className={styles.imagenMiniatura} />
+                      <img src={item.src} alt="" title={item.nombreArchivo} className={styles.imagenMiniatura} />
                       {indice === 0 && <span className={styles.imagenEtiqueta}>Portada</span>}
                       {indice === 1 && <span className={styles.imagenEtiqueta}>Contra portada</span>}
                       <button

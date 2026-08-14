@@ -2,8 +2,8 @@
 
 /* ============================================================
    CATEGORÍAS — spec sección 7. Solo Prêt-à-porter/Atelier admiten
-   categorías nuevas — Archivo tiene estructura fija (Runway/
-   Colecciones), no editable desde aquí.
+   categorías nuevas — Runway (`tipo: 'archivo'`) tiene estructura fija
+   (una entrada por colección de pasarela), no editable desde aquí.
    ============================================================ */
 
 import { useState } from 'react';
@@ -62,7 +62,7 @@ export default function CategoriasPage() {
         ))}
       </div>
 
-      {esFija && <p className={styles.avisoFija}>Archive/Colecciones tiene una estructura fija (Runway/Colecciones) — no se pueden añadir categorías nuevas aquí.</p>}
+      {esFija && <p className={styles.avisoFija}>Runway tiene una entrada fija por colección de pasarela — no se pueden añadir categorías nuevas aquí.</p>}
 
       <div className={styles.lista}>
         {esFija ? (
