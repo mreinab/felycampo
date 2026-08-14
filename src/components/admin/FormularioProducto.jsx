@@ -25,7 +25,7 @@ import {
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import {
-  tiposProducto, coleccionesMock, coloresMock, telasMock, tallasEstandar, ajustesTiendaMock,
+  tiposProducto, coleccionesMock, coloresMock, telasMock, tallasEstandar, ajustesTiendaMock, rutaTipoProducto,
 } from '@/components/admin/mockData';
 import styles from './FormularioProducto.module.css';
 
@@ -100,6 +100,14 @@ const CAMPOS_TIPO = {
     precio: { requerido: false, placeholder: 'Desde 980 €' }, tallas: false, colores: 'opcional', telas: 'opcional', stock: false, boton: 'Solicitar cita', coleccion: 'opcional',
   },
   archivo: {
+    precio: false, tallas: false, colores: false, telas: false, stock: false, boton: false, coleccion: { requerido: true },
+  },
+  // novia/fiesta: archivos de colecciones pasadas, mismo criterio que
+  // archivo/Runway — ver categoriasMock.novia/fiesta en mockData.js.
+  novia: {
+    precio: false, tallas: false, colores: false, telas: false, stock: false, boton: false, coleccion: { requerido: true },
+  },
+  fiesta: {
     precio: false, tallas: false, colores: false, telas: false, stock: false, boton: false, coleccion: { requerido: true },
   },
 };
@@ -228,7 +236,7 @@ function FormularioProducto({
       return;
     }
 
-    router.push(tipo ? `/admin/productos/${tipo}` : '/admin/productos');
+    router.push(tipo ? rutaTipoProducto(tipo) : '/admin/productos');
   }
 
   return (
@@ -447,3 +455,4 @@ function FormularioProducto({
 }
 
 export default FormularioProducto;
+export { comprimirImagen };

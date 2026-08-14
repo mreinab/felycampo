@@ -8,11 +8,38 @@
 // tipo: 'pret-a-porter' | 'atelier' | 'archivo'
 // estado: 'Borrador' | 'Activo' | 'Archivado'
 
+// `novia`/`fiesta` son archivos de colecciones pasadas (mismo espíritu que
+// `archivo`/Runway: nombre + `fija: true`, sin precio/tallas/colores), NO
+// lo mismo que las categorías "Novias"/"Fiesta" de Atelier (`cat3`/`cat4`
+// en categoriasMock.atelier) — esas son catálogo vivo, esto es archivo
+// editorial. Viven en su propio grupo de sidebar "Colecciones", no en
+// "Productos" (ver AdminSidebar.jsx).
 export const tiposProducto = [
   { valor: 'pret-a-porter', etiqueta: 'Prêt-à-porter' },
   { valor: 'atelier', etiqueta: 'Atelier' },
   { valor: 'archivo', etiqueta: 'Runway' },
+  { valor: 'novia', etiqueta: 'Novia' },
+  { valor: 'fiesta', etiqueta: 'Fiesta' },
 ];
+
+// Base de ruta admin de cada tipo — Prêt-à-porter/Atelier viven bajo
+// /admin/productos; los archivos de colecciones (Runway/Novia/Fiesta)
+// bajo /admin/colecciones, porque así están agrupados en el sidebar (grupo
+// "Colecciones" en AdminSidebar.jsx) aunque el valor interno de `tipo`
+// siga siendo 'archivo'/'novia'/'fiesta'. Único sitio que sabe este mapeo
+// — cualquier página que construya un link "a la ruta de este tipo" debe
+// usar esta función en vez de concatenar '/admin/productos/' a mano
+// (ese hardcode fue justo el bug que dejó rota la vuelta desde la ficha de
+// producto tras el rename de archivo → Runway).
+const RUTA_TIPO_COLECCIONES = {
+  archivo: '/admin/colecciones/runway',
+  novia: '/admin/colecciones/novia',
+  fiesta: '/admin/colecciones/fiesta',
+};
+
+export function rutaTipoProducto(tipo) {
+  return RUTA_TIPO_COLECCIONES[tipo] || `/admin/productos/${tipo}`;
+}
 
 // Tallas estándar: el admin elige de esta lista fija en vez de escribir
 // el nombre de la talla a mano en cada fila.
@@ -692,6 +719,49 @@ export const categoriasMock = {
     },
     {
       id: 'cat19', nombre: 'Diafonía', temporada: 'Otoño-Invierno 22/23', visible: true, orden: 9, fija: true,
+    },
+  ],
+  // Archivo de colecciones de Novia — mismo criterio que `archivo` (fija,
+  // sin reordenar/añadir desde la UI), pero sin `temporada`: estos nombres
+  // no siguen el patrón limpio "Estación Año" de Runway, así que no llevan
+  // badge AW/SS.
+  novia: [
+    { id: 'cat20', nombre: 'Bride 27', visible: true, orden: 1, fija: true },
+    { id: 'cat21', nombre: 'ME', visible: true, orden: 2, fija: true },
+    {
+      id: 'cat22', nombre: 'Bambú Novia', visible: true, orden: 3, fija: true,
+    },
+    {
+      id: 'cat23', nombre: 'Savia Novia', visible: true, orden: 4, fija: true,
+    },
+    { id: 'cat24', nombre: 'Inside', visible: true, orden: 5, fija: true },
+    {
+      id: 'cat25', nombre: 'Introspección', visible: true, orden: 6, fija: true,
+    },
+  ],
+  // Archivo de colecciones de Fiesta — mismo criterio que `novia`.
+  fiesta: [
+    {
+      id: 'cat26', nombre: 'Primavera Verano 2026', visible: true, orden: 1, fija: true,
+    },
+    {
+      id: 'cat27', nombre: 'Primavera Verano 2025', visible: true, orden: 2, fija: true,
+    },
+    {
+      id: 'cat28', nombre: 'Prêt-à-porter', visible: true, orden: 3, fija: true,
+    },
+    { id: 'cat29', nombre: 'En Madrid', visible: true, orden: 4, fija: true },
+    { id: 'cat30', nombre: 'A Walk', visible: true, orden: 5, fija: true },
+    { id: 'cat31', nombre: 'Bambú', visible: true, orden: 6, fija: true },
+    { id: 'cat32', nombre: 'Savia', visible: true, orden: 7, fija: true },
+    {
+      id: 'cat33', nombre: 'Miscelanea', visible: true, orden: 8, fija: true,
+    },
+    {
+      id: 'cat34', nombre: 'Essentielle', visible: true, orden: 9, fija: true,
+    },
+    {
+      id: 'cat35', nombre: 'Furisode', visible: true, orden: 10, fija: true,
     },
   ],
 };

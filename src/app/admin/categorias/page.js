@@ -2,8 +2,12 @@
 
 /* ============================================================
    CATEGORÍAS — spec sección 7. Solo Prêt-à-porter/Atelier admiten
-   categorías nuevas — Runway (`tipo: 'archivo'`) tiene estructura fija
-   (una entrada por colección de pasarela), no editable desde aquí.
+   categorías nuevas — los archivos de colecciones (Runway/Novia/Fiesta,
+   `tipo: 'archivo'/'novia'/'fiesta'`) tienen estructura fija (una entrada
+   por colección, `fija: true` en cada categoría de mockData.js), no
+   editable desde aquí. `esFija` se calcula mirando la propia lista, no
+   comparando `tab` contra un tipo hardcodeado — así un futuro archivo más
+   no necesita tocar esta página.
    ============================================================ */
 
 import { useState } from 'react';
@@ -24,7 +28,7 @@ export default function CategoriasPage() {
   const [nuevaCategoria, setNuevaCategoria] = useState('');
 
   const lista = categorias[tab];
-  const esFija = tab === 'archivo';
+  const esFija = Boolean(lista?.some((c) => c.fija));
 
   function alternarVisible(id) {
     alternarVisibleContexto(tab, id);
@@ -62,7 +66,7 @@ export default function CategoriasPage() {
         ))}
       </div>
 
-      {esFija && <p className={styles.avisoFija}>Runway tiene una entrada fija por colección de pasarela — no se pueden añadir categorías nuevas aquí.</p>}
+      {esFija && <p className={styles.avisoFija}>Esta sección tiene una entrada fija por colección — no se pueden añadir categorías nuevas aquí.</p>}
 
       <div className={styles.lista}>
         {esFija ? (

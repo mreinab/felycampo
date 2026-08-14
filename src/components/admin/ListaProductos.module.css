@@ -176,12 +176,41 @@
 }
 
 .categoriaTarjetaImagen {
+  position: relative;
   display: block;
   text-decoration: none;
   color: inherit;
   border: var(--border-thin) solid var(--color-gris-200);
   background: var(--color-light-details);
   transition: border-color 0.2s var(--ease-marca);
+}
+
+.categoriaEditar {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-marca), color 0.2s var(--ease-marca);
+}
+
+.categoriaTarjetaImagen:hover .categoriaEditar,
+.categoriaEditar:focus-visible {
+  opacity: 1;
+}
+
+.categoriaEditar:hover {
+  color: var(--color-rosa-oscuro);
 }
 
 .categoriaTarjetaImagen:hover {

@@ -18,7 +18,7 @@ import {
 } from '@/components/admin';
 import { Boton } from '@/components/ui';
 import {
-  productosMock, coloresMock, telasMock, tiposProducto, coleccionesMock,
+  productosMock, coloresMock, telasMock, tiposProducto, coleccionesMock, rutaTipoProducto,
 } from '@/components/admin/mockData';
 import styles from './page.module.css';
 
@@ -44,7 +44,7 @@ export default function VerProductoPage({ params }) {
 
   return (
     <div>
-      <BotonVolver href={`/admin/productos/${producto.tipo}`} />
+      <BotonVolver href={rutaTipoProducto(producto.tipo)} />
       <PageHeader titulo={producto.nombre} subtitulo={producto.sku}>
         <Boton variante="texto" href={`/admin/productos/${producto.id}/editar`}>Editar</Boton>
       </PageHeader>

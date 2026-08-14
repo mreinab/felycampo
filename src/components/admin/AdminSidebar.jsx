@@ -32,6 +32,8 @@ import {
   ChevronDown,
   Scissors,
   Archive,
+  Heart,
+  PartyPopper,
   Users,
   BarChart3,
   Settings,
@@ -77,7 +79,13 @@ const grupos = [
     titulo: 'Colecciones',
     items: [
       {
-        href: '/admin/productos/runway', label: 'Runway', icono: Archive, tipo: 'archivo',
+        href: '/admin/colecciones/runway', label: 'Runway', icono: Archive, tipo: 'archivo',
+      },
+      {
+        href: '/admin/colecciones/novia', label: 'Novia', icono: Heart, tipo: 'novia',
+      },
+      {
+        href: '/admin/colecciones/fiesta', label: 'Fiesta', icono: PartyPopper, tipo: 'fiesta',
       },
     ],
   },
@@ -153,7 +161,13 @@ function AdminSidebar() {
       return (
         <li key={item.href}>
           <div className={`${styles.item} ${enRuta && !categoriaActiva ? styles.activo : ''}`}>
-            <Link href={item.href} className={styles.itemEnlace}>
+            <Link
+              href={item.href}
+              className={styles.itemEnlace}
+              onClick={() => {
+                if (tieneCategorias) setSubAbiertos((actual) => ({ ...actual, [item.href]: true }));
+              }}
+            >
               <Icono className={styles.icono} aria-hidden="true" />
               <span className={styles.label}>{item.label}</span>
             </Link>

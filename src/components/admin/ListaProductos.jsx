@@ -15,16 +15,17 @@
 import { Suspense, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Pencil } from 'lucide-react';
 import {
   PageHeader, TablaAdmin, EstadoPublicacionBadge, FiltroBar, FiltroSelector, TabsFiltro, ModalOverlay, BotonVolver, useToast, useCategorias,
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import {
-  productosMock, tiposProducto, coleccionesMock, codigoTemporada,
+  productosMock, tiposProducto, coleccionesMock, codigoTemporada, rutaTipoProducto,
 } from '@/components/admin/mockData';
 import { calcularEstadoPublicacion, CONFIG_ESTADO_PUBLICACION } from './EstadoPublicacionBadge';
 import FormularioProducto from './FormularioProducto';
+import FormularioColeccion from './FormularioColeccion';
 import styles from './ListaProductos.module.css';
 
 const OPCIONES_PUBLICACION = [
@@ -46,15 +47,15 @@ function stockTotal(producto) {
 }
 
 function ListaProductosContenido({
-  tipoFijo, titulo, agruparPorCategoria = false, iconoCategoria: IconoCategoria, imagenesCategoria, slugRuta,
+  tipoFijo, titulo, agruparPorCategoria = false, iconoCategoria: IconoCategoria, imagenesCategoria,
 }) {
   // La URL de la ruta puede diferir del valor interno de `tipo` (p.ej.
-  // runway usa slugRuta="runway" pero tipoFijo sigue siendo "archivo",
-  // ver docs/adminpanel.md sección 5) — slugRuta cae a tipoFijo cuando
-  // coinciden, como en pret-a-porter/atelier.
-  const rutaTipo = slugRuta || tipoFijo;
+  // Runway vive en /admin/colecciones/runway pero tipoFijo sigue siendo
+  // "archivo", ver docs/adminpanel.md sección 5) — rutaTipoProducto()
+  // sabe ese mapeo, único sitio que lo sabe.
+  const rutaBase = rutaTipoProducto(tipoFijo);
   const { mostrarToast } = useToast();
-  const { categorias } = useCategorias();
+  const { categorias, anadirCategoria, editarCategoria } = useCategorias();
   const searchParams = useSearchParams();
   const categoriaFija = searchParams.get('categoria') || '';
   const [productos, setProductos] = useState(productosMock);
@@ -66,6 +67,35 @@ function ListaProductosContenido({
   const [nuevoAbierto, setNuevoAbierto] = useState(false);
   const [productoEnEdicion, setProductoEnEdicion] = useState(null);
   const [filtroTemporada, setFiltroTemporada] = useState('Todas');
+  const [nuevaColeccionAbierta, setNuevaColeccionAbierta] = useState(false);
+  const [coleccionEnEdicion, setColeccionEnEdicion] = useState(null);
+
+  function crearColeccion(datos) {
+    // La colección nueva es, por definición, la más reciente del archivo
+    // — se inserta antes que todas las demás (orden mínimo actual - 1) en
+    // vez de al final, así queda arriba del todo en la rejilla igual que
+    // "La Colección"/etc. hoy. La propia orden ascendente de las 9/6/10
+    // existentes ya codifica su secuencia real de temporada; no hace falta
+    // volver a calcularla a partir del string de `temporada`.
+    const ordenes = (categorias[tipoFijo] || []).map((c) => c.orden);
+    const ordenNuevo = ordenes.length ? Math.min(...ordenes) - 1 : 1;
+    anadirCategoria(tipoFijo, {
+      ...datos, fija: true, orden: ordenNuevo,
+    });
+    setNuevaColeccionAbierta(false);
+    mostrarToast(`"${datos.nombre}" creada (demo)`);
+  }
+
+  function guardarEdicionColeccion(datos) {
+    editarCategoria(tipoFijo, coleccionEnEdicion.id, datos);
+    setColeccionEnEdicion(null);
+    mostrarToast(`"${datos.nombre}" actualizada (demo)`);
+  }
+
+  function cerrarModalColeccion() {
+    setNuevaColeccionAbierta(false);
+    setColeccionEnEdicion(null);
+  }
 
   const categoriaActual = categoriaFija ? categorias[tipoFijo]?.find((c) => c.id === categoriaFija) : null;
 
@@ -126,8 +156,19 @@ function ListaProductosContenido({
   }
 
   if (agruparPorCategoria && !categoriaFija) {
-    const todasLasCategorias = (categorias[tipoFijo] || []).filter((c) => c.visible);
+    // `orden` ascendente = más reciente primero (así están definidas las
+    // colecciones de Runway/Novia/Fiesta en mockData.js) — sin este sort
+    // una colección añadida desde el modal se pintaría en su posición de
+    // array, no en su sitio cronológico.
+    const todasLasCategorias = (categorias[tipoFijo] || [])
+      .filter((c) => c.visible)
+      .sort((a, b) => a.orden - b.orden);
     const hayTemporadas = todasLasCategorias.some((c) => c.temporada);
+    // Archivos de colecciones (Runway/Novia/Fiesta) tienen categorías fijas
+    // (ver categoriasMock en mockData.js) — solo ahí tiene sentido dar de
+    // alta una colección nueva desde aquí; Pret-à-porter/Atelier ya tienen
+    // su propia alta de categoría en /admin/categorias.
+    const esColeccionFija = todasLasCategorias.some((c) => c.fija);
     const categoriasVisibles = hayTemporadas && filtroTemporada !== 'Todas'
       ? todasLasCategorias.filter((c) => codigoTemporada(c.temporada).startsWith(filtroTemporada))
       : todasLasCategorias;
@@ -140,7 +181,6 @@ function ListaProductosContenido({
           {hayTemporadas && (
             <div className={styles.temporadaSelector}>
               {[
-                { valor: 'Todas', etiqueta: 'Todas', clase: '' },
                 { valor: 'AW', etiqueta: 'Autumn Winter', clase: styles.temporadaBotonAw },
                 { valor: 'SS', etiqueta: 'Spring Summer', clase: styles.temporadaBotonSs },
               ].map(({ valor, etiqueta, clase }) => (
@@ -149,24 +189,44 @@ function ListaProductosContenido({
                   type="button"
                   className={`${styles.temporadaBoton} ${clase} ${filtroTemporada === valor ? styles.temporadaBotonActivo : ''}`}
                   aria-pressed={filtroTemporada === valor}
-                  onClick={() => setFiltroTemporada(valor)}
+                  onClick={() => setFiltroTemporada(filtroTemporada === valor ? 'Todas' : valor)}
                 >
                   {etiqueta}
                 </button>
               ))}
             </div>
           )}
+          {esColeccionFija && (
+            <Boton variante="solido" onClick={() => setNuevaColeccionAbierta(true)}>
+              <Plus size={14} />
+              Nueva Colección
+            </Boton>
+          )}
         </PageHeader>
         <div className={`${styles.categoriasGrid} ${imagenesCategoria ? styles.categoriasGridImagenes : ''}`}>
           {categoriasVisibles.map((cat) => (imagenesCategoria ? (
             <Link
               key={cat.id}
-              href={`/admin/productos/${rutaTipo}?categoria=${cat.id}`}
+              href={`${rutaBase}?categoria=${cat.id}`}
               className={styles.categoriaTarjetaImagen}
             >
+              {esColeccionFija && (
+                <button
+                  type="button"
+                  className={styles.categoriaEditar}
+                  aria-label={`Editar ${cat.nombre}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setColeccionEnEdicion(cat);
+                  }}
+                >
+                  <Pencil size={14} />
+                </button>
+              )}
               <div className={styles.categoriaImagenWrap}>
-                {imagenesCategoria[cat.id] ? (
-                  <img src={imagenesCategoria[cat.id]} alt="" className={styles.categoriaImagen} />
+                {imagenesCategoria[cat.id] || cat.imagen ? (
+                  <img src={imagenesCategoria[cat.id] || cat.imagen} alt="" className={styles.categoriaImagen} />
                 ) : <div className={styles.categoriaImagenVacia} />}
                 {cat.temporada && (
                   <span className={`${styles.categoriaBadge} ${codigoTemporada(cat.temporada).startsWith('AW') ? styles.categoriaBadgeAw : styles.categoriaBadgeSs}`}>
@@ -177,17 +237,31 @@ function ListaProductosContenido({
               <div className={styles.categoriaInfoFila}>
                 <span className={styles.categoriaNombre}>{cat.nombre}</span>
                 <span className={styles.categoriaContador}>
-                  {productos.filter((p) => p.tipo === tipoFijo && p.categoriaId === cat.id).length}
+                  {cat.numeroLooks ?? productos.filter((p) => p.tipo === tipoFijo && p.categoriaId === cat.id).length}
                 </span>
               </div>
             </Link>
           ) : (
-            <Link key={cat.id} href={`/admin/productos/${rutaTipo}?categoria=${cat.id}`} className={styles.categoriaTarjeta}>
+            <Link key={cat.id} href={`${rutaBase}?categoria=${cat.id}`} className={styles.categoriaTarjeta}>
               {IconoCategoria && <IconoCategoria className={styles.categoriaIcono} aria-hidden="true" />}
               <span className={styles.categoriaNombre}>{cat.nombre}</span>
             </Link>
           )))}
         </div>
+
+        {esColeccionFija && (
+          <ModalOverlay
+            abierto={nuevaColeccionAbierta || Boolean(coleccionEnEdicion)}
+            onCerrar={cerrarModalColeccion}
+          >
+            <FormularioColeccion
+              key={coleccionEnEdicion?.id || 'nueva'}
+              onGuardado={coleccionEnEdicion ? guardarEdicionColeccion : crearColeccion}
+              pedirTemporada={hayTemporadas}
+              categoriaExistente={coleccionEnEdicion}
+            />
+          </ModalOverlay>
+        )}
       </div>
     );
   }
@@ -195,7 +269,7 @@ function ListaProductosContenido({
   return (
     <div>
       {agruparPorCategoria && (
-        <BotonVolver href={`/admin/productos/${rutaTipo}`}>Categorías</BotonVolver>
+        <BotonVolver href={rutaBase}>Atrás</BotonVolver>
       )}
       <PageHeader
         titulo={categoriaActual ? `${titulo} — ${categoriaActual.nombre}` : titulo}
