@@ -6,13 +6,13 @@ export default {
   argTypes: {
     variante: {
       control: 'select',
-      options: ['solido', 'contorno', 'rosa', 'texto', 'texto-crema', 'avisa'],
-      description: 'Sólido = acción principal. Rosa = solo CTA de compra, máximo una por pantalla. Contorno = acción secundaria. Texto = enlaces. Texto-crema = enlace en --color-crema, para fondos oscuros/imágenes. Avisa = tamaño fijo compacto, para "avísame cuando esté disponible".',
+      options: ['solido', 'contorno', 'contorno-rosa', 'rosa', 'texto', 'texto-crema', 'avisa'],
+      description: 'Sólido = acción principal. Rosa = solo CTA de compra, máximo una por pantalla. Contorno = acción secundaria. Contorno-rosa = mismo contorno en rosa-oscuro, para acciones secundarias de limpiar/descartar (ej. Limpiar filtros); mismo hover que contorno, invierte a relleno sólido. Texto = enlaces. Texto-crema = enlace en --color-crema, para fondos oscuros/imágenes. Avisa = tamaño fijo compacto, para "avísame cuando esté disponible".',
     },
     tamano: {
       control: 'select',
       options: ['s', 'm', 'l', 'full'],
-      description: 'Solo aplica a las variantes solido/contorno/rosa — la variante avisa ignora este control (tamaño fijo).',
+      description: 'Solo aplica a las variantes solido/contorno/contorno-rosa/rosa — la variante avisa ignora este control (tamaño fijo).',
     },
     desactivado: {
       control: 'boolean',
@@ -33,6 +33,7 @@ export const Variantes = {
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
       <Boton variante="solido">Comprar</Boton>
       <Boton variante="contorno">Ver colección</Boton>
+      <Boton variante="contorno-rosa">Limpiar filtros</Boton>
       <Boton variante="rosa">Añadir a la cesta</Boton>
       <Boton variante="texto">Descubre más</Boton>
     </div>

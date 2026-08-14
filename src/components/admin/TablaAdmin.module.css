@@ -27,16 +27,30 @@
   border-bottom: var(--border-regular) solid var(--color-gris-200);
 }
 
+.thNueva {
+  width: 24px;
+  padding: var(--spacing-3) 0 var(--spacing-3) var(--spacing-4);
+  border-bottom: var(--border-regular) solid var(--color-gris-200);
+}
+
+.tdNueva {
+  padding: var(--spacing-3) 0 var(--spacing-3) var(--spacing-4);
+}
+
+.puntoNuevo {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-rosa);
+}
+
 .tr {
   border-bottom: var(--border-thin) solid var(--color-gris-200);
 }
 
 .tr:last-child {
   border-bottom: none;
-}
-
-.tr:hover {
-  background: var(--color-gris-100);
 }
 
 .filaClicable {
@@ -50,6 +64,14 @@
 
 .seleccionada {
   background: var(--color-hairline);
+}
+
+.destacada {
+  background: var(--color-rosa-light);
+}
+
+.destacadaVerde {
+  background: var(--color-verde-light);
 }
 
 .td {

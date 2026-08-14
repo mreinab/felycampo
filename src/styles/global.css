@@ -41,8 +41,43 @@
   --color-rosa:           #E92174;   /* alias: --rosa */
   --color-rosa-oscuro:    #C2185F;   /* alias: --rosa-oscuro */
   --color-rosa-velo:      #FCE4EE;   /* alias: --rosa-velo */
+  --color-rosa-light:     #fff2f6;   /* alias: --rosa-light */
 
   --color-crema:          #F5F1EE;   /* alias: --crema */
+
+  /* Colores de estado — SOLO panel admin (badges de estado/origen,
+     pestañas de TabsFiltro, chips de acción en FormularioProducto,
+     botones de bulk-actions en ListaProductos). No forman parte de la
+     identidad de marca del sitio público — por eso no están en
+     styleguide.html. Mismo patrón que rosa: base / oscuro / velo /
+     velo-oscuro. "oscuro" hace doble uso: es el texto sobre fondo
+     "velo" en cualquier badge (nunca el tono base — no da suficiente
+     contraste) Y el hover cuando el tono base se usa como fondo sólido
+     (ej. botón bulkPublicar). "velo-oscuro" es solo el hover sobre el
+     propio fondo pastel (chips de FormularioProducto). Cada familia
+     solo define los tonos que realmente se usan en algún sitio. */
+  --color-azul:              #1c74d4;
+  --color-azul-oscuro:       #1659A3;
+  --color-azul-velo:         #DCE9FB;
+  --color-azul-velo-oscuro:  #C3DCF7;
+
+  --color-amarillo:              #b58c04;
+  --color-amarillo-oscuro:       #8c6c02;
+  --color-amarillo-velo:         #FBEFC6;
+  --color-amarillo-velo-oscuro:  #F5E3A0;
+
+  --color-verde:              #2a8b41;
+  --color-verde-oscuro:       #17612A;
+  --color-verde-velo:         #DCF3E1;
+  --color-verde-light:        #f5fff6;
+  --color-verde-velo-oscuro:  #C7EAD0;
+
+  --color-naranja:        #9A4E12;
+  --color-naranja-oscuro: #773C0E;
+  --color-naranja-velo:   #FBE3CE;
+
+  --color-rojo:        #C0392B;
+  --color-rojo-oscuro: #A5311F;
 
   /* ---------- TIPOGRAFÍA — familia ---------- */
   --font-base: Helvetica, Inter, Arial, sans-serif;

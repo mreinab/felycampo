@@ -402,6 +402,7 @@ export const pedidosMock = [
     tracking: '',
     notasInternas: '',
     items: [{ producto: 'Vestido Aurora', talla: 'S', color: 'Burdeos', cantidad: 1, precio: '890 €' }],
+    nuevo: true, // placeholder de diseño — ver AdminSidebar "nuevos: 3"; sin lógica real de "visto" detrás
   },
   {
     id: 'FC-2036',
@@ -414,6 +415,7 @@ export const pedidosMock = [
     tracking: 'ES394857110',
     notasInternas: '',
     items: [{ producto: 'Falda Vera', talla: 'M', color: 'Rosa suave', cantidad: 2, precio: '840 €' }],
+    nuevo: true,
   },
   {
     id: 'FC-2037',
@@ -426,6 +428,7 @@ export const pedidosMock = [
     tracking: '',
     notasInternas: 'Pendiente de verificación de dirección.',
     items: [{ producto: 'Vestido Aurora', talla: 'M', color: 'Azul marino', cantidad: 1, precio: '890 €' }],
+    nuevo: true,
   },
 ];
 
@@ -564,10 +567,11 @@ export const consultasPrecioMock = [
     clienteId: null,
     estado: 'Pendiente',
     mensaje: '¿Este modelo se puede confeccionar en manga larga?',
+    nuevo: true, // placeholder de diseño — ver AdminSidebar "nuevos: 2"; sin lógica real de "visto" detrás
   },
   {
     id: 'cp7',
-    producto: 'Diseño a medida Atelier',
+    producto: 'Vestido Alba',
     color: null,
     fecha: '2026-08-12',
     nombre: 'Irene Vázquez',
@@ -575,7 +579,8 @@ export const consultasPrecioMock = [
     telefono: '+34 677 888 999',
     clienteId: null,
     estado: 'Pendiente',
-    mensaje: 'Quiero un diseño completamente a medida, no encuentro nada parecido en el catálogo. ¿Podéis ayudarme?',
+    mensaje: '¿Podríais decirme el precio y los plazos de entrega para este vestido?',
+    nuevo: true,
   },
 ];
 

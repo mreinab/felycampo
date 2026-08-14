@@ -7,17 +7,12 @@
   white-space: nowrap;
 }
 
-.atelier {
-  background: #DCE9FB;
-  color: #1D5FA8;
-}
-
 .novias {
-  background: var(--color-rosa-velo);
-  color: var(--color-rosa-oscuro);
+  background: var(--color-azul-velo);
+  color: var(--color-azul-oscuro);
 }
 
 .fiesta {
-  background: #FBE3CE;
-  color: #9A4E12;
+  background: var(--color-naranja-velo);
+  color: var(--color-naranja-oscuro);
 }

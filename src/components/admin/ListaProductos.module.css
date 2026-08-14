@@ -27,12 +27,12 @@
 }
 
 .bulkBar .bulkPublicar {
-  background: #1E7B34;
-  border-color: #1E7B34;
+  background: var(--color-verde);
+  border-color: var(--color-verde);
 }
 .bulkBar .bulkPublicar:hover {
-  background: #17612A;
-  border-color: #17612A;
+  background: var(--color-verde-oscuro);
+  border-color: var(--color-verde-oscuro);
 }
 
 .bulkBar .bulkDesactivar {
@@ -45,12 +45,12 @@
 }
 
 .bulkBar .bulkBorrar {
-  background: #C0392B;
-  border-color: #C0392B;
+  background: var(--color-rojo);
+  border-color: var(--color-rojo);
 }
 .bulkBar .bulkBorrar:hover {
-  background: #A5311F;
-  border-color: #A5311F;
+  background: var(--color-rojo-oscuro);
+  border-color: var(--color-rojo-oscuro);
 }
 
 .bulkCerrar {

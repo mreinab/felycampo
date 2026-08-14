@@ -1,3 +1,10 @@
+.cabeceraSuperior {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
 .resumen {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -50,29 +57,32 @@
 }
 
 .estadoBoton {
+  display: inline-flex;
+  align-items: center;
   padding: var(--spacing-2) var(--spacing-4);
   background: none;
   font-family: var(--font-base);
   font-size: var(--text-label);
+  line-height: normal;
   cursor: pointer;
   transition: background-color 0.2s var(--ease-marca), color 0.2s var(--ease-marca);
 }
 
 /* Inactivo: sin relleno, borde del mismo color que el texto — mismos hex
    que EstadoContactoBadge.module.css. Activo: relleno sólido. */
-.estadoBoton.pendiente { border: var(--border-regular) solid #8A6A00; color: #8A6A00; }
-.estadoBoton.contactado { border: var(--border-regular) solid #1E7B34; color: #1E7B34; }
+.estadoBoton.pendiente { border: var(--border-regular) solid var(--color-amarillo); color: var(--color-amarillo); }
+.estadoBoton.contactado { border: var(--border-regular) solid var(--color-verde); color: var(--color-verde); }
 
-.estadoBotonActivo.pendiente { background: #8A6A00; color: var(--color-fondo); }
-.estadoBotonActivo.contactado { background: #1E7B34; color: var(--color-fondo); }
+.estadoBotonActivo.pendiente { background: var(--color-amarillo); color: var(--color-fondo); }
+.estadoBotonActivo.contactado { background: var(--color-verde); color: var(--color-fondo); }
 
 .origenFila {
   margin-bottom: var(--spacing-1);
 }
 
 .itemImagen {
-  width: 44px;
-  height: 60px;
+  width: 80px;
+  height: 120px;
   object-fit: cover;
   background: var(--color-gris-100);
 }

@@ -4,19 +4,21 @@ import { use, useState } from 'react';
 import { notFound } from 'next/navigation';
 import { StickyNote } from 'lucide-react';
 import {
-  PageHeader, TablaAdmin, EstadoTimeline, BotonVolver, useToast,
+  PageHeader, TablaAdmin, BotonVolver, useToast,
 } from '@/components/admin';
 import { Boton } from '@/components/ui';
 import { pedidosMock, productosMock, coloresMock } from '@/components/admin/mockData';
 import { CONFIG_ESTADO_PEDIDO } from '@/components/admin/EstadoPedidoBadge';
 import styles from './page.module.css';
 
-const PASOS_ENVIO = ['Recibido', 'Confirmado', 'Enviado', 'Entregado'];
-const INDICE_PASO = { Procesando: 1, Enviado: 2, Entregado: 3 };
 const ESTADOS_ENVIO_ORDEN = ['Procesando', 'Enviado', 'Entregado'];
 
+function productoPorNombre(nombre) {
+  return productosMock.find((p) => p.nombre === nombre);
+}
+
 function imagenProducto(nombre) {
-  return productosMock.find((p) => p.nombre === nombre)?.imagen || '';
+  return productoPorNombre(nombre)?.imagen || '';
 }
 
 function colorHex(nombre) {
@@ -50,8 +52,8 @@ export default function DetallePedidoPage({ params }) {
 
   return (
     <div>
-      <BotonVolver href="/admin/pedidos" />
-      <PageHeader titulo={`Pedido ${pedido.id}`} subtitulo={pedido.cliente}>
+      <div className={styles.cabeceraSuperior}>
+        <BotonVolver href="/admin/pedidos" />
         <div className={styles.estadoSelector}>
           {ESTADOS_ENVIO_ORDEN.map((valor) => {
             const { etiqueta, clase } = CONFIG_ESTADO_PEDIDO[valor];
@@ -69,7 +71,8 @@ export default function DetallePedidoPage({ params }) {
             );
           })}
         </div>
-      </PageHeader>
+      </div>
+      <PageHeader titulo={`Pedido ${pedido.id}`} subtitulo={pedido.cliente} />
 
       <div className={styles.resumen}>
         <div>
@@ -128,6 +131,10 @@ export default function DetallePedidoPage({ params }) {
           ]}
           filas={pedido.items}
           claveFila={(item) => `${item.producto}-${item.talla}-${item.color}`}
+          hrefFila={(item) => {
+            const producto = productoPorNombre(item.producto);
+            return producto ? `/admin/productos/${producto.id}` : undefined;
+          }}
         />
       </div>
 
@@ -146,11 +153,6 @@ export default function DetallePedidoPage({ params }) {
         <div>
           <Boton variante="contorno" tamano="s" onClick={guardarNotas}>Guardar notas</Boton>
         </div>
-      </div>
-
-      <div className={styles.bloque}>
-        <p className={styles.bloqueTitulo}>Estado del pedido</p>
-        <EstadoTimeline pasos={PASOS_ENVIO} activo={INDICE_PASO[pedido.estadoEnvio]} />
       </div>
     </div>
   );

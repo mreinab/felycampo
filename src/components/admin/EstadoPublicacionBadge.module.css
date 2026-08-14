@@ -8,18 +8,18 @@
 }
 
 .publicado {
-  background: #DCF3E1;
-  color: #1E7B34;
+  background: var(--color-verde-velo);
+  color: var(--color-verde-oscuro);
 }
 
 .programado {
-  background: #FBEFC6;
-  color: #8A6A00;
+  background: var(--color-amarillo-velo);
+  color: var(--color-amarillo-oscuro);
 }
 
 .borrador {
-  background: #DCE9FB;
-  color: #1D5FA8;
+  background: var(--color-azul-velo);
+  color: var(--color-azul-oscuro);
 }
 
 .archivado {

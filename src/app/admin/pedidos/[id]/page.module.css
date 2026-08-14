@@ -1,3 +1,10 @@
+.cabeceraSuperior {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
 .resumen {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -103,8 +110,8 @@
 }
 
 .itemImagen {
-  width: 44px;
-  height: 60px;
+  width: 80px;
+  height: 120px;
   object-fit: cover;
   background: var(--color-gris-100);
 }
@@ -152,13 +159,13 @@
 /* Inactivo: sin relleno, borde del mismo color (más oscuro/saturado) que el
    texto — mismos hex que EstadoPedidoBadge.module.css. Activo: relleno
    sólido de ese mismo color, texto en --color-fondo. */
-.estadoBoton.enProceso { border: var(--border-regular) solid #1D5FA8; color: #1D5FA8; }
-.estadoBoton.enviado { border: var(--border-regular) solid #8A6A00; color: #8A6A00; }
-.estadoBoton.completado { border: var(--border-regular) solid #1E7B34; color: #1E7B34; }
+.estadoBoton.enProceso { border: var(--border-regular) solid var(--color-azul); color: var(--color-azul); }
+.estadoBoton.enviado { border: var(--border-regular) solid var(--color-amarillo); color: var(--color-amarillo); }
+.estadoBoton.completado { border: var(--border-regular) solid var(--color-verde); color: var(--color-verde); }
 
-.estadoBotonActivo.enProceso { background: #1D5FA8; color: var(--color-fondo); }
-.estadoBotonActivo.enviado { background: #8A6A00; color: var(--color-fondo); }
-.estadoBotonActivo.completado { background: #1E7B34; color: var(--color-fondo); }
+.estadoBotonActivo.enProceso { background: var(--color-azul); color: var(--color-fondo); }
+.estadoBotonActivo.enviado { background: var(--color-amarillo); color: var(--color-fondo); }
+.estadoBotonActivo.completado { background: var(--color-verde); color: var(--color-fondo); }
 
 .etiquetaCampo {
   display: block;

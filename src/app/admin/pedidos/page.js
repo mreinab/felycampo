@@ -7,9 +7,9 @@
 
 import { Suspense, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { StickyNote } from 'lucide-react';
+import { StickyNote, List, LayoutGrid } from 'lucide-react';
 import {
-  PageHeader, TablaAdmin, EstadoBadge, EstadoPedidoBadge, FiltroBar, FiltroSelector, TabsFiltro,
+  PageHeader, TablaAdmin, GridPedidos, EstadoBadge, EstadoPedidoBadge, FiltroBar, FiltroSelector, TabsFiltro,
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import { pedidosMock, productosMock } from '@/components/admin/mockData';
@@ -27,6 +27,28 @@ function imagenesPedido(pedido) {
     .filter(Boolean);
 }
 
+function totalNumero(total) {
+  return Number(total.replace(/[^\d]/g, ''));
+}
+
+function calcularHoras(fecha) {
+  const inicio = new Date(`${fecha}T00:00:00`);
+  return Math.floor((Date.now() - inicio.getTime()) / (1000 * 60 * 60));
+}
+
+function etiquetaRecibido(fecha) {
+  const horas = calcularHoras(fecha);
+  if (horas < 24) return horas <= 1 ? 'Hace 1 hora' : `Hace ${horas} horas`;
+  const dias = Math.floor(horas / 24);
+  return dias === 1 ? 'Hace 1 día' : `Hace ${dias} días`;
+}
+
+// "No enviado a las 2 semanas" — mismo protocolo que esUrgente en
+// consultas-precio (fila destacada en rosa-velo vía resaltarFila).
+function esRetrasado(p) {
+  return calcularHoras(p.fecha) >= 24 * 14 && p.estadoEnvio === 'Procesando';
+}
+
 function PedidosContenido() {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState('');
@@ -34,7 +56,8 @@ function PedidosContenido() {
   const [filtroEnvio, setFiltroEnvio] = useState(searchParams.get('estadoEnvio') || 'Todos');
   const [desde, setDesde] = useState('');
   const [hasta, setHasta] = useState('');
-  const [ordenFecha, setOrdenFecha] = useState('reciente');
+  const [orden, setOrden] = useState('reciente');
+  const [vista, setVista] = useState('tabla');
 
   const filtrados = useMemo(() => pedidosMock
     .filter((p) => {
@@ -45,14 +68,50 @@ function PedidosContenido() {
       if (query && !`${p.id} ${p.cliente}`.toLowerCase().includes(query.toLowerCase())) return false;
       return true;
     })
-    .sort((a, b) => (ordenFecha === 'reciente' ? b.fecha.localeCompare(a.fecha) : a.fecha.localeCompare(b.fecha))),
-  [filtroPago, filtroEnvio, desde, hasta, query, ordenFecha]);
+    .sort((a, b) => {
+      if (orden === 'reciente') return b.fecha.localeCompare(a.fecha);
+      if (orden === 'antiguo') return a.fecha.localeCompare(b.fecha);
+      if (orden === 'precioAsc') return totalNumero(a.total) - totalNumero(b.total);
+      return totalNumero(b.total) - totalNumero(a.total);
+    }),
+  [filtroPago, filtroEnvio, desde, hasta, query, orden]);
+
+  const hayFiltros = filtroPago !== 'Todos' || desde !== '' || hasta !== '' || orden !== 'reciente' || query !== '';
+
+  function limpiarFiltros() {
+    setQuery('');
+    setFiltroPago('Todos');
+    setDesde('');
+    setHasta('');
+    setOrden('reciente');
+  }
 
   return (
     <div>
-      <PageHeader titulo="Pedidos" subtitulo={`${filtrados.length} pedidos`} />
+      <PageHeader titulo="Pedidos" subtitulo={`${filtrados.length} pedidos`}>
+        <div className={styles.vistaToggle} role="group" aria-label="Cambiar vista">
+          <button
+            type="button"
+            className={`${styles.vistaBoton} ${vista === 'tabla' ? styles.vistaBotonActiva : ''}`}
+            aria-pressed={vista === 'tabla'}
+            aria-label="Vista de tabla"
+            onClick={() => setVista('tabla')}
+          >
+            <List size={16} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className={`${styles.vistaBoton} ${vista === 'grid' ? styles.vistaBotonActiva : ''}`}
+            aria-pressed={vista === 'grid'}
+            aria-label="Vista de rejilla"
+            onClick={() => setVista('grid')}
+          >
+            <LayoutGrid size={16} aria-hidden="true" />
+          </button>
+        </div>
+      </PageHeader>
 
-      <FiltroBar>
+      <FiltroBar onLimpiar={hayFiltros ? limpiarFiltros : undefined}>
         <Input etiqueta="Buscar" placeholder="Pedido o cliente" valor={query} onChange={(e) => setQuery(e.target.value)} />
         <FiltroSelector
           etiqueta="Pago"
@@ -60,58 +119,84 @@ function PedidosContenido() {
           onChange={(e) => setFiltroPago(e.target.value)}
           opciones={[{ valor: 'Todos', etiqueta: 'Todos' }, { valor: 'Pendiente', etiqueta: 'Pendiente' }, { valor: 'Pagado', etiqueta: 'Pagado' }, { valor: 'Fallido', etiqueta: 'Fallido' }]}
         />
+        <FiltroSelector
+          etiqueta="Ordenar por"
+          valor={orden}
+          onChange={(e) => setOrden(e.target.value)}
+          opciones={[
+            { valor: 'reciente', etiqueta: 'Fecha: Más reciente' },
+            { valor: 'antiguo', etiqueta: 'Fecha: Más antiguo' },
+            { valor: 'precioAsc', etiqueta: 'Precio: Menor a mayor' },
+            { valor: 'precioDesc', etiqueta: 'Precio: Mayor a menor' },
+          ]}
+        />
         <Input etiqueta="Desde" tipo="date" valor={desde} onChange={(e) => setDesde(e.target.value)} />
         <Input etiqueta="Hasta" tipo="date" valor={hasta} onChange={(e) => setHasta(e.target.value)} />
-        <FiltroSelector
-          etiqueta="Fecha"
-          valor={ordenFecha}
-          onChange={(e) => setOrdenFecha(e.target.value)}
-          opciones={[{ valor: 'reciente', etiqueta: 'Más recientes' }, { valor: 'antiguo', etiqueta: 'Más antiguos' }]}
-        />
       </FiltroBar>
 
       <TabsFiltro opciones={OPCIONES_ESTADO_PEDIDO} valor={filtroEnvio} onChange={setFiltroEnvio} />
 
-      <TablaAdmin
-        columnas={[
-          {
-            clave: 'id',
-            etiqueta: 'Pedido',
-            render: (p) => (
-              <span className={styles.idFila}>
-                {p.id}
-                {p.notasInternas && (
-                  <span className={styles.notaIcono} tabIndex={0} aria-label={`Nota interna: ${p.notasInternas}`}>
-                    <StickyNote size={14} aria-hidden="true" />
-                    <span className={styles.notaTooltip} role="tooltip">{p.notasInternas}</span>
-                  </span>
-                )}
-              </span>
-            ),
-          },
-          {
-            clave: 'imagen',
-            etiqueta: '',
-            render: (p) => {
-              const imagenes = imagenesPedido(p);
-              return imagenes.length > 0 ? (
-                <span className={styles.miniaturaFila}>
-                  <img src={imagenes[0]} alt="" className={styles.miniatura} />
-                  {imagenes.length > 1 && <span className={styles.miniaturaExtra}>{`+${imagenes.length - 1}`}</span>}
+      {vista === 'tabla' ? (
+        <TablaAdmin
+          columnas={[
+            {
+              clave: 'id',
+              etiqueta: 'Pedido',
+              render: (p) => (
+                <span className={styles.idFila}>
+                  {p.id}
+                  {p.notasInternas && (
+                    <span className={styles.notaIcono} tabIndex={0} aria-label={`Nota interna: ${p.notasInternas}`}>
+                      <StickyNote size={14} aria-hidden="true" />
+                      <span className={styles.notaTooltip} role="tooltip">{p.notasInternas}</span>
+                    </span>
+                  )}
                 </span>
-              ) : <span className={styles.miniatura} />;
+              ),
             },
-          },
-          { clave: 'cliente', etiqueta: 'Cliente' },
-          { clave: 'fecha', etiqueta: 'Fecha' },
-          { clave: 'total', etiqueta: 'Total' },
-          { clave: 'estadoPago', etiqueta: 'Pago', render: (p) => <EstadoBadge estado={p.estadoPago} /> },
-          { clave: 'estadoEnvio', etiqueta: 'Estado', render: (p) => <EstadoPedidoBadge estado={p.estadoEnvio} /> },
-        ]}
-        filas={filtrados}
-        hrefFila={(p) => `/admin/pedidos/${p.id}`}
-        renderAcciones={(p) => <Boton variante="texto" href={`/admin/pedidos/${p.id}`}>Ver</Boton>}
-      />
+            {
+              clave: 'imagen',
+              etiqueta: '',
+              render: (p) => {
+                const imagenes = imagenesPedido(p);
+                return imagenes.length > 0 ? (
+                  <span className={styles.miniaturaFila}>
+                    <img src={imagenes[0]} alt="" className={styles.miniatura} />
+                    {imagenes.length > 1 && <span className={styles.miniaturaExtra}>{`+${imagenes.length - 1}`}</span>}
+                  </span>
+                ) : <span className={styles.miniatura} />;
+              },
+            },
+            { clave: 'cliente', etiqueta: 'Cliente' },
+            {
+              clave: 'recibido',
+              etiqueta: 'Recibido',
+              render: (p) => (
+                <div className={styles.fechaColumna}>
+                  <span className={esRetrasado(p) ? styles.recibidoRetrasado : undefined}>{etiquetaRecibido(p.fecha)}</span>
+                  <span className={styles.fechaSecundaria}>{p.fecha}</span>
+                </div>
+              ),
+            },
+            { clave: 'total', etiqueta: 'Total' },
+            { clave: 'estadoPago', etiqueta: 'Pago', render: (p) => <EstadoBadge estado={p.estadoPago} /> },
+            { clave: 'estadoEnvio', etiqueta: 'Estado', render: (p) => <EstadoPedidoBadge estado={p.estadoEnvio} /> },
+          ]}
+          filas={filtrados}
+          filaNueva={(p) => p.nuevo}
+          resaltarFila={esRetrasado}
+          resaltarFilaVerde={(p) => p.estadoEnvio === 'Entregado'}
+          porPagina={15}
+          hrefFila={(p) => `/admin/pedidos/${p.id}`}
+          renderAcciones={(p) => <Boton variante="texto" href={`/admin/pedidos/${p.id}`}>Ver</Boton>}
+        />
+      ) : (
+        <GridPedidos
+          filas={filtrados}
+          hrefFila={(p) => `/admin/pedidos/${p.id}`}
+          porPagina={12}
+        />
+      )}
     </div>
   );
 }

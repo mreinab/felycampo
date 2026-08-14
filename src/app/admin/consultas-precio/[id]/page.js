@@ -42,8 +42,8 @@ export default function DetalleConsultaPrecioPage({ params }) {
 
   return (
     <div>
-      <BotonVolver href="/admin/consultas-precio" />
-      <PageHeader titulo={consultaOriginal.producto} subtitulo={`Consulta de precio — ${consultaOriginal.nombre}`}>
+      <div className={styles.cabeceraSuperior}>
+        <BotonVolver href="/admin/consultas-precio" />
         <div className={styles.estadoSelector}>
           {ESTADOS_CONTACTO_ORDEN.map((valor) => {
             const clase = valor === 'Pendiente' ? 'pendiente' : 'contactado';
@@ -62,7 +62,8 @@ export default function DetalleConsultaPrecioPage({ params }) {
             );
           })}
         </div>
-      </PageHeader>
+      </div>
+      <PageHeader titulo={consultaOriginal.producto} subtitulo={`Consulta de precio — ${consultaOriginal.nombre}`} />
 
       <div className={styles.resumen}>
         <div>
@@ -102,9 +103,7 @@ export default function DetalleConsultaPrecioPage({ params }) {
               render: () => (
                 <div>
                   <div className={styles.origenFila}><OrigenProductoBadge producto={consultaOriginal.producto} /></div>
-                  {productoRelacionado ? (
-                    <Boton variante="texto" href={`/admin/productos/${productoRelacionado.id}/editar`}>{productoRelacionado.nombre}</Boton>
-                  ) : consultaOriginal.producto}
+                  {consultaOriginal.producto}
                 </div>
               ),
             },
@@ -121,6 +120,7 @@ export default function DetalleConsultaPrecioPage({ params }) {
           ]}
           filas={[consultaOriginal]}
           claveFila={() => consultaOriginal.id}
+          hrefFila={() => (productoRelacionado ? `/admin/productos/${productoRelacionado.id}` : undefined)}
         />
       </div>
 

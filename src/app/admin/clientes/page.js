@@ -15,10 +15,10 @@ const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', '
 
 const OPCIONES_ORDEN = [
   { valor: 'ninguno', etiqueta: 'Sin ordenar' },
-  { valor: 'clienteMasReciente', etiqueta: 'Cliente más reciente primero' },
-  { valor: 'clienteMasAntiguo', etiqueta: 'Cliente más antiguo primero' },
-  { valor: 'gastado', etiqueta: 'Más gastado primero' },
-  { valor: 'pedidos', etiqueta: 'Más pedidos primero' },
+  { valor: 'clienteMasReciente', etiqueta: 'Cliente desde: Más reciente' },
+  { valor: 'clienteMasAntiguo', etiqueta: 'Cliente desde: Más antiguo' },
+  { valor: 'gastado', etiqueta: 'Gasto: Mayor a menor' },
+  { valor: 'pedidos', etiqueta: 'Pedidos: Mayor a menor' },
 ];
 
 const OPCIONES_ULTIMO_PEDIDO = [
@@ -66,11 +66,19 @@ export default function ClientesPage() {
     return lista;
   }, [filtroUltimoPedido, query, orden]);
 
+  const hayFiltros = filtroUltimoPedido !== 'Todos' || orden !== 'ninguno' || query !== '';
+
+  function limpiarFiltros() {
+    setQuery('');
+    setFiltroUltimoPedido('Todos');
+    setOrden('ninguno');
+  }
+
   return (
     <div>
       <PageHeader titulo="Clientes" subtitulo={`${filtrados.length} registros`} />
 
-      <FiltroBar>
+      <FiltroBar onLimpiar={hayFiltros ? limpiarFiltros : undefined}>
         <Input etiqueta="Buscar" placeholder="Nombre del cliente" valor={query} onChange={(e) => setQuery(e.target.value)} />
         <FiltroSelector
           etiqueta="Último pedido"

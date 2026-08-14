@@ -318,33 +318,33 @@
 }
 
 .acciones .accionBorrador {
-  background: #DCE9FB;
-  border-color: #DCE9FB;
-  color: #1D5FA8;
+  background: var(--color-azul-velo);
+  border-color: var(--color-azul-velo);
+  color: var(--color-azul-oscuro);
 }
 .acciones .accionBorrador:hover {
-  background: #C3DCF7;
-  border-color: #C3DCF7;
+  background: var(--color-azul-velo-oscuro);
+  border-color: var(--color-azul-velo-oscuro);
 }
 
 .acciones .accionProgramado {
-  background: #FBEFC6;
-  border-color: #FBEFC6;
-  color: #8A6A00;
+  background: var(--color-amarillo-velo);
+  border-color: var(--color-amarillo-velo);
+  color: var(--color-amarillo-oscuro);
 }
 .acciones .accionProgramado:hover {
-  background: #F5E3A0;
-  border-color: #F5E3A0;
+  background: var(--color-amarillo-velo-oscuro);
+  border-color: var(--color-amarillo-velo-oscuro);
 }
 
 .acciones .accionPublicar {
-  background: #DCF3E1;
-  border-color: #DCF3E1;
-  color: #1E7B34;
+  background: var(--color-verde-velo);
+  border-color: var(--color-verde-velo);
+  color: var(--color-verde-oscuro);
 }
 .acciones .accionPublicar:hover {
-  background: #C7EAD0;
-  border-color: #C7EAD0;
+  background: var(--color-verde-velo-oscuro);
+  border-color: var(--color-verde-velo-oscuro);
 }
 
 .tipoGrid {

@@ -7,6 +7,7 @@
    Uso:
      <Boton>Comprar</Boton>
      <Boton variante="contorno">Ver colección</Boton>
+     <Boton variante="contorno-rosa">Limpiar filtros</Boton>
      <Boton variante="rosa" tamano="full">Añadir a la cesta</Boton>
      <Boton variante="texto">Descubre más</Boton>
      <Boton variante="texto-crema">Descubre más</Boton>
@@ -17,9 +18,12 @@ import styles from './Boton.module.css';
 /**
  * Botón principal del sistema. 'solido' = acción principal (una
  * por pantalla). 'rosa' se reserva para CTAs de compra — no repetir más de
- * una vez por vista, pierde fuerza. 'contorno' = acción secundaria. 'texto'
- * = enlaces. 'texto-crema' = mismo enlace, en --color-crema (fondos
- * oscuros/imágenes, ej. HeroCarousel). Esquinas siempre rectas (radio 0).
+ * una vez por vista, pierde fuerza. 'contorno' = acción secundaria. 'contorno-rosa'
+ * = mismo contorno pero en rosa-oscuro, para acciones secundarias "de limpiar/
+ * descartar" (ej. Limpiar filtros); mismo patrón de hover que 'contorno' (invierte
+ * a relleno sólido, texto/icono en --color-fondo). 'texto' = enlaces. 'texto-crema'
+ * = mismo enlace, en --color-crema (fondos oscuros/imágenes, ej. HeroCarousel).
+ * Esquinas siempre rectas (radio 0).
  */
 function Boton({
   children,

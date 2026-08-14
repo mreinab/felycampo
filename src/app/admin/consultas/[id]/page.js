@@ -51,7 +51,7 @@ export default function DetalleConsultaPage({ params }) {
           <p className={styles.resumenLabel}>Producto relacionado</p>
           <p className={styles.resumenValor}>
             {productoRelacionado ? (
-              <Boton variante="texto" href={`/admin/productos/${productoRelacionado.id}/editar`}>{productoRelacionado.nombre}</Boton>
+              <Boton variante="texto" href={`/admin/productos/${productoRelacionado.id}`}>{productoRelacionado.nombre}</Boton>
             ) : 'Ninguno'}
           </p>
         </div>

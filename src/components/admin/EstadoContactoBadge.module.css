@@ -8,11 +8,11 @@
 }
 
 .pendiente {
-  background: #FBEFC6;
-  color: #8A6A00;
+  background: var(--color-amarillo-velo);
+  color: var(--color-amarillo-oscuro);
 }
 
 .contactado {
-  background: #DCF3E1;
-  color: #1E7B34;
+  background: var(--color-verde-velo);
+  color: var(--color-verde-oscuro);
 }

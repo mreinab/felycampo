@@ -50,3 +50,16 @@
 .selectInput option {
   cursor: pointer;
 }
+
+/* Selector con etiqueta (button.limpiar) para ganar en especificidad a
+   .boton de Boton.module.css sin depender del orden de carga de los CSS
+   modules — necesario para el display:inline-flex del icono. El color
+   (rosa-oscuro, con hover invertido) ya lo trae la propia variante
+   "contorno-rosa" de Boton. */
+button.limpiar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-left: auto;
+  margin-bottom: var(--spacing-2);
+}

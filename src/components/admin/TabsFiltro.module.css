@@ -31,18 +31,18 @@
    (no se puede leer un CSS module desde otro, así que si cambia uno hay
    que cambiar el otro). */
 .publicado {
-  background: #DCF3E1;
-  color: #1E7B34;
+  background: var(--color-verde-velo);
+  color: var(--color-verde-oscuro);
 }
 
 .programado {
-  background: #FBEFC6;
-  color: #8A6A00;
+  background: var(--color-amarillo-velo);
+  color: var(--color-amarillo-oscuro);
 }
 
 .borrador {
-  background: #DCE9FB;
-  color: #1D5FA8;
+  background: var(--color-azul-velo);
+  color: var(--color-azul-oscuro);
 }
 
 .archivado {
@@ -52,27 +52,27 @@
 
 /* Variantes de color — mismos valores que EstadoPedidoBadge.module.css. */
 .enProceso {
-  background: #DCE9FB;
-  color: #1D5FA8;
+  background: var(--color-azul-velo);
+  color: var(--color-azul-oscuro);
 }
 
 .enviado {
-  background: #FBEFC6;
-  color: #8A6A00;
+  background: var(--color-amarillo-velo);
+  color: var(--color-amarillo-oscuro);
 }
 
 .completado {
-  background: #DCF3E1;
-  color: #1E7B34;
+  background: var(--color-verde-velo);
+  color: var(--color-verde-oscuro);
 }
 
 /* Variantes de color — mismos valores que EstadoContactoBadge.module.css. */
 .pendiente {
-  background: #FBEFC6;
-  color: #8A6A00;
+  background: var(--color-amarillo-velo);
+  color: var(--color-amarillo-oscuro);
 }
 
 .contactado {
-  background: #DCF3E1;
-  color: #1E7B34;
+  background: var(--color-verde-velo);
+  color: var(--color-verde-oscuro);
 }

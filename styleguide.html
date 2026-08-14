@@ -104,6 +104,8 @@
   .sg-btn-contorno:hover { background:var(--tinta); color:var(--fondo); }
   .sg-btn-rosa { background:var(--rosa); color:var(--fondo); }
   .sg-btn-rosa:hover { background:var(--rosa-oscuro); }
+  .sg-btn-contorno-rosa { background:transparent; color:var(--rosa-oscuro); border:1px solid var(--rosa-oscuro); }
+  .sg-btn-contorno-rosa:hover { background:var(--rosa-oscuro); color:var(--fondo); }
   .sg-btn-texto { background:none; font-size:var(--text-label); color:var(--tinta); text-decoration:none; border-bottom: solid 1px var(--tinta); padding-bottom:var(--space-1); }
   .sg-btn-texto:hover { border-color:var(--rosa); }
   .sg-btn-texto-mayus { text-transform:uppercase; }
@@ -540,6 +542,7 @@
       <div class="sg-fila">
         <button class="sg-btn sg-btn-solido sg-btn-m">Comprar</button>
         <button class="sg-btn sg-btn-contorno sg-btn-m">Ver colección</button>
+        <button class="sg-btn sg-btn-contorno-rosa sg-btn-m">Limpiar filtros</button>
         <button class="sg-btn sg-btn-rosa sg-btn-m">Añadir a la cesta</button>
         <button class="sg-btn sg-btn-texto">Descubre más</button>
         <button class="sg-btn sg-btn-texto sg-btn-texto-mayus">Términos y condiciones</button>
@@ -552,7 +555,7 @@
           <span class="sg-tooltip-texto">Añadir a wishlist</span>
         </span>
       </div>
-      <p class="sg-nota">Sólido (negro) para acción principal; contorno para secundaria; rosa solo para la CTA de compra; texto subrayado para enlaces. Al hover, el sólido vira a rosa. Esquinas rectas. "Avísame cuando esté disponible" es un botón compacto (padding 8px, texto en <code>--text-caption</code>) para tarjetas de producto agotado. El icono de guardar (Bookmark, Lucide, esquinas rectas) lleva tooltip "Añadir a wishlist"; su trazo es tinta (<code>stroke-width:1</code>) y, al hacer clic, se rellena también en tinta. En la tarjeta de producto solo aparece al hacer hover sobre la tarjeta.</p>
+      <p class="sg-nota">Sólido (negro) para acción principal; contorno para secundaria; contorno-rosa es el mismo contorno pero en rosa-oscuro, para acciones secundarias de limpiar/descartar (ej. "Limpiar filtros" en el panel admin) — mismo patrón de hover que contorno, invierte a relleno sólido con texto/icono en --fondo; rosa solo para la CTA de compra; texto subrayado para enlaces. Al hover, el sólido vira a rosa. Esquinas rectas. "Avísame cuando esté disponible" es un botón compacto (padding 8px, texto en <code>--text-caption</code>) para tarjetas de producto agotado. El icono de guardar (Bookmark, Lucide, esquinas rectas) lleva tooltip "Añadir a wishlist"; su trazo es tinta (<code>stroke-width:1</code>) y, al hacer clic, se rellena también en tinta. En la tarjeta de producto solo aparece al hacer hover sobre la tarjeta.</p>
     </section>
 
     <section id="etiquetas">

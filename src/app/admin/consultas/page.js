@@ -25,11 +25,19 @@ function ConsultasContenido() {
     return true;
   }), [filtroTipo, filtroEstado, query]);
 
+  const hayFiltros = filtroTipo !== 'Todos' || filtroEstado !== 'Todos' || query !== '';
+
+  function limpiarFiltros() {
+    setQuery('');
+    setFiltroTipo('Todos');
+    setFiltroEstado('Todos');
+  }
+
   return (
     <div>
       <PageHeader titulo="Consultas / Citas" subtitulo={`${filtradas.length} registros`} />
 
-      <FiltroBar>
+      <FiltroBar onLimpiar={hayFiltros ? limpiarFiltros : undefined}>
         <Input etiqueta="Buscar" placeholder="Nombre del cliente" valor={query} onChange={(e) => setQuery(e.target.value)} />
         <FiltroSelector
           etiqueta="Tipo"

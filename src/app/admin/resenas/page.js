@@ -28,6 +28,14 @@ export default function ResenasPage() {
     return true;
   }), [resenas, filtroEstado, filtroValoracion, query]);
 
+  const hayFiltros = filtroEstado !== 'Todas' || filtroValoracion !== 'Todas' || query !== '';
+
+  function limpiarFiltros() {
+    setQuery('');
+    setFiltroEstado('Todas');
+    setFiltroValoracion('Todas');
+  }
+
   function alternarEstado(id) {
     setResenas((actual) => actual.map((r) => (r.id === id ? { ...r, estado: r.estado === 'Publicada' ? 'Oculta' : 'Publicada' } : r)));
     mostrarToast('Estado actualizado (demo)');
@@ -39,7 +47,7 @@ export default function ResenasPage() {
         <Boton variante="solido" href="/admin/resenas/nueva"><Plus size={14} /> Nueva reseña</Boton>
       </PageHeader>
 
-      <FiltroBar>
+      <FiltroBar onLimpiar={hayFiltros ? limpiarFiltros : undefined}>
         <Input etiqueta="Buscar" placeholder="Nombre del cliente" valor={query} onChange={(e) => setQuery(e.target.value)} />
         <FiltroSelector
           etiqueta="Estado"

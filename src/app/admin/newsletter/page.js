@@ -25,11 +25,18 @@ export default function NewsletterPage() {
     })
     .sort((a, b) => b.fecha.localeCompare(a.fecha)), [filtroOrigen, query]);
 
+  const hayFiltros = filtroOrigen !== 'Todos' || query !== '';
+
+  function limpiarFiltros() {
+    setQuery('');
+    setFiltroOrigen('Todos');
+  }
+
   return (
     <div>
       <PageHeader titulo="Newsletter" subtitulo={`${filtrados.length} suscriptores`} />
 
-      <FiltroBar>
+      <FiltroBar onLimpiar={hayFiltros ? limpiarFiltros : undefined}>
         <Input etiqueta="Buscar" placeholder="Email" valor={query} onChange={(e) => setQuery(e.target.value)} />
         <FiltroSelector
           etiqueta="Origen"
