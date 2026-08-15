@@ -1,8 +1,11 @@
 export { default as AdminSidebar, AdminMarca } from './AdminSidebar';
 export { default as AdminTopbar } from './AdminTopbar';
+export { default as AdminContenido } from './AdminContenido';
 export { default as TablaAdmin } from './TablaAdmin';
 export { default as GridPedidos } from './GridPedidos';
 export { default as GridConsultasPrecio } from './GridConsultasPrecio';
+export { default as GridProductos } from './GridProductos';
+export { default as GridResenas } from './GridResenas';
 export { default as Paginacion } from './Paginacion';
 export { default as EstadoBadge } from './EstadoBadge';
 export { default as EstadoPublicacionBadge } from './EstadoPublicacionBadge';

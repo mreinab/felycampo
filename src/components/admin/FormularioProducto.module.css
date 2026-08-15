@@ -1,14 +1,9 @@
-.publicacion {
-  grid-column: 1 / -1;
-  font-size: var(--text-caption);
-  color: var(--color-gris-500);
-  padding: var(--spacing-2) var(--spacing-3);
-  background: var(--color-gris-100);
-  margin-top: calc(-1 * var(--spacing-2));
-}
-
 .campoAncho {
   grid-column: 1 / -1;
+}
+
+.accionAnadirColeccion {
+  margin-top: var(--spacing-3);
 }
 
 .textarea {
@@ -240,6 +235,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-3);
+  margin-bottom: var(--spacing-6);
 }
 
 .colorChip {
@@ -270,15 +266,31 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-3);
+  margin-bottom: var(--spacing-6);
 }
 
 .telaChip {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
   padding: var(--spacing-3);
   border: var(--border-regular) solid var(--color-gris-200);
   background: none;
   cursor: pointer;
   text-align: left;
+}
+
+.telaChipImagen {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: var(--border-thin) solid var(--color-gris-300);
+}
+
+.telaChipTexto {
+  display: flex;
+  flex-direction: column;
 }
 
 .telaChip:hover {
@@ -318,34 +330,27 @@
 }
 
 .acciones .accionBorrador {
-  background: var(--color-azul-velo);
-  border-color: var(--color-azul-velo);
-  color: var(--color-azul-oscuro);
+  background: var(--color-azul);
+  border-color: var(--color-azul);
+  color: var(--color-fondo);
 }
 .acciones .accionBorrador:hover {
-  background: var(--color-azul-velo-oscuro);
-  border-color: var(--color-azul-velo-oscuro);
+  background: var(--color-azul-oscuro);
+  border-color: var(--color-azul-oscuro);
 }
 
 .acciones .accionProgramado {
-  background: var(--color-amarillo-velo);
-  border-color: var(--color-amarillo-velo);
-  color: var(--color-amarillo-oscuro);
+  background: var(--color-amarillo);
+  border-color: var(--color-amarillo);
+  color: var(--color-fondo);
 }
 .acciones .accionProgramado:hover {
-  background: var(--color-amarillo-velo-oscuro);
-  border-color: var(--color-amarillo-velo-oscuro);
+  background: var(--color-amarillo-oscuro);
+  border-color: var(--color-amarillo-oscuro);
 }
 
-.acciones .accionPublicar {
-  background: var(--color-verde-velo);
-  border-color: var(--color-verde-velo);
-  color: var(--color-verde-oscuro);
-}
-.acciones .accionPublicar:hover {
-  background: var(--color-verde-velo-oscuro);
-  border-color: var(--color-verde-velo-oscuro);
-}
+/* accionPublicar sin override: es Boton variante="solido" (FormularioProducto.jsx),
+   que ya trae tinta de fondo / rosa al hover por defecto (Boton.module.css). */
 
 .tipoGrid {
   grid-column: 1 / -1;
@@ -373,5 +378,239 @@
   border-color: var(--color-tinta);
   background: var(--color-tinta);
   color: var(--color-fondo);
+}
+
+.prendasLista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-3);
+}
+
+.prendaFila {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: end;
+  gap: var(--spacing-3);
+}
+
+.prendaQuitar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: var(--border-regular) solid var(--color-gris-200);
+  background: none;
+  color: var(--color-gris-500);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.prendaQuitar:hover {
+  border-color: var(--color-rosa-oscuro);
+  color: var(--color-rosa-oscuro);
+}
+
+/* Alta rápida de color/tela sin salir del modal — mismo patrón que
+   FormularioLook.module.css/GestorColores.module.css/
+   GestorTejidos.module.css (no se puede importar una clase de otro CSS
+   Module). */
+.anadirFila {
+  display: flex;
+  gap: var(--spacing-3);
+  align-items: flex-end;
+  margin-top: var(--spacing-4);
+}
+
+/* Los campos de texto crecen; el swatch/imagen (tamaño fijo, ver
+   .inputColor) y el botón de acción no. */
+.anadirFila > * {
+  flex: 1;
+}
+
+.anadirFila > .campoColor,
+.anadirFila > button {
+  flex: none;
+}
+
+/* "Añadir color"/"Añadir tela" (Boton contorno/s) quedaban más bajos que
+   Input.module.css .input al lado (41px de alto real) — se iguala aquí
+   para que la fila se vea nivelada. */
+.anadirFila > button {
+  height: 41px;
+}
+
+.campoColor {
+  display: block;
+}
+
+.inputColor {
+  width: 48px;
+  height: 41px;
+  padding: 2px;
+  border: 1px solid var(--color-gris-300);
+  background: var(--color-fondo);
+  cursor: pointer;
+}
+
+/* Botón de subir imagen de tela — mismo tamaño que .inputColor (swatch de
+   color y miniatura de tela pesan igual visualmente en la fila), pero es
+   un <button> con icono/preview en vez de un <input type="color">. */
+.inputImagenTela {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+}
+
+.inputImagenTelaPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Vínculo con un look de Runway/Novia/Fiesta — buscador + lista de
+   resultados, con el vínculo activo destacado arriba en su propia
+   tarjeta. Mismo criterio de altura/padding que .anadirFila para que se
+   sienta parte del mismo lenguaje visual del formulario. */
+.vinculoActual {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  border: var(--border-regular) solid var(--color-tinta);
+  margin-bottom: var(--spacing-4);
+}
+
+.vinculoActualImagen {
+  width: 44px;
+  height: 60px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-gris-100);
+}
+
+.vinculoActualTexto {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.vinculoActualNombre {
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+}
+
+.vinculoActualSub {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+.vinculoVacio {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-3);
+}
+
+.vinculoBuscador {
+  position: relative;
+  margin-bottom: var(--spacing-3);
+}
+
+.vinculoBuscadorIcono {
+  position: absolute;
+  top: 50%;
+  left: var(--spacing-3);
+  transform: translateY(-50%);
+  color: var(--color-gris-400);
+  pointer-events: none;
+}
+
+.vinculoBuscadorInput {
+  width: 100%;
+  height: 41px;
+  padding: 0 var(--spacing-3) 0 40px;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  background: var(--color-fondo);
+}
+
+.vinculoBuscadorInput::placeholder {
+  color: var(--color-gris-400);
+}
+
+.vinculoBuscadorInput:focus {
+  outline: none;
+  border-color: var(--color-tinta);
+}
+
+.vinculoLista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  max-height: 280px;
+  overflow-y: auto;
+  border: var(--border-thin) solid var(--color-gris-200);
+  padding: var(--spacing-2);
+}
+
+.vinculoFila {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.vinculoFila:hover {
+  background: var(--color-gris-100);
+}
+
+.vinculoFilaActiva {
+  background: var(--color-gris-100);
+}
+
+.vinculoFilaImagen {
+  width: 36px;
+  height: 48px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-gris-100);
+}
+
+.vinculoFilaTexto {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.vinculoFilaNombre {
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.vinculoFilaSub {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+.vinculoFilaCheck {
+  color: var(--color-tinta);
+  flex-shrink: 0;
 }
 

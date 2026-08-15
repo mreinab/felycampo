@@ -71,6 +71,17 @@ function Boton({
     className,
   ].filter(Boolean).join(' ');
 
+  // Con href, es un enlace real (mismo criterio que la variante "texto" de
+  // arriba) — antes se ignoraba por completo y el botón no navegaba a
+  // ningún sitio pese a tener href.
+  if (href && !desactivado) {
+    return (
+      <a href={href} onClick={onClick} className={clase} tabIndex={tabIndex}>
+        {children}
+      </a>
+    );
+  }
+
   return (
     <button type={type} onClick={onClick} disabled={desactivado} className={clase}>
       {children}

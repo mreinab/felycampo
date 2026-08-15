@@ -14,14 +14,16 @@
 import Link from 'next/link';
 import { PageHeader, TablaAdmin, EstadoBadge } from '@/components/admin';
 import { Boton } from '@/components/ui';
-import { pedidosMock, productosMock, consultasMock, stockMock } from '@/components/admin/mockData';
+import {
+  pedidosMock, productosMock, consultasMock, filasStock, nivelStock,
+} from '@/components/admin/mockData';
 import styles from './page.module.css';
 
 export default function AdminDashboard() {
   const pedidosPendientes = pedidosMock.filter((p) => p.estadoEnvio === 'Procesando').length;
   const productosActivos = productosMock.filter((p) => p.estado === 'Activo').length;
   const consultasPendientes = consultasMock.filter((c) => c.estado === 'Pendiente').length;
-  const stockBajo = stockMock.filter((s) => s.cantidad > 0 && s.cantidad < 5).length;
+  const stockBajo = filasStock().filter((f) => nivelStock(f.stock) === 'bajo').length;
 
   const ultimosPedidos = pedidosMock.slice(0, 6);
 

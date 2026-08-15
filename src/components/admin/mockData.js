@@ -612,51 +612,90 @@ export const consultasPrecioMock = [
 ];
 
 // ---------- RESEÑAS ----------
-
+// `productoId` (FK real a productosMock) sustituye a la antigua
+// `productoRelacionado` (nombre en texto libre) — misma relación frágil
+// que ya se corrigió en otros sitios del panel (ver docs/adminpanel.md
+// sección 7 punto 4). Con producto vinculado, la ficha/tabla puede
+// enseñar SKU + foto del producto, no solo el nombre.
+// `clienteId` (FK real a clientesMock) — todas las reseñas vienen de una
+// clienta con cuenta (el placeholder de envío público exige "iniciar
+// sesión" antes de escribir una, ver EscribirResena.jsx), así que no
+// existe la reseña anónima: a diferencia de otros mocks del panel
+// (consultasPrecioMock sí admite `clienteId: null`, visitantes sin
+// cuenta), aquí siempre hay un cliente real detrás.
+// `nuevo: true` en r5/r6 (recién "enviadas", `estado: 'Oculta'`) — mismo
+// placeholder de diseño que `cp6`/`cp7` arriba: de dónde sale una reseña
+// nueva (formulario público del cliente, sección "Escribir una reseña"
+// de la ficha de producto — placeholder de UI, sin lógica real detrás
+// todavía) y cuándo debería publicarse es trabajo de backend pendiente.
 export const resenasMock = [
   {
     id: 'r1',
     nombreCliente: 'Marta Ibáñez',
+    clienteId: 'cl1',
     texto: 'El vestido Aurora es una pasada, la tela y el corte son espectaculares.',
     valoracion: 5,
     fecha: '2026-07-10',
     estado: 'Publicada',
     foto: '/img/Clientes/ClientReview- (1).jpg',
-    productoRelacionado: 'Vestido Aurora',
-    usadaHome: true,
+    productoId: 'p1',
   },
   {
     id: 'r2',
     nombreCliente: 'Laura Gómez',
+    clienteId: 'cl2',
     texto: 'Atención impecable en el atelier, el vestido de novia superó mis expectativas.',
     valoracion: 5,
     fecha: '2026-06-28',
     estado: 'Publicada',
     foto: '/img/Clientes/ClientReview- (2).jpg',
-    productoRelacionado: 'Vestido Elena',
-    usadaHome: true,
+    productoId: 'p3',
   },
   {
     id: 'r3',
-    nombreCliente: 'Anónimo',
+    nombreCliente: 'Sara Molina',
+    clienteId: 'cl4',
     texto: 'Muy buena calidad, aunque el plazo de entrega fue algo más largo de lo esperado.',
     valoracion: 4,
     fecha: '2026-06-02',
     estado: 'Oculta',
     foto: '',
-    productoRelacionado: null,
-    usadaHome: false,
+    productoId: null,
   },
   {
     id: 'r4',
     nombreCliente: 'Elena Castro',
+    clienteId: 'cl3',
     texto: 'La falda Vera es mi compra favorita de esta temporada, muy versátil.',
     valoracion: 5,
     fecha: '2026-05-18',
     estado: 'Publicada',
     foto: '',
-    productoRelacionado: 'Falda Vera',
-    usadaHome: false,
+    productoId: 'p2',
+  },
+  {
+    id: 'r5',
+    nombreCliente: 'Beatriz Soler',
+    clienteId: 'cl6',
+    texto: 'Me encantó el abrigo, calienta muchísimo y el corte es precioso, tal cual en las fotos.',
+    valoracion: 5,
+    fecha: '2026-08-12',
+    estado: 'Oculta',
+    foto: '',
+    productoId: 'p7',
+    nuevo: true,
+  },
+  {
+    id: 'r6',
+    nombreCliente: 'Carmen Vidal',
+    clienteId: 'cl7',
+    texto: 'Buena calidad pero la talla me quedó algo más justa de lo que esperaba según la guía.',
+    valoracion: 3,
+    fecha: '2026-08-13',
+    estado: 'Oculta',
+    foto: '',
+    productoId: 'p1',
+    nuevo: true,
   },
 ];
 
@@ -672,6 +711,16 @@ export function codigoTemporada(temporada) {
   const anioFinal = anio.includes('/') ? anio.split('/')[1] : anio;
   return `${estacion === 'Otoño-Invierno' ? 'AW' : 'SS'}${anioFinal}`;
 }
+
+// Looks de "La Colección" (cat11, FW27) — únicamente imágenes, el resto
+// de datos de cada look (nombre real, descripción, colores, telas) los
+// completa el admin a mano desde FormularioLook. 34 fotos en
+// public/img/collections/runway/fw27-lacoleccion (FelyCampo_01..34.webp),
+// una por look, en orden.
+const looksLaColeccion = Array.from({ length: 34 }, (_, i) => ({
+  nombre: `Look ${i + 1}`,
+  imagenes: [`/img/collections/runway/fw27-lacoleccion/FelyCampo_${String(i + 1).padStart(2, '0')}.webp`],
+}));
 
 export const categoriasMock = {
   'pret-a-porter': [
@@ -698,7 +747,7 @@ export const categoriasMock = {
   // guardados todavía, todos los huecos empiezan vacíos "Añadir imágenes").
   archivo: [
     {
-      id: 'cat11', nombre: 'La Colección', temporada: 'Otoño-Invierno 26/27', visible: true, orden: 1, fija: true, numeroLooks: 12,
+      id: 'cat11', nombre: 'La Colección', temporada: 'Otoño-Invierno 26/27', visible: true, orden: 1, fija: true, numeroLooks: 34, looks: looksLaColeccion,
     },
     {
       id: 'cat12', nombre: 'Dreaming', temporada: 'Primavera-Verano 26', visible: true, orden: 2, fija: true, numeroLooks: 12,
@@ -785,45 +834,40 @@ export const categoriasMock = {
 };
 
 // ---------- STOCK ----------
+// Stock general, sin desglose por ubicación (se quitó el antiguo
+// stockMock/ubicacionesStock, un dataset de 7 filas aparte cubriendo solo
+// 2 productos) — ahora /admin/stock lee directo de `productosMock[].tallas`,
+// el mismo número que ya se edita en "Tallas y Stock" de cada producto.
+// Solo Prêt-à-porter tiene tallas/stock (ver CAMPOS_TIPO en
+// FormularioProducto.jsx), así que es el único tipo que aparece aquí.
 
-export const ubicacionesStock = [
-  { id: 'loc1', nombre: 'Tienda Madrid', tipo: 'Tienda' },
-  { id: 'loc2', nombre: 'Almacén central', tipo: 'Almacén' },
-];
+// Mismo umbral en todos los sitios que muestran nivel de stock (página
+// Stock, KPI "Referencias con stock bajo" del dashboard): 0 = agotado,
+// menos de 5 = bajo, el resto = ok.
+export function nivelStock(cantidad) {
+  if (cantidad === 0) return 'agotado';
+  if (cantidad < 5) return 'bajo';
+  return 'ok';
+}
 
-export const stockMock = [
-  { locationId: 'loc1', producto: 'Vestido Aurora', talla: 'S', color: 'Burdeos', cantidad: 3 },
-  { locationId: 'loc1', producto: 'Vestido Aurora', talla: 'M', color: 'Azul marino', cantidad: 2 },
-  { locationId: 'loc1', producto: 'Falda Vera', talla: 'S', color: 'Rosa suave', cantidad: 1 },
-  { locationId: 'loc1', producto: 'Falda Vera', talla: 'L', color: 'Blanco', cantidad: 0 },
-  { locationId: 'loc2', producto: 'Vestido Aurora', talla: 'M', color: 'Burdeos', cantidad: 5 },
-  { locationId: 'loc2', producto: 'Falda Vera', talla: 'M', color: 'Rosa suave', cantidad: 4 },
-  { locationId: 'loc2', producto: 'Falda Vera', talla: 'L', color: 'Blanco', cantidad: 4 },
-];
-
-// ---------- CONTENIDO (páginas fijas) ----------
-
-export const contenidoMock = [
-  {
-    pagina: 'Sobre nosotros',
-    bloques: [
-      { id: 'ct1', titulo: 'Historia de la marca', texto: 'Fely Campo nace en Salamanca, fusionando la costura tradicional con un lenguaje contemporáneo.', imagen: '/img/artesany.jpg' },
-      { id: 'ct2', titulo: 'El atelier', texto: 'Cada pieza se confecciona a medida, con procesos artesanales que respetan el tiempo del oficio.', imagen: '' },
-    ],
-  },
-  {
-    pagina: 'Visítanos',
-    bloques: [
-      { id: 'ct3', titulo: 'Cita previa', texto: 'Reserva tu cita en cualquiera de nuestros ateliers para una experiencia personalizada.', imagen: '/img/punto-venta.webp' },
-    ],
-  },
-  {
-    pagina: 'Ayuda',
-    bloques: [
-      { id: 'ct4', titulo: 'Atención al cliente', texto: 'Resolvemos tus dudas sobre pedidos, tallas y confección a medida.', imagen: '' },
-    ],
-  },
-];
+// Una fila por talla activa de cada producto — así una prenda con 3 tallas
+// ocupa 3 filas en la tabla de stock, cada una filtrable/ordenable por
+// separado.
+export function filasStock() {
+  return productosMock
+    .filter((p) => p.tallas?.length)
+    .flatMap((p) => p.tallas.map((t) => ({
+      id: `${p.id}-${t.talla}`,
+      productoId: p.id,
+      nombre: p.nombre,
+      sku: p.sku,
+      imagen: p.imagen,
+      coleccion: p.coleccion,
+      categoriaId: p.categoriaId,
+      talla: t.talla,
+      stock: t.stock,
+    })));
+}
 
 // ---------- BLOG ----------
 
@@ -833,14 +877,6 @@ export const blogMock = [
   { id: 'b3', titulo: 'Cuidado de tejidos delicados', fecha: '2026-08-01', estado: 'Borrador', categoria: 'Consejos', imagen: '' },
 ];
 
-// ---------- EXTRAS ----------
-
-export const extrasMock = [
-  { id: 'ex1', nombre: 'Emails automáticos avanzados', activo: true, descripcion: 'Envía un email al cliente en cada cambio de estado de pedido o consulta, sin acción manual.' },
-  { id: 'ex2', nombre: 'Stock por ubicación', activo: true, descripcion: 'Muestra el desglose de stock por tienda/almacén en la sección Stock.' },
-  { id: 'ex3', nombre: 'Control de stock avanzado', activo: false, descripcion: 'Bloquea automáticamente la compra en la web cuando el stock llega a 0.' },
-  { id: 'ex4', nombre: 'Mapa de tiendas', activo: false, descripcion: 'Añade una pantalla en /visitenos con las ubicaciones sobre un mapa.' },
-];
 
 // ---------- CLIENTES ----------
 

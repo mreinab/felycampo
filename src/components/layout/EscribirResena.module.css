@@ -1,0 +1,100 @@
+.bloque {
+  max-width: 480px;
+  padding: var(--spacing-6) var(--spacing-5);
+  border: 1px solid var(--color-gris-300);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.titulo {
+  font-family: var(--font-base);
+  font-size: 1.125rem;
+  color: var(--color-tinta);
+}
+
+.gateTexto {
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-gris-500);
+}
+
+.gateBoton,
+.enviarBoton {
+  align-self: flex-start;
+  padding: var(--spacing-3) var(--spacing-5);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  border: none;
+  border-radius: var(--radius-botones);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.gateBoton:hover,
+.enviarBoton:hover {
+  background: var(--color-rosa);
+}
+
+.confirmacion {
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.estrellasFila {
+  display: flex;
+  gap: 4px;
+}
+
+.estrella {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-tinta);
+  cursor: pointer;
+}
+
+.textarea {
+  width: 100%;
+  padding: var(--spacing-3);
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  resize: vertical;
+}
+
+.subirFoto {
+  display: block;
+  cursor: pointer;
+}
+
+.subirFotoVacio {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  border: 1px dashed var(--color-gris-300);
+  color: var(--color-gris-500);
+  font-family: var(--font-base);
+  font-size: var(--text-caption);
+}
+
+.fotoPreview {
+  display: block;
+  width: 100%;
+  max-width: 160px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.inputArchivo {
+  display: none;
+}

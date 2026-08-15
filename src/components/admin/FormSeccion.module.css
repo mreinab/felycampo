@@ -31,9 +31,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  border: var(--border-regular) solid var(--color-tinta);
+  width: 20px;
+  height: 20px;
+  background: var(--color-tinta);
+  color: var(--color-fondo);
   font-size: var(--text-caption);
   flex-shrink: 0;
 }

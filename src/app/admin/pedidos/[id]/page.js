@@ -115,6 +115,7 @@ export default function DetallePedidoPage({ params }) {
                 : <span className={styles.itemImagen} />),
             },
             { clave: 'producto', etiqueta: 'Producto' },
+            { clave: 'sku', etiqueta: 'SKU', render: (item) => productoPorNombre(item.producto)?.sku || '—' },
             { clave: 'talla', etiqueta: 'Talla' },
             {
               clave: 'color',

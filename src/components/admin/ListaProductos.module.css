@@ -19,13 +19,28 @@
 }
 
 .publicarBoton {
-  background: var(--color-amarillo-oscuro);
-  border-color: var(--color-amarillo-oscuro);
+  background: var(--color-azul);
+  border-color: var(--color-azul);
 }
 
 .publicarBoton:hover {
-  background: var(--color-amarillo);
-  border-color: var(--color-amarillo);
+  background: var(--color-azul-oscuro);
+  border-color: var(--color-azul-velo);
+}
+
+/* Ya publicada (botón desactivado, ver ListaProductos.jsx) — verde de
+   "hecho", no el azul de "acción disponible" del resto de .publicarBoton.
+   Sin la opacidad 0.5 de .boton:disabled (Boton.module.css): atenuada
+   parecería una acción no disponible, cuando en realidad confirma que
+   la colección SÍ está publicada — selector con "button." para pesar más
+   que ".boton:disabled" pase lo que pase el orden de los CSS Modules. */
+.publicarBotonPublicada {
+  background: var(--color-verde);
+  border-color: var(--color-verde);
+}
+
+button.publicarBotonPublicada:disabled {
+  opacity: 1;
 }
 
 .bulkBar {
@@ -520,6 +535,70 @@
   font-family: var(--font-base);
   font-size: var(--text-caption);
   font-weight: var(--font-weight-medium);
+}
+
+/* Superpuesta a .lookImagenWrap pero FUERA de .lookTarjetaBoton (ver
+   comentario en ListaProductos.jsx) — mismo box exacto (top:0/left:0,
+   ancho 100%, aspect-ratio 3:4) porque .lookImagenWrap es el primer hijo
+   de ese botón, que a su vez es el primer hijo de .lookTarjeta: ambas
+   parten del mismo origen. pointer-events:none dejar pasar los clicks
+   sobre el resto de la imagen; los hijos reactivan pointer-events. */
+.lookImagenOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Mini rejilla de productos vinculados (ver FormularioLook.jsx "Productos
+   vinculados") — hasta 2 miniaturas 3:4, cada una navega a la ficha de
+   solo lectura del producto. Con más de 2, la segunda pasa a ser un
+   contador "+N" que abre el propio look en vez de un producto concreto
+   (no hay una única ficha a la que llevar un agregado). */
+.lookVinculadosGrid {
+  position: absolute;
+  bottom: var(--spacing-2);
+  right: var(--spacing-2);
+  display: flex;
+  gap: 4px;
+  pointer-events: auto;
+}
+
+.lookVinculadoTile {
+  display: block;
+  width: 26px;
+  aspect-ratio: 3 / 4;
+  padding: 0;
+  border: var(--border-thin) solid var(--color-fondo);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.lookVinculadoImagen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--color-gris-100);
+}
+
+.lookVinculadoMas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  aspect-ratio: 3 / 4;
+  padding: 0;
+  border: var(--border-thin) solid var(--color-fondo);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  font-family: var(--font-base);
+  font-size: 10px;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
 }
 
 .lookInfo {

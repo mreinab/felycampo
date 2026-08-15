@@ -11,7 +11,7 @@
 import { Suspense } from 'react';
 import '@/styles/global.css';
 import {
-  AdminSidebar, AdminMarca, AdminTopbar, ToastProvider, CategoriasProvider,
+  AdminSidebar, AdminMarca, AdminTopbar, AdminContenido, ToastProvider, CategoriasProvider,
 } from '@/components/admin';
 import styles from './layout.module.css';
 
@@ -38,7 +38,7 @@ export default function AdminLayout({ children }) {
                 <Suspense fallback={null}>
                   <AdminSidebar />
                 </Suspense>
-                <main className={styles.contenido}>{children}</main>
+                <AdminContenido className={styles.contenido}>{children}</AdminContenido>
               </div>
             </div>
           </ToastProvider>

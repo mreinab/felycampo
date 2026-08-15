@@ -1,0 +1,95 @@
+/* Duplicado de FormularioProducto.module.css .coloresGrid/.colorChip/…
+   (no se puede importar una clase de otro CSS Module) — mismo selector
+   visual de colores que un producto, sin el estado "activo" (aquí no hay
+   nada que seleccionar, es la biblioteca en sí). */
+.coloresGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-5);
+}
+
+.colorChip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: var(--border-regular) solid var(--color-gris-200);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.colorPunto {
+  width: 20px;
+  height: 20px;
+  border: var(--border-thin) solid var(--color-gris-300);
+  flex-shrink: 0;
+}
+
+.colorNombre {
+  white-space: nowrap;
+}
+
+/* X para borrar — mismo patrón de botón-corner que .imagenQuitar/
+   .prendaQuitar en el resto del panel, aquí en línea dentro del chip en
+   vez de superpuesto porque el chip no es una foto. */
+.chipQuitar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-gris-400);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.chipQuitar:hover {
+  color: var(--color-rosa-oscuro);
+}
+
+/* Alta rápida de color — mismo patrón que FormularioProducto.module.css/
+   FormularioLook.module.css .anadirFila/.campoColor/.inputColor. */
+.anadirFila {
+  display: flex;
+  gap: var(--spacing-3);
+  align-items: flex-end;
+  max-width: 620px;
+}
+
+.anadirFila > * {
+  flex: 1;
+}
+
+.anadirFila > .campoColor,
+.anadirFila > button {
+  flex: none;
+}
+
+.anadirFila > button {
+  height: 41px;
+}
+
+.campoColor {
+  display: block;
+}
+
+.etiquetaCampo {
+  display: block;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-2);
+}
+
+.inputColor {
+  width: 48px;
+  height: 41px;
+  padding: 2px;
+  border: 1px solid var(--color-gris-300);
+  background: var(--color-fondo);
+  cursor: pointer;
+}

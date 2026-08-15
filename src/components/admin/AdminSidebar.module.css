@@ -178,6 +178,28 @@
   color: var(--color-rosa-oscuro);
 }
 
+/* Mismo lenguaje visual que .contador (píldora rosa) pero para texto en
+   vez de un número — marca temporalmente una sección aún sin construir,
+   se quita en cuanto la página tenga su lógica real. */
+.porHacer {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 var(--spacing-2);
+  border-radius: var(--radius-full);
+  background: var(--color-rosa);
+  color: var(--color-fondo);
+  font-size: var(--text-nano);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.item.activo .porHacer {
+  background: var(--color-fondo);
+  color: var(--color-rosa-oscuro);
+}
+
 .icono {
   flex-shrink: 0;
   width: 16px;
@@ -246,6 +268,15 @@
   border: none;
   cursor: pointer;
   text-align: left;
+}
+
+/* Solo los subitem de un item.children (ver "Tus Materiales" en
+   AdminSidebar.jsx) llevan icono propio — los de item.tipo (categorías)
+   nunca lo necesitaron, por eso no está en .subitem base. */
+.iconoSubitem {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
 }
 
 .subitemEnlace {

@@ -14,12 +14,12 @@
 
 import { Suspense, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
-  Plus, X, Pencil, List, LayoutGrid, Upload, ChevronLeft, ChevronRight, ArrowUpFromLine, Check,
+  Plus, X, Pencil, List, LayoutGrid, Upload, ChevronLeft, ChevronRight, ArrowUpFromLine, Check, RefreshCw,
 } from 'lucide-react';
 import {
-  PageHeader, TablaAdmin, EstadoPublicacionBadge, FiltroBar, FiltroSelector, TabsFiltro, ModalOverlay, ConfirmarBorrado, BotonVolver, useToast, useCategorias,
+  PageHeader, TablaAdmin, GridProductos, EstadoPublicacionBadge, FiltroBar, FiltroSelector, TabsFiltro, ModalOverlay, ConfirmarBorrado, BotonVolver, useToast, useCategorias,
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import {
@@ -57,9 +57,15 @@ function stockTotal(producto) {
 function LookTarjeta({
   look, onEditar, onEliminar,
 }) {
+  const router = useRouter();
   const [indice, setIndice] = useState(0);
   const imagenes = look.imagenes || [];
   const hayVarias = imagenes.length > 1;
+  const vinculados = look.productosVinculados || [];
+
+  function irAProducto(id) {
+    router.push(`/admin/productos/${id}`);
+  }
 
   function irAnterior(e) {
     e.preventDefault();
@@ -106,6 +112,48 @@ function LookTarjeta({
           <span className={styles.lookNombre}>{look.nombre}</span>
         </div>
       </button>
+
+      {/* Fuera de .lookTarjetaBoton a propósito — un <button> (navegar a
+          producto) no puede anidarse dentro de otro <button> (onEditar) sin
+          romper la hidratación y el propio click. Se superpone a la imagen
+          por posición absoluta (mismo box, misma esquina) en vez de vivir
+          dentro de ella. */}
+      {imagenes.length > 0 && vinculados.length > 0 && (
+        <div className={styles.lookImagenOverlay}>
+          <div className={styles.lookVinculadosGrid}>
+            {vinculados.slice(0, 2).map((p, i) => {
+              const esContador = i === 1 && vinculados.length > 2;
+              if (esContador) {
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    className={styles.lookVinculadoMas}
+                    onClick={onEditar}
+                    aria-label={`Ver ${vinculados.length - 1} productos vinculados más`}
+                  >
+                    {`+${vinculados.length - 1}`}
+                  </button>
+                );
+              }
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  className={styles.lookVinculadoTile}
+                  onClick={() => irAProducto(p.id)}
+                  aria-label={`Ver producto vinculado: ${p.nombre}`}
+                >
+                  {p.imagen ? (
+                    <img src={p.imagen} alt="" className={styles.lookVinculadoImagen} />
+                  ) : <span className={styles.lookVinculadoImagen} />}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <button type="button" className={styles.lookQuitar} aria-label={`Borrar ${look.nombre}`} onClick={onEliminar}>
         <X size={14} />
       </button>
@@ -139,6 +187,7 @@ function ListaProductosContenido({
   const [confirmarBorradoBloqueAbierto, setConfirmarBorradoBloqueAbierto] = useState(false);
   const [nuevoAbierto, setNuevoAbierto] = useState(false);
   const [productoEnEdicion, setProductoEnEdicion] = useState(null);
+  const [vistaProductos, setVistaProductos] = useState('tabla');
   const [filtroTemporada, setFiltroTemporada] = useState('Todas');
   const [nuevaColeccionAbierta, setNuevaColeccionAbierta] = useState(false);
   const [coleccionEnEdicion, setColeccionEnEdicion] = useState(null);
@@ -199,25 +248,45 @@ function ListaProductosContenido({
   // completo (al menos una imagen subida) — publicar una colección sin
   // ni un look con foto no tendría sentido.
   const hayLookCompleto = looks.some((l) => l.imagenes?.length > 0);
+  // publicadaAlDia: publicada y sin ediciones de looks posteriores → botón
+  // desactivado, "Colección publicada". necesitaActualizar: se editó un
+  // look después de publicar (ver marcarCambiosSiPublicada más abajo) →
+  // el botón vuelve a activarse como "Actualizar publicación" en vez de
+  // quedarse marcado como publicado cuando ya no refleja lo editado.
+  const publicadaAlDia = categoriaActual?.publicada && !categoriaActual?.cambiosSinPublicar;
+  const necesitaActualizar = categoriaActual?.publicada && categoriaActual?.cambiosSinPublicar;
   const [vistaLooks, setVistaLooks] = useState('rejilla');
   const [lookEnEdicionIndice, setLookEnEdicionIndice] = useState(null);
   const [lookAEliminarIndice, setLookAEliminarIndice] = useState(null);
 
+  // Una vez publicada, tocar cualquier look (editar, añadir, borrar) deja
+  // la colección "desactualizada" — el botón de Publicar pasa a "Actualizar
+  // publicación" (ver PageHeader más abajo) en vez de quedarse en "Colección
+  // publicada" como si lo ya visible siguiera reflejando lo editado.
+  function marcarCambiosSiPublicada() {
+    return categoriaActual?.publicada ? { cambiosSinPublicar: true } : {};
+  }
+
   function guardarLook(datos) {
     const nuevosLooks = looks.map((l, i) => (i === lookEnEdicionIndice ? datos : l));
-    editarCategoria(tipoFijo, categoriaActual.id, { looks: nuevosLooks });
+    editarCategoria(tipoFijo, categoriaActual.id, { looks: nuevosLooks, ...marcarCambiosSiPublicada() });
     setLookEnEdicionIndice(null);
     mostrarToast(`"${datos.nombre}" guardado (demo)`);
   }
 
   function agregarLook() {
-    editarCategoria(tipoFijo, categoriaActual.id, { numeroLooks: categoriaActual.numeroLooks + 1 });
+    editarCategoria(tipoFijo, categoriaActual.id, {
+      numeroLooks: categoriaActual.numeroLooks + 1, ...marcarCambiosSiPublicada(),
+    });
     mostrarToast(`Look ${categoriaActual.numeroLooks + 1} añadido (demo)`);
   }
 
   function publicarColeccion() {
-    editarCategoria(tipoFijo, categoriaActual.id, { publicada: true });
-    mostrarToast(`"${categoriaActual.nombre}" publicada (demo) — sigue sin haber una web pública real detrás`);
+    const actualizacion = categoriaActual.publicada;
+    editarCategoria(tipoFijo, categoriaActual.id, { publicada: true, cambiosSinPublicar: false });
+    mostrarToast(actualizacion
+      ? `"${categoriaActual.nombre}" actualizada (demo) — sigue sin haber una web pública real detrás`
+      : `"${categoriaActual.nombre}" publicada (demo) — sigue sin haber una web pública real detrás`);
   }
 
   function confirmarEliminarLook() {
@@ -226,6 +295,7 @@ function ListaProductosContenido({
     editarCategoria(tipoFijo, categoriaActual.id, {
       numeroLooks: categoriaActual.numeroLooks - 1,
       looks: nuevosLooks,
+      ...marcarCambiosSiPublicada(),
     });
     setLookAEliminarIndice(null);
     mostrarToast('Look eliminado (demo)');
@@ -314,17 +384,19 @@ function ListaProductosContenido({
         </div>
         <PageHeader
           titulo={`${titulo} — ${categoriaActual.nombre}`}
-          subtitulo={`${categoriaActual.numeroLooks} look${categoriaActual.numeroLooks === 1 ? '' : 's'}${categoriaActual.publicada ? ' · Publicada' : ''}`}
+          subtitulo={`${categoriaActual.numeroLooks} look${categoriaActual.numeroLooks === 1 ? '' : 's'}${publicadaAlDia ? ' · Publicada' : ''}${necesitaActualizar ? ' · Cambios sin publicar' : ''}`}
         >
           {hayLookCompleto && (
             <Boton
               variante="solido"
-              className={styles.publicarBoton}
+              className={`${styles.publicarBoton} ${publicadaAlDia ? styles.publicarBotonPublicada : ''}`}
               onClick={publicarColeccion}
-              desactivado={categoriaActual.publicada}
+              desactivado={publicadaAlDia}
             >
-              {categoriaActual.publicada ? <Check size={14} /> : <ArrowUpFromLine size={14} />}
-              {categoriaActual.publicada ? 'Colección publicada' : 'Publicar colección'}
+              {/* eslint-disable-next-line no-nested-ternary -- 3 estados: sin publicar / cambios pendientes / al día */}
+              {publicadaAlDia ? <Check size={14} /> : necesitaActualizar ? <RefreshCw size={14} /> : <ArrowUpFromLine size={14} />}
+              {/* eslint-disable-next-line no-nested-ternary -- idem */}
+              {publicadaAlDia ? 'Colección publicada' : necesitaActualizar ? 'Actualizar publicación' : 'Publicar colección'}
             </Boton>
           )}
           <Boton variante="solido" onClick={agregarLook}>
@@ -355,6 +427,13 @@ function ListaProductosContenido({
                   : <span className={styles.miniatura} />),
               },
               { clave: 'nombre', etiqueta: 'Look' },
+              {
+                clave: 'sku',
+                etiqueta: 'SKU',
+                render: (look) => (look.prendas?.length
+                  ? look.prendas.map((p) => p.sku).filter(Boolean).join(', ') || '—'
+                  : '—'),
+              },
               {
                 clave: 'imagenes', etiqueta: 'Imágenes', render: (look) => look.imagenes?.length || 0,
               },
@@ -514,9 +593,29 @@ function ListaProductosContenido({
 
   return (
     <div>
-      {agruparPorCategoria && (
-        <BotonVolver href={rutaBase}>Atrás</BotonVolver>
-      )}
+      <div className={styles.cabeceraSuperior}>
+        {agruparPorCategoria ? <BotonVolver href={rutaBase}>Atrás</BotonVolver> : <div />}
+        <div className={styles.vistaToggle} role="group" aria-label="Cambiar vista">
+          <button
+            type="button"
+            className={`${styles.vistaBoton} ${vistaProductos === 'tabla' ? styles.vistaBotonActiva : ''}`}
+            aria-pressed={vistaProductos === 'tabla'}
+            aria-label="Vista de tabla"
+            onClick={() => setVistaProductos('tabla')}
+          >
+            <List size={16} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className={`${styles.vistaBoton} ${vistaProductos === 'rejilla' ? styles.vistaBotonActiva : ''}`}
+            aria-pressed={vistaProductos === 'rejilla'}
+            aria-label="Vista de rejilla"
+            onClick={() => setVistaProductos('rejilla')}
+          >
+            <LayoutGrid size={16} aria-hidden="true" />
+          </button>
+        </div>
+      </div>
       <PageHeader
         titulo={categoriaActual ? `${titulo} — ${categoriaActual.nombre}` : titulo}
         subtitulo={`${filtrados.length} producto${filtrados.length === 1 ? '' : 's'}`}
@@ -559,30 +658,39 @@ function ListaProductosContenido({
         </div>
       )}
 
-      <TablaAdmin
-        seleccionables
-        seleccionadas={seleccionadas}
-        onToggleSeleccion={alternarSeleccion}
-        onToggleTodas={alternarTodas}
-        columnas={[
-          { clave: 'imagen', etiqueta: '', render: (p) => (p.imagen ? <img src={p.imagen} alt="" className={styles.miniatura} /> : <span className={styles.miniatura} />) },
-          { clave: 'nombre', etiqueta: 'Nombre' },
-          { clave: 'tipo', etiqueta: 'Tipo', render: (p) => etiquetaTipo(p.tipo) },
-          { clave: 'categoria', etiqueta: 'Categoría', render: (p) => etiquetaCategoria(p.tipo, p.categoriaId) },
-          { clave: 'coleccion', etiqueta: 'Colección', render: (p) => etiquetaColeccion(p.coleccion) },
-          { clave: 'precio', etiqueta: 'Precio', render: (p) => p.precio || '—' },
-          { clave: 'stock', etiqueta: 'Stock', render: (p) => stockTotal(p) },
-          { clave: 'estado', etiqueta: 'Estado', render: (p) => <EstadoPublicacionBadge estado={p.estado} /> },
-        ]}
-        filas={filtrados}
-        onClickFila={abrirEdicion}
-        renderAcciones={(p) => (
-          <div className={styles.filaAcciones}>
-            <Boton variante="texto" onClick={() => abrirEdicion(p)}>Editar</Boton>
-            <Boton variante="texto" onClick={() => duplicar(p)}>Duplicar</Boton>
-          </div>
-        )}
-      />
+      {vistaProductos === 'tabla' ? (
+        <TablaAdmin
+          seleccionables
+          seleccionadas={seleccionadas}
+          onToggleSeleccion={alternarSeleccion}
+          onToggleTodas={alternarTodas}
+          columnas={[
+            { clave: 'imagen', etiqueta: '', render: (p) => (p.imagen ? <img src={p.imagen} alt="" className={styles.miniatura} /> : <span className={styles.miniatura} />) },
+            { clave: 'nombre', etiqueta: 'Nombre' },
+            { clave: 'sku', etiqueta: 'SKU', render: (p) => p.sku || '—' },
+            // "Tipo"/"Categoría" se ocultan cuando ya vienen fijados por la
+            // ruta/filtro (tipoFijo, ?categoria=) — todas las filas serían el
+            // mismo valor, columna redundante. Mismo criterio que ya usa el
+            // filtro "Tipo" de FiltroBar más arriba (!tipoFijo).
+            !tipoFijo && { clave: 'tipo', etiqueta: 'Tipo', render: (p) => etiquetaTipo(p.tipo) },
+            !categoriaFija && { clave: 'categoria', etiqueta: 'Categoría', render: (p) => etiquetaCategoria(p.tipo, p.categoriaId) },
+            { clave: 'coleccion', etiqueta: 'Colección', render: (p) => etiquetaColeccion(p.coleccion) },
+            { clave: 'precio', etiqueta: 'Precio', render: (p) => p.precio || '—' },
+            { clave: 'stock', etiqueta: 'Stock', render: (p) => stockTotal(p) },
+            { clave: 'estado', etiqueta: 'Estado', render: (p) => <EstadoPublicacionBadge estado={p.estado} /> },
+          ].filter(Boolean)}
+          filas={filtrados}
+          onClickFila={abrirEdicion}
+          renderAcciones={(p) => (
+            <div className={styles.filaAcciones}>
+              <Boton variante="texto" onClick={() => abrirEdicion(p)}>Editar</Boton>
+              <Boton variante="texto" onClick={() => duplicar(p)}>Duplicar</Boton>
+            </div>
+          )}
+        />
+      ) : (
+        <GridProductos filas={filtrados} onClickFila={abrirEdicion} porPagina={12} />
+      )}
 
       <ModalOverlay abierto={nuevoAbierto} onCerrar={() => setNuevoAbierto(false)}>
         <FormularioProducto tipoInicial={tipoFijo} categoriaInicial={categoriaFija || undefined} onGuardado={crearProducto} />

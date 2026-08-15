@@ -221,6 +221,7 @@ export default function MetricasPage() {
                 : <span className={styles.miniatura} />),
             },
             { clave: 'producto', etiqueta: 'Producto' },
+            { clave: 'sku', etiqueta: 'SKU', render: (fila) => productoPorNombre(fila.producto)?.sku || '—' },
             { clave: 'unidadesVendidas', etiqueta: 'Unidades vendidas' },
             { clave: 'ingresos', etiqueta: 'Ingresos' },
           ]}

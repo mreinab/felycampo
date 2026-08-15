@@ -14,7 +14,7 @@
 .th {
   text-align: left;
   padding: var(--spacing-3) var(--spacing-4);
-  font-size: var(--text-caption);
+  font-size: var(--text-micro);
   text-transform: uppercase;
   color: var(--color-gris-500);
   border-bottom: var(--border-regular) solid var(--color-gris-200);

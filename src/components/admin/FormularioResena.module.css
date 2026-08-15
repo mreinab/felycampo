@@ -65,3 +65,147 @@
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
+
+/* Vínculo con el producto reseñado — duplicado de
+   FormularioProducto.module.css .vinculo* (no se puede importar una
+   clase de otro CSS Module) — mismo buscador + lista + tarjeta activa. */
+.vinculoActual {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  border: var(--border-regular) solid var(--color-tinta);
+  margin-bottom: var(--spacing-4);
+  max-width: 620px;
+}
+
+.vinculoActualImagen {
+  width: 44px;
+  height: 60px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-gris-100);
+}
+
+.vinculoActualTexto {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.vinculoActualNombre {
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+}
+
+.vinculoActualSub {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+.vinculoVacio {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  margin-bottom: var(--spacing-3);
+}
+
+.vinculoBuscador {
+  position: relative;
+  margin-bottom: var(--spacing-3);
+  max-width: 620px;
+}
+
+.vinculoBuscadorIcono {
+  position: absolute;
+  top: 50%;
+  left: var(--spacing-3);
+  transform: translateY(-50%);
+  color: var(--color-gris-400);
+  pointer-events: none;
+}
+
+.vinculoBuscadorInput {
+  width: 100%;
+  height: 41px;
+  padding: 0 var(--spacing-3) 0 40px;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  background: var(--color-fondo);
+}
+
+.vinculoBuscadorInput::placeholder {
+  color: var(--color-gris-400);
+}
+
+.vinculoBuscadorInput:focus {
+  outline: none;
+  border-color: var(--color-tinta);
+}
+
+.vinculoLista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  max-height: 280px;
+  max-width: 620px;
+  overflow-y: auto;
+  border: var(--border-thin) solid var(--color-gris-200);
+  padding: var(--spacing-2);
+}
+
+.vinculoFila {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.vinculoFila:hover {
+  background: var(--color-gris-100);
+}
+
+.vinculoFilaActiva {
+  background: var(--color-gris-100);
+}
+
+.vinculoFilaImagen {
+  width: 36px;
+  height: 48px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-gris-100);
+}
+
+.vinculoFilaTexto {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.vinculoFilaNombre {
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.vinculoFilaSub {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+.vinculoFilaCheck {
+  color: var(--color-tinta);
+  flex-shrink: 0;
+}

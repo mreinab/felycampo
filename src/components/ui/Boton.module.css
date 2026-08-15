@@ -23,7 +23,18 @@
 }
 
 /* ---------- Tamaños ---------- */
-.s    { padding: 8px 20px;  font-size: var(--text-caption); }
+/* .boton.s (no ".s" suelto): .rosa/.contorno-rosa no traen su propio
+   display/gap, y .solido/.contorno sí (gap distinto cada uno) — con
+   ".s" a secas el orden del archivo dejaba ganar el gap del variante en
+   vez del de aquí. ".boton.s" sube la especificidad para que el tamaño
+   "s" siempre imponga flex+gap, sea cual sea el variante combinado. */
+.boton.s {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: 8px 20px;
+  font-size: var(--text-caption);
+}
 .m    { padding: var(--spacing-3) var(--spacing-6); font-size: var(--text-label); }
 .l    { padding: 16px 36px; font-size: var(--text-body); }
 .full { width: 100%; padding: 16px 0; font-size: var(--text-small); }
@@ -61,7 +72,11 @@
   color: var(--color-tinta);
   border: 1px solid var(--color-tinta);
   border-radius: var(--radius-botones);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
 }
+
 .contorno:hover {
   background: var(--color-tinta);
   color: var(--color-fondo);
