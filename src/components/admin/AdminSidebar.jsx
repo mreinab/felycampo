@@ -45,7 +45,9 @@ const grupos = [
   {
     titulo: null,
     items: [
-      { href: '/admin', label: 'Home', icono: Home },
+      {
+        href: '/admin', label: 'Home', icono: Home, porHacer: true,
+      },
     ],
   },
   {

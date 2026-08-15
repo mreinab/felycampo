@@ -369,6 +369,6 @@ Por prioridad aproximada:
 - **Blog** (`/admin/blog`)
 - **Settings** (`/admin/settings`)
 
-Todas siguen el mismo patrón general descrito en la sección 1 (mock en memoria, sin backend), pero no se han documentado en detalle aquí porque su diseño de producto todavía está por decidir. El sidebar marca estas 3 últimas — Diseño, Blog, Settings — con una píldora "Por hacer" (ver `AdminSidebar.jsx`, sección 5).
+Todas siguen el mismo patrón general descrito en la sección 1 (mock en memoria, sin backend), pero no se han documentado en detalle aquí porque su diseño de producto todavía está por decidir. El sidebar marca Home, Diseño, Blog y Settings con una píldora "Por hacer" (ver `AdminSidebar.jsx`, sección 5) — Clientes/Newsletter, aunque tampoco están documentadas en detalle, no llevan la píldora.
 
 **Nota — inconsistencia a revisar:** el sidebar también marca "Consultas/Citas" (`/admin/consultas`) con esa misma píldora "Por hacer", pero esa sección **sí** está documentada y construida — es "Consultas / Citas generales", sección 4.1 (listado con filtros, detalle con selector de estado, historial local, notas internas). No se ha quitado el flag `porHacer` de ese item porque así se pidió explícitamente al añadirlo; queda anotado aquí para que se revise si fue intencional (¿falta algo de esa sección que no se ve en el código?) o un desajuste entre lo que se pidió marcar y lo que realmente está sin construir.
