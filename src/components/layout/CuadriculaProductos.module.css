@@ -7,7 +7,7 @@
 
 .cuadricula {
   height: 80vh;
-  max-height: 600px;
+  height: fit-content;
   display: flex;
   gap: var(--spacing-2);
   padding-inline: var(--spacing-2);

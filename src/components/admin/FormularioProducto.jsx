@@ -139,12 +139,27 @@ function comprimirImagenTela(archivo) {
   });
 }
 
+// Filtro "Tipo" de la sección "Vincular a Runway/Novia/Fiesta" — mismas
+// etiquetas que tiposProducto, restringidas a los 3 tipos de archivo
+// editorial (looksBuscables nunca trae pret-a-porter/atelier).
+const OPCIONES_TIPO_LOOK = [
+  { valor: 'todos', etiqueta: 'Todos' },
+  { valor: 'archivo', etiqueta: 'Runway' },
+  { valor: 'novia', etiqueta: 'Novia' },
+  { valor: 'fiesta', etiqueta: 'Fiesta' },
+];
+
 const CAMPOS_TIPO = {
   'pret-a-porter': {
     precio: { requerido: true, placeholder: '890 €' }, tallas: true, colores: true, telas: true, stock: true, coleccion: 'opcional',
   },
+  // Atelier (Novias/Fiesta) no lleva precio fijo — la web pública ya
+  // resuelve esto con el botón "Precio a consultar" (ver
+  // consultasPrecioMock en mockData.js), así que aquí tampoco se pide un
+  // importe: la sección "Precio de compra" muestra el aviso fijo en su
+  // lugar (`consulta: true` en vez de un objeto de validación de input).
   atelier: {
-    precio: { requerido: false, placeholder: 'Desde 980 €' }, tallas: false, colores: 'opcional', telas: 'opcional', stock: false, coleccion: 'opcional',
+    precio: { consulta: true }, tallas: false, colores: 'opcional', telas: 'opcional', stock: false, coleccion: 'opcional',
   },
   archivo: {
     precio: false, tallas: false, colores: false, telas: false, stock: false, coleccion: { requerido: true },
@@ -228,6 +243,8 @@ function FormularioProducto({
   const { categorias } = useCategorias();
   const [lookVinculado, setLookVinculado] = useState(productoExistente?.lookVinculado || null);
   const [buscarLook, setBuscarLook] = useState('');
+  const [filtroTipoLook, setFiltroTipoLook] = useState('todos');
+  const [filtroColeccionLook, setFiltroColeccionLook] = useState('todas');
 
   const inputArchivoRef = useRef(null);
   const inputImagenTelaRef = useRef(null);
@@ -325,13 +342,27 @@ function FormularioProducto({
     return lista;
   }, [categorias]);
 
+  // Opciones del filtro "Colección" — solo las que existen dentro del tipo
+  // ya elegido (filtroTipoLook), para no enseñar nombres de una colección
+  // de Runway mientras se filtra por Novia. Cambiar de tipo resetea este
+  // filtro (ver el onChange del select) en vez de dejar seleccionado un
+  // nombre que ya no aplica.
+  const coleccionesLookDisponibles = useMemo(() => {
+    const relevantes = filtroTipoLook === 'todos'
+      ? looksBuscables
+      : looksBuscables.filter((l) => l.tipo === filtroTipoLook);
+    return [...new Set(relevantes.map((l) => l.categoriaNombre))].sort((a, b) => a.localeCompare(b));
+  }, [looksBuscables, filtroTipoLook]);
+
   const resultadosLook = useMemo(() => {
     const q = buscarLook.trim().toLowerCase();
-    if (!q) return looksBuscables;
-    return looksBuscables.filter((l) => l.categoriaNombre.toLowerCase().includes(q)
-      || l.lookNombre.toLowerCase().includes(q)
-      || l.prendas.some((p) => p.nombre?.toLowerCase().includes(q) || p.sku?.toLowerCase().includes(q)));
-  }, [looksBuscables, buscarLook]);
+    return looksBuscables
+      .filter((l) => filtroTipoLook === 'todos' || l.tipo === filtroTipoLook)
+      .filter((l) => filtroColeccionLook === 'todas' || l.categoriaNombre === filtroColeccionLook)
+      .filter((l) => !q || l.categoriaNombre.toLowerCase().includes(q)
+        || l.lookNombre.toLowerCase().includes(q)
+        || l.prendas.some((p) => p.nombre?.toLowerCase().includes(q) || p.sku?.toLowerCase().includes(q)));
+  }, [looksBuscables, buscarLook, filtroTipoLook, filtroColeccionLook]);
 
   function vincularLook(item) {
     setLookVinculado(item);
@@ -447,7 +478,7 @@ function FormularioProducto({
         descripcionCorta: descripcion.es,
         imagen: imagenes[0] || '',
         imagenes,
-        ...(campos.precio && { precio }),
+        ...(campos.precio && !campos.precio.consulta && { precio }),
         ...(campos.tallas && { tallas }),
         ...(campos.colores && { colorIds }),
         ...(campos.telas && { telaIds }),
@@ -605,15 +636,17 @@ function FormularioProducto({
             </div>
           </FormSeccion>
 
-          <FormSeccion numero={numeroEspecificos} titulo="Campos específicos" descripcion={`Solo lo relevante para ${tiposProducto.find((t) => t.valor === tipo).etiqueta}.`}>
-            {campos.precio && (
+          <FormSeccion numero={numeroEspecificos} titulo="Precio de compra" descripcion={`Solo lo relevante para ${tiposProducto.find((t) => t.valor === tipo).etiqueta}.`}>
+            {campos.precio && (campos.precio.consulta ? (
+              <p className={styles.precioConsulta}>Precios a consultar</p>
+            ) : (
               <Input
                 etiqueta={`Precio${campos.precio.requerido ? '' : ' (opcional)'}`}
                 placeholder={campos.precio.placeholder}
                 valor={precio}
                 onChange={(e) => setPrecio(e.target.value)}
               />
-            )}
+            ))}
           </FormSeccion>
 
           {campos.coleccion && (
@@ -801,6 +834,37 @@ function FormularioProducto({
                 ) : (
                   <p className={styles.vinculoVacio}>Sin vincular todavía — busca por nombre de colección, look o SKU de una prenda.</p>
                 )}
+
+                <div className={styles.anadirFila}>
+                  <label>
+                    <span className={styles.etiquetaCampo}>Tipo</span>
+                    <select
+                      className={styles.selectInput}
+                      value={filtroTipoLook}
+                      onChange={(e) => {
+                        setFiltroTipoLook(e.target.value);
+                        setFiltroColeccionLook('todas');
+                      }}
+                    >
+                      {OPCIONES_TIPO_LOOK.map((opcion) => (
+                        <option key={opcion.valor} value={opcion.valor}>{opcion.etiqueta}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    <span className={styles.etiquetaCampo}>Colección</span>
+                    <select
+                      className={styles.selectInput}
+                      value={filtroColeccionLook}
+                      onChange={(e) => setFiltroColeccionLook(e.target.value)}
+                    >
+                      <option value="todas">Todas</option>
+                      {coleccionesLookDisponibles.map((nombre) => (
+                        <option key={nombre} value={nombre}>{nombre}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
 
                 <div className={styles.vinculoBuscador}>
                   <Search size={16} className={styles.vinculoBuscadorIcono} aria-hidden="true" />

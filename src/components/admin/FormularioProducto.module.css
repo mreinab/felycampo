@@ -518,6 +518,18 @@
   margin-bottom: var(--spacing-3);
 }
 
+/* Aviso fijo de la sección "Precio de compra" cuando el tipo no lleva
+   precio de venta (Atelier) — mismo tono que .vinculoVacio, más fondo
+   gris y padding para que se lea como una nota destacada, no como texto
+   suelto flotando en la sección. */
+.precioConsulta {
+  grid-column: 1 / -1;
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  background: var(--color-gris-100);
+  padding: var(--spacing-3);
+}
+
 .vinculoBuscador {
   position: relative;
   margin-bottom: var(--spacing-3);
@@ -535,6 +547,7 @@
 .vinculoBuscadorInput {
   width: 100%;
   height: 41px;
+  margin-top: var(--spacing-3);
   padding: 0 var(--spacing-3) 0 40px;
   border: 1px solid var(--color-gris-300);
   border-radius: var(--radius-inputs);

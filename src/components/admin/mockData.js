@@ -1164,16 +1164,25 @@ export const disenoMock = [
     id: 'd1',
     kind: 'hero',
     label: 'Hero — carrusel principal',
+    // titulo/ctaTexto bilingües {es, en} — es el único bloque migrado a la
+    // vista previa en espejo de Diseño (ver DisenoEditor.jsx), que usa un
+    // selector de idioma único para toda la página en vez de uno por bloque.
     slides: [
-      { id: 's1', src: '/img/FW27-Hero3.mp4', tipo: 'video', titulo: 'Prêt-à-porter', ctaTexto: 'Explorar', destino: '/pret-a-porter' },
-      { id: 's2', src: '/img/HERO-1.jpg', tipo: 'imagen', titulo: 'Prêt-à-porter', ctaTexto: 'Explorar', destino: '/pret-a-porter' },
-      { id: 's3', src: '/img/novias-sección-FelyCampo3.jpg', tipo: 'imagen', titulo: 'Bride 27', ctaTexto: 'Ver colección', destino: '/atelier/novias' },
+      {
+        id: 's1', src: '/img/FW27-Hero3.mp4', tipo: 'video', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
+      },
+      {
+        id: 's2', src: '/img/HERO-1.jpg', tipo: 'imagen', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
+      },
+      {
+        id: 's3', src: '/img/novias-sección-FelyCampo3.jpg', tipo: 'imagen', titulo: { es: 'Bride 27', en: 'Bride 27' }, ctaTexto: { es: 'Ver colección', en: 'View collection' }, destino: '/atelier/novias',
+      },
     ],
   },
   {
     id: 'd2',
     kind: 'text',
-    label: 'Título de colección — "Edición mujer"',
+    label: 'Título de colección',
     // Único bloque con edición bilingüe completa en esta demo (regla
     // transversal 6) — el resto de bloques de Diseño seguirían el
     // mismo patrón (ver SelectorIdioma) cuando se conecten a datos reales.
@@ -1190,36 +1199,42 @@ export const disenoMock = [
     label: 'Banner — imagen destacada',
     src: '/img/FW27-Hero.jpg',
     tipo: 'imagen',
-    titulo: 'Archivo y colecciones',
-    ctaTexto: 'Descubre más',
-    destino: '/archivo/colecciones',
+    titulo: { es: 'Otoño Invierno 2027', en: 'Autumn Winter 2027' },
+    ctaTexto: { es: 'Descubre la colección', en: 'Discover the collection' },
   },
   {
     id: 'd4',
     kind: 'productRow',
     label: 'Fila de producto — "Destacados"',
-    productoIds: ['p1', 'p2'],
-    verMasDestino: '/archivo/colecciones',
+    // 4 IDs, no 2 — CuadriculaProductos.jsx reparte el ancho a partes
+    // iguales entre lo que reciba (flex:1 por tarjeta, sin cuadrícula
+    // fija), así que con solo 2 se veían 2 columnas anchas en vez de las
+    // 4 de la home real (misma "Pensada para 4 productos" del propio
+    // componente).
+    productoIds: ['p1', 'p2', 'p7', 'p8'],
   },
   {
     id: 'd5',
     kind: 'mediaSplit',
     label: 'Dos imágenes — Novias / Fiesta',
     items: [
-      { id: 'sm1', src: '/img/novias-sección-FelyCampo2.jpg', tipo: 'imagen', titulo: 'Novias', destino: '/atelier/novias' },
-      { id: 'sm2', src: '/img/invitadas-sección-FelyCampo.jpg', tipo: 'imagen', titulo: 'Fiesta', destino: '/atelier/fiesta' },
+      { id: 'sm1', src: '/img/novias-sección-FelyCampo2.jpg', tipo: 'imagen', titulo: 'Novias' },
+      { id: 'sm2', src: '/img/invitadas-sección-FelyCampo.jpg', tipo: 'imagen', titulo: 'Fiesta' },
     ],
   },
   {
     id: 'd6',
     kind: 'productRowTabs',
     label: 'Fila con tabs — "Un look para cada ocasión"',
-    titulo: 'Un look para cada ocasión',
+    // Mismos 4 productos que "Destacados" (d4), rotados por tab — mismo
+    // criterio que productosPorOcasion en src/app/[locale]/page.js
+    // (rota productosInvitada en vez de listas distintas por ocasión).
+    // 4 por tab, no 1-2: mismo motivo que d4 más arriba.
     tabs: [
-      { id: 't1', nombre: 'Día de boda', productoIds: ['p1', 'p2'], verMasDestino: '/archivo/colecciones' },
-      { id: 't2', nombre: 'Noche de boda', productoIds: ['p2', 'p1'], verMasDestino: '/archivo/colecciones' },
-      { id: 't3', nombre: 'Comuniones y bautizo', productoIds: ['p1'], verMasDestino: '/archivo/colecciones' },
-      { id: 't4', nombre: 'Bolsos de fiesta', productoIds: ['p2'], verMasDestino: '/archivo/colecciones' },
+      { id: 't1', nombre: 'Día de boda', productoIds: ['p1', 'p2', 'p7', 'p8'], verMasDestino: '/archivo/colecciones' },
+      { id: 't2', nombre: 'Noche de boda', productoIds: ['p2', 'p7', 'p8', 'p1'], verMasDestino: '/archivo/colecciones' },
+      { id: 't3', nombre: 'Comuniones y bautizo', productoIds: ['p7', 'p8', 'p1', 'p2'], verMasDestino: '/archivo/colecciones' },
+      { id: 't4', nombre: 'Bolsos de fiesta', productoIds: ['p8', 'p1', 'p2', 'p7'], verMasDestino: '/archivo/colecciones' },
     ],
   },
   {
@@ -1230,7 +1245,6 @@ export const disenoMock = [
     titulo: 'Visita el atelier',
     texto: 'Costura a medida en Salamanca, Madrid y Oviedo. Reserva tu cita.',
     enlaceTexto: 'Reservar cita',
-    destino: '/visitenos/cita',
   },
   {
     id: 'd8',
@@ -1243,15 +1257,43 @@ export const disenoMock = [
 
 // Páginas internas disponibles para los desplegables "destino" del CTA
 // (nunca texto libre — mismo criterio que la sección web de productos).
+// Páginas internas disponibles para los desplegables "destino" de Diseño
+// (DisenoEditor.jsx "Destino del CTA") — cada valor es una ruta REAL de
+// src/app/[locale]/ (aunque su contenido siga "pendiente de maquetar",
+// la ruta ya existe y navega, ver comentarios de cada page.js). Las 6
+// categorías de Prêt-à-porter son las mismas que categoriasMock['pret-a-porter']
+// (sección 5); las 9 colecciones de Archivo son categoriasMock.archivo
+// (sus slugs son categoriasMock.archivo[].nombre en minúsculas/con
+// guiones — /archivo/colecciones/[coleccion] es una plantilla genérica
+// que acepta cualquier slug, así que estos 9 ya navegan de verdad).
 export const paginasInternas = [
   { valor: '/pret-a-porter', etiqueta: 'Prêt-à-porter' },
-  { valor: '/pret-a-porter/vestidos', etiqueta: 'Prêt-à-porter — Vestidos' },
+  { valor: '/pret-a-porter/tops', etiqueta: 'Prêt-à-porter — Tops y Camisas' },
+  { valor: '/pret-a-porter/coats', etiqueta: 'Prêt-à-porter — Chaquetas y Abrigos' },
   { valor: '/pret-a-porter/faldas', etiqueta: 'Prêt-à-porter — Faldas' },
+  { valor: '/pret-a-porter/vestidos', etiqueta: 'Prêt-à-porter — Vestidos' },
+  { valor: '/pret-a-porter/zapatos', etiqueta: 'Prêt-à-porter — Zapatos' },
+  { valor: '/pret-a-porter/accesorios', etiqueta: 'Prêt-à-porter — Accesorios' },
+  { valor: '/atelier', etiqueta: 'Atelier' },
   { valor: '/atelier/novias', etiqueta: 'Atelier — Novias' },
   { valor: '/atelier/fiesta', etiqueta: 'Atelier — Fiesta' },
+  { valor: '/archivo', etiqueta: 'Archivo' },
   { valor: '/archivo/runway', etiqueta: 'Archivo — Runway' },
   { valor: '/archivo/colecciones', etiqueta: 'Archivo — Colecciones' },
+  { valor: '/archivo/colecciones/la-coleccion', etiqueta: 'Archivo — La Colección' },
+  { valor: '/archivo/colecciones/dreaming', etiqueta: 'Archivo — Dreaming' },
+  { valor: '/archivo/colecciones/self-world', etiqueta: 'Archivo — Self World' },
+  { valor: '/archivo/colecciones/lei-zu', etiqueta: 'Archivo — Lei Zu' },
+  { valor: '/archivo/colecciones/the-way-here', etiqueta: 'Archivo — The Way Here' },
+  { valor: '/archivo/colecciones/zigurat', etiqueta: 'Archivo — Zigurat' },
+  { valor: '/archivo/colecciones/tempore', etiqueta: 'Archivo — Tempore' },
+  { valor: '/archivo/colecciones/nagare', etiqueta: 'Archivo — Nagare' },
+  { valor: '/archivo/colecciones/diafonia', etiqueta: 'Archivo — Diafonía' },
+  { valor: '/visitenos', etiqueta: 'Visítanos' },
   { valor: '/visitenos/cita', etiqueta: 'Visítanos — Cita' },
+  { valor: '/visitenos/madrid', etiqueta: 'Visítanos — Madrid' },
+  { valor: '/visitenos/oviedo', etiqueta: 'Visítanos — Oviedo' },
+  { valor: '/visitenos/salamanca', etiqueta: 'Visítanos — Salamanca' },
 ];
 
 // Banco de vídeos ya subidos, mismo criterio que bancoImagenes.
