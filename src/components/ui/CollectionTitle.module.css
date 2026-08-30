@@ -22,12 +22,11 @@
   font-size: var(--text-micro);
   text-transform: uppercase;
   color: var(--color-tinta);
-  letter-spacing: 0.02rem;
+  letter-spacing: var(--tracking-label);
 }
 
 .titulo {
-  margin-top: var(--spacing-3);
-  font-size: var(--text-body-lg);
+  font-size: var(--text-h3);
   font-weight: var(--font-weight-medium);
   color: var(--color-tinta);
   text-transform: uppercase;
@@ -42,15 +41,21 @@
   line-height: var(--leading-base);
 }
 
-/* variante="tabs": fila de tabs debajo del título, dentro del mismo
-   bloque — plana, sin cajas ni fondos, solo un subrayado que marca
-   el tab activo. */
+/* variante="tabs": el layout (grid de 4 columnas, título a la
+   izquierda, accion ancha a la derecha) lo pone CabeceraSeccion (ver
+   ui/CabeceraSeccion.jsx) — CollectionTitle solo le pasa la fila de
+   tabs como children. El título usa la misma clase .titulo de aquí
+   arriba, sin modificador propio. */
+
+/* fila de tabs — plana, sin cajas ni fondos, solo un subrayado que
+   marca el tab activo. Todo en mayúsculas vía CSS (no en las
+   traducciones) para que funcione igual en cualquier idioma. */
 .tabs {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: var(--spacing-5);
-  margin-top: var(--spacing-5);
+  margin-right: var(--spacing-7);
 }
 
 .tab {
@@ -60,7 +65,8 @@
   padding: 0 0 var(--spacing-1) 0;
   font-family: var(--font-base);
   font-size: var(--text-small);
-  letter-spacing: 0.02rem;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
   color: var(--color-gris-500);
   cursor: pointer;
   transition: color 0.25s var(--ease-marca), border-color 0.25s var(--ease-marca);

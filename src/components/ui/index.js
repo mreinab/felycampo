@@ -10,4 +10,5 @@ export { default as MediaLink } from './MediaLink';
 export { default as ImageTitle } from './ImageTitle';
 export { default as PanelLateral } from './PanelLateral';
 export { default as CollectionTitle } from './CollectionTitle';
+export { default as CabeceraSeccion } from './CabeceraSeccion';
 export { default as VerMasOverlay } from './VerMasOverlay';

@@ -1,13 +1,18 @@
 /* Placeholder — pendiente de maquetar. Ruta: /atelier/fiesta */
 
+import { CuadriculaProductos } from '@/components/layout';
+import { productosEjemplo } from '@/components/layout/productosEjemplo';
+
 export default function Pagina() {
   return (
-    <section className="seccion contenedor">
-      <p className="text-caption uppercase text-gris-500 mb-16">Fely Campo</p>
-      <h1>Atelier · Fiesta</h1>
-      <p className="text-gris-500 mt-24 texto-legible">
-        Página pendiente de maquetar. La ruta ya existe y navega.
-      </p>
+    <section className="seccion">
+      <CuadriculaProductos
+        productos={productosEjemplo}
+        disposicion="grid"
+        tituloKey="catalogo.subtituloFelyCampo"
+        coleccionKey="nav.submenus.atelier.fiesta"
+        descriptionKey="cuadriculaTabs.descripcion"
+      />
     </section>
   );
 }

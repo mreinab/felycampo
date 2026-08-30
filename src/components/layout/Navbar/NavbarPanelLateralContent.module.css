@@ -1,39 +1,54 @@
 /* NavbarPanelLateralContent.module.css */
 
-/* Submenú de escritorio: lista de sub-enlaces arriba, dos MediaLink
-   ocupando el resto del ancho del panel. */
-.submenuContent {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-9);
-  height: 100%;
-}
-
+/* Submenú de escritorio: lista de sub-enlaces (dentro de .contenido,
+   con su padding) + dos MediaLink (fuera de .contenido — ver
+   PanelLateral "debajo" en Navbar.jsx, .submenuCards más abajo). */
 .submenuList {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
-  flex-shrink: 0;
   list-style: none;
-  height: 40%;
 }
 
 .submenuLink {
   font-size: var(--text-small);
   color: var(--color-tinta);
-  transition: color 0.25s var(--ease-marca);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: var(--spacing-1);
+  transition: text-decoration-color 0.25s var(--ease-marca);
 }
 .submenuLink:hover {
-  color: var(--color-rosa);
+  text-decoration-color: var(--color-tinta);
+}
+
+/* "Ver todos" — primer item de la lista (ver Navbar.jsx), destacado
+   frente a las categorías para que se lea como acción, no como una más.
+   Mismo criterio de subrayado que .submenuLink (solo al hover) salvo
+   que sea la página actual — ahí .submenuLinkTodosActivo lo deja fijo. */
+.submenuLinkTodos {
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: var(--spacing-1);
+  transition: text-decoration-color 0.25s var(--ease-marca);
+}
+.submenuLinkTodos:hover {
+  text-decoration-color: var(--color-tinta);
+}
+
+.submenuLinkTodosActivo {
+  text-decoration-color: var(--color-tinta);
 }
 
 /* Fila con los dos MediaLink (cada uno se reparte el ancho a partes
-   iguales, ver .card en MediaLink.module.css) — ocupa el mismo hueco
-   que antes tenía la imagen única del submenú. */
+   iguales, ver .card en MediaLink.module.css) — fuera de .contenido,
+   a todo el ancho del panel, con su propio padding en vez del lateral
+   heredado del resto del contenido. */
 .submenuCards {
-  flex: 1;
   display: flex;
-  align-items: flex-end;
   gap: var(--spacing-2);
-  overflow: hidden;
+  padding: var(--spacing-2);
 }

@@ -1,0 +1,87 @@
+/* ============================================================
+   CABECERA DE SECCIÓN — Fely Campo
+   Grid de 4 columnas: grupo título (subtítulo pequeño opcional +
+   título grande + descripción opcional, apilados) en la 1ª, acción
+   libre (botón, fila de tabs...) en las últimas, vía "children".
+   Compartida por CuadriculaProductos y CollectionTitle (variante
+   "tabs") — antes cada uno tenía su propia copia de este layout.
+   ============================================================ */
+
+.cabecera {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: end;
+  gap: 0.04rem;
+  padding-inline: 0px;
+  margin: var(--spacing-8) 0 var(--spacing-4) 0;
+  min-height: 10vh;
+}
+
+/* "alinear='start'" (ver CabeceraSeccion.jsx) — páginas de catálogo
+   de Tienda/Atelier, con el toggle de densidad pegado arriba en vez
+   de compartir línea base con el título. */
+.cabeceraInicio {
+  align-items: start;
+}
+
+.tituloGrupo {
+  grid-column: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding-left: var(--spacing-7);
+}
+
+.subtitle {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  color: var(--color-gris-700);
+}
+
+/* Mismo estilo que .descripcion de CollectionTitle, sin el centrado
+   propio (aquí vive apilada dentro de .tituloGrupo, no sola). */
+.descripcion {
+  font-size: var(--text-small);
+  color: var(--color-gris-500);
+  line-height: var(--leading-base);
+}
+
+/* accion: por defecto ocupa 1 columna (la 4ª), pegada a la derecha —
+   un botón suelto (ej. CuadriculaProductos). accionAncha la extiende
+   a 3 columnas (2ª a 4ª) — una fila de tabs (ej. CollectionTitle
+   variante "tabs") necesita más sitio que un botón. */
+.accion {
+  grid-column: 4 / 5;
+  justify-self: end;
+  margin-right: var(--spacing-7);
+}
+
+.accionAncha {
+  grid-column: 2 / 5;
+  justify-self: stretch;
+  margin-right: 0;
+}
+
+/* Mobile: 4 columnas estrechas no dejan sitio para el grupo título +
+   acción — se apilan en una sola columna, mismo orden que el desktop. */
+@media (max-width: 767px) {
+  .cabecera {
+    grid-template-columns: 1fr;
+    padding-inline: var(--spacing-5);
+  }
+  .tituloGrupo,
+  .accion {
+    grid-column: 1;
+  }
+  .tituloGrupo {
+    padding-left: 0;
+  }
+  .accion {
+    justify-self: start;
+    margin-right: 0;
+  }
+  .accionAncha {
+    justify-self: stretch;
+  }
+}

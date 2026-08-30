@@ -37,12 +37,13 @@ export const ConTabs = {
   },
   args: {
     variante: 'tabs',
+    subtitleKey: 'cuadriculaTabs.subtitulo',
     titleKey: 'cuadriculaTabs.titulo',
+    descriptionKey: 'cuadriculaTabs.descripcion',
     tabs: [
       { key: 'diaBoda', labelKey: 'cuadriculaTabs.tabs.diaBoda' },
       { key: 'nocheBoda', labelKey: 'cuadriculaTabs.tabs.nocheBoda' },
       { key: 'comunionesBautizo', labelKey: 'cuadriculaTabs.tabs.comunionesBautizo' },
-      { key: 'bolsosFiesta', labelKey: 'cuadriculaTabs.tabs.bolsosFiesta' },
     ],
   },
 };

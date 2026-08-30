@@ -138,6 +138,19 @@ export const ConColores = {
   args: { imagen: IMG, imagenHover: IMG_HOVER, nombre: 'Vestido Sol', precio: '760 €', colores: coloresSol },
 };
 
+// Páginas de categoría (Tienda/Atelier): colores siempre visibles, en
+// el encabezado — mismo tope de 3 puntos + "+N" que en hover.
+export const ConColoresSiempreVisibles = {
+  args: {
+    imagen: IMG,
+    imagenHover: IMG_HOVER,
+    nombre: 'Vestido Sol',
+    precio: '760 €',
+    colores: coloresSol,
+    coloresSiempreVisibles: true,
+  },
+};
+
 export const Agotado = {
   args: { imagen: IMG, imagenHover: IMG_HOVER, nombre: 'Vestido Nube', precio: '690 €', badge: 'Agotado', badgeVariante: 'agotado', agotado: true },
 };

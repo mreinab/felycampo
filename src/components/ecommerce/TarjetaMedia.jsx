@@ -11,9 +11,11 @@
 
 import styles from './TarjetaMedia.module.css';
 
-function TarjetaMedia({ src, tipo = 'imagen', alt = '' }) {
+function TarjetaMedia({ src, tipo = 'imagen', alt = '', variante }) {
+  const esCarrusel = variante === 'carrusel';
+
   return (
-    <div className={styles.tarjetaMedia}>
+    <div className={`${styles.tarjetaMedia} ${esCarrusel ? styles.tarjetaMediaCarrusel : ''}`}>
       {tipo === 'video' ? (
         <video src={src} className={styles.media} autoPlay muted loop playsInline />
       ) : (

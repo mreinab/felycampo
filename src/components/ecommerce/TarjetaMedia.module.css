@@ -21,3 +21,8 @@
   height: 100%;
   object-fit: cover;
 }
+
+/* Variante "carrusel" (ver TarjetaMedia.jsx) — usada por
+   CuadriculaProductos en modo banda horizontal, misma proporción
+   2/3 que TarjetaProducto.marcoCarrusel. */
+.tarjetaMediaCarrusel { aspect-ratio: 2 / 3; }

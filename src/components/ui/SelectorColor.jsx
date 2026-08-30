@@ -9,10 +9,9 @@
 
 import styles from './SelectorColor.module.css';
 
-function SelectorColor({ colores = [], seleccionado, onSelect }) {
+function SelectorColor({ colores = [], seleccionado, onSelect, tabIndex }) {
   return (
     <div className={styles.selector}>
-      <span className={styles.actual}>{seleccionado}</span>
       <div className={styles.swatches}>
         {colores.map(({ hex, nombre }) => (
           <button
@@ -23,8 +22,10 @@ function SelectorColor({ colores = [], seleccionado, onSelect }) {
             aria-pressed={seleccionado === nombre}
             onClick={() => onSelect(nombre)}
             className={`${styles.swatch} ${seleccionado === nombre ? styles.activo : ''}`}
-            style={{ background: hex }}
-          />
+            tabIndex={tabIndex}
+          >
+            <span className={styles.punto} style={{ background: hex }} />
+          </button>
         ))}
       </div>
     </div>

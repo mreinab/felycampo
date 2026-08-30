@@ -11,6 +11,7 @@
      <Boton variante="rosa" tamano="full">Añadir a la cesta</Boton>
      <Boton variante="texto">Descubre más</Boton>
      <Boton variante="texto-crema">Descubre más</Boton>
+     <Boton variante="flecha" href="/coleccion">Comprar ahora</Boton>
    ============================================================ */
 
 import styles from './Boton.module.css';
@@ -21,8 +22,12 @@ import styles from './Boton.module.css';
  * una vez por vista, pierde fuerza. 'contorno' = acción secundaria. 'contorno-rosa'
  * = mismo contorno pero en rosa-oscuro, para acciones secundarias "de limpiar/
  * descartar" (ej. Limpiar filtros); mismo patrón de hover que 'contorno' (invierte
- * a relleno sólido, texto/icono en --color-fondo). 'texto' = enlaces. 'texto-crema'
- * = mismo enlace, en --color-crema (fondos oscuros/imágenes, ej. HeroCarousel).
+ * a relleno sólido, texto/icono en --color-fondo). 'texto' = enlaces.
+ * 'texto-crema' = mismo enlace, en --color-crema (fondos oscuros/imágenes,
+ * ej. HeroCarousel).
+ * 'flecha' = nuevo diseño de CTA en mayúsculas, subrayado, con "→" al final
+ * (ej. cabecera de CuadriculaProductos) — candidato a sustituir a
+ * solido/contorno/rosa en el resto del sistema, todavía sin extender.
  * Esquinas siempre rectas (radio 0).
  */
 function Boton({
@@ -37,19 +42,21 @@ function Boton({
   tabIndex,
   className,
 }) {
-  if (variante === 'texto' || variante === 'texto-crema') {
+  if (variante === 'texto' || variante === 'texto-crema' || variante === 'flecha') {
     const clases = [
-      styles.texto,
+      variante === 'flecha' ? styles.flecha : styles.texto,
       variante === 'texto-crema' && styles.textoCrema,
       mayusculas && styles.textoMayusculas,
       className,
     ].filter(Boolean).join(' ');
 
+    const contenido = variante === 'flecha' ? <>{children} →</> : children;
+
     // Con href, es un enlace real; sin él, un <span> que solo dispara onClick.
     if (href && !desactivado) {
       return (
         <a href={href} onClick={onClick} className={clases} tabIndex={tabIndex}>
-          {children}
+          {contenido}
         </a>
       );
     }
@@ -59,7 +66,7 @@ function Boton({
         onClick={desactivado ? undefined : onClick}
         className={clases}
       >
-        {children}
+        {contenido}
       </span>
     );
   }
@@ -83,7 +90,7 @@ function Boton({
   }
 
   return (
-    <button type={type} onClick={onClick} disabled={desactivado} className={clase}>
+    <button type={type} onClick={onClick} disabled={desactivado} className={clase} tabIndex={tabIndex}>
       {children}
     </button>
   );

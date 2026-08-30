@@ -1,15 +1,18 @@
-import BloqueSeccion from '@/components/layout/BloqueSeccion';
+/* Placeholder — pendiente de maquetar. Ruta: /atelier/novias */
 
-export default async function Pagina({ params }) {
-  const { locale } = await params;
+import { CuadriculaProductos } from '@/components/layout';
+import { productosEjemplo } from '@/components/layout/productosEjemplo';
 
+export default function Pagina() {
   return (
-    <BloqueSeccion
-      imagen="/img/novias-sección-FelyCampo2.jpg"
-      titulo="Atelier Novia"
-      texto="Reserva tu cita y vive un día único en el Atelier Novia Fely Campo en Salamanca o en Madrid. Disfruta del asesoramiento personalizado de nuestra diseñadora"
-      enlace="Reserva tu cita"
-      href={`/${locale}/visitenos/cita`}
-    />
+    <section className="seccion">
+      <CuadriculaProductos
+        productos={productosEjemplo}
+        disposicion="grid"
+        tituloKey="catalogo.subtituloFelyCampo"
+        coleccionKey="nav.submenus.atelier.novias"
+        descriptionKey="cuadriculaTabs.descripcion"
+      />
+    </section>
   );
 }

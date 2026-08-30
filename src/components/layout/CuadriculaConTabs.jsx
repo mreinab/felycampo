@@ -25,7 +25,7 @@ import styles from './CuadriculaConTabs.module.css';
  *     ]}
  *   />
  */
-function CuadriculaConTabs({ titleKey, tabs }) {
+function CuadriculaConTabs({ titleKey, subtitleKey, descriptionKey, tabs }) {
   const [activo, setActivo] = useState(0);
 
   return (
@@ -33,6 +33,8 @@ function CuadriculaConTabs({ titleKey, tabs }) {
       <CollectionTitle
         variante="tabs"
         titleKey={titleKey}
+        subtitleKey={subtitleKey}
+        descriptionKey={descriptionKey}
         tabs={tabs}
         activo={activo}
         onSelectTab={setActivo}

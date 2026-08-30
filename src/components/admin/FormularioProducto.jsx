@@ -194,7 +194,7 @@ function FormularioProducto({
   const [colorIds, setColorIds] = useState(productoExistente?.colorIds || []);
   const [telaIds, setTelaIds] = useState(productoExistente?.telaIds || []);
   const [coleccion, setColeccion] = useState(productoExistente?.coleccion || '');
-  // El desplegable arranca mostrando solo la colección vigente (fw27,
+  // El desplegable arranca mostrando solo la colección vigente (FW27,
   // "Otoño-Invierno 2027") — no las 4 temporadas de coleccionesMock, para
   // no enseñar un histórico que hoy no aplica a ningún producto nuevo.
   // Si el producto que se edita ya pertenecía a otra colección (una de
@@ -203,7 +203,7 @@ function FormularioProducto({
   // coloresDisponibles/telasDisponibles más abajo: una colección añadida
   // aquí no se escribe de vuelta en mockData.js.
   const [coleccionesDisponibles, setColeccionesDisponibles] = useState(() => {
-    const vigente = coleccionesMock.filter((c) => c.valor === 'fw27');
+    const vigente = coleccionesMock.filter((c) => c.valor === 'FW27');
     const actual = productoExistente?.coleccion;
     if (actual && !vigente.some((c) => c.valor === actual)) {
       const existente = coleccionesMock.find((c) => c.valor === actual);

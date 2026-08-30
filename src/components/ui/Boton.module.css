@@ -9,7 +9,7 @@
   display: inline-block;
   text-align: center;
   font-family: var(--font-base);
-  letter-spacing: 0.02rem;
+  letter-spacing: var(--tracking-label);
   border: none;
   cursor: pointer;
   transition: background-color 0.25s var(--ease-marca),
@@ -17,9 +17,13 @@
   border-color 0.25s var(--ease-marca);
 }
 
+/* Sin opacity: el botón desactivado se queda con el mismo color que
+   activo — pointer-events:none ya impide el clic, y el motivo (ej.
+   "elige una talla") se comunica con un mensaje aparte, no con el
+   botón apagado. */
 .boton:disabled {
   pointer-events: none;
-  opacity: 0.5;
+  cursor: default;
 }
 
 /* ---------- Tamaños ---------- */
@@ -32,12 +36,12 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
-  padding: 8px 20px;
-  font-size: var(--text-caption);
+  padding: 8px 28px;
+  font-size: var(--text-small);
 }
 .m    { padding: var(--spacing-3) var(--spacing-6); font-size: var(--text-label); }
 .l    { padding: 16px 36px; font-size: var(--text-body); }
-.full { width: 100%; padding: 16px 0; font-size: var(--text-small); }
+.full { width: 100%; padding: var(--spacing-4); font-size: var(--text-small); }
 
 /* Variante avisa: tamaño fijo, no se combina con .s/.m/.l/.full */
 .avisa {
@@ -60,12 +64,15 @@
 .solido {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: var(--color-tinta);
   color: var(--color-fondo);
   border-radius: var(--radius-botones);
+  text-transform: uppercase;
+  letter-spacing: 0.02rem;
 }
-.solido:hover { background: var(--color-rosa); }
+.solido:hover { background: var(--color-tinta); }
 
 .contorno {
   background: transparent;
@@ -104,34 +111,58 @@
   color: var(--color-fondo);
 }
 
-/* Variante texto: enlace subrayado, no es una "caja" */
+/* Variante texto: enlace subrayado, no es una "caja". Hover: el trazo
+   engrosa (--border-thick), nunca cambia de color — padding-bottom baja
+   la misma medida que el borde sube, así el bloque no cambia de alto
+   ni empuja el texto de alrededor. */
 .texto {
   display: inline-block;
   background: none;
   border: none;
   padding: 0;
   color: var(--color-tinta);
-  font-size: var(--text-small);
-  letter-spacing: 0.02rem;
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
   cursor: pointer;
-  border-bottom: 1px solid var(--color-tinta);
+  border-bottom: var(--border-regular) solid var(--color-tinta);
   padding-bottom: 2px;
-  transition: border-color 0.25s var(--ease-marca);
+  transition: border-bottom-width 0.25s var(--ease-marca), padding-bottom 0.25s var(--ease-marca);
 }
-.texto:hover { border-color: var(--color-rosa); }
+.texto:hover {
+  border-bottom-width: var(--border-thick);
+  padding-bottom: 1.5px;
+}
 
-/* Modificador: texto en mayúsculas (ej. enlaces legales) — el hover
-   se queda en tinta en vez de virar a rosa como .texto */
+/* Modificador: texto en mayúsculas (ej. enlaces legales) */
 .textoMayusculas {
   text-transform: uppercase;
 }
-.textoMayusculas:hover { border-color: var(--color-tinta); }
 
 /* Modificador: mismo enlace que .texto pero en --color-crema — para
    usarlo sobre fondos oscuros o imágenes (ej. HeroCarousel), donde
-   --color-tinta no tendría contraste suficiente. */
+   --color-tinta no tendría contraste suficiente. Hereda el hover de
+   grosor de .texto sin más — nunca vira a rosa. */
 .textoCrema {
   color: var(--color-crema);
   border-bottom-color: var(--color-crema);
 }
-.textoCrema:hover { border-bottom-color: var(--color-rosa); }
+
+/* Variante flecha: nuevo diseño de CTA — texto subrayado en mayúsculas
+   con flecha al final (la añade Boton.jsx), no una "caja" como
+   solido/contorno/rosa. Candidato a sustituirlas en el resto del
+   sistema; de momento conviven. */
+.flecha {
+  display: inline-block;
+  background: none;
+  padding: var(--spacing-2) 0 0 0;
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-tinta);
+  border: none;
+  border-bottom: 1px solid var(--color-tinta);
+  border-radius: var(--radius-botones);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
+}

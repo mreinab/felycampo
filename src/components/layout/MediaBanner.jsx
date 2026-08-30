@@ -4,6 +4,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import useEnVista from '@/hooks/useEnVista';
 import { Boton, ImageTitle } from '../ui';
 import styles from './MediaBanner.module.css';
 
@@ -26,6 +27,7 @@ import styles from './MediaBanner.module.css';
 function MediaBanner({ src, tipo = 'imagen', labelKey, tituloKey, ctaKey, href, variante = 'etiqueta' }) {
   const t = useTranslations();
   const router = useRouter();
+  const [ref, enVista] = useEnVista();
   const esImageTitle = variante === 'imageTitle';
   const Contenedor = esImageTitle ? 'div' : 'a';
 
@@ -40,7 +42,10 @@ function MediaBanner({ src, tipo = 'imagen', labelKey, tituloKey, ctaKey, href, 
         <img src={src} alt="" className={styles.media} />
       )}
 
-      <div className={styles.contenido}>
+      <div
+        ref={esImageTitle ? undefined : ref}
+        className={`${styles.contenido} ${!esImageTitle && enVista ? styles.enVista : ''}`}
+      >
         {esImageTitle ? (
           <span onClick={(e) => e.stopPropagation()}>
             <ImageTitle

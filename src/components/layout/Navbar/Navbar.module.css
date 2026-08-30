@@ -6,7 +6,17 @@
   z-index: 50;
   width: 100%;
   background: var(--color-fondo);
-  transition: background-color 0.45s var(--ease-marca);
+  transition: background-color 0.45s var(--ease-marca), transform 0.35s var(--ease-marca);
+}
+
+/* Con el Footer a la vista (ver useEnVista-style observer en
+   Navbar.jsx) el header se desliza fuera de pantalla — su logo y el
+   del Footer no deben competir a la vez. Sticky/fixed en los dos
+   casos (ver .transparent más abajo), así que un translateY basta,
+   sin dejar hueco vacío donde estaba. */
+.header.ocultoPorFooter {
+  transform: translateY(-100%);
+  pointer-events: none;
 }
 
 /* Transparente solo mientras no se ha hecho scroll y no está en hover —
@@ -24,7 +34,10 @@
 
 /* "opaco" se activa por scroll o por hover (ambos vía JS en Navbar.jsx,
    ver isLight/solido) — cuando no está activo (.light) el texto y el
-   logo pasan a --color-fondo para leerse sobre el Hero. */
+   logo pasan a --color-fondo para leerse sobre el Hero.
+   Fondo blanco sólido (sin blur ni transparencia) — necesario aunque
+   coincida con el --color-fondo de .header base: .transparent (más
+   específico) lo pone a transparent, esta regla lo devuelve a sólido. */
 .header.transparent.opaco {
   background: var(--color-fondo);
 }
@@ -42,7 +55,7 @@
 }
 
 .navRow {
-  min-height: 76px;
+  min-height: var(--nav-height);
   position: relative;
   display: flex;
   align-items: center;
@@ -66,7 +79,7 @@
 }
 
 .navLogo {
-  height: 58px;
+  height: 50px;
   width: auto;
   margin-top: var(--spacing-2);
   transition: height 0.45s var(--ease-marca);
@@ -78,18 +91,29 @@
    transición, y si se sube de nuevo al top, vuelve a crecer. */
 .navLogoGrande {
   margin-top: 0px;
-  height: 150px;
+  height: 175px;
 }
 
-/* Enlaces (compartido por desktop y móvil) */
+/* Enlaces (compartido por desktop y móvil). El subrayado (no el color)
+   marca tanto el hover como la página activa — mismo trazo en los dos
+   casos, así el hover "anticipa" cómo se ve la sección ya activa. */
 .navLink {
-  font-size: var(--text-small);
+  font-size: 0.95rem;
   color: var(--color-tinta);
-  transition: color 0.25s var(--ease-marca);
-  padding: var(--spacing-3) 0;
+  padding: var(--spacing-3) 0 0 0;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: var(--spacing-1);
+  transition: text-decoration-color 0.25s var(--ease-marca);
 }
 .navLink:hover {
-  color: var(--color-rosa);
+  text-decoration-color: var(--color-tinta);
+}
+
+/* Marca en qué sección se está navegando ahora mismo — mismo trazo
+   que :hover, pero fijo. */
+.navLinkActivo {
+  text-decoration-color: var(--color-tinta);
 }
 
 /* Grupo de enlaces de escritorio */
@@ -212,6 +236,15 @@
     height: 48px;
     margin-top: 0;
   }
+  .navLogoGrande {
+    height: 100px;
+  }
+}
+
+/* El logo grande (.light, antes de scroll/hover) ya molesta a 175px
+   antes de que el navRow cambie a hamburguesa a los 767px — lo baja a
+   100px un poco antes, sin tocar el resto del layout de esa franja. */
+@media (max-width: 920px) and (min-width: 765px) {
   .navLogoGrande {
     height: 100px;
   }

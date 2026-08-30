@@ -3,20 +3,26 @@
     "links": {
       "tienda": "Shop",
       "atelier": "Atelier",
-      "elMundoDeFely": "The World of Fely",
+      "elMundoDeFely": "About Fely",
       "visitanos": "Visit Us"
     },
     "submenus": {
       "tienda": {
-        "vestidos": "Dresses",
+        "verTodos": "View all",
+        "tops": "Tops & Shirts",
+        "coats": "Coats & Jackets",
         "faldas": "Skirts",
-        "coats": "Coats"
+        "vestidos": "Dresses",
+        "zapatos": "Shoes",
+        "accesorios": "Accessories"
       },
       "atelier": {
         "novias": "Bridal",
-        "fiesta": "Evening Wear"
+        "fiesta": "Evening Wear",
+        "vosotras": "For You"
       },
       "elMundoDeFely": {
+        "blog": "Blog",
         "historia": "Story",
         "archivo": "Archive",
         "runway": "Runway"
@@ -41,7 +47,43 @@
     }
   },
   "producto": {
-    "anadirWishlist": "Add to Wishlist"
+    "anadirWishlist": "Add to Wishlist",
+    "fichaCaption": "Product page",
+    "anadirCesta": "Add",
+    "talla": "Size",
+    "detalles": "Details",
+    "composicion": "Composition and care",
+    "composicionTexto": "100% seasonal materials, selected by our design team. Hand or dry-clean wash only, do not tumble dry.",
+    "envios": "Shipping and returns",
+    "enviosTexto": "Free shipping on orders over €150. Free returns within 30 days of receiving your order.",
+    "relacionados": "You may also like",
+    "noEncontrado": "We couldn't find this product.",
+    "galeriaAnterior": "Previous image",
+    "galeriaSiguiente": "Next image",
+    "galeriaCerrar": "Close gallery"
+  },
+  "guiaTallas": {
+    "abrir": "Size guide",
+    "titulo": "Measurements",
+    "cerrar": "Close size guide",
+    "europa": "Europe",
+    "unidadCm": "CM",
+    "unidadIn": "IN",
+    "vistaReal": "Body",
+    "vistaPatron": "Garment",
+    "talla": "Size",
+    "disclaimer": "Measurements are for reference only and may vary slightly depending on material or manufacturing. Use them as a guide when choosing your size.",
+    "comoMedir": "How to measure",
+    "medidas": {
+      "pecho": { "etiqueta": "Bust", "texto": "Measure around the fullest part of the bust." },
+      "cintura": { "etiqueta": "Waist", "texto": "Measure around the narrowest part of the waist." },
+      "cadera": { "etiqueta": "Hip", "texto": "Measure around the widest part of the hip." },
+      "caderaAlta": { "etiqueta": "High hip", "texto": "Pending: exact wording for \"high hip\"." },
+      "contBrazo": { "etiqueta": "Arm circumference", "texto": "Pending: exact wording for \"arm circumference\"." }
+    }
+  },
+  "heroCarousel": {
+    "cta": "Discover more"
   },
   "collectionTitle": {
     "edicionMujer": {
@@ -51,7 +93,7 @@
     }
   },
   "mediaBanner": {
-    "label": "The AW27 Collection",
+    "label": "The FW27 Collection",
     "titulo": "FW27 New Arrivals",
     "cta": "Discover the collection"
   },
@@ -59,31 +101,77 @@
     "item1": {
       "label": "Bridal Atelier",
       "titulo": "Bridal Atelier",
-      "cta": "Discover more"
+      "cta": "View all"
     },
     "item2": {
-      "label": "Party Atelier",
-      "titulo": "Party Atelier",
-      "cta": "Discover more"
+      "label": "Evening Wear Atelier",
+      "titulo": "Evening Wear Atelier",
+      "cta": "View all"
     }
   },
   "cuadriculaTabs": {
+    "subtitulo": "Atelier",
     "titulo": "A look for every occasion",
-    "descripcion": "Pieces designed to accompany you through every celebration, from the ceremony to the last dance of the night.",
+    "descripcion": "Book your appointment and enjoy a unique day at the Atelier. Experience personalized guidance from our designer.",
     "tabs": {
-      "diaBoda": "Daytime wedding guest",
-      "nocheBoda": "Evening wedding guest",
-      "comunionesBautizo": "Christenings & communions",
-      "bolsosFiesta": "Party bags"
+      "diaBoda": "Wedding Guest Day",
+      "nocheBoda": "Wedding Guest Night",
+      "comunionesBautizo": "Christenings & Communions"
     }
   },
+  "catalogo": {
+    "subtituloFelyCampo": "Fely Campo",
+    "subtituloTienda": "Prêt-à-porter",
+    "tituloTienda": "Prêt-à-porter"
+  },
   "cuadriculaProductos": {
-    "verMas": "See more"
+    "verMas": "See more",
+    "coleccion": "The Collection",
+    "novedades": "FW27",
+    "novedadesDescripcion": "New pieces for the season, crafted with the same care for every occasion.",
+    "shopNow": "See full collection",
+    "progreso": "Carousel progress: {porcentaje}%.",
+    "anterior": "View previous products",
+    "siguiente": "View more products",
+    "vistaCuadricula": "Grid view",
+    "vistaCompacta": "2-column view",
+    "filtros": "Filters",
+    "resultados": "{total} products",
+    "cargandoMas": "Loading more products…"
+  },
+  "filtros": {
+    "titulo": "Filters",
+    "cerrar": "Close filters",
+    "ordenarPor": "Sort by",
+    "orden": {
+      "recomendados": "Recommended",
+      "precioAsc": "Price: low to high",
+      "precioDesc": "Price: high to low"
+    },
+    "talla": "Size",
+    "color": "Color",
+    "precio": "Price",
+    "hasta": "Up to {precio}",
+    "limpiar": "Clear filters",
+    "verResultados": "View {total} products"
   },
   "visitaAtelier": {
     "titulo": "The Fely Campo Atelier",
     "texto": "Discover made-to-measure couture at our atelier in Salamanca or Madrid. Personalised guidance, hand-picked fabrics, and the same care in every single piece.",
     "enlace": "Book an appointment"
+  },
+  "compromiso": {
+    "texto": "Designed and made in Salamanca since 1997",
+    "subtitulo": "Craftsmanship, Femininity and Warmth"
+  },
+  "footer": {
+    "newsletter": {
+      "texto": "Sign up to our newsletter for first access to special offers, limited collections, new arrivals and to stay connected with our community.",
+      "consentimiento": "By submitting your email, you agree to our <privacidad>Privacy Policy</privacidad>.",
+      "enviar": "Submit",
+      "exito": "Thank you — you're subscribed!",
+      "error": "Something went wrong. Please try again."
+    }
   },
   "clientsReview": {
     "titulo": "In their own words",

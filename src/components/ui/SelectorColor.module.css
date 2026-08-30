@@ -8,11 +8,6 @@
   gap: var(--spacing-2);
 }
 
-.actual {
-  font-size: var(--text-body);
-  color: var(--color-tinta);
-}
-
 .swatches {
   display: flex;
   flex-wrap: wrap;
@@ -20,19 +15,29 @@
   gap: var(--spacing-3);
 }
 
+/* El botón no lleva el color de fondo — eso vive en .punto, aparte,
+   para que el cuadrado nunca cambie de tamaño: el subrayado activo/
+   hover vive en el border-bottom del botón, separado del cuadrado
+   por padding-bottom (mismo patrón que .colorBoton/.punto de
+   TarjetaProducto). */
 .swatch {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+  display: block;
+  background: none;
   border: none;
-  padding: 0;
+  border-bottom: 2px solid transparent;
+  padding: 0 0 3px 0;
   cursor: pointer;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
-  outline: 1px solid transparent;
-  outline-offset: 2px;
-  transition: outline-color 0.2s var(--ease-marca);
+  transition: border-color 0.2s var(--ease-marca);
 }
 .swatch:hover,
 .swatch.activo {
-  outline-color: var(--color-tinta);
+  border-bottom-color: var(--color-tinta);
+}
+
+.punto {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
 }

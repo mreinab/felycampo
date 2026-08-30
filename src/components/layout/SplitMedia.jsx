@@ -3,6 +3,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import useEnVista from '@/hooks/useEnVista';
 import { Boton, ImageTitle } from '../ui';
 import styles from './SplitMedia.module.css';
 
@@ -27,48 +28,72 @@ import styles from './SplitMedia.module.css';
  * visual). tituloKey y ctaKey son opcionales: un item sin ninguno de
  * los dos queda como imagen pura, sin overlay de texto ni link.
  */
+/**
+ * Una pieza del grid, como componente aparte: cada una necesita su
+ * propio useEnVista (un hook por elemento observado), y eso no se
+ * puede llamar dentro de un .map en el componente padre.
+ */
+function Pieza({ item, esImageTitle, esLanding, esClicableComoImagen, t }) {
+  const [ref, enVista] = useEnVista();
+  const Contenedor = esClicableComoImagen ? 'a' : 'div';
+  const claseContenido = esLanding ? styles.contenidoLanding : styles.contenido;
+
+  return (
+    <Contenedor {...(esClicableComoImagen ? { href: item.href } : {})} className={styles.pieza}>
+      {item.tipo === 'video' ? (
+        <video src={item.src} className={styles.media} autoPlay muted loop playsInline />
+      ) : (
+        <img src={item.src} alt="" className={styles.media} />
+      )}
+
+      {esLanding && !item.tituloKey && !item.ctaKey ? null : (
+        <div
+          ref={esImageTitle ? undefined : ref}
+          className={`${claseContenido} ${!esImageTitle && enVista ? styles.enVista : ''}`}
+        >
+          {esImageTitle ? (
+            <ImageTitle
+              titulo={t(item.tituloKey)}
+              ctaTexto={t(item.ctaKey)}
+              href={item.href}
+              variante="oscuro"
+            />
+          ) : esLanding ? (
+            <>
+              {item.tituloKey && <h1 className={styles.tituloLanding}>{t(item.tituloKey)}</h1>}
+              {item.ctaKey && (
+                <Boton variante="texto" className={styles.cta}>{t(item.ctaKey)}</Boton>
+              )}
+            </>
+          ) : (
+            <>
+              <p className={styles.etiqueta}>{t(item.labelKey)}</p>
+              <Boton variante="texto" className={styles.cta}>{t(item.ctaKey)}</Boton>
+            </>
+          )}
+        </div>
+      )}
+    </Contenedor>
+  );
+}
+
 function SplitMedia({ items, variante = 'etiqueta' }) {
   const t = useTranslations();
   const esImageTitle = variante === 'imageTitle';
   const esLanding = variante === 'landing';
   const esClicableComoImagen = !esImageTitle;
-  const Pieza = esClicableComoImagen ? 'a' : 'div';
 
   return (
     <div className={`${styles.grid} ${esLanding ? styles.landing : ''}`}>
       {items.map((item, index) => (
-        <Pieza key={index} {...(esClicableComoImagen ? { href: item.href } : {})} className={styles.pieza}>
-          {item.tipo === 'video' ? (
-            <video src={item.src} className={styles.media} autoPlay muted loop playsInline />
-          ) : (
-            <img src={item.src} alt="" className={styles.media} />
-          )}
-
-          {esLanding && !item.tituloKey && !item.ctaKey ? null : (
-            <div className={esLanding ? styles.contenidoLanding : styles.contenido}>
-              {esImageTitle ? (
-                <ImageTitle
-                  titulo={t(item.tituloKey)}
-                  ctaTexto={t(item.ctaKey)}
-                  href={item.href}
-                  variante="oscuro"
-                />
-              ) : esLanding ? (
-                <>
-                  {item.tituloKey && <h1 className={styles.tituloLanding}>{t(item.tituloKey)}</h1>}
-                  {item.ctaKey && (
-                    <Boton variante="texto" className={styles.cta}>{t(item.ctaKey)}</Boton>
-                  )}
-                </>
-              ) : (
-                <>
-                  <p className={styles.etiqueta}>{t(item.labelKey)}</p>
-                  <Boton variante="texto" className={styles.cta}>{t(item.ctaKey)}</Boton>
-                </>
-              )}
-            </div>
-          )}
-        </Pieza>
+        <Pieza
+          key={index}
+          item={item}
+          esImageTitle={esImageTitle}
+          esLanding={esLanding}
+          esClicableComoImagen={esClicableComoImagen}
+          t={t}
+        />
       ))}
     </div>
   );

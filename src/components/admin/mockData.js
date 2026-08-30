@@ -49,7 +49,7 @@ export const tallasEstandar = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 // mismo criterio "fw"/"ss" que ya usan los assets del sitio público,
 // p.ej. /img/ecommerce/27FW/...). Etiqueta legible para mostrar en tabla/filtro.
 export const coleccionesMock = [
-  { valor: 'fw27', etiqueta: 'Otoño-Invierno 2027' },
+  { valor: 'FW27', etiqueta: 'Otoño-Invierno 2027' },
   { valor: 'ss26', etiqueta: 'Primavera-Verano 2026' },
   { valor: 'fw26', etiqueta: 'Otoño-Invierno 2026' },
   { valor: 'ss25', etiqueta: 'Primavera-Verano 2025' },
@@ -158,7 +158,7 @@ export const productosMock = [
     descripcionCorta: 'Look de pasarela FW27, pieza única de archivo.',
     imagen: '/img/ecommerce/Invitada/LOOK12_2-scaled.webp',
     imagenes: ['/img/ecommerce/Invitada/LOOK12_2-scaled.webp'],
-    coleccion: 'fw27',
+    coleccion: 'FW27',
     estado: 'Activo',
     sku: 'FC-ARC-R12',
   },
@@ -191,7 +191,7 @@ export const productosMock = [
     colorIds: ['col7', 'col8'],
     telaIds: ['tel5'],
     estado: 'Programado',
-    coleccion: 'fw27',
+    coleccion: 'FW27',
     sku: 'FC-VES-NIE',
   },
   {
@@ -236,7 +236,7 @@ export const productosMock = [
     descripcionCorta: 'Look de pasarela FW27, pendiente de publicar en el archivo.',
     imagen: '/img/ecommerce/Invitada/LOOK18_1-scaled.webp',
     imagenes: ['/img/ecommerce/Invitada/LOOK18_1-scaled.webp'],
-    coleccion: 'fw27',
+    coleccion: 'FW27',
     estado: 'Programado',
     sku: 'FC-ARC-R18',
   },
@@ -344,8 +344,8 @@ export const productosMock = [
     categoriaId: 'cat12',
     nombre: 'Colección Fiesta 26',
     descripcionCorta: 'Colección de fiesta SS26, editorial completo.',
-    imagen: '/img/HERO-1.jpg',
-    imagenes: ['/img/HERO-1.jpg'],
+    imagen: '/img/HERO-2.jpg',
+    imagenes: ['/img/HERO-2.jpg'],
     coleccion: 'ss26',
     estado: 'Activo',
     sku: 'FC-ARC-F26',
@@ -701,7 +701,7 @@ export const resenasMock = [
 
 // ---------- CATEGORÍAS ----------
 
-// "Otoño-Invierno 26/27" → "AW27" (último año del rango), "Primavera-Verano
+// "Otoño-Invierno 26/27" → "FW27" (último año del rango), "Primavera-Verano
 // 26" → "SS26" — usado por `categoriasMock.archivo[].temporada` en
 // ListaProductos.jsx (badge de tarjeta) y AdminSidebar.jsx (submenú de
 // Runway). Vive aquí, no en un componente, porque ambos lo importan.
@@ -715,11 +715,11 @@ export function codigoTemporada(temporada) {
 // Looks de "La Colección" (cat11, FW27) — únicamente imágenes, el resto
 // de datos de cada look (nombre real, descripción, colores, telas) los
 // completa el admin a mano desde FormularioLook. 34 fotos en
-// public/img/collections/runway/fw27-lacoleccion (FelyCampo_01..34.webp),
+// public/img/collections/runway/FW27-lacoleccion (FelyCampo_01..34.webp),
 // una por look, en orden.
 const looksLaColeccion = Array.from({ length: 34 }, (_, i) => ({
   nombre: `Look ${i + 1}`,
-  imagenes: [`/img/collections/runway/fw27-lacoleccion/FelyCampo_${String(i + 1).padStart(2, '0')}.webp`],
+  imagenes: [`/img/collections/runway/FW27-lacoleccion/FelyCampo_${String(i + 1).padStart(2, '0')}.webp`],
 }));
 
 export const categoriasMock = {
@@ -1169,10 +1169,10 @@ export const disenoMock = [
     // selector de idioma único para toda la página en vez de uno por bloque.
     slides: [
       {
-        id: 's1', src: '/img/FW27-Hero3.mp4', tipo: 'video', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
+        id: 's1', src: '/img/FW27-Hero3.mp4', tipo: 'video', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/tienda',
       },
       {
-        id: 's2', src: '/img/HERO-1.jpg', tipo: 'imagen', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
+        id: 's2', src: '/img/HERO-2.jpg', tipo: 'imagen', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/tienda',
       },
       {
         id: 's3', src: '/img/novias-sección-FelyCampo3.jpg', tipo: 'imagen', titulo: { es: 'Bride 27', en: 'Bride 27' }, ctaTexto: { es: 'Ver colección', en: 'View collection' }, destino: '/atelier/novias',
@@ -1267,13 +1267,13 @@ export const disenoMock = [
 // guiones — /archivo/colecciones/[coleccion] es una plantilla genérica
 // que acepta cualquier slug, así que estos 9 ya navegan de verdad).
 export const paginasInternas = [
-  { valor: '/pret-a-porter', etiqueta: 'Prêt-à-porter' },
-  { valor: '/pret-a-porter/tops', etiqueta: 'Prêt-à-porter — Tops y Camisas' },
-  { valor: '/pret-a-porter/coats', etiqueta: 'Prêt-à-porter — Chaquetas y Abrigos' },
-  { valor: '/pret-a-porter/faldas', etiqueta: 'Prêt-à-porter — Faldas' },
-  { valor: '/pret-a-porter/vestidos', etiqueta: 'Prêt-à-porter — Vestidos' },
-  { valor: '/pret-a-porter/zapatos', etiqueta: 'Prêt-à-porter — Zapatos' },
-  { valor: '/pret-a-porter/accesorios', etiqueta: 'Prêt-à-porter — Accesorios' },
+  { valor: '/tienda', etiqueta: 'Prêt-à-porter' },
+  { valor: '/tienda/tops-y-camisetas', etiqueta: 'Prêt-à-porter — Tops y Camisas' },
+  { valor: '/tienda/chaquetas-y-abrigos', etiqueta: 'Prêt-à-porter — Chaquetas y Abrigos' },
+  { valor: '/tienda/faldas', etiqueta: 'Prêt-à-porter — Faldas' },
+  { valor: '/tienda/vestidos', etiqueta: 'Prêt-à-porter — Vestidos' },
+  { valor: '/tienda/zapatos', etiqueta: 'Prêt-à-porter — Zapatos' },
+  { valor: '/tienda/accesorios', etiqueta: 'Prêt-à-porter — Accesorios' },
   { valor: '/atelier', etiqueta: 'Atelier' },
   { valor: '/atelier/novias', etiqueta: 'Atelier — Novias' },
   { valor: '/atelier/fiesta', etiqueta: 'Atelier — Fiesta' },
@@ -1308,7 +1308,7 @@ export const bancoVideos = [
 export const bancoImagenes = [
   '/img/FW27-Hero.jpg',
   '/img/FW27-Hero2.jpg',
-  '/img/HERO-1.jpg',
+  '/img/HERO-2.jpg',
   '/img/artesany.jpg',
   '/img/novias-sección-FelyCampo.jpg',
   '/img/novias-sección-FelyCampo2.jpg',

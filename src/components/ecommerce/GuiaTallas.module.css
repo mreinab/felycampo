@@ -1,0 +1,206 @@
+/* ============================================================
+   GUÍA DE TALLAS ("Medidas") — Fely Campo
+   Esquinas siempre rectas (radio 0), igual que el resto del sistema.
+   ============================================================ */
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-6);
+}
+
+.titulo {
+  font-size: var(--text-h4);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+  text-transform: uppercase;
+}
+
+.cerrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: var(--spacing-1);
+  color: var(--color-tinta);
+  cursor: pointer;
+  transition: opacity 0.25s var(--ease-marca);
+}
+
+.cerrar:hover {
+  opacity: 0.6;
+}
+
+.seccionTabla {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding-bottom: var(--spacing-6);
+  border-bottom: 0.75px solid var(--color-gris-300);
+}
+
+.filaControles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.etiquetaSeccion {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  color: var(--color-gris-700);
+}
+
+/* Mismo patrón que .tab/.activa de CollectionTitle (y PanelFiltros) —
+   subrayado transparente por defecto, tinta en la opción activa. */
+.toggle {
+  display: flex;
+  gap: var(--spacing-3);
+}
+
+.tab {
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  padding: 0 0 var(--spacing-1) 0;
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-gris-500);
+  cursor: pointer;
+  transition: color 0.25s var(--ease-marca), border-color 0.25s var(--ease-marca);
+}
+
+.tab:hover {
+  color: var(--color-tinta);
+}
+
+.tabActivo {
+  color: var(--color-tinta);
+  border-bottom-color: var(--color-tinta);
+}
+
+/* Chips de talla — mismo patrón que .chip de PanelFiltros (caja
+   rellena en tinta cuando está seleccionada). */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.chip {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 var(--spacing-2);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  border: 1px solid var(--color-gris-300);
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
+}
+
+.chip:hover {
+  border-color: var(--color-tinta);
+}
+
+.chipActivo {
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  border-color: var(--color-tinta);
+}
+
+/* ---------- Tabla ---------- */
+.tablaScroll {
+  overflow-x: auto;
+}
+
+.tabla {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.thMedida {
+  position: sticky;
+  left: 0;
+  background: var(--color-fondo);
+  text-align: left;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+  padding: var(--spacing-2) var(--spacing-3) var(--spacing-2) 0;
+  white-space: nowrap;
+}
+
+.th {
+  text-align: center;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gris-400);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-bottom: 0.75px solid var(--color-gris-300);
+  transition: color 0.25s var(--ease-marca);
+}
+
+.td {
+  text-align: center;
+  font-size: var(--text-small);
+  color: var(--color-gris-400);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-bottom: 0.75px solid var(--color-gris-200);
+  transition: color 0.25s var(--ease-marca);
+}
+
+/* La talla elegida en los chips, oscura — el resto se queda en gris
+   claro (mismo criterio que Mango: la columna activa destaca, las
+   demás quedan de referencia). */
+.columnaActiva {
+  color: var(--color-tinta);
+  font-weight: var(--font-weight-medium);
+}
+
+.disclaimer {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  line-height: var(--leading-base);
+}
+
+/* ---------- Cómo medir ---------- */
+.seccionMedir {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding-top: var(--spacing-6);
+}
+
+.subtitulo {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  color: var(--color-gris-700);
+}
+
+.ilustracion {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: var(--color-crema);
+}
+
+.listaMedir {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding-left: var(--spacing-5);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  line-height: var(--leading-base);
+}

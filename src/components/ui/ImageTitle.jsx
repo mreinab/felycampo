@@ -1,5 +1,8 @@
 // ImageTitle.jsx
 
+'use client';
+
+import useEnVista from '@/hooks/useEnVista';
 import Boton from './Boton';
 import styles from './ImageTitle.module.css';
 
@@ -10,14 +13,18 @@ import styles from './ImageTitle.module.css';
  * <a> envolviendo toda la imagen). variante="blanco" cambia el título
  * y el CTA a --color-crema para fondos oscuros; el default se queda en
  * --color-tinta.
+ * Título y CTA entran con fundido + subida (CSS, ver .module.css) la
+ * primera vez que este bloque entra en el viewport — de ahí useEnVista
+ * en vez de disparar la animación directamente al montar.
  */
 function ImageTitle({ titulo, ctaTexto, href, variante = 'oscuro', tabIndex }) {
+  const [ref, enVista] = useEnVista();
   const claseTitulo = variante === 'blanco'
     ? `${styles.titulo} ${styles.blanco}`
     : styles.titulo;
 
   return (
-    <div className={styles.contenido}>
+    <div ref={ref} className={`${styles.contenido} ${enVista ? styles.enVista : ''}`}>
       <p className={claseTitulo}>{titulo}</p>
       <Boton
         variante={variante === 'blanco' ? 'texto-crema' : 'texto'}

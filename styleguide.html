@@ -20,7 +20,7 @@
     --text-display:4rem; --text-h1:3rem; --text-h2:2rem; --text-h3:1.5rem; --text-h4:1.25rem;
     --text-body-lg:1.25rem; --text-body:1rem; --text-small:0.875rem; --text-label:0.8125rem;
     --text-caption:0.75rem; --text-micro:0.6875rem;
-    --border-thin:0.75px; --border-regular:1px;
+    --border-thin:0.75px; --border-regular:1px; --border-thick:1.5px;
     --screen-tablet:768px; --screen-desktop:1024px;
     --max-texto:700px; --max-contenido:1440px; --max-sitio:1920px;
   }
@@ -99,19 +99,33 @@
   .sg-btn { font-family:inherit; cursor:pointer; border:none; transition:all .25s; font-size:var(--text-label); letter-spacing:0.02rem; }
   .sg-btn-m { padding:var(--space-3) var(--space-6); }
   .sg-btn-solido { background:var(--tinta); color:var(--fondo); }
-  .sg-btn-solido:hover { background:var(--rosa); }
+  .sg-btn-solido:hover { background:var(--tinta); }
   .sg-btn-contorno { background:transparent; color:var(--tinta); border:1px solid var(--tinta); }
   .sg-btn-contorno:hover { background:var(--tinta); color:var(--fondo); }
   .sg-btn-rosa { background:var(--rosa); color:var(--fondo); }
   .sg-btn-rosa:hover { background:var(--rosa-oscuro); }
   .sg-btn-contorno-rosa { background:transparent; color:var(--rosa-oscuro); border:1px solid var(--rosa-oscuro); }
   .sg-btn-contorno-rosa:hover { background:var(--rosa-oscuro); color:var(--fondo); }
-  .sg-btn-texto { background:none; font-size:var(--text-label); color:var(--tinta); text-decoration:none; border-bottom: solid 1px var(--tinta); padding-bottom:var(--space-1); }
-  .sg-btn-texto:hover { border-color:var(--rosa); }
+  .sg-btn-texto { background:none; font-size:var(--text-label); color:var(--tinta); text-decoration:none; border-bottom: solid var(--border-regular) var(--tinta); padding-bottom:var(--space-1); transition:border-bottom-width .25s, padding-bottom .25s; }
+  .sg-btn-texto:hover { border-bottom-width:var(--border-thick); padding-bottom:calc(var(--space-1) - 0.5px); }
   .sg-btn-texto-mayus { text-transform:uppercase; }
-  .sg-btn-texto-mayus:hover { border-color:var(--tinta); }
   .sg-btn-avisa { width:100%; box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; padding:var(--space-2); font-size:var(--text-caption); white-space:nowrap; text-align:center; background:none; border:1px solid var(--tinta); color:var(--tinta); margin-top:8px; }
   .sg-btn-avisa:hover { background:var(--tinta); color:var(--fondo); }
+
+  /* Cabecera de sección — grid de 4 columnas: grupo título (subtítulo +
+     título + descripción) en la 1ª, acción en las últimas. */
+  .sg-cabecera { display:grid; grid-template-columns:repeat(4,1fr); align-items:end; gap:2px; padding-inline:0; margin-bottom:32px; }
+  .sg-cabecera-titulo-grupo { grid-column:1/2; display:flex; flex-direction:column; padding-left:var(--space-7); }
+  .sg-cabecera-subtitle { font-size:var(--text-caption); font-weight:500; text-transform:uppercase; color:var(--tinta); }
+  .sg-cabecera-titulo { font-size:var(--text-body-lg); font-weight:500; color:var(--tinta); text-transform:uppercase; }
+  .sg-cabecera-descripcion { font-size:var(--text-small); color:var(--g500); line-height:1.5; }
+  .sg-cabecera-accion { grid-column:4/5; justify-self:end; margin-right:var(--space-7); }
+  .sg-cabecera-accion-ancha { grid-column:2/5; justify-self:stretch; margin-right:0; display:flex; justify-content:flex-end; flex-wrap:wrap; gap:var(--space-5); }
+  @media (max-width:767px) {
+    .sg-cabecera { grid-template-columns:1fr; }
+    .sg-cabecera-titulo-grupo, .sg-cabecera-accion, .sg-cabecera-accion-ancha { grid-column:1; }
+    .sg-cabecera-accion { justify-self:start; margin-right:0; }
+  }
 
   /* Badges */
   .sg-badges { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
@@ -278,6 +292,7 @@
     </details>
     <details open>
       <summary>Componentes<svg class="ac-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="m6 9 6 6 6-6"/></svg></summary>
+      <a href="#cabecera-seccion">Cabecera de sección</a>
       <a href="#producto">Tarjeta de producto</a>
       <a href="#tarjeta-tienda">Tarjeta de tienda</a>
       <a href="#atelier">Visita el atelier</a>
@@ -438,8 +453,12 @@
           <div class="sg-borde-caja" style="border-width:var(--border-thin)"></div>
           <span class="token-etq">--border-thin<br>0.75px</span>
         </div>
+        <div class="token-item">
+          <div class="sg-borde-caja" style="border-width:var(--border-thick)"></div>
+          <span class="token-etq">--border-thick<br>1.5px</span>
+        </div>
       </div>
-      <p class="sg-nota"><code>--border-regular</code> (1px): grosor estándar en inputs, botones, tarjetas y separadores. <code>--border-thin</code> (0.75px): reservado para elementos pequeños y delicados, como el contorno de los puntos de color de producto.</p>
+      <p class="sg-nota"><code>--border-regular</code> (1px): grosor estándar en inputs, botones, tarjetas y separadores. <code>--border-thin</code> (0.75px): reservado para elementos pequeños y delicados, como el contorno de los puntos de color de producto. <code>--border-thick</code> (1.5px): estado hover de los enlaces subrayados (<code>.sg-btn-texto</code>) — el trazo engrosa en vez de cambiar de color a rosa; el padding-bottom baja la misma medida para que el bloque no cambie de alto. OJO: a densidad estándar (DPR 1x) los navegadores redondean el grosor de borde al píxel entero, así que este valor renderiza igual que <code>--border-regular</code> — sin cambio visible — en pantallas no-Retina.</p>
 
       <p class="sg-rotulo" style="margin-top:32px;">Bordes · grosor de trazo · color hairline</p>
       <div class="token-grupo">
@@ -555,7 +574,7 @@
           <span class="sg-tooltip-texto">Añadir a wishlist</span>
         </span>
       </div>
-      <p class="sg-nota">Sólido (negro) para acción principal; contorno para secundaria; contorno-rosa es el mismo contorno pero en rosa-oscuro, para acciones secundarias de limpiar/descartar (ej. "Limpiar filtros" en el panel admin) — mismo patrón de hover que contorno, invierte a relleno sólido con texto/icono en --fondo; rosa solo para la CTA de compra; texto subrayado para enlaces. Al hover, el sólido vira a rosa. Esquinas rectas. "Avísame cuando esté disponible" es un botón compacto (padding 8px, texto en <code>--text-caption</code>) para tarjetas de producto agotado. El icono de guardar (Bookmark, Lucide, esquinas rectas) lleva tooltip "Añadir a wishlist"; su trazo es tinta (<code>stroke-width:1</code>) y, al hacer clic, se rellena también en tinta. En la tarjeta de producto solo aparece al hacer hover sobre la tarjeta.</p>
+      <p class="sg-nota">Sólido (negro) para acción principal; contorno para secundaria; contorno-rosa es el mismo contorno pero en rosa-oscuro, para acciones secundarias de limpiar/descartar (ej. "Limpiar filtros" en el panel admin) — mismo patrón de hover que contorno, invierte a relleno sólido con texto/icono en --fondo; rosa solo para la CTA de compra; texto subrayado para enlaces — al hover engrosa el trazo (<code>--border-thick</code>), nunca cambia de color. Esquinas rectas. "Avísame cuando esté disponible" es un botón compacto (padding 8px, texto en <code>--text-caption</code>) para tarjetas de producto agotado. El icono de guardar (Bookmark, Lucide, esquinas rectas) lleva tooltip "Añadir a wishlist"; su trazo es tinta (<code>stroke-width:1</code>) y, al hacer clic, se rellena también en tinta. En la tarjeta de producto solo aparece al hacer hover sobre la tarjeta.</p>
     </section>
 
     <section id="etiquetas">
@@ -624,6 +643,36 @@
           </ul>
         </div>
       </div>
+    </section>
+
+    <section id="cabecera-seccion">
+      <p class="sg-rotulo">Cabecera de sección</p>
+
+      <div class="sg-cabecera">
+        <div class="sg-cabecera-titulo-grupo">
+          <p class="sg-cabecera-subtitle">FW27</p>
+          <p class="sg-cabecera-titulo">La Colección</p>
+          <p class="sg-cabecera-descripcion">Piezas nuevas de temporada, pensadas para acompañar cada ocasión con la misma artesanía de siempre.</p>
+        </div>
+        <div class="sg-cabecera-accion">
+          <a href="#" class="sg-btn-texto sg-btn-texto-mayus">Ver colección</a>
+        </div>
+      </div>
+
+      <div class="sg-cabecera" style="margin-bottom:0;">
+        <div class="sg-cabecera-titulo-grupo">
+          <p class="sg-cabecera-subtitle">Atelier</p>
+          <p class="sg-cabecera-titulo">Un look para cada ocasión</p>
+          <p class="sg-cabecera-descripcion">Reserva tu cita y vive un día único en el Atelier. Disfruta del asesoramiento personalizado de nuestra diseñadora.</p>
+        </div>
+        <div class="sg-cabecera-accion-ancha">
+          <a href="#" class="sg-btn-texto sg-btn-texto-mayus">Invitada boda día</a>
+          <a href="#" class="sg-btn-texto sg-btn-texto-mayus">Invitada boda noche</a>
+          <a href="#" class="sg-btn-texto sg-btn-texto-mayus">Comuniones &amp; bautizos</a>
+        </div>
+      </div>
+
+      <p class="sg-nota">Componente <code>CabeceraSeccion</code> (<code>src/components/ui/CabeceraSeccion.jsx</code>) — grid de 4 columnas: grupo título (subtítulo pequeño opcional + título grande + descripción opcional, apilados) en la 1ª columna, "accion" libre (vía <code>children</code>) en las últimas. Por defecto la accion ocupa 1 columna (la 4ª), pegada a la derecha — un botón suelto, como en la primera fila de arriba (usada por <code>CuadriculaProductos</code>). Con la prop <code>accionAncha</code> ocupa 3 columnas (2ª a 4ª) — para contenido que necesita más sitio que un botón, como la fila de tabs de la segunda fila (usada por <code>CollectionTitle</code> variante <code>"tabs"</code>). En mobile, todo se apila en una sola columna. Reutilizada así para que las dos cabeceras no diverjan con el tiempo al vivir cada una su propia copia del layout.</p>
     </section>
 
     <section id="producto">

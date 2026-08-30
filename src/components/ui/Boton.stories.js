@@ -6,8 +6,8 @@ export default {
   argTypes: {
     variante: {
       control: 'select',
-      options: ['solido', 'contorno', 'contorno-rosa', 'rosa', 'texto', 'texto-crema', 'avisa'],
-      description: 'Sólido = acción principal. Rosa = solo CTA de compra, máximo una por pantalla. Contorno = acción secundaria. Contorno-rosa = mismo contorno en rosa-oscuro, para acciones secundarias de limpiar/descartar (ej. Limpiar filtros); mismo hover que contorno, invierte a relleno sólido. Texto = enlaces. Texto-crema = enlace en --color-crema, para fondos oscuros/imágenes. Avisa = tamaño fijo compacto, para "avísame cuando esté disponible".',
+      options: ['solido', 'contorno', 'contorno-rosa', 'rosa', 'texto', 'texto-crema', 'flecha', 'avisa'],
+      description: 'Sólido = acción principal. Rosa = solo CTA de compra, máximo una por pantalla. Contorno = acción secundaria. Contorno-rosa = mismo contorno en rosa-oscuro, para acciones secundarias de limpiar/descartar (ej. Limpiar filtros); mismo hover que contorno, invierte a relleno sólido. Texto = enlaces. Texto-crema = enlace en --color-crema, para fondos oscuros/imágenes. Flecha = nuevo diseño de CTA subrayado en mayúsculas con "→" al final. Avisa = tamaño fijo compacto, para "avísame cuando esté disponible".',
     },
     tamano: {
       control: 'select',
@@ -20,7 +20,7 @@ export default {
     },
     mayusculas: {
       control: 'boolean',
-      description: 'Solo aplica con variante="texto": pone el texto en mayúsculas (ej. enlaces legales) y fija el hover en tinta.',
+      description: 'Solo aplica con variante="texto": pone el texto en mayúsculas (ej. enlaces legales).',
     },
     onClick: {
       description: 'Evento que se dispara al hacer clic (ignorado si desactivado es true).',
@@ -73,4 +73,8 @@ export const TextoCrema = {
       <Boton {...args} />
     </div>
   ),
+};
+
+export const Flecha = {
+  args: { variante: 'flecha', children: 'Comprar ahora' },
 };

@@ -3,11 +3,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { ShoppingBag } from 'lucide-react';
 import styles from './Navbar.module.css';
 import { PanelLateral } from '../../ui';
 import NavbarPanelLateralContent from './NavbarPanelLateralContent';
+import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 
 // Enlaces con submenú (Tienda, Atelier — coinciden con las categorías
 // reales del sitemap). El resto son enlaces simples, sin panel.
@@ -15,23 +17,36 @@ import NavbarPanelLateralContent from './NavbarPanelLateralContent';
 // aquí solo se guarda la estructura (hrefs, claves de traducción, imagen).
 const SUBMENU_STRUCTURE = {
   tienda: {
+    // "verTodos" va primero a propósito: alimenta tanto la lista de
+    // texto (arriba del todo) como la única MediaLink de este submenú
+    // (cardsUnico, toma items[0] — ver NavbarPanelLateralCards.jsx), así
+    // la imagen enlaza y rotula "Ver todos" en vez de una categoría.
     items: [
-      { key: 'vestidos', href: '/pret-a-porter/vestidos' },
-      { key: 'faldas', href: '/pret-a-porter/faldas' },
-      { key: 'coats', href: '/pret-a-porter/coats' },
+      { key: 'verTodos', href: '/tienda' },
+      { key: 'tops', href: '/tienda/tops-y-camisetas' },
+      { key: 'coats', href: '/tienda/chaquetas-y-abrigos' },
+      { key: 'faldas', href: '/tienda/faldas' },
+      { key: 'vestidos', href: '/tienda/vestidos' },
+      { key: 'zapatos', href: '/tienda/zapatos' },
+      { key: 'accesorios', href: '/tienda/accesorios' },
     ],
     image: '/img/styleguide/prod-tarjeta.webp',
+    // Una sola imagen a todo el ancho en vez de las dos MediaLink
+    // habituales (ver NavbarPanelLateralCards.jsx).
+    cardsUnico: true,
   },
   atelier: {
     items: [
       { key: 'novias', href: '/atelier/novias' },
       { key: 'fiesta', href: '/atelier/fiesta' },
+      { key: 'vosotras', href: '/atelier/vosotras' },
     ],
     image: '/img/styleguide/punto-venta.webp',
   },
   elMundoDeFely: {
     items: [
-      { key: 'historia', href: '/about/fely-campo' },
+      { key: 'blog', href: '/blog' },
+      { key: 'historia', href: '/sobre-fely' },
       { key: 'archivo', href: '/archivo' },
       { key: 'runway', href: '/archivo/runway' },
     ],
@@ -46,13 +61,16 @@ const SUBMENU_STRUCTURE = {
       { key: 'reservarCita', href: '/visitenos/cita' },
     ],
     image: '/img/styleguide/prod-tarjeta-hover.webp',
+    // Una sola imagen a todo el ancho en vez de las dos MediaLink
+    // habituales (ver NavbarPanelLateralCards.jsx).
+    cardsUnico: true,
   },
 };
 
 const NAV_ITEMS = [
-  { key: 'tienda', href: '/pret-a-porter', submenu: 'tienda' },
   { key: 'atelier', href: '/atelier', submenu: 'atelier' },
-  { key: 'elMundoDeFely', href: '/el-mundo-de-fely', submenu: 'elMundoDeFely' },
+  { key: 'tienda', href: '/tienda', submenu: 'tienda' },
+  { key: 'elMundoDeFely', href: '/sobre-fely', submenu: 'elMundoDeFely' },
   { key: 'visitanos', href: '/visitenos', submenu: 'visitanos' },
 ];
 
@@ -62,12 +80,14 @@ const SCROLL_THRESHOLD_PX = 50;
 function Navbar({ transparent = false }) {
   const t = useTranslations('nav');
   const locale = useLocale();
+  const pathname = usePathname();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [lastSubmenu, setLastSubmenu] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [headerHovered, setHeaderHovered] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
   const closeTimeout = useRef(null);
   const headerLeaveTimeout = useRef(null);
 
@@ -83,6 +103,23 @@ function Navbar({ transparent = false }) {
     handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // El Footer tiene su propio logo (ver Footer.jsx) — cuando entra en
+  // el viewport, el header se desliza hacia arriba y desaparece para
+  // que los dos no compitan a la vez. Footer y Navbar son hermanos en
+  // layout.js, sin ref compartida, así que se busca por la etiqueta
+  // semántica (una sola por página) en vez de pasar una prop/contexto
+  // solo para esto.
+  useEffect(() => {
+    const footer = document.querySelector('footer');
+    if (!footer || typeof IntersectionObserver === 'undefined') return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entrada]) => setFooterVisible(entrada.isIntersecting),
+    );
+    observer.observe(footer);
+    return () => observer.disconnect();
   }, []);
 
   const openSubmenu = (key) => {
@@ -128,11 +165,25 @@ function Navbar({ transparent = false }) {
   // cualquier ruta sin prefijo al locale por defecto (es).
   const withLocale = (href) => (href === '/' ? `/${locale}` : `/${locale}${href}`);
 
-  // El fondo se vuelve sólido por scroll O por hover (antes esto último
-  // era un :hover puro en CSS). Ahora lo llevamos a JS porque el logo
-  // (un <img src>, no se puede tintar con CSS) tiene que cambiar de
-  // imagen exactamente a la vez que el fondo y el texto.
-  const solido = scrolled || headerHovered;
+  // Activo = la ruta actual es ese enlace o vive debajo de él (ej.
+  // /tienda/chaquetas-y-abrigos marca activo "Tienda", cuyo href es
+  // /tienda) — así funciona para toda la sección, no solo su
+  // portada exacta.
+  const esActivo = (href) => {
+    const destino = withLocale(href);
+    return pathname === destino || pathname?.startsWith(`${destino}/`);
+  };
+
+  // El fondo se vuelve sólido por scroll, por hover, O por tener un
+  // submenú abierto (antes esto último era un :hover puro en CSS).
+  // Ahora lo llevamos a JS porque el logo (un <img src>, no se puede
+  // tintar con CSS) tiene que cambiar de imagen exactamente a la vez
+  // que el fondo y el texto.
+  // El PanelLateral del submenú vive fuera de <header> a propósito (ver
+  // más abajo) — al mover el ratón del header hacia el panel, el
+  // mouseleave del header dispara igual, y sin "activeSubmenu" aquí el
+  // fondo se volvía transparente con el panel (blanco) todavía abierto.
+  const solido = scrolled || headerHovered || !!activeSubmenu;
   const isLight = transparent && !solido;
 
   const headerClass = [
@@ -140,6 +191,7 @@ function Navbar({ transparent = false }) {
     transparent && styles.transparent,
     transparent && solido && styles.opaco,
     isLight && styles.light,
+    footerVisible && styles.ocultoPorFooter,
   ].filter(Boolean).join(' ');
 
   const navLogoClassName = isLight ? `${styles.navLogo} ${styles.navLogoGrande}` : styles.navLogo;
@@ -169,16 +221,19 @@ function Navbar({ transparent = false }) {
           <span className={`${styles.navToggleBar} ${mobileMenuOpen ? styles.navToggleBarBottomOpen : styles.navToggleBarBottom}`} />
         </button>
 
-        {/* Enlaces — solo visibles en escritorio. Los que tienen submenú
-            lo abren al hacer hover (con retardo de cierre anti-parpadeo). */}
-        <nav className={styles.navLinks}>
+        {/* Enlaces — solo visibles en escritorio. Los que tienen submenú lo
+            abren al hacer hover. El cierre vive en el mouseleave de todo
+            el <nav>, no en cada <a>: así el hueco entre enlaces no cierra
+            el submenú de camino al siguiente, solo lo hace salir de toda
+            la fila (o entrar en un enlace sin submenú, que lo cierra a
+            propósito — "siguiente navegación" sin desplegable). */}
+        <nav className={styles.navLinks} onMouseLeave={scheduleSubmenuClose}>
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={withLocale(item.href)}
-              className={styles.navLink}
-              onMouseEnter={() => item.submenu && openSubmenu(item.submenu)}
-              onMouseLeave={() => item.submenu && scheduleSubmenuClose()}
+              className={`${styles.navLink} ${esActivo(item.href) ? styles.navLinkActivo : ''}`}
+              onMouseEnter={() => (item.submenu ? openSubmenu(item.submenu) : scheduleSubmenuClose())}
             >
               {t(`links.${item.key}`)}
             </a>
@@ -198,7 +253,7 @@ function Navbar({ transparent = false }) {
         <div className={styles.navActions}>
           <a href={withLocale('/wishlist')} className={styles.navLink}>{t('actions.wishlist')}</a>
           <a href={withLocale('/mi-cuenta')} className={styles.navLink}>{t('actions.miCuenta')}</a>
-          <a href={withLocale('/carrito')} className={styles.navLink}>{t('actions.carrito')}</a>
+          <a href={withLocale('/carrito')} className={styles.navLink}>{t('actions.carrito')} (0)</a>
         </div>
 
         {/* Utilidades — móvil: solo el icono del carrito, el resto vive en el menú hamburguesa */}
@@ -214,9 +269,13 @@ function Navbar({ transparent = false }) {
           no serviría de nada — solo importa frente a elementos hermanos. */}
       <PanelLateral
         abierto={!!activeSubmenu}
+        debajoHeader
         onMouseEnter={cancelSubmenuClose}
         onMouseLeave={scheduleSubmenuClose}
         onCerrar={closeSubmenu}
+        debajo={displayedSubmenu && (
+          <NavbarPanelLateralCards submenuKey={lastSubmenu} submenu={displayedSubmenu} />
+        )}
       >
         {displayedSubmenu && (
           <NavbarPanelLateralContent submenuKey={lastSubmenu} submenu={displayedSubmenu} />

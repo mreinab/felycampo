@@ -45,3 +45,40 @@
   color: var(--color-fondo);
   border-bottom-color: var(--color-fondo);
 }
+
+/* Entrada de etiqueta + CTA (mismo patrón en ImageTitle y SplitMedia):
+   fundido + subida, el CTA un poco después. Ocultos hasta que
+   .contenido recibe .enVista (ver MediaBanner.jsx / useEnVista) — la
+   primera vez que entra en el viewport, no al montar. Solo aplica a
+   la variante "etiqueta": en "imageTitle" el propio ImageTitle ya
+   gestiona su entrada. */
+.contenido p,
+.contenido span {
+  opacity: 0;
+}
+.contenido.enVista p,
+.contenido.enVista span {
+  animation: entradaContenido 0.9s var(--ease-marca) forwards;
+}
+.contenido.enVista span {
+  animation-delay: 0.3s;
+}
+
+@keyframes entradaContenido {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contenido p,
+  .contenido span {
+    animation: none;
+    opacity: 1;
+  }
+}

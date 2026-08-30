@@ -1,0 +1,56 @@
+/* ============================================================
+   FICHA DE PRODUCTO — Fely Campo
+   Dos columnas en escritorio: galería a la izquierda, info (nombre,
+   precio, selectores, acordeón) a la derecha, pegada arriba mientras
+   la galería es más alta que ella. Apiladas en mobile.
+   ============================================================ */
+
+.ficha {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--spacing-8);
+}
+
+@media (max-width: 767px) {
+  .ficha {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+  }
+}
+
+.info {
+  position: sticky;
+  top: var(--spacing-8);
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  padding: var(--spacing-8) var(--spacing-8) var(--spacing-8) 0;
+  /* Sin esto, un item de grid no encoge por debajo del ancho mínimo
+     de su contenido (min-width:auto de fábrica) — con el cuadrado de
+     BotonGuardar (aspect-ratio 1) dentro de .fila, eso podía empujar
+     .info más ancho que su columna del grid (2fr). */
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .info {
+    position: static;
+  }
+}
+
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.nombre {
+  font-size: var(--text-h3);
+}
+
+.precio {
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  letter-spacing: var(--tracking-label);
+}

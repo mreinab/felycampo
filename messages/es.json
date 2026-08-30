@@ -3,20 +3,26 @@
     "links": {
       "tienda": "Tienda",
       "atelier": "Atelier",
-      "elMundoDeFely": "El mundo de Fely",
+      "elMundoDeFely": "Sobre Fely",
       "visitanos": "Visítanos"
     },
     "submenus": {
       "tienda": {
-        "vestidos": "Vestidos",
+        "verTodos": "Ver todos",
+        "tops": "Tops y Camisas",
+        "coats": "Chaquetas y Abrigos",
         "faldas": "Faldas",
-        "coats": "Coats"
+        "vestidos": "Vestidos",
+        "zapatos": "Zapatos",
+        "accesorios": "Accesorios"
       },
       "atelier": {
         "novias": "Novias",
-        "fiesta": "Fiesta"
+        "fiesta": "Fiesta",
+        "vosotras": "Vosotras"
       },
       "elMundoDeFely": {
+        "blog": "Blog",
         "historia": "Historia",
         "archivo": "Archivo",
         "runway": "Runway"
@@ -41,7 +47,43 @@
     }
   },
   "producto": {
-    "anadirWishlist": "Añadir a Wishlist"
+    "anadirWishlist": "Añadir a Wishlist",
+    "fichaCaption": "Ficha de producto",
+    "anadirCesta": "Añadir",
+    "talla": "Talla",
+    "detalles": "Detalles",
+    "composicion": "Composición y cuidado",
+    "composicionTexto": "100% materiales de temporada, seleccionados por nuestro equipo de diseño. Lavado a mano o en seco, no usar secadora.",
+    "envios": "Envíos y devoluciones",
+    "enviosTexto": "Envío gratuito a partir de 150 €. Devoluciones gratuitas en un plazo de 30 días desde la recepción del pedido.",
+    "relacionados": "También te puede interesar",
+    "noEncontrado": "No hemos encontrado este producto.",
+    "galeriaAnterior": "Imagen anterior",
+    "galeriaSiguiente": "Imagen siguiente",
+    "galeriaCerrar": "Cerrar galería"
+  },
+  "guiaTallas": {
+    "abrir": "Guía de tallas",
+    "titulo": "Medidas",
+    "cerrar": "Cerrar guía de tallas",
+    "europa": "Europa",
+    "unidadCm": "CM",
+    "unidadIn": "IN",
+    "vistaReal": "Real",
+    "vistaPatron": "Patrón",
+    "talla": "Talla",
+    "disclaimer": "Las medidas se han tomado como referencia y pueden variar ligeramente según el material o la fabricación. Sirven como referencia al elegir la talla.",
+    "comoMedir": "Cómo medir",
+    "medidas": {
+      "pecho": { "etiqueta": "Pecho", "texto": "Rodea el busto por el punto más saliente." },
+      "cintura": { "etiqueta": "Cintura", "texto": "Envuelve la parte más estrecha del abdomen." },
+      "cadera": { "etiqueta": "Cadera", "texto": "Mide el contorno en el punto más ancho." },
+      "caderaAlta": { "etiqueta": "Cadera alta", "texto": "Pendiente: texto exacto de \"cadera alta\"." },
+      "contBrazo": { "etiqueta": "Cont. brazo", "texto": "Pendiente: texto exacto de \"contorno de brazo\"." }
+    }
+  },
+  "heroCarousel": {
+    "cta": "Ver más"
   },
   "collectionTitle": {
     "edicionMujer": {
@@ -59,31 +101,77 @@
     "item1": {
       "label": "Atelier Novia",
       "titulo": "Atelier Novia",
-      "cta": "Descubre más"
+      "cta": "Ver todo"
     },
     "item2": {
       "label": "Atelier Fiesta",
       "titulo": "Atelier Fiesta",
-      "cta": "Descubre más"
+      "cta": "Ver todo"
     }
   },
   "cuadriculaTabs": {
+    "subtitulo": "Atelier",
     "titulo": "Un look para cada ocasión",
-    "descripcion": "Piezas pensadas para acompañarte en cada celebración, desde la ceremonia hasta la última copa de la noche.",
+    "descripcion": "Reserva tu cita y vive un día único en el Atelier. Disfruta del asesoramiento personalizado de nuestra diseñadora.",
     "tabs": {
-      "diaBoda": "Invitada boda de día",
-      "nocheBoda": "Invitada boda de noche",
-      "comunionesBautizo": "Comuniones y bautizo",
-      "bolsosFiesta": "Bolsos de fiesta"
+      "diaBoda": "Invitada Boda Día",
+      "nocheBoda": "Invitada Boda Noche",
+      "comunionesBautizo": "Comuniones & Bautizos"
     }
   },
+  "catalogo": {
+    "subtituloFelyCampo": "Fely Campo",
+    "subtituloTienda": "Prêt-à-porter",
+    "tituloTienda": "Prêt-à-porter"
+  },
   "cuadriculaProductos": {
-    "verMas": "Ver más"
+    "verMas": "Ver más",
+    "coleccion": "La Colección",
+    "novedades": "FW27",
+    "novedadesDescripcion": "Piezas nuevas de temporada, pensadas para acompañar cada ocasión con la misma artesanía de siempre.",
+    "shopNow": "Ver colección",
+    "progreso": "Progreso del carrusel: {porcentaje}%.",
+    "anterior": "Ver productos anteriores",
+    "siguiente": "Ver más productos",
+    "vistaCuadricula": "Vista en cuadrícula",
+    "vistaCompacta": "Vista en 2 columnas",
+    "filtros": "Filtros",
+    "resultados": "{total} productos",
+    "cargandoMas": "Cargando más productos…"
+  },
+  "filtros": {
+    "titulo": "Filtros",
+    "cerrar": "Cerrar filtros",
+    "ordenarPor": "Ordenar por",
+    "orden": {
+      "recomendados": "Recomendados",
+      "precioAsc": "Precio: menor a mayor",
+      "precioDesc": "Precio: mayor a menor"
+    },
+    "talla": "Talla",
+    "color": "Color",
+    "precio": "Precio",
+    "hasta": "Hasta {precio}",
+    "limpiar": "Limpiar filtros",
+    "verResultados": "Ver {total} productos"
   },
   "visitaAtelier": {
-    "titulo": "Artesanía, Feminidad y Cercanía",
+    "titulo": "Artesanía, Feminidad & Cercanía",
     "texto": "Lo que quiero transmitir con mis vestidos es un sentimiento y una pasión por lo que es mi oficio y mi profesión: la moda…",
     "enlace": "Descubre más"
+  },
+  "compromiso": {
+    "texto": "Diseñado & Confeccionado en Salamanca desde 1997",
+    "subtitulo": "Artesanía, Feminidad & Cercanía"
+  },
+  "footer": {
+    "newsletter": {
+      "texto": "Suscríbete a nuestra newsletter para ser la primera en acceder a ofertas especiales, colecciones limitadas, nuevas incorporaciones y para estar conectada con nuestra comunidad.",
+      "consentimiento": "Al enviar tu email, aceptas nuestra <privacidad>Política de privacidad</privacidad>.",
+      "enviar": "Enviar",
+      "exito": "¡Gracias! Ya estás suscrita.",
+      "error": "Algo ha ido mal. Inténtalo de nuevo."
+    }
   },
   "clientsReview": {
     "titulo": "Ellas te lo cuentan",

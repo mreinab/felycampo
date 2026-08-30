@@ -14,7 +14,7 @@ import styles from './SelectorTalla.module.css';
  * Selector de talla de producto. Las tallas en el array
  * 'agotadas' se muestran tachadas y deshabilitadas.
  */
-function SelectorTalla({ tallas = [], agotadas = [], seleccionada, onSelect }) {
+function SelectorTalla({ tallas = [], agotadas = [], seleccionada, onSelect, tabIndex }) {
   return (
     <div className={styles.lista}>
       {tallas.map((t) => {
@@ -27,7 +27,7 @@ function SelectorTalla({ tallas = [], agotadas = [], seleccionada, onSelect }) {
         ].filter(Boolean).join(' ');
 
         return (
-          <button key={t} type="button" disabled={agotada} onClick={() => onSelect(t)} className={clase}>
+          <button key={t} type="button" disabled={agotada} onClick={() => onSelect(t)} className={clase} tabIndex={tabIndex}>
             {t}
           </button>
         );

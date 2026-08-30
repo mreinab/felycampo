@@ -50,6 +50,10 @@
   padding: var(--spacing-7) var(--spacing-4) var(--spacing-9);
 }
 
+/* La entrada de título + CTA (fundido + subida) vive en ImageTitle,
+   que es quien siempre renderiza el contenido real de cada slide —
+   ver ImageTitle.module.css. */
+
 /* ---------- Barra de progreso ---------- */
 
 .progreso {

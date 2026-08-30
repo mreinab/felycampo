@@ -42,7 +42,6 @@ export const Principal = {
       { key: 'diaBoda', labelKey: 'cuadriculaTabs.tabs.diaBoda', productos: productosBase },
       { key: 'nocheBoda', labelKey: 'cuadriculaTabs.tabs.nocheBoda', productos: [...productosBase].reverse() },
       { key: 'comunionesBautizo', labelKey: 'cuadriculaTabs.tabs.comunionesBautizo', productos: productosBase },
-      { key: 'bolsosFiesta', labelKey: 'cuadriculaTabs.tabs.bolsosFiesta', productos: [...productosBase].reverse() },
     ],
   },
 };

@@ -71,7 +71,6 @@ const TAB_LABEL_KEYS = [
   'cuadriculaTabs.tabs.diaBoda',
   'cuadriculaTabs.tabs.nocheBoda',
   'cuadriculaTabs.tabs.comunionesBautizo',
-  'cuadriculaTabs.tabs.bolsosFiesta',
 ];
 
 const SPLIT_TITULO_KEYS = ['splitMedia.item1.titulo', 'splitMedia.item2.titulo'];
@@ -93,7 +92,7 @@ const TIPOS_PRODUCTO_DESTACADOS = tiposProducto.filter((t) => ['pret-a-porter', 
 // entrada de nivel superior sin " — " (p.ej. "Prêt-à-porter" a secas)
 // pasa a "Todo el catálogo".
 const GRUPOS_DESTINO = [
-  { grupo: 'Prêt-à-porter', prefijo: '/pret-a-porter' },
+  { grupo: 'Prêt-à-porter', prefijo: '/tienda' },
   { grupo: 'Atelier', prefijo: '/atelier' },
   { grupo: 'Archivo', prefijo: '/archivo' },
   { grupo: 'Visítanos', prefijo: '/visitenos' },
