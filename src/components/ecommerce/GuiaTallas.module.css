@@ -37,9 +37,24 @@
 .seccionTabla {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--spacing-6);
   padding-bottom: var(--spacing-6);
   border-bottom: 0.75px solid var(--color-gris-300);
+}
+
+/* Grupo 1: etiqueta "Europa" + chips de talla. */
+.grupoTallas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+/* Grupo 2: etiqueta "Patrón" (ya no es un toggle, ver GuiaTallas.jsx)
+   + toggle cm-in + tabla + disclaimer. */
+.grupoTabla {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
 }
 
 .filaControles {
@@ -95,9 +110,12 @@
 }
 
 .chip {
-  min-width: 36px;
-  height: 36px;
-  padding: 0 var(--spacing-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
   font-family: var(--font-base);
   font-size: var(--text-small);
   background: var(--color-fondo);
@@ -119,8 +137,17 @@
 }
 
 /* ---------- Tabla ---------- */
+/* overflow-x:auto sigue permitiendo desplazar la tabla a la talla
+   seleccionada (ver scrollIntoView en GuiaTallas.jsx) si no cabe
+   entera, pero sin la barra visible — mismo criterio que .pista de
+   GaleriaProducto/GaleriaProductoLightbox. */
 .tablaScroll {
   overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tablaScroll::-webkit-scrollbar {
+  display: none;
 }
 
 .tabla {
@@ -152,7 +179,7 @@
 
 .td {
   text-align: center;
-  font-size: var(--text-small);
+  font-size: var(--text-body);
   color: var(--color-gris-400);
   padding: var(--spacing-2) var(--spacing-3);
   border-bottom: 0.75px solid var(--color-gris-200);
@@ -195,12 +222,49 @@
   background: var(--color-crema);
 }
 
+/* Sin numeración de <ol> nativa (list-style:none) — el número lo pinta
+   .numeroMedir a mano, para poder ponerlo en su propia caja en vez del
+   marcador por defecto del navegador. */
 .listaMedir {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
-  padding-left: var(--spacing-5);
+  gap: var(--spacing-4);
+  list-style: none;
+  padding-left: 0;
   font-size: var(--text-small);
   color: var(--color-tinta);
   line-height: var(--leading-base);
+}
+
+/* Cada medida apilada: número, etiqueta, texto — sin el "—" de antes
+   (ver GuiaTallas.jsx). */
+.itemMedir {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.filaNumero {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.numeroMedir {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: var(--border-regular) solid var(--color-tinta);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.etiquetaMedir {
+  color: var(--color-tinta);
+}
+
+.textoMedir {
+  color: var(--color-tinta);
 }

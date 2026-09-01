@@ -6,6 +6,23 @@
   background: var(--color-gris-100);
 }
 
+.nombreCelda {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+/* Debajo del nombre, en cualquier fila con color asignado (la raíz
+   incluida, no solo sus variantes) — el color real de esa fila sin
+   necesitar una columna propia ni repetir el nombre del color en
+   texto. */
+.nombreVarianteSwatch {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border: var(--border-thin) solid var(--color-gris-300);
+}
+
 /* Mismo patrón que pedidos/[id]/page.module.css .cabeceraSuperior (no se
    puede importar una clase de otro CSS Module) — BotonVolver a la
    izquierda, un control a la derecha, en vez de meterlo dentro de

@@ -14,7 +14,7 @@
      <GuiaTallas abierto={abierta} onCerrar={() => setAbierta(false)} />
    ============================================================ */
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
 import { PanelLateral } from '../ui';
@@ -24,8 +24,18 @@ import styles from './GuiaTallas.module.css';
 function GuiaTallas({ abierto, onCerrar }) {
   const t = useTranslations('guiaTallas');
   const [unidad, setUnidad] = useState('cm');
-  const [vista, setVista] = useState('real');
   const [tallaSeleccionada, setTallaSeleccionada] = useState(TALLAS_MEDIDAS[0].talla);
+  const columnasRef = useRef(new Map());
+
+  // Al elegir una talla en los chips, la tabla se desplaza (si hiciera
+  // falta) para dejar su columna a la vista — .tablaScroll sigue
+  // permitiendo scroll-x pero sin barra visible (ver
+  // GuiaTallas.module.css), así que sin esto una columna fuera del
+  // viewport quedaría seleccionada pero invisible.
+  const seleccionarTalla = (talla) => {
+    setTallaSeleccionada(talla);
+    columnasRef.current.get(talla)?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  };
 
   return (
     <PanelLateral abierto={abierto} onCerrar={onCerrar} lado="derecha" atraparFoco>
@@ -37,100 +47,94 @@ function GuiaTallas({ abierto, onCerrar }) {
       </div>
 
       <section className={styles.seccionTabla}>
-        <div className={styles.filaControles}>
-          <span className={styles.etiquetaSeccion}>{t('europa')}</span>
-          <div className={styles.toggle}>
-            <button
-              type="button"
-              aria-pressed={unidad === 'cm'}
-              className={`${styles.tab} ${unidad === 'cm' ? styles.tabActivo : ''}`}
-              onClick={() => setUnidad('cm')}
-            >
-              {t('unidadCm')}
-            </button>
-            <button
-              type="button"
-              aria-pressed={unidad === 'in'}
-              className={`${styles.tab} ${unidad === 'in' ? styles.tabActivo : ''}`}
-              onClick={() => setUnidad('in')}
-            >
-              {t('unidadIn')}
-            </button>
+        <div className={styles.grupoTallas}>
+          <span className={styles.etiquetaSeccion}>{t('seleccionaTallaje')}</span>
+
+          <div className={styles.chips} role="radiogroup" aria-label={t('talla')}>
+            {TALLAS_MEDIDAS.map(({ talla }) => (
+              <button
+                key={talla}
+                type="button"
+                role="radio"
+                aria-checked={tallaSeleccionada === talla}
+                className={`${styles.chip} ${tallaSeleccionada === talla ? styles.chipActivo : ''}`}
+                onClick={() => seleccionarTalla(talla)}
+              >
+                {talla}
+              </button>
+            ))}
           </div>
         </div>
 
-        <div className={styles.chips} role="radiogroup" aria-label={t('talla')}>
-          {TALLAS_MEDIDAS.map(({ talla }) => (
-            <button
-              key={talla}
-              type="button"
-              role="radio"
-              aria-checked={tallaSeleccionada === talla}
-              className={`${styles.chip} ${tallaSeleccionada === talla ? styles.chipActivo : ''}`}
-              onClick={() => setTallaSeleccionada(talla)}
-            >
-              {talla}
-            </button>
-          ))}
-        </div>
+        <div className={styles.grupoTabla}>
+          <div className={styles.filaControles}>
+            <span className={styles.etiquetaSeccion}>{t('vistaPatron')}</span>
+            <div className={styles.toggle}>
+              <button
+                type="button"
+                aria-pressed={unidad === 'cm'}
+                className={`${styles.tab} ${unidad === 'cm' ? styles.tabActivo : ''}`}
+                onClick={() => setUnidad('cm')}
+              >
+                {t('unidadCm')}
+              </button>
+              <button
+                type="button"
+                aria-pressed={unidad === 'in'}
+                className={`${styles.tab} ${unidad === 'in' ? styles.tabActivo : ''}`}
+                onClick={() => setUnidad('in')}
+              >
+                {t('unidadIn')}
+              </button>
+            </div>
+          </div>
 
-        <div className={styles.toggle}>
-          <button
-            type="button"
-            aria-pressed={vista === 'real'}
-            className={`${styles.tab} ${vista === 'real' ? styles.tabActivo : ''}`}
-            onClick={() => setVista('real')}
-          >
-            {t('vistaReal')}
-          </button>
-          <button
-            type="button"
-            aria-pressed={vista === 'patron'}
-            className={`${styles.tab} ${vista === 'patron' ? styles.tabActivo : ''}`}
-            onClick={() => setVista('patron')}
-          >
-            {t('vistaPatron')}
-          </button>
-        </div>
-
-        <div className={styles.tablaScroll}>
-          <table className={styles.tabla}>
-            <thead>
-              <tr>
-                <th scope="col" className={styles.thMedida} />
-                {TALLAS_MEDIDAS.map(({ talla }) => (
-                  <th
-                    key={talla}
-                    scope="col"
-                    className={`${styles.th} ${talla === tallaSeleccionada ? styles.columnaActiva : ''}`}
-                  >
-                    {talla}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {CLAVES_MEDIDAS.map((clave) => (
-                <tr key={clave}>
-                  <th scope="row" className={styles.thMedida}>{t(`medidas.${clave}.etiqueta`)}</th>
-                  {TALLAS_MEDIDAS.map((fila) => {
-                    const valor = convertirMedida(fila[clave][vista], unidad);
-                    return (
-                      <td
-                        key={fila.talla}
-                        className={`${styles.td} ${fila.talla === tallaSeleccionada ? styles.columnaActiva : ''}`}
-                      >
-                        {formatearMedida(valor)}
-                      </td>
-                    );
-                  })}
+          <div className={styles.tablaScroll}>
+            <table className={styles.tabla}>
+              <thead>
+                <tr>
+                  <th scope="col" className={styles.thMedida} />
+                  {TALLAS_MEDIDAS.map(({ talla }) => (
+                    <th
+                      key={talla}
+                      ref={(nodo) => {
+                        if (nodo) columnasRef.current.set(talla, nodo);
+                        else columnasRef.current.delete(talla);
+                      }}
+                      scope="col"
+                      className={`${styles.th} ${talla === tallaSeleccionada ? styles.columnaActiva : ''}`}
+                    >
+                      {talla}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {CLAVES_MEDIDAS.map((clave) => (
+                  <tr key={clave}>
+                    <th scope="row" className={styles.thMedida}>{t(`medidas.${clave}.etiqueta`)}</th>
+                    {TALLAS_MEDIDAS.map((fila) => {
+                      // Sin toggle "Real"/"Patrón": la tabla siempre
+                      // muestra la medida de patrón (ver "Patrón" como
+                      // etiqueta fija, no botón, más abajo).
+                      const valor = convertirMedida(fila[clave].patron, unidad);
+                      return (
+                        <td
+                          key={fila.talla}
+                          className={`${styles.td} ${fila.talla === tallaSeleccionada ? styles.columnaActiva : ''}`}
+                        >
+                          {formatearMedida(valor)}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-        <p className={styles.disclaimer}>{t('disclaimer')}</p>
+          <p className={styles.disclaimer}>{t('disclaimer')}</p>
+        </div>
       </section>
 
       <section className={styles.seccionMedir}>
@@ -139,9 +143,13 @@ function GuiaTallas({ abierto, onCerrar }) {
             con cada medida señalada. */}
         <img src="/img/guia-tallas/como-medir.svg" alt="" className={styles.ilustracion} />
         <ol className={styles.listaMedir}>
-          {CLAVES_MEDIDAS.map((clave) => (
-            <li key={clave}>
-              <strong>{t(`medidas.${clave}.etiqueta`)}</strong> — {t(`medidas.${clave}.texto`)}
+          {CLAVES_MEDIDAS.map((clave, indice) => (
+            <li key={clave} className={styles.itemMedir}>
+              <div className={styles.filaNumero}>
+                <span className={styles.numeroMedir}>{indice + 1}</span>
+                <strong className={styles.etiquetaMedir}>{t(`medidas.${clave}.etiqueta`)}</strong>
+              </div>
+              <p className={styles.textoMedir}>{t(`medidas.${clave}.texto`)}</p>
             </li>
           ))}
         </ol>

@@ -1,9 +1,13 @@
 export { default as TarjetaProducto } from './TarjetaProducto';
 export { default as TarjetaMedia } from './TarjetaMedia';
 export { default as LineaCarrito } from './LineaCarrito';
+export { default as TarjetaCarrito } from './TarjetaCarrito';
+export { default as CarritoPanel } from './CarritoPanel';
+export { default as PanelInfoEnvios } from './PanelInfoEnvios';
 export { default as TarjetaTienda } from './TarjetaTienda';
 export { default as CargarMas } from './CargarMas';
 export { default as FichaProductoAcciones } from './FichaProductoAcciones';
 export { default as GaleriaProducto } from './GaleriaProducto';
 export { default as GaleriaProductoLightbox } from './GaleriaProductoLightbox';
 export { default as GuiaTallas } from './GuiaTallas';
+export { default as LookPasarela } from './LookPasarela';

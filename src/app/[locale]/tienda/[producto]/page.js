@@ -7,24 +7,42 @@
 
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { CuadriculaProductos } from '@/components/layout';
+import { ProductosRecomendados, ResenasClientes } from '@/components/layout';
 import { productosEjemplo } from '@/components/layout/productosEjemplo';
-import { FichaProductoAcciones, GaleriaProducto } from '@/components/ecommerce';
+import { FichaProductoAcciones, GaleriaProducto, LookPasarela } from '@/components/ecommerce';
 import { Acordeon, FilaAcordeon } from '@/components/ui';
 import { slugify } from '@/lib/slugify';
 import EscribirResena from '@/components/layout/EscribirResena';
 import styles from './page.module.css';
 
 export default async function FichaProducto({ params }) {
-  const { producto: slug } = await params;
+  const { locale, producto: slug } = await params;
   const t = await getTranslations('producto');
 
   const producto = productosEjemplo.find((candidato) => slugify(candidato.nombre) === slug);
   if (!producto) notFound();
 
   // Mismo catálogo de ejemplo, excluyendo el producto actual — hasta
-  // 4, la misma cantidad que espera CuadriculaProductos en "fila".
-  const relacionados = productosEjemplo.filter((candidato) => candidato !== producto).slice(0, 4);
+  // 10, la misma cantidad que espera ProductosRecomendados en su carrusel.
+  const relacionados = productosEjemplo.filter((candidato) => candidato !== producto).slice(0, 10);
+
+  // PLACEHOLDER a propósito, ver ResenasClientes.jsx — mismas
+  // fotos/textos/nombres que r1/r2 de resenasMock
+  // (src/components/admin/mockData.js), las únicas dos con foto real
+  // disponible en /public/img/Clientes. Sin conexión real todavía con
+  // el admin (ni filtrado por producto ni por estado "Publicada").
+  const resenas = [
+    {
+      nombre: 'Marta Ibáñez',
+      texto: 'El vestido Aurora es una pasada, la tela y el corte son espectaculares.',
+      foto: '/img/Clientes/ClientReview- (1).jpg',
+    },
+    {
+      nombre: 'Laura Gómez',
+      texto: 'Atención impecable en el atelier, el vestido de novia superó mis expectativas.',
+      foto: '/img/Clientes/ClientReview- (2).jpg',
+    },
+  ];
 
   return (
     <section className="seccion contenedor">
@@ -42,39 +60,69 @@ export default async function FichaProducto({ params }) {
           <div className={styles.cabecera}>
             <h1 className={styles.nombre}>{producto.nombre}</h1>
             <p className={styles.precio}>{producto.precio}</p>
+            <p className={styles.descripcion}>{producto.descripcion}</p>
           </div>
 
-          <FichaProductoAcciones colores={producto.colores} tallas={producto.tallas} />
+          <FichaProductoAcciones
+            nombre={producto.nombre}
+            precio={producto.precio}
+            imagen={producto.imagen}
+            colores={producto.colores}
+            tallas={producto.tallas}
+          />
 
           <Acordeon>
-            <FilaAcordeon titulo={t('detalles')} abiertoPorDefecto>
-              <p>{producto.descripcion}</p>
-            </FilaAcordeon>
             <FilaAcordeon titulo={t('composicion')}>
               <p>{t('composicionTexto')}</p>
+              <div>
+                <p>{t('origenDisenado')}</p>
+                <p>{t('origenFabricado')}</p>
+                <p>{t('origenTintura')}</p>
+                <p>{t('origenTejido')}</p>
+              </div>
             </FilaAcordeon>
             <FilaAcordeon titulo={t('envios')}>
-              <p>{t('enviosTexto')}</p>
+              <div>
+                <p>{t('enviosSubtitulo')}</p>
+                <p>{t('entregaEstimada')}</p>
+              </div>
+              <div>
+                <p>{t('devolucionesSubtitulo')}</p>
+                <p>
+                  {t.rich('devolucionesTexto', {
+                    email: (chunks) => <a href="mailto:info@felycampo.com" className="enlace-texto">{chunks}</a>,
+                    telefono: (chunks) => <a href="tel:+34683703644" className="enlace-texto">{chunks}</a>,
+                    atencion: (chunks) => <a href={`/${locale}/ayuda/atencion-cliente`} className="enlace-texto">{chunks}</a>,
+                  })}
+                </p>
+              </div>
             </FilaAcordeon>
           </Acordeon>
+
+          {/* PLACEHOLDER a propósito, ver LookPasarela.jsx — se
+              renderiza siempre con una imagen fija, sin lógica real
+              de selección todavía (pendiente de admin panel). Detalle
+              completo en docs/design.md, sección "Look de pasarela
+              (placeholder)". */}
+          <LookPasarela
+            titulo={t('runwayLook')}
+            imagen="/img/collections/runway/fw27-lacoleccion/FelyCampo_01.webp"
+            alt={t('runwayLook')}
+          />
         </div>
       </div>
 
+      <ResenasClientes titulo={t('resenasTitulo')} resenas={resenas} />
+
       {relacionados.length > 0 && (
-        <CuadriculaProductos
-          productos={relacionados}
-          tituloKey="catalogo.subtituloFelyCampo"
-          coleccionKey="producto.relacionados"
-        />
+        <ProductosRecomendados titulo={t('relacionados')} productos={relacionados} />
       )}
 
       {/* Placeholder de UI para el flujo "cliente logueado deja una
           reseña" — ver EscribirResena.jsx para el porqué no hay login
           real detrás. Alimentaría /admin/resenas (nueva fila con
           `estado: 'Oculta'`, pendiente de revisión). */}
-      <div className="mt-24">
-        <EscribirResena />
-      </div>
+      <EscribirResena />
     </section>
   );
 }

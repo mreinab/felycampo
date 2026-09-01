@@ -74,13 +74,22 @@
    lo que mida "debajo"). Se deja en su alto natural: el contenido
    real (lista + cards) casi siempre cabe sin scroll. */
 .contenido {
-  padding: var(--spacing-9) var(--spacing-7) var(--spacing-7);
+  padding: var(--spacing-6);
 }
 
 /* Ya arranca debajo del header, no necesita el mismo colchón superior
    que el submenú de escritorio (que sí sigue tapado por él). */
 .sobreNavbar .contenido {
   padding-top: var(--spacing-7);
+}
+
+/* Submenú de escritorio del Navbar: el panel arranca en top:0 pero por
+   DEBAJO del header en z-index (ver "debajoHeader" en PanelLateral.jsx)
+   — sin este colchón, el header (76px, Navbar.module.css) tapa el
+   principio de la lista de enlaces (los primeros ítems quedan ocultos
+   detrás, solo asoma el último). */
+.debajoHeader .contenido {
+  padding-top: var(--spacing-9);
 }
 
 /* ---------- Overlay ---------- */

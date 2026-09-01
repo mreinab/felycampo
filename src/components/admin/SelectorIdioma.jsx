@@ -19,8 +19,8 @@ import { Check } from 'lucide-react';
 import styles from './SelectorIdioma.module.css';
 
 const IDIOMAS = [
-  { valor: 'es', etiqueta: 'ES' },
-  { valor: 'en', etiqueta: 'EN' },
+  { valor: 'es', etiqueta: 'ES', bandera: '/img/assets/flags/spain-flag.png' },
+  { valor: 'en', etiqueta: 'EN', bandera: '/img/assets/flags/united-kingdom.png' },
 ];
 
 function SelectorIdioma({ idioma, onChange, completados = [] }) {
@@ -35,6 +35,7 @@ function SelectorIdioma({ idioma, onChange, completados = [] }) {
           className={`${styles.opcion} ${idioma === opcion.valor ? styles.opcionActiva : ''}`}
           onClick={() => onChange(opcion.valor)}
         >
+          <img src={opcion.bandera} alt="" className={styles.bandera} aria-hidden="true" />
           {opcion.etiqueta}
           {completados.includes(opcion.valor) && (
             <Check size={11} className={styles.tick} aria-label="Completado" />

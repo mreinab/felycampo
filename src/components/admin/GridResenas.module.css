@@ -7,10 +7,15 @@
 
 .tarjeta {
   display: block;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
   color: inherit;
   border: var(--border-thin) solid var(--color-gris-200);
   background: var(--color-light-details);
+  cursor: pointer;
   transition: border-color 0.2s var(--ease-marca);
 }
 

@@ -3,7 +3,7 @@
   font-family: var(--font-base);
   font-size: var(--text-caption);
   color: var(--color-gris-500);
-  margin-bottom: var(--spacing-2);
+  margin-bottom: var(--spacing-1);
 }
 
 .subirVacio {

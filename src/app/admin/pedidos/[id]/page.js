@@ -22,7 +22,7 @@ function imagenProducto(nombre) {
 }
 
 function colorHex(nombre) {
-  return coloresMock.find((c) => c.nombre === nombre)?.hex || '';
+  return coloresMock.find((c) => c.nombre.es === nombre)?.hex || '';
 }
 
 export default function DetallePedidoPage({ params }) {

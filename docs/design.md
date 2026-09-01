@@ -157,6 +157,87 @@ Cuatro columnas (atención, marca, síguenos, newsletter) + barra legal inferior
 Imagen + texto + enlace. Patrón editorial repetido (About, Atelier, colecciones).
 Admite versión invertida (imagen a la derecha).
 
+### Look de pasarela (placeholder) — pendiente de lógica real
+`LookPasarela` (`src/components/ecommerce/LookPasarela.jsx`), en la ficha de
+producto (`tienda/[producto]/page.js`), debajo del Acordeon. Título "Runway
+look" (mismo tratamiento tipográfico que `.texto` de Boton — mayúsculas,
+letter-spacing, tinta — pero SIN el subrayado, porque no es un enlace) +
+imagen en marco fijo (200px de ancho, aspect-ratio 3/4, `object-fit: cover`).
+
+**Por qué se renderiza siempre, con una imagen fija:** en producción, este
+bloque solo debería aparecer cuando el producto tiene un look de pasarela
+conectado desde el admin panel — si no hay conexión, no hay bloque. Como esa
+conexión todavía no existe (ni el campo en el modelo de producto, ni la
+pantalla de admin para crearla), se renderiza siempre con una imagen de
+ejemplo (`/img/collections/runway/fw27-lacoleccion/FelyCampo_01.webp`) para
+que el diseño del bloque pueda revisarse ya, en vez de quedar invisible hasta
+que exista el backend real.
+
+**Lógica pendiente de implementar (no está en el código todavía):**
+- El bloque debería ocultarse por completo cuando el producto no tiene un
+  look conectado — no mostrar el placeholder en producción.
+- La imagen mostrada tendría que salir de una carpeta distinta según de
+  dónde viene conceptualmente el producto: `/img/collections/runway` para
+  Tienda, `/img/collections/novia` para Atelier → Novias, y
+  `/img/collections/fiesta` para Atelier → Fiesta.
+- **El obstáculo real:** `tienda/[producto]/page.js` es una única plantilla
+  compartida por *todos* los productos, venga la visita de `/tienda`, de
+  `/atelier/novias` o de `/atelier/fiesta` — la URL del producto es siempre
+  `/tienda/[slug]`, así que la página no tiene forma de saber por sí sola en
+  cuál de las tres secciones "vive" un producto dado. Además, hoy
+  `productosEjemplo.js` no tiene ningún campo de sección/colección, y las
+  páginas de Atelier (`atelier/novias/page.js`, `atelier/fiesta/page.js`)
+  renderizan ahora mismo el mismo array completo sin filtrar — no hay ninguna
+  asociación real producto↔sección que consultar todavía.
+- Para implementar esto de verdad hace falta, como mínimo: (1) un campo en
+  el producto (ej. `seccion: 'tienda' | 'novias' | 'fiesta'`, o el propio
+  admin panel guardando la ruta de la imagen de pasarela ya resuelta) y (2)
+  el filtrado real de Atelier por esa sección, que hoy tampoco existe.
+
+### Reseñas de clientes (placeholder) — pendiente de lógica real
+`ResenasClientes` (`src/components/layout/ResenasClientes.jsx`), en la ficha
+de producto, justo debajo de `.ficha` (encima de "Otros productos que te van
+a encantar"). Distinto del formulario "Escribe tu reseña" (`EscribirResena`,
+al final de la misma página) — este bloque es solo LECTURA: reseñas ya
+publicadas, no el formulario para dejar una nueva.
+
+Diseño minimalista guiado por la foto: retrato del cliente a sangre (sin
+marco ni sombra, cero radio) con el texto de la reseña y el nombre debajo, a
+modo de pie de foto — sin estrellas ni chrome adicional. `<h3>` plano a todo
+el ancho como título (mismo tratamiento que el de `ProductosRecomendados`),
+sin `CabeceraSeccion`.
+
+**Vive con 1 reseña igual de bien que con 4:** cada tarjeta tiene un ancho
+acotado (`grid-template-columns: repeat(auto-fit, minmax(240px, 320px))` +
+`justify-content: center`) — no se estira a ocupar toda la fila si solo hay
+una o dos, ni se ve rota si hay más. Explícitamente pensado así porque en la
+práctica la mayoría de productos tendrán 1-2 reseñas, no 3-4.
+
+**Por qué se renderiza siempre, con reseñas fijas:** igual que
+`LookPasarela`, en producción este bloque debería mostrar solo las reseñas
+reales de ESE producto con `estado: 'Publicada'` (ver `resenasMock` en
+`src/components/admin/mockData.js`) — o no mostrarse si no hay ninguna. Esa
+conexión no existe todavía (el admin y el sitio público usan catálogos mock
+totalmente separados: `productosMock`/`resenasMock` por un lado,
+`productosEjemplo` por otro, sin ningún id en común), así que
+`tienda/[producto]/page.js` le pasa dos reseñas de ejemplo hardcodeadas
+(mismo texto/nombre que `r1`/`r2` de `resenasMock`, las únicas dos con foto
+real disponible en `/public/img/Clientes`).
+
+**Lógica pendiente de implementar (no está en el código todavía):**
+- Filtrar `resenasMock` por `productoId` del producto actual y por
+  `estado: 'Publicada'`, y pasar ese resultado a `ResenasClientes` en vez del
+  array de ejemplo.
+- **El mismo obstáculo que con el look de pasarela:** `productosEjemplo.js`
+  (catálogo del sitio público) y `productosMock`/`resenasMock` (catálogo del
+  admin) son dos fuentes de datos completamente independientes hoy — ningún
+  producto público tiene un id que enlace con `productoId` de una reseña.
+  Unificar esas dos fuentes (o mapear entre ellas) es requisito previo para
+  que el filtrado real funcione.
+- Si un producto no tiene ninguna reseña publicada, el componente ya
+  devuelve `null` (no pinta nada) — ese comportamiento SÍ está implementado,
+  solo falta que le llegue la lista real ya filtrada.
+
 ---
 
 ## Do's & Don'ts

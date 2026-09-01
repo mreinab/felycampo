@@ -239,6 +239,16 @@
   .navLogoGrande {
     height: 100px;
   }
+
+  /* Ficha de producto (ver esFichaProducto en Navbar.jsx), solo móvil:
+     el header flota sin fondo sobre la galería en vez de empujarla
+     hacia abajo — position:absolute (no fixed) porque no debe seguir
+     el scroll, solo "vive" sobre la primera foto y se desplaza con el
+     resto de la página como cualquier otro elemento en flujo normal. */
+  .header.fichaProducto {
+    position: absolute;
+    background: none;
+  }
 }
 
 /* El logo grande (.light, antes de scroll/hover) ya molesta a 175px

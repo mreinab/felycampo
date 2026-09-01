@@ -74,7 +74,7 @@ function PanelFiltros({
 
       <Acordeon>
         {tallas.length > 0 && (
-          <FilaAcordeon titulo={t('talla')} abiertoPorDefecto>
+          <FilaAcordeon titulo={t('talla')}>
             <div className={styles.chips}>
               {tallas.map((talla) => (
                 <button
@@ -92,7 +92,7 @@ function PanelFiltros({
         )}
 
         {colores.length > 0 && (
-          <FilaAcordeon titulo={t('color')} abiertoPorDefecto>
+          <FilaAcordeon titulo={t('color')}>
             <div className={styles.chips}>
               {colores.map(({ hex, nombre }) => (
                 <button
@@ -111,7 +111,7 @@ function PanelFiltros({
           </FilaAcordeon>
         )}
 
-        <FilaAcordeon titulo={t('precio')} abiertoPorDefecto>
+        <FilaAcordeon titulo={t('precio')}>
           <div className={styles.precio}>
             <input
               type="range"

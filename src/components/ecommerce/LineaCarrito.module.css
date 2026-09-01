@@ -7,6 +7,16 @@
   gap: var(--spacing-5);
   padding-block: var(--spacing-5);
   border-bottom: 1px solid var(--color-hairline);
+  transition: opacity 0.3s var(--ease-marca), transform 0.3s var(--ease-marca);
+}
+
+/* Al bajar la cantidad a 0 (ver manejarCantidad en LineaCarrito.jsx) —
+   la duración tiene que coincidir con DURACION_SALIDA_MS ahí, que es
+   quien de verdad quita la línea del carrito cuando termina. */
+.saliendo {
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
 }
 
 .marco {
@@ -26,24 +36,80 @@
   justify-content: space-between;
 }
 
-.cabecera { display: flex; justify-content: space-between; align-items: flex-start; }
+/* Fila: nombre+precio (columna) a la izquierda, quitar a la derecha. */
+.cabecera { display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; }
+
+.nombrePrecio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
 .nombre { font-size: var(--text-body-lg); color: var(--color-tinta); }
 
+/* Mismo patrón que .cerrar de CarritoPanel.module.css (icono, sin
+   texto) pero con fondo gris-100 — aquí vive suelto en la fila, no en
+   la cabecera de un panel, así que necesita su propia caja visible. */
 .quitar {
-  background: none;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--color-gris-100);
   border: none;
-  font-size: var(--text-caption);
-  color: var(--color-gris-500);
+  border-radius: 0;
+  color: var(--color-tinta);
   cursor: pointer;
-  transition: color 0.25s var(--ease-marca);
+  transition: opacity 0.25s var(--ease-marca);
 }
-.quitar:hover { color: var(--color-rosa-oscuro); }
+.quitar:hover { opacity: 0.6; }
 
-.talla {
+.detalles {
+  align-items: flex-start;
+  gap: var(--spacing-1);
+  margin-top: var(--spacing-1);
   font-size: var(--text-small);
   color: var(--color-gris-500);
-  margin-top: var(--spacing-1);
+  display: flex;
+  flex-direction: column;
 }
 
-.pie { display: flex; justify-content: space-between; align-items: flex-end; }
+/* Solo la talla en sí, sin la etiqueta "Talla:" delante (ver
+   LineaCarrito.jsx) — tamaño propio en vez de heredar el de .detalles. */
+.talla {
+  font-size: 1rem;
+}
+
+.color {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.colorPunto {
+  width: 18px;
+  height: 18px;
+  border: var(--border-thin) solid var(--color-gris-300);
+  flex-shrink: 0;
+}
+
+/* Un solo hijo (SelectorCantidad) desde que .precio se mudó arriba,
+   junto a .cabecera — align-self:flex-end lo ancla a la derecha de
+   .info en vez de estirarlo a todo el ancho. */
+.pie {
+  display: flex;
+  align-self: flex-end;
+}
+
+/* .control de SelectorCantidad (ver className en LineaCarrito.jsx) —
+   ocupa el ancho de .pie, que ya de por sí no es todo el de .info
+   (align-self:flex-end de arriba). Solo aquí: no toca el resto de
+   usos de SelectorCantidad (ej. TarjetaCarrito, en una fila con
+   selector de talla y color al lado). */
+.controlAncho {
+  width: 100%;
+}
+
 .precio { font-size: var(--text-body-lg); color: var(--color-tinta); }

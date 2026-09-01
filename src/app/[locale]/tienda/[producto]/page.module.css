@@ -14,7 +14,10 @@
 @media (max-width: 767px) {
   .ficha {
     grid-template-columns: 1fr;
-    gap: var(--spacing-6);
+    /* Sin gap: el "peek" de .info sobre la galería (más abajo) lo
+       controla su propio margin-top negativo — un gap aquí competiría
+       con él. */
+    gap: 0;
   }
 }
 
@@ -36,6 +39,18 @@
 @media (max-width: 767px) {
   .info {
     position: static;
+    /* "Peek" sobre la galería — 40px por encima de su borde inferior,
+       como una tarjeta que asoma sobre la última foto. */
+    margin-top: -60px;
+    margin-inline: var(--spacing-3);
+    padding: var(--spacing-6);
+    background: var(--color-fondo);
+    z-index: 10;
+  }
+
+  .punto {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -53,4 +68,13 @@
   font-size: var(--text-small);
   color: var(--color-tinta);
   letter-spacing: var(--tracking-label);
+}
+
+/* Antes vivía en el acordeón "Detalles" (ver page.js) — ahora se
+   muestra siempre, justo debajo del precio, sin plegar. */
+.descripcion {
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--color-tinta);
+  margin-top: var(--spacing-4);
 }

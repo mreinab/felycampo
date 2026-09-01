@@ -3,7 +3,7 @@
 import { use } from 'react';
 import { notFound } from 'next/navigation';
 import {
-  PageHeader, TablaAdmin, EstadoBadge, EstadoPedidoBadge, EstadoContactoBadge, Estrellas, BotonVolver,
+  PageHeader, TablaAdmin, EstadoBadge, EstadoPedidoBadge, EstadoContactoBadge, BotonVolver,
 } from '@/components/admin';
 import {
   clientesMock, pedidosMock, resenasMock, consultasMock, consultasPrecioMock, productosMock,
@@ -84,8 +84,13 @@ export default function DetalleClientePage({ params }) {
         <p className={styles.bloqueTitulo}>Reseñas</p>
         <TablaAdmin
           columnas={[
-            { clave: 'texto', etiqueta: 'Texto', render: (r) => <span className={styles.textoExtracto}>{r.texto}</span> },
-            { clave: 'valoracion', etiqueta: 'Valoración', render: (r) => <Estrellas valor={r.valoracion} /> },
+            {
+              clave: 'texto',
+              etiqueta: 'Texto',
+              // `texto` es string en reseñas antiguas del mock y {es, en}
+              // en las creadas/editadas desde FormularioResena.jsx.
+              render: (r) => <span className={styles.textoExtracto}>{typeof r.texto === 'string' ? r.texto : r.texto.es}</span>,
+            },
             { clave: 'fecha', etiqueta: 'Fecha' },
             { clave: 'estado', etiqueta: 'Estado', render: (r) => <EstadoBadge estado={r.estado} /> },
           ]}

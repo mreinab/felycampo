@@ -34,7 +34,9 @@ import {
 } from 'lucide-react';
 import { PageHeader, FormSeccion, SelectorIdioma } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
-import { coloresMock, telasMock, productosMock } from '@/components/admin/mockData';
+import {
+  coloresMock, familiasColorMock, telasMock, productosMock,
+} from '@/components/admin/mockData';
 import { comprimirImagen } from './FormularioProducto';
 import styles from './FormularioLook.module.css';
 
@@ -108,8 +110,15 @@ function FormularioLook({
   // seleccionable aquí).
   const [coloresDisponibles, setColoresDisponibles] = useState(coloresMock);
   const [telasDisponibles, setTelasDisponibles] = useState(telasMock);
-  const [nombreColorNuevo, setNombreColorNuevo] = useState('');
+  const [nombreColorNuevoEs, setNombreColorNuevoEs] = useState('');
+  const [nombreColorNuevoEn, setNombreColorNuevoEn] = useState('');
+  // El nuevo color siempre encaja en una familia ya existente — mismo
+  // criterio que FormularioProducto.jsx/GestorColores.jsx.
+  const [familiaColorNueva, setFamiliaColorNueva] = useState(familiasColorMock[0]?.id || '');
   const [hexColorNuevo, setHexColorNuevo] = useState('#000000');
+  // Familia actualmente desplegada bajo la rejilla de "padres" (null =
+  // ninguna) — mismo criterio que FormularioProducto.jsx.
+  const [familiaColorActiva, setFamiliaColorActiva] = useState(null);
   // El input HEX es texto libre mientras se escribe ("#6E263" a mitad de
   // teclear no es un hex válido todavía) — el swatch nativo <input
   // type="color"> exige siempre un #rrggbb completo, así que recibe esta
@@ -142,6 +151,19 @@ function FormularioLook({
   const inputImagenTelaRef = useRef(null);
 
   const idiomasCompletados = ['es', 'en'].filter((cod) => descripcion[cod]?.trim());
+
+  // Agrupa coloresDisponibles bajo su familia — mismo criterio que
+  // gruposColores en FormularioProducto.jsx/GestorColores.jsx. `muestras`
+  // se resuelve siempre contra coloresMock (fijo), no coloresDisponibles.
+  const gruposColores = useMemo(() => (
+    familiasColorMock
+      .map((f) => ({
+        ...f,
+        muestras: f.muestras.map((id) => coloresMock.find((c) => c.id === id)?.hex).filter(Boolean),
+        colores: coloresDisponibles.filter((c) => c.familia === f.id),
+      }))
+      .filter((f) => f.colores.length > 0)
+  ), [coloresDisponibles]);
 
   const resultadosProducto = useMemo(() => {
     const q = buscarProducto.trim().toLowerCase();
@@ -197,11 +219,18 @@ function FormularioLook({
   }
 
   function anadirColorNuevo() {
-    if (!nombreColorNuevo.trim()) return;
-    const nuevo = { id: `col${Date.now()}`, nombre: nombreColorNuevo.trim(), hex: hexColorValido };
+    if (!nombreColorNuevoEs.trim() || !nombreColorNuevoEn.trim() || !familiaColorNueva) return;
+    const nuevo = {
+      id: `col${Date.now()}`,
+      familia: familiaColorNueva,
+      nombre: { es: nombreColorNuevoEs.trim(), en: nombreColorNuevoEn.trim() },
+      hex: hexColorValido,
+    };
     setColoresDisponibles((actual) => [...actual, nuevo]);
     setColorIds((actual) => [...actual, nuevo.id]);
-    setNombreColorNuevo('');
+    setFamiliaColorActiva(familiaColorNueva);
+    setNombreColorNuevoEs('');
+    setNombreColorNuevoEn('');
     setHexColorNuevo('#000000');
   }
 
@@ -344,23 +373,51 @@ function FormularioLook({
 
       <FormSeccion numero={4} titulo="Colores" descripcion="Colores del look — no lleva precio, tallas ni stock: no es inventario vendible.">
         <div className={styles.seccionAncha}>
-          <span className={styles.etiqueta}>Toca un color guardado en Materiales para activarlo, o añade uno nuevo</span>
-          <div className={styles.coloresGrid}>
-            {coloresDisponibles.map((c) => {
-              const activo = colorIds.includes(c.id);
+          <span className={styles.etiqueta}>Toca un color guardado para activarlo o añade uno nuevo</span>
+          <div className={styles.familiasGrid}>
+            {gruposColores.map((grupo) => {
+              const seleccionados = grupo.colores.filter((c) => colorIds.includes(c.id)).length;
+              const activa = familiaColorActiva === grupo.id;
               return (
                 <button
-                  key={c.id}
+                  key={grupo.id}
                   type="button"
-                  className={`${styles.colorChip} ${activo ? styles.colorChipActivo : ''}`}
-                  onClick={() => setColorIds(activo ? colorIds.filter((id) => id !== c.id) : [...colorIds, c.id])}
+                  className={`${styles.familiaChip} ${activa ? styles.familiaChipActiva : ''}`}
+                  onClick={() => setFamiliaColorActiva(activa ? null : grupo.id)}
                 >
-                  <span className={styles.colorPunto} style={{ background: c.hex }} />
-                  {c.nombre}
+                  <span className={styles.familiaMuestras}>
+                    {grupo.muestras.map((hex) => (
+                      <span key={hex} className={styles.familiaMuestra} style={{ background: hex }} />
+                    ))}
+                  </span>
+                  {grupo.etiqueta}
+                  {seleccionados > 0 && <span className={styles.familiaBadge}>{seleccionados}</span>}
                 </button>
               );
             })}
           </div>
+
+          {familiaColorActiva && (
+            <div className={styles.coloresGrid}>
+              {gruposColores.find((g) => g.id === familiaColorActiva)?.colores.map((c) => {
+                const activo = colorIds.includes(c.id);
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    className={`${styles.colorChip} ${activo ? styles.colorChipActivo : ''}`}
+                    onClick={() => setColorIds(activo ? colorIds.filter((id) => id !== c.id) : [...colorIds, c.id])}
+                  >
+                    <span className={styles.colorPunto} style={{ background: c.hex }} />
+                    <span className={styles.colorChipTexto}>
+                      <span className={styles.colorChipNombre}>{c.nombre.es}</span>
+                      <span className={styles.colorChipTraduccion}>{c.nombre.en}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
           <div className={styles.anadirFila}>
             <label className={styles.campoColor}>
               <span className={styles.etiqueta}>Selector</span>
@@ -370,8 +427,22 @@ function FormularioLook({
                 visual rápido, el texto permite pegar/escribir un código exacto;
                 ambos sincronizados con el mismo estado. */}
             <Input etiqueta="HEX" valor={hexColorNuevo} onChange={(e) => setHexColorNuevo(e.target.value)} placeholder="#6E2635" />
-            <Input etiqueta="Nuevo color" valor={nombreColorNuevo} onChange={(e) => setNombreColorNuevo(e.target.value)} placeholder="Burdeos" />
-            <Boton variante="contorno" tamano="s" onClick={anadirColorNuevo} desactivado={!nombreColorNuevo.trim()}>
+            <Input etiqueta="Nombre (ES)" valor={nombreColorNuevoEs} onChange={(e) => setNombreColorNuevoEs(e.target.value)} placeholder="Burdeos" />
+            <Input etiqueta="Name (EN)" valor={nombreColorNuevoEn} onChange={(e) => setNombreColorNuevoEn(e.target.value)} placeholder="Bordeaux" />
+            <label>
+              <span className={styles.etiqueta}>Grupo</span>
+              <select className={styles.selectInput} value={familiaColorNueva} onChange={(e) => setFamiliaColorNueva(e.target.value)}>
+                {familiasColorMock.map((f) => (
+                  <option key={f.id} value={f.id}>{f.etiqueta}</option>
+                ))}
+              </select>
+            </label>
+            <Boton
+              variante="contorno"
+              tamano="s"
+              onClick={anadirColorNuevo}
+              desactivado={!nombreColorNuevoEs.trim() || !nombreColorNuevoEn.trim()}
+            >
               <Plus size={14} />
               Añadir color
             </Boton>

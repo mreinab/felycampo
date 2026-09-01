@@ -29,6 +29,12 @@
  * panel — hoy en día únicamente el submenú de escritorio del Navbar
  * lo necesita. Cualquier otro uso (Filtros, GuiaTallas, drawers de
  * admin...) debe dejarlo en su valor por defecto.
+ *
+ * "claseContenido" (opcional): clase extra sobre .contenido, SOLO para
+ * quien necesite que su contenido tenga alto propio y scroll interno
+ * (ej. CarritoPanel: lista scrollable + botones que no deben moverse
+ * nunca de sitio). Sin ella, .contenido se queda en su alto natural —
+ * el comportamiento de siempre, sin tocar al resto de usos.
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -45,6 +51,7 @@ function PanelLateral({
   debajoHeader = false,
   lado = 'izquierda',
   atraparFoco = false,
+  claseContenido,
   onMouseEnter,
   onMouseLeave,
   onCerrar,
@@ -126,7 +133,7 @@ function PanelLateral({
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <div className={styles.contenido}>{children}</div>
+        <div className={`${styles.contenido} ${claseContenido || ''}`}>{children}</div>
         {debajo}
       </div>
     </>,

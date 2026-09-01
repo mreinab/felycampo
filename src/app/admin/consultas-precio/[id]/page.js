@@ -15,7 +15,7 @@ import styles from './page.module.css';
 const ESTADOS_CONTACTO_ORDEN = ['Pendiente', 'Contactado'];
 
 function colorHex(nombre) {
-  return coloresMock.find((c) => c.nombre === nombre)?.hex || '';
+  return coloresMock.find((c) => c.nombre.es === nombre)?.hex || '';
 }
 
 export default function DetalleConsultaPrecioPage({ params }) {

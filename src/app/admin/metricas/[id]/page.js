@@ -20,7 +20,7 @@ import { productosMock, pedidosMock, coloresMock } from '@/components/admin/mock
 import styles from './page.module.css';
 
 function colorHex(nombre) {
-  return coloresMock.find((c) => c.nombre === nombre)?.hex || '';
+  return coloresMock.find((c) => c.nombre.es === nombre)?.hex || '';
 }
 
 function comprasDe(nombreProducto) {

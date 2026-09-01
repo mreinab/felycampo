@@ -2,6 +2,10 @@
 
 /* ============================================================
    FORMULARIO DE RESEÑA — Fely Campo (admin)
+   Vive en un ModalOverlay (como el alta/edición de producto) en vez de
+   ser su propia página — /admin/resenas/page.js decide cuándo se abre
+   (nueva o edición), igual que ListaProductos.jsx con
+   FormularioProducto.jsx.
    El producto reseñado ya no es un <select> de nombre en texto libre
    (misma relación frágil que ya se corrigió en otros sitios del panel,
    ver docs/adminpanel.md sección 7 punto 4) — ahora es un vínculo real
@@ -11,30 +15,54 @@
    miniatura+SKU, tarjeta de vínculo activo con botón "Quitar vínculo".
    ============================================================ */
 
-import { useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Search, Link2, X } from 'lucide-react';
 import {
-  PageHeader, FormSeccion, PickerDrawer, Estrellas, useToast,
+  useMemo, useRef, useState,
+} from 'react';
+import { useRouter } from 'next/navigation';
+import {
+  Search, Link2, Upload, X,
+} from 'lucide-react';
+import {
+  PageHeader, FormSeccion, DragList, SelectorIdioma, useToast,
 } from './index';
 import { Boton, Input } from '../ui';
-import { productosMock, bancoImagenes } from './mockData';
+import { productosMock } from './mockData';
+import { comprimirImagen } from './FormularioProducto';
 import styles from './FormularioResena.module.css';
 
-function FormularioResena({ resenaExistente }) {
+const ESTADOS = [
+  { valor: 'Oculta', etiqueta: 'Oculta', clase: 'oculta' },
+  { valor: 'Publicada', etiqueta: 'Publicada', clase: 'publicada' },
+];
+
+function FormularioResena({ resenaExistente, onGuardado }) {
   const router = useRouter();
   const { mostrarToast } = useToast();
 
   const [nombreCliente, setNombreCliente] = useState(resenaExistente?.nombreCliente || '');
-  const [texto, setTexto] = useState(resenaExistente?.texto || '');
-  const [valoracion, setValoracion] = useState(resenaExistente?.valoracion || 5);
-  const [foto, setFoto] = useState(resenaExistente?.foto || '');
+  // Texto bilingüe, mismo criterio que "Reseñas de Clientas" en
+  // FormularioProducto.jsx — idioma propio, independiente de cualquier
+  // otro toggle del panel. Las reseñas más antiguas del mock guardan
+  // `texto` como string plano (sin traducción todavía); se reparte a
+  // `es` al abrir para no perder el contenido.
+  const [idiomaTexto, setIdiomaTexto] = useState('es');
+  const [texto, setTexto] = useState(() => {
+    const t = resenaExistente?.texto;
+    if (!t) return { es: '', en: '' };
+    return typeof t === 'string' ? { es: t, en: '' } : { es: t.es || '', en: t.en || '' };
+  });
+  // Fotos de la clienta — mismo carrusel arrastrable que "Reseñas de
+  // Clientas" en FormularioProducto.jsx (.imagenesScroll/.imagenItem
+  // duplicados aquí, no se puede importar una clase de otro CSS
+  // Module). `foto` (singular) sigue viviendo en reseñas antiguas del
+  // mock — se reparte a un array de una sola foto al abrir.
+  const [fotos, setFotos] = useState(() => (
+    resenaExistente?.fotos || (resenaExistente?.foto ? [resenaExistente.foto] : [])
+  ));
   // Sin control de edición todavía: por defecto "Oculta" — una reseña
   // (llegue desde donde llegue, ver mockData.js) no se publica sola, hay
   // que revisarla primero.
   const [estado, setEstado] = useState(resenaExistente?.estado || 'Oculta');
-  const [pickerAbierto, setPickerAbierto] = useState(false);
-  const [seleccionTemp, setSeleccionTemp] = useState([]);
 
   const [productoVinculado, setProductoVinculado] = useState(() => {
     const producto = productosMock.find((p) => p.id === resenaExistente?.productoId);
@@ -43,6 +71,8 @@ function FormularioResena({ resenaExistente }) {
     } : null;
   });
   const [buscarProducto, setBuscarProducto] = useState('');
+
+  const inputFotosRef = useRef(null);
 
   const resultadosProducto = useMemo(() => {
     const q = buscarProducto.trim().toLowerCase();
@@ -56,26 +86,85 @@ function FormularioResena({ resenaExistente }) {
     });
   }
 
+  async function agregarFotos(archivos) {
+    const lista = Array.from(archivos || []);
+    if (!lista.length) return;
+    const nuevas = await Promise.all(lista.map(async (archivo) => {
+      let blobFinal;
+      try {
+        blobFinal = await comprimirImagen(archivo);
+      } catch {
+        blobFinal = archivo;
+      }
+      return URL.createObjectURL(blobFinal);
+    }));
+    setFotos((actual) => [...actual, ...nuevas]);
+  }
+
+  function quitarFoto(src) {
+    setFotos((actual) => actual.filter((s) => s !== src));
+  }
+
   function guardar(estadoFinal) {
+    setEstado(estadoFinal);
     mostrarToast(estadoFinal === 'Publicada' ? 'Reseña publicada (demo)' : 'Reseña guardada (demo)');
+
+    if (onGuardado) {
+      onGuardado({
+        id: resenaExistente?.id || `res${Date.now()}`,
+        clienteId: resenaExistente?.clienteId,
+        nombreCliente: nombreCliente.trim(),
+        texto,
+        // `valoracion` ya no se pide en este formulario — se conserva la
+        // de una reseña existente (si la tenía) en vez de descartarla.
+        valoracion: resenaExistente?.valoracion,
+        fotos,
+        foto: fotos[0] || undefined,
+        fecha: resenaExistente?.fecha || new Date().toISOString().slice(0, 10),
+        estado: estadoFinal,
+        productoId: productoVinculado?.id,
+        nuevo: resenaExistente?.nuevo,
+      });
+      return;
+    }
     router.push('/admin/resenas');
   }
 
   return (
     <div>
-      <PageHeader titulo={resenaExistente ? 'Editar reseña' : 'Nueva reseña'} />
+      <PageHeader titulo={resenaExistente ? 'Editar reseña' : 'Nueva reseña'}>
+        <div className={styles.estadoSelector} role="group" aria-label="Estado de publicación">
+          {ESTADOS.map((opcion) => {
+            const activo = estado === opcion.valor;
+            return (
+              <button
+                key={opcion.valor}
+                type="button"
+                className={`${styles.estadoBoton} ${styles[opcion.clase]} ${activo ? styles.estadoBotonActivo : ''}`}
+                aria-pressed={activo}
+                onClick={() => setEstado(opcion.valor)}
+              >
+                {opcion.etiqueta}
+              </button>
+            );
+          })}
+        </div>
+      </PageHeader>
 
       <FormSeccion numero={1} titulo="Contenido de la reseña">
         {/* Sin "Anónimo" como opción — toda reseña viene de una clienta con
             cuenta (ver mockData.js resenasMock), no hay reseña anónima. */}
         <Input etiqueta="Nombre del cliente" valor={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} />
-        <label>
-          <span className={styles.etiquetaCampo}>Valoración</span>
-          <Estrellas valor={valoracion} onChange={setValoracion} />
-        </label>
         <div className={styles.campoAncho}>
-          <span className={styles.etiquetaCampo}>Texto de la reseña</span>
-          <textarea className={styles.textarea} value={texto} onChange={(e) => setTexto(e.target.value)} />
+          <SelectorIdioma idioma={idiomaTexto} onChange={setIdiomaTexto} />
+        </div>
+        <div className={styles.campoAncho}>
+          <span className={styles.etiquetaCampo}>{`Texto de la reseña (${idiomaTexto.toUpperCase()})`}</span>
+          <textarea
+            className={styles.textarea}
+            value={texto[idiomaTexto]}
+            onChange={(e) => setTexto({ ...texto, [idiomaTexto]: e.target.value })}
+          />
         </div>
       </FormSeccion>
 
@@ -137,44 +226,53 @@ function FormularioResena({ resenaExistente }) {
         </div>
       </FormSeccion>
 
-      <FormSeccion numero={3} titulo="Datos adicionales" descripcion="Opcionales — foto de la clienta y estado de publicación.">
+      <FormSeccion numero={3} titulo="Fotos de clientas" descripcion="Opcionales — fotos de la clienta con la prenda, arrastra para reordenar.">
         <div className={styles.campoAncho}>
-          <span className={styles.etiquetaCampo}>Foto de la clienta (opcional)</span>
-          <div className={styles.foto}>
-            {foto ? <img src={foto} alt="" className={styles.fotoMiniatura} /> : <span className={styles.fotoMiniatura} />}
-            <Boton variante="contorno" tamano="s" onClick={() => { setSeleccionTemp(foto ? [foto] : []); setPickerAbierto(true); }}>
-              {foto ? 'Cambiar foto' : 'Elegir foto'}
-            </Boton>
-            {foto && <Boton variante="texto" onClick={() => setFoto('')}>Quitar</Boton>}
+          <div className={styles.imagenesScroll}>
+            {fotos.length > 0 && (
+              <DragList
+                items={fotos.map((src) => ({ src }))}
+                claveItem={(item) => item.src}
+                onReorder={(nuevo) => setFotos(nuevo.map((item) => item.src))}
+                orientacion="horizontal"
+                renderItem={(item) => (
+                  <div className={styles.imagenItem}>
+                    <img src={item.src} alt="" className={styles.imagenMiniatura} />
+                    <button
+                      type="button"
+                      className={styles.imagenQuitar}
+                      aria-label="Quitar foto"
+                      onClick={() => quitarFoto(item.src)}
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                )}
+              />
+            )}
+            <button type="button" className={styles.fotoAnadir} onClick={() => inputFotosRef.current?.click()}>
+              <Upload size={18} strokeWidth={1} aria-hidden="true" />
+              <span>Añadir foto</span>
+            </button>
           </div>
+          <input
+            ref={inputFotosRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className={styles.inputArchivo}
+            onChange={(e) => {
+              agregarFotos(e.target.files);
+              e.target.value = '';
+            }}
+          />
         </div>
-        <label className={styles.campoAncho}>
-          <span className={styles.etiquetaCampo}>Estado</span>
-          <select className={styles.selectInput} value={estado} onChange={(e) => setEstado(e.target.value)}>
-            <option value="Oculta">Oculta (no seleccionable en Diseño)</option>
-            <option value="Publicada">Publicada (disponible en Diseño)</option>
-          </select>
-        </label>
       </FormSeccion>
 
       <div className={styles.acciones}>
         <Boton variante="contorno" onClick={() => guardar(estado)}>Guardar</Boton>
         <Boton variante="solido" onClick={() => guardar('Publicada')}>Publicar</Boton>
       </div>
-
-      <PickerDrawer
-        abierto={pickerAbierto}
-        onCerrar={() => setPickerAbierto(false)}
-        titulo="Elegir foto"
-        items={bancoImagenes}
-        claveItem={(src) => src}
-        seleccionados={seleccionTemp}
-        max={1}
-        onToggle={(src) => setSeleccionTemp([src])}
-        renderItem={(src) => <img src={src} alt="" className={styles.pickerFoto} />}
-        onConfirmar={() => setFoto(seleccionTemp[0] || '')}
-        columnas={3}
-      />
     </div>
   );
 }

@@ -15,10 +15,11 @@
 import { useMemo, useState } from 'react';
 import { List, LayoutGrid, Plus } from 'lucide-react';
 import {
-  PageHeader, TablaAdmin, GridResenas, FiltroBar, FiltroSelector, Estrellas, useToast,
+  PageHeader, TablaAdmin, GridResenas, FiltroBar, FiltroSelector, ModalOverlay, useToast,
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import { resenasMock, productosMock } from '@/components/admin/mockData';
+import FormularioResena from '@/components/admin/FormularioResena';
 import styles from './page.module.css';
 
 function productoDe(productoId) {
@@ -31,7 +32,11 @@ export default function ResenasPage() {
   const [vista, setVista] = useState('tabla');
   const [query, setQuery] = useState('');
   const [filtroEstado, setFiltroEstado] = useState('Todas');
-  const [filtroValoracion, setFiltroValoracion] = useState('Todas');
+  // Nueva/Editar viven en un ModalOverlay, igual que el alta/edición de
+  // producto en ListaProductos.jsx — ya no son páginas propias (ver
+  // FormularioResena.jsx).
+  const [nuevaAbierta, setNuevaAbierta] = useState(false);
+  const [resenaEnEdicion, setResenaEnEdicion] = useState(null);
 
   // Más recientes primero (mismo criterio por defecto que Consultas de
   // precio) — sin esto, una reseña recién "enviada" (`nuevo: true`, ver
@@ -41,23 +46,31 @@ export default function ResenasPage() {
   const filtradas = useMemo(() => resenas
     .filter((r) => {
       if (filtroEstado !== 'Todas' && r.estado !== filtroEstado) return false;
-      if (filtroValoracion !== 'Todas' && String(r.valoracion) !== filtroValoracion) return false;
       if (query && !r.nombreCliente.toLowerCase().includes(query.toLowerCase())) return false;
       return true;
     })
-    .sort((a, b) => b.fecha.localeCompare(a.fecha)), [resenas, filtroEstado, filtroValoracion, query]);
+    .sort((a, b) => b.fecha.localeCompare(a.fecha)), [resenas, filtroEstado, query]);
 
-  const hayFiltros = filtroEstado !== 'Todas' || filtroValoracion !== 'Todas' || query !== '';
+  const hayFiltros = filtroEstado !== 'Todas' || query !== '';
 
   function limpiarFiltros() {
     setQuery('');
     setFiltroEstado('Todas');
-    setFiltroValoracion('Todas');
   }
 
   function alternarEstado(id) {
     setResenas((actual) => actual.map((r) => (r.id === id ? { ...r, estado: r.estado === 'Publicada' ? 'Oculta' : 'Publicada' } : r)));
     mostrarToast('Estado actualizado (demo)');
+  }
+
+  function crearResena(nueva) {
+    setResenas((actual) => [nueva, ...actual]);
+    setNuevaAbierta(false);
+  }
+
+  function guardarEdicionResena(resena) {
+    setResenas((actual) => actual.map((r) => (r.id === resena.id ? resena : r)));
+    setResenaEnEdicion(null);
   }
 
   return (
@@ -83,7 +96,7 @@ export default function ResenasPage() {
             <LayoutGrid size={16} aria-hidden="true" />
           </button>
         </div>
-        <Boton variante="solido" href="/admin/resenas/nueva"><Plus size={14} /> Nueva reseña</Boton>
+        <Boton variante="solido" onClick={() => setNuevaAbierta(true)}><Plus size={14} /> Nueva reseña</Boton>
       </PageHeader>
 
       <FiltroBar onLimpiar={hayFiltros ? limpiarFiltros : undefined}>
@@ -94,13 +107,6 @@ export default function ResenasPage() {
           onChange={(e) => setFiltroEstado(e.target.value)}
           opciones={[{ valor: 'Todas', etiqueta: 'Todas' }, { valor: 'Publicada', etiqueta: 'Publicada' }, { valor: 'Oculta', etiqueta: 'Oculta' }]}
           activo={filtroEstado !== 'Todas'}
-        />
-        <FiltroSelector
-          etiqueta="Valoración"
-          valor={filtroValoracion}
-          onChange={(e) => setFiltroValoracion(e.target.value)}
-          opciones={[{ valor: 'Todas', etiqueta: 'Todas' }, ...[5, 4, 3, 2, 1].map((n) => ({ valor: String(n), etiqueta: `${n} estrellas` }))]}
-          activo={filtroValoracion !== 'Todas'}
         />
       </FiltroBar>
 
@@ -116,23 +122,36 @@ export default function ResenasPage() {
             },
             { clave: 'nombreCliente', etiqueta: 'Cliente' },
             { clave: 'sku', etiqueta: 'SKU', render: (r) => productoDe(r.productoId)?.sku || '—' },
-            { clave: 'texto', etiqueta: 'Texto', render: (r) => <span className={styles.textoExtracto}>{r.texto}</span> },
-            { clave: 'valoracion', etiqueta: 'Valoración', render: (r) => <Estrellas valor={r.valoracion} /> },
+            {
+              clave: 'texto',
+              etiqueta: 'Texto',
+              // `texto` es string en reseñas antiguas del mock y {es, en}
+              // en las creadas/editadas desde FormularioResena.jsx.
+              render: (r) => <span className={styles.textoExtracto}>{typeof r.texto === 'string' ? r.texto : r.texto.es}</span>,
+            },
             { clave: 'fecha', etiqueta: 'Fecha' },
           ]}
           filas={filtradas}
           filaNueva={(r) => Boolean(r.nuevo)}
-          hrefFila={(r) => `/admin/resenas/${r.id}/editar`}
+          onClickFila={(r) => setResenaEnEdicion(r)}
           renderAcciones={(r) => (
             <>
-              <Boton variante="texto" href={`/admin/resenas/${r.id}/editar`}>Editar</Boton>{' '}
+              <Boton variante="texto" onClick={() => setResenaEnEdicion(r)}>Editar</Boton>{' '}
               <Boton variante="texto" onClick={() => alternarEstado(r.id)}>{r.estado === 'Publicada' ? 'Ocultar' : 'Publicar'}</Boton>
             </>
           )}
         />
       ) : (
-        <GridResenas filas={filtradas} hrefFila={(r) => `/admin/resenas/${r.id}/editar`} porPagina={12} />
+        <GridResenas filas={filtradas} onClickFila={(r) => setResenaEnEdicion(r)} porPagina={12} />
       )}
+
+      <ModalOverlay abierto={nuevaAbierta} onCerrar={() => setNuevaAbierta(false)}>
+        <FormularioResena onGuardado={crearResena} />
+      </ModalOverlay>
+
+      <ModalOverlay abierto={!!resenaEnEdicion} onCerrar={() => setResenaEnEdicion(null)}>
+        <FormularioResena resenaExistente={resenaEnEdicion} onGuardado={guardarEdicionResena} />
+      </ModalOverlay>
     </div>
   );
 }

@@ -1,28 +1,26 @@
 .seccion {
-  padding: var(--spacing-6) 0;
-  border-bottom: var(--border-thin) solid var(--color-gris-200);
-}
-
-.seccion:last-child {
-  border-bottom: none;
+  padding: var(--spacing-6);
+  margin: var(--spacing-6) 0;
+  background: var(--color-fondo);
 }
 
 .cabecera {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: var(--spacing-4);
   margin-bottom: var(--spacing-5);
 }
 
+/* Pegada al final de la cabecera aunque ya no haya un space-between que
+   la empuje — mismo resultado visual que antes para "Subir otra imagen"
+   (FormularioProducto.jsx)/quitar slide (DisenoEditor.jsx). */
 .accion {
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 .titulo {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
   font-size: var(--text-h4);
   font-weight: var(--font-weight-medium);
 }
@@ -31,11 +29,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   background: var(--color-tinta);
   color: var(--color-fondo);
-  font-size: var(--text-caption);
+  font-size: var(--text-body-lg);
   flex-shrink: 0;
 }
 
@@ -43,7 +41,6 @@
   font-size: var(--text-caption);
   color: var(--color-gris-500);
   margin-top: var(--spacing-1);
-  margin-left: 32px;
 }
 
 .campos {

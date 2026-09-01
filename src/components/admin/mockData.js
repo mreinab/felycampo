@@ -60,15 +60,97 @@ export const coleccionesMock = [
 // estos ids (colorIds/telaIds) en vez de escribir hex/nombre a mano cada
 // vez, así el mismo color/tela se ve igual en todas las fichas.
 
+// Familias de color (grupos) — el picker de FormularioProducto.jsx/
+// GestorColores.jsx/FormularioLook.jsx agrupa coloresMock bajo estas
+// cabeceras, y el desplegable de "añadir color nuevo" solo permite
+// encajarlo en una de estas familias existentes (no crea familias nuevas).
+// `muestras`: 1-2 ids de coloresMock elegidos a mano por familia (no los
+// primeros de la lista sin más) para que el par de cuadraditos junto al
+// nombre del grupo sea reconocible de un vistazo — p.ej. "reds" enseña
+// rojo pasión + burdeos, no dos tonos casi iguales.
+export const familiasColorMock = [
+  { id: 'neutrals', etiqueta: 'Neutros', muestras: ['black', 'optic-white'] },
+  { id: 'browns', etiqueta: 'Marrones', muestras: ['camel', 'chocolate'] },
+  { id: 'reds', etiqueta: 'Rojos y vinos', muestras: ['passion-red', 'bordeaux'] },
+  { id: 'pinks', etiqueta: 'Rosas y fucsias', muestras: ['fuchsia', 'baby-pink'] },
+  { id: 'oranges', etiqueta: 'Naranjas', muestras: ['orange', 'terracotta'] },
+  { id: 'yellows', etiqueta: 'Amarillos y dorados', muestras: ['mustard', 'pastel-yellow'] },
+  { id: 'greens', etiqueta: 'Verdes', muestras: ['emerald', 'olive-green'] },
+  { id: 'blues', etiqueta: 'Azules', muestras: ['navy', 'sky-blue'] },
+  { id: 'purples', etiqueta: 'Morados', muestras: ['violet', 'lilac-lavender'] },
+  { id: 'coolGreys', etiqueta: 'Grises fríos', muestras: ['silver', 'ice-grey'] },
+];
+
+// Cada color pertenece a una familia (`familia`, id de familiasColorMock)
+// y lleva nombre bilingüe — se usa `nombre.es` en el nombre de archivo de
+// imagen (ver nombreArchivoImagen en FormularioProducto.jsx) y ambos en el
+// chip del picker.
 export const coloresMock = [
-  { id: 'col1', nombre: 'Burdeos', hex: '#6E2635' },
-  { id: 'col2', nombre: 'Azul marino', hex: '#23324A' },
-  { id: 'col3', nombre: 'Rosa suave', hex: '#EED3E8' },
-  { id: 'col4', nombre: 'Blanco', hex: '#F7F7F7' },
-  { id: 'col5', nombre: 'Crema', hex: '#F5F1EE' },
-  { id: 'col6', nombre: 'Azul piedra', hex: '#6B7A8F' },
-  { id: 'col7', nombre: 'Tinta', hex: '#202020' },
-  { id: 'col8', nombre: 'Camel', hex: '#C19A6B' },
+  // Neutros
+  { id: 'black', familia: 'neutrals', nombre: { es: 'Negro', en: 'Black' }, hex: '#111111' },
+  { id: 'optic-white', familia: 'neutrals', nombre: { es: 'Blanco óptico', en: 'Optic White' }, hex: '#FAFAF7' },
+  { id: 'ivory', familia: 'neutrals', nombre: { es: 'Marfil', en: 'Ivory' }, hex: '#F3EDE1' },
+  { id: 'ecru', familia: 'neutrals', nombre: { es: 'Crudo', en: 'Ecru' }, hex: '#EDE7DA' },
+  { id: 'pearl-grey', familia: 'neutrals', nombre: { es: 'Gris perla', en: 'Pearl Grey' }, hex: '#CFCCC6' },
+  { id: 'stone-grey', familia: 'neutrals', nombre: { es: 'Gris piedra', en: 'Stone Grey' }, hex: '#A8A29A' },
+  { id: 'taupe', familia: 'neutrals', nombre: { es: 'Topo', en: 'Taupe' }, hex: '#8E7F6E' },
+  { id: 'anthracite', familia: 'neutrals', nombre: { es: 'Antracita', en: 'Anthracite' }, hex: '#4A4A48' },
+  // Marrones
+  { id: 'sand', familia: 'browns', nombre: { es: 'Arena', en: 'Sand' }, hex: '#D8CBB4' },
+  { id: 'beige', familia: 'browns', nombre: { es: 'Beige', en: 'Beige' }, hex: '#D9C7A9' },
+  { id: 'nude', familia: 'browns', nombre: { es: 'Nude', en: 'Nude' }, hex: '#E3C4A8' },
+  { id: 'camel', familia: 'browns', nombre: { es: 'Camel', en: 'Camel' }, hex: '#C19A6B' },
+  { id: 'bronze', familia: 'browns', nombre: { es: 'Bronce', en: 'Bronze' }, hex: '#8C6A3F' },
+  { id: 'chocolate', familia: 'browns', nombre: { es: 'Chocolate', en: 'Chocolate' }, hex: '#4B3621' },
+  // Rojos y vinos
+  { id: 'coral', familia: 'reds', nombre: { es: 'Coral', en: 'Coral' }, hex: '#E0715A' },
+  { id: 'brick', familia: 'reds', nombre: { es: 'Teja', en: 'Brick' }, hex: '#A34A2A' },
+  { id: 'passion-red', familia: 'reds', nombre: { es: 'Rojo pasión', en: 'Passion Red' }, hex: '#B21F2D' },
+  { id: 'bordeaux', familia: 'reds', nombre: { es: 'Burdeos', en: 'Bordeaux' }, hex: '#6E1E2B' },
+  { id: 'wine', familia: 'reds', nombre: { es: 'Vino', en: 'Wine' }, hex: '#4A0E1E' },
+  // Rosas y fucsias
+  { id: 'baby-pink', familia: 'pinks', nombre: { es: 'Rosa baby', en: 'Baby Pink' }, hex: '#F7D6DE' },
+  { id: 'quartz-pink', familia: 'pinks', nombre: { es: 'Rosa cuarzo', en: 'Quartz Pink' }, hex: '#F0C4CC' },
+  { id: 'dusty-rose', familia: 'pinks', nombre: { es: 'Rosa palo', en: 'Dusty Rose' }, hex: '#D9B8B2' },
+  { id: 'powder-pink', familia: 'pinks', nombre: { es: 'Rosa empolvado', en: 'Powder Pink' }, hex: '#E7C6CC' },
+  { id: 'bubblegum-pink', familia: 'pinks', nombre: { es: 'Rosa chicle', en: 'Bubblegum Pink' }, hex: '#E8749A' },
+  { id: 'fuchsia', familia: 'pinks', nombre: { es: 'Fucsia', en: 'Fuchsia' }, hex: '#B03060' },
+  { id: 'plum', familia: 'pinks', nombre: { es: 'Ciruela', en: 'Plum' }, hex: '#5A2A4A' },
+  // Naranjas
+  { id: 'peach', familia: 'oranges', nombre: { es: 'Melocotón', en: 'Peach' }, hex: '#F6C8A8' },
+  { id: 'terracotta', familia: 'oranges', nombre: { es: 'Terracota', en: 'Terracotta' }, hex: '#B5623C' },
+  { id: 'orange', familia: 'oranges', nombre: { es: 'Naranja', en: 'Orange' }, hex: '#E0722F' },
+  { id: 'rust', familia: 'oranges', nombre: { es: 'Óxido', en: 'Rust' }, hex: '#9E4A24' },
+  // Amarillos y dorados
+  { id: 'pastel-yellow', familia: 'yellows', nombre: { es: 'Amarillo pastel', en: 'Pastel Yellow' }, hex: '#F3E6A8' },
+  { id: 'vanilla', familia: 'yellows', nombre: { es: 'Vainilla', en: 'Vanilla' }, hex: '#EFE3B0' },
+  { id: 'mustard', familia: 'yellows', nombre: { es: 'Mostaza', en: 'Mustard' }, hex: '#C99A2E' },
+  { id: 'gold-champagne', familia: 'yellows', nombre: { es: 'Oro / Champán', en: 'Gold / Champagne' }, hex: '#C6A664' },
+  // Verdes
+  { id: 'mint-green', familia: 'greens', nombre: { es: 'Verde menta', en: 'Mint Green' }, hex: '#C6E6D4' },
+  { id: 'pistachio-green', familia: 'greens', nombre: { es: 'Verde pistacho', en: 'Pistachio Green' }, hex: '#BCCB8E' },
+  { id: 'sage-green', familia: 'greens', nombre: { es: 'Verde salvia', en: 'Sage Green' }, hex: '#9DA88C' },
+  { id: 'khaki', familia: 'greens', nombre: { es: 'Caqui', en: 'Khaki' }, hex: '#7C7A53' },
+  { id: 'olive-green', familia: 'greens', nombre: { es: 'Verde oliva', en: 'Olive Green' }, hex: '#6B6A3A' },
+  { id: 'emerald', familia: 'greens', nombre: { es: 'Esmeralda', en: 'Emerald' }, hex: '#0F5C43' },
+  { id: 'petrol', familia: 'greens', nombre: { es: 'Petróleo', en: 'Petrol' }, hex: '#1E4D4A' },
+  { id: 'bottle-green', familia: 'greens', nombre: { es: 'Verde botella', en: 'Bottle Green' }, hex: '#14342B' },
+  // Azules
+  { id: 'baby-blue', familia: 'blues', nombre: { es: 'Azul baby', en: 'Baby Blue' }, hex: '#CFE3F2' },
+  { id: 'sky-blue', familia: 'blues', nombre: { es: 'Azul cielo', en: 'Sky Blue' }, hex: '#A9CFE8' },
+  { id: 'light-blue', familia: 'blues', nombre: { es: 'Azul celeste', en: 'Light Blue' }, hex: '#7FB3D8' },
+  { id: 'denim', familia: 'blues', nombre: { es: 'Denim', en: 'Denim' }, hex: '#4A6B8A' },
+  { id: 'klein-blue', familia: 'blues', nombre: { es: 'Azul klein', en: 'Klein Blue' }, hex: '#1B2A78' },
+  { id: 'navy', familia: 'blues', nombre: { es: 'Azul marino', en: 'Navy' }, hex: '#1F2A44' },
+  // Morados
+  { id: 'lilac-lavender', familia: 'purples', nombre: { es: 'Lila / Lavanda', en: 'Lilac / Lavender' }, hex: '#D6C8E8' },
+  { id: 'mauve', familia: 'purples', nombre: { es: 'Malva', en: 'Mauve' }, hex: '#8E7C93' },
+  { id: 'violet', familia: 'purples', nombre: { es: 'Violeta', en: 'Violet' }, hex: '#6A4B8C' },
+  { id: 'aubergine', familia: 'purples', nombre: { es: 'Berenjena', en: 'Aubergine' }, hex: '#3E2A44' },
+  // Grises fríos
+  { id: 'ice-grey', familia: 'coolGreys', nombre: { es: 'Gris hielo', en: 'Ice Grey' }, hex: '#E2E6EA' },
+  { id: 'blue-grey', familia: 'coolGreys', nombre: { es: 'Azul grisáceo', en: 'Blue Grey' }, hex: '#B9C4CC' },
+  { id: 'silver', familia: 'coolGreys', nombre: { es: 'Plata', en: 'Silver' }, hex: '#C4C7CC' },
 ];
 
 export const telasMock = [
@@ -77,6 +159,60 @@ export const telasMock = [
   { id: 'tel3', nombre: 'Encaje francés', composicion: '60% algodón, 40% nylon' },
   { id: 'tel4', nombre: 'Gasa de seda', composicion: '100% seda' },
   { id: 'tel5', nombre: 'Popelín', composicion: '97% algodón, 3% elastano' },
+];
+
+// ---------- CUIDADOS (etiqueta de conservación) ----------
+// Lista maestra oficial (careInstructionsMaster) — 5 categorías estándar
+// de una etiqueta textil, cada instrucción con nombre bilingüe (mismo
+// criterio que coloresMock: `texto.es`/`texto.en`, no un string suelto).
+// `id` reutiliza el `code` de la lista maestra en vez de generar uno
+// nuevo, para poder cruzar contra la fuente original si hace falta.
+export const categoriasCuidadoMock = [
+  { id: 'washing', etiqueta: { es: 'Lavado', en: 'Washing' } },
+  { id: 'bleaching', etiqueta: { es: 'Blanqueo', en: 'Bleaching' } },
+  { id: 'drying', etiqueta: { es: 'Secado', en: 'Drying' } },
+  { id: 'ironing', etiqueta: { es: 'Planchado', en: 'Ironing' } },
+  { id: 'professionalCleaning', etiqueta: { es: 'Limpieza profesional', en: 'Professional cleaning' } },
+];
+
+export const cuidadosMock = [
+  // Lavado
+  { id: 'wash_95', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 95 °C', en: 'Machine wash max. 95 °C' } },
+  { id: 'wash_60', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 60 °C', en: 'Machine wash max. 60 °C' } },
+  { id: 'wash_60_mild', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 60 °C, ciclo suave', en: 'Machine wash max. 60 °C, mild' } },
+  { id: 'wash_40', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 40 °C', en: 'Machine wash max. 40 °C' } },
+  { id: 'wash_40_mild', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 40 °C, ciclo suave', en: 'Machine wash max. 40 °C, mild' } },
+  { id: 'wash_40_verymild', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 40 °C, muy suave', en: 'Machine wash max. 40 °C, very mild' } },
+  { id: 'wash_30', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 30 °C', en: 'Machine wash max. 30 °C' } },
+  { id: 'wash_30_mild', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 30 °C, ciclo suave', en: 'Machine wash max. 30 °C, mild' } },
+  { id: 'wash_hand', categoria: 'washing', texto: { es: 'Lavar a mano máx. 40 °C', en: 'Hand wash max. 40 °C' } },
+  { id: 'wash_no', categoria: 'washing', texto: { es: 'No lavar', en: 'Do not wash' } },
+  // Blanqueo
+  { id: 'bleach_any', categoria: 'bleaching', texto: { es: 'Se puede usar lejía', en: 'Bleach allowed' } },
+  { id: 'bleach_oxygen', categoria: 'bleaching', texto: { es: 'Solo blanqueo con oxígeno / sin cloro', en: 'Oxygen/non-chlorine bleach only' } },
+  { id: 'bleach_no', categoria: 'bleaching', texto: { es: 'No usar lejía', en: 'Do not bleach' } },
+  // Secado
+  { id: 'tumble_normal', categoria: 'drying', texto: { es: 'Secar en secadora, temperatura normal', en: 'Tumble dry, normal' } },
+  { id: 'tumble_low', categoria: 'drying', texto: { es: 'Secar en secadora, temperatura baja', en: 'Tumble dry, low heat' } },
+  { id: 'tumble_no', categoria: 'drying', texto: { es: 'No usar secadora', en: 'Do not tumble dry' } },
+  { id: 'dry_line', categoria: 'drying', texto: { es: 'Secar tendido', en: 'Line dry' } },
+  { id: 'dry_flat', categoria: 'drying', texto: { es: 'Secar en horizontal', en: 'Dry flat' } },
+  { id: 'dry_drip', categoria: 'drying', texto: { es: 'Secar sin escurrir', en: 'Drip dry' } },
+  { id: 'dry_shade', categoria: 'drying', texto: { es: 'Secar a la sombra', en: 'Dry in shade' } },
+  // Planchado
+  { id: 'iron_high', categoria: 'ironing', texto: { es: 'Planchar máx. 200 °C (alta)', en: 'Iron max. 200 °C (high)' } },
+  { id: 'iron_medium', categoria: 'ironing', texto: { es: 'Planchar máx. 150 °C (media)', en: 'Iron max. 150 °C (medium)' } },
+  { id: 'iron_low', categoria: 'ironing', texto: { es: 'Planchar máx. 110 °C (baja)', en: 'Iron max. 110 °C (low)' } },
+  { id: 'iron_no_steam', categoria: 'ironing', texto: { es: 'Planchar sin vapor', en: 'Iron without steam' } },
+  { id: 'iron_no', categoria: 'ironing', texto: { es: 'No planchar', en: 'Do not iron' } },
+  // Limpieza profesional
+  { id: 'dryclean_p', categoria: 'professionalCleaning', texto: { es: 'Limpieza en seco con percloroetileno', en: 'Dry clean, perchloroethylene' } },
+  { id: 'dryclean_p_mild', categoria: 'professionalCleaning', texto: { es: 'Limpieza en seco (perclo), proceso suave', en: 'Dry clean, PCE, mild process' } },
+  { id: 'dryclean_f', categoria: 'professionalCleaning', texto: { es: 'Limpieza en seco con hidrocarburos', en: 'Dry clean, hydrocarbons only' } },
+  { id: 'dryclean_f_mild', categoria: 'professionalCleaning', texto: { es: 'Limpieza en seco (hidrocarburos), suave', en: 'Dry clean, hydrocarbons, mild' } },
+  { id: 'dryclean_no', categoria: 'professionalCleaning', texto: { es: 'No limpiar en seco', en: 'Do not dry clean' } },
+  { id: 'wetclean_w', categoria: 'professionalCleaning', texto: { es: 'Limpieza profesional en húmedo', en: 'Professional wet clean' } },
+  { id: 'wetclean_no', categoria: 'professionalCleaning', texto: { es: 'No usar limpieza en húmedo', en: 'Do not wet clean' } },
 ];
 
 export const productosMock = [
@@ -94,7 +230,7 @@ export const productosMock = [
       { talla: 'M', stock: 5 },
       { talla: 'L', stock: 0 },
     ],
-    colorIds: ['col1', 'col2'],
+    colorIds: ['bordeaux', 'navy'],
     telaIds: ['tel1'],
     estado: 'Activo',
     coleccion: 'fw26',
@@ -114,7 +250,7 @@ export const productosMock = [
       { talla: 'M', stock: 4 },
       { talla: 'L', stock: 4 },
     ],
-    colorIds: ['col3', 'col4'],
+    colorIds: ['powder-pink', 'optic-white'],
     telaIds: ['tel2'],
     estado: 'Activo',
     coleccion: 'fw26',
@@ -129,7 +265,7 @@ export const productosMock = [
     imagen: '/img/novias-sección-FelyCampo2.jpg',
     imagenes: ['/img/novias-sección-FelyCampo2.jpg', '/img/novias-sección-FelyCampo3.jpg'],
     precio: 'Desde 2.400 €',
-    colorIds: ['col5'],
+    colorIds: ['ivory'],
     telaIds: ['tel3'],
     coleccion: 'ss26',
     estado: 'Activo',
@@ -144,7 +280,7 @@ export const productosMock = [
     imagen: '/img/invitadas-sección-FelyCampo.jpg',
     imagenes: ['/img/invitadas-sección-FelyCampo.jpg'],
     precio: 'Desde 980 €',
-    colorIds: ['col6'],
+    colorIds: ['blue-grey'],
     telaIds: ['tel4'],
     coleccion: 'fw26',
     estado: 'Borrador',
@@ -188,7 +324,7 @@ export const productosMock = [
       { talla: 'M', stock: 6 },
       { talla: 'L', stock: 2 },
     ],
-    colorIds: ['col7', 'col8'],
+    colorIds: ['black', 'camel'],
     telaIds: ['tel5'],
     estado: 'Programado',
     coleccion: 'FW27',
@@ -207,7 +343,7 @@ export const productosMock = [
       { talla: 'S', stock: 0 },
       { talla: 'M', stock: 0 },
     ],
-    colorIds: ['col2'],
+    colorIds: ['navy'],
     telaIds: ['tel5'],
     estado: 'Archivado',
     coleccion: 'ss25',
@@ -222,7 +358,7 @@ export const productosMock = [
     imagen: '/img/ecommerce/27FW/invitadas-sección-FelyCampo2.jpg',
     imagenes: ['/img/ecommerce/27FW/invitadas-sección-FelyCampo2.jpg'],
     precio: 'Desde 890 €',
-    colorIds: ['col4'],
+    colorIds: ['optic-white'],
     telaIds: ['tel2'],
     coleccion: 'ss25',
     estado: 'Archivado',
@@ -256,7 +392,7 @@ export const productosMock = [
       { talla: 'S', stock: 0 },
       { talla: 'M', stock: 0 },
     ],
-    colorIds: ['col1'],
+    colorIds: ['bordeaux'],
     telaIds: ['tel1'],
     estado: 'Archivado',
     coleccion: 'ss25',
@@ -275,7 +411,7 @@ export const productosMock = [
       { talla: 'S', stock: 5 },
       { talla: 'M', stock: 5 },
     ],
-    colorIds: ['col3'],
+    colorIds: ['powder-pink'],
     telaIds: ['tel5'],
     estado: 'Programado',
     coleccion: 'ss26',
@@ -290,7 +426,7 @@ export const productosMock = [
     imagen: '/img/novias-sección-FelyCampo3.jpg',
     imagenes: ['/img/novias-sección-FelyCampo3.jpg'],
     precio: 'Desde 2.100 €',
-    colorIds: ['col5'],
+    colorIds: ['ivory'],
     telaIds: ['tel4'],
     coleccion: 'ss26',
     estado: 'Programado',
@@ -305,7 +441,7 @@ export const productosMock = [
     imagen: '/img/ecommerce/Invitada/LOOK1_2-scaled.webp',
     imagenes: ['/img/ecommerce/Invitada/LOOK1_2-scaled.webp'],
     precio: 'Desde 1.900 €',
-    colorIds: ['col4'],
+    colorIds: ['optic-white'],
     telaIds: ['tel3'],
     coleccion: 'ss25',
     estado: 'Archivado',
@@ -320,7 +456,7 @@ export const productosMock = [
     imagen: '/img/invitadas-sección-FelyCampo2.jpg',
     imagenes: ['/img/invitadas-sección-FelyCampo2.jpg'],
     precio: 'Desde 1.050 €',
-    colorIds: ['col2'],
+    colorIds: ['navy'],
     telaIds: ['tel1'],
     coleccion: 'fw26',
     estado: 'Activo',
@@ -389,7 +525,7 @@ export const pedidosMock = [
     direccionEnvio: 'Av. Diagonal 200, 08018 Barcelona',
     tracking: 'ES394857103',
     notasInternas: '',
-    items: [{ producto: 'Falda Vera', talla: 'S', color: 'Rosa suave', cantidad: 1, precio: '420 €' }],
+    items: [{ producto: 'Falda Vera', talla: 'S', color: 'Rosa empolvado', cantidad: 1, precio: '420 €' }],
   },
   {
     id: 'FC-2033',
@@ -403,7 +539,7 @@ export const pedidosMock = [
     notasInternas: 'Esperando confirmación de pago por transferencia.',
     items: [
       { producto: 'Vestido Aurora', talla: 'L', color: 'Azul marino', cantidad: 1, precio: '890 €' },
-      { producto: 'Falda Vera', talla: 'M', color: 'Blanco', cantidad: 1, precio: '420 €' },
+      { producto: 'Falda Vera', talla: 'M', color: 'Blanco óptico', cantidad: 1, precio: '420 €' },
     ],
   },
   {
@@ -416,7 +552,7 @@ export const pedidosMock = [
     direccionEnvio: 'Gran Vía 10, 50001 Zaragoza',
     tracking: '',
     notasInternas: 'Tarjeta rechazada, contactar con la clienta.',
-    items: [{ producto: 'Falda Vera', talla: 'L', color: 'Blanco', cantidad: 1, precio: '420 €' }],
+    items: [{ producto: 'Falda Vera', talla: 'L', color: 'Blanco óptico', cantidad: 1, precio: '420 €' }],
   },
   {
     id: 'FC-2035',
@@ -441,7 +577,7 @@ export const pedidosMock = [
     direccionEnvio: 'Paseo de la Castellana 100, 28046 Madrid',
     tracking: 'ES394857110',
     notasInternas: '',
-    items: [{ producto: 'Falda Vera', talla: 'M', color: 'Rosa suave', cantidad: 2, precio: '840 €' }],
+    items: [{ producto: 'Falda Vera', talla: 'M', color: 'Rosa empolvado', cantidad: 2, precio: '840 €' }],
     nuevo: true,
   },
   {
@@ -525,7 +661,7 @@ export const consultasPrecioMock = [
   {
     id: 'cp1',
     producto: 'Vestido Elena',
-    color: 'Crema',
+    color: 'Marfil',
     fecha: '2026-08-05',
     nombre: 'Marta Ibáñez',
     email: 'marta.ibanez@example.com',
@@ -550,7 +686,7 @@ export const consultasPrecioMock = [
   {
     id: 'cp3',
     producto: 'Vestido Alba',
-    color: 'Rosa suave',
+    color: 'Rosa empolvado',
     fecha: '2026-08-02',
     nombre: 'Beatriz Soler',
     email: 'beatriz.soler@example.com',

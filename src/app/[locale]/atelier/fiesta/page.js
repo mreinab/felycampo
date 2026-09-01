@@ -9,7 +9,7 @@ export default function Pagina() {
       <CuadriculaProductos
         productos={productosEjemplo}
         disposicion="grid"
-        tituloKey="catalogo.subtituloFelyCampo"
+        tituloKey="nav.links.atelier"
         coleccionKey="nav.submenus.atelier.fiesta"
         descriptionKey="cuadriculaTabs.descripcion"
       />

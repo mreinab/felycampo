@@ -1,0 +1,45 @@
+/* ============================================================
+   PRODUCTOS RECOMENDADOS — Fely Campo
+   ============================================================ */
+
+.seccion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-10);
+}
+
+/* <h3> plano a todo el ancho — no un CabeceraSeccion (sin subtítulo
+   pequeño encima ni acción al lado, ver ProductosRecomendados.jsx).
+   Mismo tratamiento visual que .titulo de CollectionTitle.module.css
+   (font-size h3, mayúsculas, peso medio) para no desentonar con el
+   resto de títulos de sección del sitio. */
+.titulo {
+  width: 100%;
+  padding-inline: var(--spacing-4);
+  font-size: var(--text-body-lg);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  color: var(--color-tinta);
+}
+
+.contenedor {
+  width: 100%;
+}
+
+.pista {
+  display: flex;
+  gap: 0.04rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pista::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  flex: 0 0 260px;
+  width: 260px;
+}

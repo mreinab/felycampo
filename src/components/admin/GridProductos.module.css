@@ -106,6 +106,14 @@
   padding: var(--spacing-3);
 }
 
+.tarjetaAcciones {
+  padding: 0 var(--spacing-3) var(--spacing-3);
+}
+
+.tarjetaAcciones > * {
+  width: 100%;
+}
+
 .nombre {
   font-size: var(--text-small);
   color: var(--color-tinta);

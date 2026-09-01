@@ -25,31 +25,7 @@
   display: block;
   font-size: var(--text-caption);
   color: var(--color-gris-500);
-  margin-bottom: var(--spacing-2);
-}
-
-.selectInput {
-  width: 100%;
-  border: 1px solid var(--color-gris-300);
-  border-radius: var(--radius-inputs);
-  padding: 12px var(--spacing-1);
-  font-family: var(--font-base);
-  font-size: var(--text-small);
-  background: var(--color-fondo);
-  color: var(--color-tinta);
-}
-
-.foto {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-3);
-}
-
-.fotoMiniatura {
-  width: 56px;
-  height: 56px;
-  object-fit: cover;
-  background: var(--color-gris-100);
+  margin-bottom: var(--spacing-1);
 }
 
 .acciones {
@@ -59,11 +35,111 @@
   padding-top: var(--spacing-6);
 }
 
-.pickerFoto {
+/* Estado de publicación — mismo lenguaje visual que .estadoSelector de
+   /admin/consultas-precio/[id]/page.module.css (no se puede importar una
+   clase de otro CSS Module), en la cabecera en vez de metido como un
+   campo más del formulario: es un interruptor sobre TODA la reseña, no
+   un dato de contenido. Colores alineados con EstadoBadge.jsx (Publicada
+   → tinta, Oculta → gris). */
+.estadoSelector {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.estadoBoton {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-2) var(--spacing-4);
+  background: none;
+  font-family: var(--font-base);
+  font-size: var(--text-label);
+  line-height: normal;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-marca), color 0.2s var(--ease-marca);
+}
+
+.estadoBoton.oculta { border: var(--border-regular) solid var(--color-gris-500); color: var(--color-gris-500); }
+.estadoBoton.publicada { border: var(--border-regular) solid var(--color-tinta); color: var(--color-tinta); }
+
+.estadoBotonActivo.oculta { background: var(--color-gris-500); color: var(--color-fondo); }
+.estadoBotonActivo.publicada { background: var(--color-tinta); color: var(--color-fondo); }
+
+/* Fotos de clientas — mismo carrusel arrastrable que "Reseñas de
+   Clientas" en FormularioProducto.module.css .imagenesScroll/.imagenItem
+   (no se puede importar una clase de otro CSS Module), duplicado aquí a
+   las mismas medidas para que el diseño sea idéntico. */
+.imagenesScroll {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-3);
   width: 100%;
+  height: 250px;
+  box-sizing: border-box;
+  padding: var(--spacing-3);
+  border: var(--border-regular) dashed var(--color-gris-300);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.imagenItem {
+  position: relative;
+  width: 150px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.imagenMiniatura {
   display: block;
-  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+}
+
+.imagenQuitar {
+  position: absolute;
+  top: var(--spacing-1);
+  right: var(--spacing-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-fondo);
+  border: none;
+  padding: 0;
+  color: var(--color-tinta);
+  cursor: pointer;
+  transition: color 0.25s var(--ease-marca);
+}
+
+.imagenQuitar:hover {
+  color: var(--color-rosa-oscuro);
+}
+
+.fotoAnadir {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-1);
+  width: 150px;
+  height: 100%;
+  flex-shrink: 0;
+  border: var(--border-regular) dashed var(--color-gris-300);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-base);
+  font-size: var(--text-nano);
+  color: var(--color-gris-500);
+  text-align: center;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.fotoAnadir:hover {
+  border-color: var(--color-tinta);
+  color: var(--color-tinta);
+}
+
+.inputArchivo {
+  display: none;
 }
 
 /* Vínculo con el producto reseñado — duplicado de

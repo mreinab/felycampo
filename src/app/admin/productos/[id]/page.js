@@ -105,7 +105,7 @@ export default function VerProductoPage({ params }) {
                 {colores.map((c) => (
                   <span key={c.id} className={styles.colorFila}>
                     <span className={styles.colorPunto} style={{ background: c.hex }} aria-hidden="true" />
-                    {c.nombre}
+                    {c.nombre.es}
                   </span>
                 ))}
               </div>

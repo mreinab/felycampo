@@ -41,7 +41,7 @@ function EscribirResena() {
 
   if (enviada) {
     return (
-      <div className={styles.bloque}>
+      <div>
         <p className={styles.confirmacion}>
           ¡Gracias por tu reseña! Quedará pendiente de revisión antes de publicarse.
         </p>
@@ -51,7 +51,7 @@ function EscribirResena() {
 
   if (!sesionIniciada) {
     return (
-      <div className={styles.bloque}>
+      <div>
         <p className={styles.gateTexto}>¿Ya tienes cuenta? Inicia sesión para dejar tu reseña de este producto.</p>
         <button type="button" className={styles.gateBoton} onClick={() => setSesionIniciada(true)}>
           Iniciar sesión (demo)
@@ -61,7 +61,7 @@ function EscribirResena() {
   }
 
   return (
-    <form className={styles.bloque} onSubmit={enviar}>
+    <form onSubmit={enviar}>
       <p className={styles.titulo}>Escribe tu reseña</p>
 
       <div className={styles.estrellasFila}>

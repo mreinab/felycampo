@@ -23,7 +23,7 @@ import {
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import {
-  productosMock, tiposProducto, coleccionesMock, codigoTemporada, rutaTipoProducto,
+  productosMock, tiposProducto, coleccionesMock, coloresMock, codigoTemporada, rutaTipoProducto,
 } from '@/components/admin/mockData';
 import { calcularEstadoPublicacion, CONFIG_ESTADO_PUBLICACION } from './EstadoPublicacionBadge';
 import FormularioProducto from './FormularioProducto';
@@ -187,6 +187,12 @@ function ListaProductosContenido({
   const [confirmarBorradoBloqueAbierto, setConfirmarBorradoBloqueAbierto] = useState(false);
   const [nuevoAbierto, setNuevoAbierto] = useState(false);
   const [productoEnEdicion, setProductoEnEdicion] = useState(null);
+  // Duplicar = alta de una variante de color del mismo producto: mismo
+  // formulario que "Nuevo producto", pero con productoBase precargando
+  // todo lo compartido (nombre, descripción, precio, tallas, composición,
+  // cuidados...) y dejando en blanco lo que cambia por color (fotos,
+  // color/estampado, SKU) — ver FormularioProducto.jsx `semilla`.
+  const [productoParaDuplicar, setProductoParaDuplicar] = useState(null);
   const [vistaProductos, setVistaProductos] = useState('tabla');
   const [filtroTemporada, setFiltroTemporada] = useState('Todas');
   const [nuevaColeccionAbierta, setNuevaColeccionAbierta] = useState(false);
@@ -339,20 +345,30 @@ function ListaProductosContenido({
   }
 
   function duplicar(producto) {
-    mostrarToast(`"${producto.nombre}" duplicado (demo)`);
+    setProductoParaDuplicar(producto);
   }
 
-  function crearProducto(producto) {
-    setProductos((actual) => [producto, ...actual]);
+  function crearProducto(productoOProductos) {
+    // FormularioProducto.jsx puede crear varias variantes de color a la
+    // vez ("Nueva variante" en Colores y Estampados) — llega un array
+    // cuando el alta trae más de una, un único objeto si no.
+    const nuevos = Array.isArray(productoOProductos) ? productoOProductos : [productoOProductos];
+    setProductos((actual) => [...nuevos, ...actual]);
     setNuevoAbierto(false);
+    setProductoParaDuplicar(null);
   }
 
   function abrirEdicion(producto) {
     setProductoEnEdicion(producto);
   }
 
-  function guardarEdicion(producto) {
-    setProductos((actual) => actual.map((p) => (p.id === producto.id ? producto : p)));
+  function guardarEdicion(productoOProductos) {
+    // FormularioProducto.jsx permite añadir "Variante de color" nuevas
+    // también en edición — si se añadió alguna, llega un array (la raíz
+    // editada primero, las variantes nuevas detrás); si no, un único
+    // objeto como siempre.
+    const [raiz, ...nuevasVariantes] = Array.isArray(productoOProductos) ? productoOProductos : [productoOProductos];
+    setProductos((actual) => [...nuevasVariantes, ...actual.map((p) => (p.id === raiz.id ? raiz : p))]);
     setProductoEnEdicion(null);
   }
 
@@ -666,7 +682,19 @@ function ListaProductosContenido({
           onToggleTodas={alternarTodas}
           columnas={[
             { clave: 'imagen', etiqueta: '', render: (p) => (p.imagen ? <img src={p.imagen} alt="" className={styles.miniatura} /> : <span className={styles.miniatura} />) },
-            { clave: 'nombre', etiqueta: 'Nombre' },
+            {
+              clave: 'nombre',
+              etiqueta: 'Nombre',
+              render: (p) => {
+                const color = coloresMock.find((c) => p.colorIds?.includes(c.id));
+                return (
+                  <span className={styles.nombreCelda}>
+                    {p.nombre}
+                    {color && <span className={styles.nombreVarianteSwatch} style={{ background: color.hex }} title={color.nombre.es} />}
+                  </span>
+                );
+              },
+            },
             { clave: 'sku', etiqueta: 'SKU', render: (p) => p.sku || '—' },
             // "Tipo"/"Categoría" se ocultan cuando ya vienen fijados por la
             // ruta/filtro (tipoFijo, ?categoria=) — todas las filas serían el
@@ -689,11 +717,15 @@ function ListaProductosContenido({
           )}
         />
       ) : (
-        <GridProductos filas={filtrados} onClickFila={abrirEdicion} porPagina={12} />
+        <GridProductos filas={filtrados} onClickFila={abrirEdicion} onDuplicar={duplicar} porPagina={12} />
       )}
 
       <ModalOverlay abierto={nuevoAbierto} onCerrar={() => setNuevoAbierto(false)}>
         <FormularioProducto tipoInicial={tipoFijo} categoriaInicial={categoriaFija || undefined} onGuardado={crearProducto} />
+      </ModalOverlay>
+
+      <ModalOverlay abierto={!!productoParaDuplicar} onCerrar={() => setProductoParaDuplicar(null)}>
+        <FormularioProducto productoBase={productoParaDuplicar} onGuardado={crearProducto} />
       </ModalOverlay>
 
       <ModalOverlay abierto={!!productoEnEdicion} onCerrar={() => setProductoEnEdicion(null)}>

@@ -26,16 +26,22 @@ import collectionTitleStyles from './CollectionTitle.module.css';
  * lo pega arriba (ej. páginas de catálogo de Tienda/Atelier, con el
  * toggle de densidad de CuadriculaProductos en la accion).
  *
+ * "enCuadricula": usa la clase .cabeceraProductos (mismo CSS que
+ * .cabecera) en vez de .cabecera — la pasa CuadriculaProductos, único
+ * consumidor que la necesita distinguida en el DOM.
+ *
  * Uso:
  *   <CabeceraSeccion titleKey="cuadriculaProductos.novedades">
  *     <Boton variante="flecha" href="/coleccion">Ver colección</Boton>
  *   </CabeceraSeccion>
  */
-function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, children, accionAncha = false, alinear = 'end' }) {
+function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, children, accionAncha = false, alinear = 'end', enCuadricula = false }) {
   const t = useTranslations();
 
+  const claseCabecera = enCuadricula ? styles.cabeceraProductos : styles.cabecera;
+
   return (
-    <div className={`${styles.cabecera} ${alinear === 'start' ? styles.cabeceraInicio : ''}`}>
+    <div className={`${claseCabecera} ${alinear === 'start' ? styles.cabeceraInicio : ''}`}>
       <div className={styles.tituloGrupo}>
         {subtitleKey && <h2 className={styles.subtitle}>{t(subtitleKey)}</h2>}
         <p className={collectionTitleStyles.titulo}>{t(titleKey)}</p>

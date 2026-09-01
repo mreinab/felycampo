@@ -227,6 +227,7 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
           titleKey={coleccionKey || tituloKey}
           descriptionKey={descriptionKey}
           alinear={esGrid ? 'start' : 'end'}
+          enCuadricula
         >
           {(verMasHref || esGrid) && accion}
         </CabeceraSeccion>

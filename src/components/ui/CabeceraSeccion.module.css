@@ -17,11 +17,24 @@
   min-height: 10vh;
 }
 
+/* Misma regla que .cabecera — usada en su lugar cuando CabeceraSeccion
+   se renderiza dentro de CuadriculaProductos (ver CabeceraSeccion.jsx). */
+.cabeceraProductos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: end;
+  gap: 0.04rem;
+  padding-inline: 0px;
+  margin: var(--spacing-4) 0 var(--spacing-4) 0;
+  min-height: 10vh;
+}
+
 /* "alinear='start'" (ver CabeceraSeccion.jsx) — páginas de catálogo
    de Tienda/Atelier, con el toggle de densidad pegado arriba en vez
    de compartir línea base con el título. */
 .cabeceraInicio {
   align-items: start;
+  margin: var(--spacing-8) 0 var(--spacing-4) 0;
 }
 
 .tituloGrupo {
@@ -66,7 +79,8 @@
 /* Mobile: 4 columnas estrechas no dejan sitio para el grupo título +
    acción — se apilan en una sola columna, mismo orden que el desktop. */
 @media (max-width: 767px) {
-  .cabecera {
+  .cabecera,
+  .cabeceraProductos {
     grid-template-columns: 1fr;
     padding-inline: var(--spacing-5);
   }

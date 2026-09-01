@@ -27,10 +27,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import EstadoPublicacionBadge from './EstadoPublicacionBadge';
 import Paginacion from './Paginacion';
+import { Boton } from '../ui';
 import { rutaTipoProducto } from './mockData';
 import styles from './GridProductos.module.css';
 
-function Tarjeta({ producto, onClick }) {
+function Tarjeta({ producto, onClick, onDuplicar }) {
   const router = useRouter();
   const lookVinculado = producto.lookVinculado;
 
@@ -54,6 +55,17 @@ function Tarjeta({ producto, onClick }) {
         </div>
       </button>
 
+      {/* Fuera de .tarjetaBoton por el mismo motivo que .lookVinculadoTile
+          (no se puede anidar un <button> dentro de otro) — crea una
+          variante de color de este mismo producto, ver
+          FormularioProducto.jsx `productoBase`/ListaProductos.jsx
+          `duplicar`. */}
+      <div className={styles.tarjetaAcciones}>
+        <Boton variante="contorno" tamano="s" onClick={() => onDuplicar(producto)}>
+          Duplicar
+        </Boton>
+      </div>
+
       {lookVinculado && (
         <div className={styles.imagenOverlay}>
           <button
@@ -73,7 +85,7 @@ function Tarjeta({ producto, onClick }) {
 }
 
 function GridProductos({
-  filas, onClickFila, porPagina = 12, vacio = 'No hay productos que mostrar.',
+  filas, onClickFila, onDuplicar, porPagina = 12, vacio = 'No hay productos que mostrar.',
 }) {
   const [pagina, setPagina] = useState(1);
 
@@ -89,7 +101,7 @@ function GridProductos({
     <div>
       <div className={styles.grid}>
         {filasPagina.map((producto) => (
-          <Tarjeta key={producto.id} producto={producto} onClick={() => onClickFila(producto)} />
+          <Tarjeta key={producto.id} producto={producto} onClick={() => onClickFila(producto)} onDuplicar={onDuplicar} />
         ))}
       </div>
       <Paginacion pagina={pagina} porPagina={porPagina} total={filas.length} onCambiar={setPagina} />

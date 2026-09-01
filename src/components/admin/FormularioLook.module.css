@@ -3,7 +3,7 @@
   font-family: var(--font-base);
   font-size: var(--text-caption);
   color: var(--color-gris-500);
-  margin-bottom: var(--spacing-2);
+  margin-bottom: var(--spacing-1);
 }
 
 .nombreFijo {
@@ -133,11 +133,81 @@
   flex-shrink: 0;
 }
 
+/* Grupos de color (Neutros, Rojos y vinos...) — "padres" en una rejilla
+   flex-wrap, cada uno con 1-2 cuadraditos de muestra para reconocer la
+   familia sin leer la etiqueta. Al tocar uno se abre SU rejilla de
+   colores debajo de toda la fila de padres (un único grupo desplegado a
+   la vez) — así 55 colores no se enseñan de golpe. */
+.familiasGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-3);
+}
+
+.familiaChip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: var(--border-regular) solid var(--color-gris-200);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+.familiaChip:hover {
+  border-color: var(--color-gris-300);
+}
+
+.familiaChipActiva {
+  border-color: var(--color-tinta);
+  color: var(--color-fondo);
+  background: var(--color-tinta);
+}
+
+.familiaMuestras {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.familiaMuestra {
+  width: 14px;
+  height: 14px;
+  border: var(--border-thin) solid var(--color-gris-300);
+}
+
+.familiaMuestra + .familiaMuestra {
+  margin-left: -5px;
+}
+
+/* Mismo lenguaje visual que AdminSidebar.module.css .contador (píldora
+   rosa numérica) — avisa cuántos colores de la familia están elegidos
+   aunque el grupo esté cerrado. */
+.familiaBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 50%;
+  background: var(--color-rosa);
+  color: var(--color-fondo);
+  font-size: var(--text-nano);
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
+}
+
 .coloresGrid {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-3);
-  margin-bottom: var(--spacing-6);
+  padding: var(--spacing-3);
+  margin-bottom: var(--spacing-2);
+  background: var(--color-gris-100);
 }
 
 .colorChip {
@@ -148,6 +218,7 @@
   border: var(--border-regular) solid var(--color-gris-200);
   background: none;
   cursor: pointer;
+  text-align: left;
   font-family: var(--font-base);
   font-size: var(--text-small);
   color: var(--color-tinta);
@@ -161,7 +232,24 @@
   border-color: var(--color-tinta);
   background: var(--color-tinta);
   color: var(--color-fondo);
+}
+
+.colorChipTexto {
+  display: flex;
+  flex-direction: column;
+}
+
+.colorChipNombre {
   font-weight: var(--font-weight-medium);
+}
+
+.colorChipTraduccion {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+.colorChipActivo .colorChipTraduccion {
+  color: var(--color-fondo);
 }
 
 .telasGrid {
@@ -270,6 +358,7 @@
    no competir visualmente con ella. */
 .anadirFila {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-3);
   align-items: flex-end;
   margin-top: var(--spacing-4);
@@ -281,11 +370,23 @@
    abajo), así que ahora se excluye por clase en vez de por posición. */
 .anadirFila > * {
   flex: 1;
+  min-width: 120px;
 }
 
 .anadirFila > .campoColor,
 .anadirFila > button {
   flex: none;
+}
+
+.selectInput {
+  width: 100%;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: 12px var(--spacing-1);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
 }
 
 /* "Añadir color"/"Añadir tela" (Boton contorno/s) quedaban más bajos que

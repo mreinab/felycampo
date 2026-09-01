@@ -11,6 +11,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
 import { Navbar, Footer } from '@/components/layout';
+import { CarritoProvider } from '@/context/CarritoContext';
 import { locales } from '@/i18n';
 
 export const metadata = {
@@ -46,9 +47,11 @@ export default async function RootLayout({ children, params }) {
           next/font/google, este es el sitio donde se sustituiría. */}
       <body>
         <NextIntlClientProvider messages={messages}>
-          <Navbar transparent={isHome} />
-          <main>{children}</main>
-          <Footer />
+          <CarritoProvider>
+            <Navbar transparent={isHome} />
+            <main>{children}</main>
+            <Footer />
+          </CarritoProvider>
         </NextIntlClientProvider>
       </body>
     </html>

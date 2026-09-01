@@ -29,7 +29,7 @@ import {
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import {
-  tiposProducto, coleccionesMock, coloresMock, telasMock, tallasEstandar, ajustesTiendaMock, rutaTipoProducto,
+  tiposProducto, coleccionesMock, coloresMock, familiasColorMock, categoriasCuidadoMock, cuidadosMock, resenasMock, tallasEstandar, ajustesTiendaMock, rutaTipoProducto,
 } from '@/components/admin/mockData';
 import styles from './FormularioProducto.module.css';
 
@@ -59,7 +59,7 @@ function nombreArchivoImagen({
 }) {
   const partes = [nombre?.es?.trim() || 'Producto'];
 
-  const colorPrincipal = coloresMock.find((c) => c.id === colorIds[0])?.nombre;
+  const colorPrincipal = coloresMock.find((c) => c.id === colorIds[0])?.nombre?.es;
   if (colorPrincipal) partes.push(colorPrincipal);
 
   const tipoEtiqueta = tiposProducto.find((t) => t.valor === tipo)?.etiqueta;
@@ -175,36 +175,93 @@ const CAMPOS_TIPO = {
 };
 
 function FormularioProducto({
-  productoExistente, tipoInicial, categoriaInicial, onGuardado,
+  productoExistente, productoBase, tipoInicial, categoriaInicial, onGuardado,
 }) {
   const router = useRouter();
   const { mostrarToast } = useToast();
 
+  // Semilla de datos iniciales: productoExistente (edición in-place, mismo
+  // id) o productoBase (duplicar como variante de color desde el botón
+  // "Duplicar" de ListaProductos — mismo producto, pero con todo lo que
+  // debe cambiar entre colores vacío: fotos, color/estampado, SKU propio
+  // y de cada prenda, stock por talla (es inventario de OTRO color, no
+  // vale para este), look vinculado (la foto de pasarela es de OTRO
+  // color) y reseñas (son de compradoras de la pieza original, no de esta
+  // variante nueva) — el admin solo tiene que rellenar eso y subir las
+  // fotos del color nuevo. Sin ninguno de los dos (alta desde cero) es
+  // null y cada useState de abajo cae en su valor por defecto de siempre.
+  const semilla = productoExistente || (productoBase ? {
+    ...productoBase,
+    id: undefined,
+    sku: undefined,
+    imagen: '',
+    imagenes: [],
+    colorIds: [],
+    estampadoId: null,
+    estado: 'Borrador',
+    lookVinculado: null,
+    tallas: (productoBase.tallas || []).map((t) => ({ ...t, stock: 0 })),
+    prendas: (productoBase.prendas || []).map((p) => ({ ...p, sku: '' })),
+  } : null);
+
   const tipoFijado = Boolean(tipoInicial) && !productoExistente;
-  const ocultarSeccionTipo = tipoFijado || Boolean(productoExistente);
-  const [tipo, setTipo] = useState(productoExistente?.tipo || tipoInicial || '');
-  const [categoriaId, setCategoriaId] = useState(productoExistente?.categoriaId || categoriaInicial || '');
+  const ocultarSeccionTipo = tipoFijado || Boolean(productoExistente) || Boolean(productoBase);
+  const [tipo, setTipo] = useState(semilla?.tipo || tipoInicial || '');
+  const [categoriaId, setCategoriaId] = useState(semilla?.categoriaId || categoriaInicial || '');
   const [idioma, setIdioma] = useState('es');
-  const [nombre, setNombre] = useState({ es: productoExistente?.nombre || '', en: '' });
-  const [descripcion, setDescripcion] = useState({ es: productoExistente?.descripcionCorta || '', en: '' });
-  const [imagenes, setImagenes] = useState(productoExistente?.imagenes || []);
-  const [estado, setEstado] = useState(productoExistente?.estado || 'Borrador');
-  const [precio, setPrecio] = useState(productoExistente?.precio || '');
-  const [tallas, setTallas] = useState(productoExistente?.tallas || []);
-  const [colorIds, setColorIds] = useState(productoExistente?.colorIds || []);
-  const [telaIds, setTelaIds] = useState(productoExistente?.telaIds || []);
-  const [coleccion, setColeccion] = useState(productoExistente?.coleccion || '');
+  const [nombre, setNombre] = useState({ es: semilla?.nombre || '', en: '' });
+  const [descripcion, setDescripcion] = useState({ es: semilla?.descripcionCorta || '', en: '' });
+  const [estado, setEstado] = useState(semilla?.estado || 'Borrador');
+  const [precio, setPrecio] = useState(semilla?.precio || '');
+  // Variantes de color — un producto puede subirse (o editarse) con varias
+  // variantes de color a la vez, una pestaña por variante con SU PROPIA
+  // Imágenes/Color o Estampado/Tallas y Stock (lo único que cambia entre
+  // colores); el resto del formulario (nombre, precio, composición,
+  // cuidados...) es compartido y se rellena una sola vez. Disponible al
+  // dar de alta un producto nuevo de cero y también al editar uno ya
+  // existente (así se puede añadir un color más sin salir del panel de
+  // edición) — solo "Duplicar" (productoBase) sigue trabajando sobre una
+  // única variante, sin pestañas ni botón de añadir otra: ya es en sí
+  // mismo el alta de una variante de color nueva.
+  const permiteVariasVariantes = !productoBase;
+  const [variantes, setVariantes] = useState(() => [{
+    id: 'v0',
+    imagenes: semilla?.imagenes || [],
+    colorIds: semilla?.colorIds || [],
+    estampadoId: semilla?.estampadoId || null,
+    tallas: semilla?.tallas || [],
+  }]);
+  const [varianteActivaIndice, setVarianteActivaIndice] = useState(0);
+  const varianteActiva = variantes[varianteActivaIndice] || variantes[0];
+
+  function actualizarVarianteActiva(cambios) {
+    setVariantes((actual) => actual.map((v, i) => (i === varianteActivaIndice ? { ...v, ...cambios } : v)));
+  }
+
+  function anadirVariante() {
+    setVariantes((actual) => [...actual, {
+      id: `v${Date.now()}`, imagenes: [], colorIds: [], estampadoId: null, tallas: [],
+    }]);
+    setVarianteActivaIndice(variantes.length);
+  }
+
+  function quitarVariante(indice) {
+    setVariantes((actual) => (actual.length > 1 ? actual.filter((_, i) => i !== indice) : actual));
+    setVarianteActivaIndice((actual) => (indice <= actual ? Math.max(0, actual - 1) : actual));
+  }
+
+  const [coleccion, setColeccion] = useState(semilla?.coleccion || '');
   // El desplegable arranca mostrando solo la colección vigente (FW27,
   // "Otoño-Invierno 2027") — no las 4 temporadas de coleccionesMock, para
   // no enseñar un histórico que hoy no aplica a ningún producto nuevo.
   // Si el producto que se edita ya pertenecía a otra colección (una de
   // las antiguas del mock), se añade también esa para no perder el dato
   // al abrir el formulario. Mismo criterio "demo, sin backend" que
-  // coloresDisponibles/telasDisponibles más abajo: una colección añadida
-  // aquí no se escribe de vuelta en mockData.js.
+  // coloresDisponibles más abajo: una colección añadida aquí no se
+  // escribe de vuelta en mockData.js.
   const [coleccionesDisponibles, setColeccionesDisponibles] = useState(() => {
     const vigente = coleccionesMock.filter((c) => c.valor === 'FW27');
-    const actual = productoExistente?.coleccion;
+    const actual = semilla?.coleccion;
     if (actual && !vigente.some((c) => c.valor === actual)) {
       const existente = coleccionesMock.find((c) => c.valor === actual);
       if (existente) return [...vigente, existente];
@@ -214,25 +271,64 @@ function FormularioProducto({
   const [estacionColeccionNueva, setEstacionColeccionNueva] = useState('fw');
   const [anioColeccionNuevo, setAnioColeccionNuevo] = useState('');
   const [nombresArchivos, setNombresArchivos] = useState({});
-  const [prendas, setPrendas] = useState(() => prendasIniciales(productoExistente));
-  // Copia local de coloresMock/telasMock — permite añadir un color/tela
-  // nuevos sin salir del modal (mismo criterio "demo, sin backend" que
-  // GestorColores.jsx/GestorTejidos.jsx: no se escribe de vuelta en
-  // mockData.js, pero el recién creado sí aparece al momento como chip
-  // seleccionable aquí).
+  const [prendas, setPrendas] = useState(() => prendasIniciales(semilla));
+  // Copia local de coloresMock — permite añadir un color nuevo sin salir
+  // del modal (mismo criterio "demo, sin backend" que GestorColores.jsx:
+  // no se escribe de vuelta en mockData.js, pero el recién creado sí
+  // aparece al momento como chip seleccionable aquí).
   const [coloresDisponibles, setColoresDisponibles] = useState(coloresMock);
-  const [telasDisponibles, setTelasDisponibles] = useState(telasMock);
-  const [nombreColorNuevo, setNombreColorNuevo] = useState('');
+  const [nombreColorNuevoEs, setNombreColorNuevoEs] = useState('');
+  const [nombreColorNuevoEn, setNombreColorNuevoEn] = useState('');
+  // El nuevo color siempre encaja en una familia ya existente (Neutros,
+  // Rojos y vinos...) — el desplegable no ofrece "crear familia", arranca
+  // en la primera para que nunca quede sin seleccionar.
+  const [familiaColorNueva, setFamiliaColorNueva] = useState(familiasColorMock[0]?.id || '');
   const [hexColorNuevo, setHexColorNuevo] = useState('#000000');
+  // Familia de color actualmente desplegada bajo la rejilla de "padres"
+  // (null = ninguna) — un solo grupo abierto a la vez, ver Colores más
+  // abajo.
+  const [familiaColorActiva, setFamiliaColorActiva] = useState(null);
   // El input HEX es texto libre mientras se escribe ("#6E263" a mitad de
   // teclear no es un hex válido todavía) — el swatch nativo <input
   // type="color"> exige siempre un #rrggbb completo, así que recibe esta
   // versión saneada en vez de hexColorNuevo tal cual.
   const hexColorValido = /^#[0-9a-fA-F]{6}$/.test(hexColorNuevo) ? hexColorNuevo : '#000000';
-  const [nombreTelaNueva, setNombreTelaNueva] = useState('');
-  const [composicionTelaNueva, setComposicionTelaNueva] = useState('');
-  const [imagenTelaNueva, setImagenTelaNueva] = useState('');
-  const [subiendoImagenTela, setSubiendoImagenTela] = useState(false);
+  // Estampados: biblioteca de la sesión (igual que coloresDisponibles),
+  // sin mock previo — arranca vacía porque no hay biblioteca de fábrica de
+  // estampados, solo lo que suba el admin aquí. `estampadoId` (dentro de
+  // la variante activa) es excluyente con `colorIds` (spec: "Selecciona
+  // un color o estampado" — uno u otro, nunca los dos), así que elegir
+  // uno vacía el otro.
+  const [estampadosDisponibles, setEstampadosDisponibles] = useState([]);
+  // Qué fila de alta se enseña bajo la rejilla de padres/estampados —
+  // solo una a la vez, y ninguna por defecto (null) hasta que el admin
+  // toca uno de los dos botones.
+  const [modoAnadir, setModoAnadir] = useState(null);
+  const [nombreEstampadoNuevoEs, setNombreEstampadoNuevoEs] = useState('');
+  const [nombreEstampadoNuevoEn, setNombreEstampadoNuevoEn] = useState('');
+  const [imagenEstampadoNueva, setImagenEstampadoNueva] = useState('');
+  const [subiendoImagenEstampado, setSubiendoImagenEstampado] = useState(false);
+  // Composición y Origen: campos directos del producto, sin biblioteca
+  // reutilizable (a diferencia de Colores/Telas) — cada producto escribe
+  // los suyos, no hay chips que guardar ni seleccionar. Bilingües como
+  // Nombre/Descripción (objeto {es, en} + su propio SelectorIdioma, no
+  // comparte el `idioma` de "Datos comunes" porque son secciones
+  // independientes del formulario).
+  const [idiomaComposicion, setIdiomaComposicion] = useState('es');
+  const [composicion, setComposicion] = useState({ es: semilla?.composicion?.es || '', en: semilla?.composicion?.en || '' });
+  const [disenadoEn, setDisenadoEn] = useState({ es: semilla?.disenadoEn?.es || '', en: semilla?.disenadoEn?.en || '' });
+  const [fabricadoEn, setFabricadoEn] = useState({ es: semilla?.fabricadoEn?.es || '', en: semilla?.fabricadoEn?.en || '' });
+  const [tinturaEstampacion, setTinturaEstampacion] = useState({ es: semilla?.tinturaEstampacion?.es || '', en: semilla?.tinturaEstampacion?.en || '' });
+  const [origenTejido, setOrigenTejido] = useState({ es: semilla?.origenTejido?.es || '', en: semilla?.origenTejido?.en || '' });
+  // Cuidados: selección múltiple — una prenda suele llevar
+  // varias instrucciones a la vez (lavado + planchado + secado...), no una
+  // sola. cuidadosMock trae ya las más comunes agrupadas por categoría
+  // (ver categoriasCuidadoMock); el admin puede añadir cualquier otra.
+  const [cuidadosDisponibles, setCuidadosDisponibles] = useState(cuidadosMock);
+  const [cuidadoIds, setCuidadoIds] = useState(semilla?.cuidadoIds || []);
+  const [nombreCuidadoNuevoEs, setNombreCuidadoNuevoEs] = useState('');
+  const [nombreCuidadoNuevoEn, setNombreCuidadoNuevoEn] = useState('');
+  const [categoriaCuidadoNueva, setCategoriaCuidadoNueva] = useState(categoriasCuidadoMock[0]?.id || '');
   // Vínculo con el look de Runway/Novia/Fiesta que enseña esta misma
   // pieza en pasarela — `categorias` viene de CategoriasProvider (mismo
   // Context que ListaProductos.jsx/FormularioLook.jsx), así que un look
@@ -241,13 +337,31 @@ function FormularioProducto({
   // tiene ese lujo: productosMock ahí es la copia estática del import,
   // porque no existe un ProductosProvider — ver comentario en ese archivo.
   const { categorias } = useCategorias();
-  const [lookVinculado, setLookVinculado] = useState(productoExistente?.lookVinculado || null);
+  const [lookVinculado, setLookVinculado] = useState(semilla?.lookVinculado || null);
   const [buscarLook, setBuscarLook] = useState('');
   const [filtroTipoLook, setFiltroTipoLook] = useState('todos');
   const [filtroColeccionLook, setFiltroColeccionLook] = useState('todas');
+  // Reseñas de Clientas — dos vías, igual de válidas: vincular una reseña
+  // que ya existe en /admin/resenas (resenasMock, buscador igual que
+  // "Vincular a Runway...") o subir una nueva directamente aquí. La nueva
+  // solo vive en la sesión de este formulario (mismo límite "demo, sin
+  // backend" que coloresDisponibles): no aparece en /admin/resenas hasta
+  // que exista un backend real.
+  const [resenasVinculadas, setResenasVinculadas] = useState(() => (
+    productoExistente ? resenasMock.filter((r) => r.productoId === productoExistente.id) : []
+  ));
+  const [modoResena, setModoResena] = useState(null);
+  const [buscarResena, setBuscarResena] = useState('');
+  const [nombreClienteResenaNueva, setNombreClienteResenaNueva] = useState('');
+  // Texto bilingüe como Composición y Origen — idioma propio, independiente
+  // del `idioma` de "Datos comunes" (secciones distintas del formulario).
+  const [idiomaResenaNueva, setIdiomaResenaNueva] = useState('es');
+  const [textoResenaNueva, setTextoResenaNueva] = useState({ es: '', en: '' });
+  const [fotosResenaNueva, setFotosResenaNueva] = useState([]);
 
   const inputArchivoRef = useRef(null);
-  const inputImagenTelaRef = useRef(null);
+  const inputImagenEstampadoRef = useRef(null);
+  const inputFotosResenaRef = useRef(null);
 
   async function agregarImagenes(archivos) {
     const lista = Array.from(archivos || []);
@@ -256,8 +370,8 @@ function FormularioProducto({
     let pesoOriginal = 0;
     let pesoComprimido = 0;
     let algunaPesada = false;
-    let posicion = imagenes.length;
-    const total = imagenes.length + lista.length;
+    let posicion = varianteActiva.imagenes.length;
+    const total = varianteActiva.imagenes.length + lista.length;
     const nombresNuevos = {};
 
     const nuevas = await Promise.all(lista.map(async (archivo) => {
@@ -276,7 +390,7 @@ function FormularioProducto({
       const archivoNombrado = new File(
         [blobFinal],
         nombreArchivoImagen({
-          nombre, colorIds, tipo, posicion: miPosicion, total, mime: blobFinal.type,
+          nombre, colorIds: varianteActiva.colorIds, tipo, posicion: miPosicion, total, mime: blobFinal.type,
         }),
         { type: blobFinal.type }
       );
@@ -285,13 +399,29 @@ function FormularioProducto({
       return url;
     }));
 
-    setImagenes((actual) => [...actual, ...nuevas]);
+    actualizarVarianteActiva({ imagenes: [...varianteActiva.imagenes, ...nuevas] });
     setNombresArchivos((actual) => ({ ...actual, ...nombresNuevos }));
 
     const enMb = (bytes) => (bytes / (1024 * 1024)).toFixed(1);
     const resumen = `Imágenes optimizadas: ${enMb(pesoOriginal)} MB → ${enMb(pesoComprimido)} MB (demo)`;
     mostrarToast(algunaPesada ? `${resumen}. Alguna sigue pesando bastante — considera recortarla.` : resumen);
   }
+
+  // Agrupa coloresDisponibles bajo su familia (Neutros, Rojos y vinos...)
+  // en el orden de familiasColorMock — una familia sin ningún color
+  // asignado todavía no se muestra (no hay nada que pintar en ella).
+  // `muestras` resuelve los 1-2 ids curados de familiasColorMock a su hex,
+  // siempre contra coloresMock (no coloresDisponibles) — el par de
+  // cuadraditos del grupo es fijo, no cambia si se añade un color nuevo.
+  const gruposColores = useMemo(() => (
+    familiasColorMock
+      .map((f) => ({
+        ...f,
+        muestras: f.muestras.map((id) => coloresMock.find((c) => c.id === id)?.hex).filter(Boolean),
+        colores: coloresDisponibles.filter((c) => c.familia === f.id),
+      }))
+      .filter((f) => f.colores.length > 0)
+  ), [coloresDisponibles]);
 
   const campos = CAMPOS_TIPO[tipo];
   const idiomasCompletados = ['es', 'en'].filter((cod) => nombre[cod]?.trim() && descripcion[cod]?.trim());
@@ -300,20 +430,23 @@ function FormularioProducto({
   // editorial, no un producto que se vincule a sí mismo.
   const esVendible = tipo === 'pret-a-porter' || tipo === 'atelier';
 
-  // Numeración de secciones — Imágenes y Prendas y SKU son siempre 1 y 2;
-  // el resto se calcula con un contador porque "Tipo de producto" es
-  // opcional (ocultarSeccionTipo) y "Colores"/"Tejidos y Composición" solo
-  // existen para los tipos que los usan (CAMPOS_TIPO) — evita reescribir
-  // ternarios a mano en cada FormSeccion cuando cambia qué va antes de qué.
-  let contadorSeccion = 2;
+  // Numeración de secciones — Imágenes, Datos comunes y Prendas y SKU son
+  // siempre 1, 2 y 3; el resto se calcula con un contador porque "Tipo de
+  // producto" es opcional (ocultarSeccionTipo) y "Colores"/"Composición y
+  // Cuidados" solo existen para los tipos que los usan (CAMPOS_TIPO) —
+  // evita reescribir ternarios a mano en cada FormSeccion cuando cambia
+  // qué va antes de qué. Colores y Estampados va antes que Tallas y Stock
+  // (numeroColores se calcula antes que numeroTallas) a propósito.
+  let contadorSeccion = 3;
   const numeroTipo = !ocultarSeccionTipo ? (contadorSeccion += 1) : null;
-  const numeroDatos = (contadorSeccion += 1);
   const numeroEspecificos = (contadorSeccion += 1);
   const numeroColeccion = campos?.coleccion ? (contadorSeccion += 1) : null;
-  const numeroTallas = campos?.tallas ? (contadorSeccion += 1) : null;
   const numeroColores = campos?.colores ? (contadorSeccion += 1) : null;
-  const numeroTejidos = campos?.telas ? (contadorSeccion += 1) : null;
+  const numeroTallas = campos?.tallas ? (contadorSeccion += 1) : null;
+  const numeroComposicion = campos?.telas ? (contadorSeccion += 1) : null;
+  const numeroCuidados = campos?.telas ? (contadorSeccion += 1) : null;
   const numeroVinculo = esVendible ? (contadorSeccion += 1) : null;
+  const numeroResenas = esVendible ? (contadorSeccion += 1) : null;
 
   // Aplana categorias.archivo/novia/fiesta → una fila por look ya con
   // alguna imagen o prenda subida (los huecos "Look N" vacíos no aportan
@@ -369,6 +502,62 @@ function FormularioProducto({
     setBuscarLook('');
   }
 
+  // Excluye las ya vinculadas — no tiene sentido volver a enseñarlas en
+  // los resultados de búsqueda.
+  const resultadosResena = useMemo(() => {
+    const q = buscarResena.trim().toLowerCase();
+    const vinculadasIds = resenasVinculadas.map((r) => r.id);
+    return resenasMock
+      .filter((r) => !vinculadasIds.includes(r.id))
+      .filter((r) => !q || r.nombreCliente.toLowerCase().includes(q) || r.texto.toLowerCase().includes(q));
+  }, [buscarResena, resenasVinculadas]);
+
+  function vincularResenaExistente(resena) {
+    setResenasVinculadas((actual) => [...actual, resena]);
+    setBuscarResena('');
+    setModoResena(null);
+  }
+
+  function quitarResenaVinculada(id) {
+    setResenasVinculadas((actual) => actual.filter((r) => r.id !== id));
+  }
+
+  async function agregarFotosResena(archivos) {
+    const lista = Array.from(archivos || []);
+    if (!lista.length) return;
+    const nuevas = await Promise.all(lista.map(async (archivo) => {
+      let blobFinal;
+      try {
+        blobFinal = await comprimirImagen(archivo);
+      } catch {
+        blobFinal = archivo;
+      }
+      return URL.createObjectURL(blobFinal);
+    }));
+    setFotosResenaNueva((actual) => [...actual, ...nuevas]);
+  }
+
+  function quitarFotoResenaNueva(src) {
+    setFotosResenaNueva((actual) => actual.filter((s) => s !== src));
+  }
+
+  function anadirResenaNueva() {
+    if (!nombreClienteResenaNueva.trim() || !textoResenaNueva.es.trim()) return;
+    const nueva = {
+      id: `res${Date.now()}`,
+      nombreCliente: nombreClienteResenaNueva.trim(),
+      texto: { es: textoResenaNueva.es.trim(), en: textoResenaNueva.en.trim() },
+      fotos: fotosResenaNueva,
+      estado: 'Oculta',
+      productoId: productoExistente?.id,
+    };
+    setResenasVinculadas((actual) => [...actual, nueva]);
+    setModoResena(null);
+    setNombreClienteResenaNueva('');
+    setTextoResenaNueva({ es: '', en: '' });
+    setFotosResenaNueva([]);
+  }
+
   function actualizarPrenda(indice, campo, valor) {
     setPrendas((actual) => actual.map((p, i) => (i === indice ? { ...p, [campo]: valor } : p)));
   }
@@ -382,40 +571,61 @@ function FormularioProducto({
   }
 
   function anadirColorNuevo() {
-    if (!nombreColorNuevo.trim()) return;
-    const nuevo = { id: `col${Date.now()}`, nombre: nombreColorNuevo.trim(), hex: hexColorValido };
+    if (!nombreColorNuevoEs.trim() || !nombreColorNuevoEn.trim() || !familiaColorNueva) return;
+    const nuevo = {
+      id: `col${Date.now()}`,
+      familia: familiaColorNueva,
+      nombre: { es: nombreColorNuevoEs.trim(), en: nombreColorNuevoEn.trim() },
+      hex: hexColorValido,
+    };
     setColoresDisponibles((actual) => [...actual, nuevo]);
-    setColorIds((actual) => [...actual, nuevo.id]);
-    setNombreColorNuevo('');
+    actualizarVarianteActiva({ colorIds: [nuevo.id], estampadoId: null });
+    setFamiliaColorActiva(familiaColorNueva);
+    setModoAnadir(null);
+    setNombreColorNuevoEs('');
+    setNombreColorNuevoEn('');
     setHexColorNuevo('#000000');
   }
 
-  async function agregarImagenTela(archivo) {
+  async function agregarImagenEstampado(archivo) {
     if (!archivo) return;
-    setSubiendoImagenTela(true);
+    setSubiendoImagenEstampado(true);
     let blobFinal;
     try {
       blobFinal = await comprimirImagenTela(archivo);
     } catch {
       blobFinal = archivo;
     }
-    setImagenTelaNueva(URL.createObjectURL(blobFinal));
-    setSubiendoImagenTela(false);
+    setImagenEstampadoNueva(URL.createObjectURL(blobFinal));
+    setSubiendoImagenEstampado(false);
   }
 
-  function anadirTelaNueva() {
-    if (!nombreTelaNueva.trim()) return;
-    const nueva = {
-      id: `tel${Date.now()}`,
-      nombre: nombreTelaNueva.trim(),
-      composicion: composicionTelaNueva.trim(),
-      imagen: imagenTelaNueva || undefined,
+  function anadirEstampadoNuevo() {
+    if (!nombreEstampadoNuevoEs.trim() || !nombreEstampadoNuevoEn.trim() || !imagenEstampadoNueva) return;
+    const nuevo = {
+      id: `est${Date.now()}`,
+      nombre: { es: nombreEstampadoNuevoEs.trim(), en: nombreEstampadoNuevoEn.trim() },
+      imagen: imagenEstampadoNueva,
     };
-    setTelasDisponibles((actual) => [...actual, nueva]);
-    setTelaIds((actual) => [...actual, nueva.id]);
-    setNombreTelaNueva('');
-    setComposicionTelaNueva('');
-    setImagenTelaNueva('');
+    setEstampadosDisponibles((actual) => [...actual, nuevo]);
+    actualizarVarianteActiva({ estampadoId: nuevo.id, colorIds: [] });
+    setModoAnadir(null);
+    setNombreEstampadoNuevoEs('');
+    setNombreEstampadoNuevoEn('');
+    setImagenEstampadoNueva('');
+  }
+
+  function anadirCuidadoNuevo() {
+    if (!nombreCuidadoNuevoEs.trim() || !nombreCuidadoNuevoEn.trim() || !categoriaCuidadoNueva) return;
+    const nuevo = {
+      id: `cui${Date.now()}`,
+      categoria: categoriaCuidadoNueva,
+      texto: { es: nombreCuidadoNuevoEs.trim(), en: nombreCuidadoNuevoEn.trim() },
+    };
+    setCuidadosDisponibles((actual) => [...actual, nuevo]);
+    setCuidadoIds((actual) => [...actual, nuevo.id]);
+    setNombreCuidadoNuevoEs('');
+    setNombreCuidadoNuevoEn('');
   }
 
   function anadirColeccionNueva() {
@@ -448,64 +658,156 @@ function FormularioProducto({
   }
 
   function alternarTalla(talla) {
-    setTallas((actual) => (
-      actual.some((f) => f.talla === talla)
+    const actual = varianteActiva.tallas;
+    actualizarVarianteActiva({
+      tallas: actual.some((f) => f.talla === talla)
         ? actual.filter((f) => f.talla !== talla)
-        : [...actual, { talla, stock: 0 }]
-    ));
+        : [...actual, { talla, stock: 0 }],
+    });
   }
 
   function cambiarStockTalla(talla, stock) {
-    setTallas((actual) => actual.map((f) => (f.talla === talla ? { ...f, stock } : f)));
+    actualizarVarianteActiva({
+      tallas: varianteActiva.tallas.map((f) => (f.talla === talla ? { ...f, stock } : f)),
+    });
   }
 
   const MENSAJE_GUARDADO = {
-    Activo: 'Producto publicado (demo)',
-    Programado: 'Guardado para publicar más tarde — no visible en la web todavía (demo)',
-    Borrador: 'Borrador guardado (demo)',
+    Activo: (n) => (n > 1 ? `${n} variantes publicadas (demo)` : 'Producto publicado (demo)'),
+    Programado: (n) => (n > 1
+      ? `${n} variantes guardadas para publicar más tarde — no visibles en la web todavía (demo)`
+      : 'Guardado para publicar más tarde — no visible en la web todavía (demo)'),
+    Borrador: (n) => (n > 1 ? `${n} variantes guardadas como borrador (demo)` : 'Borrador guardado (demo)'),
   };
 
   function guardar(estadoFinal) {
     setEstado(estadoFinal);
-    mostrarToast(MENSAJE_GUARDADO[estadoFinal]);
+    mostrarToast(MENSAJE_GUARDADO[estadoFinal](variantes.length));
 
     if (onGuardado) {
-      onGuardado({
-        id: productoExistente?.id || `p${Date.now()}`,
+      // Campos compartidos por todas las variantes de color de este
+      // producto — se rellenan una sola vez en el formulario, no por
+      // variante (ver `variantes`/`camposApilados` de Colores más abajo).
+      const camposComunes = {
         tipo,
         categoriaId,
         nombre: nombre.es,
         descripcionCorta: descripcion.es,
-        imagen: imagenes[0] || '',
-        imagenes,
         ...(campos.precio && !campos.precio.consulta && { precio }),
-        ...(campos.tallas && { tallas }),
-        ...(campos.colores && { colorIds }),
-        ...(campos.telas && { telaIds }),
+        ...(campos.telas && {
+          composicion: (composicion.es.trim() || composicion.en.trim()) ? composicion : undefined,
+          disenadoEn: (disenadoEn.es.trim() || disenadoEn.en.trim()) ? disenadoEn : undefined,
+          fabricadoEn: (fabricadoEn.es.trim() || fabricadoEn.en.trim()) ? fabricadoEn : undefined,
+          tinturaEstampacion: (tinturaEstampacion.es.trim() || tinturaEstampacion.en.trim()) ? tinturaEstampacion : undefined,
+          origenTejido: (origenTejido.es.trim() || origenTejido.en.trim()) ? origenTejido : undefined,
+          cuidadoIds,
+        }),
         ...(campos.coleccion && { coleccion }),
         prendas: prendas.filter((p) => p.nombre.trim() || p.sku.trim()),
-        ...(esVendible && { lookVinculado: lookVinculado || undefined }),
         estado: estadoFinal,
-        sku: productoExistente?.sku || `FC-NEW-${Date.now().toString().slice(-4)}`,
+      };
+
+      const idRaiz = semilla?.id || `p${Date.now()}`;
+
+      // Una fila de productosMock por variante — la primera es la "raíz"
+      // (se queda con el id/SKU del producto que se está editando, si lo
+      // hay, y con lookVinculado/reseñas: son contenido editorial, no
+      // tiene sentido duplicarlo en cada color); el resto son variantes
+      // nuevas encadenadas a ella vía `varianteDeId`, mismo campo que ya
+      // usa "Duplicar" en ListaProductos.jsx.
+      const productos = variantes.map((v, indice) => {
+        const esRaiz = indice === 0;
+        const varianteDeId = esRaiz
+          ? (productoBase?.id || productoExistente?.varianteDeId || undefined)
+          : idRaiz;
+        return {
+          id: esRaiz ? idRaiz : `p${Date.now()}${indice}`,
+          ...(varianteDeId && { varianteDeId }),
+          ...camposComunes,
+          imagen: v.imagenes[0] || '',
+          imagenes: v.imagenes,
+          ...(campos.tallas && { tallas: v.tallas }),
+          ...(campos.colores && { colorIds: v.colorIds, estampadoId: v.estampadoId || undefined }),
+          ...(esRaiz && esVendible && { lookVinculado: lookVinculado || undefined, resenas: resenasVinculadas }),
+          sku: esRaiz ? (semilla?.sku || `FC-NEW-${Date.now().toString().slice(-4)}`) : `FC-NEW-${Date.now().toString().slice(-4)}${indice}`,
+        };
       });
+
+      // Editar sin tocar "Variante de color" sigue mandando un único objeto
+      // (mismo contrato de siempre para guardarEdicion) — solo se manda el
+      // array completo si, estando en edición, se han añadido variantes
+      // nuevas además de la raíz.
+      onGuardado(productoExistente && productos.length === 1 ? productos[0] : productos);
       return;
     }
 
     router.push(tipo ? rutaTipoProducto(tipo) : '/admin/productos');
   }
 
+  // Pestaña por variante de color — solo al dar de alta un producto nuevo
+  // de cero (permiteVariasVariantes). Vive UNA sola vez, pegada (sticky)
+  // justo debajo de la cabecera del modal (ver .cabeceraFija más abajo),
+  // no repetida dentro de Imágenes/Colores y Estampados/Tallas y Stock:
+  // así el admin puede cambiar de variante sin tener que volver a subir
+  // del todo, sea cual sea la sección por la que vaya scrolleando.
+  const variantesTabsUI = permiteVariasVariantes && (
+    <div className={styles.variantesTabs}>
+      {variantes.map((v, indice) => {
+        const colorDeVariante = coloresDisponibles.find((c) => v.colorIds.includes(c.id));
+        const estampadoDeVariante = estampadosDisponibles.find((e) => e.id === v.estampadoId);
+        const etiqueta = colorDeVariante?.nombre?.es || estampadoDeVariante?.nombre?.es || `Variante ${indice + 1}`;
+        const activa = indice === varianteActivaIndice;
+        return (
+          <div key={v.id} className={styles.varianteTabWrap}>
+            <button
+              type="button"
+              className={`${styles.varianteTab} ${activa ? styles.varianteTabActiva : ''}`}
+              onClick={() => setVarianteActivaIndice(indice)}
+            >
+              {colorDeVariante && <span className={styles.varianteTabMuestra} style={{ background: colorDeVariante.hex }} />}
+              {etiqueta}
+            </button>
+            {variantes.length > 1 && (
+              <button
+                type="button"
+                className={`${styles.varianteTabQuitar} ${activa ? styles.varianteTabQuitarActiva : ''}`}
+                aria-label={`Quitar ${etiqueta}`}
+                onClick={() => quitarVariante(indice)}
+              >
+                <X size={12} />
+              </button>
+            )}
+          </div>
+        );
+      })}
+      <Boton variante="contorno" tamano="s" className={styles.varianteAnadirBoton} onClick={anadirVariante}>
+        <Plus size={14} />
+        Variante de color
+      </Boton>
+    </div>
+  );
+
   return (
     <div>
-      <PageHeader
-        titulo={productoExistente ? `Editar: ${productoExistente.nombre}` : 'Nuevo producto'}
-        subtitulo={productoExistente ? `SKU ${productoExistente.sku}` : 'Completa los pasos en orden'}
-      />
+      <div className={styles.cabeceraFija}>
+        <PageHeader
+          titulo={productoExistente
+            ? `Editar: ${productoExistente.nombre}`
+            : productoBase ? `Nueva variante: ${productoBase.nombre}` : 'Nuevo producto'}
+          subtitulo={productoExistente
+            ? `SKU ${productoExistente.sku}`
+            : productoBase ? 'Mismos datos que el original — cambia el color, sube las fotos y asigna un SKU nuevo.' : 'Completa los pasos en orden'}
+        />
+        {variantesTabsUI}
+      </div>
 
       <FormSeccion
         numero={1}
         titulo="Imágenes"
-        descripcion="Mínimo 1, recomendado 3-6 — arrastra para reordenar."
-        accion={imagenes.length > 0 && (
+        descripcion={permiteVariasVariantes
+          ? 'Mínimo 1 por variante, recomendado 3-6 — arrastra para reordenar.'
+          : 'Mínimo 1, recomendado 3-6 — arrastra para reordenar.'}
+        accion={varianteActiva.imagenes.length > 0 && (
           <Boton variante="solido" onClick={() => inputArchivoRef.current?.click()}>
             <Upload size={14} />
             Subir otra imagen
@@ -514,7 +816,7 @@ function FormularioProducto({
       >
         <div className={styles.galeria}>
           <div className={styles.subirCaja}>
-            {imagenes.length === 0 ? (
+            {varianteActiva.imagenes.length === 0 ? (
               <button type="button" className={styles.subirVacio} onClick={() => inputArchivoRef.current?.click()}>
                 <Upload size={22} strokeWidth={1} className={styles.subirIcono} aria-hidden="true" />
                 <span>Añadir imagen</span>
@@ -522,9 +824,9 @@ function FormularioProducto({
             ) : (
               <div className={styles.imagenesScroll}>
                 <DragList
-                  items={imagenes.map((src) => ({ src, nombreArchivo: nombresArchivos[src] }))}
+                  items={varianteActiva.imagenes.map((src) => ({ src, nombreArchivo: nombresArchivos[src] }))}
                   claveItem={(item) => item.src}
-                  onReorder={(nuevo) => setImagenes(nuevo.map((i) => i.src))}
+                  onReorder={(nuevo) => actualizarVarianteActiva({ imagenes: nuevo.map((i) => i.src) })}
                   orientacion="horizontal"
                   renderItem={(item, indice) => (
                     <div className={styles.imagenItem}>
@@ -535,7 +837,7 @@ function FormularioProducto({
                         type="button"
                         className={styles.imagenQuitar}
                         aria-label="Quitar imagen"
-                        onClick={() => setImagenes(imagenes.filter((s) => s !== item.src))}
+                        onClick={() => actualizarVarianteActiva({ imagenes: varianteActiva.imagenes.filter((s) => s !== item.src) })}
                       >
                         <X size={14} />
                       </button>
@@ -562,7 +864,26 @@ function FormularioProducto({
         </div>
       </FormSeccion>
 
-      <FormSeccion numero={2} titulo="Prendas y SKU" descripcion="Cada pieza del producto con su código de inventario — útil si es un conjunto de varias piezas.">
+      <FormSeccion numero={2} titulo="Datos comunes" descripcion="Nombre y descripción necesitan versión en los dos idiomas del sitio.">
+        <div className={styles.campoAncho}>
+          <SelectorIdioma idioma={idioma} onChange={setIdioma} completados={idiomasCompletados} />
+        </div>
+        <Input
+          etiqueta={`Nombre (${idioma.toUpperCase()})`}
+          valor={nombre[idioma]}
+          onChange={(e) => setNombre({ ...nombre, [idioma]: e.target.value })}
+        />
+        <div className={styles.campoAncho}>
+          <span className={styles.etiquetaCampo}>{`Descripción corta (${idioma.toUpperCase()})`}</span>
+          <textarea
+            className={styles.textarea}
+            value={descripcion[idioma]}
+            onChange={(e) => setDescripcion({ ...descripcion, [idioma]: e.target.value })}
+          />
+        </div>
+      </FormSeccion>
+
+      <FormSeccion numero={3} titulo="Prendas y SKU" descripcion="Cada pieza del producto con su código de inventario — útil si es un conjunto de varias piezas.">
         <div className={styles.campoAncho}>
           <div className={styles.prendasLista}>
             {prendas.map((prenda, indice) => (
@@ -617,25 +938,6 @@ function FormularioProducto({
 
       {tipo && (
         <>
-          <FormSeccion numero={numeroDatos} titulo="Datos comunes" descripcion="Nombre y descripción necesitan versión en los dos idiomas del sitio.">
-            <div className={styles.campoAncho}>
-              <SelectorIdioma idioma={idioma} onChange={setIdioma} completados={idiomasCompletados} />
-            </div>
-            <Input
-              etiqueta={`Nombre (${idioma.toUpperCase()})`}
-              valor={nombre[idioma]}
-              onChange={(e) => setNombre({ ...nombre, [idioma]: e.target.value })}
-            />
-            <div className={styles.campoAncho}>
-              <span className={styles.etiquetaCampo}>{`Descripción corta (${idioma.toUpperCase()})`}</span>
-              <textarea
-                className={styles.textarea}
-                value={descripcion[idioma]}
-                onChange={(e) => setDescripcion({ ...descripcion, [idioma]: e.target.value })}
-              />
-            </div>
-          </FormSeccion>
-
           <FormSeccion numero={numeroEspecificos} titulo="Precio de compra" descripcion={`Solo lo relevante para ${tiposProducto.find((t) => t.valor === tipo).etiqueta}.`}>
             {campos.precio && (campos.precio.consulta ? (
               <p className={styles.precioConsulta}>Precios a consultar</p>
@@ -684,13 +986,205 @@ function FormularioProducto({
             </FormSeccion>
           )}
 
+          {campos.colores && (
+            <FormSeccion
+              numero={numeroColores}
+              titulo="Colores y Estampados"
+              descripcion={`Selecciona un color o estampado para tu producto${campos.colores === 'opcional' ? ' (opcional)' : ''}.`}
+            >
+              <div className={styles.campoAncho}>
+                <div className={styles.familiasBloque}>
+                  <span className={styles.etiquetaCampo}>COLORES</span>
+                  <div className={styles.familiasGrid}>
+                    {gruposColores.map((grupo) => {
+                      const seleccionados = grupo.colores.filter((c) => varianteActiva.colorIds.includes(c.id)).length;
+                      const activa = familiaColorActiva === grupo.id;
+                      return (
+                        <button
+                          key={grupo.id}
+                          type="button"
+                          className={`${styles.familiaChip} ${(activa || seleccionados > 0) ? styles.familiaChipActiva : ''}`}
+                          onClick={() => setFamiliaColorActiva(activa ? null : grupo.id)}
+                        >
+                          <span className={styles.familiaMuestras}>
+                            {grupo.muestras.map((hex) => (
+                              <span key={hex} className={styles.familiaMuestra} style={{ background: hex }} />
+                            ))}
+                          </span>
+                          {grupo.etiqueta}
+                          {seleccionados > 0 && <span className={styles.familiaBadge}>{seleccionados}</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {familiaColorActiva && (
+                  <div className={styles.coloresPanel}>
+                    <span className={styles.etiquetaCampo}>Selecciona un color</span>
+                    <div className={styles.coloresGrid}>
+                      {gruposColores.find((g) => g.id === familiaColorActiva)?.colores.map((c) => {
+                        const activo = varianteActiva.colorIds.includes(c.id);
+                        return (
+                          <button
+                            key={c.id}
+                            type="button"
+                            className={`${styles.colorChip} ${activo ? styles.colorChipActivo : ''}`}
+                            onClick={() => {
+                              if (activo) {
+                                actualizarVarianteActiva({ colorIds: [] });
+                              } else {
+                                actualizarVarianteActiva({ colorIds: [c.id], estampadoId: null });
+                                setModoAnadir(null);
+                              }
+                            }}
+                          >
+                            <span className={styles.colorPunto} style={{ background: c.hex }} />
+                            <span className={styles.colorChipTexto}>
+                              <span className={styles.colorChipNombre}>{c.nombre.es}</span>
+                              <span className={styles.colorChipTraduccion}>{c.nombre.en}</span>
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {estampadosDisponibles.length > 0 && (
+                  <div className={styles.familiasBloque}>
+                    <span className={styles.etiquetaCampo}>ESTAMPADOS</span>
+                    <div className={styles.estampadosGrid}>
+                      {estampadosDisponibles.map((p) => {
+                        const activo = varianteActiva.estampadoId === p.id;
+                        return (
+                          <button
+                            key={p.id}
+                            type="button"
+                            className={`${styles.estampadoChip} ${activo ? styles.estampadoChipActivo : ''}`}
+                            onClick={() => {
+                              if (activo) {
+                                actualizarVarianteActiva({ estampadoId: null });
+                              } else {
+                                actualizarVarianteActiva({ estampadoId: p.id, colorIds: [] });
+                                setModoAnadir(null);
+                              }
+                            }}
+                          >
+                            <img src={p.imagen} alt="" className={styles.estampadoChipImagen} />
+                            <span className={styles.colorChipTexto}>
+                              <span className={styles.colorChipNombre}>{p.nombre.es}</span>
+                              <span className={styles.colorChipTraduccion}>{p.nombre.en}</span>
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                <div className={styles.modoAnadirGrupo}>
+                  <Boton
+                    variante="contorno"
+                    tamano="s"
+                    className={modoAnadir === 'color' ? styles.modoAnadirBotonActivo : ''}
+                    onClick={() => setModoAnadir(modoAnadir === 'color' ? null : 'color')}
+                  >
+                    <Plus size={14} />
+                    Añadir color
+                  </Boton>
+                  <Boton
+                    variante="contorno"
+                    tamano="s"
+                    className={modoAnadir === 'estampado' ? styles.modoAnadirBotonActivo : ''}
+                    onClick={() => setModoAnadir(modoAnadir === 'estampado' ? null : 'estampado')}
+                  >
+                    <Plus size={14} />
+                    Añadir estampado
+                  </Boton>
+                </div>
+
+                {modoAnadir === 'color' && (
+                  <div className={styles.anadirFila}>
+                    <label className={styles.campoColor}>
+                      <span className={styles.etiquetaCampo}>Selector</span>
+                      <input type="color" value={hexColorValido} onChange={(e) => setHexColorNuevo(e.target.value)} className={styles.inputColor} aria-label="Elegir color" />
+                    </label>
+                    {/* HEX como campo editable junto al swatch — el swatch da el atajo
+                        visual rápido, el texto permite pegar/escribir un código exacto;
+                        ambos sincronizados con el mismo estado. */}
+                    <Input etiqueta="HEX" valor={hexColorNuevo} onChange={(e) => setHexColorNuevo(e.target.value)} placeholder="#6E2635" />
+                    <Input etiqueta="Nombre (ES)" valor={nombreColorNuevoEs} onChange={(e) => setNombreColorNuevoEs(e.target.value)} placeholder="Burdeos" />
+                    <Input etiqueta="Name (EN)" valor={nombreColorNuevoEn} onChange={(e) => setNombreColorNuevoEn(e.target.value)} placeholder="Bordeaux" />
+                    <label>
+                      <span className={styles.etiquetaCampo}>Grupo</span>
+                      <select className={styles.selectInput} value={familiaColorNueva} onChange={(e) => setFamiliaColorNueva(e.target.value)}>
+                        {familiasColorMock.map((f) => (
+                          <option key={f.id} value={f.id}>{f.etiqueta}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <Boton
+                      variante="contorno"
+                      tamano="s"
+                      onClick={anadirColorNuevo}
+                      desactivado={!nombreColorNuevoEs.trim() || !nombreColorNuevoEn.trim()}
+                    >
+                      Guardar color
+                    </Boton>
+                  </div>
+                )}
+
+                {modoAnadir === 'estampado' && (
+                  <div className={styles.anadirFila}>
+                    <div className={styles.campoColor}>
+                      <span className={styles.etiquetaCampo}>Imagen</span>
+                      <button
+                        type="button"
+                        className={`${styles.inputColor} ${styles.inputImagenTela}`}
+                        onClick={() => inputImagenEstampadoRef.current?.click()}
+                        aria-label="Subir foto del estampado"
+                      >
+                        {imagenEstampadoNueva ? (
+                          <img src={imagenEstampadoNueva} alt="" className={styles.inputImagenTelaPreview} />
+                        ) : (
+                          <Upload size={16} strokeWidth={1} aria-hidden="true" />
+                        )}
+                      </button>
+                      <input
+                        ref={inputImagenEstampadoRef}
+                        type="file"
+                        accept="image/*"
+                        className={styles.inputArchivo}
+                        onChange={(e) => {
+                          agregarImagenEstampado(e.target.files?.[0]);
+                          e.target.value = '';
+                        }}
+                      />
+                    </div>
+                    <Input etiqueta="Nombre (ES)" valor={nombreEstampadoNuevoEs} onChange={(e) => setNombreEstampadoNuevoEs(e.target.value)} placeholder="Flores" />
+                    <Input etiqueta="Name (EN)" valor={nombreEstampadoNuevoEn} onChange={(e) => setNombreEstampadoNuevoEn(e.target.value)} placeholder="Floral" />
+                    <Boton
+                      variante="contorno"
+                      tamano="s"
+                      onClick={anadirEstampadoNuevo}
+                      desactivado={!nombreEstampadoNuevoEs.trim() || !nombreEstampadoNuevoEn.trim() || !imagenEstampadoNueva || subiendoImagenEstampado}
+                    >
+                      {subiendoImagenEstampado ? 'Optimizando…' : 'Guardar estampado'}
+                    </Boton>
+                  </div>
+                )}
+              </div>
+            </FormSeccion>
+          )}
+
           {campos.tallas && (
             <FormSeccion numero={numeroTallas} titulo="Tallas y Stock" descripcion="Tallas disponibles y stock por talla.">
               <div className={styles.campoAncho}>
                 <span className={styles.etiquetaCampo}>Toca una talla para activarla</span>
                 <div className={styles.tallasGrid}>
                   {tallasEstandar.map((t) => {
-                    const fila = tallas.find((f) => f.talla === t);
+                    const fila = varianteActiva.tallas.find((f) => f.talla === t);
                     const activa = Boolean(fila);
                     return (
                       <div key={t} className={`${styles.tallaBox} ${activa ? styles.tallaBoxActiva : ''}`}>
@@ -715,99 +1209,110 @@ function FormularioProducto({
             </FormSeccion>
           )}
 
-          {campos.colores && (
-            <FormSeccion numero={numeroColores} titulo="Colores" descripcion={`Colores del producto${campos.colores === 'opcional' ? ' (opcional)' : ''}.`}>
+          {campos.telas && (
+            <FormSeccion
+              numero={numeroComposicion}
+              titulo="Composición y Origen"
+              descripcion={`Tejido y procedencia del producto${campos.telas === 'opcional' ? ' (opcional)' : ''}.`}
+            >
               <div className={styles.campoAncho}>
-                <span className={styles.etiquetaCampo}>Toca un color guardado en Materiales para activarlo, o añade uno nuevo</span>
-                <div className={styles.coloresGrid}>
-                  {coloresDisponibles.map((c) => {
-                    const activo = colorIds.includes(c.id);
-                    return (
-                      <button
-                        key={c.id}
-                        type="button"
-                        className={`${styles.colorChip} ${activo ? styles.colorChipActivo : ''}`}
-                        onClick={() => setColorIds(activo ? colorIds.filter((id) => id !== c.id) : [...colorIds, c.id])}
-                      >
-                        <span className={styles.colorPunto} style={{ background: c.hex }} />
-                        {c.nombre}
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className={styles.anadirFila}>
-                  <label className={styles.campoColor}>
-                    <span className={styles.etiquetaCampo}>Selector</span>
-                    <input type="color" value={hexColorValido} onChange={(e) => setHexColorNuevo(e.target.value)} className={styles.inputColor} aria-label="Elegir color" />
-                  </label>
-                  {/* HEX como campo editable junto al swatch — el swatch da el atajo
-                      visual rápido, el texto permite pegar/escribir un código exacto;
-                      ambos sincronizados con el mismo estado. */}
-                  <Input etiqueta="HEX" valor={hexColorNuevo} onChange={(e) => setHexColorNuevo(e.target.value)} placeholder="#6E2635" />
-                  <Input etiqueta="Nuevo color" valor={nombreColorNuevo} onChange={(e) => setNombreColorNuevo(e.target.value)} placeholder="Burdeos" />
-                  <Boton variante="contorno" tamano="s" onClick={anadirColorNuevo} desactivado={!nombreColorNuevo.trim()}>
-                    <Plus size={14} />
-                    Añadir color
-                  </Boton>
+                <SelectorIdioma idioma={idiomaComposicion} onChange={setIdiomaComposicion} />
+              </div>
+              <div className={styles.campoAncho}>
+                <div className={styles.camposApilados}>
+                  <div className={styles.campoAncho}>
+                    <span className={styles.etiquetaCampo}>{`Composición (${idiomaComposicion.toUpperCase()})`}</span>
+                    <textarea
+                      className={styles.textarea}
+                      value={composicion[idiomaComposicion]}
+                      onChange={(e) => setComposicion({ ...composicion, [idiomaComposicion]: e.target.value })}
+                      placeholder={idiomaComposicion === 'en' ? '70% cotton, 30% polyester' : '70% algodón, 30% poliéster'}
+                    />
+                  </div>
+                  <Input
+                    etiqueta={`Diseñado en (${idiomaComposicion.toUpperCase()})`}
+                    valor={disenadoEn[idiomaComposicion]}
+                    onChange={(e) => setDisenadoEn({ ...disenadoEn, [idiomaComposicion]: e.target.value })}
+                    placeholder={idiomaComposicion === 'en' ? 'Spain' : 'España'}
+                  />
+                  <Input
+                    etiqueta={`Fabricado en (${idiomaComposicion.toUpperCase()})`}
+                    valor={fabricadoEn[idiomaComposicion]}
+                    onChange={(e) => setFabricadoEn({ ...fabricadoEn, [idiomaComposicion]: e.target.value })}
+                    placeholder="Portugal"
+                  />
+                  <Input
+                    etiqueta={`Tintura y estampación (${idiomaComposicion.toUpperCase()})`}
+                    valor={tinturaEstampacion[idiomaComposicion]}
+                    onChange={(e) => setTinturaEstampacion({ ...tinturaEstampacion, [idiomaComposicion]: e.target.value })}
+                    placeholder={idiomaComposicion === 'en' ? 'Italy' : 'Italia'}
+                  />
+                  <Input
+                    etiqueta={`Origen tejido (${idiomaComposicion.toUpperCase()})`}
+                    valor={origenTejido[idiomaComposicion]}
+                    onChange={(e) => setOrigenTejido({ ...origenTejido, [idiomaComposicion]: e.target.value })}
+                    placeholder="India"
+                  />
                 </div>
               </div>
             </FormSeccion>
           )}
 
           {campos.telas && (
-            <FormSeccion numero={numeroTejidos} titulo="Tejidos y Composición" descripcion={`Telas del producto${campos.telas === 'opcional' ? ' (opcional)' : ''}, con su composición.`}>
+            <FormSeccion
+              numero={numeroCuidados}
+              titulo="Cuidados"
+              descripcion={`Instrucciones de conservación del producto${campos.telas === 'opcional' ? ' (opcional)' : ''}.`}
+            >
               <div className={styles.campoAncho}>
-                <span className={styles.etiquetaCampo}>Toca una tela guardada en Materiales para activarla, o añade una nueva</span>
-                <div className={styles.telasGrid}>
-                  {telasDisponibles.map((t) => {
-                    const activo = telaIds.includes(t.id);
+                <div className={styles.cuidadosLista}>
+                  {categoriasCuidadoMock.map((cat) => {
+                    const items = cuidadosDisponibles.filter((c) => c.categoria === cat.id);
+                    if (!items.length) return null;
                     return (
-                      <button
-                        key={t.id}
-                        type="button"
-                        className={`${styles.telaChip} ${activo ? styles.telaChipActivo : ''}`}
-                        onClick={() => setTelaIds(activo ? telaIds.filter((id) => id !== t.id) : [...telaIds, t.id])}
-                      >
-                        {t.imagen && <img src={t.imagen} alt="" className={styles.telaChipImagen} />}
-                        <span className={styles.telaChipTexto}>
-                          <span className={styles.telaChipNombre}>{t.nombre}</span>
-                          <span className={styles.telaChipComposicion}>{t.composicion}</span>
-                        </span>
-                      </button>
+                      <div key={cat.id} className={styles.cuidadoCategoria}>
+                        <span className={styles.cuidadoCategoriaTitulo}>{cat.etiqueta.es}</span>
+                        <div className={styles.telasGrid}>
+                          {items.map((c) => {
+                            const activo = cuidadoIds.includes(c.id);
+                            return (
+                              <button
+                                key={c.id}
+                                type="button"
+                                className={`${styles.telaChip} ${activo ? styles.telaChipActivo : ''}`}
+                                onClick={() => setCuidadoIds(activo ? cuidadoIds.filter((id) => id !== c.id) : [...cuidadoIds, c.id])}
+                              >
+                                <span className={styles.telaChipTexto}>
+                                  <span className={styles.telaChipNombre}>{c.texto.es}</span>
+                                  <span className={styles.telaChipComposicion}>{c.texto.en}</span>
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
                 <div className={styles.anadirFila}>
-                  <div className={styles.campoColor}>
-                    <span className={styles.etiquetaCampo}>Imagen</span>
-                    <button
-                      type="button"
-                      className={`${styles.inputColor} ${styles.inputImagenTela}`}
-                      onClick={() => inputImagenTelaRef.current?.click()}
-                      aria-label="Subir foto de la tela"
-                    >
-                      {imagenTelaNueva ? (
-                        <img src={imagenTelaNueva} alt="" className={styles.inputImagenTelaPreview} />
-                      ) : (
-                        <Upload size={16} strokeWidth={1} aria-hidden="true" />
-                      )}
-                    </button>
-                    <input
-                      ref={inputImagenTelaRef}
-                      type="file"
-                      accept="image/*"
-                      className={styles.inputArchivo}
-                      onChange={(e) => {
-                        agregarImagenTela(e.target.files?.[0]);
-                        e.target.value = '';
-                      }}
-                    />
-                  </div>
-                  <Input etiqueta="Nueva tela" valor={nombreTelaNueva} onChange={(e) => setNombreTelaNueva(e.target.value)} placeholder="Tafetán" />
-                  <Input etiqueta="Composición" valor={composicionTelaNueva} onChange={(e) => setComposicionTelaNueva(e.target.value)} placeholder="70% algodón, 30% poliéster" />
-                  <Boton variante="contorno" tamano="s" onClick={anadirTelaNueva} desactivado={!nombreTelaNueva.trim() || subiendoImagenTela}>
+                  <Input etiqueta="Nueva instrucción (ES)" valor={nombreCuidadoNuevoEs} onChange={(e) => setNombreCuidadoNuevoEs(e.target.value)} placeholder="Secar a la sombra" />
+                  <Input etiqueta="New instruction (EN)" valor={nombreCuidadoNuevoEn} onChange={(e) => setNombreCuidadoNuevoEn(e.target.value)} placeholder="Dry in shade" />
+                  <label>
+                    <span className={styles.etiquetaCampo}>Categoría</span>
+                    <select className={styles.selectInput} value={categoriaCuidadoNueva} onChange={(e) => setCategoriaCuidadoNueva(e.target.value)}>
+                      {categoriasCuidadoMock.map((cat) => (
+                        <option key={cat.id} value={cat.id}>{cat.etiqueta.es}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <Boton
+                    variante="contorno"
+                    tamano="s"
+                    onClick={anadirCuidadoNuevo}
+                    desactivado={!nombreCuidadoNuevoEs.trim() || !nombreCuidadoNuevoEn.trim()}
+                  >
                     <Plus size={14} />
-                    {subiendoImagenTela ? 'Optimizando…' : 'Añadir tela'}
+                    Añadir cuidado
                   </Boton>
                 </div>
               </div>
@@ -903,6 +1408,188 @@ function FormularioProducto({
                     );
                   })}
                 </div>
+              </div>
+            </FormSeccion>
+          )}
+
+          {esVendible && (
+            <FormSeccion
+              numero={numeroResenas}
+              titulo="Reseñas de Clientas"
+              descripcion="Vincula una reseña ya creada en Reseñas o sube una nueva directamente aquí."
+            >
+              <div className={styles.campoAncho}>
+                {resenasVinculadas.length === 0 ? (
+                  <p className={styles.vinculoVacio}>Sin reseñas vinculadas todavía.</p>
+                ) : (
+                  <div className={styles.resenasLista}>
+                    {resenasVinculadas.map((r) => (
+                      <div key={r.id} className={styles.resenaTarjeta}>
+                        <div className={styles.resenaTarjetaCabecera}>
+                          <span className={styles.resenaTarjetaNombre}>{r.nombreCliente}</span>
+                          <button
+                            type="button"
+                            className={styles.prendaQuitar}
+                            aria-label={`Quitar reseña de ${r.nombreCliente}`}
+                            onClick={() => quitarResenaVinculada(r.id)}
+                          >
+                            <X size={14} />
+                          </button>
+                        </div>
+                        {/* r.texto es string en reseñas ya vinculadas desde /admin/resenas
+                            (sin traducción todavía) y {es, en} en las nuevas creadas aquí
+                            mismo — se enseña el texto en español en ambos casos. */}
+                        <p className={styles.resenaTarjetaTexto}>{typeof r.texto === 'string' ? r.texto : r.texto.es}</p>
+                        {(r.fotos?.length > 0 || r.foto) && (
+                          <div className={styles.resenaTarjetaFotos}>
+                            {(r.fotos || [r.foto]).map((src) => (
+                              <img key={src} src={src} alt="" className={styles.resenaTarjetaFoto} />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className={styles.modoAnadirGrupo}>
+                  <Boton
+                    variante="contorno"
+                    tamano="s"
+                    className={modoResena === 'vincular' ? styles.modoAnadirBotonActivo : ''}
+                    onClick={() => setModoResena(modoResena === 'vincular' ? null : 'vincular')}
+                  >
+                    <Link2 size={14} />
+                    Vincular reseña
+                  </Boton>
+                  <Boton
+                    variante="contorno"
+                    tamano="s"
+                    className={modoResena === 'nueva' ? styles.modoAnadirBotonActivo : ''}
+                    onClick={() => setModoResena(modoResena === 'nueva' ? null : 'nueva')}
+                  >
+                    <Plus size={14} />
+                    Nueva reseña
+                  </Boton>
+                </div>
+
+                {modoResena === 'vincular' && (
+                  <div className={styles.campoAncho}>
+                    <div className={styles.vinculoBuscador}>
+                      <Search size={16} className={styles.vinculoBuscadorIcono} aria-hidden="true" />
+                      <input
+                        type="text"
+                        className={styles.vinculoBuscadorInput}
+                        placeholder="Buscar por nombre de la clienta o texto…"
+                        value={buscarResena}
+                        onChange={(e) => setBuscarResena(e.target.value)}
+                      />
+                    </div>
+                    <div className={styles.vinculoLista}>
+                      {resultadosResena.length === 0 ? (
+                        <p className={styles.vinculoVacio}>Sin resultados.</p>
+                      ) : resultadosResena.map((r) => (
+                        <button
+                          key={r.id}
+                          type="button"
+                          className={styles.vinculoFila}
+                          onClick={() => vincularResenaExistente(r)}
+                        >
+                          {r.foto ? (
+                            <img src={r.foto} alt="" className={styles.vinculoFilaImagen} />
+                          ) : <span className={styles.vinculoFilaImagen} />}
+                          <span className={styles.vinculoFilaTexto}>
+                            <span className={styles.vinculoFilaNombre}>{r.nombreCliente}</span>
+                            <span className={styles.vinculoFilaSub}>{r.texto}</span>
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {modoResena === 'nueva' && (
+                  <div className={styles.resenaNuevaForm}>
+                    <div className={styles.campoAncho}>
+                      <span className={styles.etiquetaCampo}>Nombre de la clienta</span>
+                      <input
+                        type="text"
+                        className={styles.inputTexto}
+                        value={nombreClienteResenaNueva}
+                        onChange={(e) => setNombreClienteResenaNueva(e.target.value)}
+                        placeholder="Marta Ibáñez"
+                      />
+                    </div>
+                    <div className={styles.campoAncho}>
+                      <SelectorIdioma idioma={idiomaResenaNueva} onChange={setIdiomaResenaNueva} />
+                    </div>
+                    <div className={styles.campoAncho}>
+                      <span className={styles.etiquetaCampo}>{`Texto de la reseña (${idiomaResenaNueva.toUpperCase()})`}</span>
+                      <textarea
+                        className={styles.textarea}
+                        value={textoResenaNueva[idiomaResenaNueva]}
+                        onChange={(e) => setTextoResenaNueva({ ...textoResenaNueva, [idiomaResenaNueva]: e.target.value })}
+                      />
+                    </div>
+                    <div className={styles.campoAncho}>
+                      <span className={styles.etiquetaCampo}>Fotos (opcional)</span>
+                      {/* Mismo patrón de arrastrar-para-reordenar que Imágenes (ver
+                          .imagenesScroll más arriba) — la portada de la reseña es
+                          la primera foto de fotosResenaNueva. */}
+                      <div className={styles.imagenesScroll}>
+                        {fotosResenaNueva.length > 0 && (
+                          <DragList
+                            items={fotosResenaNueva.map((src) => ({ src }))}
+                            claveItem={(item) => item.src}
+                            onReorder={(nuevo) => setFotosResenaNueva(nuevo.map((item) => item.src))}
+                            orientacion="horizontal"
+                            renderItem={(item) => (
+                              <div className={styles.imagenItem}>
+                                <img src={item.src} alt="" className={styles.imagenMiniatura} />
+                                <button
+                                  type="button"
+                                  className={styles.imagenQuitar}
+                                  aria-label="Quitar foto"
+                                  onClick={() => quitarFotoResenaNueva(item.src)}
+                                >
+                                  <X size={14} />
+                                </button>
+                              </div>
+                            )}
+                          />
+                        )}
+                        <button
+                          type="button"
+                          className={styles.resenaFotoAnadir}
+                          onClick={() => inputFotosResenaRef.current?.click()}
+                        >
+                          <Upload size={18} strokeWidth={1} aria-hidden="true" />
+                          <span>Añadir foto</span>
+                        </button>
+                      </div>
+                      <input
+                        ref={inputFotosResenaRef}
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        className={styles.inputArchivo}
+                        onChange={(e) => {
+                          agregarFotosResena(e.target.files);
+                          e.target.value = '';
+                        }}
+                      />
+                    </div>
+                    <Boton
+                      variante="contorno"
+                      tamano="s"
+                      onClick={anadirResenaNueva}
+                      desactivado={!nombreClienteResenaNueva.trim() || !textoResenaNueva.es.trim()}
+                    >
+                      <Plus size={14} />
+                      Añadir reseña
+                    </Boton>
+                  </div>
+                )}
               </div>
             </FormSeccion>
           )}

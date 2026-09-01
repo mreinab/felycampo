@@ -6,16 +6,18 @@
    columnas (12 tarjetas/página, mismo Paginacion que GridPedidos/
    GridConsultasPrecio). La imagen de la tarjeta es la del PRODUCTO
    reseñado (no la foto que sube la clienta, ver FormularioResena.jsx
-   "Foto de la clienta" — esa es secundaria, aquí prima reconocer de
-   un vistazo qué producto es).
+   "Fotos de clientas" — esa es secundaria, aquí prima reconocer de un
+   vistazo qué producto es).
+   Clicar una tarjeta abre el mismo ModalOverlay de edición que clicar
+   una fila de TablaAdmin (onClickFila) — /admin/resenas/nueva y
+   /admin/resenas/[id]/editar ya no son páginas propias, ver
+   FormularioResena.jsx.
    Uso:
-     <GridResenas filas={resenas} hrefFila={(r) => `/admin/resenas/${r.id}/editar`} porPagina={12} />
+     <GridResenas filas={resenas} onClickFila={(r) => setResenaEnEdicion(r)} porPagina={12} />
    ============================================================ */
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import EstadoBadge from './EstadoBadge';
-import Estrellas from './Estrellas';
 import Paginacion from './Paginacion';
 import { productosMock } from './mockData';
 import styles from './GridResenas.module.css';
@@ -24,11 +26,14 @@ function productoDe(productoId) {
   return productosMock.find((p) => p.id === productoId);
 }
 
-function Tarjeta({ resena, href }) {
+function Tarjeta({ resena, onClick }) {
   const producto = productoDe(resena.productoId);
+  // `texto` es string en reseñas antiguas del mock y {es, en} en las
+  // creadas/editadas desde FormularioResena.jsx.
+  const texto = typeof resena.texto === 'string' ? resena.texto : resena.texto.es;
 
   return (
-    <Link href={href} className={styles.tarjeta}>
+    <button type="button" onClick={onClick} className={styles.tarjeta}>
       <div className={styles.imagenWrap}>
         {producto?.imagen ? <img src={producto.imagen} alt="" className={styles.imagen} /> : <div className={styles.imagenVacia} />}
         {resena.nuevo && <span className={styles.puntoNuevo} title="Nuevo" aria-label="Nuevo" />}
@@ -36,8 +41,7 @@ function Tarjeta({ resena, href }) {
       </div>
       <div className={styles.info}>
         <p className={styles.nombreCliente}>{resena.nombreCliente}</p>
-        <Estrellas valor={resena.valoracion} />
-        <p className={styles.texto}>{resena.texto}</p>
+        <p className={styles.texto}>{texto}</p>
         {producto && (
           <p className={styles.producto}>
             {producto.nombre}
@@ -46,12 +50,12 @@ function Tarjeta({ resena, href }) {
           </p>
         )}
       </div>
-    </Link>
+    </button>
   );
 }
 
 function GridResenas({
-  filas, hrefFila, porPagina = 12, vacio = 'No hay reseñas que mostrar.',
+  filas, onClickFila, porPagina = 12, vacio = 'No hay reseñas que mostrar.',
 }) {
   const [pagina, setPagina] = useState(1);
 
@@ -67,7 +71,7 @@ function GridResenas({
     <div>
       <div className={styles.grid}>
         {filasPagina.map((resena) => (
-          <Tarjeta key={resena.id} resena={resena} href={hrefFila(resena)} />
+          <Tarjeta key={resena.id} resena={resena} onClick={() => onClickFila(resena)} />
         ))}
       </div>
       <Paginacion pagina={pagina} porPagina={porPagina} total={filas.length} onCambiar={setPagina} />

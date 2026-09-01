@@ -20,12 +20,20 @@
 
 .panel {
   position: relative;
-  background: var(--color-fondo);
+  background: var(--color-details);
   width: 100%;
   max-width: 720px;
   margin: auto;
-  padding: var(--spacing-7);
   cursor: auto;
+}
+
+/* El padding vive aquí (no en .panel) para que un contenido que lo
+   necesite (ver FormularioProducto.jsx `.cabeceraFija`) pueda anular
+   este padding puntualmente y pegar un bloque sticky al borde real de
+   .panel — mismo resultado visual que antes para cualquier otro modal
+   que no lo necesite. */
+.contenido {
+  padding: var(--spacing-6);
 }
 
 .cerrar {
@@ -36,5 +44,5 @@
   border: none;
   cursor: pointer;
   color: var(--color-tinta);
-  z-index: 1;
+  z-index: 2;
 }

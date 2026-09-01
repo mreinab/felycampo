@@ -8,6 +8,8 @@ import { useLocale, useTranslations } from 'next-intl';
 import { ShoppingBag } from 'lucide-react';
 import styles from './Navbar.module.css';
 import { PanelLateral } from '../../ui';
+import CarritoPanel from '../../ecommerce/CarritoPanel';
+import { useCarrito } from '@/context/CarritoContext';
 import NavbarPanelLateralContent from './NavbarPanelLateralContent';
 import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 
@@ -67,6 +69,13 @@ const SUBMENU_STRUCTURE = {
   },
 };
 
+// Cualquier ruta de un solo segmento bajo /tienda que NO sea ninguna
+// de estas (categorías reales + la propia portada "Tienda", verTodos)
+// es una ficha de producto (slug de producto, ver slugify.js) — el
+// header móvil se comporta distinto ahí (ver esFichaProducto/
+// .fichaProducto en Navbar.module.css).
+const RUTAS_TIENDA_CONOCIDAS = new Set(SUBMENU_STRUCTURE.tienda.items.map((item) => item.href));
+
 const NAV_ITEMS = [
   { key: 'atelier', href: '/atelier', submenu: 'atelier' },
   { key: 'tienda', href: '/tienda', submenu: 'tienda' },
@@ -81,6 +90,7 @@ function Navbar({ transparent = false }) {
   const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
+  const { cantidadTotal } = useCarrito();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
@@ -186,12 +196,20 @@ function Navbar({ transparent = false }) {
   const solido = scrolled || headerHovered || !!activeSubmenu;
   const isLight = transparent && !solido;
 
+  // Solo importa en móvil (ver @media en Navbar.module.css) — en
+  // escritorio la ficha de producto usa el header normal de siempre.
+  const esFichaProducto = (() => {
+    const match = pathname?.match(/^\/[^/]+\/tienda\/([^/]+)$/);
+    return !!match && !RUTAS_TIENDA_CONOCIDAS.has(`/tienda/${match[1]}`);
+  })();
+
   const headerClass = [
     styles.header,
     transparent && styles.transparent,
     transparent && solido && styles.opaco,
     isLight && styles.light,
     footerVisible && styles.ocultoPorFooter,
+    esFichaProducto && styles.fichaProducto,
   ].filter(Boolean).join(' ');
 
   const navLogoClassName = isLight ? `${styles.navLogo} ${styles.navLogoGrande}` : styles.navLogo;
@@ -253,7 +271,7 @@ function Navbar({ transparent = false }) {
         <div className={styles.navActions}>
           <a href={withLocale('/wishlist')} className={styles.navLink}>{t('actions.wishlist')}</a>
           <a href={withLocale('/mi-cuenta')} className={styles.navLink}>{t('actions.miCuenta')}</a>
-          <a href={withLocale('/carrito')} className={styles.navLink}>{t('actions.carrito')} (0)</a>
+          <a href={withLocale('/carrito')} className={styles.navLink}>{t('actions.carrito')} ({cantidadTotal})</a>
         </div>
 
         {/* Utilidades — móvil: solo el icono del carrito, el resto vive en el menú hamburguesa */}
@@ -298,6 +316,11 @@ function Navbar({ transparent = false }) {
           <a href={withLocale('/mi-cuenta')} className={styles.mobileMenuLink}>{t('actions.miCuenta')}</a>
         </nav>
       </PanelLateral>
+
+      {/* Global, no por página (a diferencia de GuiaTallas): se abre
+          sola al añadir un producto desde cualquier ficha, ver
+          CarritoContext. */}
+      <CarritoPanel />
     </>
   );
 }

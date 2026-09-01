@@ -9,3 +9,5 @@ export { default as SplitMedia } from './SplitMedia';
 export { default as CuadriculaConTabs } from './CuadriculaConTabs';
 export { default as SectionClientsReview } from './SectionClientsReview';
 export { default as SectionCompromiso } from './SectionCompromiso';
+export { default as ProductosRecomendados } from './ProductosRecomendados';
+export { default as ResenasClientes } from './ResenasClientes';

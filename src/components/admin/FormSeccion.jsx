@@ -11,11 +11,9 @@ function FormSeccion({
   return (
     <section className={styles.seccion}>
       <div className={styles.cabecera}>
+        <span className={styles.numero}>{numero}</span>
         <div>
-          <p className={styles.titulo}>
-            <span className={styles.numero}>{numero}</span>
-            {titulo}
-          </p>
+          <p className={styles.titulo}>{titulo}</p>
           {descripcion && <p className={styles.descripcion}>{descripcion}</p>}
         </div>
         {accion && <div className={styles.accion}>{accion}</div>}
