@@ -30,10 +30,9 @@
 
 .marco {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 4.5;
   flex: 0 1 auto;
   min-height: 0;
-  background: var(--color-crema);
   border-radius: var(--radius-imagenes);
 }
 
@@ -86,7 +85,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
+  text-align: center;
   gap: var(--spacing-1);
   margin-top: var(--spacing-3);
   margin-bottom: var(--spacing-3);
@@ -101,6 +101,7 @@
 
 .precios {
   display: flex;
+  justify-content: center;
   gap: var(--spacing-2);
   font-size: var(--text-small);
   flex-shrink: 0;
@@ -117,6 +118,7 @@
   height: 18px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   opacity: 0;
   transition: opacity 0.3s ease;

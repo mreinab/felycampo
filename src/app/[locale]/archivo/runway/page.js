@@ -1,13 +1,31 @@
-/* Placeholder — pendiente de maquetar. Ruta: /archivo/runway */
+/* ============================================================
+   RUNWAY — Fely Campo. Ruta: /archivo/runway
+   Cuadrícula editorial de las 9 colecciones de pasarela (ver
+   colecciones.js, datos compartidos con [coleccion]/page.js). Cada
+   tarjeta enlaza a /archivo/runway/[slug]-[temporada] en minúsculas,
+   ej. /archivo/runway/dreaming-ss26 (ver slugCompleto en colecciones.js).
+   ============================================================ */
 
-export default function Pagina() {
+import { RunwayTarjeta } from '@/components/layout';
+import { COLECCIONES, slugCompleto } from './colecciones';
+import styles from './page.module.css';
+
+export default async function Pagina({ params }) {
+  const { locale } = await params;
+
   return (
-    <section className="seccion contenedor">
-      <p className="text-caption uppercase text-gris-500 mb-16">Fely Campo</p>
-      <h1>Runway</h1>
-      <p className="text-gris-500 mt-24 texto-legible">
-        Página pendiente de maquetar. La ruta ya existe y navega.
-      </p>
+    <section className={`${styles.pagina} contenedor`}>
+      <div className={styles.grid}>
+        {COLECCIONES.map((coleccion) => (
+          <RunwayTarjeta
+            key={coleccion.slug}
+            href={`/${locale}/archivo/runway/${slugCompleto(coleccion)}`}
+            nombre={coleccion.nombre}
+            temporada={coleccion.temporada}
+            medios={coleccion.medios}
+          />
+        ))}
+      </div>
     </section>
   );
 }

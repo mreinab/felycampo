@@ -2,29 +2,27 @@
 
 /* ============================================================
    PRODUCTOS RECOMENDADOS — Fely Campo
-   Carrusel horizontal de hasta 10 productos — SOLO para la ficha de
-   producto (tienda/[producto]/page.js), debajo de LookPasarela. No se
-   usa en ningún otro sitio (Tienda/Atelier/home siguen con
-   CuadriculaProductos tal cual estaban).
+   Hasta 10 productos — SOLO para la ficha de producto
+   (tienda/[producto]/page.js), debajo de LookPasarela. No se usa en
+   ningún otro sitio (Tienda/Atelier/home siguen con CuadriculaProductos
+   tal cual estaban).
 
-   A diferencia de CuadriculaProductos, cuyo título es un
-   CabeceraSeccion (subtítulo pequeño + título + acción en grid de 4
-   columnas), aquí el título es un <h3> plano a todo el ancho, sin
-   subtítulo ni acción al lado. Y la cuadrícula no es una fila fija ni
-   un grid paginado: es una banda de scroll horizontal libre, con la
-   misma conversión de rueda vertical -> scroll horizontal que
-   GaleriaProducto (para poder hojearla también con un ratón normal,
-   no solo con trackpad/touch).
+   Carrusel de scroll horizontal libre solo por debajo de 768px (misma
+   conversión de rueda vertical -> scroll horizontal que GaleriaProducto,
+   para poder hojearla también con un ratón normal, no solo con
+   trackpad/touch) — de tablet para arriba pasa a ser una fila estática
+   sin scroll, con un número fijo de tarjetas según el ancho (3 en
+   tablet, 4 en escritorio; el resto se ocultan, ver
+   ProductosRecomendados.module.css). Sin título de sección.
    Uso:
-     <ProductosRecomendados titulo="Otros productos que te van a encantar"
-        productos={relacionados} />
+     <ProductosRecomendados productos={relacionados} />
    ============================================================ */
 
 import { useEffect, useRef } from 'react';
 import TarjetaProducto from '../ecommerce/TarjetaProducto';
 import styles from './ProductosRecomendados.module.css';
 
-function ProductosRecomendados({ titulo, productos = [] }) {
+function ProductosRecomendados({ productos = [] }) {
   const contenedorRef = useRef(null);
   const pistaRef = useRef(null);
   const objetivoScrollRef = useRef(0);
@@ -61,9 +59,16 @@ function ProductosRecomendados({ titulo, productos = [] }) {
       if (Math.abs(evento.deltaY) <= Math.abs(evento.deltaX)) return;
       const pista = pistaRef.current;
       if (!pista) return;
+      // Sin nada que desplazar (versión estática de tablet/escritorio,
+      // ver ProductosRecomendados.module.css) no se llama a
+      // preventDefault — si no, cualquier scroll vertical de página con
+      // el ratón encima de esta sección se quedaría bloqueado sin mover
+      // nada (el carrusel no tiene overflow, pero el listener seguiría
+      // "comiéndose" el evento).
+      const maximo = pista.scrollWidth - pista.clientWidth;
+      if (maximo <= 0) return;
       evento.preventDefault();
       if (!animandoRef.current) objetivoScrollRef.current = pista.scrollLeft;
-      const maximo = pista.scrollWidth - pista.clientWidth;
       objetivoScrollRef.current = Math.min(maximo, Math.max(0, objetivoScrollRef.current + evento.deltaY));
       if (!animandoRef.current) {
         animandoRef.current = true;
@@ -80,7 +85,6 @@ function ProductosRecomendados({ titulo, productos = [] }) {
 
   return (
     <section className={styles.seccion}>
-      <h3 className={styles.titulo}>{titulo}</h3>
       <div ref={contenedorRef} className={styles.contenedor}>
         <div ref={pistaRef} className={styles.pista}>
           {productosVisibles.map((producto) => (

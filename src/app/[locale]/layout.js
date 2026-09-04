@@ -14,6 +14,26 @@ import { Navbar, Footer } from '@/components/layout';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { locales } from '@/i18n';
 
+// Páginas con su propio ProductHero (ver
+// src/components/layout/ProductHero.jsx) — nacen con el Navbar
+// transparente igual que home, pero con el logo a tamaño normal (ver
+// "crecerLogo" más abajo). No se importa desde Navbar.jsx: es un
+// Client Component, y solo sus componentes (no valores sueltos)
+// cruzan de forma fiable la frontera a un Server Component como este
+// layout — mantener en sync con SUBMENU_STRUCTURE.tienda.items de
+// Navbar.jsx si cambian las categorías de Tienda.
+const RUTAS_CON_PRODUCT_HERO = [
+  '/tienda',
+  '/tienda/tops-y-camisetas',
+  '/tienda/chaquetas-y-abrigos',
+  '/tienda/faldas',
+  '/tienda/vestidos',
+  '/tienda/zapatos',
+  '/tienda/accesorios',
+  '/atelier/novias',
+  '/atelier/fiesta',
+];
+
 export const metadata = {
   title: 'Fely Campo · Moda de fiesta y novia',
   description: 'Firma de moda femenina fundada en Salamanca en 1997. Colecciones de fiesta y novia, prêt-à-porter y costura a medida.',
@@ -33,12 +53,23 @@ export default async function RootLayout({ children, params }) {
 
   const messages = await getMessages();
 
-  // Home transparente, el resto de páginas con el Navbar blanco de
-  // siempre. El pathname no llega como prop al layout compartido — lo
-  // inyecta middleware.js vía header (x-pathname) para no tener que
-  // renderizar <Navbar /> a mano en cada una de las páginas.
+  // Home transparente (con el logo creciendo), páginas de listado de
+  // producto (Tienda + categorías, Atelier/novias y /fiesta) también
+  // transparentes pero con el logo a tamaño normal — llevan su propio
+  // ProductHero debajo (ver layout.js más abajo/Navbar.jsx) — el
+  // resto de páginas con el Navbar blanco de siempre. El pathname no
+  // llega como prop al layout compartido — lo inyecta middleware.js
+  // vía header (x-pathname) para no tener que renderizar <Navbar />
+  // a mano en cada una de las páginas.
   const pathname = (await headers()).get('x-pathname') ?? '';
-  const isHome = pathname === `/${locale}` || pathname === `/${locale}/`;
+  const rutaSinLocale = pathname.replace(new RegExp(`^/${locale}`), '') || '/';
+  const isHome = rutaSinLocale === '/';
+  const tieneProductHero = RUTAS_CON_PRODUCT_HERO.includes(rutaSinLocale);
+  // Ficha de colección de Runway (/archivo/runway/[coleccion], ruta
+  // dinámica — no puede vivir en RUTAS_CON_PRODUCT_HERO, que solo hace
+  // match exacto): mismo Navbar transparente que Tienda/Atelier, con su
+  // propio hero marcado data-navbar-hero (ver [coleccion]/page.js).
+  const esFichaRunway = rutaSinLocale.startsWith('/archivo/runway/');
 
   return (
     <html lang={locale}>
@@ -48,7 +79,7 @@ export default async function RootLayout({ children, params }) {
       <body>
         <NextIntlClientProvider messages={messages}>
           <CarritoProvider>
-            <Navbar transparent={isHome} />
+            <Navbar transparent={isHome || tieneProductHero || esFichaRunway} crecerLogo={isHome} />
             <main>{children}</main>
             <Footer />
           </CarritoProvider>

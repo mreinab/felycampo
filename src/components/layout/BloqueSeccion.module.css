@@ -3,7 +3,6 @@
    ============================================================ */
 
 .seccion {
-  height: 95vh;
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
@@ -29,14 +28,7 @@
 }
 
 .imagen { 
-  position: relative;
-  top: 15%;
-  left: 25%;
-  width: 50%; 
-  height: 65%; 
   object-fit: cover; 
-
-  border: solid 8px var(--color-rosa);
 }
 
 /* En mobile la imagen mide 70dvh: altura explícita en .marco (en vez

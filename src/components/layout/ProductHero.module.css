@@ -1,0 +1,15 @@
+/* ============================================================
+   PRODUCT HERO — Fely Campo
+   Sin marco (radio 0, sin sombra) — mismo criterio que el resto del
+   sistema. Pegada al techo de la página: el Navbar flota encima en
+   position:fixed mientras esta franja está en pantalla (ver
+   Navbar.module.css .header.transparent), así que no lleva
+   padding/margin de compensación propio.
+   ============================================================ */
+.hero {
+  width: 100%;
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

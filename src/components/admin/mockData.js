@@ -492,8 +492,8 @@ export const productosMock = [
     categoriaId: 'cat13',
     nombre: 'Colección Novias 26',
     descripcionCorta: 'Colección de novias FW26, pendiente de publicar en el archivo.',
-    imagen: '/img/FW27-Hero.jpg',
-    imagenes: ['/img/FW27-Hero.jpg'],
+    imagen: '/img/FW27-HERO.webp',
+    imagenes: ['/img/FW27-HERO.webp'],
     coleccion: 'fw26',
     estado: 'Programado',
     sku: 'FC-ARC-N26',
@@ -754,9 +754,8 @@ export const consultasPrecioMock = [
 // sección 7 punto 4). Con producto vinculado, la ficha/tabla puede
 // enseñar SKU + foto del producto, no solo el nombre.
 // `clienteId` (FK real a clientesMock) — todas las reseñas vienen de una
-// clienta con cuenta (el placeholder de envío público exige "iniciar
-// sesión" antes de escribir una, ver EscribirResena.jsx), así que no
-// existe la reseña anónima: a diferencia de otros mocks del panel
+// clienta con cuenta, así que no existe la reseña anónima: a
+// diferencia de otros mocks del panel
 // (consultasPrecioMock sí admite `clienteId: null`, visitantes sin
 // cuenta), aquí siempre hay un cliente real detrás.
 // `nuevo: true` en r5/r6 (recién "enviadas", `estado: 'Oculta'`) — mismo
@@ -1008,7 +1007,7 @@ export function filasStock() {
 // ---------- BLOG ----------
 
 export const blogMock = [
-  { id: 'b1', titulo: 'Detrás de la colección FW27', fecha: '2026-07-20', estado: 'Publicado', categoria: 'Colecciones', imagen: '/img/FW27-Hero.jpg' },
+  { id: 'b1', titulo: 'Detrás de la colección FW27', fecha: '2026-07-20', estado: 'Publicado', categoria: 'Colecciones', imagen: '/img/FW27-HERO.webp' },
   { id: 'b2', titulo: 'El proceso de un vestido de novia a medida', fecha: '2026-07-05', estado: 'Publicado', categoria: 'Atelier', imagen: '/img/novias-sección-FelyCampo.jpg' },
   { id: 'b3', titulo: 'Cuidado de tejidos delicados', fecha: '2026-08-01', estado: 'Borrador', categoria: 'Consejos', imagen: '' },
 ];
@@ -1293,7 +1292,7 @@ export const ajustesTiendaMock = {
 };
 
 // ---------- DISEÑO (bloques reales de la landing, en orden) ----------
-// kind: 'hero' | 'text' | 'media' | 'productRow' | 'mediaSplit' | 'productRowTabs' | 'mediaText' | 'reviews'
+// kind: 'hero' | 'text' | 'media' | 'productRow' | 'mediaSplit' | 'mediaText' | 'reviews'
 
 export const disenoMock = [
   {
@@ -1333,7 +1332,7 @@ export const disenoMock = [
     id: 'd3',
     kind: 'media',
     label: 'Banner — imagen destacada',
-    src: '/img/FW27-Hero.jpg',
+    src: '/img/FW27-HERO.webp',
     tipo: 'imagen',
     titulo: { es: 'Otoño Invierno 2027', en: 'Autumn Winter 2027' },
     ctaTexto: { es: 'Descubre la colección', en: 'Discover the collection' },
@@ -1356,21 +1355,6 @@ export const disenoMock = [
     items: [
       { id: 'sm1', src: '/img/novias-sección-FelyCampo2.jpg', tipo: 'imagen', titulo: 'Novias' },
       { id: 'sm2', src: '/img/invitadas-sección-FelyCampo.jpg', tipo: 'imagen', titulo: 'Fiesta' },
-    ],
-  },
-  {
-    id: 'd6',
-    kind: 'productRowTabs',
-    label: 'Fila con tabs — "Un look para cada ocasión"',
-    // Mismos 4 productos que "Destacados" (d4), rotados por tab — mismo
-    // criterio que productosPorOcasion en src/app/[locale]/page.js
-    // (rota productosInvitada en vez de listas distintas por ocasión).
-    // 4 por tab, no 1-2: mismo motivo que d4 más arriba.
-    tabs: [
-      { id: 't1', nombre: 'Día de boda', productoIds: ['p1', 'p2', 'p7', 'p8'], verMasDestino: '/archivo/colecciones' },
-      { id: 't2', nombre: 'Noche de boda', productoIds: ['p2', 'p7', 'p8', 'p1'], verMasDestino: '/archivo/colecciones' },
-      { id: 't3', nombre: 'Comuniones y bautizo', productoIds: ['p7', 'p8', 'p1', 'p2'], verMasDestino: '/archivo/colecciones' },
-      { id: 't4', nombre: 'Bolsos de fiesta', productoIds: ['p8', 'p1', 'p2', 'p7'], verMasDestino: '/archivo/colecciones' },
     ],
   },
   {
@@ -1442,7 +1426,7 @@ export const bancoVideos = [
 
 // Banco de imágenes ya subidas, para los selectores de imagen (Diseño, Blog, Contenido).
 export const bancoImagenes = [
-  '/img/FW27-Hero.jpg',
+  '/img/FW27-HERO.webp',
   '/img/FW27-Hero2.jpg',
   '/img/HERO-2.jpg',
   '/img/artesany.jpg',

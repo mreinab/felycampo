@@ -1,11 +1,12 @@
 /* Ruta: /tienda/chaquetas-y-abrigos — cuadrícula de abrigos FW27. */
 
-import { CuadriculaProductos } from '@/components/layout';
+import { CuadriculaProductos, ProductHero } from '@/components/layout';
 import { productosEjemplo } from '@/components/layout/productosEjemplo';
 
 export default function ChaquetasYAbrigosPagina() {
   return (
     <section className="seccion">
+      <ProductHero imagen="/img/ecommerce/Categorias/chaqueta.webp" />
       <CuadriculaProductos
         productos={productosEjemplo}
         disposicion="grid"

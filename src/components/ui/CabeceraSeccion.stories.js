@@ -15,7 +15,7 @@ export default {
   ],
 };
 
-// Accion por defecto (1 columna, la 4ª) — un botón suelto. Mismo uso
+// Con children — un botón suelto debajo del grupo título. Mismo uso
 // que la cabecera de CuadriculaProductos.
 export const ConBoton = {
   args: {
@@ -30,25 +30,7 @@ export const ConBoton = {
   ),
 };
 
-// accionAncha (3 columnas, 2ª a 4ª) — contenido que necesita más
-// sitio que un botón, ej. una fila de tabs. Mismo uso que
-// CollectionTitle variante "tabs".
-export const AccionAncha = {
-  args: {
-    subtitleKey: 'cuadriculaTabs.subtitulo',
-    titleKey: 'cuadriculaTabs.titulo',
-    descriptionKey: 'cuadriculaTabs.descripcion',
-    accionAncha: true,
-  },
-  render: (args) => (
-    <CabeceraSeccion {...args}>
-      <Boton variante="flecha" href="#">Ver todo</Boton>
-    </CabeceraSeccion>
-  ),
-};
-
-// Sin accion (sin children) — solo el grupo título, sin la columna de
-// la derecha.
+// Sin children — solo el grupo título.
 export const SoloTitulo = {
   args: {
     subtitleKey: 'cuadriculaProductos.novedades',

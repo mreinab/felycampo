@@ -9,17 +9,6 @@
   gap: var(--spacing-4);
 }
 
-/* Mismo tratamiento que .titulo de ProductosRecomendados.module.css —
-   <h3> plano a todo el ancho, sin CabeceraSeccion. */
-.titulo {
-  width: 100%;
-  padding-inline: var(--spacing-4);
-  font-size: var(--text-body-lg);
-  font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
-  color: var(--color-tinta);
-}
-
 /* auto-fit con un máximo por tarjeta (no 1fr): con una sola reseña, o
    dos, las tarjetas no se estiran a ocupar todo el ancho — crecen
    hasta 320px como mucho y la fila se centra, así que el bloque se ve

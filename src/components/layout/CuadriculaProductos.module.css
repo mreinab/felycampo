@@ -15,6 +15,15 @@
   padding-block: 0px;
 }
 
+/* Solo "grid" (catálogo completo de Tienda/Atelier, ver esGrid en
+   CuadriculaProductos.jsx): estas páginas no tienen más secciones
+   debajo, la cuadrícula es lo último antes del Footer — sin este
+   margen quedaban pegados. La variante "fila" (home) no lo lleva: su
+   espaciado entre secciones ya lo reparte .landing en page.module.css. */
+.seccionGrid {
+  margin-bottom: var(--spacing-10);
+}
+
 /* La cabecera opcional (grupo título + acción) vive ahora en
    CabeceraSeccion (ver ui/CabeceraSeccion.module.css) — reutilizada
    tal cual por CollectionTitle variante "tabs", así que ya no se
@@ -79,10 +88,22 @@
   }
 }
 
-/* ---------- Toggle de densidad — accion de la cabecera (solo "grid") ---------- */
+/* ---------- Toggle de densidad — accion de la cabecera (solo "grid") ----------
+   Tercer elemento de la fila de .cabeceraProductos.cabeceraInicio (ver
+   CabeceraSeccion.module.css) — sin width:100%, si no competiría por
+   ancho con el 70% del título en vez de quedarse a su propio tamaño. */
 .toggleVista {
   display: flex;
   gap: var(--spacing-2);
+}
+
+/* Sin toggle en mobile: la fila de 3 de .cabeceraProductos.cabeceraInicio
+   (ver CabeceraSeccion.module.css) pasa a columna ahí, y elegir densidad
+   de columnas no aporta nada en una cuadrícula ya forzada a 2. */
+@media (max-width: 767px) {
+  .toggleVista {
+    display: none;
+  }
 }
 
 /* Esquinas siempre rectas (radio 0), igual que el resto del sistema —
@@ -96,7 +117,7 @@
   border: none;
   border-radius: 0;
   border-bottom: 1px solid transparent;
-  padding: var(--spacing-1) 4px;
+  padding: var(--spacing-1) 2px;
   color: var(--color-tinta);
   opacity: 0.5;
   cursor: pointer;
@@ -128,20 +149,8 @@
   border-bottom: solid 1px var(--color-tinta);
 }
 
-/* ---------- Barra de filtros — solo "grid", debajo de la cabecera ---------- */
-.barraFiltros {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-inline: var(--spacing-7);
-}
-
-@media (max-width: 767px) {
-  .barraFiltros {
-    padding-inline: var(--spacing-5);
-  }
-}
-
+/* ---------- Botón "Filtros" — solo "grid", primer elemento de la fila
+   de CabeceraSeccion (ver "before" en CabeceraSeccion.jsx) ---------- */
 .filtrosBoton {
   display: flex;
   align-items: center;
@@ -169,11 +178,6 @@
   width: 6px;
   height: 6px;
   background: var(--color-rosa);
-}
-
-.resultados {
-  font-size: var(--text-small);
-  color: var(--color-gris-500);
 }
 
 /* ---------- Paginación por scroll — solo "grid" ---------- */

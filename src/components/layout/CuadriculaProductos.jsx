@@ -4,7 +4,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { LayoutGrid, Square } from 'lucide-react';
+import { LayoutGrid, Square, SlidersHorizontal } from 'lucide-react';
 import TarjetaProducto from '../ecommerce/TarjetaProducto';
 import TarjetaMedia from '../ecommerce/TarjetaMedia';
 import { Boton, CabeceraSeccion } from '../ui';
@@ -45,24 +45,23 @@ function parsearPrecio(precio) {
  * subtítulo pequeño "tituloKey", título grande "coleccionKey" (si
  * falta, reusa tituloKey) y descripción opcional "descriptionKey". Sin
  * tituloKey no se pinta cabecera — pensado para sitios que ya traen su
- * propio título encima (ej. CuadriculaConTabs). "verMasHref" es el
- * destino del botón "flecha" en la accion (y no pinta el botón si
+ * propio título encima. "verMasHref" es el destino del botón "flecha"
+ * en la accion (y no pinta el botón si
  * falta, aunque haya título).
  *
- * En "grid", la cabecera añade además un toggle de densidad en la
- * accion (4ª columna): icono "layout-grid" (activo por defecto, la
- * cuadrícula de 4 columnas normal) e icono "square", que la cambia a
- * 2 columnas centradas.
- *
- * También en "grid": debajo de la cabecera, una barra con el botón
- * "Filtros" (abre PanelFiltros, panel lateral con talla/color/precio +
- * ordenar por) y el recuento de resultados. "tallas"/"colores"/precio
- * disponibles para filtrar se calculan a partir de "productos" (no hay
- * lista fija). La cuadrícula solo pinta un lote inicial de 8 — al
- * acercarse al final (IntersectionObserver sobre un centinela después
- * de la cuadrícula) carga 8 más, con tarjetas-esqueleto (.skeleton)
- * mientras "llega" (simulado con un timeout — aquí no hay backend
- * real todavía).
+ * En "grid", la cabecera (CabeceraSeccion con enCuadricula + alinear
+ * "start") pasa a ser una fila de 3: el botón "Filtros" (before, abre
+ * PanelFiltros — panel lateral con talla/color/precio + ordenar por,
+ * que también enseña el recuento de resultados), el grupo título (70%
+ * de ancho) y el toggle de densidad (children/accion: icono
+ * "layout-grid", activo por defecto — cuadrícula de 4 columnas — e
+ * icono "square", que la cambia a 2 columnas centradas; oculto en
+ * mobile). "tallas"/"colores"/precio disponibles para filtrar se
+ * calculan a partir de "productos" (no hay lista fija). La cuadrícula
+ * solo pinta un lote inicial de 8 — al acercarse al final
+ * (IntersectionObserver sobre un centinela después de la cuadrícula)
+ * carga 8 más, con tarjetas-esqueleto (.skeleton) mientras "llega"
+ * (simulado con un timeout — aquí no hay backend real todavía).
  */
 function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila' }) {
   const t = useTranslations();
@@ -219,8 +218,19 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
     </>
   );
 
+  // Botón "Filtros" — en "grid" vive como primer elemento de la fila
+  // de CabeceraSeccion (ver "before" más abajo), no en una barra propia
+  // debajo del título como antes.
+  const filtrosBoton = esGrid && (
+    <button type="button" className={styles.filtrosBoton} onClick={() => setFiltrosAbiertos(true)}>
+      <SlidersHorizontal size={16} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" />
+      {t('cuadriculaProductos.filtros')}
+      {hayFiltrosActivos && <span className={styles.filtrosPunto} aria-hidden="true" />}
+    </button>
+  );
+
   return (
-    <section className={styles.seccion}>
+    <section className={`${styles.seccion} ${esGrid ? styles.seccionGrid : ''}`}>
       {tituloKey && (
         <CabeceraSeccion
           subtitleKey={tituloKey}
@@ -228,21 +238,10 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
           descriptionKey={descriptionKey}
           alinear={esGrid ? 'start' : 'end'}
           enCuadricula
+          before={filtrosBoton}
         >
           {(verMasHref || esGrid) && accion}
         </CabeceraSeccion>
-      )}
-
-      {esGrid && (
-        <div className={styles.barraFiltros}>
-          <button type="button" className={styles.filtrosBoton} onClick={() => setFiltrosAbiertos(true)}>
-            {t('cuadriculaProductos.filtros')}
-            {hayFiltrosActivos && <span className={styles.filtrosPunto} aria-hidden="true" />}
-          </button>
-          <span className={styles.resultados}>
-            {t('cuadriculaProductos.resultados', { total: productosOrdenados.length })}
-          </span>
-        </div>
       )}
 
       <div className={claseCuadricula}>

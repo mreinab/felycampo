@@ -86,7 +86,7 @@ const NAV_ITEMS = [
 const CLOSE_DELAY_MS = 200;
 const SCROLL_THRESHOLD_PX = 50;
 
-function Navbar({ transparent = false }) {
+function Navbar({ transparent = false, crecerLogo = false }) {
   const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
@@ -108,12 +108,35 @@ function Navbar({ transparent = false }) {
 
   // Solo importa combinado con la prop "transparent" (ver Navbar.module.css):
   // decide si el fondo pasa de transparente a blanco al hacer scroll.
+  // Si la página trae un Hero marcado con data-navbar-hero (home,
+  // ProductHero en Tienda/Atelier), se usa un IntersectionObserver
+  // sobre ese bloque en vez del umbral fijo: "scrolled" pasa a true
+  // al 80% de scroll del Hero (threshold 0.2 — cuando solo queda un
+  // 20% de su alto por asomar, sea cual sea ese alto: 105dvh en home,
+  // 50vh en ProductHero), no cuando ya ha desaparecido del todo — así
+  // el fondo blanco no llega "tarde" justo antes de que el Hero se
+  // acabe. Mismo criterio de observer que ya usa el Footer más abajo.
+  // Sin Hero en la página (o sin soporte de IntersectionObserver), cae
+  // al umbral fijo de siempre. Depende de "pathname": el layout no
+  // desmonta Navbar al navegar entre rutas, así que hay que re-buscar
+  // el Hero de la página nueva.
   useEffect(() => {
+    const heroMarcador = document.querySelector('[data-navbar-hero]');
+
+    if (heroMarcador && typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver(
+        ([entrada]) => setScrolled(entrada.intersectionRatio <= 0.2),
+        { threshold: 0.2 },
+      );
+      observer.observe(heroMarcador);
+      return () => observer.disconnect();
+    }
+
     const handleScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD_PX);
     handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   // El Footer tiene su propio logo (ver Footer.jsx) — cuando entra en
   // el viewport, el header se desliza hacia arriba y desaparece para
@@ -212,7 +235,10 @@ function Navbar({ transparent = false }) {
     esFichaProducto && styles.fichaProducto,
   ].filter(Boolean).join(' ');
 
-  const navLogoClassName = isLight ? `${styles.navLogo} ${styles.navLogoGrande}` : styles.navLogo;
+  // El logo solo crece en home (crecerLogo) — en las páginas con
+  // ProductHero (Tienda/Atelier) se queda en blanco pero a tamaño
+  // normal, ver isLight más arriba para el color/imagen del logo.
+  const navLogoClassName = (isLight && crecerLogo) ? `${styles.navLogo} ${styles.navLogoGrande}` : styles.navLogo;
 
   return (
     <>

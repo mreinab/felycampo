@@ -1,32 +1,44 @@
 /* ============================================================
    CABECERA DE SECCIÓN — Fely Campo
-   Grid de 4 columnas: grupo título (subtítulo pequeño opcional +
-   título grande + descripción opcional, apilados) en la 1ª, acción
-   libre (botón, fila de tabs...) en las últimas, vía "children".
-   Compartida por CuadriculaProductos y CollectionTitle (variante
-   "tabs") — antes cada uno tenía su propia copia de este layout.
+   Columna centrada: grupo título (subtítulo pequeño opcional +
+   título grande + descripción opcional, apilados) seguido de
+   contenido libre vía "children", todo centrado en el eje
+   horizontal. Usada por CuadriculaProductos (children = Boton "Ver
+   más" + toggle de densidad).
    ============================================================ */
 
 .cabecera {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: end;
-  gap: 0.04rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
   padding-inline: 0px;
-  margin: var(--spacing-8) 0 var(--spacing-4) 0;
+  margin: var(--spacing-4) 0 var(--spacing-6) 0;
   min-height: 10vh;
+}
+
+.cabecera .tituloGrupo {
+  padding-left: 0;
 }
 
 /* Misma regla que .cabecera — usada en su lugar cuando CabeceraSeccion
    se renderiza dentro de CuadriculaProductos (ver CabeceraSeccion.jsx). */
 .cabeceraProductos {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: end;
-  gap: 0.04rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
   padding-inline: 0px;
   margin: var(--spacing-4) 0 var(--spacing-4) 0;
   min-height: 10vh;
+}
+
+.cabeceraProductos .tituloGrupo {
+  padding-left: 0;
 }
 
 /* "alinear='start'" (ver CabeceraSeccion.jsx) — páginas de catálogo
@@ -37,10 +49,27 @@
   margin: var(--spacing-8) 0 var(--spacing-4) 0;
 }
 
+/* Único caso que combina enCuadricula + alinear="start" (CuadriculaProductos
+   en "grid", ver CuadriculaProductos.jsx): fila de 3 elementos separados
+   en vez de la columna centrada de siempre — "before" (botón Filtros),
+   el grupo título (70% de ancho) y "children" (toggle de densidad). */
+.cabeceraProductos.cabeceraInicio {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: start;
+  justify-content: space-between;
+  padding-inline: var(--spacing-7);
+}
+
+.cabeceraProductos.cabeceraInicio .tituloGrupo {
+  width: 70%;
+}
+
 .tituloGrupo {
-  grid-column: 1 / 2;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--spacing-1);
   padding-left: var(--spacing-7);
 }
@@ -53,49 +82,33 @@
 }
 
 /* Mismo estilo que .descripcion de CollectionTitle, sin el centrado
-   propio (aquí vive apilada dentro de .tituloGrupo, no sola). */
+   propio (aquí vive apilada dentro de .tituloGrupo, no sola). Ancho
+   acotado en escritorio para que no estire la cabecera de lado a lado
+   — en mobile no hace falta, ver media query abajo. */
 .descripcion {
+  max-width: 350px;
   font-size: var(--text-small);
   color: var(--color-gris-500);
   line-height: var(--leading-base);
+  text-align: center;
 }
 
-/* accion: por defecto ocupa 1 columna (la 4ª), pegada a la derecha —
-   un botón suelto (ej. CuadriculaProductos). accionAncha la extiende
-   a 3 columnas (2ª a 4ª) — una fila de tabs (ej. CollectionTitle
-   variante "tabs") necesita más sitio que un botón. */
-.accion {
-  grid-column: 4 / 5;
-  justify-self: end;
-  margin-right: var(--spacing-7);
-}
-
-.accionAncha {
-  grid-column: 2 / 5;
-  justify-self: stretch;
-  margin-right: 0;
-}
-
-/* Mobile: 4 columnas estrechas no dejan sitio para el grupo título +
-   acción — se apilan en una sola columna, mismo orden que el desktop. */
 @media (max-width: 767px) {
   .cabecera,
   .cabeceraProductos {
-    grid-template-columns: 1fr;
     padding-inline: var(--spacing-5);
-  }
-  .tituloGrupo,
-  .accion {
-    grid-column: 1;
   }
   .tituloGrupo {
     padding-left: 0;
   }
-  .accion {
-    justify-self: start;
-    margin-right: 0;
+  .descripcion {
+    max-width: none;
   }
-  .accionAncha {
-    justify-self: stretch;
+  .cabeceraProductos.cabeceraInicio {
+    flex-direction: column;
+    align-items: center;
+  }
+  .cabeceraProductos.cabeceraInicio .tituloGrupo {
+    width: 100%;
   }
 }

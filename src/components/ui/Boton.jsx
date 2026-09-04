@@ -25,7 +25,7 @@ import styles from './Boton.module.css';
  * a relleno sólido, texto/icono en --color-fondo). 'texto' = enlaces.
  * 'texto-crema' = mismo enlace, en --color-crema (fondos oscuros/imágenes,
  * ej. HeroCarousel).
- * 'flecha' = nuevo diseño de CTA en mayúsculas, subrayado, con "→" al final
+ * 'flecha' = nuevo diseño de CTA en mayúsculas, subrayado
  * (ej. cabecera de CuadriculaProductos) — candidato a sustituir a
  * solido/contorno/rosa en el resto del sistema, todavía sin extender.
  * Esquinas siempre rectas (radio 0).
@@ -50,13 +50,11 @@ function Boton({
       className,
     ].filter(Boolean).join(' ');
 
-    const contenido = variante === 'flecha' ? <>{children} →</> : children;
-
     // Con href, es un enlace real; sin él, un <span> que solo dispara onClick.
     if (href && !desactivado) {
       return (
         <a href={href} onClick={onClick} className={clases} tabIndex={tabIndex}>
-          {contenido}
+          {children}
         </a>
       );
     }
@@ -66,7 +64,7 @@ function Boton({
         onClick={desactivado ? undefined : onClick}
         className={clases}
       >
-        {contenido}
+        {children}
       </span>
     );
   }

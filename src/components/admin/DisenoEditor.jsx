@@ -15,7 +15,7 @@
    del panel lateral de antes.
    IMPORTANTE — solo diseño, sin lógica nueva: los bloques cuyo texto en
    la home viene de una clave de traducción (text/media/mediaSplit/
-   productRowTabs/reviews) siguen mostrando el texto REAL de esas claves
+   reviews) siguen mostrando el texto REAL de esas claves
    en la vista previa — los campos del modal para esos bloques son
    cosmética/placeholder, no reescriben messages/*.json (no hay backend
    detrás de ningún bloque de este editor). Los bloques cuyo contenido
@@ -31,7 +31,7 @@ import {
 } from 'lucide-react';
 import { Boton, Input, CollectionTitle } from '../ui';
 import {
-  HeroCarousel, MediaBanner, SplitMedia, CuadriculaProductos, CuadriculaConTabs, BloqueSeccion, SectionClientsReview,
+  HeroCarousel, MediaBanner, SplitMedia, CuadriculaProductos, BloqueSeccion, SectionClientsReview,
 } from '../layout';
 import {
   PageHeader, PickerDrawer, SelectorIdioma, FormSeccion, ModalOverlay, useToast,
@@ -57,27 +57,14 @@ const TITULOS_KIND = {
   media: 'Imagen + CTA',
   productRow: 'Fila de producto',
   mediaSplit: 'Dos imágenes',
-  productRowTabs: 'Fila de producto con tabs',
   mediaText: 'Imagen + texto',
   reviews: 'Reseñas destacadas',
 };
 
-// Claves reales de messages/{locale}.json para "Un look para cada
-// ocasión" (page.js) — en el mismo orden que sus 4 tabs. Si desde el
-// admin se añade un 5º tab ("Añadir tab"), no existe clave real para
-// él: cae de vuelta a la primera — aviso ya cubierto por el criterio
-// "sin conectar cables" de este editor.
-const TAB_LABEL_KEYS = [
-  'cuadriculaTabs.tabs.diaBoda',
-  'cuadriculaTabs.tabs.nocheBoda',
-  'cuadriculaTabs.tabs.comunionesBautizo',
-];
-
 const SPLIT_TITULO_KEYS = ['splitMedia.item1.titulo', 'splitMedia.item2.titulo'];
 
-// Paso 1 del selector de productos (SelectorProductos), compartido por
-// "Destacados" (productRow) y por cada tab de "Un look para cada
-// ocasión" (productRowTabs): solo Prêt-à-porter y Atelier — Runway
+// Paso 1 del selector de productos (SelectorProductos), usado por
+// "Destacados" (productRow): solo Prêt-à-porter y Atelier — Runway
 // (tipo 'archivo') queda fuera de estas filas a propósito (novia/fiesta
 // son archivo editorial, no productos vendibles — no tienen filas en
 // productosMock, ver mockData.js).
@@ -160,18 +147,6 @@ function vistaPreviaDe(bloque, idioma) {
           variante="landing"
           items={bloque.items.map((item, i) => ({
             tipo: item.tipo, src: item.src, href: '#', tituloKey: SPLIT_TITULO_KEYS[i] || SPLIT_TITULO_KEYS[0],
-          }))}
-        />
-      );
-    case 'productRowTabs':
-      return (
-        <CuadriculaConTabs
-          titleKey="cuadriculaTabs.titulo"
-          tabs={bloque.tabs.map((tab, i) => ({
-            key: tab.id,
-            labelKey: TAB_LABEL_KEYS[i] || TAB_LABEL_KEYS[0],
-            productos: productosDe(tab.productoIds),
-            verMasHref: '#',
           }))}
         />
       );
@@ -452,26 +427,6 @@ function EditorMediaSplit({ bloque, actualizar, abrirPicker }) {
   );
 }
 
-// Tabs fijos: ni nombre ni cuáles existen se pueden tocar desde aquí (los
-// 4 mismos de siempre — "Un look para cada ocasión" en la home real no
-// tiene más), solo sus productos — mismo criterio que "Destacados".
-function EditorProductRowTabs({ bloque, actualizar }) {
-  function actualizarTab(id, cambios) {
-    actualizar({ tabs: bloque.tabs.map((t) => (t.id === id ? { ...t, ...cambios } : t)) });
-  }
-  return (
-    <>
-      {bloque.tabs.map((tab, indice) => (
-        <FormSeccion key={tab.id} numero={indice + 1} titulo={tab.nombre || `Tab ${indice + 1}`}>
-          <div className={styles.campoAncho}>
-            <SelectorProductos productoIds={tab.productoIds} onChange={(ids) => actualizarTab(tab.id, { productoIds: ids })} max={4} />
-          </div>
-        </FormSeccion>
-      ))}
-    </>
-  );
-}
-
 function EditorMediaText({ bloque, actualizar, abrirPicker }) {
   return (
     <FormSeccion numero={1} titulo="Imagen y texto">
@@ -675,12 +630,11 @@ function EditorHero({ bloque, actualizar }) {
   );
 }
 
-// Filas de producto (productRow/productRowTabs) exigen sus 4 huecos
-// llenos (ver SelectorProductos) antes de poder guardar — el resto de
-// bloques no tiene ese requisito, así que se dan siempre por completos.
+// Fila de producto ("Destacados") exige sus 4 huecos llenos (ver
+// SelectorProductos) antes de poder guardar — el resto de bloques no
+// tiene ese requisito, así que se dan siempre por completos.
 function bloqueCompleto(bloque) {
   if (bloque.kind === 'productRow') return bloque.productoIds.length === 4;
-  if (bloque.kind === 'productRowTabs') return bloque.tabs.every((tab) => tab.productoIds.length === 4);
   return true;
 }
 
@@ -690,7 +644,6 @@ const EDITORES = {
   media: EditorMedia,
   productRow: EditorProductRow,
   mediaSplit: EditorMediaSplit,
-  productRowTabs: EditorProductRowTabs,
   mediaText: EditorMediaText,
   reviews: EditorReviews,
 };

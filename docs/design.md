@@ -196,10 +196,10 @@ que exista el backend real.
 
 ### Reseñas de clientes (placeholder) — pendiente de lógica real
 `ResenasClientes` (`src/components/layout/ResenasClientes.jsx`), en la ficha
-de producto, justo debajo de `.ficha` (encima de "Otros productos que te van
-a encantar"). Distinto del formulario "Escribe tu reseña" (`EscribirResena`,
-al final de la misma página) — este bloque es solo LECTURA: reseñas ya
-publicadas, no el formulario para dejar una nueva.
+de producto, justo debajo de `.ficha`. Este bloque es solo LECTURA: reseñas
+ya publicadas — el formulario público "Escribe tu reseña" (`EscribirResena`)
+que vivía al final de la misma página se quitó del sitio público en una
+sesión posterior.
 
 Diseño minimalista guiado por la foto: retrato del cliente a sangre (sin
 marco ni sombra, cero radio) con el texto de la reseña y el nombre debajo, a

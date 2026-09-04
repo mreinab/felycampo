@@ -35,6 +35,12 @@
  * (ej. CarritoPanel: lista scrollable + botones que no deben moverse
  * nunca de sitio). Sin ella, .contenido se queda en su alto natural —
  * el comportamiento de siempre, sin tocar al resto de usos.
+ *
+ * "ancho" (opcional, ej. "380px"): sobrescribe el ancho fijo de 420px
+ * de .panel vía style inline — así un consumidor concreto (ej.
+ * CarritoPanel) puede tener su propio ancho sin tocar el de los
+ * demás (Filtros, GuiaTallas, submenú de Navbar...), que se quedan en
+ * el de siempre. "max-width: 90vw" de .panel se sigue aplicando igual.
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -52,6 +58,7 @@ function PanelLateral({
   lado = 'izquierda',
   atraparFoco = false,
   claseContenido,
+  ancho,
   onMouseEnter,
   onMouseLeave,
   onCerrar,
@@ -68,6 +75,21 @@ function PanelLateral({
   // nivel que el propio Navbar, donde su z-index sí compara de verdad.
   const [montado, setMontado] = useState(false);
   useEffect(() => setMontado(true), []);
+
+  // Bloquea el scroll de la página de fondo mientras el panel está
+  // abierto — solo para los paneles "modales" de verdad (atraparFoco,
+  // ej. CarritoPanel/GuiaTallas): no tiene sentido dejar ver/mover la
+  // barra de scroll de la página detrás de un panel que tiene su
+  // propio scroll interno. El submenú de Navbar (hover) y el menú
+  // móvil no pasan atraparFoco, así que no les afecta.
+  useEffect(() => {
+    if (!atraparFoco || !abierto) return undefined;
+    const overflowPrevio = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = overflowPrevio;
+    };
+  }, [atraparFoco, abierto]);
 
   useEffect(() => {
     if (!atraparFoco || !abierto) return undefined;
@@ -128,6 +150,7 @@ function PanelLateral({
       <div
         ref={panelRef}
         className={clase}
+        style={ancho ? { width: ancho } : undefined}
         aria-hidden={!abierto}
         tabIndex={atraparFoco ? -1 : undefined}
         onMouseEnter={onMouseEnter}

@@ -6,10 +6,11 @@
    LIGHTBOX DE GALERÍA DE PRODUCTO — Fely Campo
    Pantalla completa (fade suave al abrir/cerrar) con las imágenes de
    GaleriaProducto más grandes: misma banda con scroll horizontal +
-   scroll-snap, más una franja de miniaturas abajo centrada para saltar
-   entre ellas. Mantiene el logo en el mismo sitio que el Navbar real
-   (mismo alto de fila, 76px, mismo logo/tamaño) pero sin el resto del
-   header — es su propia cabecera mínima, no el Navbar de verdad (viven
+   scroll-snap, más una franja de miniaturas a la izquierda, centrada
+   verticalmente, para saltar entre ellas. Mantiene el logo en el mismo
+   sitio que el Navbar real (mismo alto de fila, 76px, mismo logo/tamaño)
+   pero sin el resto del header — es su propia cabecera mínima, no el
+   Navbar de verdad (viven
    en sitios distintos del árbol, sin forma de ocultar uno desde el
    otro sin acoplarlos).
    Uso:

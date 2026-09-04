@@ -9,7 +9,6 @@
    ============================================================ */
 
 import { useEffect, useState } from 'react';
-import { X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import styles from './LineaCarrito.module.css';
 import { SelectorCantidad } from '../ui';
@@ -54,29 +53,31 @@ function LineaCarrito({ imagen, nombre, talla, color, colorHex, precio, cantidad
 
   return (
     <div className={`${styles.linea} ${eliminando ? styles.saliendo : ''}`}>
-      <div className={styles.marco}>
-        {imagen && <img src={imagen} alt={nombre} className={styles.imagen} />}
-      </div>
-
-      <div className={styles.info}>
-        <div className={styles.cabecera}>
+      <div className={styles.filaSuperior}>
+        <div className={styles.columnaNombre}>
           <div className={styles.nombrePrecio}>
             <p className={styles.nombre}>{nombre}</p>
             <p className={styles.precio}>{precio}</p>
           </div>
-          <button type="button" onClick={onQuitar} className={styles.quitar} aria-label={t('quitar')}>
-            <X size={16} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" />
-          </button>
+          {talla && <span className={styles.talla}>{t('talla')} {talla}</span>}
+          {color && <span className={styles.colorNombre}>{color}</span>}
         </div>
 
-        <div className={styles.detalles}>
-          {talla && <span className={styles.talla}>{talla}</span>}
-          {color && (
-            <span className={styles.color} title={color}>
-              {colorHex && <span className={styles.colorPunto} style={{ background: colorHex }} />}
-            </span>
-          )}
-        </div>
+        {color && (
+          <span className={styles.color} title={color}>
+            {colorHex && <span className={styles.colorPunto} style={{ background: colorHex }} />}
+          </span>
+        )}
+      </div>
+
+      <div className={styles.marco}>
+        {imagen && <img src={imagen} alt={nombre} className={styles.imagen} />}
+      </div>
+
+      <div className={styles.filaInferior}>
+        <button type="button" onClick={onQuitar} className={styles.quitar}>
+          {t('quitar')}
+        </button>
 
         <div className={styles.pie}>
           <SelectorCantidad valor={cantidadMostrada} onChange={manejarCantidad} min={0} className={styles.controlAncho} />

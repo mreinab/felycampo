@@ -9,7 +9,7 @@
    Navbar: el carrito es global, no de una página.
    ============================================================ */
 
-import { X } from 'lucide-react';
+import { X, ShoppingBag } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { PanelLateral, Boton } from '../ui';
 import { useCarrito } from '@/context/CarritoContext';
@@ -22,7 +22,7 @@ function CarritoPanel() {
   const { lineas, panelAbierto, cerrarPanel, quitar, actualizarCantidad } = useCarrito();
 
   return (
-    <PanelLateral abierto={panelAbierto} onCerrar={cerrarPanel} lado="derecha" atraparFoco claseContenido={styles.contenido}>
+    <PanelLateral abierto={panelAbierto} onCerrar={cerrarPanel} lado="derecha" atraparFoco claseContenido={styles.contenido} ancho="380px">
       <div className={styles.cabecera}>
         <h2 className={styles.titulo}>{t('titulo')}</h2>
         <button type="button" className={styles.cerrar} onClick={cerrarPanel} aria-label={t('cerrar')}>
@@ -57,10 +57,11 @@ function CarritoPanel() {
           </div>
 
           <div className={styles.acciones}>
-            <Boton variante="solido" tamano="full">{t('pagar')}</Boton>
             <Boton variante="contorno" tamano="full" href={`/${locale}/carrito`} onClick={cerrarPanel}>
+              <ShoppingBag size={16} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" />
               {t('verCarrito')}
             </Boton>
+            <Boton variante="solido" tamano="full">{t('pagar')}</Boton>
           </div>
         </>
       )}

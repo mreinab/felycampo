@@ -53,7 +53,6 @@
     "avisoTalla": "Selecciona una talla antes de añadir al carrito.",
     "talla": "Talla",
     "runwayLook": "Runway look",
-    "resenasTitulo": "Lo que dicen nuestras clientas",
     "composicion": "Composición y cuidado",
     "composicionTexto": "100% materiales de temporada, seleccionados por nuestro equipo de diseño. Lavado a mano o en seco, no usar secadora.",
     "origenDisenado": "Diseñado en: Salamanca, España",
@@ -65,11 +64,20 @@
     "devolucionesSubtitulo": "Devoluciones",
     "devolucionesTexto": "Puedes ponerte en contacto con nosotros en <email>info@felycampo.com</email> o en el <telefono>+34 683 703 644</telefono> dentro de los 14 días naturales siguientes a la recepción del pedido para gestionar una devolución o cambio. Te indicaremos los pasos a seguir. Los gastos de devolución corren a cargo del cliente, salvo en caso de prenda defectuosa o error en el pedido. Visita nuestra página de <atencion>atención al cliente</atencion>.",
     "entregaEstimada": "Entrega estimada: 2 semanas",
-    "relacionados": "Otros productos que te van a encantar",
     "noEncontrado": "No hemos encontrado este producto.",
+    "seguirExplorandoTienda": "Sigue explorando la colección",
+    "seguirExplorandoAtelier": "Sigue explorando el atelier",
     "galeriaAnterior": "Imagen anterior",
     "galeriaSiguiente": "Imagen siguiente",
-    "galeriaCerrar": "Cerrar galería"
+    "galeriaCerrar": "Cerrar galería",
+    "lookNumero": "Look {numero}",
+    "productosLook": "Prendas de este look",
+    "consigueElLook": "Consigue el look",
+    "lookVerDetalle": "Ver detalle del look",
+    "videoActivarSonido": "Activar sonido",
+    "videoSilenciar": "Silenciar",
+    "videoReproducir": "Reproducir vídeo",
+    "videoPausar": "Pausar vídeo"
   },
   "atencionCliente": {
     "titulo": "Atención al cliente",
@@ -87,7 +95,7 @@
     "vacio": "Tu carrito está vacío.",
     "explorarTienda": "Explorar tienda",
     "pagar": "Pagar",
-    "verCarrito": "Ver carrito",
+    "verCarrito": "Carrito",
     "quitar": "Quitar",
     "talla": "Talla",
     "tuPedido": "Tu pedido",
@@ -168,11 +176,7 @@
     "subtitulo": "Atelier",
     "titulo": "Un look para cada ocasión",
     "descripcion": "Reserva tu cita y vive un día único en el Atelier. Disfruta del asesoramiento personalizado de nuestra diseñadora.",
-    "tabs": {
-      "diaBoda": "Invitada Boda Día",
-      "nocheBoda": "Invitada Boda Noche",
-      "comunionesBautizo": "Comuniones & Bautizos"
-    }
+    "reservarCita": "Reserva tu cita"
   },
   "catalogo": {
     "subtituloFelyCampo": "Fely Campo",
@@ -191,7 +195,6 @@
     "vistaCuadricula": "Vista en cuadrícula",
     "vistaCompacta": "Vista en 2 columnas",
     "filtros": "Filtros",
-    "resultados": "{total} productos",
     "cargandoMas": "Cargando más productos…"
   },
   "filtros": {
@@ -221,7 +224,7 @@
   },
   "footer": {
     "newsletter": {
-      "texto": "Suscríbete a nuestra newsletter para ser la primera en acceder a ofertas especiales, colecciones limitadas, nuevas incorporaciones y para estar conectada con nuestra comunidad.",
+      "texto": "Suscríbete y sé la primera en conocer ofertas, colecciones limitadas y novedades.",
       "consentimiento": "Al enviar tu email, aceptas nuestra <privacidad>Política de privacidad</privacidad>.",
       "enviar": "Enviar",
       "exito": "¡Gracias! Ya estás suscrita.",

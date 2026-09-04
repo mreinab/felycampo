@@ -3,11 +3,11 @@
 /* ============================================================
    RESEÑAS DE CLIENTES (placeholder) — Fely Campo
    Bloque de reseñas publicadas, debajo de .ficha en la ficha de
-   producto (tienda/[producto]/page.js) — distinto del formulario
-   "Escribe tu reseña" (EscribirResena.jsx, más abajo en la misma
-   página): esto es solo LECTURA, reseñas ya publicadas desde el admin
-   panel (ver resenasMock en src/components/admin/mockData.js, campo
-   estado: 'Publicada').
+   producto (tienda/[producto]/page.js) — solo LECTURA, reseñas ya
+   publicadas desde el admin panel (ver resenasMock en
+   src/components/admin/mockData.js, campo estado: 'Publicada'). El
+   formulario público "Escribe tu reseña" (EscribirResena.jsx) que
+   vivía debajo en la misma página se quitó del sitio público.
 
    PLACEHOLDER a propósito, mismo criterio que LookPasarela.jsx: no
    está conectado de verdad al admin todavía (ni hay filtrado real por
@@ -26,19 +26,18 @@
    centra, así que no se ve "vacío" ni desproporcionado según cuántas
    reseñas haya.
    Uso:
-     <ResenasClientes titulo="Lo que dicen nuestras clientas" resenas={[
+     <ResenasClientes resenas={[
        { nombre: 'Marta Ibáñez', texto: 'El vestido...', foto: '/img/Clientes/ClientReview- (1).jpg' },
      ]} />
    ============================================================ */
 
 import styles from './ResenasClientes.module.css';
 
-function ResenasClientes({ titulo, resenas = [] }) {
+function ResenasClientes({ resenas = [] }) {
   if (resenas.length === 0) return null;
 
   return (
     <section className={styles.seccion}>
-      <h3 className={styles.titulo}>{titulo}</h3>
       <div className={styles.fila}>
         {resenas.map((resena) => (
           <figure key={resena.nombre} className={styles.tarjeta}>

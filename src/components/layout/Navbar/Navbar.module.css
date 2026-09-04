@@ -54,6 +54,14 @@
   background: var(--color-fondo);
 }
 
+/* El subrayado de hover/activo (.navLink:hover/.navLinkActivo más abajo)
+   por defecto es --color-tinta — ilegible sobre un Hero oscuro con el
+   texto ya en --color-fondo. En .light se invierte igual que el texto. */
+.header.light .navLink:hover,
+.header.light .navLinkActivo {
+  text-decoration-color: var(--color-fondo);
+}
+
 .navRow {
   min-height: var(--nav-height);
   position: relative;

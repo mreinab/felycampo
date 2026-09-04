@@ -21,7 +21,7 @@
 
 .marco {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 4.5;
   background: var(--color-crema);
   overflow: hidden;
   border-radius: var(--radius-imagenes);

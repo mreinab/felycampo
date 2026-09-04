@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-6);
-  padding: var(--spacing-8) var(--spacing-8) var(--spacing-8) 0;
+  padding: var(--spacing-10) var(--spacing-8) var(--spacing-8) 0;
   /* Sin esto, un item de grid no encoge por debajo del ancho mínimo
      de su contenido (min-width:auto de fábrica) — con el cuadrado de
      BotonGuardar (aspect-ratio 1) dentro de .fila, eso podía empujar
@@ -77,4 +77,14 @@
   font-weight: 400;
   color: var(--color-tinta);
   margin-top: var(--spacing-4);
+}
+
+/* CTA debajo de ProductosRecomendados (ver page.js) — vuelve a la
+   página de categoría de la que vino la visita (Tienda/Atelier),
+   detectada por el header Referer del navegador. */
+.seguirExplorando {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-10);
 }

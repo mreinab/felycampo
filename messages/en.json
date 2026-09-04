@@ -53,7 +53,6 @@
     "avisoTalla": "Please select a size before adding to cart.",
     "talla": "Size",
     "runwayLook": "Runway look",
-    "resenasTitulo": "What our clients are saying",
     "composicion": "Composition and care",
     "composicionTexto": "100% seasonal materials, selected by our design team. Hand or dry-clean wash only, do not tumble dry.",
     "origenDisenado": "Designed in: Salamanca, Spain",
@@ -65,11 +64,20 @@
     "devolucionesSubtitulo": "Returns",
     "devolucionesTexto": "You can contact us at <email>info@felycampo.com</email> or at <telefono>+34 683 703 644</telefono> within 14 days of receiving your order to arrange a return or exchange. We'll guide you through the process. Return shipping costs are borne by the customer, except where the item is faulty or incorrect. Visit our <atencion>customer service</atencion> page.",
     "entregaEstimada": "Estimated delivery: 2 weeks",
-    "relacionados": "Other products you'll love",
     "noEncontrado": "We couldn't find this product.",
+    "seguirExplorandoTienda": "Keep exploring the collection",
+    "seguirExplorandoAtelier": "Keep exploring the atelier",
     "galeriaAnterior": "Previous image",
     "galeriaSiguiente": "Next image",
-    "galeriaCerrar": "Close gallery"
+    "galeriaCerrar": "Close gallery",
+    "lookNumero": "Look {numero}",
+    "productosLook": "Pieces from this look",
+    "consigueElLook": "Get the look",
+    "lookVerDetalle": "View look detail",
+    "videoActivarSonido": "Turn sound on",
+    "videoSilenciar": "Mute",
+    "videoReproducir": "Play video",
+    "videoPausar": "Pause video"
   },
   "atencionCliente": {
     "titulo": "Customer Service",
@@ -87,7 +95,7 @@
     "vacio": "Your cart is empty.",
     "explorarTienda": "Explore shop",
     "pagar": "Checkout",
-    "verCarrito": "View cart",
+    "verCarrito": "Cart",
     "quitar": "Remove",
     "talla": "Size",
     "tuPedido": "Your order",
@@ -168,11 +176,7 @@
     "subtitulo": "Atelier",
     "titulo": "A look for every occasion",
     "descripcion": "Book your appointment and enjoy a unique day at the Atelier. Experience personalized guidance from our designer.",
-    "tabs": {
-      "diaBoda": "Wedding Guest Day",
-      "nocheBoda": "Wedding Guest Night",
-      "comunionesBautizo": "Christenings & Communions"
-    }
+    "reservarCita": "Book your appointment"
   },
   "catalogo": {
     "subtituloFelyCampo": "Fely Campo",
@@ -191,7 +195,6 @@
     "vistaCuadricula": "Grid view",
     "vistaCompacta": "2-column view",
     "filtros": "Filters",
-    "resultados": "{total} products",
     "cargandoMas": "Loading more products…"
   },
   "filtros": {
@@ -221,7 +224,7 @@
   },
   "footer": {
     "newsletter": {
-      "texto": "Sign up to our newsletter for first access to special offers, limited collections, new arrivals and to stay connected with our community.",
+      "texto": "Sign up for first access to offers, limited collections and new arrivals.",
       "consentimiento": "By submitting your email, you agree to our <privacidad>Privacy Policy</privacidad>.",
       "enviar": "Submit",
       "exito": "Thank you — you're subscribed!",
