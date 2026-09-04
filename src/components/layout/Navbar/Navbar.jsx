@@ -49,8 +49,6 @@ const SUBMENU_STRUCTURE = {
     items: [
       { key: 'blog', href: '/blog' },
       { key: 'historia', href: '/sobre-fely' },
-      { key: 'archivo', href: '/archivo' },
-      { key: 'runway', href: '/archivo/runway' },
     ],
     image: '/img/styleguide/prod-tarjeta-relacionado.webp',
   },

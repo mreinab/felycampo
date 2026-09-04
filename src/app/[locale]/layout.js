@@ -65,11 +65,6 @@ export default async function RootLayout({ children, params }) {
   const rutaSinLocale = pathname.replace(new RegExp(`^/${locale}`), '') || '/';
   const isHome = rutaSinLocale === '/';
   const tieneProductHero = RUTAS_CON_PRODUCT_HERO.includes(rutaSinLocale);
-  // Ficha de colección de Runway (/archivo/runway/[coleccion], ruta
-  // dinámica — no puede vivir en RUTAS_CON_PRODUCT_HERO, que solo hace
-  // match exacto): mismo Navbar transparente que Tienda/Atelier, con su
-  // propio hero marcado data-navbar-hero (ver [coleccion]/page.js).
-  const esFichaRunway = rutaSinLocale.startsWith('/archivo/runway/');
 
   return (
     <html lang={locale}>
@@ -79,7 +74,7 @@ export default async function RootLayout({ children, params }) {
       <body>
         <NextIntlClientProvider messages={messages}>
           <CarritoProvider>
-            <Navbar transparent={isHome || tieneProductHero || esFichaRunway} crecerLogo={isHome} />
+            <Navbar transparent={isHome || tieneProductHero} crecerLogo={isHome} />
             <main>{children}</main>
             <Footer />
           </CarritoProvider>

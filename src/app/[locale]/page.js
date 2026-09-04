@@ -96,7 +96,6 @@ export default async function Home({ params }) {
         coleccionKey="cuadriculaProductos.coleccion"
         tituloKey="cuadriculaProductos.novedades"
         descriptionKey="cuadriculaProductos.novedadesDescripcion"
-        verMasHref={`/${locale}/archivo/colecciones`}
       />
       <SplitMedia
         variante="landing"

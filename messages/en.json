@@ -23,9 +23,7 @@
       },
       "elMundoDeFely": {
         "blog": "Blog",
-        "historia": "Story",
-        "archivo": "Archive",
-        "runway": "Runway"
+        "historia": "Story"
       },
       "visitanos": {
         "salamanca": "Salamanca",
@@ -69,15 +67,7 @@
     "seguirExplorandoAtelier": "Keep exploring the atelier",
     "galeriaAnterior": "Previous image",
     "galeriaSiguiente": "Next image",
-    "galeriaCerrar": "Close gallery",
-    "lookNumero": "Look {numero}",
-    "productosLook": "Pieces from this look",
-    "consigueElLook": "Get the look",
-    "lookVerDetalle": "View look detail",
-    "videoActivarSonido": "Turn sound on",
-    "videoSilenciar": "Mute",
-    "videoReproducir": "Play video",
-    "videoPausar": "Pause video"
+    "galeriaCerrar": "Close gallery"
   },
   "atencionCliente": {
     "titulo": "Customer Service",
