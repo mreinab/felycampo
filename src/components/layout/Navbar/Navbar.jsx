@@ -49,6 +49,7 @@ const SUBMENU_STRUCTURE = {
     items: [
       { key: 'blog', href: '/blog' },
       { key: 'historia', href: '/sobre-fely' },
+      { key: 'runway', href: '/archivo/runway' },
     ],
     image: '/img/styleguide/prod-tarjeta-relacionado.webp',
   },
@@ -66,13 +67,6 @@ const SUBMENU_STRUCTURE = {
     cardsUnico: true,
   },
 };
-
-// Cualquier ruta de un solo segmento bajo /tienda que NO sea ninguna
-// de estas (categorías reales + la propia portada "Tienda", verTodos)
-// es una ficha de producto (slug de producto, ver slugify.js) — el
-// header móvil se comporta distinto ahí (ver esFichaProducto/
-// .fichaProducto en Navbar.module.css).
-const RUTAS_TIENDA_CONOCIDAS = new Set(SUBMENU_STRUCTURE.tienda.items.map((item) => item.href));
 
 const NAV_ITEMS = [
   { key: 'atelier', href: '/atelier', submenu: 'atelier' },
@@ -217,20 +211,12 @@ function Navbar({ transparent = false, crecerLogo = false }) {
   const solido = scrolled || headerHovered || !!activeSubmenu;
   const isLight = transparent && !solido;
 
-  // Solo importa en móvil (ver @media en Navbar.module.css) — en
-  // escritorio la ficha de producto usa el header normal de siempre.
-  const esFichaProducto = (() => {
-    const match = pathname?.match(/^\/[^/]+\/tienda\/([^/]+)$/);
-    return !!match && !RUTAS_TIENDA_CONOCIDAS.has(`/tienda/${match[1]}`);
-  })();
-
   const headerClass = [
     styles.header,
     transparent && styles.transparent,
     transparent && solido && styles.opaco,
     isLight && styles.light,
     footerVisible && styles.ocultoPorFooter,
-    esFichaProducto && styles.fichaProducto,
   ].filter(Boolean).join(' ');
 
   // El logo solo crece en home (crecerLogo) — en las páginas con

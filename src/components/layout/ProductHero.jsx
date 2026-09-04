@@ -18,16 +18,30 @@ import styles from './ProductHero.module.css';
  * los enlaces en blanco; en cuanto se scrollea fuera de él, pasa al
  * navbar normal. Mismo criterio (IntersectionObserver) que ya usa
  * Navbar.jsx para saber cuándo el Footer entra en pantalla.
+ *
+ * El marcador vive en .envoltorio, NO en .hero — a propósito. .hero
+ * pasa a position:fixed en mobile (ver ProductHero.module.css): su
+ * recuadro respecto al viewport ya no cambia nunca al hacer scroll, así
+ * que el observer lo vería "siempre visible" y el navbar se quedaría
+ * transparente para siempre. .envoltorio, en cambio, reserva el hueco
+ * de 50vh en el flujo NORMAL siempre (en cualquier ancho) y sí se
+ * desplaza de verdad con la página — el observer detecta que sale de
+ * escena exactamente cuando CuadriculaProductos (que va justo detrás en
+ * el flujo, tapando la imagen fija) llega a tocar el navbar, ni antes
+ * ni después. En escritorio .hero ocupa el mismo recuadro que
+ * .envoltorio (sin position:fixed), así que el comportamiento no
+ * cambia nada ahí.
  */
 function ProductHero({ imagen, alt = '' }) {
   return (
-    <div
-      className={styles.hero}
-      style={{ backgroundImage: `url(${imagen})` }}
-      role={alt ? 'img' : undefined}
-      aria-label={alt || undefined}
-      data-navbar-hero
-    />
+    <div className={styles.envoltorio} data-navbar-hero>
+      <div
+        className={styles.hero}
+        style={{ backgroundImage: `url(${imagen})` }}
+        role={alt ? 'img' : undefined}
+        aria-label={alt || undefined}
+      />
+    </div>
   );
 }
 

@@ -38,9 +38,11 @@
 
 @media (max-width: 767px) {
   .info {
-    position: static;
-    /* "Peek" sobre la galería — 40px por encima de su borde inferior,
-       como una tarjeta que asoma sobre la última foto. */
+    /* relative (no static): así el z-index de abajo hace algo de
+       verdad — GaleriaProducto .pista se queda fija en mobile (ver
+       GaleriaProducto.module.css), .info necesita ganarle en el eje z
+       para taparla al hacer scroll, no solo asomar 40px por encima. */
+    position: relative;
     margin-top: -60px;
     margin-inline: var(--spacing-3);
     padding: var(--spacing-6);
@@ -51,6 +53,16 @@
   .punto {
     width: 20px;
     height: 20px;
+  }
+
+  /* Todo lo que va después de .ficha (reseñas, recomendados, "sigue
+     explorando") necesita el mismo tapado que .info arriba — .pista de
+     GaleriaProducto sigue fija (ver GaleriaProducto.module.css) durante
+     todo el alto que ocupe esta sección, no solo mientras dura .info. */
+  .debajoFicha {
+    position: relative;
+    z-index: 1;
+    background: var(--color-fondo);
   }
 }
 

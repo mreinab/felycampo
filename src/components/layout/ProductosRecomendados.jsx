@@ -16,13 +16,18 @@
    ProductosRecomendados.module.css). Sin título de sección.
    Uso:
      <ProductosRecomendados productos={relacionados} />
+
+   "hrefBase"/"ocultarPrecio" (opcionales, se le pasan tal cual a
+   TarjetaProducto): usados por FichaProductoAtelier.jsx (Novias/
+   Fiesta) para enlazar a su propia ficha en vez de a /tienda y no
+   enseñar precio — mismo criterio que en CuadriculaProductos.jsx.
    ============================================================ */
 
 import { useEffect, useRef } from 'react';
 import TarjetaProducto from '../ecommerce/TarjetaProducto';
 import styles from './ProductosRecomendados.module.css';
 
-function ProductosRecomendados({ productos = [] }) {
+function ProductosRecomendados({ productos = [], hrefBase, ocultarPrecio = false }) {
   const contenedorRef = useRef(null);
   const pistaRef = useRef(null);
   const objetivoScrollRef = useRef(0);
@@ -89,7 +94,7 @@ function ProductosRecomendados({ productos = [] }) {
         <div ref={pistaRef} className={styles.pista}>
           {productosVisibles.map((producto) => (
             <div key={producto.nombre} className={styles.item}>
-              <TarjetaProducto {...producto} variante="carrusel" />
+              <TarjetaProducto {...producto} variante="carrusel" hrefBase={hrefBase} ocultarPrecio={ocultarPrecio} />
             </div>
           ))}
         </div>

@@ -139,16 +139,18 @@ export default async function FichaProducto({ params }) {
         </div>
       </div>
 
-      <ResenasClientes resenas={resenas} />
+      <div className={styles.debajoFicha}>
+        <ResenasClientes resenas={resenas} />
 
-      {relacionados.length > 0 && (
-        <>
-          <ProductosRecomendados productos={relacionados} />
-          <div className={styles.seguirExplorando}>
-            <Boton variante="solido" href={hrefSeguirExplorando}>{t(keySeguirExplorando)}</Boton>
-          </div>
-        </>
-      )}
+        {relacionados.length > 0 && (
+          <>
+            <ProductosRecomendados productos={relacionados} />
+            <div className={styles.seguirExplorando}>
+              <Boton variante="solido" href={hrefSeguirExplorando}>{t(keySeguirExplorando)}</Boton>
+            </div>
+          </>
+        )}
+      </div>
     </section>
   );
 }

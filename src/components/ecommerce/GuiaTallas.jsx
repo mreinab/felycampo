@@ -114,10 +114,7 @@ function GuiaTallas({ abierto, onCerrar }) {
                   <tr key={clave}>
                     <th scope="row" className={styles.thMedida}>{t(`medidas.${clave}.etiqueta`)}</th>
                     {TALLAS_MEDIDAS.map((fila) => {
-                      // Sin toggle "Real"/"Patrón": la tabla siempre
-                      // muestra la medida de patrón (ver "Patrón" como
-                      // etiqueta fija, no botón, más abajo).
-                      const valor = convertirMedida(fila[clave].patron, unidad);
+                      const valor = convertirMedida(fila[clave], unidad);
                       return (
                         <td
                           key={fila.talla}

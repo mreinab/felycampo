@@ -31,8 +31,8 @@
 
 .icono {
   flex-shrink: 0;
-  width: var(--text-caption);
-  height: var(--text-caption);
+  width: 18px;
+  height: 18px;
   transition: transform 0.28s var(--ease-marca);
 }
 

@@ -23,7 +23,8 @@
       },
       "elMundoDeFely": {
         "blog": "Blog",
-        "historia": "Historia"
+        "historia": "Historia",
+        "runway": "Runway"
       },
       "visitanos": {
         "salamanca": "Salamanca",
@@ -50,13 +51,17 @@
     "anadirCesta": "Añadir",
     "avisoTalla": "Selecciona una talla antes de añadir al carrito.",
     "talla": "Talla",
+    "contactar": "Contacta con nosotros",
+    "avisoColor": "Selecciona un color antes de contactar.",
     "runwayLook": "Runway look",
-    "composicion": "Composición y cuidado",
+    "composicion": "Composición",
     "composicionTexto": "100% materiales de temporada, seleccionados por nuestro equipo de diseño. Lavado a mano o en seco, no usar secadora.",
     "origenDisenado": "Diseñado en: Salamanca, España",
     "origenFabricado": "Fabricado en: Salamanca, España",
     "origenTintura": "Tintura y estampación: Italia",
     "origenTejido": "Origen tejido: India",
+    "porEncargoTitulo": "Producto por Encargo (PRE-ORDER)",
+    "porEncargoTexto": "Esta prenda se realiza por encargo específicamente para cada pedido y cliente, por lo que no se admite realizar devolución una vez confirmado el pedido. Por ello puedes contactar con nosotros para más información y para hacer el pedido a través de nuestro botón de más información.",
     "envios": "Envíos y devoluciones",
     "enviosSubtitulo": "Envíos",
     "devolucionesSubtitulo": "Devoluciones",
@@ -67,7 +72,15 @@
     "seguirExplorandoAtelier": "Sigue explorando el atelier",
     "galeriaAnterior": "Imagen anterior",
     "galeriaSiguiente": "Imagen siguiente",
-    "galeriaCerrar": "Cerrar galería"
+    "galeriaCerrar": "Cerrar galería",
+    "lookNumero": "Look {numero}",
+    "productosLook": "Prendas de este look",
+    "consigueElLook": "Consigue el look",
+    "lookVerDetalle": "Ver detalle del look",
+    "videoActivarSonido": "Activar sonido",
+    "videoSilenciar": "Silenciar",
+    "videoReproducir": "Reproducir vídeo",
+    "videoPausar": "Pausar vídeo"
   },
   "atencionCliente": {
     "titulo": "Atención al cliente",
@@ -130,10 +143,26 @@
     "medidas": {
       "pecho": { "etiqueta": "Pecho", "texto": "Rodea el busto por el punto más saliente." },
       "cintura": { "etiqueta": "Cintura", "texto": "Envuelve la parte más estrecha del abdomen." },
-      "cadera": { "etiqueta": "Cadera", "texto": "Mide el contorno en el punto más ancho." },
-      "caderaAlta": { "etiqueta": "Cadera alta", "texto": "Pendiente: texto exacto de \"cadera alta\"." },
-      "contBrazo": { "etiqueta": "Cont. brazo", "texto": "Pendiente: texto exacto de \"contorno de brazo\"." }
+      "cadera": { "etiqueta": "Cadera", "texto": "Mide el contorno en el punto más ancho." }
     }
+  },
+  "solicitudAtelier": {
+    "titulo": "Solicita información",
+    "subtitulo": "Cuéntanos qué talla necesitas y cómo podemos contactarte — te responderemos con toda la información.",
+    "producto": "Producto",
+    "color": "Color",
+    "talla": "Talla",
+    "avisoTalla": "Selecciona una talla.",
+    "nombre": "Nombre",
+    "email": "Email",
+    "telefono": "Teléfono (opcional)",
+    "comentario": "Comentario (opcional)",
+    "comentarioPlaceholder": "Cuéntanos cualquier detalle adicional…",
+    "avisoDatos": "Completa tu nombre y email para continuar.",
+    "enviar": "Enviar solicitud",
+    "confirmacionTitulo": "¡Solicitud enviada!",
+    "confirmacionTexto": "Gracias por tu interés. Nuestro equipo se pondrá en contacto contigo lo antes posible.",
+    "cerrar": "Cerrar"
   },
   "heroCarousel": {
     "cta": "Ver más"
@@ -198,10 +227,11 @@
     },
     "talla": "Talla",
     "color": "Color",
+    "coleccion": "Colección",
     "precio": "Precio",
     "hasta": "Hasta {precio}",
     "limpiar": "Limpiar filtros",
-    "verResultados": "Ver {total} productos"
+    "verResultados": "Ver productos"
   },
   "visitaAtelier": {
     "titulo": "Artesanía, Feminidad & Cercanía",

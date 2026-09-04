@@ -9,6 +9,7 @@ import TarjetaProducto from '../ecommerce/TarjetaProducto';
 import TarjetaMedia from '../ecommerce/TarjetaMedia';
 import { Boton, CabeceraSeccion } from '../ui';
 import PanelFiltros from './PanelFiltros';
+import { familiasColorMock, coloresMock } from '@/components/admin/mockData';
 import styles from './CuadriculaProductos.module.css';
 
 const LOTE_INICIAL = 8;
@@ -21,6 +22,26 @@ const ORDEN_TALLAS = ['XS', 'S', 'M', 'L', 'XL'];
 function parsearPrecio(precio) {
   if (!precio) return 0;
   return parseInt(String(precio).replace(/[^\d]/g, ''), 10) || 0;
+}
+
+// El filtro de Color agrupa por familia (Neutros, Rojos y vinos... ver
+// familiasColorMock/coloresMock en components/admin/mockData.js — las
+// mismas familias con las que ya se organizan los colores en el panel
+// admin, ver familiaChip en FormularioProducto.jsx), no por color
+// suelto. productosEjemplo no tiene un id de coloresMock por color (sus
+// nombres/hex son propios), así que cada hex se asigna a la familia
+// cuyo color de coloresMock tenga el tono más parecido (distancia
+// euclídea en RGB) — heurística, no una relación de datos real.
+function distanciaHex(hexA, hexB) {
+  const [rA, gA, bA] = hexA.match(/\w\w/g).map((h) => parseInt(h, 16));
+  const [rB, gB, bB] = hexB.match(/\w\w/g).map((h) => parseInt(h, 16));
+  return (rA - rB) ** 2 + (gA - gB) ** 2 + (bA - bB) ** 2;
+}
+
+function familiaDeHex(hex) {
+  return coloresMock.reduce((mejor, candidato) => (
+    distanciaHex(hex, candidato.hex) < distanciaHex(hex, mejor.hex) ? candidato : mejor
+  ), coloresMock[0]).familia;
 }
 
 /**
@@ -40,6 +61,22 @@ function parsearPrecio(precio) {
  * true" rompe esa norma: se renderiza como TarjetaMedia (solo imagen/
  * gif/vídeo en bucle, sin nombre ni precio) en vez de TarjetaProducto,
  * y no lo tocan los filtros de talla/color/precio.
+ * "ocultarPrecio" (opcional, se le pasa tal cual a TarjetaProducto): no
+ * pinta el precio en ninguna tarjeta — usado por Atelier (Novias/
+ * Fiesta), no por Tienda. En PanelFiltros, esta misma prop también
+ * oculta "ordenar por" y el rango de precio (no tiene sentido filtrar/
+ * ordenar por un dato que no se enseña).
+ * "hrefBase" (opcional, se le pasa tal cual a TarjetaProducto): primer
+ * segmento de la ficha de cada producto ('tienda' por defecto) — Atelier
+ * (Novias/Fiesta) pasa 'atelier/novias'/'atelier/fiesta', su propia
+ * ficha sin precio ni carrito (ver FichaProductoAtelier.jsx).
+ * "colecciones" (opcional, array de nombres): activa un desplegable
+ * más en PanelFiltros ("Colección") — lista de nombres, selección
+ * única (clicar el ya activo lo quita), mismo patrón que "ordenar por".
+ * Usado por Atelier (Novias/Fiesta), no por Tienda. De momento es solo
+ * selección visual: productosEjemplo no tiene todavía un campo
+ * "colección" con el que cruzarla, así que no filtra la cuadrícula de
+ * verdad (ver coleccionSeleccionada más abajo).
  *
  * "tituloKey" (opcional): activa la cabecera (CabeceraSeccion) —
  * subtítulo pequeño "tituloKey", título grande "coleccionKey" (si
@@ -51,9 +88,8 @@ function parsearPrecio(precio) {
  *
  * En "grid", la cabecera (CabeceraSeccion con enCuadricula + alinear
  * "start") pasa a ser una fila de 3: el botón "Filtros" (before, abre
- * PanelFiltros — panel lateral con talla/color/precio + ordenar por,
- * que también enseña el recuento de resultados), el grupo título (70%
- * de ancho) y el toggle de densidad (children/accion: icono
+ * PanelFiltros — panel lateral con talla/color/precio + ordenar por),
+ * el grupo título (70% de ancho) y el toggle de densidad (children/accion: icono
  * "layout-grid", activo por defecto — cuadrícula de 4 columnas — e
  * icono "square", que la cambia a 2 columnas centradas; oculto en
  * mobile). "tallas"/"colores"/precio disponibles para filtrar se
@@ -63,7 +99,7 @@ function parsearPrecio(precio) {
  * carga 8 más, con tarjetas-esqueleto (.skeleton) mientras "llega"
  * (simulado con un timeout — aquí no hay backend real todavía).
  */
-function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila' }) {
+function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase }) {
   const t = useTranslations();
 
   const esGrid = disposicion === 'grid';
@@ -74,7 +110,8 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
   const [filtrosAbiertos, setFiltrosAbiertos] = useState(false);
   const [orden, setOrden] = useState('recomendados');
   const [tallasSeleccionadas, setTallasSeleccionadas] = useState([]);
-  const [coloresSeleccionados, setColoresSeleccionados] = useState([]);
+  const [familiasSeleccionadas, setFamiliasSeleccionadas] = useState([]);
+  const [coleccionSeleccionada, setColeccionSeleccionada] = useState(null);
 
   const tallasDisponibles = useMemo(() => {
     if (!esGrid) return [];
@@ -83,13 +120,18 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
     return ORDEN_TALLAS.filter((talla) => encontradas.has(talla));
   }, [productos, esGrid]);
 
-  const coloresDisponibles = useMemo(() => {
+  const familiasDisponibles = useMemo(() => {
     if (!esGrid) return [];
-    const vistos = new Map();
-    productos.forEach((producto) => (producto.colores || []).forEach(({ hex, nombre }) => {
-      if (!vistos.has(nombre)) vistos.set(nombre, hex);
+    const idsPresentes = new Set();
+    productos.forEach((producto) => (producto.colores || []).forEach(({ hex }) => {
+      idsPresentes.add(familiaDeHex(hex));
     }));
-    return Array.from(vistos, ([nombre, hex]) => ({ nombre, hex }));
+    return familiasColorMock
+      .filter((familia) => idsPresentes.has(familia.id))
+      .map((familia) => ({
+        ...familia,
+        muestras: familia.muestras.map((id) => coloresMock.find((c) => c.id === id)?.hex).filter(Boolean),
+      }));
   }, [productos, esGrid]);
 
   const precioMaximoDisponible = useMemo(() => {
@@ -108,7 +150,8 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
   }, [precioMaximoDisponible]);
 
   const hayFiltrosActivos = tallasSeleccionadas.length > 0
-    || coloresSeleccionados.length > 0
+    || familiasSeleccionadas.length > 0
+    || Boolean(coleccionSeleccionada)
     || precioMax < precioMaximoDisponible;
 
   const alternarEnLista = (lista, valor) => (
@@ -117,12 +160,13 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
 
   const limpiarFiltros = () => {
     setTallasSeleccionadas([]);
-    setColoresSeleccionados([]);
+    setFamiliasSeleccionadas([]);
+    setColeccionSeleccionada(null);
     setPrecioMax(precioMaximoDisponible);
   };
 
-  // Lista filtrada + ordenada — base tanto del recuento de resultados
-  // como de la paginación por scroll de más abajo.
+  // Lista filtrada + ordenada — base de la paginación por scroll de
+  // más abajo.
   const productosOrdenados = useMemo(() => {
     if (!esGrid) return productos;
 
@@ -130,8 +174,8 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
       if (producto.media) return true;
       const pasaTalla = tallasSeleccionadas.length === 0
         || (producto.tallas || []).some((talla) => tallasSeleccionadas.includes(talla));
-      const pasaColor = coloresSeleccionados.length === 0
-        || (producto.colores || []).some(({ nombre }) => coloresSeleccionados.includes(nombre));
+      const pasaColor = familiasSeleccionadas.length === 0
+        || (producto.colores || []).some(({ hex }) => familiasSeleccionadas.includes(familiaDeHex(hex)));
       const pasaPrecio = parsearPrecio(producto.precio) <= precioMax;
       return pasaTalla && pasaColor && pasaPrecio;
     });
@@ -139,7 +183,7 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
     if (orden === 'precioAsc') return [...filtrados].sort((a, b) => parsearPrecio(a.precio) - parsearPrecio(b.precio));
     if (orden === 'precioDesc') return [...filtrados].sort((a, b) => parsearPrecio(b.precio) - parsearPrecio(a.precio));
     return filtrados;
-  }, [productos, esGrid, tallasSeleccionadas, coloresSeleccionados, precioMax, orden]);
+  }, [productos, esGrid, tallasSeleccionadas, familiasSeleccionadas, precioMax, orden]);
 
   // ---------- Paginación por scroll (solo "grid") ----------
   const [visibles, setVisibles] = useState(LOTE_INICIAL);
@@ -150,7 +194,7 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
   // estricto podría dejar "visibles" apuntando más allá del final.
   useEffect(() => {
     setVisibles(LOTE_INICIAL);
-  }, [tallasSeleccionadas, coloresSeleccionados, precioMax, orden]);
+  }, [tallasSeleccionadas, familiasSeleccionadas, precioMax, orden]);
 
   useEffect(() => {
     if (!esGrid || cargandoMas || visibles >= productosOrdenados.length) return undefined;
@@ -250,7 +294,7 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
             {producto.media ? (
               <TarjetaMedia {...producto} />
             ) : (
-              <TarjetaProducto {...producto} coloresSiempreVisibles={esGrid} />
+              <TarjetaProducto {...producto} coloresSiempreVisibles={esGrid} ocultarPrecio={ocultarPrecio} hrefBase={hrefBase} />
             )}
           </div>
         ))}
@@ -278,14 +322,17 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
           tallas={tallasDisponibles}
           tallasSeleccionadas={tallasSeleccionadas}
           onToggleTalla={(talla) => setTallasSeleccionadas((actual) => alternarEnLista(actual, talla))}
-          colores={coloresDisponibles}
-          coloresSeleccionados={coloresSeleccionados}
-          onToggleColor={(color) => setColoresSeleccionados((actual) => alternarEnLista(actual, color))}
+          familias={familiasDisponibles}
+          familiasSeleccionadas={familiasSeleccionadas}
+          onToggleFamilia={(id) => setFamiliasSeleccionadas((actual) => alternarEnLista(actual, id))}
+          colecciones={colecciones}
+          coleccionSeleccionada={coleccionSeleccionada}
+          onSeleccionarColeccion={(nombre) => setColeccionSeleccionada((actual) => (actual === nombre ? null : nombre))}
+          ocultarPrecio={ocultarPrecio}
           precioMax={precioMax}
           precioMaximo={precioMaximoDisponible}
           onCambiarPrecioMax={setPrecioMax}
           onLimpiar={limpiarFiltros}
-          totalResultados={productosOrdenados.length}
         />
       )}
     </section>

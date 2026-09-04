@@ -45,6 +45,16 @@ import { slugify } from '@/lib/slugify';
  * categoría, no por la home) se pinta dentro de .encabezado, junto a
  * nombre/precio, siempre visible y navegable — sin depender del hover.
  *
+ * "ocultarPrecio" (opcional): no pinta el precio en absoluto — usado
+ * por Atelier (Novias/Fiesta, precio bajo cita/presupuesto, no de
+ * catálogo), no por Tienda.
+ * "hrefBase" ('tienda' por defecto): primer segmento de la ficha a la
+ * que enlaza la tarjeta (`/${locale}/${hrefBase}/${slug}`) — Atelier
+ * (Novias/Fiesta) pasa 'atelier/novias'/'atelier/fiesta' en vez de
+ * 'tienda': esas piezas no se compran online (sin precio de catálogo,
+ * sin carrito) así que necesitan su propia ficha, no la de Tienda (ver
+ * FichaProductoAtelier.jsx).
+ *
  * Imagen + nombre/precio enlazan a la ficha de producto
  * (/tienda/[producto], slug de "nombre" — ver src/lib/slugify.js);
  * ".enlace" usa display:contents para no romper el layout en flex/
@@ -67,9 +77,11 @@ function TarjetaProducto({
   alt,
   variante,
   coloresSiempreVisibles = false,
+  ocultarPrecio = false,
+  hrefBase = 'tienda',
 }) {
   const locale = useLocale();
-  const hrefProducto = `/${locale}/tienda/${slugify(nombre)}`;
+  const hrefProducto = `/${locale}/${hrefBase}/${slugify(nombre)}`;
 
   const coloresVisibles = colores.slice(0, 3);
   const coloresRestantes = colores.length - coloresVisibles.length;
@@ -84,6 +96,19 @@ function TarjetaProducto({
   const imagenHoverActual = colorSeleccionado?.imagenHover || imagenHover;
   const tipoActual = colorSeleccionado?.imagen ? colorSeleccionado.tipo || 'imagen' : tipo;
   const tipoHoverActual = colorSeleccionado?.imagenHover ? colorSeleccionado.tipoHover || 'imagen' : tipoHover;
+
+  const preciosBloque = !ocultarPrecio && (
+    <div className={`${styles.precios} ${esCarrusel ? styles.preciosCarrusel : ''}`}>
+      {precioRebajado ? (
+        <>
+          <span className={styles.antes}>{precio}</span>
+          <span className={styles.ahora}>{precioRebajado}</span>
+        </>
+      ) : (
+        <span className={styles.precio}>{precio}</span>
+      )}
+    </div>
+  );
 
   const coloresBotones = coloresVisibles.length > 0 && (
     <>
@@ -163,16 +188,7 @@ function TarjetaProducto({
         <div className={styles.encabezado}>
           <p className={`${styles.nombre} ${esCarrusel ? styles.nombreCarrusel : ''}`}>{nombre}</p>
 
-          <div className={`${styles.precios} ${esCarrusel ? styles.preciosCarrusel : ''}`}>
-            {precioRebajado ? (
-              <>
-                <span className={styles.antes}>{precio}</span>
-                <span className={styles.ahora}>{precioRebajado}</span>
-              </>
-            ) : (
-              <span className={styles.precio}>{precio}</span>
-            )}
-          </div>
+          {preciosBloque}
 
           {coloresSiempreVisibles && !agotado && coloresBotones && (
             <div className={styles.coloresEncabezado} onClick={(evento) => evento.stopPropagation()}>

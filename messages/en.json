@@ -23,7 +23,8 @@
       },
       "elMundoDeFely": {
         "blog": "Blog",
-        "historia": "Story"
+        "historia": "Story",
+        "runway": "Runway"
       },
       "visitanos": {
         "salamanca": "Salamanca",
@@ -50,13 +51,17 @@
     "anadirCesta": "Add",
     "avisoTalla": "Please select a size before adding to cart.",
     "talla": "Size",
+    "contactar": "Contact us",
+    "avisoColor": "Please select a color before contacting us.",
     "runwayLook": "Runway look",
-    "composicion": "Composition and care",
+    "composicion": "Composition",
     "composicionTexto": "100% seasonal materials, selected by our design team. Hand or dry-clean wash only, do not tumble dry.",
     "origenDisenado": "Designed in: Salamanca, Spain",
     "origenFabricado": "Made in: Salamanca, Spain",
     "origenTintura": "Dyeing and printing: Italy",
     "origenTejido": "Fabric origin: India",
+    "porEncargoTitulo": "Made-to-Order Product (PRE-ORDER)",
+    "porEncargoTexto": "This garment is made to order specifically for each order and customer, so returns are not accepted once the order has been confirmed. For this reason, you can contact us for more information and to place your order through our information button.",
     "envios": "Shipping and returns",
     "enviosSubtitulo": "Shipping",
     "devolucionesSubtitulo": "Returns",
@@ -67,7 +72,15 @@
     "seguirExplorandoAtelier": "Keep exploring the atelier",
     "galeriaAnterior": "Previous image",
     "galeriaSiguiente": "Next image",
-    "galeriaCerrar": "Close gallery"
+    "galeriaCerrar": "Close gallery",
+    "lookNumero": "Look {numero}",
+    "productosLook": "Pieces from this look",
+    "consigueElLook": "Get the look",
+    "lookVerDetalle": "View look detail",
+    "videoActivarSonido": "Turn sound on",
+    "videoSilenciar": "Mute",
+    "videoReproducir": "Play video",
+    "videoPausar": "Pause video"
   },
   "atencionCliente": {
     "titulo": "Customer Service",
@@ -130,10 +143,26 @@
     "medidas": {
       "pecho": { "etiqueta": "Bust", "texto": "Measure around the fullest part of the bust." },
       "cintura": { "etiqueta": "Waist", "texto": "Measure around the narrowest part of the waist." },
-      "cadera": { "etiqueta": "Hip", "texto": "Measure around the widest part of the hip." },
-      "caderaAlta": { "etiqueta": "High hip", "texto": "Pending: exact wording for \"high hip\"." },
-      "contBrazo": { "etiqueta": "Arm circumference", "texto": "Pending: exact wording for \"arm circumference\"." }
+      "cadera": { "etiqueta": "Hip", "texto": "Measure around the widest part of the hip." }
     }
+  },
+  "solicitudAtelier": {
+    "titulo": "Request information",
+    "subtitulo": "Tell us your size and how to reach you — we'll get back to you with all the details.",
+    "producto": "Product",
+    "color": "Color",
+    "talla": "Size",
+    "avisoTalla": "Please select a size.",
+    "nombre": "Name",
+    "email": "Email",
+    "telefono": "Phone (optional)",
+    "comentario": "Comment (optional)",
+    "comentarioPlaceholder": "Tell us any additional details…",
+    "avisoDatos": "Please fill in your name and email to continue.",
+    "enviar": "Send request",
+    "confirmacionTitulo": "Request sent!",
+    "confirmacionTexto": "Thank you for your interest. Our team will get in touch with you as soon as possible.",
+    "cerrar": "Close"
   },
   "heroCarousel": {
     "cta": "Discover more"
@@ -198,10 +227,11 @@
     },
     "talla": "Size",
     "color": "Color",
+    "coleccion": "Collection",
     "precio": "Price",
     "hasta": "Up to {precio}",
     "limpiar": "Clear filters",
-    "verResultados": "View {total} products"
+    "verResultados": "View products"
   },
   "visitaAtelier": {
     "titulo": "The Fely Campo Atelier",

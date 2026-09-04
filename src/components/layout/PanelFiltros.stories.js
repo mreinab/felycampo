@@ -3,12 +3,11 @@ import { NextIntlClientProvider } from 'next-intl';
 import PanelFiltros from './PanelFiltros';
 import messages from '../../../messages/es.json';
 
-const COLORES = [
-  { hex: '#202020', nombre: 'Tinta' },
-  { hex: '#C19A6B', nombre: 'Camel' },
-  { hex: '#6E2635', nombre: 'Burdeos' },
-  { hex: '#F7F7F7', nombre: 'Blanco' },
-  { hex: '#23324A', nombre: 'Azul marino' },
+const FAMILIAS = [
+  { id: 'neutrals', etiqueta: 'Neutros', muestras: ['#111111', '#FAFAF7'] },
+  { id: 'browns', etiqueta: 'Marrones', muestras: ['#C19A6B', '#4B3621'] },
+  { id: 'reds', etiqueta: 'Rojos y vinos', muestras: ['#B21F2D', '#6E1E2B'] },
+  { id: 'blues', etiqueta: 'Azules', muestras: ['#1F2A44', '#A9CFE8'] },
 ];
 
 export default {
@@ -33,7 +32,7 @@ export const Interactivo = {
       const [abierto, setAbierto] = useState(true);
       const [orden, setOrden] = useState('recomendados');
       const [tallasSeleccionadas, setTallasSeleccionadas] = useState([]);
-      const [coloresSeleccionados, setColoresSeleccionados] = useState([]);
+      const [familiasSeleccionadas, setFamiliasSeleccionadas] = useState([]);
       const [precioMax, setPrecioMax] = useState(1200);
 
       const alternar = (lista, valor) => (
@@ -53,18 +52,17 @@ export const Interactivo = {
             tallas={['XS', 'S', 'M', 'L', 'XL']}
             tallasSeleccionadas={tallasSeleccionadas}
             onToggleTalla={(talla) => setTallasSeleccionadas((actual) => alternar(actual, talla))}
-            colores={COLORES}
-            coloresSeleccionados={coloresSeleccionados}
-            onToggleColor={(color) => setColoresSeleccionados((actual) => alternar(actual, color))}
+            familias={FAMILIAS}
+            familiasSeleccionadas={familiasSeleccionadas}
+            onToggleFamilia={(id) => setFamiliasSeleccionadas((actual) => alternar(actual, id))}
             precioMax={precioMax}
             precioMaximo={1200}
             onCambiarPrecioMax={setPrecioMax}
             onLimpiar={() => {
               setTallasSeleccionadas([]);
-              setColoresSeleccionados([]);
+              setFamiliasSeleccionadas([]);
               setPrecioMax(1200);
             }}
-            totalResultados={12}
           />
         </>
       );

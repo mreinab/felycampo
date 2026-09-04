@@ -13,6 +13,9 @@
 }
 
 .titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
   font-size: var(--text-h4);
   font-weight: var(--font-weight-medium);
   color: var(--color-tinta);
@@ -36,22 +39,30 @@
   opacity: 0.6;
 }
 
-/* ---------- Ordenar por ---------- */
-.seccionOrden {
+/* .contenido extra (ver claseContenido en PanelLateral.jsx) + .listaScroll:
+   mismo patrón que .contenido/.lista de CarritoPanel.module.css —
+   cabecera fija arriba, el acordeón de filtros scrollea en su propio
+   hueco (flex:1) y .acciones queda siempre pegado abajo del todo, sea
+   cual sea su alto (menos filas en Atelier, ver ocultarPrecio). */
+.contenido {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-3);
-  padding-bottom: var(--spacing-5);
-  border-bottom: 0.75px solid var(--color-gris-300);
+  height: 100%;
+  background: var(--color-fondo);
 }
 
-.etiquetaSeccion {
-  font-size: var(--text-caption);
-  font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
-  color: var(--color-gris-700);
+.listaScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
+.listaScroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- Ordenar por / Colección: listas de texto ---------- */
 .listaOrden {
   display: flex;
   flex-direction: column;
@@ -116,34 +127,57 @@
   border-color: var(--color-tinta);
 }
 
-/* Swatch de color: punto cuadrado (radio 0, igual que .punto de
-   TarjetaProducto) envuelto en un botón más grande — más fácil de
-   pulsar, y el aro cuando está activo no queda pegado al color. */
-.swatchBoton {
+/* ---------- Color: familias ---------- */
+/* Mismo elemento que .familiaChip/.familiasGrid de
+   FormularioProducto.module.css (panel admin) — recreado aquí porque
+   vive en components/admin/ (solo el panel), no en components/layout/
+   (sitio público). "Padres" en flex-wrap, cada uno con 1-2 cuadraditos
+   de muestra para reconocer la familia sin leer la etiqueta — no se
+   enseña el color suelto, ver familiaDeHex en CuadriculaProductos.jsx. */
+.familiasGrid {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: 0;
-  cursor: pointer;
-  transition: border-color 0.25s var(--ease-marca);
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
 }
 
-.swatchBoton:hover,
-.swatchActivo {
+.familiaChip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--color-gris-300);
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
+}
+
+.familiaChip:hover {
   border-color: var(--color-tinta);
 }
 
-.swatch {
-  display: block;
-  width: 20px;
-  height: 20px;
-  border-radius: 0;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+.familiaChipActiva {
+  border-color: var(--color-tinta);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+}
+
+.familiaMuestras {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.familiaMuestra {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--color-gris-300);
+}
+
+.familiaMuestra + .familiaMuestra {
+  margin-left: -5px;
 }
 
 /* ---------- Precio ---------- */
@@ -164,11 +198,21 @@
 }
 
 /* ---------- Acciones ---------- */
+/* Ya no necesita margin-top para "empujarse" abajo: vive fuera del
+   hueco que scrollea (.listaScroll, arriba) así que el propio flex
+   column de .contenido lo deja pegado al fondo del panel sin más
+   truco, mismo criterio que .acciones de CarritoPanel.module.css. */
 .acciones {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3);
-  margin-top: var(--spacing-6);
   padding-top: var(--spacing-5);
   border-top: 0.75px solid var(--color-gris-300);
+}
+
+/* Boton variante="contorno" ya usa --color-tinta para el borde, pero el
+   texto sale en --color-gris-700 (ver .contorno en Boton.module.css) —
+   aquí lo pisamos a tinta también. */
+.acciones .limpiarBoton {
+  color: var(--color-tinta);
 }

@@ -59,4 +59,16 @@
   font-weight: 500;
   color: #fff;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.13);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: var(--spacing-1);
+  transition: text-decoration-color 0.25s var(--ease-marca);
+}
+
+/* Mismo criterio que .submenuLink de NavbarPanelLateralContent.module.css
+   (subrayado solo al hover) — en blanco aquí porque el texto vive sobre
+   una foto, no sobre --color-fondo. */
+.card:hover .label,
+.card:focus-visible .label {
+  text-decoration-color: #fff;
 }

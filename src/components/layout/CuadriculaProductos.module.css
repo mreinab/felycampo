@@ -24,10 +24,23 @@
   margin-bottom: var(--spacing-10);
 }
 
+/* Mobile: por delante del ProductHero fijo que va justo antes (ver
+   ProductHero.module.css) — fondo opaco + posicionada + z-index por
+   encima, así lo va tapando a medida que se hace scroll, en vez de
+   dejarlo asomar por los lados. */
+@media (max-width: 767px) {
+  .seccion.seccionGrid {
+    position: relative;
+    z-index: 1;
+    background: var(--color-fondo);
+  }
+}
+
 /* La cabecera opcional (grupo título + acción) vive ahora en
    CabeceraSeccion (ver ui/CabeceraSeccion.module.css) — reutilizada
    tal cual por CollectionTitle variante "tabs", así que ya no se
    duplica el layout aquí. */
+
 
 /* ---------- Cuadrícula ---------- */
 .cuadricula {

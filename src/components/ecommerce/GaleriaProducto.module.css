@@ -95,12 +95,40 @@
 }
 
 @media (max-width: 767px) {
-  .imagen {
-    object-fit: cover;
+  /* La imagen se queda fija justo debajo del navbar (sticky de
+     siempre, ver Navbar.module.css — ya no se hace position:absolute
+     ni desaparece con el scroll) en vez de desplazarse con la página.
+     .galeria (arriba) pasa a reservar exactamente ese hueco restante
+     (100vh - nav-height, no 110vh: ya no hace falta el "de más" que
+     compensaba el navbar flotando encima) — mismo criterio que
+     .envoltorio de ProductHero.module.css, así el flujo no colapsa
+     nada. El resto del contenido de la ficha (.info y todo lo que
+     viene después — reseñas, recomendados, "sigue explorando", ver
+     page.module.css/FichaProductoAtelier.module.css) la va tapando
+     según se hace scroll (position:relative + z-index por encima).
+     Las flechas pasan también a fijas, centradas en ese mismo hueco,
+     para que no se "despeguen" de la pista al primer scroll. */
+  .galeria {
+    height: calc(100vh - var(--nav-height));
+  }
+
+  .pista {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    width: 100%;
+    height: calc(100vh - var(--nav-height));
+    z-index: 0;
   }
 
   .flecha {
+    position: fixed;
+    top: calc(var(--nav-height) + (100vh - var(--nav-height)) / 2);
     width: 32px;
     height: 32px;
+  }
+
+  .imagen {
+    object-fit: cover;
   }
 }
