@@ -19,7 +19,9 @@
       "atelier": {
         "novias": "Bridal",
         "fiesta": "Evening Wear",
-        "vosotras": "For You"
+        "vosotras": "For You",
+        "noviasSubmenu": "Bridal Collection",
+        "fiestaSubmenu": "Evening Wear Collection"
       },
       "elMundoDeFely": {
         "blog": "Blog",
@@ -45,6 +47,9 @@
       "carrito": "Cart"
     }
   },
+  "breadcrumb": {
+    "ariaLabel": "Breadcrumb"
+  },
   "producto": {
     "anadirWishlist": "Add to Wishlist",
     "fichaCaption": "Product page",
@@ -60,6 +65,7 @@
     "origenFabricado": "Made in: Salamanca, Spain",
     "origenTintura": "Dyeing and printing: Italy",
     "origenTejido": "Fabric origin: India",
+    "categorias": "Categories",
     "porEncargoTitulo": "Made-to-Order Product (PRE-ORDER)",
     "porEncargoTexto": "This garment is made to order specifically for each order and customer, so returns are not accepted once the order has been confirmed. For this reason, you can contact us for more information and to place your order through our information button.",
     "envios": "Shipping and returns",
@@ -111,6 +117,12 @@
     "infoEnvioSubrayado": "Shipping",
     "infoEnvioResto": "& returns"
   },
+  "wishlist": {
+    "titulo": "Wishlist",
+    "descripcion": "Save the pieces you love most so you can find them easily and add them to your bag whenever you're ready.",
+    "vacio": "Your wishlist is empty.",
+    "explorarTienda": "Explore the shop"
+  },
   "infoEnvios": {
     "titulo": "Shipping & Returns",
     "cerrar": "Close",
@@ -135,7 +147,6 @@
     "cerrar": "Close size guide",
     "seleccionaTallaje": "Select a size",
     "unidadCm": "CM",
-    "unidadIn": "IN",
     "vistaPatron": "Garment",
     "talla": "Size",
     "disclaimer": "Measurements are for reference only and may vary slightly depending on material or manufacturing. Use them as a guide when choosing your size.",
@@ -148,20 +159,40 @@
   },
   "solicitudAtelier": {
     "titulo": "Request information",
-    "subtitulo": "Tell us your size and how to reach you — we'll get back to you with all the details.",
-    "producto": "Product",
-    "color": "Color",
+    "subtitulo": "Tell us your size and how to reach you, we'll get back to you with all the details.",
     "talla": "Size",
     "avisoTalla": "Please select a size.",
     "nombre": "Name",
+    "nombrePlaceholder": "Jane Smith",
     "email": "Email",
+    "emailPlaceholder": "jane@example.com",
     "telefono": "Phone (optional)",
+    "telefonoPlaceholder": "+34 600 000 000",
     "comentario": "Comment (optional)",
     "comentarioPlaceholder": "Tell us any additional details…",
     "avisoDatos": "Please fill in your name and email to continue.",
     "enviar": "Send request",
     "confirmacionTitulo": "Request sent!",
     "confirmacionTexto": "Thank you for your interest. Our team will get in touch with you as soon as possible.",
+    "cerrar": "Close"
+  },
+  "miCuenta": {
+    "tabLogin": "Log in",
+    "tabRegistro": "Create account",
+    "tituloLogin": "Log in",
+    "tituloRegistro": "Create your account",
+    "subtituloLogin": "Sign in to see your orders, your wishlist and your saved details.",
+    "subtituloRegistro": "We only need a couple of details to create your account.",
+    "nombreCompleto": "Full name",
+    "nombreCompletoPlaceholder": "Jane Smith",
+    "fechaNacimiento": "Date of birth",
+    "email": "Email",
+    "emailPlaceholder": "jane@example.com",
+    "password": "Password",
+    "enviarLogin": "Log in",
+    "enviarRegistro": "Create account",
+    "separador": "or continue with",
+    "google": "Continue with Google",
     "cerrar": "Close"
   },
   "heroCarousel": {
@@ -197,6 +228,14 @@
     "descripcion": "Book your appointment and enjoy a unique day at the Atelier. Experience personalized guidance from our designer.",
     "reservarCita": "Book your appointment"
   },
+  "vosotras": {
+    "descripcion": "Our clients, in their own words and their own photos, wearing Fely Campo in their special moments.",
+    "verGaleria": "View gallery"
+  },
+  "atelierCategoriaSeo": {
+    "titulo": "{categoria} · {seccion} · Atelier — Fely Campo",
+    "descripcion": "{categoria} style dresses in the {seccion} Atelier collection by Fely Campo. Personalized fitting with our designer."
+  },
   "catalogo": {
     "subtituloFelyCampo": "Fely Campo",
     "subtituloTienda": "Prêt-à-porter",
@@ -231,7 +270,64 @@
     "precio": "Price",
     "hasta": "Up to {precio}",
     "limpiar": "Clear filters",
-    "verResultados": "View products"
+    "verResultados": "View products",
+    "estiloYSilueta": {
+      "titulo": "Style & silhouette",
+      "grupos": {
+        "silueta": {
+          "titulo": "Silhouette",
+          "opciones": {
+            "corteA": "A-line",
+            "recto": "Straight",
+            "sirena": "Mermaid",
+            "princesa": "Ballgown"
+          }
+        },
+        "volumen": {
+          "titulo": "Volume",
+          "opciones": {
+            "dosPiezas": "Two-piece"
+          }
+        },
+        "largo": {
+          "titulo": "Length",
+          "opciones": {
+            "corto": "Short",
+            "midi": "Midi",
+            "largo": "Long",
+            "cola": "Train"
+          }
+        },
+        "estilo": {
+          "titulo": "Style",
+          "opciones": {
+            "minimal": "Minimal",
+            "lencero": "Slip dress",
+            "diferente": "Unconventional",
+            "clasico": "Classic",
+            "romantico": "Romantic"
+          }
+        },
+        "detalles": {
+          "titulo": "Details",
+          "opciones": {
+            "asimetrico": "Asymmetric",
+            "escoteEspalda": "Open back",
+            "fluido": "Flowy",
+            "mangas": "Sleeves"
+          }
+        },
+        "ocasion": {
+          "titulo": "Occasion",
+          "opciones": {
+            "alfombraRoja": "Red carpet",
+            "noche": "Evening",
+            "tarde": "Afternoon",
+            "dia": "Day"
+          }
+        }
+      }
+    }
   },
   "visitaAtelier": {
     "titulo": "The Fely Campo Atelier",

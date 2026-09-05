@@ -178,3 +178,11 @@
   font-size: var(--text-small);
   color: var(--color-tinta);
 }
+
+/* "esAtelier": mismo aviso que .avisoColor en FichaProductoAtelier.module.css
+   (InfoAtelier.jsx) — sin color elegido, "Contacta con nosotros" no
+   abre el modal, solo avisa aquí debajo del selector. */
+.avisoColor {
+  color: var(--color-rosa-oscuro);
+  font-size: var(--text-caption);
+}

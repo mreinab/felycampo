@@ -33,12 +33,22 @@ export const TALLAS_MEDIDAS = Object.entries(MEDIDAS_POR_TALLA).map(([talla, med
   ...medidas,
 }));
 
-// cm -> in, 1 decimal.
-export function convertirMedida(valorCm, unidad) {
-  if (valorCm === null || valorCm === undefined) return null;
-  if (unidad === 'in') return Math.round((valorCm / 2.54) * 10) / 10;
-  return valorCm;
-}
+// Escala de tallas de Fely Campo (36 a 64, ya no XS/S/M/L/XL) — fuente
+// única reusada en todo el sitio (SelectorTalla, PanelFiltros,
+// catálogo de ejemplo, panel admin...) para no repetir el rango a
+// mano en cada sitio.
+export const TALLAS_DISPONIBLES = TALLAS_MEDIDAS.map((medida) => medida.talla);
+
+// PLACEHOLDER — sin stock real por producto todavía (ver "tallas" en
+// productosEjemplo.js: el mismo TALLAS_DISPONIBLES completo para todos
+// los productos), así que no hay de dónde sacar qué talla está
+// agotada de verdad. Se usa como ejemplo fijo del prop "agotadas" de
+// SelectorTalla en sus tres consumidores reales (FichaProductoAcciones,
+// GaleriaProductoLightbox, ModalSolicitudAtelier) — mismo valor que ya
+// usaba SelectorTalla.stories.js — para que el aspa/opacidad de
+// ".agotada" (ver SelectorTalla.module.css) se vea también en la app,
+// no solo en Storybook.
+export const TALLAS_AGOTADAS_EJEMPLO = [44];
 
 export function formatearMedida(valor) {
   if (valor === null || valor === undefined) return '—';

@@ -30,7 +30,7 @@ function NavbarPanelLateralCards({ submenuKey, submenu }) {
           key={item.key}
           href={withLocale(item.href)}
           image={submenu.image}
-          label={t(`submenus.${submenuKey}.${item.key}`)}
+          label={t(`submenus.${submenuKey}.${item.labelKey || item.key}`)}
           variante={submenu.cardsUnico ? 'ancho' : undefined}
         />
       ))}

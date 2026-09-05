@@ -14,11 +14,24 @@
      </Modal>
    ============================================================ */
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import styles from './Modal.module.css';
 
 function Modal({ abierto, onCerrar, children }) {
+  // Portal a document.body — mismo motivo que PanelLateral.jsx: quien
+  // invoque Modal puede vivir dentro de un ancestro con su propio
+  // contexto de apilamiento (ej. .info en FichaProductoAtelier,
+  // position:sticky — siempre crea uno, tenga o no z-index), y desde
+  // ahí ningún z-index interno del modal puede ganarle al header
+  // (Navbar.module.css): el ancestro entero queda "atrapado" por
+  // debajo. El portal cuelga overlay/contenedor directo de <body>, al
+  // mismo nivel que el propio Navbar, donde su z-index sí compara de
+  // verdad (ver ModalSolicitudAtelier.jsx, "Solicitar información").
+  const [montado, setMontado] = useState(false);
+  useEffect(() => setMontado(true), []);
+
   useEffect(() => {
     if (!abierto) return undefined;
     const overflowPrevio = document.body.style.overflow;
@@ -35,9 +48,9 @@ function Modal({ abierto, onCerrar, children }) {
     };
   }, [abierto, onCerrar]);
 
-  if (!abierto) return null;
+  if (!abierto || !montado) return null;
 
-  return (
+  return createPortal(
     <>
       <div className={styles.overlay} aria-hidden="true" onClick={onCerrar} />
       <div className={styles.contenedor}>
@@ -48,7 +61,8 @@ function Modal({ abierto, onCerrar, children }) {
           <div className={styles.contenido}>{children}</div>
         </div>
       </div>
-    </>
+    </>,
+    document.body,
   );
 }
 

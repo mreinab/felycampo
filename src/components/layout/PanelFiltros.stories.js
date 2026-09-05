@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import PanelFiltros from './PanelFiltros';
+import { TALLAS_DISPONIBLES } from '../ecommerce/guiaTallasData';
 import messages from '../../../messages/es.json';
 
 const FAMILIAS = [
@@ -33,6 +34,7 @@ export const Interactivo = {
       const [orden, setOrden] = useState('recomendados');
       const [tallasSeleccionadas, setTallasSeleccionadas] = useState([]);
       const [familiasSeleccionadas, setFamiliasSeleccionadas] = useState([]);
+      const [estiloSiluetaSeleccionados, setEstiloSiluetaSeleccionados] = useState([]);
       const [precioMax, setPrecioMax] = useState(1200);
 
       const alternar = (lista, valor) => (
@@ -49,18 +51,23 @@ export const Interactivo = {
             onCerrar={() => setAbierto(false)}
             orden={orden}
             onCambiarOrden={setOrden}
-            tallas={['XS', 'S', 'M', 'L', 'XL']}
+            tallas={TALLAS_DISPONIBLES}
             tallasSeleccionadas={tallasSeleccionadas}
             onToggleTalla={(talla) => setTallasSeleccionadas((actual) => alternar(actual, talla))}
             familias={FAMILIAS}
             familiasSeleccionadas={familiasSeleccionadas}
             onToggleFamilia={(id) => setFamiliasSeleccionadas((actual) => alternar(actual, id))}
+            estiloYSilueta
+            esFiesta
+            estiloSiluetaSeleccionados={estiloSiluetaSeleccionados}
+            onToggleEstiloSilueta={(id) => setEstiloSiluetaSeleccionados((actual) => alternar(actual, id))}
             precioMax={precioMax}
             precioMaximo={1200}
             onCambiarPrecioMax={setPrecioMax}
             onLimpiar={() => {
               setTallasSeleccionadas([]);
               setFamiliasSeleccionadas([]);
+              setEstiloSiluetaSeleccionados([]);
               setPrecioMax(1200);
             }}
           />

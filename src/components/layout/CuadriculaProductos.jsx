@@ -3,18 +3,21 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { LayoutGrid, Square, SlidersHorizontal } from 'lucide-react';
 import TarjetaProducto from '../ecommerce/TarjetaProducto';
 import TarjetaMedia from '../ecommerce/TarjetaMedia';
 import { Boton, CabeceraSeccion } from '../ui';
 import PanelFiltros from './PanelFiltros';
 import { familiasColorMock, coloresMock } from '@/components/admin/mockData';
+import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
 import styles from './CuadriculaProductos.module.css';
 
 const LOTE_INICIAL = 8;
 const LOTE_INCREMENTO = 8;
-const ORDEN_TALLAS = ['XS', 'S', 'M', 'L', 'XL'];
+// Mismo rango de tallas (36 a 64) que GuiaTallas — fuente única en
+// guiaTallasData.js, ver TALLAS_DISPONIBLES ahí.
+const ORDEN_TALLAS = TALLAS_DISPONIBLES;
 
 // Los precios del catálogo se escriben "990 €"/"1.050 €" (punto como
 // separador de miles, sin decimales) — quitar todo lo que no sea
@@ -77,6 +80,28 @@ function familiaDeHex(hex) {
  * selección visual: productosEjemplo no tiene todavía un campo
  * "colección" con el que cruzarla, así que no filtra la cuadrícula de
  * verdad (ver coleccionSeleccionada más abajo).
+ * "estiloYSilueta" (opcional): activa el bloque "Estilo y silueta" en
+ * PanelFiltros (Silueta/Volumen/Largo/Estilo/Detalles, y "Ocasión" si
+ * además "esFiesta"). Usado por Atelier (Novias/Fiesta) — mismo caso
+ * que "colecciones": selección visual, productosEjemplo no tiene esos
+ * atributos todavía, así que tampoco filtra la cuadrícula de verdad.
+ *
+ * "categoriaActiva" (opcional, {grupo, opcion} — ver
+ * estiloSiluetaGrupos.js): la pasan las páginas
+ * /atelier/{seccion}/categoria/[categoria]/page.js, resuelta ahí desde
+ * el segmento de URL (params.categoria), no desde el cliente — así la
+ * miga de pan y el título de categoría salen ya en el HTML servido
+ * (SEO/crawlers), no solo tras hidratar. Con ella: preselecciona el
+ * chip correspondiente en PanelFiltros (y abre su fila,
+ * "estiloSiluetaAbiertoPorDefecto") y cambia la cabecera de
+ * "tituloKey"/"coleccionKey" normal a una miga de pan real
+ * ("Atelier" enlaza a /atelier, "coleccionKey" enlaza a "hrefBase")
+ * con el nombre de la categoría como título grande (ver
+ * "breadcrumbItems" más abajo y "breadcrumbItems" en
+ * CabeceraSeccion.jsx). Misma limitación que "estiloYSilueta": no
+ * filtra la cuadrícula de verdad, solo la selección visual del chip —
+ * los tags de categoría de FichaProductoAtelier.jsx son quienes
+ * enlazan a estas páginas.
  *
  * "tituloKey" (opcional): activa la cabecera (CabeceraSeccion) —
  * subtítulo pequeño "tituloKey", título grande "coleccionKey" (si
@@ -99,8 +124,9 @@ function familiaDeHex(hex) {
  * carga 8 más, con tarjetas-esqueleto (.skeleton) mientras "llega"
  * (simulado con un timeout — aquí no hay backend real todavía).
  */
-function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase }) {
+function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase, estiloYSilueta = false, esFiesta = false, categoriaActiva = null }) {
   const t = useTranslations();
+  const locale = useLocale();
 
   const esGrid = disposicion === 'grid';
   const [columnas, setColumnas] = useState(4);
@@ -112,6 +138,12 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
   const [tallasSeleccionadas, setTallasSeleccionadas] = useState([]);
   const [familiasSeleccionadas, setFamiliasSeleccionadas] = useState([]);
   const [coleccionSeleccionada, setColeccionSeleccionada] = useState(null);
+  // Preseleccionado desde "categoriaActiva" (prop, resuelta en el
+  // Server Component de la página) cuando se llega a una URL de
+  // categoría — ver comentario de "categoriaActiva" arriba.
+  const [estiloSiluetaSeleccionados, setEstiloSiluetaSeleccionados] = useState(
+    categoriaActiva ? [categoriaActiva.opcion] : []
+  );
 
   const tallasDisponibles = useMemo(() => {
     if (!esGrid) return [];
@@ -152,6 +184,7 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
   const hayFiltrosActivos = tallasSeleccionadas.length > 0
     || familiasSeleccionadas.length > 0
     || Boolean(coleccionSeleccionada)
+    || estiloSiluetaSeleccionados.length > 0
     || precioMax < precioMaximoDisponible;
 
   const alternarEnLista = (lista, valor) => (
@@ -162,6 +195,7 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
     setTallasSeleccionadas([]);
     setFamiliasSeleccionadas([]);
     setColeccionSeleccionada(null);
+    setEstiloSiluetaSeleccionados([]);
     setPrecioMax(precioMaximoDisponible);
   };
 
@@ -195,6 +229,9 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
   useEffect(() => {
     setVisibles(LOTE_INICIAL);
   }, [tallasSeleccionadas, familiasSeleccionadas, precioMax, orden]);
+  // "estiloSiluetaSeleccionados"/"coleccionSeleccionada" no filtran la
+  // cuadrícula de verdad (ver comentario de "estiloYSilueta"/
+  // "colecciones" más arriba), así que no reinician "visibles".
 
   useEffect(() => {
     if (!esGrid || cargandoMas || visibles >= productosOrdenados.length) return undefined;
@@ -275,10 +312,19 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
 
   return (
     <section className={`${styles.seccion} ${esGrid ? styles.seccionGrid : ''}`}>
+      {/* "breadcrumbItems": el primer tramo (tituloKey) enlaza a
+          "/atelier" — única sección que hoy usa "categoriaActiva" y que
+          tiene una página real en ese segmento (ver atelier/page.js). */}
       {tituloKey && (
         <CabeceraSeccion
           subtitleKey={tituloKey}
-          titleKey={coleccionKey || tituloKey}
+          titleKey={categoriaActiva
+            ? `filtros.estiloYSilueta.grupos.${categoriaActiva.grupo}.opciones.${categoriaActiva.opcion}`
+            : (coleccionKey || tituloKey)}
+          breadcrumbItems={categoriaActiva ? [
+            { key: tituloKey, href: `/${locale}/atelier` },
+            { key: coleccionKey || tituloKey, href: `/${locale}/${hrefBase}` },
+          ] : undefined}
           descriptionKey={descriptionKey}
           alinear={esGrid ? 'start' : 'end'}
           enCuadricula
@@ -325,6 +371,11 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
           familias={familiasDisponibles}
           familiasSeleccionadas={familiasSeleccionadas}
           onToggleFamilia={(id) => setFamiliasSeleccionadas((actual) => alternarEnLista(actual, id))}
+          estiloYSilueta={estiloYSilueta}
+          esFiesta={esFiesta}
+          estiloSiluetaAbiertoPorDefecto={Boolean(categoriaActiva)}
+          estiloSiluetaSeleccionados={estiloSiluetaSeleccionados}
+          onToggleEstiloSilueta={(id) => setEstiloSiluetaSeleccionados((actual) => alternarEnLista(actual, id))}
           colecciones={colecciones}
           coleccionSeleccionada={coleccionSeleccionada}
           onSeleccionarColeccion={(nombre) => setColeccionSeleccionada((actual) => (actual === nombre ? null : nombre))}

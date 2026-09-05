@@ -70,35 +70,14 @@
   color: var(--color-gris-700);
 }
 
-/* Mismo patrón que .tab/.activa de CollectionTitle (y PanelFiltros) —
-   subrayado transparente por defecto, tinta en la opción activa. */
-.toggle {
-  display: flex;
-  gap: var(--spacing-3);
-}
-
-.tab {
-  background: none;
-  border: none;
-  border-bottom: 1px solid transparent;
-  border-radius: 0;
-  padding: 0 0 var(--spacing-1) 0;
+/* Ya no es un toggle cm/in (una sola unidad, ver GuiaTallas.jsx) —
+   texto plano, sin subrayado ni estado interactivo. */
+.unidad {
   font-family: var(--font-base);
   font-size: var(--text-small);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--color-gris-500);
-  cursor: pointer;
-  transition: color 0.25s var(--ease-marca), border-color 0.25s var(--ease-marca);
-}
-
-.tab:hover {
   color: var(--color-tinta);
-}
-
-.tabActivo {
-  color: var(--color-tinta);
-  border-bottom-color: var(--color-tinta);
 }
 
 /* Chips de talla — mismo patrón que .chip de PanelFiltros (caja

@@ -10,6 +10,7 @@ import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 import { ProductosRecomendados, ResenasClientes } from '@/components/layout';
 import { productosEjemplo } from '@/components/layout/productosEjemplo';
+import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
 import { FichaProductoAcciones, GaleriaProducto, LookPasarela } from '@/components/ecommerce';
 import { Acordeon, FilaAcordeon, Boton } from '@/components/ui';
 import { slugify } from '@/lib/slugify';
@@ -52,24 +53,6 @@ export default async function FichaProducto({ params }) {
   const esOrigenTienda = rutaOrigen && RUTAS_TIENDA.includes(rutaOrigen);
   const hrefSeguirExplorando = esOrigenAtelier || esOrigenTienda ? `/${locale}${rutaOrigen}` : `/${locale}/tienda`;
   const keySeguirExplorando = esOrigenAtelier ? 'seguirExplorandoAtelier' : 'seguirExplorandoTienda';
-
-  // PLACEHOLDER a propósito, ver ResenasClientes.jsx — mismas
-  // fotos/textos/nombres que r1/r2 de resenasMock
-  // (src/components/admin/mockData.js), las únicas dos con foto real
-  // disponible en /public/img/Clientes. Sin conexión real todavía con
-  // el admin (ni filtrado por producto ni por estado "Publicada").
-  const resenas = [
-    {
-      nombre: 'Marta Ibáñez',
-      texto: 'El vestido Aurora es una pasada, la tela y el corte son espectaculares.',
-      foto: '/img/Clientes/ClientReview- (1).jpg',
-    },
-    {
-      nombre: 'Laura Gómez',
-      texto: 'Atención impecable en el atelier, el vestido de novia superó mis expectativas.',
-      foto: '/img/Clientes/ClientReview- (2).jpg',
-    },
-  ];
 
   return (
     <section className="seccion contenedor">
@@ -140,7 +123,7 @@ export default async function FichaProducto({ params }) {
       </div>
 
       <div className={styles.debajoFicha}>
-        <ResenasClientes resenas={resenas} />
+        <ResenasClientes resenas={RESENAS_EJEMPLO} />
 
         {relacionados.length > 0 && (
           <>

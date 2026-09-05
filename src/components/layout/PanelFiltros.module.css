@@ -94,6 +94,31 @@
   border-bottom-color: var(--color-tinta);
 }
 
+/* ---------- Estilo y silueta: sub-bloques con subtítulo ---------- */
+/* Un único FilaAcordeon con varios sub-bloques dentro (ver
+   GRUPOS_ESTILO_SILUETA en estiloSiluetaGrupos.js) — cada uno con su propio
+   subtítulo (mismo tratamiento tipográfico que .titulo de
+   Acordeon.module.css, un peldaño por debajo del título de fila) y
+   fila de chips (.chips/.chip, reutilizados de Talla). */
+.subgrupos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.subgrupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.subgrupoTitulo {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gris-500);
+  text-transform: uppercase;
+}
+
 /* ---------- Talla / Color: chips ---------- */
 .chips {
   display: flex;
@@ -104,11 +129,15 @@
 /* Mismo patrón que SelectorTalla (.talla/.activa): caja rellena en
    tinta cuando está seleccionada, en vez de un simple check. */
 .chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 44px;
-  height: 44px;
-  padding: 0 var(--spacing-3);
+  min-height: 32px;
+  padding: var(--spacing-2) var(--spacing-3);
   font-family: var(--font-base);
   font-size: var(--text-small);
+  text-align: center;
   background: var(--color-fondo);
   color: var(--color-tinta);
   border: 1px solid var(--color-gris-300);

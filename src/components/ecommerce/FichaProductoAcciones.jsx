@@ -13,7 +13,7 @@
    useState — no se puede repartir estado de un Server Component.
    Uso:
      <FichaProductoAcciones nombre="Vestido Aurora" precio="890 €"
-       imagen="/img/aurora.jpg" colores={[...]} tallas={['S','M','L']} />
+       imagen="/img/aurora.jpg" colores={[...]} tallas={[38, 40, 42]} />
    ============================================================ */
 
 import { useState } from 'react';
@@ -21,6 +21,7 @@ import { useTranslations } from 'next-intl';
 import { SelectorColor, SelectorTalla, Boton, BotonGuardar } from '../ui';
 import { useCarrito } from '@/context/CarritoContext';
 import GuiaTallas from './GuiaTallas';
+import { TALLAS_AGOTADAS_EJEMPLO } from './guiaTallasData';
 import styles from './FichaProductoAcciones.module.css';
 
 function FichaProductoAcciones({ nombre, precio, imagen, colores = [], tallas = [] }) {
@@ -52,7 +53,12 @@ function FichaProductoAcciones({ nombre, precio, imagen, colores = [], tallas = 
 
       {tallas.length > 0 && (
         <div className={styles.bloqueTalla}>
-          <SelectorTalla tallas={tallas} seleccionada={talla} onSelect={(valor) => { setTalla(valor); setAvisoTalla(false); }} />
+          <SelectorTalla
+            tallas={tallas}
+            agotadas={TALLAS_AGOTADAS_EJEMPLO}
+            seleccionada={talla}
+            onSelect={(valor) => { setTalla(valor); setAvisoTalla(false); }}
+          />
         </div>
       )}
 

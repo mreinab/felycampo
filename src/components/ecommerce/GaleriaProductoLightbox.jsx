@@ -13,6 +13,13 @@
    Navbar de verdad (viven
    en sitios distintos del árbol, sin forma de ocultar uno desde el
    otro sin acoplarlos).
+   "esAtelier" (Atelier Novias/Fiesta, ver FichaProductoAtelier.jsx):
+   sin precio ni "añadir a la cesta" — el panel de compra rápida pasa a
+   ser el mismo CTA "Contacta con nosotros" que InfoAtelier.jsx, con su
+   propia instancia de ModalSolicitudAtelier (no comparte estado con la
+   de InfoAtelier, pero es el mismo modal/flujo). Sin selector de talla
+   aquí tampoco: en Atelier la talla se pide dentro del propio modal,
+   igual que desde InfoAtelier.
    Uso:
      <GaleriaProductoLightbox
        imagenes={['/a.jpg', '/b.jpg']} alt="Vestido Aurora"
@@ -25,6 +32,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
 import { SelectorColor, SelectorTalla, Boton, BotonGuardar } from '../ui';
+import ModalSolicitudAtelier from './ModalSolicitudAtelier';
+import { TALLAS_AGOTADAS_EJEMPLO } from './guiaTallasData';
 import styles from './GaleriaProductoLightbox.module.css';
 
 function GaleriaProductoLightbox({
@@ -38,6 +47,7 @@ function GaleriaProductoLightbox({
   precio,
   colores = [],
   tallas = [],
+  esAtelier = false,
 }) {
   const t = useTranslations('producto');
   const locale = useLocale();
@@ -46,6 +56,8 @@ function GaleriaProductoLightbox({
   const [color, setColor] = useState(colores[0]?.nombre ?? null);
   const [talla, setTalla] = useState(null);
   const [mostrarTallas, setMostrarTallas] = useState(false);
+  const [avisoColor, setAvisoColor] = useState(false);
+  const [modalAtelierAbierto, setModalAtelierAbierto] = useState(false);
 
   // Cada apertura empieza de cero — sin esto, reabrir el lightbox en
   // otro producto (o en el mismo tras elegir talla) heredaría la talla
@@ -54,9 +66,20 @@ function GaleriaProductoLightbox({
     if (!abierta) return;
     setTalla(null);
     setMostrarTallas(false);
+    setAvisoColor(false);
   }, [abierta]);
 
   const alClicComprar = () => {
+    if (esAtelier) {
+      // Mismo criterio que InfoAtelier.alContactar: sin color elegido,
+      // "Contacta con nosotros" no abre el modal, solo avisa.
+      if (colores.length > 0 && !color) {
+        setAvisoColor(true);
+        return;
+      }
+      setModalAtelierAbierto(true);
+      return;
+    }
     if (!mostrarTallas) {
       setMostrarTallas(true);
       return;
@@ -200,23 +223,47 @@ function GaleriaProductoLightbox({
           </div>
 
           {colores.length > 0 && (
-            <SelectorColor colores={colores} seleccionado={color} onSelect={setColor} tabIndex={tabIndexInteractivo} />
+            <SelectorColor
+              colores={colores}
+              seleccionado={color}
+              onSelect={(valor) => { setColor(valor); setAvisoColor(false); }}
+              tabIndex={tabIndexInteractivo}
+            />
           )}
+          {esAtelier && avisoColor && <p className={styles.avisoColor}>{t('avisoColor')}</p>}
 
-          {mostrarTallas && tallas.length > 0 && (
-            <SelectorTalla tallas={tallas} seleccionada={talla} onSelect={setTalla} tabIndex={tabIndexInteractivo} />
+          {!esAtelier && mostrarTallas && tallas.length > 0 && (
+            <SelectorTalla
+              tallas={tallas}
+              agotadas={TALLAS_AGOTADAS_EJEMPLO}
+              seleccionada={talla}
+              onSelect={setTalla}
+              tabIndex={tabIndexInteractivo}
+            />
           )}
 
           <Boton
             variante="solido"
             tamano="full"
             onClick={alClicComprar}
-            desactivado={mostrarTallas && tallas.length > 0 && !talla}
+            desactivado={!esAtelier && mostrarTallas && tallas.length > 0 && !talla}
             tabIndex={tabIndexInteractivo}
           >
-            {t('anadirCesta')}
+            {esAtelier ? t('contactar') : t('anadirCesta')}
           </Boton>
         </div>
+      )}
+
+      {esAtelier && (
+        <ModalSolicitudAtelier
+          abierto={modalAtelierAbierto}
+          onCerrar={() => setModalAtelierAbierto(false)}
+          imagen={imagenes[0]}
+          producto={nombre}
+          color={color}
+          colorHex={colores.find((candidato) => candidato.nombre === color)?.hex}
+          tallas={tallas}
+        />
       )}
     </div>
   );

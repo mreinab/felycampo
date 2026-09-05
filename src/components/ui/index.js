@@ -5,6 +5,7 @@ export { default as SelectorCantidad } from './SelectorCantidad';
 export { default as Etiqueta } from './Etiqueta';
 export { default as BotonGuardar } from './BotonGuardar';
 export { default as SelectorColor } from './SelectorColor';
+export { default as CarruselFotos } from './CarruselFotos';
 export { default as Acordeon, FilaAcordeon } from './Acordeon';
 export { default as MediaLink } from './MediaLink';
 export { default as ImageTitle } from './ImageTitle';

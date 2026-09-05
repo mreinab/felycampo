@@ -14,6 +14,8 @@
 // aquí, no de copias sueltas por página (antes /tienda/chaquetas-y-
 // abrigos tenía su propio array separado; ya no).
 
+import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
+
 // Cada producto de ejemplo usa el reportaje fotográfico COMPLETO de un
 // único color/variante (4 fotos seguidas de la misma pieza) en vez de
 // una imagen suelta por producto — así la galería de la ficha
@@ -43,13 +45,6 @@ const GRUPOS_PRODUCTO = [
 
 const PRECIOS = ['990 €', '1.050 €', '1.120 €', '980 €', '850 €', '1.250 €'];
 
-const TALLAS = [
-  ['S', 'M', 'L'],
-  ['XS', 'S', 'M'],
-  ['M', 'L', 'XL'],
-  ['XS', 'S', 'M', 'L', 'XL'],
-];
-
 const DESCRIPCION = 'Pieza confeccionada con los mismos acabados artesanales de siempre, pensada para acompañar cada ocasión con la calidad y el cuidado que caracterizan a Fely Campo.';
 
 export const productosEjemplo = Array.from({ length: 24 }, (_, indice) => {
@@ -69,7 +64,10 @@ export const productosEjemplo = Array.from({ length: 24 }, (_, indice) => {
     imagenHover: grupo.fotos[1],
     nombre: `Producto de ejemplo ${String(indice + 1).padStart(2, '0')}`,
     precio: PRECIOS[indice % PRECIOS.length],
-    tallas: TALLAS[indice % TALLAS.length],
+    // Mismo rango completo (36 a 64) en todos los productos — todas las
+    // tablas/selectores de talla del sitio enseñan siempre las mismas
+    // opciones, ver TALLAS_DISPONIBLES en guiaTallasData.js.
+    tallas: TALLAS_DISPONIBLES,
     descripcion: DESCRIPCION,
   };
 });

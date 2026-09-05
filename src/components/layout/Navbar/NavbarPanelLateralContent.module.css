@@ -24,8 +24,7 @@
 
 /* "Ver todos" — primer item de la lista (ver Navbar.jsx), destacado
    frente a las categorías para que se lea como acción, no como una más.
-   Mismo criterio de subrayado que .submenuLink (solo al hover) salvo
-   que sea la página actual — ahí .submenuLinkTodosActivo lo deja fijo. */
+   Mismo criterio de subrayado que .submenuLink (solo al hover). */
 .submenuLinkTodos {
   font-size: var(--text-small);
   font-weight: var(--font-weight-medium);
@@ -39,7 +38,11 @@
   text-decoration-color: var(--color-tinta);
 }
 
-.submenuLinkTodosActivo {
+/* Página actual — mismo trazo que :hover pero fijo (ver "esActivo" en
+   NavbarPanelLateralContent.jsx), igual criterio que .navLinkActivo de
+   Navbar.module.css. Se aplica a cualquier enlace de la lista, no solo
+   a "Ver todos". */
+.submenuLinkActivo {
   text-decoration-color: var(--color-tinta);
 }
 

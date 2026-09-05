@@ -16,8 +16,8 @@ export default {
   ],
 };
 
-// Interactivo — abre/cierra el panel para poder probar el toggle
-// CM/IN, los chips de talla, REAL/PATRÓN, Escape y el atrapado de foco.
+// Interactivo — abre/cierra el panel para poder probar los chips de
+// talla, Escape y el atrapado de foco.
 export const Interactivo = {
   render: () => {
     function Demo() {

@@ -10,7 +10,7 @@ import styles from './Input.module.css';
 /**
  * Campo de formulario estándar. Borde recto, sin radio.
  */
-function Input({ etiqueta, tipo = 'text', placeholder, valor, onChange, nombre }) {
+function Input({ etiqueta, tipo = 'text', placeholder, valor, onChange, nombre, tabIndex }) {
   return (
     <label className={styles.campo}>
       {etiqueta && <span className={styles.etiqueta}>{etiqueta}</span>}
@@ -20,6 +20,7 @@ function Input({ etiqueta, tipo = 'text', placeholder, valor, onChange, nombre }
         value={valor}
         onChange={onChange}
         placeholder={placeholder}
+        tabIndex={tabIndex}
         className={styles.input}
       />
     </label>

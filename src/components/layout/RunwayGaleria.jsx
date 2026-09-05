@@ -28,6 +28,8 @@ function RunwayGaleria({ looks = [], alt }) {
   const pistaRef = useRef(null);
   const cerrarRef = useRef(null);
   const ruedaEnCooldownRef = useRef(false);
+  const panelInfoRef = useRef(null);
+  const panelInfoInteriorRef = useRef(null);
 
   const [abierta, setAbierta] = useState(false);
   const [indiceActivo, setIndiceActivo] = useState(0);
@@ -79,6 +81,30 @@ function RunwayGaleria({ looks = [], alt }) {
   useEffect(() => {
     setDetalleAbierto(false);
   }, [indiceActivo]);
+
+  // .panelInfo crece/encoge según tenga o no descripción/productos (no
+  // todos los looks traen los dos) — .panelInfoInterior nunca se toca
+  // (mide su alto natural, sin restricciones), y ese alto se aplica al
+  // propio .panelInfo con una transición (ver RunwayGaleria.module.css:
+  // "height" + "overflow:hidden" ahí). Como .panelInfo es
+  // position:absolute con "bottom" fijo, el propio CSS ya hace crecer
+  // el panel hacia arriba desde su borde inferior — el ResizeObserver
+  // solo evita que el cambio de alto sea un salto instantáneo al
+  // cambiar de look (o al plegar/desplegar el detalle en mobile).
+  useEffect(() => {
+    const panel = panelInfoRef.current;
+    const interior = panelInfoInteriorRef.current;
+    if (!panel || !interior) return undefined;
+
+    const aplicarAltura = () => {
+      panel.style.height = `${interior.offsetHeight}px`;
+    };
+
+    aplicarAltura();
+    const observer = new ResizeObserver(aplicarAltura);
+    observer.observe(interior);
+    return () => observer.disconnect();
+  }, []);
 
   const irAIndice = (indice) => {
     const nodo = pistaRef.current;
@@ -168,59 +194,61 @@ function RunwayGaleria({ looks = [], alt }) {
           </div>
         )}
 
-        <div className={styles.panelInfo}>
-          <div className={styles.panelCabecera}>
-            <p className={styles.panelTitulo}>{t('lookNumero', { numero: indiceActivo + 1 })}</p>
-            <button
-              type="button"
-              className={`${styles.panelToggle} ${detalleAbierto ? styles.panelToggleAbierto : ''}`}
-              onClick={() => setDetalleAbierto((valor) => !valor)}
-              aria-expanded={detalleAbierto}
-              aria-controls={detalleId}
-              aria-label={t('lookVerDetalle')}
-              tabIndex={tabIndexInteractivo}
+        <div className={styles.panelInfo} ref={panelInfoRef}>
+          <div className={styles.panelInfoInterior} ref={panelInfoInteriorRef}>
+            <div className={styles.panelCabecera}>
+              <p className={styles.panelTitulo}>{t('lookNumero', { numero: indiceActivo + 1 })}</p>
+              <button
+                type="button"
+                className={`${styles.panelToggle} ${detalleAbierto ? styles.panelToggleAbierto : ''}`}
+                onClick={() => setDetalleAbierto((valor) => !valor)}
+                aria-expanded={detalleAbierto}
+                aria-controls={detalleId}
+                aria-label={t('lookVerDetalle')}
+                tabIndex={tabIndexInteractivo}
+              >
+                <Plus size={18} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" />
+              </button>
+            </div>
+
+            <div
+              id={detalleId}
+              className={`${styles.panelDetalle} ${detalleAbierto ? styles.panelDetalleAbierto : ''}`}
             >
-              <Plus size={18} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" />
-            </button>
-          </div>
+              <div className={styles.panelDetalleInner}>
+                <div className={styles.panelDetalleContenido}>
+                  {lookActivo?.descripcion && <p className={styles.panelDescripcion}>{lookActivo.descripcion}</p>}
 
-          <div
-            id={detalleId}
-            className={`${styles.panelDetalle} ${detalleAbierto ? styles.panelDetalleAbierto : ''}`}
-          >
-            <div className={styles.panelDetalleInner}>
-              <div className={styles.panelDetalleContenido}>
-                {lookActivo?.descripcion && <p className={styles.panelDescripcion}>{lookActivo.descripcion}</p>}
-
-                {productosDelLook.length > 0 && (
-                  <div className={styles.panelProductosBloque}>
-                    <p className={styles.panelProductosTitulo}>{t('consigueElLook')}</p>
-                    <div className={`${styles.panelProductos} ${productosDelLook.length >= 3 ? styles.panelProductosScroll : ''}`}>
-                      {productosDelLook.map((producto) => (
-                        <a
-                          key={producto.nombre}
-                          href={`/${locale}/tienda/${slugify(producto.nombre)}`}
-                          className={styles.panelProducto}
-                          tabIndex={tabIndexInteractivo}
-                        >
-                          <span className={styles.panelProductoImagenWrap}>
-                            <img src={producto.imagen} alt="" className={styles.panelProductoImagen} />
-                            <button
-                              type="button"
-                              className={styles.panelProductoAnadir}
-                              onClick={(evento) => evento.preventDefault()}
-                              aria-label={t('anadirCesta')}
-                              tabIndex={tabIndexInteractivo}
-                            >
-                              <Plus size={12} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" />
-                            </button>
-                          </span>
-                          <span className={styles.panelProductoNombre}>{producto.nombre}</span>
-                        </a>
-                      ))}
+                  {productosDelLook.length > 0 && (
+                    <div className={styles.panelProductosBloque}>
+                      <p className={styles.panelProductosTitulo}>{t('consigueElLook')}</p>
+                      <div className={`${styles.panelProductos} ${productosDelLook.length >= 3 ? styles.panelProductosScroll : ''}`}>
+                        {productosDelLook.map((producto) => (
+                          <a
+                            key={producto.nombre}
+                            href={`/${locale}/tienda/${slugify(producto.nombre)}`}
+                            className={styles.panelProducto}
+                            tabIndex={tabIndexInteractivo}
+                          >
+                            <span className={styles.panelProductoImagenWrap}>
+                              <img src={producto.imagen} alt="" className={styles.panelProductoImagen} />
+                              <button
+                                type="button"
+                                className={styles.panelProductoAnadir}
+                                onClick={(evento) => evento.preventDefault()}
+                                aria-label={t('anadirCesta')}
+                                tabIndex={tabIndexInteractivo}
+                              >
+                                <Plus size={12} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" />
+                              </button>
+                            </span>
+                            <span className={styles.panelProductoNombre}>{producto.nombre}</span>
+                          </a>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>

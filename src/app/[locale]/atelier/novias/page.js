@@ -27,6 +27,7 @@ export default function Pagina() {
         ocultarPrecio
         colecciones={COLECCIONES_NOVIAS}
         hrefBase="atelier/novias"
+        estiloYSilueta
       />
     </section>
   );

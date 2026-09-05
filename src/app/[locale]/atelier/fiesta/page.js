@@ -32,6 +32,8 @@ export default function Pagina() {
         ocultarPrecio
         colecciones={COLECCIONES_FIESTA}
         hrefBase="atelier/fiesta"
+        estiloYSilueta
+        esFiesta
       />
     </section>
   );

@@ -102,13 +102,21 @@
   height: 175px;
 }
 
-/* Enlaces (compartido por desktop y móvil). El subrayado (no el color)
-   marca tanto el hover como la página activa — mismo trazo en los dos
-   casos, así el hover "anticipa" cómo se ve la sección ya activa. */
+/* Enlaces (compartido por desktop y móvil) — también "Mi cuenta"
+   (ver Navbar.jsx), un <button> en vez de un <a> porque abre
+   MiCuentaModal en vez de navegar: background/border/font/cursor
+   resetean el estilo nativo de botón (sin efecto sobre los <a>, que no
+   los necesitan). El subrayado (no el color) marca tanto el hover
+   como la página activa — mismo trazo en los dos casos, así el hover
+   "anticipa" cómo se ve la sección ya activa. */
 .navLink {
+  font-family: var(--font-base);
   font-size: 0.95rem;
   color: var(--color-tinta);
+  background: none;
+  border: none;
   padding: var(--spacing-3) 0 0 0;
+  cursor: pointer;
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: var(--spacing-1);
@@ -200,9 +208,17 @@
   gap: var(--spacing-4);
 }
 
+/* También "Mi cuenta" (ver Navbar.jsx), un <button> en vez de un <a>
+   — resetea el estilo nativo de botón (sin efecto sobre los <a>). */
 .mobileMenuLink {
+  font-family: var(--font-base);
   font-size: var(--text-label);
   color: var(--color-tinta);
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
   transition: color 0.25s var(--ease-marca);
 }
 .mobileMenuLink:hover {

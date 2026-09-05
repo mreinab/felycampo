@@ -18,12 +18,11 @@ import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
 import { PanelLateral } from '../ui';
-import { CLAVES_MEDIDAS, TALLAS_MEDIDAS, convertirMedida, formatearMedida } from './guiaTallasData';
+import { CLAVES_MEDIDAS, TALLAS_MEDIDAS, formatearMedida } from './guiaTallasData';
 import styles from './GuiaTallas.module.css';
 
 function GuiaTallas({ abierto, onCerrar }) {
   const t = useTranslations('guiaTallas');
-  const [unidad, setUnidad] = useState('cm');
   const [tallaSeleccionada, setTallaSeleccionada] = useState(TALLAS_MEDIDAS[0].talla);
   const columnasRef = useRef(new Map());
 
@@ -69,24 +68,7 @@ function GuiaTallas({ abierto, onCerrar }) {
         <div className={styles.grupoTabla}>
           <div className={styles.filaControles}>
             <span className={styles.etiquetaSeccion}>{t('vistaPatron')}</span>
-            <div className={styles.toggle}>
-              <button
-                type="button"
-                aria-pressed={unidad === 'cm'}
-                className={`${styles.tab} ${unidad === 'cm' ? styles.tabActivo : ''}`}
-                onClick={() => setUnidad('cm')}
-              >
-                {t('unidadCm')}
-              </button>
-              <button
-                type="button"
-                aria-pressed={unidad === 'in'}
-                className={`${styles.tab} ${unidad === 'in' ? styles.tabActivo : ''}`}
-                onClick={() => setUnidad('in')}
-              >
-                {t('unidadIn')}
-              </button>
-            </div>
+            <span className={styles.unidad}>{t('unidadCm')}</span>
           </div>
 
           <div className={styles.tablaScroll}>
@@ -113,17 +95,14 @@ function GuiaTallas({ abierto, onCerrar }) {
                 {CLAVES_MEDIDAS.map((clave) => (
                   <tr key={clave}>
                     <th scope="row" className={styles.thMedida}>{t(`medidas.${clave}.etiqueta`)}</th>
-                    {TALLAS_MEDIDAS.map((fila) => {
-                      const valor = convertirMedida(fila[clave], unidad);
-                      return (
-                        <td
-                          key={fila.talla}
-                          className={`${styles.td} ${fila.talla === tallaSeleccionada ? styles.columnaActiva : ''}`}
-                        >
-                          {formatearMedida(valor)}
-                        </td>
-                      );
-                    })}
+                    {TALLAS_MEDIDAS.map((fila) => (
+                      <td
+                        key={fila.talla}
+                        className={`${styles.td} ${fila.talla === tallaSeleccionada ? styles.columnaActiva : ''}`}
+                      >
+                        {formatearMedida(fila[clave])}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>

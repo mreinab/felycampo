@@ -13,7 +13,7 @@
      <PanelFiltros
        abierto={filtrosAbiertos} onCerrar={() => setFiltrosAbiertos(false)}
        orden={orden} onCambiarOrden={setOrden}
-       tallas={['XS','S','M']} tallasSeleccionadas={[]} onToggleTalla={...}
+       tallas={[36,38,40]} tallasSeleccionadas={[]} onToggleTalla={...}
        familias={[{ id:'neutrals', etiqueta:'Neutros', muestras:['#111111','#FAFAF7'] }]}
        familiasSeleccionadas={[]} onToggleFamilia={...}
        precioMax={500} precioMaximo={1200} onCambiarPrecioMax={...}
@@ -34,6 +34,17 @@
    FormularioProducto.jsx en el panel admin, recreado aquí porque ese
    vive en components/admin/ (solo el panel), no en components/layout/
    (sitio público). Selección múltiple, no única (ver CuadriculaProductos.jsx).
+   "estiloYSilueta"/"estiloSiluetaSeleccionados"/"onToggleEstiloSilueta"
+   (opcional, ver GRUPOS_ESTILO_SILUETA en estiloSiluetaGrupos.js):
+   segunda fila del acordeón, justo después de Color (mismo orden que
+   Tienda: Color primero). "esFiesta" enseña además el sub-bloque
+   "Ocasión".
+   "estiloSiluetaAbiertoPorDefecto": abre esa fila ya desplegada al
+   montar — CuadriculaProductos.jsx la pasa a true cuando la página se
+   sirve para una categoría concreta (ver prop "categoriaActiva" ahí y
+   /atelier/{seccion}/categoria/[categoria]/page.js), para que el chip
+   preseleccionado se vea sin que el usuario tenga que desplegar la fila
+   a mano.
 
    "Ordenar por" vive dentro del Acordeon como una fila más (la última),
    no como bloque suelto arriba — mismo criterio de siempre (colapsado a
@@ -47,6 +58,7 @@
 import { useTranslations } from 'next-intl';
 import { X, SlidersHorizontal, Trash2 } from 'lucide-react';
 import { PanelLateral, Boton, Acordeon, FilaAcordeon } from '../ui';
+import { GRUPOS_ESTILO_SILUETA } from './estiloSiluetaGrupos';
 import styles from './PanelFiltros.module.css';
 
 const ORDENES = ['recomendados', 'precioAsc', 'precioDesc'];
@@ -62,6 +74,11 @@ function PanelFiltros({
   familias = [],
   familiasSeleccionadas = [],
   onToggleFamilia,
+  estiloYSilueta = false,
+  esFiesta = false,
+  estiloSiluetaAbiertoPorDefecto = false,
+  estiloSiluetaSeleccionados = [],
+  onToggleEstiloSilueta,
   colecciones = [],
   coleccionSeleccionada,
   onSeleccionarColeccion,
@@ -72,6 +89,7 @@ function PanelFiltros({
   onLimpiar,
 }) {
   const t = useTranslations('filtros');
+  const gruposEstiloSilueta = GRUPOS_ESTILO_SILUETA.filter((grupo) => !grupo.soloFiesta || esFiesta);
 
   return (
     <PanelLateral abierto={abierto} onCerrar={onCerrar} lado="derecha" claseContenido={styles.contenido}>
@@ -105,6 +123,31 @@ function PanelFiltros({
                     </span>
                     {etiqueta}
                   </button>
+                ))}
+              </div>
+            </FilaAcordeon>
+          )}
+
+          {estiloYSilueta && (
+            <FilaAcordeon titulo={t('estiloYSilueta.titulo')} abiertoPorDefecto={estiloSiluetaAbiertoPorDefecto}>
+              <div className={styles.subgrupos}>
+                {gruposEstiloSilueta.map((grupo) => (
+                  <div key={grupo.id} className={styles.subgrupo}>
+                    <p className={styles.subgrupoTitulo}>{t(`estiloYSilueta.grupos.${grupo.id}.titulo`)}</p>
+                    <div className={styles.chips}>
+                      {grupo.opciones.map((opcion) => (
+                        <button
+                          key={opcion}
+                          type="button"
+                          className={`${styles.chip} ${estiloSiluetaSeleccionados.includes(opcion) ? styles.chipActivo : ''}`}
+                          aria-pressed={estiloSiluetaSeleccionados.includes(opcion)}
+                          onClick={() => onToggleEstiloSilueta(opcion)}
+                        >
+                          {t(`estiloYSilueta.grupos.${grupo.id}.opciones.${opcion}`)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </FilaAcordeon>

@@ -22,7 +22,8 @@
    "Contacta con nosotros" abre ModalSolicitudAtelier.jsx (talla +
    datos de contacto + comentario) en vez de navegar directamente.
    Uso:
-     <InfoAtelier nombre="Vestido Aurora" descripcion="..." colores={[...]} tallas={[...]} />
+     <InfoAtelier imagen="/img/aurora.jpg" nombre="Vestido Aurora"
+       descripcion="..." colores={[...]} tallas={[...]} />
    ============================================================ */
 
 import { useState } from 'react';
@@ -31,7 +32,7 @@ import { Boton, SelectorColor, BotonGuardar } from '../ui';
 import ModalSolicitudAtelier from './ModalSolicitudAtelier';
 import styles from './FichaProductoAtelier.module.css';
 
-function InfoAtelier({ nombre, descripcion, colores = [], tallas = [] }) {
+function InfoAtelier({ imagen, nombre, descripcion, colores = [], tallas = [] }) {
   const t = useTranslations('producto');
   const [color, setColor] = useState(null);
   const [avisoColor, setAvisoColor] = useState(false);
@@ -75,8 +76,10 @@ function InfoAtelier({ nombre, descripcion, colores = [], tallas = [] }) {
       <ModalSolicitudAtelier
         abierto={modalAbierto}
         onCerrar={() => setModalAbierto(false)}
+        imagen={imagen}
         producto={nombre}
         color={color}
+        colorHex={colores.find((candidato) => candidato.nombre === color)?.hex}
         tallas={tallas}
       />
     </>

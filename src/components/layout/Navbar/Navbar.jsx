@@ -9,7 +9,9 @@ import { ShoppingBag } from 'lucide-react';
 import styles from './Navbar.module.css';
 import { PanelLateral } from '../../ui';
 import CarritoPanel from '../../ecommerce/CarritoPanel';
+import MiCuentaModal from '../../ecommerce/MiCuentaModal';
 import { useCarrito } from '@/context/CarritoContext';
+import { useMiCuenta } from '@/context/MiCuentaContext';
 import NavbarPanelLateralContent from './NavbarPanelLateralContent';
 import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 
@@ -39,8 +41,15 @@ const SUBMENU_STRUCTURE = {
   },
   atelier: {
     items: [
-      { key: 'novias', href: '/atelier/novias' },
-      { key: 'fiesta', href: '/atelier/fiesta' },
+      // "labelKey": el submenú enseña "Colección Novias"/"Colección
+      // Fiesta" (nav.submenus.atelier.noviasSubmenu/fiestaSubmenu),
+      // distinto del "Novias"/"Fiesta" que usan la miga de pan y el
+      // título de CabeceraSeccion en esas mismas páginas
+      // (nav.submenus.atelier.novias/fiesta, ver
+      // CuadriculaProductos.jsx) — mismo "key"/href para todo lo
+      // demás (routing, "key" de React), ver NavbarPanelLateralContent.jsx.
+      { key: 'novias', href: '/atelier/novias', labelKey: 'noviasSubmenu' },
+      { key: 'fiesta', href: '/atelier/fiesta', labelKey: 'fiestaSubmenu' },
       { key: 'vosotras', href: '/atelier/vosotras' },
     ],
     image: '/img/styleguide/punto-venta.webp',
@@ -83,6 +92,7 @@ function Navbar({ transparent = false, crecerLogo = false }) {
   const locale = useLocale();
   const pathname = usePathname();
   const { cantidadTotal } = useCarrito();
+  const { abrir: abrirMiCuenta } = useMiCuenta();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
@@ -279,9 +289,13 @@ function Navbar({ transparent = false, crecerLogo = false }) {
 
         {/* Utilidades — escritorio: texto completo */}
         <div className={styles.navActions}>
-          <a href={withLocale('/wishlist')} className={styles.navLink}>{t('actions.wishlist')}</a>
-          <a href={withLocale('/mi-cuenta')} className={styles.navLink}>{t('actions.miCuenta')}</a>
-          <a href={withLocale('/carrito')} className={styles.navLink}>{t('actions.carrito')} ({cantidadTotal})</a>
+          <a href={withLocale('/wishlist')} className={`${styles.navLink} ${esActivo('/wishlist') ? styles.navLinkActivo : ''}`}>{t('actions.wishlist')}</a>
+          {/* Botón, no enlace: abre MiCuentaModal (ver useMiCuenta más
+              arriba) en vez de navegar a una página — por eso no lleva
+              "esActivo" tampoco, ya no hay una ruta /mi-cuenta que
+              pueda ser la actual. */}
+          <button type="button" className={styles.navLink} onClick={abrirMiCuenta}>{t('actions.miCuenta')}</button>
+          <a href={withLocale('/carrito')} className={`${styles.navLink} ${esActivo('/carrito') ? styles.navLinkActivo : ''}`}>{t('actions.carrito')} ({cantidadTotal})</a>
         </div>
 
         {/* Utilidades — móvil: solo el icono del carrito, el resto vive en el menú hamburguesa */}
@@ -323,7 +337,16 @@ function Navbar({ transparent = false, crecerLogo = false }) {
           ))}
           <div className={styles.mobileMenuDivider} />
           <a href={withLocale('/wishlist')} className={styles.mobileMenuLink}>{t('actions.wishlist')}</a>
-          <a href={withLocale('/mi-cuenta')} className={styles.mobileMenuLink}>{t('actions.miCuenta')}</a>
+          {/* Mismo criterio que en .navActions de escritorio: botón que
+              abre MiCuentaModal, no un enlace — cierra antes el propio
+              menú móvil, si no quedarían los dos superpuestos. */}
+          <button
+            type="button"
+            className={styles.mobileMenuLink}
+            onClick={() => { setMobileMenuOpen(false); abrirMiCuenta(); }}
+          >
+            {t('actions.miCuenta')}
+          </button>
         </nav>
       </PanelLateral>
 
@@ -331,6 +354,11 @@ function Navbar({ transparent = false, crecerLogo = false }) {
           sola al añadir un producto desde cualquier ficha, ver
           CarritoContext. */}
       <CarritoPanel />
+
+      {/* Global también — "Mi cuenta" (arriba y en el menú móvil) y el
+          aviso de /carrito la abren vía useMiCuenta(), ver
+          MiCuentaContext.jsx. */}
+      <MiCuentaModal />
     </>
   );
 }

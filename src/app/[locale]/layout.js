@@ -12,6 +12,7 @@ import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
 import { Navbar, Footer } from '@/components/layout';
 import { CarritoProvider } from '@/context/CarritoContext';
+import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
 
 // Páginas con su propio ProductHero (ver
@@ -70,6 +71,11 @@ export default async function RootLayout({ children, params }) {
   // match exacto): mismo Navbar transparente que Tienda/Atelier, con su
   // propio hero marcado data-navbar-hero (ver [coleccion]/page.js).
   const esFichaRunway = rutaSinLocale.startsWith('/archivo/runway/');
+  // Igual que "esFichaRunway": páginas de categoría de Atelier
+  // (/atelier/{novias,fiesta}/categoria/[categoria], ruta dinámica —
+  // ver ese page.js) llevan el mismo ProductHero que ../page.js, así
+  // que necesitan el mismo Navbar transparente.
+  const esCategoriaAtelier = /^\/atelier\/(novias|fiesta)\/categoria\//.test(rutaSinLocale);
 
   return (
     <html lang={locale}>
@@ -79,9 +85,11 @@ export default async function RootLayout({ children, params }) {
       <body>
         <NextIntlClientProvider messages={messages}>
           <CarritoProvider>
-            <Navbar transparent={isHome || tieneProductHero || esFichaRunway} crecerLogo={isHome} />
-            <main>{children}</main>
-            <Footer />
+            <MiCuentaProvider>
+              <Navbar transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier} crecerLogo={isHome} />
+              <main>{children}</main>
+              <Footer />
+            </MiCuentaProvider>
           </CarritoProvider>
         </NextIntlClientProvider>
       </body>

@@ -22,6 +22,7 @@ import { ShoppingBasket, User } from 'lucide-react';
 import { Boton } from '@/components/ui';
 import { TarjetaCarrito, PanelInfoEnvios } from '@/components/ecommerce';
 import { useCarrito } from '@/context/CarritoContext';
+import { useMiCuenta } from '@/context/MiCuentaContext';
 import { formatearPrecio, parsearPrecio } from '@/lib/precio';
 import styles from './page.module.css';
 
@@ -29,6 +30,7 @@ export default function Pagina() {
   const t = useTranslations('carrito');
   const locale = useLocale();
   const { lineas, cantidadTotal, subtotal, quitar, actualizarCantidad, actualizarTalla } = useCarrito();
+  const { abrir: abrirMiCuenta } = useMiCuenta();
   const [panelEnviosAbierto, setPanelEnviosAbierto] = useState(false);
 
   // El coste de envío no se calcula todavía (sin backend real) — se
@@ -87,13 +89,13 @@ export default function Pagina() {
             <div className={styles.filaPedir}>
               <Boton variante="solido" tamano="full">{t('iniciarPedido')}</Boton>
 
-              <a href={`/${locale}/mi-cuenta`} className={styles.loginPrompt}>
+              <button type="button" className={styles.loginPrompt} onClick={abrirMiCuenta}>
                 <div className={styles.loginPromptGrupo}>
                   <User className={styles.loginPromptIcono} strokeWidth={1.5} />
                   <span className={styles.loginPromptPregunta}>{t('loginPromptPregunta')}</span>
                 </div>
                 {t('loginPromptCta')}
-              </a>
+              </button>
             </div>
 
             <button type="button" className={styles.infoEnvio} onClick={() => setPanelEnviosAbierto(true)}>

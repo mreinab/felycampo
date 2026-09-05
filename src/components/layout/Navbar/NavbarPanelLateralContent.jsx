@@ -26,18 +26,21 @@ function NavbarPanelLateralContent({ submenuKey, submenu }) {
     <ul className={styles.submenuList}>
       {submenu.items.map((link) => {
         const esTodos = link.key === 'verTodos';
-        // "Ver todos" solo va subrayado cuando esa es la página actual
-        // (ej. /tienda exacto) — el resto del tiempo se comporta
-        // como el resto de enlaces (subrayado solo al hover).
-        const esActivo = esTodos && pathname === withLocale(link.href);
-        const clase = esTodos
-          ? `${styles.submenuLinkTodos} ${esActivo ? styles.submenuLinkTodosActivo : ''}`
-          : styles.submenuLink;
+        // Subrayado fijo cuando ese enlace es la página actual (ej.
+        // /atelier/novias exacto) — igual que .navLinkActivo del propio
+        // Navbar, para cualquier enlace de la lista, no solo "Ver
+        // todos". El resto del tiempo se comporta como el resto de
+        // enlaces (subrayado solo al hover).
+        const esActivo = pathname === withLocale(link.href);
+        const clase = [
+          esTodos ? styles.submenuLinkTodos : styles.submenuLink,
+          esActivo && styles.submenuLinkActivo,
+        ].filter(Boolean).join(' ');
 
         return (
           <li key={link.href}>
             <a href={withLocale(link.href)} className={clase}>
-              {t(`submenus.${submenuKey}.${link.key}`)}
+              {t(`submenus.${submenuKey}.${link.labelKey || link.key}`)}
             </a>
           </li>
         );

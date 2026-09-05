@@ -23,6 +23,13 @@
   padding-left: 0;
 }
 
+/* "margenSuperiorAmplio" (ver CabeceraSeccion.jsx) — solo pisa el
+   margin-top de .cabecera (var(--spacing-4) por defecto), no todo el
+   shorthand: el margin-bottom/lados de .cabecera se mantienen. */
+.margenSuperiorAmplio {
+  margin-top: var(--spacing-6);
+}
+
 /* Misma regla que .cabecera — usada en su lugar cuando CabeceraSeccion
    se renderiza dentro de CuadriculaProductos (ver CabeceraSeccion.jsx). */
 .cabeceraProductos {
@@ -50,15 +57,16 @@
 }
 
 /* Único caso que combina enCuadricula + alinear="start" (CuadriculaProductos
-   en "grid", ver CuadriculaProductos.jsx): fila de 3 elementos separados
-   en vez de la columna centrada de siempre — "before" (botón Filtros),
-   el grupo título (70% de ancho) y "children" (toggle de densidad). */
+   en "grid", ver CuadriculaProductos.jsx) — "before" (botón Filtros),
+   el grupo título (70% de ancho) y "children" (toggle de densidad),
+   sin flex-direction/flex-wrap propios: hereda el flex-direction:column
+   de .cabeceraProductos en vez de ponerlos en fila. */
 .cabeceraProductos.cabeceraInicio {
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: start;
+  align-items: center;
   justify-content: space-between;
   padding-inline: var(--spacing-7);
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
 }
 
 .cabeceraProductos.cabeceraInicio .tituloGrupo {
@@ -79,6 +87,28 @@
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
   color: var(--color-gris-700);
+}
+
+/* Miga de pan (ver "breadcrumbItems" en CabeceraSeccion.jsx) — misma
+   clase .subtitle para heredar tamaño/mayúsculas/color, aquí aplicada
+   a un <nav> en vez de un <h2>. Lista en fila con " / " entre tramos
+   (::after, no texto real: no se lee dos veces en lectores de
+   pantalla) — el último tramo no lleva separador. */
+.migaLista {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--spacing-1);
+}
+
+.migaLista li:not(:last-child)::after {
+  content: '/';
+  margin-left: var(--spacing-1);
+}
+
+.migaLista a {
+  text-decoration: underline;
 }
 
 /* Mismo estilo que .descripcion de CollectionTitle, sin el centrado

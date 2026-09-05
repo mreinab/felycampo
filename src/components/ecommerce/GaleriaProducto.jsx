@@ -12,11 +12,15 @@
    a media imagen. Clicar una imagen abre GaleriaProductoLightbox
    a pantalla completa, en la misma posición.
    nombre/precio/colores/tallas solo se usan en el lightbox, para el
-   panel de compra rápida sobre la imagen.
+   panel de compra rápida sobre la imagen. "esAtelier" (Atelier Novias/
+   Fiesta, ver FichaProductoAtelier.jsx): ese panel cambia a "Contacta
+   con nosotros" en vez de "Añadir a la cesta" (sin precio ni talla,
+   ver GaleriaProductoLightbox.jsx) — ahí no se pasa "precio"/"tallas",
+   solo "nombre"/"colores".
    Uso:
      <GaleriaProducto imagenes={['/a.jpg', '/b.jpg']} alt="Vestido Aurora"
         nombre="Vestido Aurora" precio="890 €"
-        colores={[{ hex: '#EED3E8', nombre: 'Rosa suave' }]} tallas={['S','M','L']} />
+        colores={[{ hex: '#EED3E8', nombre: 'Rosa suave' }]} tallas={[38, 40, 42]} />
    ============================================================ */
 
 import { useEffect, useRef, useState } from 'react';
@@ -25,7 +29,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import GaleriaProductoLightbox from './GaleriaProductoLightbox';
 import styles from './GaleriaProducto.module.css';
 
-function GaleriaProducto({ imagenes = [], alt, nombre, precio, colores = [], tallas = [] }) {
+function GaleriaProducto({ imagenes = [], alt, nombre, precio, colores = [], tallas = [], esAtelier = false }) {
   const t = useTranslations('producto');
   const galeriaRef = useRef(null);
   const pistaRef = useRef(null);
@@ -189,6 +193,7 @@ function GaleriaProducto({ imagenes = [], alt, nombre, precio, colores = [], tal
         precio={precio}
         colores={colores}
         tallas={tallas}
+        esAtelier={esAtelier}
       />
     </div>
   );

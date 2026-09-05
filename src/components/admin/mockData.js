@@ -4,6 +4,8 @@
 // reutilizan assets reales del sitio público (public/img/...) para que el
 // panel se vea coherente con la web, no con placeholders genéricos.
 
+import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
+
 // ---------- PRODUCTOS ----------
 // tipo: 'pret-a-porter' | 'atelier' | 'archivo'
 // estado: 'Borrador' | 'Activo' | 'Archivado'
@@ -42,8 +44,9 @@ export function rutaTipoProducto(tipo) {
 }
 
 // Tallas estándar: el admin elige de esta lista fija en vez de escribir
-// el nombre de la talla a mano en cada fila.
-export const tallasEstandar = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+// el nombre de la talla a mano en cada fila — mismo rango (36 a 64) que
+// el resto del sitio, ver TALLAS_DISPONIBLES en guiaTallasData.js.
+export const tallasEstandar = TALLAS_DISPONIBLES;
 
 // Colección/temporada de cada producto (código corto tipo SKU + año,
 // mismo criterio "fw"/"ss" que ya usan los assets del sitio público,
@@ -226,9 +229,9 @@ export const productosMock = [
     imagenes: ['/img/ecommerce/27FW/FW27-Dress-Look02.jpg', '/img/ecommerce/27FW/FW27-Look02.webp'],
     precio: '890 €',
     tallas: [
-      { talla: 'S', stock: 3 },
-      { talla: 'M', stock: 5 },
-      { talla: 'L', stock: 0 },
+      { talla: 38, stock: 3 },
+      { talla: 40, stock: 5 },
+      { talla: 42, stock: 0 },
     ],
     colorIds: ['bordeaux', 'navy'],
     telaIds: ['tel1'],
@@ -246,9 +249,9 @@ export const productosMock = [
     imagenes: ['/img/ecommerce/27FW/FW27-Top-Look03.jpg', '/img/ecommerce/27FW/FW27-Look03.webp'],
     precio: '420 €',
     tallas: [
-      { talla: 'S', stock: 2 },
-      { talla: 'M', stock: 4 },
-      { talla: 'L', stock: 4 },
+      { talla: 38, stock: 2 },
+      { talla: 40, stock: 4 },
+      { talla: 42, stock: 4 },
     ],
     colorIds: ['powder-pink', 'optic-white'],
     telaIds: ['tel2'],
@@ -320,9 +323,9 @@ export const productosMock = [
     imagenes: ['/img/abrigos-2026.jpg', '/img/abrigos-2026-2.jpg'],
     precio: '760 €',
     tallas: [
-      { talla: 'S', stock: 4 },
-      { talla: 'M', stock: 6 },
-      { talla: 'L', stock: 2 },
+      { talla: 38, stock: 4 },
+      { talla: 40, stock: 6 },
+      { talla: 42, stock: 2 },
     ],
     colorIds: ['black', 'camel'],
     telaIds: ['tel5'],
@@ -340,8 +343,8 @@ export const productosMock = [
     imagenes: ['/img/ecommerce/27FW/Coat-Look-3.jpg', '/img/ecommerce/27FW/Coat-Look-4.jpg'],
     precio: '380 €',
     tallas: [
-      { talla: 'S', stock: 0 },
-      { talla: 'M', stock: 0 },
+      { talla: 38, stock: 0 },
+      { talla: 40, stock: 0 },
     ],
     colorIds: ['navy'],
     telaIds: ['tel5'],
@@ -389,8 +392,8 @@ export const productosMock = [
     imagenes: ['/img/ecommerce/27FW/FW27-Look01.webp'],
     precio: '650 €',
     tallas: [
-      { talla: 'S', stock: 0 },
-      { talla: 'M', stock: 0 },
+      { talla: 38, stock: 0 },
+      { talla: 40, stock: 0 },
     ],
     colorIds: ['bordeaux'],
     telaIds: ['tel1'],
@@ -408,8 +411,8 @@ export const productosMock = [
     imagenes: ['/img/ecommerce/27FW/FW27-Top-Look01.jpg'],
     precio: '340 €',
     tallas: [
-      { talla: 'S', stock: 5 },
-      { talla: 'M', stock: 5 },
+      { talla: 38, stock: 5 },
+      { talla: 40, stock: 5 },
     ],
     colorIds: ['powder-pink'],
     telaIds: ['tel5'],
@@ -513,7 +516,7 @@ export const pedidosMock = [
     direccionEnvio: 'Calle Serrano 45, 28001 Madrid',
     tracking: 'ES394857102',
     notasInternas: 'Clienta habitual, prefiere envío a oficina.',
-    items: [{ producto: 'Vestido Aurora', talla: 'M', color: 'Burdeos', cantidad: 1, precio: '890 €' }],
+    items: [{ producto: 'Vestido Aurora', talla: 40, color: 'Burdeos', cantidad: 1, precio: '890 €' }],
   },
   {
     id: 'FC-2032',
@@ -525,7 +528,7 @@ export const pedidosMock = [
     direccionEnvio: 'Av. Diagonal 200, 08018 Barcelona',
     tracking: 'ES394857103',
     notasInternas: '',
-    items: [{ producto: 'Falda Vera', talla: 'S', color: 'Rosa empolvado', cantidad: 1, precio: '420 €' }],
+    items: [{ producto: 'Falda Vera', talla: 38, color: 'Rosa empolvado', cantidad: 1, precio: '420 €' }],
   },
   {
     id: 'FC-2033',
@@ -538,8 +541,8 @@ export const pedidosMock = [
     tracking: '',
     notasInternas: 'Esperando confirmación de pago por transferencia.',
     items: [
-      { producto: 'Vestido Aurora', talla: 'L', color: 'Azul marino', cantidad: 1, precio: '890 €' },
-      { producto: 'Falda Vera', talla: 'M', color: 'Blanco óptico', cantidad: 1, precio: '420 €' },
+      { producto: 'Vestido Aurora', talla: 42, color: 'Azul marino', cantidad: 1, precio: '890 €' },
+      { producto: 'Falda Vera', talla: 40, color: 'Blanco óptico', cantidad: 1, precio: '420 €' },
     ],
   },
   {
@@ -552,7 +555,7 @@ export const pedidosMock = [
     direccionEnvio: 'Gran Vía 10, 50001 Zaragoza',
     tracking: '',
     notasInternas: 'Tarjeta rechazada, contactar con la clienta.',
-    items: [{ producto: 'Falda Vera', talla: 'L', color: 'Blanco óptico', cantidad: 1, precio: '420 €' }],
+    items: [{ producto: 'Falda Vera', talla: 42, color: 'Blanco óptico', cantidad: 1, precio: '420 €' }],
   },
   {
     id: 'FC-2035',
@@ -564,7 +567,7 @@ export const pedidosMock = [
     direccionEnvio: 'Calle Colón 8, 46004 Valencia',
     tracking: '',
     notasInternas: '',
-    items: [{ producto: 'Vestido Aurora', talla: 'S', color: 'Burdeos', cantidad: 1, precio: '890 €' }],
+    items: [{ producto: 'Vestido Aurora', talla: 38, color: 'Burdeos', cantidad: 1, precio: '890 €' }],
     nuevo: true, // placeholder de diseño — ver AdminSidebar "nuevos: 3"; sin lógica real de "visto" detrás
   },
   {
@@ -577,7 +580,7 @@ export const pedidosMock = [
     direccionEnvio: 'Paseo de la Castellana 100, 28046 Madrid',
     tracking: 'ES394857110',
     notasInternas: '',
-    items: [{ producto: 'Falda Vera', talla: 'M', color: 'Rosa empolvado', cantidad: 2, precio: '840 €' }],
+    items: [{ producto: 'Falda Vera', talla: 40, color: 'Rosa empolvado', cantidad: 2, precio: '840 €' }],
     nuevo: true,
   },
   {
@@ -590,7 +593,7 @@ export const pedidosMock = [
     direccionEnvio: 'Calle Sierpes 30, 41004 Sevilla',
     tracking: '',
     notasInternas: 'Pendiente de verificación de dirección.',
-    items: [{ producto: 'Vestido Aurora', talla: 'M', color: 'Azul marino', cantidad: 1, precio: '890 €' }],
+    items: [{ producto: 'Vestido Aurora', talla: 40, color: 'Azul marino', cantidad: 1, precio: '890 €' }],
     nuevo: true,
   },
 ];
@@ -783,7 +786,7 @@ export const resenasMock = [
     valoracion: 5,
     fecha: '2026-06-28',
     estado: 'Publicada',
-    foto: '/img/Clientes/ClientReview- (2).jpg',
+    foto: '/img/Clientes/vestido-2clienta.JPG',
     productoId: 'p3',
   },
   {
@@ -1213,9 +1216,9 @@ export const topProductosPorMesMock = {
       unidadesVendidas: 14,
       ingresos: '12.460 €',
       porTalla: [
-        { talla: 'S', unidadesVendidas: 4, ingresos: '3.560 €' },
-        { talla: 'M', unidadesVendidas: 7, ingresos: '6.230 €' },
-        { talla: 'L', unidadesVendidas: 3, ingresos: '2.670 €' },
+        { talla: 38, unidadesVendidas: 4, ingresos: '3.560 €' },
+        { talla: 40, unidadesVendidas: 7, ingresos: '6.230 €' },
+        { talla: 42, unidadesVendidas: 3, ingresos: '2.670 €' },
       ],
     },
     {
@@ -1223,9 +1226,9 @@ export const topProductosPorMesMock = {
       unidadesVendidas: 11,
       ingresos: '4.620 €',
       porTalla: [
-        { talla: 'S', unidadesVendidas: 3, ingresos: '1.260 €' },
-        { talla: 'M', unidadesVendidas: 5, ingresos: '2.100 €' },
-        { talla: 'L', unidadesVendidas: 3, ingresos: '1.260 €' },
+        { talla: 38, unidadesVendidas: 3, ingresos: '1.260 €' },
+        { talla: 40, unidadesVendidas: 5, ingresos: '2.100 €' },
+        { talla: 42, unidadesVendidas: 3, ingresos: '1.260 €' },
       ],
     },
     { producto: 'Vestido Elena', unidadesVendidas: 3, ingresos: '7.200 €' },
@@ -1237,9 +1240,9 @@ export const topProductosPorMesMock = {
       unidadesVendidas: 16,
       ingresos: '6.720 €',
       porTalla: [
-        { talla: 'S', unidadesVendidas: 5, ingresos: '2.100 €' },
-        { talla: 'M', unidadesVendidas: 7, ingresos: '2.940 €' },
-        { talla: 'L', unidadesVendidas: 4, ingresos: '1.680 €' },
+        { talla: 38, unidadesVendidas: 5, ingresos: '2.100 €' },
+        { talla: 40, unidadesVendidas: 7, ingresos: '2.940 €' },
+        { talla: 42, unidadesVendidas: 4, ingresos: '1.680 €' },
       ],
     },
     {
@@ -1247,9 +1250,9 @@ export const topProductosPorMesMock = {
       unidadesVendidas: 9,
       ingresos: '8.010 €',
       porTalla: [
-        { talla: 'S', unidadesVendidas: 2, ingresos: '1.780 €' },
-        { talla: 'M', unidadesVendidas: 5, ingresos: '4.450 €' },
-        { talla: 'L', unidadesVendidas: 2, ingresos: '1.780 €' },
+        { talla: 38, unidadesVendidas: 2, ingresos: '1.780 €' },
+        { talla: 40, unidadesVendidas: 5, ingresos: '4.450 €' },
+        { talla: 42, unidadesVendidas: 2, ingresos: '1.780 €' },
       ],
     },
     { producto: 'Vestido Celeste', unidadesVendidas: 5, ingresos: '4.900 €' },
@@ -1262,9 +1265,9 @@ export const topProductosPorMesMock = {
       unidadesVendidas: 6,
       ingresos: '5.340 €',
       porTalla: [
-        { talla: 'S', unidadesVendidas: 1, ingresos: '890 €' },
-        { talla: 'M', unidadesVendidas: 3, ingresos: '2.670 €' },
-        { talla: 'L', unidadesVendidas: 2, ingresos: '1.780 €' },
+        { talla: 38, unidadesVendidas: 1, ingresos: '890 €' },
+        { talla: 40, unidadesVendidas: 3, ingresos: '2.670 €' },
+        { talla: 42, unidadesVendidas: 2, ingresos: '1.780 €' },
       ],
     },
     {
@@ -1272,9 +1275,9 @@ export const topProductosPorMesMock = {
       unidadesVendidas: 4,
       ingresos: '1.680 €',
       porTalla: [
-        { talla: 'S', unidadesVendidas: 1, ingresos: '420 €' },
-        { talla: 'M', unidadesVendidas: 2, ingresos: '840 €' },
-        { talla: 'L', unidadesVendidas: 1, ingresos: '420 €' },
+        { talla: 38, unidadesVendidas: 1, ingresos: '420 €' },
+        { talla: 40, unidadesVendidas: 2, ingresos: '840 €' },
+        { talla: 42, unidadesVendidas: 1, ingresos: '420 €' },
       ],
     },
     { producto: 'Vestido Celeste', unidadesVendidas: 3, ingresos: '2.940 €' },

@@ -106,14 +106,21 @@
    de la frase se quedan en fila mientras quepan, y en cuanto no hay
    ancho de sobra el segundo pasa solo a su propia línea (columna),
    pegado al ancho real del contenedor en vez de a un breakpoint fijo. */
+/* <button>, no <a> (ver page.js) — abre MiCuentaModal en vez de
+   navegar a una página, así que resetea el estilo nativo de botón. */
 .loginPrompt {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: var(--spacing-1) var(--spacing-2);
+  font-family: var(--font-base);
   font-size: var(--text-small);
   color: var(--color-tinta);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   text-align: center;
 }
 

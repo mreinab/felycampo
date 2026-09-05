@@ -70,6 +70,23 @@
   margin-top: var(--spacing-4);
 }
 
+/* "Categorías: Corte A, Clásico..." debajo del Acordeon (ver
+   FichaProductoAtelier.jsx) — mismo tamaño que .descripcion de arriba,
+   no el .titulo en mayúsculas del Acordeon, pero más apagado
+   (--color-gris-600): es metadato secundario, cada tag ya se distingue
+   solo por el subrayado de .categoriaTag. Cada tag enlaza de verdad a
+   su página de categoría (ver .categoriaTag más abajo). */
+.categorias {
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--color-gris-600);
+}
+
+.categoriaTag {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* SelectorColor, último elemento de .cabecera (ver InfoAtelier.jsx) —
    mismo margin-top que .descripcion arriba, para que respire igual de
    la línea de encima. No cambia la foto de la galería al elegir uno
