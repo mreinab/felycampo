@@ -26,7 +26,8 @@
       "elMundoDeFely": {
         "blog": "Blog",
         "historia": "Story",
-        "runway": "Runway"
+        "runway": "Runway",
+        "talleres": "Our Workshops"
       },
       "visitanos": {
         "salamanca": "Salamanca",
@@ -87,6 +88,15 @@
     "videoSilenciar": "Mute",
     "videoReproducir": "Play video",
     "videoPausar": "Pause video"
+  },
+  "visitenos": {
+    "eyebrow": "Visit Us",
+    "titulo": "Our Ateliers",
+    "intro": "Our ateliers and showroom — always by appointment, so we can give you our full attention.",
+    "pedirCita": "Book an appointment",
+    "verMapa": "View map",
+    "whatsapp": "WhatsApp",
+    "showroomNota": "By-appointment showroom"
   },
   "atencionCliente": {
     "titulo": "Customer Service",
@@ -217,8 +227,9 @@
     "password": "Password",
     "enviarLogin": "Log in",
     "enviarRegistro": "Create account",
-    "separador": "or continue with",
     "google": "Continue with Google",
+    "preguntaRegistro": "New to Fely Campo?",
+    "preguntaLogin": "Already have an account?",
     "cerrar": "Close"
   },
   "heroCarousel": {
@@ -372,6 +383,11 @@
       "exito": "Thank you — you're subscribed!",
       "error": "Something went wrong. Please try again."
     }
+  },
+  "newsletterPopup": {
+    "titulo": "Join the Fely Campo universe",
+    "boton": "Sign Up",
+    "cerrar": "Close"
   },
   "clientsReview": {
     "titulo": "In their own words",

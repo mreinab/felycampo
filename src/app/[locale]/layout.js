@@ -10,7 +10,7 @@ import { headers } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
-import { Navbar, Footer } from '@/components/layout';
+import { Navbar, Footer, NewsletterModalGlobal } from '@/components/layout';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
@@ -33,6 +33,7 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/tienda/accesorios',
   '/atelier/novias',
   '/atelier/fiesta',
+  '/visita-fely-campo',
 ];
 
 export const metadata = {
@@ -89,6 +90,7 @@ export default async function RootLayout({ children, params }) {
               <Navbar transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier} crecerLogo={isHome} />
               <main>{children}</main>
               <Footer />
+              {isHome && <NewsletterModalGlobal />}
             </MiCuentaProvider>
           </CarritoProvider>
         </NextIntlClientProvider>

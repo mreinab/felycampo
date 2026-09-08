@@ -58,3 +58,8 @@ Desktop.ini
 
 # TypeScript
 *.tsbuildinfo
+
+# Vídeos que superan el límite de 100MB de GitHub (sin Git LFS
+# configurado) — pendientes de comprimir/alojar aparte.
+public/img/talleres/47b6fec2c28b443da5029a46864b8d25.mp4
+public/img/talleres/bd148c1010b54dcdbe924f9ab3f947af.mp4

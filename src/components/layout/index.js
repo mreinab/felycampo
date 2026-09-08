@@ -18,3 +18,5 @@ export { default as SectionCompromiso } from './SectionCompromiso';
 export { default as ProductosRecomendados } from './ProductosRecomendados';
 export { default as ResenasClientes } from './ResenasClientes';
 export { default as GaleriaVosotras } from './GaleriaVosotras';
+export { default as NewsletterModal } from './NewsletterModal';
+export { default as NewsletterModalGlobal } from './NewsletterModalGlobal';

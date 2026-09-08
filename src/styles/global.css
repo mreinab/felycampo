@@ -251,7 +251,7 @@ img { display: block; max-width: 100%; height: auto; }
 
 .contenedor {
   width: 100%;
-  max-width: var(--max-contenido);
+  max-width: var(--max-sitio);
   margin-inline: auto;
 }
 

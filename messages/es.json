@@ -26,7 +26,8 @@
       "elMundoDeFely": {
         "blog": "Blog",
         "historia": "Historia",
-        "runway": "Runway"
+        "runway": "Runway",
+        "talleres": "Nuestros talleres"
       },
       "visitanos": {
         "salamanca": "Salamanca",
@@ -87,6 +88,15 @@
     "videoSilenciar": "Silenciar",
     "videoReproducir": "Reproducir vídeo",
     "videoPausar": "Pausar vídeo"
+  },
+  "visitenos": {
+    "eyebrow": "Visítanos",
+    "titulo": "Nuestros Ateliers",
+    "intro": "Nuestros ateliers y showroom, siempre con cita previa para atenderte con calma.",
+    "pedirCita": "Pedir cita",
+    "verMapa": "Ver mapa",
+    "whatsapp": "WhatsApp",
+    "showroomNota": "Showroom con cita previa"
   },
   "atencionCliente": {
     "titulo": "Atención al cliente",
@@ -217,8 +227,9 @@
     "password": "Contraseña",
     "enviarLogin": "Iniciar sesión",
     "enviarRegistro": "Crear cuenta",
-    "separador": "o continúa con",
     "google": "Continuar con Google",
+    "preguntaRegistro": "¿Eres nueva en Fely Campo?",
+    "preguntaLogin": "¿Ya tienes cuenta?",
     "cerrar": "Cerrar"
   },
   "heroCarousel": {
@@ -372,6 +383,11 @@
       "exito": "¡Gracias! Ya estás suscrita.",
       "error": "Algo ha ido mal. Inténtalo de nuevo."
     }
+  },
+  "newsletterPopup": {
+    "titulo": "Únete al universo Fely Campo",
+    "boton": "Apúntate",
+    "cerrar": "Cerrar"
   },
   "clientsReview": {
     "titulo": "Ellas te lo cuentan",

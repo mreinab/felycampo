@@ -3,7 +3,7 @@
    Uso:
      <BloqueSeccion imagen="/img/atelier.jpg" titulo="Visita el atelier"
         texto="Costura a medida en Salamanca." enlace="Descubre más"
-        href="/visitenos/cita" invertido={false} />
+        href="/visita-fely-campo/cita" invertido={false} />
      <BloqueSeccion imagen="/img/atelier.mp4" tipo="video" ... />
    ============================================================ */
 

@@ -1412,11 +1412,11 @@ export const paginasInternas = [
   { valor: '/archivo/colecciones/tempore', etiqueta: 'Archivo — Tempore' },
   { valor: '/archivo/colecciones/nagare', etiqueta: 'Archivo — Nagare' },
   { valor: '/archivo/colecciones/diafonia', etiqueta: 'Archivo — Diafonía' },
-  { valor: '/visitenos', etiqueta: 'Visítanos' },
-  { valor: '/visitenos/cita', etiqueta: 'Visítanos — Cita' },
-  { valor: '/visitenos/madrid', etiqueta: 'Visítanos — Madrid' },
-  { valor: '/visitenos/oviedo', etiqueta: 'Visítanos — Oviedo' },
-  { valor: '/visitenos/salamanca', etiqueta: 'Visítanos — Salamanca' },
+  { valor: '/visita-fely-campo', etiqueta: 'Visítanos' },
+  { valor: '/visita-fely-campo/cita', etiqueta: 'Visítanos — Cita' },
+  { valor: '/visita-fely-campo/madrid', etiqueta: 'Visítanos — Madrid' },
+  { valor: '/visita-fely-campo/oviedo', etiqueta: 'Visítanos — Oviedo' },
+  { valor: '/visita-fely-campo/salamanca', etiqueta: 'Visítanos — Salamanca' },
 ];
 
 // Banco de vídeos ya subidos, mismo criterio que bancoImagenes.

@@ -1,4 +1,4 @@
-/* Placeholder — pendiente de maquetar. Ruta: /visitenos/salamanca */
+/* Placeholder — pendiente de maquetar. Ruta: /visita-fely-campo/salamanca */
 
 export default function Pagina() {
   return (

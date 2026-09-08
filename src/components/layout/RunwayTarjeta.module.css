@@ -18,7 +18,6 @@
   gap: var(--spacing-2);
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: var(--color-crema);
 }
 
 .medio {

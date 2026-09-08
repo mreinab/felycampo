@@ -28,12 +28,27 @@
   position: relative;
   background: var(--color-fondo);
   width: 100%;
-  max-width: 520px;
   margin: auto;
   pointer-events: auto;
 }
 
+/* Ancho por defecto — se aplica solo si quien invoca Modal no pasa su
+   propio "className" (ver Modal.jsx), así un ancho a medida (ej.
+   NewsletterModal.module.css) no compite en especificidad con este. */
+.tamanoDefault {
+  max-width: 520px;
+}
+
 .contenido {
+  /* Sin padding aquí a propósito — ver .contenidoDefault. */
+}
+
+/* Padding por defecto — mismo mecanismo que .tamanoDefault: se aplica
+   solo si quien invoca Modal no pasa su propio "classNameContenido"
+   (ver Modal.jsx), así un layout a medida (ej. NewsletterModal, que
+   necesita la foto a sangre sin padding) no compite en especificidad
+   con este. */
+.contenidoDefault {
   padding: var(--spacing-6);
 }
 

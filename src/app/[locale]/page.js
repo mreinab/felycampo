@@ -122,7 +122,7 @@ export default async function Home({ params }) {
         coleccionKey="cuadriculaTabs.titulo"
         descriptionKey="cuadriculaTabs.descripcion"
         botonTextKey="cuadriculaTabs.reservarCita"
-        verMasHref={`/${locale}/visitenos/cita`}
+        verMasHref={`/${locale}/visita-fely-campo/cita`}
       />
       <SectionClientsReview />
       <SectionCompromiso
@@ -136,7 +136,7 @@ export default async function Home({ params }) {
         titulo={tVisitaAtelier('titulo')}
         texto={tVisitaAtelier('texto')}
         enlace={tVisitaAtelier('enlace')}
-        href={`/${locale}/visitenos/cita`}
+        href={`/${locale}/visita-fely-campo/cita`}
       />
     </div>
   );

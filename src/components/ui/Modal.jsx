@@ -19,7 +19,7 @@ import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import styles from './Modal.module.css';
 
-function Modal({ abierto, onCerrar, children }) {
+function Modal({ abierto, onCerrar, children, className, classNameContenido }) {
   // Portal a document.body — mismo motivo que PanelLateral.jsx: quien
   // invoque Modal puede vivir dentro de un ancestro con su propio
   // contexto de apilamiento (ej. .info en FichaProductoAtelier,
@@ -54,11 +54,11 @@ function Modal({ abierto, onCerrar, children }) {
     <>
       <div className={styles.overlay} aria-hidden="true" onClick={onCerrar} />
       <div className={styles.contenedor}>
-        <div className={styles.panel} role="dialog" aria-modal="true">
+        <div className={[styles.panel, className || styles.tamanoDefault].filter(Boolean).join(' ')} role="dialog" aria-modal="true">
           <button type="button" className={styles.cerrar} onClick={onCerrar} aria-label="Cerrar">
             <X size={20} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" />
           </button>
-          <div className={styles.contenido}>{children}</div>
+          <div className={[styles.contenido, classNameContenido || styles.contenidoDefault].filter(Boolean).join(' ')}>{children}</div>
         </div>
       </div>
     </>,

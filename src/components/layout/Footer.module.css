@@ -18,7 +18,7 @@
 @media (min-width: 768px) {
   .footer {
     height: 100vh;
-    max-height: 80vh;
+    max-height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -70,12 +70,12 @@
   min-width: 0;
   display: flex;
   align-items: center;
-  border: 1px solid var(--color-hairline);
+  border-bottom: 1px solid var(--color-hairline);
   padding: var(--spacing-2);
   transition: border-color 0.25s var(--ease-marca);
 }
 .formNewsletter:focus-within {
-  border-color: var(--color-tinta);
+  border-bottom-color: var(--color-tinta);
 }
 
 .input {
@@ -164,7 +164,7 @@
    que tenía antes — menos peso visual, más discreto. */
 .titulo {
   color: var(--color-gris-600);
-  margin-bottom: var(--spacing-6);
+  margin-bottom: var(--spacing-3);
   font-size: 1rem;
   font-weight: 400;
 }

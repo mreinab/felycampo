@@ -59,16 +59,17 @@ const SUBMENU_STRUCTURE = {
       { key: 'blog', href: '/blog' },
       { key: 'historia', href: '/sobre-fely' },
       { key: 'runway', href: '/archivo/runway' },
+      { key: 'talleres', href: '/sobre-fely/talleres' },
     ],
     image: '/img/styleguide/prod-tarjeta-relacionado.webp',
   },
   visitanos: {
     items: [
-      { key: 'salamanca', href: '/visitenos/salamanca' },
-      { key: 'madrid', href: '/visitenos/madrid' },
-      { key: 'oviedo', href: '/visitenos/oviedo' },
-      { key: 'puntosDeVenta', href: '/visitenos' },
-      { key: 'reservarCita', href: '/visitenos/cita' },
+      { key: 'salamanca', href: '/visita-fely-campo/salamanca' },
+      { key: 'madrid', href: '/visita-fely-campo/madrid' },
+      { key: 'oviedo', href: '/visita-fely-campo/oviedo' },
+      { key: 'puntosDeVenta', href: '/visita-fely-campo' },
+      { key: 'reservarCita', href: '/visita-fely-campo/cita' },
     ],
     image: '/img/styleguide/prod-tarjeta-hover.webp',
     // Una sola imagen a todo el ancho en vez de las dos MediaLink
@@ -81,7 +82,7 @@ const NAV_ITEMS = [
   { key: 'atelier', href: '/atelier', submenu: 'atelier' },
   { key: 'tienda', href: '/tienda', submenu: 'tienda' },
   { key: 'elMundoDeFely', href: '/sobre-fely', submenu: 'elMundoDeFely' },
-  { key: 'visitanos', href: '/visitenos', submenu: 'visitanos' },
+  { key: 'visitanos', href: '/visita-fely-campo', submenu: 'visitanos' },
 ];
 
 const CLOSE_DELAY_MS = 200;
@@ -204,9 +205,23 @@ function Navbar({ transparent = false, crecerLogo = false }) {
   // /tienda/chaquetas-y-abrigos marca activo "Tienda", cuyo href es
   // /tienda) — así funciona para toda la sección, no solo su
   // portada exacta.
-  const esActivo = (href) => {
+  const esRutaActiva = (href) => {
     const destino = withLocale(href);
     return pathname === destino || pathname?.startsWith(`${destino}/`);
+  };
+
+  // Para enlaces con submenú, "activo" también cuenta si la ruta actual
+  // es la de cualquiera de sus items — en Atelier/Tienda esto ya salía
+  // gratis porque sus hrefs de submenú viven bajo el propio href del
+  // enlace (/atelier/novias bajo /atelier), pero en Sobre Fely no: sus
+  // items (/blog, /archivo/runway...) no cuelgan de /sobre-fely, así que
+  // sin este chequeo extra el enlace no se subrayaba en esas páginas.
+  const esActivo = (item) => {
+    if (typeof item === 'string') return esRutaActiva(item);
+    const hrefs = item.submenu
+      ? [item.href, ...SUBMENU_STRUCTURE[item.submenu].items.map((sub) => sub.href)]
+      : [item.href];
+    return hrefs.some(esRutaActiva);
   };
 
   // El fondo se vuelve sólido por scroll, por hover, O por tener un
@@ -270,7 +285,7 @@ function Navbar({ transparent = false, crecerLogo = false }) {
             <a
               key={item.href}
               href={withLocale(item.href)}
-              className={`${styles.navLink} ${esActivo(item.href) ? styles.navLinkActivo : ''}`}
+              className={`${styles.navLink} ${esActivo(item) ? styles.navLinkActivo : ''}`}
               onMouseEnter={() => (item.submenu ? openSubmenu(item.submenu) : scheduleSubmenuClose())}
             >
               {t(`links.${item.key}`)}

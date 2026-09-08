@@ -82,7 +82,7 @@ const GRUPOS_DESTINO = [
   { grupo: 'Prêt-à-porter', prefijo: '/tienda' },
   { grupo: 'Atelier', prefijo: '/atelier' },
   { grupo: 'Archivo', prefijo: '/archivo' },
-  { grupo: 'Visítanos', prefijo: '/visitenos' },
+  { grupo: 'Visítanos', prefijo: '/visita-fely-campo' },
 ].map(({ grupo, prefijo }) => ({
   grupo,
   opciones: paginasInternas

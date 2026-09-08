@@ -97,37 +97,6 @@
   gap: var(--spacing-6);
 }
 
-/* Mismo lenguaje de subrayado que .navLink/.navLinkActivo de
-   Navbar.module.css — trazo transparente que se vuelve --color-tinta
-   al hover o al estar activa, sin desplazar el layout. */
-.tabs {
-  display: flex;
-  gap: var(--spacing-5);
-}
-
-.tab {
-  font-family: var(--font-base);
-  font-size: var(--text-small);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-tinta);
-  background: none;
-  border: none;
-  padding: 0 0 var(--spacing-1) 0;
-  cursor: pointer;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: var(--spacing-1);
-  transition: text-decoration-color 0.25s var(--ease-marca);
-}
-
-.tab:hover {
-  text-decoration-color: var(--color-tinta);
-}
-
-.tabActivo {
-  text-decoration-color: var(--color-tinta);
-}
-
 .cabecera {
   display: flex;
   flex-direction: column;
@@ -151,26 +120,6 @@
   gap: var(--spacing-4);
 }
 
-.separador {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-3);
-}
-
-.separadorLinea {
-  flex: 1;
-  height: 1px;
-  background: var(--color-gris-300);
-}
-
-.separadorTexto {
-  font-size: var(--text-caption);
-  color: var(--color-gris-500);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  white-space: nowrap;
-}
-
 .googleBtn {
   display: flex;
   align-items: center;
@@ -190,6 +139,34 @@
 
 .googleBtn:hover {
   border-color: var(--color-tinta);
+}
+
+.cambiarModo {
+  text-align: center;
+  font-size: var(--text-small);
+  color: var(--color-gris-500);
+}
+
+/* Mismo lenguaje de subrayado que .navLink/.navLinkActivo de
+   Navbar.module.css — trazo transparente que se vuelve --color-tinta
+   al hover, sin desplazar el layout. */
+.cambiarModoBtn {
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: var(--spacing-1);
+  transition: text-decoration-color 0.25s var(--ease-marca);
+}
+
+.cambiarModoBtn:hover {
+  text-decoration-color: var(--color-tinta);
 }
 
 @media (max-width: 767px) {

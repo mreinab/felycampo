@@ -17,12 +17,12 @@
 
    Layout 50%/50% (foto a la izquierda, formulario a la derecha, ver
    MiCuentaModal.module.css) — en mobile la foto pasa a ser una franja
-   fija arriba. Dos pestañas alternan qué formulario se pinta a la
-   derecha, mismo subrayado que .navLink/.navLinkActivo del propio
-   Navbar (cada consumidor de ese patrón lo replica en su propio CSS
-   module, igual criterio que .submenuLink en
-   NavbarPanelLateralContent.module.css) — cada apertura empieza en
-   "login".
+   fija arriba. Login/Registro alternan qué formulario se pinta a la
+   derecha — no con pestañas arriba (confundían con navegación real),
+   sino con una pregunta bajo el botón de Google ("¿Eres nueva en Fely
+   Campo? Crear cuenta" / "¿Ya tienes cuenta? Iniciar sesión"), mismo
+   patrón que cualquier login/registro estándar. Cada apertura empieza
+   en "login".
 
    PLACEHOLDER a propósito, a petición: solo diseño, sin lógica de
    autenticación todavía (eso es trabajo del programador que conecte
@@ -118,30 +118,11 @@ function MiCuentaModal() {
 
       <div className={styles.layout}>
         <div className={styles.imagenPanel}>
-          <img src="/img/felycampo-lacoleccion.webp" alt="" className={styles.imagen} />
+          <img src="/img/felycampo-lacoleccion-3.webp" alt="" className={styles.imagen} />
         </div>
 
         <div className={styles.formPanel}>
           <div className={styles.formContenedor}>
-            <div className={styles.tabs}>
-              <button
-                type="button"
-                className={`${styles.tab} ${esLogin ? styles.tabActivo : ''}`}
-                onClick={() => setModo('login')}
-                tabIndex={tabIndexInteractivo}
-              >
-                {t('tabLogin')}
-              </button>
-              <button
-                type="button"
-                className={`${styles.tab} ${!esLogin ? styles.tabActivo : ''}`}
-                onClick={() => setModo('registro')}
-                tabIndex={tabIndexInteractivo}
-              >
-                {t('tabRegistro')}
-              </button>
-            </div>
-
             <div className={styles.cabecera}>
               <h1 className={styles.titulo}>{esLogin ? t('tituloLogin') : t('tituloRegistro')}</h1>
               <p className={styles.subtitulo}>{esLogin ? t('subtituloLogin') : t('subtituloRegistro')}</p>
@@ -166,12 +147,6 @@ function MiCuentaModal() {
               </Boton>
             </form>
 
-            <div className={styles.separador}>
-              <span className={styles.separadorLinea} aria-hidden="true" />
-              <span className={styles.separadorTexto}>{t('separador')}</span>
-              <span className={styles.separadorLinea} aria-hidden="true" />
-            </div>
-
             <button
               type="button"
               className={styles.googleBtn}
@@ -181,6 +156,18 @@ function MiCuentaModal() {
               <IconoGoogle />
               {t('google')}
             </button>
+
+            <p className={styles.cambiarModo}>
+              {esLogin ? t('preguntaRegistro') : t('preguntaLogin')}{' '}
+              <button
+                type="button"
+                className={styles.cambiarModoBtn}
+                onClick={() => setModo(esLogin ? 'registro' : 'login')}
+                tabIndex={tabIndexInteractivo}
+              >
+                {esLogin ? t('tabRegistro') : t('tabLogin')}
+              </button>
+            </p>
           </div>
         </div>
       </div>
