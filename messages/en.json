@@ -176,6 +176,32 @@
     "confirmacionTexto": "Thank you for your interest. Our team will get in touch with you as soon as possible.",
     "cerrar": "Close"
   },
+  "escribirResena": {
+    "titulo": "Write your review",
+    "subtitulo": "Tell us what you thought of this piece — your opinion helps other clients.",
+    "valoracion": "Rating",
+    "avisoValoracion": "Please select a rating.",
+    "comentario": "Your review",
+    "comentarioPlaceholder": "What did you like the most?",
+    "enviar": "Submit review",
+    "confirmacionTitulo": "Thanks for your review!",
+    "confirmacionTexto": "We'll review it and publish it on the product page shortly.",
+    "cerrar": "Close"
+  },
+  "panelCliente": {
+    "tabPedidos": "My orders",
+    "tabResenas": "My reviews",
+    "tabDatos": "My details",
+    "pedidosTitulo": "My orders",
+    "pedidoNumero": "Order {numero}",
+    "escribirResena": "Write a review",
+    "resenaEnviada": "Review submitted",
+    "resenasTitulo": "My reviews",
+    "resenasVacio": "You haven't written any reviews yet.",
+    "datosTitulo": "My details",
+    "datosSubtitulo": "This is how we see you — you can update it anytime.",
+    "guardarCambios": "Save changes"
+  },
   "miCuenta": {
     "tabLogin": "Log in",
     "tabRegistro": "Create account",

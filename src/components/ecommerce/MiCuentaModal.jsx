@@ -27,10 +27,11 @@
    PLACEHOLDER a propósito, a petición: solo diseño, sin lógica de
    autenticación todavía (eso es trabajo del programador que conecte
    esto a un backend real). Los campos son inputs sueltos sin estado
-   (ni value/onChange) y los dos "submit" (formulario + Google) llevan
-   preventDefault — mismo criterio que .panelProductoAnadir en
-   RunwayGaleria.jsx — solo para que clicarlos no recargue la página,
-   no implementan ningún envío de verdad.
+   (ni value/onChange); los dos "submit" (formulario + Google) llevan
+   preventDefault y navegan directamente a /mi-cuenta/panel como
+   demostración de "inicio de sesión con éxito" — no comprueban
+   credenciales de verdad, ver PANEL DE CLIENTE en
+   app/[locale]/mi-cuenta/panel/page.js.
    Registro: nombre completo + fecha de nacimiento + email, nada más (a
    petición) — sin contraseña aquí; login: email + contraseña.
    Uso:
@@ -38,7 +39,7 @@
    ============================================================ */
 
 import { useEffect, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
 import { Input, Boton } from '../ui';
 import { useMiCuenta } from '@/context/MiCuentaContext';
@@ -59,11 +60,21 @@ function IconoGoogle() {
 
 function MiCuentaModal() {
   const t = useTranslations('miCuenta');
+  const locale = useLocale();
   const { abierta, cerrar } = useMiCuenta();
   const cerrarRef = useRef(null);
   const [modo, setModo] = useState('login');
   const esLogin = modo === 'login';
   const tabIndexInteractivo = abierta ? 0 : -1;
+
+  // Placeholder de "éxito" — ver comentario de arriba: sin backend
+  // todavía, cualquier envío del formulario (o de Google) navega
+  // directamente al panel de clienta, igual que un login/registro real
+  // haría tras autenticar.
+  const alEnviarConExito = (evento) => {
+    evento.preventDefault();
+    window.location.href = `/${locale}/mi-cuenta/panel`;
+  };
 
   // Foco en cerrar + sin scroll de la página detrás mientras está
   // abierto — mismo criterio que GaleriaProductoLightbox/RunwayGaleria.
@@ -136,7 +147,7 @@ function MiCuentaModal() {
               <p className={styles.subtitulo}>{esLogin ? t('subtituloLogin') : t('subtituloRegistro')}</p>
             </div>
 
-            <form className={styles.form} onSubmit={(evento) => evento.preventDefault()}>
+            <form className={styles.form} onSubmit={alEnviarConExito}>
               {esLogin ? (
                 <>
                   <Input etiqueta={t('email')} tipo="email" nombre="email" placeholder={t('emailPlaceholder')} tabIndex={tabIndexInteractivo} />
@@ -164,7 +175,7 @@ function MiCuentaModal() {
             <button
               type="button"
               className={styles.googleBtn}
-              onClick={(evento) => evento.preventDefault()}
+              onClick={alEnviarConExito}
               tabIndex={tabIndexInteractivo}
             >
               <IconoGoogle />

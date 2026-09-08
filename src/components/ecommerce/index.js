@@ -3,6 +3,7 @@ export { default as TarjetaMedia } from './TarjetaMedia';
 export { default as LineaCarrito } from './LineaCarrito';
 export { default as TarjetaCarrito } from './TarjetaCarrito';
 export { default as TarjetaWishlist } from './TarjetaWishlist';
+export { default as EscribirResenaModal } from './EscribirResenaModal';
 export { default as CarritoPanel } from './CarritoPanel';
 export { default as MiCuentaModal } from './MiCuentaModal';
 export { default as PanelInfoEnvios } from './PanelInfoEnvios';
