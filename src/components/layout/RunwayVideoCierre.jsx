@@ -5,7 +5,7 @@
 /* ============================================================
    VÍDEO DE CIERRE DE COLECCIÓN — Fely Campo
    Último elemento de cada ficha de colección (ver
-   /archivo/runway/[coleccion]/page.js): el vídeo de la colección a
+   /colecciones-fely-campo/[coleccion]/page.js): el vídeo de la colección a
    ancho completo, que arranca solo al llegar a su punto en la página
    (IntersectionObserver — no al montar, para no reproducir fuera de
    pantalla) y se detiene al salir de vista. Sin sonido por defecto;

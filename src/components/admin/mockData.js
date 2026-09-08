@@ -1401,7 +1401,7 @@ export const paginasInternas = [
   { valor: '/atelier/novias', etiqueta: 'Atelier — Novias' },
   { valor: '/atelier/fiesta', etiqueta: 'Atelier — Fiesta' },
   { valor: '/archivo', etiqueta: 'Archivo' },
-  { valor: '/archivo/runway', etiqueta: 'Archivo — Runway' },
+  { valor: '/colecciones-fely-campo', etiqueta: 'Archivo — Runway' },
   { valor: '/archivo/colecciones', etiqueta: 'Archivo — Colecciones' },
   { valor: '/archivo/colecciones/la-coleccion', etiqueta: 'Archivo — La Colección' },
   { valor: '/archivo/colecciones/dreaming', etiqueta: 'Archivo — Dreaming' },

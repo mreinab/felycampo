@@ -90,13 +90,27 @@
     "videoPausar": "Pausar vídeo"
   },
   "visitenos": {
-    "eyebrow": "Visítanos",
+    "eyebrow": "Visita",
     "titulo": "Nuestros Ateliers",
     "intro": "Nuestros ateliers y showroom, siempre con cita previa para atenderte con calma.",
     "pedirCita": "Pedir cita",
     "verMapa": "Ver mapa",
     "whatsapp": "WhatsApp",
+    "telf": "Telf",
+    "movil": "Móvil",
     "showroomNota": "Showroom con cita previa"
+  },
+  "puntosVenta": {
+    "eyebrow": "Dónde encontrarnos",
+    "titulo": "Puntos de venta",
+    "intro": "Nuestros ateliers y la red de boutiques que trabajan con Fely Campo, en España y el resto del mundo.",
+    "todos": "Todos",
+    "direcciones": "Cómo llegar"
+  },
+  "talleres": {
+    "eyebrow": "Nuestro proceso",
+    "titulo": "Nuestros talleres",
+    "intro": "Desde el comienzo del proyecto en 2014, hemos trabajado principalmente con proveedores locales. Ha sido una prioridad para nosotras y ha marcado el rumbo del proyecto a lo largo de los años. Hemos construido una relación muy cercana con nuestros proveedores, creciendo juntos y aprendiendo los unos de los otros temporada tras temporada. La cercanía física nos permite conocer de cerca a quienes confeccionan nuestras prendas, ya que visitamos con regularidad todos los talleres que participan en nuestras producciones."
   },
   "atencionCliente": {
     "titulo": "Atención al cliente",

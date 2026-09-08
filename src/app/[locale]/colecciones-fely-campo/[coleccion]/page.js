@@ -1,5 +1,5 @@
 /* Ruta DINÁMICA: ficha de cada colección de Runway.
-   /archivo/runway/dreaming-ss26, /archivo/runway/la-coleccion-aw27...
+   /colecciones-fely-campo/dreaming-ss26, /colecciones-fely-campo/la-coleccion-aw27...
    El slug es "[nombre]-[temporada]" en minúsculas (ver slugCompleto en
    ../colecciones.js) — se busca ahí la colección para poder mostrar su
    nombre/temporada/medios/looks reales en vez de derivarlos del slug.

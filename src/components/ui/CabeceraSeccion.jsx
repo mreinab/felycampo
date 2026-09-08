@@ -50,18 +50,23 @@ import collectionTitleStyles from './CollectionTitle.module.css';
  * ProductHero encima que ya aporte separación propia, a diferencia de
  * Novias/Fiesta).
  *
+ * "className" (opcional): clases extra en el contenedor raíz, además de
+ * .cabecera/.cabeceraProductos/.cabeceraInicio — para un ajuste puntual
+ * de una página concreta sin tocar el CSS compartido (ver
+ * .cabeceraColumna en visita-fely-campo/page.module.css).
+ *
  * Uso:
  *   <CabeceraSeccion titleKey="cuadriculaProductos.novedades">
  *     <Boton variante="flecha" href="/coleccion">Ver colección</Boton>
  *   </CabeceraSeccion>
  */
-function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, breadcrumbItems, children, before, alinear = 'end', enCuadricula = false, margenSuperiorAmplio = false }) {
+function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, breadcrumbItems, children, before, alinear = 'end', enCuadricula = false, margenSuperiorAmplio = false, className }) {
   const t = useTranslations();
 
   const claseCabecera = enCuadricula ? styles.cabeceraProductos : styles.cabecera;
 
   return (
-    <div className={`${claseCabecera} ${alinear === 'start' ? styles.cabeceraInicio : ''} ${margenSuperiorAmplio ? styles.margenSuperiorAmplio : ''}`}>
+    <div className={`${claseCabecera} ${alinear === 'start' ? styles.cabeceraInicio : ''} ${margenSuperiorAmplio ? styles.margenSuperiorAmplio : ''} ${className || ''}`}>
       {before}
       <div className={styles.tituloGrupo}>
         {breadcrumbItems ? (

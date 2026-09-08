@@ -90,13 +90,27 @@
     "videoPausar": "Pause video"
   },
   "visitenos": {
-    "eyebrow": "Visit Us",
+    "eyebrow": "Visit",
     "titulo": "Our Ateliers",
     "intro": "Our ateliers and showroom — always by appointment, so we can give you our full attention.",
     "pedirCita": "Book an appointment",
     "verMapa": "View map",
     "whatsapp": "WhatsApp",
+    "telf": "Tel",
+    "movil": "Mobile",
     "showroomNota": "By-appointment showroom"
+  },
+  "puntosVenta": {
+    "eyebrow": "Where to find us",
+    "titulo": "Points of sale",
+    "intro": "Our ateliers and the network of boutiques that carry Fely Campo, in Spain and worldwide.",
+    "todos": "All",
+    "direcciones": "Directions"
+  },
+  "talleres": {
+    "eyebrow": "Our process",
+    "titulo": "Our Workshops",
+    "intro": "Since the beginning of the project in 2014, we have mainly worked with local suppliers. This has been a priority for us and has shaped the project over the years. We have built a very close relationship with our suppliers, growing together and learning from each other season after season. The physical proximity allows us to know those who make our garments closely, as we regularly visit all the workshops involved in our productions."
   },
   "atencionCliente": {
     "titulo": "Customer Service",

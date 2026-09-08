@@ -9,7 +9,7 @@
 import styles from './RunwayTarjeta.module.css';
 
 /**
- * Una celda de la cuadrícula de /archivo/runway (ver page.js ahí): un
+ * Una celda de la cuadrícula de /colecciones-fely-campo (ver page.js ahí): un
  * único medio (imagen o vídeo) a todo el ancho de la celda, o dos
  * lado a lado si "medios" trae 2 — todo el bloque enlaza a la
  * colección completa (/archivo/colecciones/[coleccion]).

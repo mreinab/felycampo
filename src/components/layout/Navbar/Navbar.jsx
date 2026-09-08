@@ -58,8 +58,8 @@ const SUBMENU_STRUCTURE = {
     items: [
       { key: 'blog', href: '/blog' },
       { key: 'historia', href: '/sobre-fely' },
-      { key: 'runway', href: '/archivo/runway' },
-      { key: 'talleres', href: '/sobre-fely/talleres' },
+      { key: 'runway', href: '/colecciones-fely-campo' },
+      { key: 'talleres', href: '/talleres-fely-campo' },
     ],
     image: '/img/styleguide/prod-tarjeta-relacionado.webp',
   },
@@ -214,8 +214,8 @@ function Navbar({ transparent = false, crecerLogo = false }) {
   // es la de cualquiera de sus items — en Atelier/Tienda esto ya salía
   // gratis porque sus hrefs de submenú viven bajo el propio href del
   // enlace (/atelier/novias bajo /atelier), pero en Sobre Fely no: sus
-  // items (/blog, /archivo/runway...) no cuelgan de /sobre-fely, así que
-  // sin este chequeo extra el enlace no se subrayaba en esas páginas.
+  // items (/blog, /colecciones-fely-campo...) no cuelgan de /sobre-fely,
+  // así que sin este chequeo extra el enlace no se subrayaba en esas páginas.
   const esActivo = (item) => {
     if (typeof item === 'string') return esRutaActiva(item);
     const hrefs = item.submenu

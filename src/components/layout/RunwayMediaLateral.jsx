@@ -3,7 +3,7 @@
 /* ============================================================
    MEDIA LATERAL DE RUNWAY — Fely Campo
    Pieza del hero de cada ficha de colección (ver
-   /archivo/runway/[coleccion]/page.js): imagen o vídeo (según
+   /colecciones-fely-campo/[coleccion]/page.js): imagen o vídeo (según
    medio.tipo) a ancho completo, ocupando todo el alto disponible
    dentro del hero (flex:1 sobre un padre en columna marcado
    data-navbar-hero). Se repite igual en las 9 colecciones — solo

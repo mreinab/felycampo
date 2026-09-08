@@ -2,7 +2,7 @@
 
 /* ============================================================
    GALERÍA DE RUNWAY — Fely Campo
-   Cuadrícula de looks de una colección (ver /archivo/runway/[coleccion]/
+   Cuadrícula de looks de una colección (ver /colecciones-fely-campo/[coleccion]/
    page.js) + lightbox a pantalla completa al clicar uno — mismo
    mecanismo que GaleriaProductoLightbox.jsx (banda con scroll-snap +
    franja de miniaturas a la izquierda para saltar entre looks sin

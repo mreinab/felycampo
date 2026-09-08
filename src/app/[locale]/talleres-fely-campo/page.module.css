@@ -1,0 +1,78 @@
+/* ============================================================
+   NUESTROS TALLERES — Fely Campo
+   Esquinas rectas en todo (--radius-imagenes/--radius-botones a 0,
+   igual que el resto del sitio).
+   ============================================================ */
+
+/* 5 columnas en escritorio (ver comentario en page.js) — cada
+   <li>.taller ocupa 1 sola columna sin span, así que con los 4
+   talleres actuales la 5ª columna queda vacía a propósito. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--spacing-6) var(--spacing-4);
+  list-style: none;
+  padding-bottom: var(--spacing-10);
+}
+
+.taller {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.marco {
+  aspect-ratio: 3 / 4;
+  background: var(--color-details);
+  border-radius: var(--radius-imagenes);
+  overflow: hidden;
+}
+
+.imagen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mismo criterio tipográfico que .info en
+   visita-fely-campo/page.module.css (texto pequeño, mismo color/interlineado
+   en todas las líneas) — aquí en dos bloques: los 4 datos rápidos
+   (.meta, apretados) y los párrafos (.texto, más aire entre sí porque
+   cada uno es un tema distinto, ver encargo del usuario). */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.meta p,
+.texto p {
+  margin: 0;
+  font-size: var(--text-small);
+  line-height: var(--leading-base);
+  color: var(--color-tinta);
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.texto p {
+  color: var(--color-gris-600);
+}
+
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+  }
+}

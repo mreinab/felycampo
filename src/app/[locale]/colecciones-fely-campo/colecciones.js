@@ -7,9 +7,11 @@
 
    "slug" es el nombre en kebab-case; la URL real de cada colección
    añade la temporada en minúsculas al final (ver slugCompleto más
-   abajo) — /archivo/runway/dreaming-ss26, /archivo/runway/la-coleccion-aw27...
-   Nota: estos slugs son propios de /archivo/runway y NO coinciden con
-   los que ya usa el "Destino del CTA" del admin bajo
+   abajo) — /colecciones-fely-campo/dreaming-ss26,
+   /colecciones-fely-campo/la-coleccion-aw27... (antes /archivo/runway/...,
+   ruta renombrada).
+   Nota: estos slugs son propios de /colecciones-fely-campo y NO
+   coinciden con los que ya usa el "Destino del CTA" del admin bajo
    /archivo/colecciones/[coleccion] (ver paginasInternas en
    mockData.js) — son dos rutas/esquemas de URL distintos.
 
@@ -180,7 +182,7 @@ export const COLECCIONES = [
   },
 ];
 
-// /archivo/runway/dreaming-ss26, /archivo/runway/la-coleccion-aw27...
+// /colecciones-fely-campo/dreaming-ss26, /colecciones-fely-campo/la-coleccion-aw27...
 export function slugCompleto(coleccion) {
   return `${coleccion.slug}-${coleccion.temporada.toLowerCase()}`;
 }

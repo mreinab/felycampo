@@ -4,7 +4,7 @@
    BACKSTAGE DE COLECCIÓN — Fely Campo
    Cuadrícula editorial de fotos de backstage, entre la descripción y
    la cuadrícula de looks de cada ficha de colección (ver
-   /archivo/runway/[coleccion]/page.js) — opcional, solo se pinta si la
+   /colecciones-fely-campo/[coleccion]/page.js) — opcional, solo se pinta si la
    colección trae "backstage" (ver colecciones.js; de momento solo La
    Colección tiene reportaje de backstage real).
    .envoltorio ocupa el 100% (para que el fondo/padding de quien la use

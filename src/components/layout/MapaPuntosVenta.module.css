@@ -1,0 +1,194 @@
+/* ============================================================
+   MAPA DE PUNTOS DE VENTA — Fely Campo
+   Mismo criterio de "esquinas rectas en todo" que el resto del sitio
+   (--radius-botones a 0) — se le pisa el redondeo por defecto a los
+   controles/popups de Leaflet, ver overrides :global() al final.
+   ============================================================ */
+
+.seccion {
+  padding-bottom: var(--spacing-10);
+}
+
+/* Mismo elemento .chips/.chip/.chipActivo que PanelFiltros.module.css
+   y visita-fely-campo/page.module.css — reutilizado tal cual aquí. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-6);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 32px;
+  padding: var(--spacing-2) var(--spacing-4);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  text-align: center;
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  border: 1px solid var(--color-gris-300);
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
+}
+
+.chip:hover {
+  border-color: var(--color-tinta);
+}
+
+.chipActivo {
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  border-color: var(--color-tinta);
+}
+
+/* Mapa (65%) + listado accesible (35%) lado a lado — mismo criterio
+   50/50-ish que .tarjeta en visita-fely-campo/page.module.css, aquí
+   con reparto desigual porque el mapa necesita más aire. */
+.layout {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-4);
+  padding-inline: var(--spacing-7);
+}
+
+.mapa {
+  flex: 2;
+  min-width: 0;
+  height: 60vh;
+  min-height: 420px;
+  background: var(--color-details);
+  border: 1px solid var(--color-hairline);
+}
+
+/* El mapa lleva aria-hidden (ver MapaPuntosVenta.jsx) — este listado
+   es el camino real por teclado/lector de pantalla a cada punto:
+   botones reales, uno por sede, que mueven el mapa al clicarlos. */
+.lista {
+  flex: 1;
+  min-width: 220px;
+  max-height: 60vh;
+  min-height: 420px;
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--color-hairline);
+}
+
+.puntoBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-1);
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--color-fondo);
+  border: none;
+  border-bottom: 1px solid var(--color-hairline);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-marca);
+}
+
+.puntoBtn:hover,
+.puntoBtn:focus-visible {
+  background: var(--color-details);
+}
+
+/* Mismo criterio que .nombre/.direccion/.telefono en .info de
+   visita-fely-campo/page.module.css — título y texto de debajo al
+   mismo tamaño y color, sin distinción de peso entre ellos. */
+.puntoNombre,
+.puntoTexto {
+  font-size: var(--text-small);
+  line-height: var(--leading-base);
+  color: var(--color-tinta);
+  white-space: pre-line;
+}
+
+@media (max-width: 767px) {
+  .layout {
+    flex-direction: column;
+    padding-inline: var(--spacing-5);
+  }
+
+  .mapa {
+    height: 40vh;
+    min-height: 320px;
+  }
+
+  .lista {
+    min-width: 0;
+    max-height: 320px;
+  }
+}
+
+/* Marcador de cada punto — cuadrado, no círculo (ver icono divIcon en
+   MapaPuntosVenta.jsx: L.circleMarker no dibuja cuadrados). Borde más
+   fino que el weight:2 que llevaba el circleMarker anterior. */
+.marcador {
+  width: 9px;
+  height: 9px;
+  background: var(--color-rosa);
+  border: 1px solid var(--color-fondo);
+  box-sizing: border-box;
+}
+
+/* ---------- Overrides Leaflet (:global — clases del propio Leaflet,
+   fuera del scope de CSS Modules) ---------- */
+
+/* Desatura las teselas OSM (por defecto vienen con mucho color/etiqueta)
+   para acercarlas al resto del sitio, monocromo + rosa como único
+   acento (ver --color-rosa en los marcadores, JS). */
+.mapa :global(.leaflet-tile-pane) {
+  filter: grayscale(0.85) contrast(0.95) brightness(1.05);
+}
+
+.mapa :global(.leaflet-control-zoom a) {
+  border-radius: 0;
+  color: var(--color-tinta);
+  border-color: var(--color-gris-300);
+}
+
+.mapa :global(.leaflet-popup-content-wrapper),
+.mapa :global(.leaflet-popup-tip) {
+  border-radius: 0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+.mapa :global(.leaflet-popup-content) {
+  margin: var(--spacing-3);
+  font-family: var(--font-base);
+}
+
+.popupNombre {
+  margin: 0 0 var(--spacing-1) 0;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+}
+
+.popupTexto {
+  margin: 0 0 var(--spacing-1) 0;
+  font-size: var(--text-caption);
+  line-height: var(--leading-base);
+  color: var(--color-gris-600);
+}
+
+.popupTexto a {
+  color: var(--color-gris-600);
+}
+
+.popupEnlace {
+  display: inline-block;
+  margin-top: var(--spacing-1);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-rosa);
+  text-decoration: underline;
+}
