@@ -41,6 +41,16 @@ import 'leaflet/dist/leaflet.css';
 const CENTRO_EUROPA = [47, 8];
 const ZOOM_INICIAL = 4;
 
+// Aún no hay foto por punto de venta (ver puntosVenta.js) — 3
+// fotos de atelier ya usadas en visita-fely-campo/ListadoUbicaciones.jsx,
+// repetidas en bucle según la posición en el listado (ver puntoBtn
+// más abajo), a modo de marcador de posición.
+const IMAGENES_PLACEHOLDER = [
+  '/img/talleres/salamanca-ateliernovia-ateliernoviasalamanca-ubicacion-felycampo.webp',
+  '/img/talleres/madrid-atelier_madrid_fiesta_novia_medida.webp',
+  '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp',
+];
+
 function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
   const t = useTranslations('puntosVenta');
   const contenedorRef = useRef(null);
@@ -210,16 +220,24 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
         <div ref={contenedorRef} className={styles.mapa} role="presentation" aria-hidden="true" />
 
         <ul className={styles.lista} aria-label={t('titulo')}>
-          {puntosVisibles.map((punto) => (
+          {puntosVisibles.map((punto, indice) => (
             <li key={punto.id}>
               <button type="button" className={styles.puntoBtn} onClick={() => irAPunto(punto)}>
-                <span className={styles.puntoNombre}>{punto.nombre}</span>
-                <span className={styles.puntoTexto}>{punto.direccion.join('\n')}</span>
-                {(punto.telefono || punto.email) && (
-                  <span className={styles.puntoTexto}>
-                    {[punto.telefono, punto.email].filter(Boolean).join('\n')}
-                  </span>
-                )}
+                <img
+                  src={IMAGENES_PLACEHOLDER[indice % IMAGENES_PLACEHOLDER.length]}
+                  alt=""
+                  aria-hidden="true"
+                  className={styles.puntoImagen}
+                />
+                <span className={styles.puntoTextos}>
+                  <span className={styles.puntoNombre}>{punto.nombre}</span>
+                  <span className={styles.puntoTexto}>{punto.direccion.join('\n')}</span>
+                  {(punto.telefono || punto.email) && (
+                    <span className={styles.puntoTexto}>
+                      {[punto.telefono, punto.email].filter(Boolean).join('\n')}
+                    </span>
+                  )}
+                </span>
               </button>
             </li>
           ))}

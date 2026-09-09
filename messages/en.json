@@ -110,7 +110,7 @@
   "talleres": {
     "eyebrow": "Our process",
     "titulo": "Our Workshops",
-    "intro": "Since the beginning of the project in 2014, we have mainly worked with local suppliers. This has been a priority for us and has shaped the project over the years. We have built a very close relationship with our suppliers, growing together and learning from each other season after season. The physical proximity allows us to know those who make our garments closely, as we regularly visit all the workshops involved in our productions."
+    "intro": "Since 2014 we've worked mainly with local suppliers, building a close relationship that grows season after season. We visit every workshop regularly to get to know the people who make our garments."
   },
   "atencionCliente": {
     "titulo": "Customer Service",
@@ -199,6 +199,29 @@
     "confirmacionTitulo": "Request sent!",
     "confirmacionTexto": "Thank you for your interest. Our team will get in touch with you as soon as possible.",
     "cerrar": "Close"
+  },
+  "pedirCitaAtelier": {
+    "eyebrow": "Atelier",
+    "titulo": "Book an appointment at the workshop",
+    "intro": "Choose a day and a time. We'll confirm as soon as possible.",
+    "dia": "Day",
+    "hora": "Time",
+    "avisoFecha": "Select a day and a time.",
+    "nombre": "Name",
+    "nombrePlaceholder": "Jane",
+    "apellidos": "Surname",
+    "apellidosPlaceholder": "Smith",
+    "email": "Email",
+    "emailPlaceholder": "jane@example.com",
+    "motivo": "Reason for your visit",
+    "motivoProbarColeccion": "Try on the collection",
+    "motivoVestidoMedida": "Atelier — Made-to-measure dress",
+    "avisoMotivo": "Select the reason for your visit.",
+    "avisoDatos": "Please fill in your name, surname and email to continue.",
+    "enviar": "Confirm appointment",
+    "confirmacionTitulo": "Appointment requested!",
+    "confirmacionTexto": "We'll confirm the day and time as soon as possible by email.",
+    "volver": "Back to home"
   },
   "escribirResena": {
     "titulo": "Write your review",

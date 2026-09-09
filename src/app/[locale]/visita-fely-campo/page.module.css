@@ -75,7 +75,7 @@
   flex-direction: row;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .tarjeta {
     max-height: 70vh;
   }
@@ -226,18 +226,27 @@
   border-color: var(--color-tinta);
 }
 
-@media (max-width: 767px) {
+/* Mobile y tablet vertical (hasta 1023px, ver convención de
+   breakpoints en ProductosRecomendados.module.css — tablet horizontal
+   ya cae en el bucle de escritorio de arriba, min-width 1024). Aquí
+   .tarjeta ya no fuerza una altura (min-height/max-height de la
+   versión escritorio no aplican): se ajusta al contenido, .galeria
+   pasa a una altura fija de 50vh y .fila gana padding en las 4
+   direcciones en vez de solo horizontal. */
+@media (max-width: 1023px) {
   .tarjeta {
     flex-direction: column;
+    min-height: 0;
   }
 
   .galeria {
     width: 100%;
-    height: 320px;
+    height: 50vh;
   }
 
   .fila {
     width: 100%;
+    padding: var(--spacing-4);
   }
 
   .info {

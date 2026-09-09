@@ -4,11 +4,14 @@
    Server Component: cabecera (CabeceraSeccion, enCuadricula +
    alinear="start" — mismo combo "fila" que usa CuadriculaProductos en
    "grid", ver CuadriculaProductos.jsx) + cuadrícula de talleres (ver
-   talleres.js). Sin interactividad — no hace falta Client Component.
+   talleres.js). El único trocito interactivo (scroll del carrusel de
+   imágenes con la rueda del ratón) vive aparte en CarruselImagenes.jsx
+   (Client Component), no aquí.
    ============================================================ */
 
 import { CabeceraSeccion } from '@/components/ui';
 import { TALLERES } from './talleres';
+import CarruselImagenes from './CarruselImagenes';
 import styles from './page.module.css';
 
 export default async function Pagina({ params }) {
@@ -25,27 +28,38 @@ export default async function Pagina({ params }) {
           enCuadricula
         />
 
-        {/* 5 columnas en escritorio — cada taller ocupa 1 sola columna
-            (hoy 4 talleres, así que la 5ª queda vacía; ver .grid). */}
+        {/* Un taller por fila (ver .grid): dentro de cada uno, el
+            carrusel de imágenes (.imagenes) va arriba y .info debajo,
+            apilados en columna (ver .taller). 6 copias de la misma
+            imagen (aún no hay fotos/vídeos distintos por taller) — la
+            6ª solo se ve parcialmente en escritorio, como pista de
+            que se puede seguir scrolleando (ver .marco:nth-child en
+            page.module.css). */}
         <ul className={styles.grid}>
           {TALLERES.map((taller) => (
             <li key={taller.id} className={styles.taller}>
-              <div className={styles.marco}>
-                <img src={taller.imagen} alt="" className={styles.imagen} />
-              </div>
+              <CarruselImagenes className={styles.imagenes}>
+                {[0, 1, 2, 3, 4, 5].map((indice) => (
+                  <div key={indice} className={styles.marco}>
+                    <img src={taller.imagen} alt="" className={styles.imagen} />
+                  </div>
+                ))}
+              </CarruselImagenes>
 
               <div className={styles.info}>
-                <div className={styles.meta}>
-                  <p>{taller.tipo[locale]}</p>
-                  <p>{taller.distancia[locale]}</p>
-                  <p>{taller.trabajadores[locale]}</p>
-                  <p>{taller.liderazgo[locale]}</p>
-                </div>
+                <div className={styles.infoContenido}>
+                  <div className={styles.meta}>
+                    <p>{taller.tipo[locale]}</p>
+                    <p>{taller.distancia[locale]}</p>
+                    <p>{taller.trabajadores[locale]}</p>
+                    <p>{taller.liderazgo[locale]}</p>
+                  </div>
 
-                <div className={styles.texto}>
-                  {taller.parrafos[locale].map((parrafo, indice) => (
-                    <p key={indice}>{parrafo}</p>
-                  ))}
+                  <div className={styles.texto}>
+                    {taller.parrafos[locale].map((parrafo, indice) => (
+                      <p key={indice}>{parrafo}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </li>

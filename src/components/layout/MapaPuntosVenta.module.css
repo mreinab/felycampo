@@ -79,11 +79,14 @@
   border: 1px solid var(--color-hairline);
 }
 
+/* Fila: .puntoImagen a la izquierda + .puntoTextos a la derecha (ver
+   más abajo) — align-items:stretch para que la imagen (aspect-ratio,
+   sin alto propio) tome el alto real del botón, que lo marca el texto. */
 .puntoBtn {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-1);
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--spacing-2);
   width: 100%;
   padding: var(--spacing-3) var(--spacing-4);
   background: var(--color-fondo);
@@ -99,6 +102,33 @@
   background: var(--color-details);
 }
 
+/* Aún no hay foto propia por punto de venta (ver IMAGENES_PLACEHOLDER
+   en MapaPuntosVenta.jsx — 3 fotos de atelier en bucle según posición
+   en el listado). Ancho fijo + aspect-ratio (no al revés): un ancho
+   fijo con alto derivado del aspect-ratio es el único de los dos
+   sentidos que los navegadores resuelven de forma fiable dentro de un
+   flex item — derivar el ancho desde el alto real del botón (variable,
+   según el texto) no está soportado de forma consistente, así que se
+   centra en vertical en vez de estirarse. */
+.puntoImagen {
+  display: block;
+  flex: none;
+  align-self: center;
+  width: var(--spacing-9);
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background: var(--color-details);
+}
+
+.puntoTextos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--spacing-1);
+  min-width: 0;
+}
+
 /* Mismo criterio que .nombre/.direccion/.telefono en .info de
    visita-fely-campo/page.module.css — título y texto de debajo al
    mismo tamaño y color, sin distinción de peso entre ellos. */
@@ -108,6 +138,12 @@
   line-height: var(--leading-base);
   color: var(--color-tinta);
   white-space: pre-line;
+}
+
+/* Único elemento en mayúsculas del bloque (ver .puntoTexto arriba,
+   sin transformar). */
+.puntoNombre {
+  text-transform: uppercase;
 }
 
 @media (max-width: 767px) {

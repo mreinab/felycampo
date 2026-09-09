@@ -118,7 +118,7 @@
    acotado en escritorio para que no estire la cabecera de lado a lado
    — en mobile no hace falta, ver media query abajo. */
 .descripcion {
-  max-width: 350px;
+  max-width: 450px;
   font-size: var(--text-small);
   color: var(--color-gris-500);
   line-height: var(--leading-base);

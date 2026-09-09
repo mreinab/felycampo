@@ -22,7 +22,7 @@ export default async function Pagina({ params }) {
         </div>
       </section>
 
-      <section className="seccion">
+      <section className="seccion" id="mapa-puntos-venta">
         <div className="contenedor">
           <MapaPuntosVenta />
         </div>

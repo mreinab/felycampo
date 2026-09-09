@@ -4,28 +4,59 @@
    igual que el resto del sitio).
    ============================================================ */
 
-/* 5 columnas en escritorio (ver comentario en page.js) — cada
-   <li>.taller ocupa 1 sola columna sin span, así que con los 4
-   talleres actuales la 5ª columna queda vacía a propósito. */
+/* Un taller debajo de otro, en columna (ver comentario en page.js) —
+   cada <li>.taller es ahora una fila completa, no una celda de
+   cuadrícula. */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--spacing-6) var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-10);
   list-style: none;
+  padding-top: var(--spacing-4);
   padding-bottom: var(--spacing-10);
 }
 
+/* Cada taller: cuadrícula de imágenes arriba, .info abajo, apilados
+   en columna (ver .imagenes y .info más abajo). */
 .taller {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
 }
 
+/* Carrusel horizontal en todos los tamaños (ver page.js — 6 copias de
+   la misma imagen en bucle, sin gap entre .marco, se leen como una
+   sola tira). En escritorio se ven 5 "columnas" de ancho normal
+   (20%), pero la 4ª y 5ª se achican (ver .marco:nth-child) para que
+   asome el borde de la 6ª y quede claro que se puede seguir
+   scrolleando; en mobile/tablet el ancho de .marco cambia a 80% (ver
+   media query) y ya no hace falta ese achicado. */
+.imagenes {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Edge/IE legacy */
+}
+
+.imagenes::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
 .marco {
+  flex: 0 0 20%;
+  scroll-snap-align: start;
   aspect-ratio: 3 / 4;
   background: var(--color-details);
   border-radius: var(--radius-imagenes);
   overflow: hidden;
+}
+
+.marco:nth-child(4),
+.marco:nth-child(5) {
+  flex-basis: 16%;
 }
 
 .imagen {
@@ -35,18 +66,32 @@
   object-fit: cover;
 }
 
+/* Mismas 5 columnas que .imagenes, para que .infoContenido (columnas
+   2-4, centrado, ver más abajo) quede alineado con la tira de
+   imágenes de arriba — las columnas 1 y 5 quedan vacías a los lados
+   a propósito. */
+.info {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+/* Sub-cuadrícula de 3 columnas (ancho de las columnas 2-4 de .info):
+   .meta ocupa la 1ª y .texto las 2 restantes (ver más abajo). */
+.infoContenido {
+  grid-column: 2 / 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding-left: var(--spacing-2);
+}
+
 /* Mismo criterio tipográfico que .info en
    visita-fely-campo/page.module.css (texto pequeño, mismo color/interlineado
    en todas las líneas) — aquí en dos bloques: los 4 datos rápidos
    (.meta, apretados) y los párrafos (.texto, más aire entre sí porque
    cada uno es un tema distinto, ver encargo del usuario). */
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-5);
-}
-
 .meta {
+  grid-column: 1;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-1);
@@ -60,7 +105,12 @@
   color: var(--color-tinta);
 }
 
+.meta p:first-child {
+  text-transform: uppercase;
+}
+
 .texto {
+  grid-column: 2 / 4;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
@@ -70,9 +120,32 @@
   color: var(--color-gris-600);
 }
 
-@media (max-width: 767px) {
+/* Mobile y tablet (hasta 1023px, ver convención de breakpoints en
+   ProductosRecomendados.module.css): en vez de las 5 "columnas" de
+   20%/16% de escritorio (ver .marco), cada .marco ocupa el 80% del
+   ancho, así se ve 1 imagen entera + 1/4 de la siguiente — el
+   achicado de la 4ª/5ª ya no aplica (nth-child con la misma
+   especificidad, pisa la regla base). .info deja de ser cuadrícula:
+   .infoContenido, .meta y .texto se apilan en columna a ancho
+   completo. */
+@media (max-width: 1023px) {
   .grid {
-    grid-template-columns: 1fr;
     gap: var(--spacing-8);
+  }
+
+  .marco,
+  .marco:nth-child(4),
+  .marco:nth-child(5) {
+    flex-basis: 80%;
+  }
+
+  .info {
+    display: block;
+  }
+
+  .infoContenido {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-2);
   }
 }

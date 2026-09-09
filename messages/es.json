@@ -110,7 +110,7 @@
   "talleres": {
     "eyebrow": "Nuestro proceso",
     "titulo": "Nuestros talleres",
-    "intro": "Desde el comienzo del proyecto en 2014, hemos trabajado principalmente con proveedores locales. Ha sido una prioridad para nosotras y ha marcado el rumbo del proyecto a lo largo de los años. Hemos construido una relación muy cercana con nuestros proveedores, creciendo juntos y aprendiendo los unos de los otros temporada tras temporada. La cercanía física nos permite conocer de cerca a quienes confeccionan nuestras prendas, ya que visitamos con regularidad todos los talleres que participan en nuestras producciones."
+    "intro": "Desde 2014 trabajamos principalmente con proveedores locales, construyendo una relación cercana que crece temporada tras temporada. Visitamos con regularidad cada taller para conocer de cerca a quienes confeccionan nuestras prendas."
   },
   "atencionCliente": {
     "titulo": "Atención al cliente",
@@ -199,6 +199,29 @@
     "confirmacionTitulo": "¡Solicitud enviada!",
     "confirmacionTexto": "Gracias por tu interés. Nuestro equipo se pondrá en contacto contigo lo antes posible.",
     "cerrar": "Cerrar"
+  },
+  "pedirCitaAtelier": {
+    "eyebrow": "Atelier",
+    "titulo": "Reservar una cita en el taller",
+    "intro": "Elige un día y una hora. Te confirmaremos lo más pronto posible.",
+    "dia": "Día",
+    "hora": "Hora",
+    "avisoFecha": "Selecciona un día y una hora.",
+    "nombre": "Nombre",
+    "nombrePlaceholder": "María",
+    "apellidos": "Apellidos",
+    "apellidosPlaceholder": "Martín",
+    "email": "Email",
+    "emailPlaceholder": "maria@ejemplo.com",
+    "motivo": "Motivo de la visita",
+    "motivoProbarColeccion": "Probarme la colección",
+    "motivoVestidoMedida": "Atelier — Vestido a medida",
+    "avisoMotivo": "Selecciona el motivo de la visita.",
+    "avisoDatos": "Completa tu nombre, apellidos y email para continuar.",
+    "enviar": "Confirmar cita",
+    "confirmacionTitulo": "¡Cita solicitada!",
+    "confirmacionTexto": "Te confirmaremos el día y la hora lo antes posible por email.",
+    "volver": "Volver al inicio"
   },
   "escribirResena": {
     "titulo": "Escribe tu reseña",

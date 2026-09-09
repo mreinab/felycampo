@@ -72,6 +72,13 @@ function ListadoUbicaciones({ locale }) {
               {ciudad}
             </button>
           ))}
+          {/* No filtra nada (no es un "ciudadActiva" más) — ancla al
+              MapaPuntosVenta de más abajo (ver id="mapa-puntos-venta"
+              en page.js); scroll-behavior:smooth ya es global (ver
+              global.css), no hace falta JS. */}
+          <a href="#mapa-puntos-venta" className={styles.chip}>
+            {t('verMapa')}
+          </a>
         </div>
       </CabeceraSeccion>
 
