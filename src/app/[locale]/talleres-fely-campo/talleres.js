@@ -42,15 +42,52 @@ const TALLERES_FOTOS = [
 
 // Solo hay 1 foto real por taller (imagen, arriba) — para que el
 // carrusel (ver .imagenes en page.js) no se vea con la misma foto
-// repetida 6 veces, "imagenes" recicla las 4 fotos del conjunto
-// entero en grupos de 3 distintas por taller (la propia + las 2
-// siguientes del conjunto, con vuelta al principio) — sigue siendo
-// placeholder, pero ya se nota el efecto de una galería real.
+// repetida 6 veces, "medios" recicla las 4 fotos del conjunto entero
+// en grupos de 3 distintas por taller (la propia + las 2 siguientes
+// del conjunto, con vuelta al principio) — sigue siendo placeholder,
+// pero ya se nota el efecto de una galería real. Talleres 3-4 (aún sin
+// fotos/vídeo propios) usan esto; talleres 1-2 tienen su propio set
+// real más abajo, que sustituye por completo a este reciclado.
 const IMAGENES_POOL = TALLERES_FOTOS.map((taller) => taller.imagen);
 
-export const TALLERES = TALLERES_FOTOS.map(({ id, imagen }, indice) => ({
+// "medios": {tipo, src} en vez de solo la URL — a partir de taller-2
+// el carrusel mezcla fotos y vídeo (ver .marco/.imagen en
+// page.module.css, mismo elemento para ambos tipos vía object-fit).
+const imagen = (src) => ({ tipo: 'imagen', src });
+const video = (src) => ({ tipo: 'video', src });
+
+// Taller 1: set propio de fotos reales (public/img/talleres/taller-1/).
+const MEDIOS_TALLER_1 = [
+  imagen('/img/talleres/taller-1/IMG_9719.JPG'),
+  imagen('/img/talleres/taller-1/IMG_9725.JPG'),
+  imagen('/img/talleres/taller-1/IMG_9730.JPG'),
+  imagen('/img/talleres/taller-1/IMG_9738.JPG'),
+  imagen('/img/talleres/taller-1/IMG_9742.JPG'),
+  imagen('/img/talleres/taller-1/IMG_9760.JPG'),
+];
+
+// Taller 2: 5 fotos reales (public/img/talleres/taller-2/) + 1 vídeo,
+// en autoplay silencioso en bucle (ver .imagen/video en page.js) —
+// mismo criterio que MEDIOS_POR_CIUDAD en
+// visita-fely-campo/ListadoUbicaciones.jsx.
+const MEDIOS_TALLER_2 = [
+  imagen('/img/talleres/taller-2/IMG_9844.JPG'),
+  imagen('/img/talleres/taller-2/IMG_9881.JPG'),
+  imagen('/img/talleres/taller-2/IMG_9884.JPG'),
+  imagen('/img/talleres/taller-2/IMG_9888.JPG'),
+  imagen('/img/talleres/taller-2/IMG_9904.JPG'),
+  video('/img/talleres/taller-2/MVI_9790.MP4'),
+];
+
+const MEDIOS_PROPIOS = {
+  'taller-1': MEDIOS_TALLER_1,
+  'taller-2': MEDIOS_TALLER_2,
+};
+
+export const TALLERES = TALLERES_FOTOS.map(({ id, imagen: imagenPrincipal }, indice) => ({
   id,
-  imagen,
-  imagenes: [0, 1, 2].map((paso) => IMAGENES_POOL[(indice + paso) % IMAGENES_POOL.length]),
+  imagen: imagenPrincipal,
+  medios: MEDIOS_PROPIOS[id]
+    ?? [0, 1, 2].map((paso) => imagen(IMAGENES_POOL[(indice + paso) % IMAGENES_POOL.length])),
   ...PLACEHOLDER,
 }));

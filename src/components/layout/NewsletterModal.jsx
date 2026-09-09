@@ -30,6 +30,7 @@ function NewsletterModal({ abierto, onCerrar, imagen = '/img/styleguide/prod-tar
         </div>
         <div className={styles.columnaTexto}>
           <h2 className={styles.titulo}>{t('titulo')}</h2>
+          <p className={styles.subtitulo}>{t('subtitulo')}</p>
           <div className={styles.filaInferior}>
             <Boton variante="solido" tamano="m" onClick={onCerrar} className={styles.boton}>
               {t('boton')}

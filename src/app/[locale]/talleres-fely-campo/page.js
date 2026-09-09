@@ -29,10 +29,10 @@ export default async function Pagina({ params }) {
         />
 
         {/* Un taller por fila (ver .grid): dentro de cada uno, el
-            carrusel de imágenes (.imagenes) va arriba y .info debajo,
-            apilados en columna (ver .taller). 6 huecos, ciclando las 3
-            fotos de taller.imagenes (ver talleres.js — aún no hay 6
-            fotos/vídeos distintos por taller) — el último solo se ve
+            carrusel de medios (.imagenes) va arriba y .info debajo,
+            apilados en columna (ver .taller). 6 huecos, ciclando
+            taller.medios (fotos y, a partir de taller-2, algún vídeo
+            en autoplay — ver talleres.js) — el último solo se ve
             parcialmente en escritorio, como pista de que se puede
             seguir scrolleando (ver .marco:nth-child en
             page.module.css). */}
@@ -40,11 +40,18 @@ export default async function Pagina({ params }) {
           {TALLERES.map((taller) => (
             <li key={taller.id} className={styles.taller}>
               <CarruselImagenes className={styles.imagenes}>
-                {[0, 1, 2, 3, 4, 5].map((indice) => (
-                  <div key={indice} className={styles.marco}>
-                    <img src={taller.imagenes[indice % taller.imagenes.length]} alt="" className={styles.imagen} />
-                  </div>
-                ))}
+                {[0, 1, 2, 3, 4, 5].map((indice) => {
+                  const medio = taller.medios[indice % taller.medios.length];
+                  return (
+                    <div key={indice} className={styles.marco}>
+                      {medio.tipo === 'video' ? (
+                        <video src={medio.src} className={styles.imagen} autoPlay muted loop playsInline />
+                      ) : (
+                        <img src={medio.src} alt="" className={styles.imagen} />
+                      )}
+                    </div>
+                  );
+                })}
               </CarruselImagenes>
 
               <div className={styles.info}>
