@@ -149,7 +149,7 @@
   --screen-desktop:  1024px;  /* alias: --screen-desktop */
   --max-texto:       700px;   /* ancho de bloques de texto legibles */
   --max-contenido:   1440px;  /* ancho de contenido */
-  --max-sitio:       1920px;  /* ancho máximo del sitio */
+  --max-sitio:       2100px;  /* ancho máximo del sitio */
   --nav-height:      76px;    /* alto de .navRow (Navbar) — min-height + padding-block, box-sizing: border-box */
 
   /* ---------- INTERLINEADO (line-height) ---------- */

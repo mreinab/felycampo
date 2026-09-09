@@ -347,7 +347,7 @@ a mano cada vez que se añada un token nuevo:
 | `--text-micro` … `--text-display` | (mismo nombre) | rem, con `html{font-size:87.5%}` |
 | `--border-thin` / `--border-regular` | (mismo nombre) | 0.75px / 1px |
 | `--screen-tablet` / `--screen-desktop` | (mismo nombre) | 768px / 1024px |
-| `--max-texto` / `--max-contenido` / `--max-sitio` | (mismo nombre) | 700 / 1440 / 1920px |
+| `--max-texto` / `--max-contenido` / `--max-sitio` | (mismo nombre) | 700 / 1440 / 2100px |
 
 ## ⚠️ Cambio importante — espaciado renombrado por PASO, no por valor
 
