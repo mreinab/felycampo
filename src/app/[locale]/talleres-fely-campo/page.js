@@ -30,10 +30,11 @@ export default async function Pagina({ params }) {
 
         {/* Un taller por fila (ver .grid): dentro de cada uno, el
             carrusel de imágenes (.imagenes) va arriba y .info debajo,
-            apilados en columna (ver .taller). 6 copias de la misma
-            imagen (aún no hay fotos/vídeos distintos por taller) — la
-            6ª solo se ve parcialmente en escritorio, como pista de
-            que se puede seguir scrolleando (ver .marco:nth-child en
+            apilados en columna (ver .taller). 6 huecos, ciclando las 3
+            fotos de taller.imagenes (ver talleres.js — aún no hay 6
+            fotos/vídeos distintos por taller) — el último solo se ve
+            parcialmente en escritorio, como pista de que se puede
+            seguir scrolleando (ver .marco:nth-child en
             page.module.css). */}
         <ul className={styles.grid}>
           {TALLERES.map((taller) => (
@@ -41,7 +42,7 @@ export default async function Pagina({ params }) {
               <CarruselImagenes className={styles.imagenes}>
                 {[0, 1, 2, 3, 4, 5].map((indice) => (
                   <div key={indice} className={styles.marco}>
-                    <img src={taller.imagen} alt="" className={styles.imagen} />
+                    <img src={taller.imagenes[indice % taller.imagenes.length]} alt="" className={styles.imagen} />
                   </div>
                 ))}
               </CarruselImagenes>

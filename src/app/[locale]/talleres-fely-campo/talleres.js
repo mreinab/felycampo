@@ -40,8 +40,17 @@ const TALLERES_FOTOS = [
   { id: 'taller-4', imagen: '/img/talleres/madrid-atelier_madrid_fiesta_novia_medida.webp' },
 ];
 
-export const TALLERES = TALLERES_FOTOS.map(({ id, imagen }) => ({
+// Solo hay 1 foto real por taller (imagen, arriba) — para que el
+// carrusel (ver .imagenes en page.js) no se vea con la misma foto
+// repetida 6 veces, "imagenes" recicla las 4 fotos del conjunto
+// entero en grupos de 3 distintas por taller (la propia + las 2
+// siguientes del conjunto, con vuelta al principio) — sigue siendo
+// placeholder, pero ya se nota el efecto de una galería real.
+const IMAGENES_POOL = TALLERES_FOTOS.map((taller) => taller.imagen);
+
+export const TALLERES = TALLERES_FOTOS.map(({ id, imagen }, indice) => ({
   id,
   imagen,
+  imagenes: [0, 1, 2].map((paso) => IMAGENES_POOL[(indice + paso) % IMAGENES_POOL.length]),
   ...PLACEHOLDER,
 }));
