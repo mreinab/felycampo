@@ -1,0 +1,88 @@
+/* ============================================================
+   ATELIER (índice: Novias + Fiesta) — Fely Campo. Ruta: /atelier
+   ProductHero + CabeceraSeccion (mismo header que Tienda/Atelier
+   Novias/Fiesta, ver page.js) + RunwayDescripcion (texto editorial) +
+   dos BloqueSeccion en zigzag (Novias/Fiesta, "invertido" en el
+   segundo) + botones comunes + "Conoce nuestros ateliers" (foto por
+   sede) + CarruselClientas al final (mismo componente que la home).
+   Esquinas rectas (sin radio), igual que el resto del sitio.
+   ============================================================ */
+
+.botones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+  padding: var(--spacing-6) var(--spacing-6);
+}
+
+@media (max-width: 767px) {
+  .botones {
+    flex-direction: column;
+    align-items: stretch;
+    padding-inline: var(--spacing-4);
+  }
+
+  .botones > a,
+  .botones > span {
+    width: 100%;
+  }
+}
+
+.ateliersSeccion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-6);
+  padding-block: var(--spacing-8);
+}
+
+.ateliersGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+  padding-inline: var(--spacing-6);
+}
+
+.atelierItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+.atelierMarco {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--color-crema);
+}
+
+.atelierImagen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-marca);
+}
+
+.atelierItem:hover .atelierImagen {
+  transform: scale(1.03);
+}
+
+.atelierCiudad {
+  font-size: var(--text-body-lg);
+  text-align: center;
+  color: var(--color-tinta);
+}
+
+@media (max-width: 767px) {
+  .ateliersGrid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin-inline: auto;
+  }
+}

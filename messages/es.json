@@ -12,9 +12,7 @@
         "tops": "Tops y Camisas",
         "coats": "Chaquetas y Abrigos",
         "faldas": "Faldas",
-        "vestidos": "Vestidos",
-        "zapatos": "Zapatos",
-        "accesorios": "Accesorios"
+        "vestidos": "Vestidos"
       },
       "atelier": {
         "novias": "Novias",
@@ -25,16 +23,15 @@
       },
       "elMundoDeFely": {
         "blog": "Blog",
-        "historia": "Historia",
         "runway": "Runway",
-        "talleres": "Nuestros talleres"
+        "talleres": "Conoce nuestros talleres"
       },
       "visitanos": {
-        "salamanca": "Salamanca",
-        "madrid": "Madrid",
-        "oviedo": "Oviedo",
+        "salamanca": "Atelier Salamanca",
+        "madrid": "Atelier Madrid",
+        "oviedo": "Atelier Oviedo",
         "puntosDeVenta": "Puntos de venta",
-        "reservarCita": "Reservar cita"
+        "reservarCita": "Pedir cita"
       }
     },
     "actions": {
@@ -92,9 +89,9 @@
   "visitenos": {
     "eyebrow": "Visita",
     "titulo": "Nuestros Ateliers",
-    "intro": "Nuestros ateliers y showroom, siempre con cita previa para atenderte con calma.",
+    "intro": "Nuestros ateliers y showroom, siempre con cita previa para atenderte con calma en nuestras ubicaciones en Salamanca, Madrid u Oviedo.",
     "pedirCita": "Pedir cita",
-    "verMapa": "Ver mapa",
+    "conoceMas": "Conoce más.",
     "whatsapp": "WhatsApp",
     "telf": "Telf",
     "movil": "Móvil",
@@ -103,14 +100,41 @@
   "puntosVenta": {
     "eyebrow": "Dónde encontrarnos",
     "titulo": "Puntos de venta",
-    "intro": "Nuestros ateliers y la red de boutiques que trabajan con Fely Campo, en España y el resto del mundo.",
-    "todos": "Todos",
+    "intro": "Descubre nuestros ateliers y la red de boutiques que trabajan con Fely Campo, en España y el resto del mundo.",
     "direcciones": "Cómo llegar"
   },
   "talleres": {
     "eyebrow": "Nuestro proceso",
     "titulo": "Nuestros talleres",
     "intro": "Desde 2014 trabajamos principalmente con proveedores locales, construyendo una relación cercana que crece temporada tras temporada. Visitamos con regularidad cada taller para conocer de cerca a quienes confeccionan nuestras prendas."
+  },
+  "atelierFiesta": {
+    "salamanca": {
+      "eyebrow": "Atelier",
+      "titulo": "Salamanca"
+    },
+    "madrid": {
+      "eyebrow": "Atelier & Showroom",
+      "titulo": "Madrid"
+    },
+    "oviedo": {
+      "eyebrow": "Atelier",
+      "titulo": "Oviedo"
+    }
+  },
+  "sobreFely": {
+    "eyebrow": "La Diseñadora",
+    "titulo": "Conoce a Fely Campo",
+    "trayectoria": "Trayectoria",
+    "manifiestoEyebrow": "Manifiesto — Colección Ibiza"
+  },
+  "blog": {
+    "volver": "Volver al blog",
+    "leerArticulo": "Leer artículo",
+    "escucharEpisodio": "Escuchar episodio",
+    "episodio": "Episodio",
+    "con": "Con",
+    "shopHere": "Comprar aquí"
   },
   "atencionCliente": {
     "titulo": "Atención al cliente",
@@ -201,8 +225,10 @@
     "cerrar": "Cerrar"
   },
   "pedirCitaAtelier": {
-    "eyebrow": "Atelier",
-    "titulo": "Reservar una cita en el taller",
+    "dondeTitulo": "¿Dónde quieres pedir la cita?",
+    "cambiarUbicacion": "Cambiar ubicación",
+    "cerrar": "Cerrar",
+    "titulo": "Reserva una cita",
     "intro": "Elige un día y una hora. Te confirmaremos lo más pronto posible.",
     "dia": "Día",
     "hora": "Hora",
@@ -214,8 +240,9 @@
     "email": "Email",
     "emailPlaceholder": "maria@ejemplo.com",
     "motivo": "Motivo de la visita",
-    "motivoProbarColeccion": "Probarme la colección",
-    "motivoVestidoMedida": "Atelier — Vestido a medida",
+    "motivoVestidoNovia": "Atelier, Vestidos de Novia",
+    "motivoVestidoFiesta": "Atelier, Vestidos de Fiesta",
+    "motivoProbarColeccion": "Probar la colección",
     "avisoMotivo": "Selecciona el motivo de la visita.",
     "avisoDatos": "Completa tu nombre, apellidos y email para continuar.",
     "enviar": "Confirmar cita",
@@ -293,6 +320,25 @@
     "item2": {
       "label": "Atelier Fiesta",
       "titulo": "Atelier Fiesta",
+      "cta": "Ver todo"
+    }
+  },
+  "atelierIndex": {
+    "subtitulo": "Fely Campo",
+    "titulo": "Atelier",
+    "conoceColeccion": "Conoce la colección",
+    "pedirCita": "Pide cita en nuestro atelier",
+    "conoceAteliers": "Conoce nuestros ateliers"
+  },
+  "splitMediaCategorias": {
+    "item1": {
+      "label": "Vestidos",
+      "titulo": "Vestidos",
+      "cta": "Ver todo"
+    },
+    "item2": {
+      "label": "Chaquetas",
+      "titulo": "Chaquetas",
       "cta": "Ver todo"
     }
   },
@@ -404,8 +450,8 @@
     }
   },
   "visitaAtelier": {
-    "titulo": "Artesanía, Feminidad & Cercanía",
-    "texto": "Lo que quiero transmitir con mis vestidos es un sentimiento y una pasión por lo que es mi oficio y mi profesión: la moda…",
+    "titulo": "De mujeres, Para mujeres, por las mujeres",
+    "texto": "Fely Campo nace en Salamanca como firma de moda femenina en 1997. Especializada en colecciones de fiesta y novia, la firma ha logrado ser un referente en el sector, dentro y fuera de nuestras fronteras gracias al compromiso con la calidad y el diseño atemporal.",
     "enlace": "Descubre más"
   },
   "compromiso": {
@@ -416,6 +462,7 @@
     "newsletter": {
       "texto": "Suscríbete y sé la primera en conocer ofertas, colecciones limitadas y novedades.",
       "consentimiento": "Al enviar tu email, aceptas nuestra <privacidad>Política de privacidad</privacidad>.",
+      "politicaEnlace": "Política de privacidad",
       "enviar": "Enviar",
       "exito": "¡Gracias! Ya estás suscrita.",
       "error": "Algo ha ido mal. Inténtalo de nuevo."
@@ -423,8 +470,6 @@
   },
   "newsletterPopup": {
     "titulo": "Únete al universo Fely Campo",
-    "subtitulo": "Recibe antes que nadie nuestras novedades, colecciones limitadas y contenido exclusivo.",
-    "boton": "Apúntate",
     "cerrar": "Cerrar"
   },
   "clientsReview": {

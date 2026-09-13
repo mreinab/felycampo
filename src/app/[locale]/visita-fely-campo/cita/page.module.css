@@ -1,0 +1,314 @@
+/* ============================================================
+   RESERVAR CITA — ATELIER — Fely Campo
+   Mismo diseño que MiCuentaModal.module.css (foto a la izquierda 50%,
+   contenido a la derecha 50%, a pantalla completa), pero como PÁGINA
+   real, no modal: .pagina es position:fixed/inset:0/height:100vh, por
+   encima del Navbar (z-index más alto que su 50) y con fondo sólido,
+   así que lo tapa igual que el modal — pero al ser una URL de verdad
+   (no un estado de apertura/cierre), no hace falta la clase
+   "abierta"/transición de opacidad de MiCuentaModal, ni su mecanismo
+   de foco/Escape (eso es de modal; aquí "cerrar" es solo un enlace de
+   vuelta a /visita-fely-campo). Dos pasos dentro del mismo
+   .formContenedor (ver page.js): "ubicación" (3 botones grandes,
+   Salamanca/Madrid/Oviedo) y "form" (el formulario ya existente,
+   motivo/día/hora/datos) — el panel de la izquierda cambia de foto
+   según la ubicación elegida.
+   Esquinas rectas en todo (--radius-botones/--radius-inputs a 0, igual
+   que el resto del sitio) — mismo criterio que ModalSolicitudAtelier.
+   ============================================================ */
+
+.pagina {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  z-index: 100;
+  background: var(--color-fondo);
+  overflow: hidden;
+}
+
+/* Mismo tamaño/diseño que .cerrar de MiCuentaModal.module.css — aquí
+   es un enlace real (vuelve a /visita-fely-campo), no un botón que
+   cierra un estado. */
+.cerrar {
+  position: fixed;
+  top: var(--spacing-4);
+  right: var(--spacing-4);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-tinta);
+  transition: opacity 0.25s var(--ease-marca);
+}
+
+.cerrar:hover {
+  opacity: 0.6;
+}
+
+/* 50%/50% en escritorio (foto a sangre a la izquierda, contenido
+   centrado a la derecha) — en mobile la foto pasa a ser una franja
+   fija arriba, mismo criterio que .pieza de SplitMedia.module.css al
+   apilarse. */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
+
+.imagenPanel {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.35s var(--ease-marca);
+}
+
+/* "grid"/"place-items", no flex/align-items: centrar con flex cuando
+   el contenido no cabe recorta el principio por arriba y no deja
+   llegar a él con scroll (bug conocido de flexbox) — grid no tiene
+   ese problema, el scroll llega hasta el principio del todo. */
+.formPanel {
+  height: 100%;
+  overflow-y: auto;
+  display: grid;
+  place-items: center;
+  padding: var(--spacing-8) var(--spacing-6);
+}
+
+/* min-width:0 en toda esta cadena (aquí, .form y .campo más abajo):
+   sin él, un item de flex/grid no encoge nunca por debajo del ancho
+   de su contenido (min-width:auto por defecto) — y aquí el contenido
+   incluye .chipsScroll, una fila de hasta 14 chips con scroll propio
+   (overflow-x:auto). Sin este min-width:0 en la cadena, ese ancho
+   "natural" (todos los chips en fila, sin envolver) se propaga hacia
+   arriba y ensancha .formContenedor por encima del viewport en
+   mobile, en vez de quedarse dentro de sus 100%/400px y dejar que
+   .chipsScroll scrollee por su cuenta. */
+.formContenedor {
+  width: 100%;
+  max-width: 400px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.titulo {
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+  text-align: center;
+}
+
+.subtitulo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  font-size: var(--text-small);
+  text-align: center;
+  color: var(--color-gris-500);
+}
+
+.subtituloUbicacion {
+  text-transform: uppercase;
+  color: var(--color-tinta);
+}
+
+/* ---------- Paso 1: elegir ubicación ---------- */
+.ubicaciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.ubicacionBtn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-4) var(--spacing-5);
+  font-family: var(--font-base);
+  text-align: center;
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  border: var(--border-regular) solid var(--color-gris-300);
+  border-radius: var(--radius-botones);
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
+}
+
+.ubicacionBtn:hover {
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  border-color: var(--color-tinta);
+}
+
+.ubicacionCiudad {
+  font-size: var(--text-body-lg);
+}
+
+/* Menor y atenuado — se atenúa igual en hover (color:inherit hereda
+   el --color-fondo que .ubicacionBtn:hover ya pone en el texto). */
+.ubicacionTipo {
+  font-size: var(--text-caption);
+  opacity: 0.6;
+}
+
+/* ---------- Paso 2: botón de solo icono (flecha), vuelve al paso 1 —
+   mismo icono que .cerrar de BlogPodcast.module.css/BlogArticulo.module.css. ---------- */
+.cambiarUbicacion {
+  align-self: flex-start;
+  display: flex;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-tinta);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.25s var(--ease-marca);
+}
+
+.cambiarUbicacion:hover {
+  opacity: 1;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+  min-width: 0;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  min-width: 0;
+}
+
+.etiqueta {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+/* Mismo elemento .chips/.chip/.chipActivo que visita-fely-campo/
+   page.module.css y MapaPuntosVenta.module.css — aquí para elegir
+   motivo/día/hora en vez de filtrar un listado. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+/* Días: en una sola fila con scroll horizontal (14 chips no caben
+   envueltos sin alargar mucho el formulario) — mismo scrollbar
+   invisible que .imagenes en talleres-fely-campo/page.module.css. */
+.chipsScroll {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: var(--spacing-1);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.chipsScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 32px;
+  padding: var(--spacing-2) var(--spacing-4);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  text-align: center;
+  white-space: nowrap;
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  border: 1px solid var(--color-gris-300);
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
+}
+
+.chip:hover {
+  border-color: var(--color-tinta);
+}
+
+.chipActivo {
+  background: var(--color-tinta);
+  color: var(--color-fondo);
+  border-color: var(--color-tinta);
+}
+
+.aviso {
+  color: var(--color-rosa-oscuro);
+  font-size: var(--text-caption);
+}
+
+.confirmacion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  text-align: center;
+  padding-top: var(--spacing-6);
+}
+
+.tituloConfirmacion {
+  font-size: var(--text-h4);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-tinta);
+  text-transform: uppercase;
+}
+
+.confirmacion p {
+  font-size: var(--text-small);
+  color: var(--color-gris-500);
+}
+
+@media (max-width: 767px) {
+  /* En mobile ya no hace falta que .formPanel sea la única zona con
+     scroll propio (eso dejaba la foto fija arriba, sin poder
+     scrollearla junto al resto) — .pagina entero scrollea, .layout
+     crece a su altura real (foto 240px + formulario) y .formPanel deja
+     de recortar/scrollear por su cuenta. */
+  .pagina {
+    overflow-y: auto;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 240px auto;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .imagenPanel {
+    height: 240px;
+  }
+
+  .formPanel {
+    height: auto;
+    overflow-y: visible;
+    padding: var(--spacing-6) var(--spacing-4);
+  }
+}

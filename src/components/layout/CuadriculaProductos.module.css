@@ -108,6 +108,8 @@
 .toggleVista {
   display: flex;
   gap: var(--spacing-2);
+  width: 90px;
+  flex-shrink: 0;
 }
 
 /* Sin toggle en mobile: la fila de 3 de .cabeceraProductos.cabeceraInicio
@@ -168,6 +170,8 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
+  width: 90px;
+  flex-shrink: 0;
   background: none;
   border: none;
   border-radius: 0;

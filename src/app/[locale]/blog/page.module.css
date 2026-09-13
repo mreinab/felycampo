@@ -1,0 +1,61 @@
+/* ============================================================
+   BLOG — Fely Campo
+   Calco literal de ../colecciones-fely-campo/page.module.css: 2
+   columnas, gap generoso ("luz y aire"), tarjetas acotadas a 550px y
+   centradas en su columna — sin alto de fila forzado (ni
+   grid-template-rows ni grid-auto-rows): cada tarjeta mide lo que le
+   toque por su propio aspect-ratio (16/9, ver BlogTarjeta.module.css).
+
+   .celdaPodcast (ver page.js, "entrada.destacado" en blog.js): fila 1,
+   columna 2, fija — es un <div>, no un <a>, así ".grid > a" (arriba)
+   no le acota el ancho a 550px. Sin alto propio: hereda el alto de la
+   fila 1 por el align-items:stretch por defecto de CSS Grid (lo marca
+   la tarjeta de la columna 1, la primera del array normal) — dentro,
+   BlogTarjetaPodcastDestacado.jsx llena la celda entera de punta a
+   punta (foto a sangre + botón de play, estilo Spotify).
+   ============================================================ */
+
+.pagina {
+  padding-inline: var(--spacing-7);
+  padding-block: var(--spacing-8) var(--spacing-10);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  gap: var(--spacing-10);
+  margin-top: var(--spacing-4);
+}
+
+.grid > a {
+  width: 100%;
+  max-width: 550px;
+}
+
+.celdaPodcast {
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .pagina {
+    padding-inline: 0;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+    margin-top: 0;
+  }
+
+  .grid > a {
+    max-width: none;
+  }
+
+  .celdaPodcast {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}

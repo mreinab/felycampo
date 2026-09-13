@@ -1400,6 +1400,9 @@ export const paginasInternas = [
   { valor: '/atelier', etiqueta: 'Atelier' },
   { valor: '/atelier/novias', etiqueta: 'Atelier — Novias' },
   { valor: '/atelier/fiesta', etiqueta: 'Atelier — Fiesta' },
+  { valor: '/atelier-fiesta/madrid', etiqueta: 'Atelier Fiesta — Madrid' },
+  { valor: '/atelier-fiesta/oviedo', etiqueta: 'Atelier Fiesta — Oviedo' },
+  { valor: '/atelier-fiesta/salamanca', etiqueta: 'Atelier Fiesta — Salamanca' },
   { valor: '/archivo', etiqueta: 'Archivo' },
   { valor: '/colecciones-fely-campo', etiqueta: 'Archivo — Runway' },
   { valor: '/archivo/colecciones', etiqueta: 'Archivo — Colecciones' },
@@ -1414,9 +1417,6 @@ export const paginasInternas = [
   { valor: '/archivo/colecciones/diafonia', etiqueta: 'Archivo — Diafonía' },
   { valor: '/visita-fely-campo', etiqueta: 'Visítanos' },
   { valor: '/visita-fely-campo/cita', etiqueta: 'Visítanos — Cita' },
-  { valor: '/visita-fely-campo/madrid', etiqueta: 'Visítanos — Madrid' },
-  { valor: '/visita-fely-campo/oviedo', etiqueta: 'Visítanos — Oviedo' },
-  { valor: '/visita-fely-campo/salamanca', etiqueta: 'Visítanos — Salamanca' },
 ];
 
 // Banco de vídeos ya subidos, mismo criterio que bancoImagenes.

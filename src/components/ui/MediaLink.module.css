@@ -10,7 +10,6 @@
   display: block;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: var(--color-crema);
 }
 
 /* Solo, a todo el ancho de la fila: 3/4 la estiraría a una vertical

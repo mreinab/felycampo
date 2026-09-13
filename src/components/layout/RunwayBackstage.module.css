@@ -50,6 +50,49 @@
   grid-column: 1;
 }
 
+/* Fila del verso poético (ver "poema" en RunwayBackstage.jsx):
+   .poemaImagenes (1 o 2 fotos, apiladas si son dos) en la columna
+   izquierda + .poema (texto, un verso por línea) en la derecha, misma
+   fila — tratado como una imagen más de la cuadrícula, no como un
+   bloque suelto a todo el ancho. Ambas reglas van DESPUÉS de la
+   cascada de nth-child de arriba y pesan igual (dos clases sobre
+   .grid > cada una) para que el orden en la hoja de estilos decida:
+   ganan siempre estas dos, sin importar en qué posición numérica caiga
+   la pareja dentro de la cuadrícula. */
+.grid > .poemaImagenes {
+  grid-column: 1;
+}
+
+.grid > .poema {
+  grid-column: 2;
+}
+
+.poemaImagenes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.poemaImagenes img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.poema {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-3);
+}
+
+.poema p {
+  margin: 0;
+  font-size: var(--text-body);
+  line-height: var(--leading-base);
+  color: var(--color-tinta);
+}
+
 @media (max-width: 767px) {
   .envoltorio {
     padding-block: var(--spacing-6);

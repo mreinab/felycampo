@@ -5,13 +5,13 @@
    alinear="start" — mismo combo "fila" que usa CuadriculaProductos en
    "grid", ver CuadriculaProductos.jsx) + cuadrícula de talleres (ver
    talleres.js). El único trocito interactivo (scroll del carrusel de
-   imágenes con la rueda del ratón) vive aparte en CarruselImagenes.jsx
-   (Client Component), no aquí.
+   imágenes con la rueda del ratón) vive aparte en
+   @/components/ui/CarruselImagenes.jsx (Client Component, compartido
+   con atelier-fiesta/AtelierDetalle.jsx), no aquí.
    ============================================================ */
 
-import { CabeceraSeccion } from '@/components/ui';
+import { CabeceraSeccion, CarruselImagenes } from '@/components/ui';
 import { TALLERES } from './talleres';
-import CarruselImagenes from './CarruselImagenes';
 import styles from './page.module.css';
 
 export default async function Pagina({ params }) {

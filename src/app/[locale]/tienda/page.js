@@ -13,6 +13,7 @@ export default function Pagina() {
         tituloKey="catalogo.subtituloFelyCampo"
         coleccionKey="catalogo.tituloTienda"
         descriptionKey="cuadriculaProductos.novedadesDescripcion"
+        ocultarSubtitulo
       />
     </section>
   );

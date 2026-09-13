@@ -13,6 +13,7 @@ export default function ChaquetasYAbrigosPagina() {
         tituloKey="catalogo.subtituloTienda"
         coleccionKey="nav.submenus.tienda.coats"
         descriptionKey="cuadriculaProductos.novedadesDescripcion"
+        ocultarSubtitulo
       />
     </section>
   );

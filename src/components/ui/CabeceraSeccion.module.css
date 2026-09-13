@@ -53,7 +53,8 @@
    de compartir línea base con el título. */
 .cabeceraInicio {
   align-items: start;
-  margin: var(--spacing-8) 0 var(--spacing-4) 0;
+  margin: var(--spacing-4) 0;
+  min-height: 110px;
 }
 
 /* Único caso que combina enCuadricula + alinear="start" (CuadriculaProductos

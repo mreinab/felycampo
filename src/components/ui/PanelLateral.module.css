@@ -63,9 +63,53 @@
    Navbar.module.css): el submenú de escritorio del propio Navbar — sigue
    empezando en top:0, así que sin este descenso de z-index taparía el
    header entero mientras está abierto. Ningún otro uso de PanelLateral
-   (Filtros, GuiaTallas, drawers de admin...) debe pasar esta prop. */
+   (Filtros, GuiaTallas, drawers de admin...) debe pasar esta prop.
+
+   A diferencia de cualquier otro uso de .panel (que se desliza en
+   horizontal, anclado a un borde lateral), este es el único que se abre
+   colgando del propio Navbar — mismo ancho completo que él, deslizando
+   en vertical desde detrás suyo en vez de en horizontal desde un lado.
+   Igual mecanismo que la base (un translate de una unidad de su propio
+   tamaño, "cerrado" → 0 "abierto"), solo que en Y y sobre alto propio
+   (auto, por contenido) en vez de la pantalla entera — combinado con un
+   fundido y una transición algo más lenta/suave que la de la base para
+   que se note como una caída con cuerpo, no un golpe seco.
+
+   flex-direction: row (en vez de la columna de la base): .contenido
+   (lista de enlaces) y "debajo" (.submenuCards, ver
+   NavbarPanelLateralCards.jsx) quedan lado a lado, texto a la
+   izquierda e imágenes a la derecha, centrados como grupo.
+
+   height fijo (no auto): antes el alto lo marcaba el contenido real,
+   así que variaba entre submenús (más corto en Atelier/Sobre Fely,
+   más largo en Tienda/Visítanos — más enlaces de texto, aunque en la
+   práctica quien manda es la columna de imágenes). Un alto fijo evita
+   ese salto al pasar el ratón de un enlace a otro. 350px es el tope
+   que se quiere para el panel en escritorio — las tarjetas (ver
+   .submenuCards en NavbarPanelLateralContent.module.css) se dimensionan
+   por alto en vez de por ancho precisamente para caber en él, en vez
+   de desbordar y depender del overflow-y de aquí abajo. */
 .panel.debajoHeader {
   z-index: 40;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 100%;
+  bottom: auto;
+  height: 350px;
+  max-height: 350px;
+  overflow-y: auto;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.5s var(--ease-marca), opacity 0.35s var(--ease-marca);
+}
+
+.panel.debajoHeader.abierto {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 /* Sin height:100% a propósito: con "debajo" (ver PanelLateral.jsx)
@@ -87,9 +131,13 @@
    DEBAJO del header en z-index (ver "debajoHeader" en PanelLateral.jsx)
    — sin este colchón, el header (76px, Navbar.module.css) tapa el
    principio de la lista de enlaces (los primeros ítems quedan ocultos
-   detrás, solo asoma el último). */
+   detrás, solo asoma el último). Ancho fijo y sin crecer (flex: none):
+   columna angosta de texto junto a las imágenes (ver .panel.debajoHeader
+   más arriba), no el resto del hueco disponible. */
 .debajoHeader .contenido {
   padding-top: var(--spacing-9);
+  width: 260px;
+  flex: none;
 }
 
 /* ---------- Overlay ---------- */
@@ -103,13 +151,17 @@
   bottom: 0;
   background: var(--color-tinta);
   opacity: 0;
+  -webkit-backdrop-filter: blur(0px);
+  backdrop-filter: blur(0px);
   z-index: 59;
   pointer-events: none;
-  transition: opacity 0.3s var(--ease-marca);
+  transition: opacity 0.3s var(--ease-marca), backdrop-filter 0.3s var(--ease-marca);
 }
 
 .overlay.abierto {
-  opacity: 0.6;
+  opacity: 0.75;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   pointer-events: auto;
   cursor: pointer;
 }

@@ -13,6 +13,7 @@ export default function Pagina() {
         tituloKey="catalogo.subtituloTienda"
         coleccionKey="nav.submenus.tienda.faldas"
         descriptionKey="cuadriculaProductos.novedadesDescripcion"
+        ocultarSubtitulo
       />
     </section>
   );

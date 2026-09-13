@@ -10,13 +10,13 @@
 
 /* Un único hijo (medio suelto) o dos (variante "split", ver
    RunwayTarjeta.jsx) — el gap solo se nota con dos. El aspect-ratio
-   vive aquí, no en .medio: así el marco entero mantiene su forma (4/3)
-   tenga 1 o 2 medios dentro — cada .medio solo se reparte el ancho y
-   estira a los 100% de alto del marco. */
+   vive aquí, no en .medio: así el marco entero mantiene su forma
+   (16/9) tenga 1 o 2 medios dentro — cada .medio solo se reparte el
+   ancho y estira a los 100% de alto del marco. */
 .marco {
   display: flex;
   gap: var(--spacing-2);
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
 

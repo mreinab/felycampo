@@ -55,15 +55,23 @@ import collectionTitleStyles from './CollectionTitle.module.css';
  * de una página concreta sin tocar el CSS compartido (ver
  * .cabeceraColumna en visita-fely-campo/page.module.css).
  *
+ * "description" (opcional): texto YA resuelto para el idioma actual,
+ * en vez de una clave de traducción — para contenido largo/propio de
+ * cada página que vive en un archivo de datos JS, no en
+ * messages/{locale}.json (ej. el primer párrafo de cada ficha en
+ * atelier-fiesta/atelieres.js). Tiene prioridad sobre "descriptionKey"
+ * si se pasan los dos (no debería darse en la práctica).
+ *
  * Uso:
  *   <CabeceraSeccion titleKey="cuadriculaProductos.novedades">
  *     <Boton variante="flecha" href="/coleccion">Ver colección</Boton>
  *   </CabeceraSeccion>
  */
-function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, breadcrumbItems, children, before, alinear = 'end', enCuadricula = false, margenSuperiorAmplio = false, className }) {
+function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, description, breadcrumbItems, children, before, alinear = 'end', enCuadricula = false, margenSuperiorAmplio = false, className }) {
   const t = useTranslations();
 
   const claseCabecera = enCuadricula ? styles.cabeceraProductos : styles.cabecera;
+  const textoDescripcion = description || (descriptionKey && t(descriptionKey));
 
   return (
     <div className={`${claseCabecera} ${alinear === 'start' ? styles.cabeceraInicio : ''} ${margenSuperiorAmplio ? styles.margenSuperiorAmplio : ''} ${className || ''}`}>
@@ -83,7 +91,7 @@ function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, breadcrumbItem
           subtitleKey && <h2 className={styles.subtitle}>{t(subtitleKey)}</h2>
         )}
         <p className={collectionTitleStyles.titulo}>{t(titleKey)}</p>
-        {descriptionKey && <p className={styles.descripcion}>{t(descriptionKey)}</p>}
+        {textoDescripcion && <p className={styles.descripcion}>{textoDescripcion}</p>}
       </div>
       {children}
     </div>

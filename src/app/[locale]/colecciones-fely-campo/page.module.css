@@ -2,7 +2,7 @@
    RUNWAY — Fely Campo (archivo)
    Cuadrícula editorial de 2 columnas, gap generoso a propósito (aire
    entre colecciones, identidad "luz y aire" del sistema) — en mobile
-   pasa a 1 columna con un gap normal, el de 200px no cabe.
+   pasa a 1 columna con un gap normal, el de --spacing-10 no cabe.
    ============================================================ */
 
 .pagina {
@@ -20,7 +20,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   justify-items: center;
-  gap: 200px;
+  gap: var(--spacing-10);
   margin-top: var(--spacing-8);
 }
 
@@ -28,7 +28,7 @@
    center de arriba las centra dentro del hueco que les sobra. */
 .grid > a {
   width: 100%;
-  max-width: 350px;
+  max-width: 550px;
 }
 
 @media (max-width: 767px) {

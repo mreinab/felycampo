@@ -31,8 +31,6 @@ const SUBMENU_STRUCTURE = {
       { key: 'coats', href: '/tienda/chaquetas-y-abrigos' },
       { key: 'faldas', href: '/tienda/faldas' },
       { key: 'vestidos', href: '/tienda/vestidos' },
-      { key: 'zapatos', href: '/tienda/zapatos' },
-      { key: 'accesorios', href: '/tienda/accesorios' },
     ],
     image: '/img/styleguide/prod-tarjeta.webp',
     // Una sola imagen a todo el ancho en vez de las dos MediaLink
@@ -57,18 +55,23 @@ const SUBMENU_STRUCTURE = {
   elMundoDeFely: {
     items: [
       { key: 'blog', href: '/blog' },
-      { key: 'historia', href: '/sobre-fely' },
       { key: 'runway', href: '/colecciones-fely-campo' },
       { key: 'talleres', href: '/talleres-fely-campo' },
     ],
     image: '/img/styleguide/prod-tarjeta-relacionado.webp',
   },
   visitanos: {
+    // Orden fijo por encargo: las 3 sedes primero, luego Puntos de
+    // venta y Pedir cita al final. "salamanca" va primero — mismo
+    // criterio que "verTodos" en tienda: alimenta tanto la lista de
+    // texto (arriba del todo) como la única MediaLink de este submenú
+    // (cardsUnico, toma items[0] — ver NavbarPanelLateralCards.jsx),
+    // así la imagen enlaza y rotula "Atelier Salamanca".
     items: [
-      { key: 'salamanca', href: '/visita-fely-campo/salamanca' },
-      { key: 'madrid', href: '/visita-fely-campo/madrid' },
-      { key: 'oviedo', href: '/visita-fely-campo/oviedo' },
-      { key: 'puntosDeVenta', href: '/visita-fely-campo' },
+      { key: 'salamanca', href: '/atelier-fiesta/salamanca' },
+      { key: 'madrid', href: '/atelier-fiesta/madrid' },
+      { key: 'oviedo', href: '/atelier-fiesta/oviedo' },
+      { key: 'puntosDeVenta', href: '/puntos-de-venta-fely-campo' },
       { key: 'reservarCita', href: '/visita-fely-campo/cita' },
     ],
     image: '/img/styleguide/prod-tarjeta-hover.webp',
@@ -146,13 +149,16 @@ function Navbar({ transparent = false, crecerLogo = false }) {
   // que los dos no compitan a la vez. Footer y Navbar son hermanos en
   // layout.js, sin ref compartida, así que se busca por la etiqueta
   // semántica (una sola por página) en vez de pasar una prop/contexto
-  // solo para esto.
+  // solo para esto. threshold 0.5 (no el 0 por defecto): recién que
+  // asoma la primera línea del footer aún no hay conflicto visual con
+  // el logo — se espera a que esté medio visible.
   useEffect(() => {
     const footer = document.querySelector('footer');
     if (!footer || typeof IntersectionObserver === 'undefined') return undefined;
 
     const observer = new IntersectionObserver(
       ([entrada]) => setFooterVisible(entrada.isIntersecting),
+      { threshold: 0.5 },
     );
     observer.observe(footer);
     return () => observer.disconnect();

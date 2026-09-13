@@ -9,44 +9,6 @@
   padding-bottom: var(--spacing-10);
 }
 
-/* Mismo elemento .chips/.chip/.chipActivo que PanelFiltros.module.css
-   y visita-fely-campo/page.module.css — reutilizado tal cual aquí. */
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--spacing-2);
-  margin-bottom: var(--spacing-6);
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  min-height: 32px;
-  padding: var(--spacing-2) var(--spacing-4);
-  font-family: var(--font-base);
-  font-size: var(--text-small);
-  text-align: center;
-  background: var(--color-fondo);
-  color: var(--color-tinta);
-  border: 1px solid var(--color-gris-300);
-  border-radius: 0;
-  cursor: pointer;
-  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
-}
-
-.chip:hover {
-  border-color: var(--color-tinta);
-}
-
-.chipActivo {
-  background: var(--color-tinta);
-  color: var(--color-fondo);
-  border-color: var(--color-tinta);
-}
-
 /* Mapa (65%) + listado accesible (35%) lado a lado — mismo criterio
    50/50-ish que .tarjeta en visita-fely-campo/page.module.css, aquí
    con reparto desigual porque el mapa necesita más aire. */
@@ -57,7 +19,20 @@
   padding-inline: var(--spacing-7);
 }
 
+/* position+z-index explícitos: Leaflet trae sus propios z-index
+   internos (panes hasta 400, controles/popups hasta 1000, ver
+   leaflet.css) que si no, escaparían a comparar directamente contra el
+   resto del sitio en vez de quedar contenidos aquí dentro — sin esto,
+   los controles del mapa o un popup abierto podían asomar por encima
+   de cualquier PanelLateral (Filtros, carrito, menú móvil...) aunque
+   ese panel estuviera abierto tapando la página (z-index: 60/59, ver
+   PanelLateral.module.css). Con esta capa el mapa entero pasa a
+   apilarse como un solo bloque a z-index: 1 — por debajo de los
+   paneles/overlay (60/59) y de todo lo demás del sitio, así ningún
+   control ni popup del mapa puede quedar por encima. */
 .mapa {
+  position: relative;
+  z-index: 1;
   flex: 2;
   min-width: 0;
   height: 60vh;
@@ -68,15 +43,63 @@
 
 /* El mapa lleva aria-hidden (ver MapaPuntosVenta.jsx) — este listado
    es el camino real por teclado/lector de pantalla a cada punto:
-   botones reales, uno por sede, que mueven el mapa al clicarlos. */
+   botones reales, uno por sede, que mueven el mapa al clicarlos.
+   Agrupado por país (ver "gruposVisibles" en MapaPuntosVenta.jsx, un
+   <section> con su título por país en vez del <ul> plano de antes) —
+   España primero y el resto en orden de cercanía real. */
 .lista {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-width: 220px;
   max-height: 60vh;
   min-height: 420px;
   overflow-y: auto;
+}
+
+.listaGrupo + .listaGrupo {
+  margin-top: var(--spacing-3);
+}
+
+/* "Pequeño título" al cambiar de país dentro del listado — sticky
+   dentro de .lista (que es quien hace scroll) para que se quede fijo
+   arriba mientras se recorren las sedes de ese país, igual que un
+   separador de sección. Mismo tratamiento tipográfico que .paisIntro
+   de arriba (mayúsculas, tracking-label), fondo propio para no dejar
+   ver el texto por debajo al quedarse fijo. */
+.listaGrupoTitulo {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin: 0;
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-gris-600);
+  background: var(--color-fondo);
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+/* Banderín cuadrado junto al nombre del país — SVG 1x1 (ver
+   CODIGO_PAIS en MapaPuntosVenta.jsx), sin recorte, mismo radio 0 que
+   el resto del sitio (--radius-botones). object-fit:cover por si algún
+   país cae de vuelta al respaldo 4x3 (no lo tenemos aquí, pero evita
+   que se deforme si algún día lo hace). */
+.listaGrupoBandera {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+.listaGrupoItems {
   list-style: none;
-  border: 1px solid var(--color-hairline);
 }
 
 /* Fila: .puntoImagen a la izquierda + .puntoTextos a la derecha (ver
@@ -91,7 +114,6 @@
   padding: var(--spacing-3) var(--spacing-4);
   background: var(--color-fondo);
   border: none;
-  border-bottom: 1px solid var(--color-hairline);
   text-align: left;
   cursor: pointer;
   transition: background-color 0.25s var(--ease-marca);
@@ -120,12 +142,17 @@
   background: var(--color-details);
 }
 
+/* Sin "gap": .puntoNombre y cada .puntoTexto ya llevan varias líneas
+   propias separadas por line-height (white-space:pre-line, ver más
+   abajo) — un gap aquí sumaría un salto extra SOLO entre bloques,
+   distinto del que separa las líneas dentro de cada uno. Sin gap, el
+   line-height es lo único que marca el ritmo vertical, igual entre
+   bloques que dentro de ellos. */
 .puntoTextos {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: var(--spacing-1);
   min-width: 0;
 }
 

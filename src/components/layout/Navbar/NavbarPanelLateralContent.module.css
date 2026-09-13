@@ -46,12 +46,32 @@
   text-decoration-color: var(--color-tinta);
 }
 
-/* Fila con los dos MediaLink (cada uno se reparte el ancho a partes
-   iguales, ver .card en MediaLink.module.css) — fuera de .contenido,
-   a todo el ancho del panel, con su propio padding en vez del lateral
-   heredado del resto del contenido. */
+/* Fila con los dos MediaLink — fuera de .contenido, así puede llevar su
+   propio padding en vez del heredado del resto del contenido. Columna
+   derecha del submenú (ver .panel.debajoHeader en PanelLateral.module.css,
+   height: 350px fijo): se dimensiona por ALTO, no por ancho — height
+   fijo aquí (230px = 350 - el padding vertical de abajo) en vez del
+   width fijo de antes, para que las tarjetas quepan siempre dentro del
+   tope de 350px del panel en vez de desbordarlo. Mismo colchón superior
+   que .contenido (ver ".debajoHeader .contenido" en PanelLateral.module.css)
+   para que las dos columnas arranquen a la misma altura, ya libres del
+   header. */
 .submenuCards {
   display: flex;
   gap: var(--spacing-2);
-  padding: var(--spacing-2);
+  height: 100%;
+  max-width: 480px;
+  padding: var(--spacing-8) var(--spacing-7) var(--spacing-6) 0;
+}
+
+/* Las MediaLink (.card en MediaLink.module.css) se reparten el ancho
+   por defecto vía flex:1 + aspect-ratio partiendo del ANCHO — aquí se
+   anula (flex: none, width: auto) para que sea el alto explícito de
+   arriba el que mande: cada tarjeta ocupa el 100% del alto de la fila y
+   su propio aspect-ratio (heredado de MediaLink.module.css, distinto en
+   "ancho") calcula el ancho a partir de él, no al revés. */
+.submenuCards > a {
+  flex: none;
+  width: auto;
+  height: 100%;
 }

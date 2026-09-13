@@ -69,6 +69,10 @@ function familiaDeHex(hex) {
  * Fiesta), no por Tienda. En PanelFiltros, esta misma prop también
  * oculta "ordenar por" y el rango de precio (no tiene sentido filtrar/
  * ordenar por un dato que no se enseña).
+ * "ocultarSubtitulo" (opcional, false por defecto): no pasa "subtitleKey"
+ * a CabeceraSeccion (el texto pequeño en mayúsculas encima del título) —
+ * usado por Tienda, no por Atelier. Sin efecto si "categoriaActiva" ya
+ * sustituye el subtítulo por una miga de pan.
  * "hrefBase" (opcional, se le pasa tal cual a TarjetaProducto): primer
  * segmento de la ficha de cada producto ('tienda' por defecto) — Atelier
  * (Novias/Fiesta) pasa 'atelier/novias'/'atelier/fiesta', su propia
@@ -124,7 +128,7 @@ function familiaDeHex(hex) {
  * carga 8 más, con tarjetas-esqueleto (.skeleton) mientras "llega"
  * (simulado con un timeout — aquí no hay backend real todavía).
  */
-function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase, estiloYSilueta = false, esFiesta = false, categoriaActiva = null }) {
+function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase, estiloYSilueta = false, esFiesta = false, categoriaActiva = null, ocultarSubtitulo = false }) {
   const t = useTranslations();
   const locale = useLocale();
 
@@ -317,7 +321,7 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
           tiene una página real en ese segmento (ver atelier/page.js). */}
       {tituloKey && (
         <CabeceraSeccion
-          subtitleKey={tituloKey}
+          subtitleKey={ocultarSubtitulo ? undefined : tituloKey}
           titleKey={categoriaActiva
             ? `filtros.estiloYSilueta.grupos.${categoriaActiva.grupo}.opciones.${categoriaActiva.opcion}`
             : (coleccionKey || tituloKey)}

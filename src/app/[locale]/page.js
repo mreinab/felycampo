@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';
-import { HeroCarousel, SplitMedia, CuadriculaProductos, SectionClientsReview, SectionCompromiso, BloqueSeccion } from '@/components/layout';
+import { HeroCarousel, SplitMedia, CuadriculaProductos, CarruselClientas, BloqueSeccion } from '@/components/layout';
 import styles from './page.module.css';
 
 // 12 productos: suficientes para que la banda desborde el viewport en
@@ -75,7 +75,6 @@ const slidesHero = [
 export default async function Home({ params }) {
   const { locale } = await params;
   const tHero = await getTranslations('heroCarousel');
-  const tCompromiso = await getTranslations('compromiso');
   const tVisitaAtelier = await getTranslations('visitaAtelier');
 
   // Igual que en el Navbar (ver withLocale en Navbar.jsx): los hrefs
@@ -101,6 +100,33 @@ export default async function Home({ params }) {
         variante="landing"
         items={[
           {
+            src: '/img/ecommerce/Categorias/vestido.webp',
+            tipo: 'imagen',
+            tituloKey: 'splitMediaCategorias.item1.titulo',
+            ctaKey: 'splitMediaCategorias.item1.cta',
+            href: `/${locale}/tienda/vestidos`,
+          },
+          {
+            src: '/img/ecommerce/Categorias/chaqueta.webp',
+            tipo: 'imagen',
+            tituloKey: 'splitMediaCategorias.item2.titulo',
+            ctaKey: 'splitMediaCategorias.item2.cta',
+            href: `/${locale}/tienda/chaquetas-y-abrigos`,
+          },
+        ]}
+      />
+      <CuadriculaProductos
+        productos={productosOcasion}
+        tituloKey="cuadriculaTabs.subtitulo"
+        coleccionKey="cuadriculaTabs.titulo"
+        descriptionKey="cuadriculaTabs.descripcion"
+        botonTextKey="cuadriculaTabs.reservarCita"
+        verMasHref={`/${locale}/visita-fely-campo/cita`}
+      />
+      <SplitMedia
+        variante="landing"
+        items={[
+          {
             src: '/img/novias-sección-FelyCampo2.jpg',
             tipo: 'imagen',
             tituloKey: 'splitMedia.item1.titulo',
@@ -116,21 +142,6 @@ export default async function Home({ params }) {
           },
         ]}
       />
-      <CuadriculaProductos
-        productos={productosOcasion}
-        tituloKey="cuadriculaTabs.subtitulo"
-        coleccionKey="cuadriculaTabs.titulo"
-        descriptionKey="cuadriculaTabs.descripcion"
-        botonTextKey="cuadriculaTabs.reservarCita"
-        verMasHref={`/${locale}/visita-fely-campo/cita`}
-      />
-      <SectionClientsReview />
-      <SectionCompromiso
-        imagen="/img/atelier/ateliernovia-lamedida-felycampo-2.mp4"
-        tipo="video"
-        texto={tCompromiso('texto')}
-        subtitulo={tCompromiso('subtitulo')}
-      />
       <BloqueSeccion
         imagen="/img/atelier/ateliernovia-lamedida-felycampo-3.webp"
         titulo={tVisitaAtelier('titulo')}
@@ -138,6 +149,7 @@ export default async function Home({ params }) {
         enlace={tVisitaAtelier('enlace')}
         href={`/${locale}/visita-fely-campo/cita`}
       />
+      <CarruselClientas />
     </div>
   );
 }

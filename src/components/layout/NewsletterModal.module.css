@@ -13,7 +13,7 @@
    "estirando" ese hueco en vez de dejar que el contenido marque el
    alto real). */
 .panel {
-  max-width: 560px;
+  max-width: 670px;
 }
 
 /* Pasada a Modal como "classNameContenido" — sin padding, para que la
@@ -27,7 +27,7 @@
 }
 
 .columnaImagen {
-  flex: 0 0 42%;
+  flex: 0 0 50%;
   align-self: stretch;
   background: var(--color-crema);
 }
@@ -62,25 +62,75 @@
   color: var(--color-tinta);
 }
 
-.subtitulo {
-  font-size: var(--text-small);
-  line-height: var(--leading-base);
-  color: var(--color-gris-500);
-}
-
 /* margin-top: auto en vez de justify-content:space-between en
-   .columnaTexto — el botón se pega abajo del todo sin necesitar una
-   altura mínima artificial para que el efecto funcione. */
-.filaInferior {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+   .columnaTexto — el bloque de newsletter se pega abajo del todo sin
+   necesitar una altura mínima artificial para que el efecto funcione. */
+.filaNewsletterWrap {
   margin-top: auto;
   padding-top: var(--spacing-3);
 }
 
-.boton {
+/* Mismo input+botón+consentimiento que Footer.module.css
+   (.filaNewsletter/.formNewsletter/.input/.botonEnviar/.estado/
+   .consentimiento) — misma pieza, aquí dentro del popup en vez del pie
+   de página. */
+.filaNewsletter {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-2);
+}
+
+.formNewsletter {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-gris-500);
+  padding: var(--spacing-2);
+}
+
+.formNewsletter:focus-within {
+  border-bottom-color: var(--color-tinta);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  padding: 8px 4px;
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+}
+
+.input::placeholder {
+  color: var(--color-gris-500);
+}
+
+.botonEnviar {
   flex-shrink: 0;
+}
+
+.estado {
+  font-size: var(--text-caption);
+  margin-top: var(--spacing-3);
+}
+.estadoExito { color: var(--color-verde); }
+.estadoError { color: var(--color-rojo); }
+
+.consentimiento {
+  font-size: var(--text-caption);
+  color: var(--color-gris-600);
+  line-height: var(--leading-base);
+  margin-top: var(--spacing-2);
+}
+
+.consentimientoEnlace {
+  color: var(--color-gris-500);
+  text-decoration: underline;
+  transition: color 0.25s var(--ease-marca);
+}
+.consentimientoEnlace:hover {
+  color: var(--color-tinta);
 }
 
 @media (max-width: 767px) {
@@ -95,9 +145,5 @@
 
   .columnaTexto {
     padding: var(--spacing-5);
-  }
-
-  .boton {
-    width: 100%;
   }
 }

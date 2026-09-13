@@ -14,6 +14,7 @@ import { Navbar, Footer, NewsletterModalGlobal } from '@/components/layout';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
+import { entradaPorSlug } from './blog/blog';
 
 // Páginas con su propio ProductHero (ver
 // src/components/layout/ProductHero.jsx) — nacen con el Navbar
@@ -29,10 +30,15 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/tienda/chaquetas-y-abrigos',
   '/tienda/faldas',
   '/tienda/vestidos',
-  '/tienda/zapatos',
-  '/tienda/accesorios',
+  '/atelier',
   '/atelier/novias',
   '/atelier/fiesta',
+  '/puntos-de-venta-fely-campo',
+  '/visita-fely-campo',
+  '/atelier-fiesta/salamanca',
+  '/atelier-fiesta/madrid',
+  '/atelier-fiesta/oviedo',
+  '/sobre-fely',
 ];
 
 export const metadata = {
@@ -76,6 +82,16 @@ export default async function RootLayout({ children, params }) {
   // ver ese page.js) llevan el mismo ProductHero que ../page.js, así
   // que necesitan el mismo Navbar transparente.
   const esCategoriaAtelier = /^\/atelier\/(novias|fiesta)\/categoria\//.test(rutaSinLocale);
+  // Ficha de entrada de blog (/blog/[slug], ruta dinámica — igual que
+  // esFichaRunway, no puede vivir en RUTAS_CON_PRODUCT_HERO): "articulo"
+  // y "podcast" llevan foto a sangre con data-navbar-hero (ver
+  // BlogArticulo.jsx/BlogPodcast.jsx) — "campana" no (gestiona su
+  // propio Navbar sólido con un offset interno, ver BlogCampana.jsx),
+  // así que hace falta mirar el dato real de blog.js, no solo el
+  // prefijo de la URL.
+  const matchBlog = rutaSinLocale.match(/^\/blog\/([^/]+)$/);
+  const tipoBlog = matchBlog && entradaPorSlug(matchBlog[1])?.tipo;
+  const esHeroBlog = tipoBlog === 'articulo' || tipoBlog === 'podcast';
 
   return (
     <html lang={locale}>
@@ -86,7 +102,7 @@ export default async function RootLayout({ children, params }) {
         <NextIntlClientProvider messages={messages}>
           <CarritoProvider>
             <MiCuentaProvider>
-              <Navbar transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier} crecerLogo={isHome} />
+              <Navbar transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier || esHeroBlog} crecerLogo={isHome} />
               <main>{children}</main>
               <Footer />
               {isHome && <NewsletterModalGlobal />}

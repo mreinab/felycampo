@@ -31,14 +31,15 @@
   object-fit: cover; 
 }
 
-/* En mobile la imagen mide 70dvh: altura explícita en .marco (en vez
-   del 100%/stretch de arriba) para que .imagen (height:100%) la herede.
-   .seccion pasa a height:auto: apilada (imagen + texto) suma más de
-   95vh, y con height fijo el texto desbordaba la caja y el Footer
-   (siguiente en el DOM) se pintaba encima. */
+/* En mobile ni .seccion ni .marco tienen altura fija: apilada (imagen
+   + texto) suma más de 95vh, y con height fijo el texto desbordaba la
+   caja y el Footer (siguiente en el DOM) se pintaba encima. Sin altura
+   explícita, .marco (height:100% del .seccion en auto) se resuelve a
+   auto y la imagen se ve a su tamaño natural (global.css: img
+   {height:auto}). */
 @media (max-width: 767px) {
   .seccion { height: auto; }
-  .marco { height: 70dvh; }
+  .marco { height: auto; }
 }
 
 .invertido { order: 2; }
@@ -48,12 +49,14 @@
 }
 
 .contenidoTexto {
-  padding: var(--spacing-6) var(--spacing-4) var(--spacing-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding: var(--spacing-8);
 }
 
 .titulo {
-  font-size: var(--text-body-lg);
-  margin-bottom: var(--spacing-1);
+  font-size: var(--text-h3);
 }
 
 .texto {
@@ -61,12 +64,17 @@
   color: var(--color-gris-500);
   line-height: var(--leading-base);
   max-width: var(--max-texto);
-  margin-bottom: var(--spacing-5);
+  white-space: pre-line;
 }
 
 /* Referencia: styleguide.html .sg-boutique-texto .sg-btn-texto —
    el enlace de este bloque es más pequeño que el resto de Boton
-   variante="texto" (--text-small por defecto). */
+   variante="texto" (--text-small por defecto). display:inline-flex
+   sobrescribe el display:flex (block-level) de .contorno en
+   Boton.module.css — sin esto el botón se estira al ancho completo de
+   .contenidoTexto en vez de ajustarse a su contenido. */
 .contenidoTexto .enlace {
+  display: inline-flex;
+  width: fit-content;
   font-size: var(--text-label);
 }

@@ -12,46 +12,6 @@
   flex-direction: column !important;
 }
 
-/* Filtro por ciudad, debajo de .tituloGrupo de CabeceraSeccion — mismo
-   elemento .chips/.chip/.chipActivo que PanelFiltros.module.css
-   (Talla/Estilo y silueta), reutilizado tal cual aquí. Centrado como
-   el resto de la cabecera (ver ListadoUbicaciones.jsx). */
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--spacing-2);
-  margin-bottom: var(--spacing-5);
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  min-height: 32px;
-  padding: var(--spacing-2) var(--spacing-4);
-  font-family: var(--font-base);
-  font-size: var(--text-small);
-  text-align: center;
-  background: var(--color-fondo);
-  color: var(--color-tinta);
-  border: 1px solid var(--color-gris-300);
-  border-radius: 0;
-  cursor: pointer;
-  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
-}
-
-.chip:hover {
-  border-color: var(--color-tinta);
-}
-
-.chipActivo {
-  background: var(--color-tinta);
-  color: var(--color-fondo);
-  border-color: var(--color-tinta);
-}
-
 /* "page-padding" del enunciado = mismo gutter horizontal que usa el
    resto del sitio para separar bloques de sección (ver --spacing-7 en
    Footer.module.css .grid), aquí en vertical entre ubicaciones.
@@ -61,6 +21,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-10);
+  margin-top: var(--spacing-8);
   padding-bottom: var(--spacing-10);
   list-style: none;
   text-transform: uppercase;
@@ -77,7 +38,7 @@
 
 @media (min-width: 1024px) {
   .tarjeta {
-    max-height: 70vh;
+    min-height: 70vh;
   }
 }
 
@@ -86,7 +47,7 @@
 .galeria {
   width: 50%;
   flex: none;
-  background: var(--color-details);
+  padding-left: var(--spacing-7);
 }
 
 .celda {
@@ -101,11 +62,10 @@
   width: 50%;
   flex: none;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
   justify-content: space-between;
   gap: var(--spacing-5);
-  padding: 0 var(--spacing-4);
+  padding: 0 var(--spacing-5);
 }
 
 .info {
@@ -120,10 +80,12 @@
 /* Nombre, dirección y teléfono ya no comparten un único <address> —
    cada uno es su propio hijo directo de .info (mismo gap que separa
    .horario/.descripcion), en vez de líneas sueltas dentro del mismo
-   bloque. Mismo tamaño/color/interlineado en los cinco. */
+   bloque. Mismo tamaño/color/interlineado en los seis (WhatsApp
+   incluido, ver .whatsapp más abajo). */
 .nombre,
 .direccion,
 .telefono,
+.whatsapp,
 .horario,
 .descripcion {
   font-size: var(--text-small);
@@ -138,29 +100,35 @@
   font-style: normal;
 }
 
-/* Dirección enlazada a Google Maps — mismo subrayado "aparece al
-   hover/focus" que .tab de mi-cuenta/panel/page.module.css y
-   .submenuLink de Navbar (transparente por defecto, --color-tinta al
-   interactuar). white-space:pre-line respeta los "\n" del propio dato
-   (dos líneas en dirección, una por teléfono/WhatsApp en .telefono)
-   sin recurrir a <br/> sueltos. */
+/* Dirección enlazada a Google Maps — subrayado siempre visible (no
+   solo al hover/focus, a diferencia de .submenuLink de Navbar o .tab
+   de mi-cuenta/panel/page.module.css): es la única pista visual de que
+   el texto es un enlace, ya que comparte color/tamaño con el resto de
+   .info a su alrededor. white-space:pre-line respeta los "\n" del
+   propio dato (dos líneas). Mismo criterio en .whatsapp más abajo. */
 .direccion {
   display: block;
   font-style: normal;
   text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: var(--spacing-1);
-  transition: text-decoration-color 0.25s var(--ease-marca);
-  white-space: pre-line;
-}
-
-.direccion:hover,
-.direccion:focus-visible {
   text-decoration-color: var(--color-tinta);
+  text-underline-offset: var(--spacing-1);
+  white-space: pre-line;
 }
 
 .telefono {
   white-space: pre-line;
+}
+
+/* Línea de WhatsApp — antes era la última línea de texto plano dentro
+   de .telefono (ver "lineaContacto" en ListadoUbicaciones.jsx, ya sin
+   WhatsApp), ahora es su propio enlace (wa.me) con el mismo subrayado
+   siempre visible que .direccion — mismo criterio de "es un enlace,
+   dilo siempre" en vez de descubrirlo solo al pasar el ratón. */
+.whatsapp {
+  display: block;
+  text-decoration: underline;
+  text-decoration-color: var(--color-tinta);
+  text-underline-offset: var(--spacing-1);
 }
 
 /* Única línea en mayúsculas del bloque — el resto ya no lo es, ver
@@ -169,12 +137,29 @@
   text-transform: uppercase;
 }
 
+/* "Conoce más." — al final de .descripcion, en la misma línea (ver
+   ListadoUbicaciones.jsx: va dentro del mismo <p>, no en un bloque
+   aparte), enlaza a la ficha de esa sede en /atelier-fiesta. Mismo
+   subrayado siempre visible que .direccion/.whatsapp — inline, no
+   display:block como esos dos, porque continúa el párrafo en vez de
+   empezar uno nuevo. */
+.conoceMas {
+  text-decoration: underline;
+  text-decoration-color: var(--color-tinta);
+  text-underline-offset: var(--spacing-1);
+  white-space: nowrap;
+}
+
+/* Orden natural del DOM (después de .info): con .fila en fila y
+   justify-content:space-between, se queda arriba a la derecha —
+   .info a la izquierda, el botón a la derecha, los dos arrancando
+   arriba (align-self:flex-start, no al fondo de la tarjeta). */
 .acciones {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-end;
-  align-self: flex-end;
+  align-items: flex-start;
+  align-self: flex-start;
   gap: var(--spacing-2);
   flex-shrink: 0;
 }
@@ -201,31 +186,6 @@
   transition: background-color 0.25s var(--ease-marca);
 }
 
-/* "Ver mapa"/"WhatsApp" — mismo tamaño/tipografía que .accionBtn,
-   contorno gris en vez de relleno negro (acción secundaria). */
-.accionBtnContorno {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-3) var(--spacing-6);
-  background: transparent;
-  border: 1px solid var(--color-gris-300);
-  border-radius: var(--radius-botones);
-  font-family: var(--font-base);
-  font-size: var(--text-label);
-  color: var(--color-tinta);
-  text-transform: uppercase;
-  letter-spacing: 0.02rem;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: border-color 0.25s var(--ease-marca);
-}
-
-.accionBtnContorno:hover {
-  border-color: var(--color-tinta);
-}
-
 /* Mobile y tablet vertical (hasta 1023px, ver convención de
    breakpoints en ProductosRecomendados.module.css — tablet horizontal
    ya cae en el bucle de escritorio de arriba, min-width 1024). Aquí
@@ -246,6 +206,8 @@
 
   .fila {
     width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
     padding: var(--spacing-4);
   }
 
@@ -253,13 +215,16 @@
     max-width: none;
   }
 
+  /* align-self:flex-start de escritorio no pinta nada apilado en
+     columna — se estira a todo el ancho, botón al final/abajo, como
+     antes de este cambio. */
   .acciones {
     flex-direction: column;
+    align-self: stretch;
     width: 100%;
   }
 
-  .accionBtn,
-  .accionBtnContorno {
+  .accionBtn {
     width: 100%;
   }
 }

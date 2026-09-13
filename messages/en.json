@@ -12,9 +12,7 @@
         "tops": "Tops & Shirts",
         "coats": "Coats & Jackets",
         "faldas": "Skirts",
-        "vestidos": "Dresses",
-        "zapatos": "Shoes",
-        "accesorios": "Accessories"
+        "vestidos": "Dresses"
       },
       "atelier": {
         "novias": "Bridal",
@@ -25,14 +23,13 @@
       },
       "elMundoDeFely": {
         "blog": "Blog",
-        "historia": "Story",
         "runway": "Runway",
-        "talleres": "Our Workshops"
+        "talleres": "Discover our workshops"
       },
       "visitanos": {
-        "salamanca": "Salamanca",
-        "madrid": "Madrid",
-        "oviedo": "Oviedo",
+        "salamanca": "Atelier Salamanca",
+        "madrid": "Atelier Madrid",
+        "oviedo": "Atelier Oviedo",
         "puntosDeVenta": "Store Locations",
         "reservarCita": "Book an Appointment"
       }
@@ -92,9 +89,9 @@
   "visitenos": {
     "eyebrow": "Visit",
     "titulo": "Our Ateliers",
-    "intro": "Our ateliers and showroom — always by appointment, so we can give you our full attention.",
+    "intro": "Our ateliers and showroom — always by appointment, so we can give you our full attention — in Salamanca, Madrid and Oviedo.",
     "pedirCita": "Book an appointment",
-    "verMapa": "View map",
+    "conoceMas": "Learn more.",
     "whatsapp": "WhatsApp",
     "telf": "Tel",
     "movil": "Mobile",
@@ -104,13 +101,40 @@
     "eyebrow": "Where to find us",
     "titulo": "Points of sale",
     "intro": "Our ateliers and the network of boutiques that carry Fely Campo, in Spain and worldwide.",
-    "todos": "All",
     "direcciones": "Directions"
   },
   "talleres": {
     "eyebrow": "Our process",
     "titulo": "Our Workshops",
     "intro": "Since 2014 we've worked mainly with local suppliers, building a close relationship that grows season after season. We visit every workshop regularly to get to know the people who make our garments."
+  },
+  "atelierFiesta": {
+    "salamanca": {
+      "eyebrow": "Atelier",
+      "titulo": "Salamanca"
+    },
+    "madrid": {
+      "eyebrow": "Atelier & Showroom",
+      "titulo": "Madrid"
+    },
+    "oviedo": {
+      "eyebrow": "Atelier",
+      "titulo": "Oviedo"
+    }
+  },
+  "sobreFely": {
+    "eyebrow": "The Designer",
+    "titulo": "Meet Fely Campo",
+    "trayectoria": "Our Story",
+    "manifiestoEyebrow": "Manifesto — Ibiza Collection"
+  },
+  "blog": {
+    "volver": "Back to blog",
+    "leerArticulo": "Read article",
+    "escucharEpisodio": "Listen to episode",
+    "episodio": "Episode",
+    "con": "With",
+    "shopHere": "Shop here"
   },
   "atencionCliente": {
     "titulo": "Customer Service",
@@ -201,8 +225,10 @@
     "cerrar": "Close"
   },
   "pedirCitaAtelier": {
-    "eyebrow": "Atelier",
-    "titulo": "Book an appointment at the workshop",
+    "dondeTitulo": "Where would you like to book your appointment?",
+    "cambiarUbicacion": "Change location",
+    "cerrar": "Close",
+    "titulo": "Book an appointment",
     "intro": "Choose a day and a time. We'll confirm as soon as possible.",
     "dia": "Day",
     "hora": "Time",
@@ -214,8 +240,9 @@
     "email": "Email",
     "emailPlaceholder": "jane@example.com",
     "motivo": "Reason for your visit",
+    "motivoVestidoNovia": "Atelier, Bridal Gowns",
+    "motivoVestidoFiesta": "Atelier, Party Dresses",
     "motivoProbarColeccion": "Try on the collection",
-    "motivoVestidoMedida": "Atelier — Made-to-measure dress",
     "avisoMotivo": "Select the reason for your visit.",
     "avisoDatos": "Please fill in your name, surname and email to continue.",
     "enviar": "Confirm appointment",
@@ -293,6 +320,25 @@
     "item2": {
       "label": "Evening Wear Atelier",
       "titulo": "Evening Wear Atelier",
+      "cta": "View all"
+    }
+  },
+  "atelierIndex": {
+    "subtitulo": "Fely Campo",
+    "titulo": "Atelier",
+    "conoceColeccion": "Discover the collection",
+    "pedirCita": "Book an appointment at our atelier",
+    "conoceAteliers": "Discover our ateliers"
+  },
+  "splitMediaCategorias": {
+    "item1": {
+      "label": "Dresses",
+      "titulo": "Dresses",
+      "cta": "View all"
+    },
+    "item2": {
+      "label": "Jackets",
+      "titulo": "Jackets",
       "cta": "View all"
     }
   },
@@ -404,8 +450,8 @@
     }
   },
   "visitaAtelier": {
-    "titulo": "The Fely Campo Atelier",
-    "texto": "Discover made-to-measure couture at our atelier in Salamanca or Madrid. Personalised guidance, hand-picked fabrics, and the same care in every single piece.",
+    "titulo": "Of women, For women, by women",
+    "texto": "Fely Campo was born in Salamanca as a women's fashion house in 1997. Specialised in party and bridal collections, the house has become a benchmark in the industry, both at home and abroad, thanks to its commitment to quality and timeless design.",
     "enlace": "Book an appointment"
   },
   "compromiso": {
@@ -416,6 +462,7 @@
     "newsletter": {
       "texto": "Sign up for first access to offers, limited collections and new arrivals.",
       "consentimiento": "By submitting your email, you agree to our <privacidad>Privacy Policy</privacidad>.",
+      "politicaEnlace": "Privacy Policy",
       "enviar": "Submit",
       "exito": "Thank you — you're subscribed!",
       "error": "Something went wrong. Please try again."
@@ -423,8 +470,6 @@
   },
   "newsletterPopup": {
     "titulo": "Join the Fely Campo universe",
-    "subtitulo": "Be the first to know about new arrivals, limited collections and exclusive content.",
-    "boton": "Sign Up",
     "cerrar": "Close"
   },
   "clientsReview": {

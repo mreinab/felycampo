@@ -7,18 +7,21 @@
 
 .footer {
   width: 100%;
-  background: var(--color-fondo);
+  background: var(--color-details);
 }
 
-/* Escritorio: el footer ocupa exactamente una pantalla — los 4 tramos
-   (logo, newsletter, columnas, legal) se reparten con space-between
-   en vez de apilarse con su alto natural, que se quedaba corto y
-   dejaba hueco vacío debajo. En mobile se deja en su alto natural: a
-   este ancho el contenido ya no cabe cómodo en 100vh. */
+/* Escritorio: el footer ocupa al menos el 60% de la pantalla — los 4
+   tramos (logo, newsletter, columnas, legal) se reparten con
+   space-between en vez de apilarse con su alto natural, que se
+   quedaba corto y dejaba hueco vacío debajo. min-height (no
+   height+max-height) para que si el contenido real supera ese 60vh
+   el footer crezca con él, en vez de desbordar por debajo de su
+   propio fondo (var(--color-details) se quedaba corto). En mobile se
+   deja en su alto natural: a este ancho el contenido ya no cabe
+   cómodo en 100vh. */
 @media (min-width: 768px) {
   .footer {
-    height: 100vh;
-    max-height: 60vh;
+    min-height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -20,7 +20,7 @@ import styles from './page.module.css';
 // secciones) — mismo criterio que RUTAS_CON_PRODUCT_HERO en
 // src/app/[locale]/layout.js, para reconocer desde qué categoría llegó
 // la visita (ver "Sigue explorando" más abajo) a partir del Referer.
-const RUTAS_TIENDA = ['/tienda', '/tienda/tops-y-camisetas', '/tienda/chaquetas-y-abrigos', '/tienda/faldas', '/tienda/vestidos', '/tienda/zapatos', '/tienda/accesorios'];
+const RUTAS_TIENDA = ['/tienda', '/tienda/tops-y-camisetas', '/tienda/chaquetas-y-abrigos', '/tienda/faldas', '/tienda/vestidos'];
 const RUTAS_ATELIER = ['/atelier', '/atelier/novias', '/atelier/fiesta', '/atelier/vosotras'];
 
 export default async function FichaProducto({ params }) {

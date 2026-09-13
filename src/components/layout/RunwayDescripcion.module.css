@@ -4,7 +4,7 @@
 
 .descripcion {
   padding-inline: var(--spacing-6);
-  padding-block: var(--spacing-10);
+  padding-block: var(--spacing-8);
 }
 
 .texto {
@@ -14,11 +14,19 @@
   line-height: var(--leading-base);
   color: var(--color-tinta);
   text-align: justify;
+  white-space: pre-line;
 }
 
 @media (max-width: 767px) {
   .descripcion {
     padding-inline: var(--spacing-4);
     padding-block: var(--spacing-8);
+  }
+
+  /* max-width:70% (ver base) se queda demasiado angosto en mobile —
+     width fijo a todo el ancho disponible en vez de un tope relativo. */
+  .texto {
+    width: 100%;
+    max-width: none;
   }
 }

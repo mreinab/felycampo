@@ -32,9 +32,9 @@ function BloqueSeccion({ imagen, tipo = 'imagen', titulo, texto, enlace, href, i
       </div>
 
       <div className={`${styles.contenidoTexto} ${invertido ? styles.textoInvertido : ''}`}>
-        <h2 className={styles.titulo}>{titulo}</h2>
+        <h3 className={styles.titulo}>{titulo}</h3>
         <p className={styles.texto}>{texto}</p>
-        {enlace && <Boton variante="texto" href={href} className={styles.enlace}>{enlace}</Boton>}
+        {enlace && <Boton variante="contorno" href={href} className={styles.enlace}>{enlace}</Boton>}
       </div>
     </section>
   );

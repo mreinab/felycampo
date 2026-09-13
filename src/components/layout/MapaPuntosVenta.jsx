@@ -5,7 +5,8 @@
 /* ============================================================
    MAPA DE PUNTOS DE VENTA — Fely Campo
    Mapa mínimo (Leaflet + teselas CARTO Positron, sin etiquetas de
-   marca ni clustering) + filtro por país + listado accesible que
+   marca ni clustering) + listado accesible agrupado por país (España
+   primero, resto por cercanía real, ver "paises" más abajo) que
    sincroniza con los marcadores. Pensado para reutilizarse tal cual
    en /puntos-de-venta-fely-campo además de al final de
    /visita-fely-campo (ver "puntos" más abajo).
@@ -18,8 +19,8 @@
    - Marcadores como L.circleMarker (SVG, sin iconos de imagen): evita
      el problema clásico de los iconos por defecto de Leaflet con
      bundlers, y mantiene el peso al mínimo con ~70 puntos.
-   - Los marcadores se crean una sola vez; el filtro por país solo
-     añade/quita del mapa (addLayer/removeLayer), no recrea nada.
+   - Todos los marcadores se crean y se añaden al mapa una sola vez, al
+     montar — sin filtro que los esconda/muestre después.
    - El mapa lleva aria-hidden: el listado de abajo (botones reales,
      focusables) es el camino accesible por teclado a cada punto —
      clicarlo mueve el mapa (flyTo) y abre su popup.
@@ -31,7 +32,7 @@
      already initialized".
    ============================================================ */
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { CabeceraSeccion } from '@/components/ui';
 import { PUNTOS_VENTA } from './puntosVenta';
@@ -51,20 +52,103 @@ const IMAGENES_PLACEHOLDER = [
   '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp',
 ];
 
+// Coordenadas aproximadas (capital) de cada país presente en
+// puntosVenta.js — usadas SOLO para ordenar los países por cercanía a
+// España (ver "paises" más abajo), no para el mapa en sí. Con pocos
+// puntos por país, el centroide de sus propias tiendas queda sesgado
+// (ej. el único punto de Francia está en Verlinghem, cerca de Bélgica,
+// muy al norte del país — con su centroide de tiendas, Francia salía
+// más lejos que Suiza). La capital real evita ese sesgo. Un país que no
+// esté aquí (nuevo en puntosVenta.js) cae al centroide de sus tiendas
+// como respaldo, ver "centroPais" más abajo — nunca rompe, solo pierde
+// la precisión extra.
+const CAPITALES_APROX = {
+  España: { lat: 40.4168, lng: -3.7038 },
+  Francia: { lat: 48.8566, lng: 2.3522 },
+  Suiza: { lat: 46.9480, lng: 7.4474 },
+  Luxemburgo: { lat: 49.6117, lng: 6.1319 },
+  'Reino Unido': { lat: 51.5074, lng: -0.1278 },
+  Bélgica: { lat: 50.8503, lng: 4.3517 },
+  Italia: { lat: 41.9028, lng: 12.4964 },
+  Irlanda: { lat: 53.3498, lng: -6.2603 },
+  Austria: { lat: 48.2082, lng: 16.3738 },
+  Alemania: { lat: 52.5200, lng: 13.4050 },
+  'Estados Unidos': { lat: 38.9072, lng: -77.0369 },
+};
+
+// Código ISO 3166-1 alpha-2 de cada país — solo para el nombre de
+// archivo del banderín circular (ver .listaGrupoBandera en
+// MapaPuntosVenta.module.css). SVGs 1x1 (recorte cuadrado, pensado para
+// clip circular por CSS) sacados una vez del paquete flag-icons a
+// public/img/flags/ — no es una dependencia del proyecto, solo los 11
+// SVG que hacían falta, así no arrastra el paquete entero a producción.
+const CODIGO_PAIS = {
+  España: 'es',
+  Francia: 'fr',
+  Suiza: 'ch',
+  Luxemburgo: 'lu',
+  'Reino Unido': 'gb',
+  Bélgica: 'be',
+  Italia: 'it',
+  Irlanda: 'ie',
+  Austria: 'at',
+  Alemania: 'de',
+  'Estados Unidos': 'us',
+};
+
 function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
   const t = useTranslations('puntosVenta');
   const contenedorRef = useRef(null);
   const mapaRef = useRef(null);
   const marcadoresRef = useRef(new Map());
-  const [paisActivo, setPaisActivo] = useState(null);
-  const [listo, setListo] = useState(false);
 
-  const paises = useMemo(
-    () => [...new Set(puntos.map((punto) => punto.pais))].sort((a, b) => a.localeCompare(b)),
-    [puntos],
+  // Orden de países — no alfabético: España primero, luego el resto de
+  // más cerca a más lejos (distancia real, haversine, entre el
+  // centroide de España y el de cada país — reutiliza el lat/lng que ya
+  // trae cada punto, sin mantener una lista de países a mano que se
+  // quedaría corta en cuanto se añada uno nuevo a puntosVenta.js).
+  // Alimenta los grupos del listado de abajo (ver "gruposVisibles").
+  const paises = useMemo(() => {
+    const porPais = new Map();
+    puntos.forEach((punto) => {
+      if (!porPais.has(punto.pais)) porPais.set(punto.pais, []);
+      porPais.get(punto.pais).push(punto);
+    });
+
+    const centroideTiendas = (lista) => {
+      const suma = lista.reduce((acc, p) => ({ lat: acc.lat + p.lat, lng: acc.lng + p.lng }), { lat: 0, lng: 0 });
+      return { lat: suma.lat / lista.length, lng: suma.lng / lista.length };
+    };
+
+    const centroPais = (pais) => CAPITALES_APROX[pais] || centroideTiendas(porPais.get(pais));
+
+    const distanciaKm = (a, b) => {
+      const R = 6371;
+      const aRad = Math.PI / 180;
+      const dLat = (b.lat - a.lat) * aRad;
+      const dLng = (b.lng - a.lng) * aRad;
+      const sen = Math.sin(dLat / 2) ** 2
+        + Math.cos(a.lat * aRad) * Math.cos(b.lat * aRad) * Math.sin(dLng / 2) ** 2;
+      return 2 * R * Math.asin(Math.sqrt(sen));
+    };
+
+    const centroEspana = centroPais('España');
+
+    return [...porPais.keys()].sort((a, b) => {
+      if (a === 'España') return -1;
+      if (b === 'España') return 1;
+      return distanciaKm(centroEspana, centroPais(a)) - distanciaKm(centroEspana, centroPais(b));
+    });
+  }, [puntos]);
+
+  // Agrupa el listado por país en el mismo orden que "paises" — un
+  // grupo por país con su propio título (ver .listaGrupoTitulo).
+  const gruposVisibles = useMemo(
+    () => paises
+      .map((pais) => ({ pais, puntos: puntos.filter((punto) => punto.pais === pais) }))
+      .filter((grupo) => grupo.puntos.length > 0),
+    [paises, puntos],
   );
-
-  const puntosVisibles = paisActivo ? puntos.filter((punto) => punto.pais === paisActivo) : puntos;
 
   useEffect(() => {
     let cancelado = false;
@@ -127,7 +211,6 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
       });
 
       mapaRef.current = mapa;
-      setListo(true);
     }
 
     montar();
@@ -142,35 +225,6 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Filtro por país: solo añade/quita capas del mapa ya creado, sin
-  // recrear marcadores — ver comentario de cabecera.
-  useEffect(() => {
-    if (!listo || !mapaRef.current) return;
-    const L_map = mapaRef.current;
-
-    marcadoresRef.current.forEach((marcador, id) => {
-      const punto = puntos.find((p) => p.id === id);
-      const visible = !paisActivo || punto?.pais === paisActivo;
-      if (visible && !L_map.hasLayer(marcador)) marcador.addTo(L_map);
-      if (!visible && L_map.hasLayer(marcador)) L_map.removeLayer(marcador);
-    });
-
-    const reducirMovimiento = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-
-    if (!paisActivo) {
-      // "Todos": vuelve a la vista general centrada en Europa — sin
-      // encuadrar a los 70 puntos, que arrastraría la vista hasta EEUU
-      // por el único punto ahí (ver fantasy-bridal en puntosVenta.js).
-      if (reducirMovimiento) L_map.setView(CENTRO_EUROPA, ZOOM_INICIAL);
-      else L_map.flyTo(CENTRO_EUROPA, ZOOM_INICIAL, { duration: 0.6 });
-    } else if (puntosVisibles.length > 0) {
-      const limites = puntosVisibles.map((punto) => [punto.lat, punto.lng]);
-      if (reducirMovimiento) L_map.fitBounds(limites, { padding: [32, 32], maxZoom: 12 });
-      else L_map.flyToBounds(limites, { padding: [32, 32], maxZoom: 12 });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paisActivo, listo]);
 
   function irAPunto(punto) {
     const marcador = marcadoresRef.current.get(punto.id);
@@ -194,54 +248,52 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
         alinear="start"
       />
 
-      <div className={styles.chips}>
-        <button
-          type="button"
-          className={`${styles.chip} ${!paisActivo ? styles.chipActivo : ''}`}
-          aria-pressed={!paisActivo}
-          onClick={() => setPaisActivo(null)}
-        >
-          {t('todos')}
-        </button>
-        {paises.map((pais) => (
-          <button
-            key={pais}
-            type="button"
-            className={`${styles.chip} ${paisActivo === pais ? styles.chipActivo : ''}`}
-            aria-pressed={paisActivo === pais}
-            onClick={() => setPaisActivo((actual) => (actual === pais ? null : pais))}
-          >
-            {pais}
-          </button>
-        ))}
-      </div>
-
       <div className={styles.layout}>
         <div ref={contenedorRef} className={styles.mapa} role="presentation" aria-hidden="true" />
 
-        <ul className={styles.lista} aria-label={t('titulo')}>
-          {puntosVisibles.map((punto, indice) => (
-            <li key={punto.id}>
-              <button type="button" className={styles.puntoBtn} onClick={() => irAPunto(punto)}>
-                <img
-                  src={IMAGENES_PLACEHOLDER[indice % IMAGENES_PLACEHOLDER.length]}
-                  alt=""
-                  aria-hidden="true"
-                  className={styles.puntoImagen}
-                />
-                <span className={styles.puntoTextos}>
-                  <span className={styles.puntoNombre}>{punto.nombre}</span>
-                  <span className={styles.puntoTexto}>{punto.direccion.join('\n')}</span>
-                  {(punto.telefono || punto.email) && (
-                    <span className={styles.puntoTexto}>
-                      {[punto.telefono, punto.email].filter(Boolean).join('\n')}
-                    </span>
-                  )}
-                </span>
-              </button>
-            </li>
+        <div className={styles.lista} aria-label={t('titulo')}>
+          {gruposVisibles.map((grupo) => (
+            <section key={grupo.pais} className={styles.listaGrupo}>
+              <h3 className={styles.listaGrupoTitulo}>
+                {CODIGO_PAIS[grupo.pais] && (
+                  <img
+                    src={`/img/flags/${CODIGO_PAIS[grupo.pais]}.svg`}
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.listaGrupoBandera}
+                  />
+                )}
+                {grupo.pais}
+              </h3>
+              <ul className={styles.listaGrupoItems}>
+                {grupo.puntos.map((punto) => {
+                  const indice = puntos.indexOf(punto);
+                  return (
+                    <li key={punto.id}>
+                      <button type="button" className={styles.puntoBtn} onClick={() => irAPunto(punto)}>
+                        <img
+                          src={IMAGENES_PLACEHOLDER[indice % IMAGENES_PLACEHOLDER.length]}
+                          alt=""
+                          aria-hidden="true"
+                          className={styles.puntoImagen}
+                        />
+                        <span className={styles.puntoTextos}>
+                          <span className={styles.puntoNombre}>{punto.nombre}</span>
+                          <span className={styles.puntoTexto}>{punto.direccion.join('\n')}</span>
+                          {(punto.telefono || punto.email) && (
+                            <span className={styles.puntoTexto}>
+                              {[punto.telefono, punto.email].filter(Boolean).join('\n')}
+                            </span>
+                          )}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
