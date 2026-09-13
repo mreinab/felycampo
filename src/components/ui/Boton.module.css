@@ -36,7 +36,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
-  padding: 0px 28px;
+  padding: var(--spacing-2) 28px;
   font-size: var(--text-small);
 }
 .m    { padding: var(--spacing-3) var(--spacing-6); font-size: var(--text-label); }
@@ -76,7 +76,7 @@
 
 .contorno {
   background: transparent;
-  color: var(--color-gris-700);
+  color: var(--color-tinta);
   border: 1px solid var(--color-tinta);
   border-radius: var(--radius-botones);
   display: flex;

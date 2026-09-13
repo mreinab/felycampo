@@ -15,3 +15,4 @@ export { default as CabeceraSeccion } from './CabeceraSeccion';
 export { default as VerMasOverlay } from './VerMasOverlay';
 export { default as Modal } from './Modal';
 export { default as CarruselImagenes } from './CarruselImagenes';
+export { default as EnVista } from './EnVista';

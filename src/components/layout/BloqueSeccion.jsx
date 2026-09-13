@@ -1,3 +1,5 @@
+'use client';
+
 /* ============================================================
    BLOQUE DE SECCIÓN (imagen + texto) — Fely Campo
    Uso:
@@ -5,10 +7,13 @@
         texto="Costura a medida en Salamanca." enlace="Descubre más"
         href="/visita-fely-campo/cita" invertido={false} />
      <BloqueSeccion imagen="/img/atelier.mp4" tipo="video" ... />
+   'use client' por useEnVista: el bloque entero (imagen + texto)
+   aparece con scroll (ver .al-scroll/.en-vista en global.css).
    ============================================================ */
 
 import styles from './BloqueSeccion.module.css';
 import { Boton } from '../ui';
+import useEnVista from '@/hooks/useEnVista';
 
 /**
  * Bloque editorial imagen+texto, reutilizado en varias
@@ -19,8 +24,10 @@ import { Boton } from '../ui';
  * <video autoPlay muted loop playsInline>.
  */
 function BloqueSeccion({ imagen, tipo = 'imagen', titulo, texto, enlace, href, invertido = false }) {
+  const [ref, enVista] = useEnVista();
+
   return (
-    <section className={styles.seccion}>
+    <section ref={ref} className={`${styles.seccion} al-scroll ${enVista ? 'en-vista' : ''}`}>
       <div className={`${styles.marco} ${invertido ? styles.invertido : ''}`}>
         {imagen && (
           tipo === 'video' ? (

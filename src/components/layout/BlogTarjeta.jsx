@@ -1,5 +1,7 @@
 // BlogTarjeta.jsx
 
+'use client';
+
 /* ============================================================
    TARJETA DE BLOG — Fely Campo
    Calco de RunwayTarjeta.jsx/.module.css (mismo .marco a 16/9 +
@@ -17,13 +19,18 @@
        imagen="/img/..."
        alt="..."
      />
-   ============================================================ */
+   'use client' por useEnVista: la tarjeta entera aparece con scroll
+   (ver .al-scroll/.en-vista en global.css), no de golpe con la
+   cuadrícula completa. ============================================================ */
 
 import styles from './BlogTarjeta.module.css';
+import useEnVista from '@/hooks/useEnVista';
 
 function BlogTarjeta({ href, titulo, extracto, meta, imagen, alt }) {
+  const [ref, enVista] = useEnVista();
+
   return (
-    <a href={href} className={styles.tarjeta}>
+    <a ref={ref} href={href} className={`${styles.tarjeta} al-scroll ${enVista ? 'en-vista' : ''}`}>
       <div className={styles.marco}>
         <img src={imagen} alt={alt} className={styles.media} />
       </div>

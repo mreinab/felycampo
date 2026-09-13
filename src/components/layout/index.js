@@ -21,6 +21,7 @@ export { default as GaleriaVosotras } from './GaleriaVosotras';
 export { default as CarruselClientas } from './CarruselClientas';
 export { default as NewsletterModal } from './NewsletterModal';
 export { default as NewsletterModalGlobal } from './NewsletterModalGlobal';
+export { default as CookieConsent } from './CookieConsent';
 export { default as MapaPuntosVenta } from './MapaPuntosVenta';
 export { default as BlogTarjeta } from './BlogTarjeta';
 export { default as BlogTarjetaPodcastDestacado } from './BlogTarjetaPodcastDestacado';

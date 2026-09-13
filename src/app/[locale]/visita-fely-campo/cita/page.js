@@ -9,7 +9,11 @@
    — ver page.module.css para el porqué de position:fixed/z-index en
    vez de la clase "abierta" del modal real.
 
-   Dos pasos dentro del mismo panel derecho:
+   Tres pasos dentro del mismo panel derecho:
+   0. Bienvenida (pasoIntro): texto editorial de presentación +
+      "Continuar", pantalla propia (no un párrafo suelto encima del
+      paso 1) para que se lea como apertura, no como una etiqueta más
+      del formulario.
    1. "¿Dónde quieres pedir la cita?" — tres botones grandes
       (Salamanca/Madrid/Oviedo, UBICACIONES de ../ubicaciones.js). El
       panel de la foto muestra la imagen de esa sede en cuanto se
@@ -18,8 +22,9 @@
       ruta eliminada): motivo + día/hora + datos de contacto. Un enlace
       "Cambiar ubicación" vuelve al paso 1.
    "?ubicacion=<id>" en la URL (lo mandan ListadoUbicaciones.jsx y
-   AtelierDetalle.jsx) preselecciona la sede y salta directo al paso 2
-   — antes se ignoraba.
+   AtelierDetalle.jsx) preselecciona la sede y salta directo al paso 2,
+   saltándose también la bienvenida (pasoIntro arranca en false) — ya
+   viene de un enlace con contexto propio, no hace falta la apertura.
 
    PLACEHOLDER a propósito, mismo criterio que ModalSolicitudAtelier:
    "confirmar" no manda nada a ningún backend real todavía, solo pasa
@@ -85,6 +90,11 @@ export default function Pagina() {
   const [ubicacionId, setUbicacionId] = useState(ubicacionInicial);
   const ubicacionSeleccionada = UBICACIONES.find((u) => u.id === ubicacionId) ?? null;
 
+  // Paso 0: bienvenida (texto editorial) antes de preguntar la sede —
+  // se salta si "?ubicacion=" ya trae una sede válida (mismo caso que
+  // salta directo al paso 2, ver comentario de cabecera).
+  const [pasoIntro, setPasoIntro] = useState(!ubicacionInicial);
+
   const [motivo, setMotivo] = useState(null);
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
   const [horaSeleccionada, setHoraSeleccionada] = useState(null);
@@ -137,8 +147,18 @@ export default function Pagina() {
 
         <div className={styles.formPanel}>
           <div className={styles.formContenedor}>
-            {!ubicacionSeleccionada ? (
-              <>
+            {pasoIntro ? (
+              <div key="intro" className={`${styles.introPaso} entrada-suave`}>
+                <div className={styles.introTexto}>
+                  <h2 className={styles.titulo}>{t('introTitulo')}</h2>
+                  <p className={styles.dondeIntro}>{t('dondeIntro')}</p>
+                </div>
+                <Boton variante="solido" tamano="full" onClick={() => setPasoIntro(false)}>
+                  {t('continuar')}
+                </Boton>
+              </div>
+            ) : !ubicacionSeleccionada ? (
+              <div key="ubicacion" className={`${styles.paso} entrada-suave`}>
                 <div className={styles.cabecera}>
                   <h1 className={styles.titulo}>{t('dondeTitulo')}</h1>
                 </div>
@@ -156,15 +176,15 @@ export default function Pagina() {
                     </button>
                   ))}
                 </div>
-              </>
+              </div>
             ) : enviado ? (
-              <div className={styles.confirmacion}>
+              <div key="confirmacion" className={`${styles.confirmacion} entrada-suave`}>
                 <h2 className={styles.tituloConfirmacion}>{t('confirmacionTitulo')}</h2>
                 <p>{t('confirmacionTexto')}</p>
                 <Boton variante="solido" tamano="full" href={`/${locale}/visita-fely-campo`}>{t('volver')}</Boton>
               </div>
             ) : (
-              <>
+              <div key="form" className={`${styles.paso} entrada-suave`}>
                 <button
                   type="button"
                   className={styles.cambiarUbicacion}
@@ -177,11 +197,8 @@ export default function Pagina() {
                 </button>
 
                 <div className={styles.cabecera}>
+                  <span className={styles.subtituloUbicacion}>{ubicacionSeleccionada.nombre}</span>
                   <h1 className={styles.titulo}>{t('titulo')}</h1>
-                  <p className={styles.subtitulo}>
-                    <span className={styles.subtituloUbicacion}>{ubicacionSeleccionada.nombre}</span>
-                    <span>{t('intro')}</span>
-                  </p>
                 </div>
 
                 <form className={styles.form} onSubmit={alEnviar}>
@@ -264,7 +281,7 @@ export default function Pagina() {
 
                   <Boton variante="solido" tamano="full" type="submit">{t('enviar')}</Boton>
                 </form>
-              </>
+              </div>
             )}
           </div>
         </div>

@@ -1,0 +1,19 @@
+/* ============================================================
+   RESPONSABILIDAD (manifiesto sostenible) — Fely Campo. Ruta: /responsabilidad
+   .hero es una copia 1:1 de ../sobre-fely/page.module.css (mismo
+   diseño, ver page.js) — el resto de la página no necesita CSS propio,
+   son CabeceraSeccion/RunwayDescripcion tal cual.
+   ============================================================ */
+
+.hero {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 767px) {
+  .hero {
+    height: auto;
+  }
+}

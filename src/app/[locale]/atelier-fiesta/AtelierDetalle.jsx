@@ -53,11 +53,14 @@
    (el carrusel del paso 4, solo activo en mobile) sigue viviendo en
    CarruselImagenes.jsx, aparte — Boton también es 'use client', pero
    solo por el onClick genérico que admite, no por nada que usemos
-   aquí (solo href). */
+   aquí (solo href). Los pasos 2/2b/3/4 aparecen con scroll (<EnVista>,
+   @/components/ui — envoltorio 'use client' de @/hooks/useEnVista
+   para poder usarlo desde este Server Component sin convertirlo
+   entero a cliente). */
 
 import { getTranslations } from 'next-intl/server';
 import { RunwayMediaLateral, RunwayDescripcion } from '@/components/layout';
-import { CarruselImagenes, Boton } from '@/components/ui';
+import { CarruselImagenes, Boton, EnVista } from '@/components/ui';
 import { UBICACIONES } from '../visita-fely-campo/ubicaciones';
 import styles from './page.module.css';
 
@@ -101,11 +104,11 @@ async function AtelierDetalle({ datos, locale }) {
             playsInline
           />
         ) : (
-          <img src={datos.medioSuperior.src} alt="" className={styles.video} />
+          <EnVista as="img" src={datos.medioSuperior.src} alt="" className={styles.video} />
         )}
 
         {datos.secciones.map((seccion, indice) => (
-          <div
+          <EnVista
             key={seccion.titulo[locale]}
             className={`${styles.seccion} ${indice % 2 === 1 ? styles.seccionInvertida : ''}`}
           >
@@ -118,11 +121,11 @@ async function AtelierDetalle({ datos, locale }) {
                 <p key={indiceParrafo}>{parrafo}</p>
               ))}
             </div>
-          </div>
+          </EnVista>
         ))}
 
         {ubicacion && (
-          <div className={styles.cita}>
+          <EnVista className={styles.cita}>
             <a href="#" target="_blank" rel="noopener noreferrer" className={styles.direccionCita}>
               {ubicacion.direccion.join(', ')}
             </a>
@@ -138,18 +141,18 @@ async function AtelierDetalle({ datos, locale }) {
             >
               {tVisitenos('pedirCita')}
             </Boton>
-          </div>
+          </EnVista>
         )}
 
         <CarruselImagenes className={styles.imagenes}>
           {[0, 1, 2, 3, 4].map((indice) => (
-            <div key={indice} className={styles.marco}>
+            <EnVista key={indice} className={styles.marco}>
               <img
                 src={datos.imagenesTira[indice % datos.imagenesTira.length]}
                 alt=""
                 className={styles.imagen}
               />
-            </div>
+            </EnVista>
           ))}
         </CarruselImagenes>
       </div>

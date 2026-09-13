@@ -6,7 +6,8 @@
 
    "descripcion": texto de RunwayDescripcion (párrafo justificado, con
    saltos de párrafo reales vía "\n\n" — ver white-space:pre-line en
-   RunwayDescripcion.module.css), copia íntegra del encargo.
+   RunwayDescripcion.module.css). Son los dos primeros párrafos de
+   "fiesta.texto" (mismo copy, reutilizado a propósito).
 
    "novias.texto": RESUMEN del texto original del encargo (bastante más
    largo, ver historial de conversación) — se pidió explícitamente
@@ -20,24 +21,25 @@
    "fiesta.texto": texto íntegro del encargo (sin resumir, a diferencia
    de "novias"), solo se retira el título repetido ("XPERIENCIA ATELIER
    FIESTA...", ya es "fiesta.titulo") y la línea final en mayúsculas
-   ("DESCUBRE EN PROFUNDIDAD CADA UNO DE ELLOS", ya cubierta por los
-   propios botones "Conoce la colección"/"Pide cita" debajo del bloque).
+   ("DESCUBRE EN PROFUNDIDAD CADA UNO DE ELLOS", ya cubierta por el CTA
+   "Pide cita" del propio BloqueSeccion).
 
    "ateliers": mismas 3 fotos por sede que IMAGEN_POR_UBICACION en
    visita-fely-campo/cita/page.js — cada una enlaza a su ficha real
-   (/atelier-fiesta/[sede], ver AtelierDetalle.jsx). Nombre de ciudad
-   sin traducir (UBICACIONES en ubicaciones.js tampoco lo traduce). */
+   (/atelier-fiesta/[sede], ver AtelierDetalle.jsx). "ciudad" es en
+   realidad el nombre completo de la sede ("Atelier Salamanca", no solo
+   "Salamanca" — Madrid es showroom además de atelier, de ahí "Atelier
+   & Showroom Madrid"), sin traducir (UBICACIONES en ubicaciones.js
+   tampoco traduce sus nombres). */
 
 export const ATELIER_INDEX = {
-  heroImagen: '/img/atelier/atelier1-1024x578.webp',
-
   descripcion: {
-    es: 'La primera cita en los Ateliers de Novia Fely Campo es la más importante, es la cita de diseño, donde se establece una conexión emocional entre la diseñadora, la prenda y la novia. En el Atelier Oviedo esta magia la compartirás con el equipo Fely Campo Oviedo.\n\nVen a compartir con nosotros la magia de encontrar tu vestido de novia. Solamente necesitamos que nos indiques la siguiente información del formulario, tras hacerlo recibirás un email de confirmación de la solicitud. En los siguientes días nos pondremos en contacto contigo a través de llamada telefónica o whatsapp, para confirmar tu cita a la mayor brevedad. Si lo deseas puedes indicarnos el horario que prefieres para que contactemos contigo.\n\nTodo el proceso de creación parte de la primera cita con Fely en Madrid y Salamanca o con el Equipo Fely Campo en el caso de Oviedo, en la que os conocéis, comprende tus gustos, tus necesidades, elegís tejidos, acabados. Al finalizar esta primera cita te facilitaremos un presupuesto para que puedas tener todos los datos antes de dar el paso.\n\nEstamos deseando conocerte.',
-    en: 'The first appointment at the Fely Campo Bridal Ateliers is the most important one — the design appointment, where an emotional connection is established between the designer, the gown and the bride. At the Oviedo Atelier, you\'ll share this magic with the Fely Campo Oviedo team.\n\nCome and share with us the magic of finding your wedding dress. We only need you to fill in the information in the form below — once you do, you\'ll receive a confirmation email for your request. In the following days we\'ll get in touch with you by phone call or WhatsApp to confirm your appointment as soon as possible. If you\'d like, you can also let us know your preferred time so we can reach you then.\n\nThe whole creative process starts with that first appointment with Fely in Madrid and Salamanca, or with the Fely Campo Team in Oviedo — a chance to get to know each other, understand your tastes and needs, and choose fabrics and finishes. At the end of this first appointment we\'ll give you a quote, so you have all the information before taking the next step.\n\nWe can\'t wait to meet you.',
+    es: 'La mujer es el centro de todas nuestras creaciones y en los Ateliers de Fiesta Fely Campo de Madrid, Salamanca y de Oviedo, vivirás una experiencia única y personalizada, en la que nuestro equipo te hará descubrir el vestido con el que sentirte segura y especial.\n\nEspacios exclusivos con un ambiente diseñado para ti, donde vivirás la magia de la experiencia Fely Campo.',
+    en: 'Women are at the heart of everything we create, and at the Fely Campo Fiesta Ateliers in Madrid, Salamanca and Oviedo you\'ll live a unique, personalised experience, guided by our team to discover the dress that makes you feel confident and special.\n\nExclusive spaces with an atmosphere designed just for you, where you\'ll experience the magic of Fely Campo.',
   },
 
   novias: {
-    imagen: '/img/atelier/ateliernovia-lamedida-felycampo-2.webp',
+    imagen: '/img/atelier/ateliernovia-lamedida-felycampo-3.webp',
     titulo: {
       es: 'Atelier Novias',
       en: 'Bridal Atelier',
@@ -61,8 +63,8 @@ export const ATELIER_INDEX = {
   },
 
   ateliers: [
-    { id: 'salamanca', ciudad: 'Salamanca', imagen: '/img/talleres/salamanca-ateliernovia-ateliernoviasalamanca-ubicacion-felycampo.webp' },
-    { id: 'madrid', ciudad: 'Madrid', imagen: '/img/talleres/madrid-atelier_madrid_fiesta_novia_medida.webp' },
-    { id: 'oviedo', ciudad: 'Oviedo', imagen: '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp' },
+    { id: 'salamanca', ciudad: 'Atelier Salamanca', imagen: '/img/talleres/salamanca-ateliernovia-ateliernoviasalamanca-ubicacion-felycampo.webp' },
+    { id: 'madrid', ciudad: 'Atelier & Showroom Madrid', imagen: '/img/talleres/madrid-atelier_madrid_fiesta_novia_medida.webp' },
+    { id: 'oviedo', ciudad: 'Atelier Oviedo', imagen: '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp' },
   ],
 };

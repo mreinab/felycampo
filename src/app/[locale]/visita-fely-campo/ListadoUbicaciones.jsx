@@ -13,10 +13,12 @@
    a necesitar pasarle contenido como "children" (chips, filtros...).
    Cada tarjeta abre con una foto/vídeo (ver .galeria en
    page.module.css), sacada del fondo común de public/img/talleres/ —
-   ver MEDIOS_TALLERES/medioDe más abajo. */
+   ver MEDIOS_TALLERES/medioDe más abajo. Cada tarjeta aparece con
+   scroll (<EnVista>, @/components/ui) — no se llama useEnVista a mano
+   aquí porque el hook no puede invocarse dentro del .map de abajo. */
 
 import { useTranslations } from 'next-intl';
-import { CabeceraSeccion } from '@/components/ui';
+import { CabeceraSeccion, EnVista } from '@/components/ui';
 import { UBICACIONES } from './ubicaciones';
 import styles from './page.module.css';
 
@@ -64,7 +66,7 @@ function ListadoUbicaciones({ locale }) {
 
           return (
             <li key={ubicacion.id}>
-              <article className={styles.tarjeta}>
+              <EnVista as="article" className={styles.tarjeta}>
                 <div className={styles.galeria}>
                   {medio.tipo === 'video' ? (
                     <video src={medio.src} className={styles.celda} autoPlay muted loop playsInline />
@@ -118,7 +120,7 @@ function ListadoUbicaciones({ locale }) {
                     </a>
                   </div>
                 </div>
-              </article>
+              </EnVista>
             </li>
           );
         })}

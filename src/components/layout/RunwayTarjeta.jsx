@@ -1,12 +1,18 @@
+'use client';
+
 /* ============================================================
    TARJETA DE RUNWAY — Fely Campo
    Uso:
      <RunwayTarjeta href="/archivo/colecciones/la-coleccion" nombre="La Colección"
         temporada="AW27" medios={[{ src: '/img/FW27-Hero3.mp4', tipo: 'video' }]} />
      <RunwayTarjeta ... medios={[{ src: 'a.webp' }, { src: 'b.webp' }]} /> // "split" a dos columnas
+   'use client' por useEnVista: la tarjeta entera aparece con scroll
+   (ver .al-scroll/.en-vista en global.css), no de golpe con la
+   cuadrícula completa.
    ============================================================ */
 
 import styles from './RunwayTarjeta.module.css';
+import useEnVista from '@/hooks/useEnVista';
 
 /**
  * Una celda de la cuadrícula de /colecciones-fely-campo (ver page.js ahí): un
@@ -15,8 +21,10 @@ import styles from './RunwayTarjeta.module.css';
  * colección completa (/archivo/colecciones/[coleccion]).
  */
 function RunwayTarjeta({ href, nombre, temporada, medios }) {
+  const [ref, enVista] = useEnVista();
+
   return (
-    <a href={href} className={styles.tarjeta}>
+    <a ref={ref} href={href} className={`${styles.tarjeta} al-scroll ${enVista ? 'en-vista' : ''}`}>
       <div className={styles.marco}>
         {medios.map((medio) => (
           <div key={medio.src} className={styles.medio}>

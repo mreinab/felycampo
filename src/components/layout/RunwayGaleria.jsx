@@ -20,6 +20,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { X, Plus } from 'lucide-react';
 import { slugify } from '@/lib/slugify';
+import { EnVista } from '../ui';
 import styles from './RunwayGaleria.module.css';
 
 function RunwayGaleria({ looks = [], alt }) {
@@ -145,9 +146,15 @@ function RunwayGaleria({ looks = [], alt }) {
     <>
       <div className={styles.grid}>
         {looks.map((look, indice) => (
-          <button key={look.imagen} type="button" className={styles.item} onClick={() => abrir(indice)}>
+          <EnVista
+            key={look.imagen}
+            as="button"
+            type="button"
+            className={styles.item}
+            onClick={() => abrir(indice)}
+          >
             <img src={look.imagen} alt="" className={styles.itemImagen} />
-          </button>
+          </EnVista>
         ))}
       </div>
 

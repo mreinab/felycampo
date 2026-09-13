@@ -58,10 +58,17 @@ function Footer() {
   };
 
   const columnas = [
-    { titulo: 'Atención cliente', enlaces: ['Envíos', 'Devoluciones', 'Guía de cuidados', 'Contacto', 'FAQ'] },
-    { titulo: 'Fely Campo', enlaces: ['Sobre Nosotros', 'Responsabilidad', 'Puntos de venta', 'Trabaja con nosotras'] },
-    { titulo: 'Síguenos', enlaces: ['Instagram', 'YouTube', 'TikTok'] },
+    { titulo: 'Atención cliente', enlaces: ['Envíos', 'Devoluciones', 'Contacto'] },
+    { titulo: 'Fely Campo', enlaces: ['Sostenibilidad', 'Sobre Nosotros', 'Puntos de venta'] },
+    { titulo: 'Síguenos', enlaces: ['Instagram', 'YouTube'] },
   ];
+
+  // Único enlace real de las 3 columnas (el resto siguen siendo
+  // placeholders "#", ver el <a> más abajo) — enlaza al manifiesto
+  // sostenible ya maquetado en /responsabilidad (ver page.js de esa
+  // ruta), con la etiqueta "Sostenibilidad" en vez del nombre técnico
+  // de la ruta.
+  const hrefColumna = (enlace) => (enlace === 'Sostenibilidad' ? withLocale('/responsabilidad') : '#');
 
   return (
     <footer className={styles.footer}>
@@ -78,7 +85,7 @@ function Footer() {
                 <h3 className={styles.titulo}>{col.titulo}</h3>
                 <ul className={styles.lista}>
                   {col.enlaces.map((e) => (
-                    <li key={e}><a href="#" className={styles.enlace}>{e}</a></li>
+                    <li key={e}><a href={hrefColumna(e)} className={styles.enlace}>{e}</a></li>
                   ))}
                 </ul>
               </div>
@@ -138,7 +145,7 @@ function Footer() {
           <span className={styles.copy}>Fely Campo © {new Date().getFullYear()}</span>
           <div className={styles.legalLista}>
             <a href="#" className={styles.legalEnlace}>Términos y condiciones</a>
-            <a href="#" className={styles.legalEnlace}>Política de cookies</a>
+            <a href={withLocale('/legal/cookies')} className={styles.legalEnlace}>Política de cookies</a>
             <a href="#" className={styles.legalEnlace}>Política de privacidad</a>
           </div>
           <div className={styles.languageSelector}>

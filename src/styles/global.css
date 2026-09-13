@@ -266,7 +266,98 @@ img { display: block; max-width: 100%; height: auto; }
   background: var(--color-fondo);
 }
 
+/* Entrada suave (fundido + subida) para transiciones entre pasos/
+   pantallas — pensada para reutilizarse en cualquier componente, no
+   solo en /visita-fely-campo/cita: añade esta clase (junto a las
+   propias del componente) al nodo raíz que cambia con cada paso, e
+   idealmente un "key" distinto por paso para forzar el remount (sin
+   remount, una animación CSS normal no se repite). */
+.entrada-suave {
+  animation: entradaSuave 0.5s var(--ease-marca) both;
+}
 
-.texto-legible { 
+@keyframes entradaSuave {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entrada-suave {
+    animation: none;
+  }
+}
+
+/* Salida suave — inversa de .entrada-suave (fundido + bajada), para
+   cuando un componente necesita animar su cierre antes de desmontarse
+   de verdad: una animación CSS no puede retrasar un unmount de React
+   por sí sola, así que quien la usa debe añadir esta clase primero
+   (en vez de desmontar) y desmontar/ocultar de verdad en un setTimeout
+   que dure lo mismo que SALIDA_SUAVE_MS (ver CookieConsent.jsx para un
+   ejemplo). Duración algo menor que la entrada (0.35s vs 0.5s): una
+   salida se espera más rápida que una entrada. */
+.salida-suave {
+  animation: salidaSuave 0.35s var(--ease-marca) both;
+}
+
+@keyframes salidaSuave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .salida-suave {
+    animation: none;
+  }
+}
+
+/* Entrada AL HACER SCROLL (no al montar, a diferencia de
+   .entrada-suave) — para texto e imágenes que deben aparecer la
+   primera vez que entran en el viewport, no de golpe al cargar la
+   página. Pareja con el hook @/hooks/useEnVista (ya usado así en
+   SplitMedia/MediaBanner/SectionCompromiso/ImageTitle, antes repetido
+   a mano en cada CSS module con su propio @keyframes — aquí como
+   utilidad global para no duplicarlo más):
+     const [ref, enVista] = useEnVista();
+     <div ref={ref} className={`al-scroll ${enVista ? 'en-vista' : ''}`}>
+   Se dispara una sola vez (useEnVista deja de observar tras la
+   primera vez que entra en vista) — nunca se repite al subir/bajar. */
+.al-scroll {
+  opacity: 0;
+}
+.al-scroll.en-vista {
+  animation: entradaScroll 0.9s var(--ease-marca) forwards;
+}
+
+@keyframes entradaScroll {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .al-scroll {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+.texto-legible {
    max-width: var(--max-texto); 
 }

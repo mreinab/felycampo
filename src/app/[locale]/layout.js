@@ -10,7 +10,7 @@ import { headers } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
-import { Navbar, Footer, NewsletterModalGlobal } from '@/components/layout';
+import { Navbar, Footer, NewsletterModalGlobal, CookieConsent } from '@/components/layout';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
@@ -39,6 +39,7 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/atelier-fiesta/madrid',
   '/atelier-fiesta/oviedo',
   '/sobre-fely',
+  '/responsabilidad',
 ];
 
 export const metadata = {
@@ -106,6 +107,7 @@ export default async function RootLayout({ children, params }) {
               <main>{children}</main>
               <Footer />
               {isHome && <NewsletterModalGlobal />}
+              <CookieConsent />
             </MiCuentaProvider>
           </CarritoProvider>
         </NextIntlClientProvider>

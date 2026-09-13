@@ -16,6 +16,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { SelectorCantidad } from '../ui';
 import { slugify } from '@/lib/slugify';
 import styles from './TarjetaCarrito.module.css';
+import useEnVista from '@/hooks/useEnVista';
 
 // Duración de la salida animada al bajar la cantidad a 0 (ver
 // manejarCantidad) — tiene que coincidir con la transición de
@@ -33,6 +34,7 @@ function TarjetaCarrito({ imagen, nombre, precio, talla, tallasDisponibles = [],
   // se quita la línea del carrito de verdad.
   const [eliminando, setEliminando] = useState(false);
   const [cantidadMostrada, setCantidadMostrada] = useState(cantidad);
+  const [ref, enVista] = useEnVista();
 
   useEffect(() => {
     if (!eliminando) setCantidadMostrada(cantidad);
@@ -54,7 +56,7 @@ function TarjetaCarrito({ imagen, nombre, precio, talla, tallasDisponibles = [],
   };
 
   return (
-    <div className={`${styles.tarjeta} ${eliminando ? styles.saliendo : ''}`}>
+    <div ref={ref} className={`${styles.tarjeta} ${eliminando ? styles.saliendo : ''} al-scroll ${enVista ? 'en-vista' : ''}`}>
       <div className={styles.marco}>
         <a href={hrefProducto} className={styles.marcoEnlace}>
           {imagen && <img src={imagen} alt={nombre} className={styles.imagen} />}

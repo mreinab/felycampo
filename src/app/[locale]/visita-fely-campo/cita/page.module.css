@@ -8,11 +8,11 @@
    (no un estado de apertura/cierre), no hace falta la clase
    "abierta"/transición de opacidad de MiCuentaModal, ni su mecanismo
    de foco/Escape (eso es de modal; aquí "cerrar" es solo un enlace de
-   vuelta a /visita-fely-campo). Dos pasos dentro del mismo
-   .formContenedor (ver page.js): "ubicación" (3 botones grandes,
-   Salamanca/Madrid/Oviedo) y "form" (el formulario ya existente,
-   motivo/día/hora/datos) — el panel de la izquierda cambia de foto
-   según la ubicación elegida.
+   vuelta a /visita-fely-campo). Tres pasos dentro del mismo
+   .formContenedor (ver page.js): "intro" (bienvenida editorial +
+   Continuar), "ubicación" (3 botones grandes, Salamanca/Madrid/Oviedo)
+   y "form" (el formulario ya existente, motivo/día/hora/datos) — el
+   panel de la izquierda cambia de foto según la ubicación elegida.
    Esquinas rectas en todo (--radius-botones/--radius-inputs a 0, igual
    que el resto del sitio) — mismo criterio que ModalSolicitudAtelier.
    ============================================================ */
@@ -101,6 +101,18 @@
   gap: var(--spacing-6);
 }
 
+/* Envoltorio de cada paso ("ubicación" y "form"): antes eran hijos
+   directos de .formContenedor (vía Fragment) y heredaban su gap; al
+   envolverlos en un nodo propio (para poder animarlos con
+   entrada-suave, ver global.css) hace falta repetir aquí ese mismo
+   gap/min-width para que la separación interna no cambie. */
+.paso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  min-width: 0;
+}
+
 .cabecera {
   display: flex;
   flex-direction: column;
@@ -114,17 +126,33 @@
   text-align: center;
 }
 
-.subtitulo {
+/* ---------- Paso 0: bienvenida (antes de elegir sede) ---------- */
+.introPaso {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
-  font-size: var(--text-small);
+  align-items: center;
+  gap: var(--spacing-6);
+}
+
+.introTexto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+/* white-space:pre-line respeta los saltos de párrafo reales ("\n\n")
+   del texto en pedirCitaAtelier.dondeIntro. */
+.dondeIntro {
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-base);
+  color: var(--color-tinta);
   text-align: center;
-  color: var(--color-gris-500);
+  white-space: pre-line;
 }
 
 .subtituloUbicacion {
-  text-transform: uppercase;
+  font-size: var(--text-small);
+  text-align: center;
   color: var(--color-tinta);
 }
 

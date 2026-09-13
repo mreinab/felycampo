@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import styles from './CabeceraSeccion.module.css';
 import collectionTitleStyles from './CollectionTitle.module.css';
+import useEnVista from '@/hooks/useEnVista';
 
 /**
  * Cabecera de sección: grupo título (subtítulo pequeño opcional +
@@ -69,6 +70,11 @@ import collectionTitleStyles from './CollectionTitle.module.css';
  */
 function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, description, breadcrumbItems, children, before, alinear = 'end', enCuadricula = false, margenSuperiorAmplio = false, className }) {
   const t = useTranslations();
+  // Solo el texto (título/subtítulo/descripción) aparece con scroll —
+  // ver .al-scroll/.en-vista en global.css — no toda la cabecera
+  // (incluidos "before"/"children", ej. el botón Filtros de
+  // CuadriculaProductos, que deben estar listos para usarse ya).
+  const [ref, enVista] = useEnVista();
 
   const claseCabecera = enCuadricula ? styles.cabeceraProductos : styles.cabecera;
   const textoDescripcion = description || (descriptionKey && t(descriptionKey));
@@ -76,7 +82,7 @@ function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, description, b
   return (
     <div className={`${claseCabecera} ${alinear === 'start' ? styles.cabeceraInicio : ''} ${margenSuperiorAmplio ? styles.margenSuperiorAmplio : ''} ${className || ''}`}>
       {before}
-      <div className={styles.tituloGrupo}>
+      <div ref={ref} className={`${styles.tituloGrupo} al-scroll ${enVista ? 'en-vista' : ''}`}>
         {breadcrumbItems ? (
           <nav aria-label={t('breadcrumb.ariaLabel')} className={styles.subtitle}>
             <ol className={styles.migaLista}>

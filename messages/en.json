@@ -128,6 +128,10 @@
     "trayectoria": "Our Story",
     "manifiestoEyebrow": "Manifesto — Ibiza Collection"
   },
+  "responsabilidad": {
+    "eyebrow": "Sustainable manifesto",
+    "titulo": "Fely Campo's commitment to fashion"
+  },
   "blog": {
     "volver": "Back to blog",
     "leerArticulo": "Read article",
@@ -225,11 +229,13 @@
     "cerrar": "Close"
   },
   "pedirCitaAtelier": {
+    "introTitulo": "Welcome to Fely Campo",
+    "dondeIntro": "Come and discover firsthand our unique experience, at one of our boutiques/ateliers in Madrid, Salamanca or Oviedo.\n\nA space designed entirely for you, where our personal stylists will guide you through the whole process until you find the perfect dress.",
+    "continuar": "Continue",
     "dondeTitulo": "Where would you like to book your appointment?",
     "cambiarUbicacion": "Change location",
     "cerrar": "Close",
     "titulo": "Book an appointment",
-    "intro": "Choose a day and a time. We'll confirm as soon as possible.",
     "dia": "Day",
     "hora": "Time",
     "avisoFecha": "Select a day and a time.",
@@ -247,7 +253,7 @@
     "avisoDatos": "Please fill in your name, surname and email to continue.",
     "enviar": "Confirm appointment",
     "confirmacionTitulo": "Appointment requested!",
-    "confirmacionTexto": "We'll confirm the day and time as soon as possible by email.",
+    "confirmacionTexto": "You'll receive a confirmation email for your request. Within the next 24 to 48 working hours, we'll get in touch with you by phone call or WhatsApp to confirm your appointment as soon as possible.",
     "volver": "Back to home"
   },
   "escribirResena": {
@@ -327,7 +333,7 @@
     "subtitulo": "Fely Campo",
     "titulo": "Atelier",
     "conoceColeccion": "Discover the collection",
-    "pedirCita": "Book an appointment at our atelier",
+    "pedirCita": "Book an appointment",
     "conoceAteliers": "Discover our ateliers"
   },
   "splitMediaCategorias": {
@@ -469,8 +475,39 @@
     }
   },
   "newsletterPopup": {
-    "titulo": "Join the Fely Campo universe",
+    "titulo": "Join Fely Campo",
+    "subtitulo": "Sign up to our newsletter for first access to special offers, limited collections, new arrivals and to stay connected with our community.",
+    "consentimiento": "By signing up I agree to receive email marketing.",
+    "noGracias": "No, thanks",
     "cerrar": "Close"
+  },
+  "cookies": {
+    "titulo": "Cookies",
+    "texto": "We use our own and third-party cookies to make the site work correctly, measure its use and personalise your experience.",
+    "enlace": "Cookie policy",
+    "personalizar": "Customise",
+    "rechazar": "Reject all",
+    "aceptar": "Accept all",
+    "guardar": "Save preferences",
+    "categorias": {
+      "necesarias": {
+        "nombre": "Necessary",
+        "texto": "Essential for the site to work properly. These cannot be switched off."
+      },
+      "analiticas": {
+        "nombre": "Analytics",
+        "texto": "Help us understand how the site is used so we can improve it."
+      },
+      "marketing": {
+        "nombre": "Marketing",
+        "texto": "Used to show you relevant advertising on and off our site."
+      }
+    }
+  },
+  "notFound": {
+    "eyebrow": "Error 404",
+    "texto": "This page doesn't exist or has moved.",
+    "boton": "Back to home"
   },
   "clientsReview": {
     "titulo": "In their own words",

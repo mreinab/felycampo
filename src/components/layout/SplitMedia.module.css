@@ -59,6 +59,7 @@
 .contenido .cta {
   color: var(--color-fondo);
   border-bottom-color: var(--color-fondo);
+  font-size: var(--text-caption);
 }
 
 /* landing: abajo pero pegado a la izquierda, no centrado — mismo
@@ -88,8 +89,15 @@
 
 .contenidoLanding .cta {
   color: var(--color-fondo);
-  border-bottom-color: var(--color-fondo);
-  text-transform: uppercase;
+  border: var(--border-regular) solid var(--color-fondo);
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--text-caption);
+  text-transform: none;
+}
+
+.contenidoLanding .cta:hover {
+  border-width: var(--border-regular);
+  padding: var(--spacing-2) var(--spacing-4);
 }
 
 /* El CTA solo aparece en hover/foco — oculto por opacidad, no por
@@ -120,6 +128,7 @@
 }
 .contenido.enVista .etiqueta,
 .contenidoLanding.enVista .tituloLanding {
+  margin-top: var(--spacing-6);
   animation: entradaContenido 0.9s var(--ease-marca) forwards;
 }
 

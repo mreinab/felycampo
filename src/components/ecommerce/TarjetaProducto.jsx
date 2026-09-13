@@ -3,6 +3,10 @@
 /* ============================================================
    TARJETA DE PRODUCTO — Fely Campo (e-commerce)
    Referente: styleguide.html #producto (.sg-prod).
+   Aparece con fundido+subida al entrar en el viewport (useEnVista,
+   ver .al-scroll/.en-vista en global.css) — no de golpe al cargar la
+   cuadrícula entera: cada tarjeta anima la primera vez que el scroll
+   la alcanza.
    Uso:
      <TarjetaProducto imagen="/img/aurora.jpg" imagenHover="/img/aurora-2.jpg"
         nombre="Vestido Aurora" precio="890 €" badge="Novia"
@@ -22,6 +26,7 @@ import { useLocale } from 'next-intl';
 import styles from './TarjetaProducto.module.css';
 import { Etiqueta, BotonGuardar, Boton } from '../ui';
 import { slugify } from '@/lib/slugify';
+import useEnVista from '@/hooks/useEnVista';
 
 /**
  * Tarjeta de producto de e-commerce. Sin badge = producto
@@ -82,6 +87,11 @@ function TarjetaProducto({
 }) {
   const locale = useLocale();
   const hrefProducto = `/${locale}/${hrefBase}/${slugify(nombre)}`;
+  // Aparece con un fundido+subida la primera vez que la tarjeta entra
+  // en el viewport al hacer scroll (ver .al-scroll/.en-vista en
+  // global.css) — mismo patrón que SplitMedia/MediaBanner, aquí en la
+  // cuadrícula de producto en vez de en un banner editorial.
+  const [ref, enVista] = useEnVista();
 
   const coloresVisibles = colores.slice(0, 3);
   const coloresRestantes = colores.length - coloresVisibles.length;
@@ -132,7 +142,7 @@ function TarjetaProducto({
   );
 
   return (
-    <article className={styles.tarjeta}>
+    <article ref={ref} className={`${styles.tarjeta} al-scroll ${enVista ? 'en-vista' : ''}`}>
       <a href={hrefProducto} className={styles.enlace}>
         <div className={`${styles.marco} ${esCarrusel ? styles.marcoCarrusel : ''}`}>
           {badge && (
