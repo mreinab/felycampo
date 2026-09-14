@@ -1,15 +1,15 @@
 /* ============================================================
    RUNWAY — Fely Campo. Ruta: /colecciones-fely-campo (antes
-   /archivo/runway — renombrada, ver colecciones.js/[coleccion]/page.js).
-   Cuadrícula editorial de las 9 colecciones de pasarela (ver
-   colecciones.js, datos compartidos con [coleccion]/page.js). Cada
-   tarjeta enlaza a /colecciones-fely-campo/[slug]-[temporada] en
-   minúsculas, ej. /colecciones-fely-campo/dreaming-ss26 (ver
-   slugCompleto en colecciones.js).
+   /archivo/runway — renombrada). Cuadrícula editorial de las 9
+   colecciones de pasarela (ver colecciones.js, datos compartidos con
+   la ficha de cada colección). Cada tarjeta enlaza a la ficha de su
+   colección en /runways-[slug] (ver ../runways-[coleccion]/page.js —
+   ruta hermana, no anidada bajo esta, a petición directa del usuario;
+   ej. /runways-dreaming, /runways-diafonia).
    ============================================================ */
 
 import { RunwayTarjeta } from '@/components/layout';
-import { COLECCIONES, slugCompleto } from './colecciones';
+import { COLECCIONES } from './colecciones';
 import styles from './page.module.css';
 
 export default async function Pagina({ params }) {
@@ -21,7 +21,7 @@ export default async function Pagina({ params }) {
         {COLECCIONES.map((coleccion) => (
           <RunwayTarjeta
             key={coleccion.slug}
-            href={`/${locale}/colecciones-fely-campo/${slugCompleto(coleccion)}`}
+            href={`/${locale}/runways-${coleccion.slug}`}
             nombre={coleccion.nombre}
             temporada={coleccion.temporada}
             medios={coleccion.medios}

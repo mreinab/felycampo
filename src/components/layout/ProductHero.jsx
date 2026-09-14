@@ -7,6 +7,11 @@
    antes de la cuadrícula — sin texto ni CTA, solo ambientación.
    Uso:
      <ProductHero imagen="/img/ecommerce/Categorias/vestido.webp" />
+     <ProductHero imagen="..." className="entrada-suave" />
+   "className" opcional, se suma a .hero — por ejemplo "entrada-suave"
+   (global.css) para un fundido+subida al montar, en páginas donde se
+   pide esa entrada (ver /ayuda/envios|devoluciones|contacto); el resto
+   de consumidores no lo pasan y no cambian.
    ============================================================ */
 
 import styles from './ProductHero.module.css';
@@ -32,11 +37,11 @@ import styles from './ProductHero.module.css';
  * .envoltorio (sin position:fixed), así que el comportamiento no
  * cambia nada ahí.
  */
-function ProductHero({ imagen, alt = '' }) {
+function ProductHero({ imagen, alt = '', className }) {
   return (
     <div className={styles.envoltorio} data-navbar-hero>
       <div
-        className={styles.hero}
+        className={`${styles.hero} ${className || ''}`}
         style={{ backgroundImage: `url(${imagen})` }}
         role={alt ? 'img' : undefined}
         aria-label={alt || undefined}

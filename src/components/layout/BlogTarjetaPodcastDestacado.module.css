@@ -64,7 +64,6 @@
 .meta {
   font-size: var(--text-caption);
   text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
   color: var(--color-crema);
   opacity: 0.8;
 }
@@ -85,5 +84,23 @@
 }
 
 .tarjeta:hover .boton {
+  transform: scale(1.06);
+}
+
+/* Variante de .boton para TarjetaEnlaceExterno cuando el icono no es el
+   triángulo de "play" (ver icono="revista" en ese componente) — mismo
+   círculo/borde, sin el padding-left óptico que ese triángulo necesita. */
+.botonAlt {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-regular) solid var(--color-crema);
+  color: var(--color-crema);
+  transition: transform 0.25s var(--ease-marca);
+}
+
+.tarjeta:hover .botonAlt {
   transform: scale(1.06);
 }

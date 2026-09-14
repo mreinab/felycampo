@@ -5,7 +5,7 @@
 /* ============================================================
    CARRUSEL DE CLIENTAS — Fely Campo
    Tira horizontal de fotos de clientas para la home, justo encima de
-   BloqueSeccion ("De mujeres, Para mujeres, por las mujeres") — sin
+   BloqueSeccion ("De mujeres, Para mujeres, Por las mujeres") — sin
    título propio, solo la tira de fotos.
    Cada tile es CarruselFotos (ui/, cross-fade + barra de progreso al
    pasar el ratón, mismo componente que ResenasClientes.jsx/

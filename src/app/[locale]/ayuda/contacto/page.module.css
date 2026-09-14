@@ -1,0 +1,68 @@
+/* ============================================================
+   CONTACTO — Fely Campo
+   Título (mismo estilo que CollectionTitle.module.css, ver page.js) +
+   cuadrícula de 4 grupos de contacto (tiendas/email/prêt-à-porter/
+   click&collect), centrada, + párrafos de presentación, justificados
+   — mismo ancho legible (--max-texto) que RunwayDescripcion/
+   .texto-legible en los dos casos, centrados como bloque
+   (margin-inline:auto) aunque el texto largo no vaya centrado.
+   ============================================================ */
+
+/* Solo espaciado — la tipografía viene de collectionTitleStyles.titulo
+   (CollectionTitle.module.css), aplicada junto a esta en page.js. */
+.titulo {
+  margin-block: var(--spacing-8) var(--spacing-6);
+}
+
+.grupos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-6);
+  max-width: var(--max-texto);
+  margin-inline: auto;
+  padding-bottom: var(--spacing-8);
+  text-align: center;
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.grupoTitulo {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  color: var(--color-gris-700);
+  margin-bottom: var(--spacing-1);
+}
+
+.chat {
+  color: var(--color-tinta);
+}
+
+.horario {
+  font-size: var(--text-small);
+  color: var(--color-gris-500);
+}
+
+.parrafos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  max-width: var(--max-texto);
+  margin-inline: auto;
+  padding-bottom: var(--spacing-10);
+  color: var(--color-gris-600);
+  line-height: var(--leading-base);
+  text-align: justify;
+}
+
+@media (max-width: 767px) {
+  .grupos {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-5);
+  }
+}

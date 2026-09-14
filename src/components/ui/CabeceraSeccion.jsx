@@ -94,9 +94,9 @@ function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, description, b
             </ol>
           </nav>
         ) : (
-          subtitleKey && <h2 className={styles.subtitle}>{t(subtitleKey)}</h2>
+          subtitleKey && <p className={styles.subtitle}>{t(subtitleKey)}</p>
         )}
-        <p className={collectionTitleStyles.titulo}>{t(titleKey)}</p>
+        <h2 className={collectionTitleStyles.titulo}>{t(titleKey)}</h2>
         {textoDescripcion && <p className={styles.descripcion}>{textoDescripcion}</p>}
       </div>
       {children}

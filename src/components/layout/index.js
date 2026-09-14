@@ -25,6 +25,7 @@ export { default as CookieConsent } from './CookieConsent';
 export { default as MapaPuntosVenta } from './MapaPuntosVenta';
 export { default as BlogTarjeta } from './BlogTarjeta';
 export { default as BlogTarjetaPodcastDestacado } from './BlogTarjetaPodcastDestacado';
+export { default as TarjetaEnlaceExterno } from './TarjetaEnlaceExterno';
 export { default as BlogArticulo } from './BlogArticulo';
 export { default as BlogPodcast } from './BlogPodcast';
 export { default as BlogCampana } from './BlogCampana';

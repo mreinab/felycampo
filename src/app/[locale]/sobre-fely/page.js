@@ -12,10 +12,10 @@
    Campo" / "La Diseñadora", mismo tratamiento nombre/temporada que la
    ficha de colección) + RunwayDescripcion (historia de la firma,
    unida en un único párrafo corrido — RunwayDescripcion solo admite
-   un "texto") → RunwayBackstage (cuadrícula editorial con las fotos de
-   trayectoria que existen — "Hoy" se quedó sin foto propia, ver
-   sobreFely.js — con el manifiesto poético intercalado en medio: su
-   foto en columna izquierda + el poema en la derecha, misma fila
+   un "texto") → RunwayBackstage (cuadrícula editorial con la foto de
+   cada etapa de la trayectoria, ver sobreFely.js — con el manifiesto
+   poético intercalado en medio: sus fotos en columna izquierda + el
+   poema en la derecha, misma fila
    — prop "poema" con "imagenes"/"indice", tratado como una imagen más
    de la cuadrícula, ver ese componente) → biografía completa en texto
    corrido, un bloque por año/etapa (.biografia en page.module.css).
@@ -27,7 +27,7 @@
    propio de la página y vive en sobreFely.js. */
 
 import { getTranslations } from 'next-intl/server';
-import { RunwayBackstage, RunwayDescripcion, RunwayMediaLateral } from '@/components/layout';
+import { RunwayBackstage, RunwayDescripcion, RunwayMediaLateral, TarjetaEnlaceExterno } from '@/components/layout';
 import { SOBRE_FELY } from './sobreFely';
 import styles from './page.module.css';
 
@@ -77,6 +77,33 @@ export default async function Pagina({ params }) {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className={styles.enlacesExternos}>
+          <div className={styles.enlacesExternosGrid}>
+            {SOBRE_FELY.enlacesExternos.map((enlace) => (
+              <div key={enlace.href} className={styles.enlaceExternoCelda}>
+                <TarjetaEnlaceExterno
+                  href={enlace.href}
+                  titulo={enlace.titulo}
+                  meta={enlace.meta[locale]}
+                  imagen={enlace.imagen}
+                  alt={enlace.titulo}
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className={styles.enlaceExternoDestacado}>
+            <TarjetaEnlaceExterno
+              href={SOBRE_FELY.prensaDestacada.href}
+              titulo={SOBRE_FELY.prensaDestacada.titulo}
+              meta={SOBRE_FELY.prensaDestacada.meta[locale]}
+              imagen={SOBRE_FELY.prensaDestacada.imagen}
+              alt={SOBRE_FELY.prensaDestacada.titulo}
+              icono="revista"
+            />
+          </div>
         </div>
       </div>
     </section>

@@ -82,6 +82,7 @@ function NewsletterModal({ abierto, onCerrar, imagen = '/img/27fw-banner.jpg' })
               >
                 {tFooter('newsletter.enviar')}
               </Boton>
+              <p className={styles.consentimiento}>{t('consentimiento')}</p>
             </div>
             {estado === 'exito' && (
               <p className={`${styles.estado} ${styles.estadoExito}`} role="status">
@@ -93,7 +94,8 @@ function NewsletterModal({ abierto, onCerrar, imagen = '/img/27fw-banner.jpg' })
                 {tFooter('newsletter.error')}
               </p>
             )}
-            <p className={styles.consentimiento}>{t('consentimiento')}</p>
+          </div>
+          <div className={styles.pie}>
             <button type="button" className={styles.noGracias} onClick={onCerrar}>
               {t('noGracias')}
             </button>

@@ -40,6 +40,9 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/atelier-fiesta/oviedo',
   '/sobre-fely',
   '/responsabilidad',
+  '/ayuda/envios',
+  '/ayuda/devoluciones',
+  '/ayuda/contacto',
 ];
 
 export const metadata = {
@@ -73,11 +76,13 @@ export default async function RootLayout({ children, params }) {
   const rutaSinLocale = pathname.replace(new RegExp(`^/${locale}`), '') || '/';
   const isHome = rutaSinLocale === '/';
   const tieneProductHero = RUTAS_CON_PRODUCT_HERO.includes(rutaSinLocale);
-  // Ficha de colección de Runway (/colecciones-fely-campo/[coleccion],
-  // ruta dinámica — no puede vivir en RUTAS_CON_PRODUCT_HERO, que solo
-  // hace match exacto): mismo Navbar transparente que Tienda/Atelier,
-  // con su propio hero marcado data-navbar-hero (ver [coleccion]/page.js).
-  const esFichaRunway = rutaSinLocale.startsWith('/colecciones-fely-campo/');
+  // Ficha de colección de Runway (/runways-[coleccion], ruta dinámica
+  // con el prefijo "runways-" en el propio nombre de carpeta — no
+  // puede vivir en RUTAS_CON_PRODUCT_HERO, que solo hace match
+  // exacto): mismo Navbar transparente que Tienda/Atelier, con su
+  // propio hero marcado data-navbar-hero (ver runways-[coleccion]/
+  // page.js).
+  const esFichaRunway = rutaSinLocale.startsWith('/runways-');
   // Igual que "esFichaRunway": páginas de categoría de Atelier
   // (/atelier/{novias,fiesta}/categoria/[categoria], ruta dinámica —
   // ver ese page.js) llevan el mismo ProductHero que ../page.js, así

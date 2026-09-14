@@ -63,12 +63,18 @@ function Footer() {
     { titulo: 'Síguenos', enlaces: ['Instagram', 'YouTube'] },
   ];
 
-  // Único enlace real de las 3 columnas (el resto siguen siendo
-  // placeholders "#", ver el <a> más abajo) — enlaza al manifiesto
-  // sostenible ya maquetado en /responsabilidad (ver page.js de esa
-  // ruta), con la etiqueta "Sostenibilidad" en vez del nombre técnico
-  // de la ruta.
-  const hrefColumna = (enlace) => (enlace === 'Sostenibilidad' ? withLocale('/responsabilidad') : '#');
+  // Enlaces reales de las 3 columnas (el resto — de momento solo
+  // "Instagram"/"YouTube" — siguen siendo placeholders "#", ver el <a>
+  // más abajo) — por etiqueta en vez del nombre técnico de cada ruta.
+  const RUTAS_COLUMNAS = {
+    'Envíos': '/ayuda/envios',
+    'Devoluciones': '/ayuda/devoluciones',
+    'Contacto': '/ayuda/contacto',
+    'Sostenibilidad': '/responsabilidad',
+    'Sobre Nosotros': '/sobre-fely',
+    'Puntos de venta': '/puntos-de-venta-fely-campo',
+  };
+  const hrefColumna = (enlace) => (RUTAS_COLUMNAS[enlace] ? withLocale(RUTAS_COLUMNAS[enlace]) : '#');
 
   return (
     <footer className={styles.footer}>

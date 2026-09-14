@@ -1,11 +1,12 @@
 /* ============================================================
    PANEL DE CLIENTE (/mi-cuenta/panel) — Fely Campo
-   Dos columnas: sidebar de pestañas (subrayado) + contenido, mismo
-   patrón general que .layout de carrito/page.module.css (sidebar
-   sticky, un min-width:0 en el contenido para que no fuerce el
-   ancho). Esquinas siempre rectas (radio 0 salvo donde el resto del
-   sistema ya usa var(--radius-imagenes)/var(--radius-botones)), igual
-   criterio que el resto del sitio.
+   Dos columnas: sidebar de pestañas (subrayado, en mayúsculas) +
+   contenido, mismo patrón general que .layout de carrito/page.module.css
+   (sidebar sticky bajo la Navbar —top:calc(var(--nav-height) +
+   var(--spacing-4))—, un min-width:0 en el contenido para que no
+   fuerce el ancho). Esquinas siempre rectas (radio 0 salvo donde el
+   resto del sistema ya usa var(--radius-imagenes)/var(--radius-botones)),
+   igual criterio que el resto del sitio.
    ============================================================ */
 
 :global(.panelCliente) {
@@ -26,12 +27,16 @@
   }
 }
 
+/* top: debajo de la Navbar sticky (--nav-height), no un espaciado
+   suelto — mismo cálculo que BlogArticulo/BlogCampana.module.css, para
+   que el sidebar se quede pegado justo bajo el header en vez de
+   colarse detrás o dejar un hueco arbitrario al hacer scroll. */
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--spacing-5);
   position: sticky;
-  top: var(--spacing-8);
+  top: calc(var(--nav-height) + var(--spacing-4));
   align-self: start;
 }
 
@@ -48,28 +53,45 @@
    (a su vez, el mismo lenguaje que .navLink/.navLinkActivo del propio
    Navbar) — aquí en columna, alineado a la izquierda en vez de
    centrado. */
+/* display:flex (icono + texto) en vez del <button> de texto suelto
+   de antes — el subrayado ya no puede ir en .tab entero (correría por
+   debajo del icono también), así que vive en .tabTexto (el <span> de
+   la etiqueta) en su lugar. */
 .tab {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
   font-family: var(--font-base);
   font-size: var(--text-small);
   font-weight: var(--font-weight-medium);
   color: var(--color-tinta);
   background: none;
   border: none;
-  padding: 0 0 var(--spacing-1) 0;
+  padding: 0;
   text-align: left;
   cursor: pointer;
+  width: fit-content;
+}
+
+.tab svg {
+  flex-shrink: 0;
+}
+
+.tabTexto {
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  padding-bottom: var(--spacing-1);
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: var(--spacing-1);
   transition: text-decoration-color 0.25s var(--ease-marca);
-  width: fit-content;
 }
 
-.tab:hover {
+.tab:hover .tabTexto {
   text-decoration-color: var(--color-tinta);
 }
 
-.tabActivo {
+.tabActivo .tabTexto {
   text-decoration-color: var(--color-tinta);
 }
 

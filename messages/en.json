@@ -106,7 +106,7 @@
   "talleres": {
     "eyebrow": "Our process",
     "titulo": "Our Workshops",
-    "intro": "Since 2014 we've worked mainly with local suppliers, building a close relationship that grows season after season. We visit every workshop regularly to get to know the people who make our garments."
+    "intro": "Where hands tell stories\n\nEvery Fely Campo piece is born close by. In our in-house workshop and two small workshops in the sierra, skilled hands transform each fabric with time, precision and sensitivity.\n\nBehind those hands are women, craft and territory. Women who can keep creating from the place they belong to, keeping alive a know-how that's part of our identity.\n\nFor Fely Campo, luxury also means this: creating beauty while respecting those who make it possible, generating opportunities and defending women's economic independence, in rural areas too."
   },
   "atelierFiesta": {
     "salamanca": {
@@ -149,6 +149,43 @@
     "clickCollectLabel": "Click & Collect",
     "clickCollect": "In-store pickup available.",
     "direccionLabel": "Store"
+  },
+  "envios": {
+    "titulo": "Shipping",
+    "texto": "We prepare every order by hand at our atelier in Salamanca and ship it across Spain and the European Union.",
+    "entregaLabel": "Estimated delivery",
+    "entrega": "2 weeks",
+    "zonaLabel": "Shipping area",
+    "zona": "Spain and the European Union",
+    "seguimientoLabel": "Tracking",
+    "seguimiento": "You'll receive an email with your tracking number as soon as your order leaves the atelier.",
+    "dudasTexto": "Any questions about your shipment? Write to us at <email>info@felycampo.com</email> or check <atencion>Customer Service</atencion>."
+  },
+  "devoluciones": {
+    "titulo": "Returns",
+    "texto": "You can contact us at <email>info@felycampo.com</email> or on <telefono>+34 683 703 644</telefono> within 14 calendar days of receiving your order to arrange a return or exchange. We'll guide you through the next steps.",
+    "gastosLabel": "Return shipping cost",
+    "gastos": "Covered by the customer, except for defective items or an order error.",
+    "masInfoTexto": "Visit our <atencion>Customer Service</atencion> page for more information."
+  },
+  "contacto": {
+    "titulo": "Contact",
+    "tiendasTitulo": "Store enquiries",
+    "horario": "Mon - Fri: 8:00 AM - 4:00 PM",
+    "emailTitulo": "E-mail",
+    "pretaporterTitulo": "Prêt-à-porter enquiries",
+    "chatOnline": "Online chat",
+    "clickCollectTitulo": "Click & Collect",
+    "direccion": "C/ Laguna Negra 17-19, Salamanca",
+    "parrafos": [
+      "At felycampo.com we want to help you choose the finest wedding gowns and eveningwear, exquisite luxury prêt-à-porter looks perfect for any occasion.",
+      "At our new Atelier in Madrid you'll find the latest from our runway collections, and you can also experience the unique process of creating a made-to-measure gown, whether for a party, a wedding, or any other event.",
+      "If you're looking for your wedding dress, our Bridal Atelier in Salamanca is ready to welcome you for a truly unique experience.",
+      "At the Fely Campo Fiesta stores in Salamanca and Oviedo, whether you're the mother of the bride, a guest or a bridesmaid for any event, our stylists will personally guide you to find the perfect dress.",
+      "You'll also find us through our wide network of stockists, both nationally and internationally.",
+      "Fely Campo brings the elegance of its design into everyday life with the prêt-à-porter line, available at our Salamanca store.",
+      "Come and discover the magic of Fely Campo in person."
+    ]
   },
   "carrito": {
     "titulo": "Cart",
@@ -230,7 +267,7 @@
   },
   "pedirCitaAtelier": {
     "introTitulo": "Welcome to Fely Campo",
-    "dondeIntro": "Come and discover firsthand our unique experience, at one of our boutiques/ateliers in Madrid, Salamanca or Oviedo.\n\nA space designed entirely for you, where our personal stylists will guide you through the whole process until you find the perfect dress.",
+    "dondeIntro": "Come experience it at one of our boutiques/ateliers in Madrid, Salamanca or Oviedo.\n\nOur personal stylists will guide you through the whole process until you find the perfect dress.",
     "continuar": "Continue",
     "dondeTitulo": "Where would you like to book your appointment?",
     "cambiarUbicacion": "Change location",
@@ -274,10 +311,12 @@
     "tabDatos": "My details",
     "pedidosTitulo": "My orders",
     "pedidoNumero": "Order {numero}",
+    "pedidoTotal": "Total {total}",
     "escribirResena": "Write a review",
     "resenaEnviada": "Review submitted",
     "resenasTitulo": "My reviews",
     "resenasVacio": "You haven't written any reviews yet.",
+    "resenasPendientesTitulo": "Products to review",
     "datosTitulo": "My details",
     "datosSubtitulo": "This is how we see you — you can update it anytime.",
     "guardarCambios": "Save changes"
@@ -294,6 +333,8 @@
     "fechaNacimiento": "Date of birth",
     "email": "Email",
     "emailPlaceholder": "jane@example.com",
+    "telefono": "Phone",
+    "telefonoPlaceholder": "+34 683 703 644",
     "password": "Password",
     "enviarLogin": "Log in",
     "enviarRegistro": "Create account",
@@ -477,7 +518,7 @@
   "newsletterPopup": {
     "titulo": "Join Fely Campo",
     "subtitulo": "Sign up to our newsletter for first access to special offers, limited collections, new arrivals and to stay connected with our community.",
-    "consentimiento": "By signing up I agree to receive email marketing.",
+    "consentimiento": "You agree to receive marketing emails.",
     "noGracias": "No, thanks",
     "cerrar": "Close"
   },

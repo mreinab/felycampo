@@ -106,7 +106,7 @@
   "talleres": {
     "eyebrow": "Nuestro proceso",
     "titulo": "Nuestros talleres",
-    "intro": "Desde 2014 trabajamos principalmente con proveedores locales, construyendo una relación cercana que crece temporada tras temporada. Visitamos con regularidad cada taller para conocer de cerca a quienes confeccionan nuestras prendas."
+    "intro": "Donde las manos cuentan historias\n\nCada pieza Fely Campo nace cerca. En nuestro taller in-house y en dos pequeños talleres de la sierra, manos expertas transforman cada tejido con tiempo, precisión y sensibilidad.\n\nDetrás de esas manos hay mujeres, oficio y territorio. Mujeres que pueden seguir creando desde el lugar al que pertenecen, manteniendo vivo un saber hacer que forma parte de nuestra identidad.\n\nPara Fely Campo, el lujo también significa esto: crear belleza respetando a quienes la hacen posible, generando oportunidades y defendiendo la independencia económica de las mujeres, también en el entorno rural."
   },
   "atelierFiesta": {
     "salamanca": {
@@ -149,6 +149,43 @@
     "clickCollectLabel": "Click & Collect",
     "clickCollect": "Recogida en tienda disponible.",
     "direccionLabel": "Tienda"
+  },
+  "envios": {
+    "titulo": "Envíos",
+    "texto": "Preparamos cada pedido a mano en nuestro atelier de Salamanca y lo enviamos a toda España y a la Unión Europea.",
+    "entregaLabel": "Entrega estimada",
+    "entrega": "2 semanas",
+    "zonaLabel": "Zona de envío",
+    "zona": "España y Unión Europea",
+    "seguimientoLabel": "Seguimiento",
+    "seguimiento": "Recibirás un email con el número de seguimiento en cuanto tu pedido salga del atelier.",
+    "dudasTexto": "¿Tienes alguna duda sobre tu envío? Escríbenos a <email>info@felycampo.com</email> o consulta <atencion>Atención al cliente</atencion>."
+  },
+  "devoluciones": {
+    "titulo": "Devoluciones",
+    "texto": "Puedes ponerte en contacto con nosotros en <email>info@felycampo.com</email> o en el <telefono>+34 683 703 644</telefono> dentro de los 14 días naturales siguientes a la recepción del pedido para gestionar una devolución o cambio. Te indicaremos los pasos a seguir.",
+    "gastosLabel": "Gastos de devolución",
+    "gastos": "A cargo de la clienta, salvo prenda defectuosa o error en el pedido.",
+    "masInfoTexto": "Visita nuestra página de <atencion>Atención al cliente</atencion> para más información."
+  },
+  "contacto": {
+    "titulo": "Contacto",
+    "tiendasTitulo": "Atención a tiendas",
+    "horario": "Lun - Vie: 8:00 - 16:00",
+    "emailTitulo": "E-mail",
+    "pretaporterTitulo": "Atención Prêt-à-porter",
+    "chatOnline": "Chat online",
+    "clickCollectTitulo": "Click & Collect",
+    "direccion": "C/ Laguna Negra 17-19, Salamanca",
+    "parrafos": [
+      "En felycampo.com queremos ayudarte a elegir los mejores vestidos de novia y vestidos de fiesta, looks especiales de prêt-à-porter de lujo ideales para cualquier ocasión.",
+      "En nuestro nuevo Atelier de Madrid encontrarás lo último de nuestras colecciones de pasarela y además podrás vivir la experiencia única de crear un vestido a medida, ya sea de fiesta, novia o para cualquier evento.",
+      "Si estás buscando tu vestido de novia, ponemos a tu disposición nuestro Atelier Novia Salamanca, donde vivirás una experiencia única.",
+      "En las tiendas Fely Campo Fiesta Salamanca y Oviedo, si eres la madrina, invitada o dama de honor de cualquier evento, nuestras estilistas te asesorarán personalmente para que encuentres el vestido perfecto.",
+      "Además, tienes a tu disposición una gran red de puntos de venta a nivel nacional e internacional, donde encontrar nuestra firma.",
+      "Fely Campo lleva la elegancia de su diseño al día a día con la línea prêt-à-porter, que podrás encontrar en nuestra tienda de Salamanca.",
+      "Ven a conocer en directo la magia de Fely Campo."
+    ]
   },
   "carrito": {
     "titulo": "Carrito",
@@ -230,7 +267,7 @@
   },
   "pedirCitaAtelier": {
     "introTitulo": "Bienvenida a Fely Campo",
-    "dondeIntro": "Ven a conocer en primera persona la experiencia única en una de nuestras tiendas/atelier en Madrid, Salamanca u Oviedo.\n\nUn ambiente diseñado totalmente para ti, donde nuestros asesores de imagen te acompañarán durante todo el proceso para que encuentres el vestido perfecto.",
+    "dondeIntro": "Ven a vivir la experiencia en una de nuestras tiendas. Nuestros asesores de imagen te acompañarán durante todo el proceso para que encuentres el vestido perfecto.",
     "continuar": "Continuar",
     "dondeTitulo": "¿Dónde quieres pedir la cita?",
     "cambiarUbicacion": "Cambiar ubicación",
@@ -274,10 +311,12 @@
     "tabDatos": "Mis datos",
     "pedidosTitulo": "Mis pedidos",
     "pedidoNumero": "Pedido {numero}",
+    "pedidoTotal": "Total {total}",
     "escribirResena": "Escribir reseña",
     "resenaEnviada": "Reseña enviada",
     "resenasTitulo": "Mis reseñas",
     "resenasVacio": "Todavía no has escrito ninguna reseña.",
+    "resenasPendientesTitulo": "Productos por reseñar",
     "datosTitulo": "Mis datos",
     "datosSubtitulo": "Así es como te vemos nosotras — puedes actualizarlo cuando quieras.",
     "guardarCambios": "Guardar cambios"
@@ -294,6 +333,8 @@
     "fechaNacimiento": "Fecha de nacimiento",
     "email": "Email",
     "emailPlaceholder": "maria@ejemplo.com",
+    "telefono": "Teléfono",
+    "telefonoPlaceholder": "+34 683 703 644",
     "password": "Contraseña",
     "enviarLogin": "Iniciar sesión",
     "enviarRegistro": "Crear cuenta",
@@ -456,8 +497,8 @@
     }
   },
   "visitaAtelier": {
-    "titulo": "De mujeres, Para mujeres, por las mujeres",
-    "texto": "Fely Campo nace en Salamanca como firma de moda femenina en 1997. Especializada en colecciones de fiesta y novia, la firma ha logrado ser un referente en el sector, dentro y fuera de nuestras fronteras gracias al compromiso con la calidad y el diseño atemporal.",
+    "titulo": "De mujeres, Para mujeres, Por las mujeres",
+    "texto": "Con 54 años de trayectoria, Fely Campo está profundamente ligada a la tierra charra, de piedra, luz y oficio. Especializada en fiesta, novia y prêt-à-porter, Fely Campo crea piezas desde el patronaje, la elección de tejidos y el conocimiento de unas manos que entienden como un oficio que se transmite y permanece.",
     "enlace": "Descubre más"
   },
   "compromiso": {
@@ -477,7 +518,7 @@
   "newsletterPopup": {
     "titulo": "Únete a Fely Campo",
     "subtitulo": "Suscríbete a nuestra newsletter para tener acceso anticipado a ofertas especiales, novedades y estar conectada con nuestra comunidad.",
-    "consentimiento": "Al registrarte aceptas recibir comunicaciones comerciales por email.",
+    "consentimiento": "Aceptas recibir comunicaciones comerciales.",
     "noGracias": "No, gracias",
     "cerrar": "Cerrar"
   },

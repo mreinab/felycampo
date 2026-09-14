@@ -26,7 +26,6 @@
   max-height: 85vh;
   overflow-y: auto;
   background: var(--color-fondo);
-  border-top: var(--border-regular) solid var(--color-gris-200);
   padding: var(--spacing-5) var(--spacing-6);
 }
 
@@ -80,6 +79,7 @@
 
 .enlacePersonalizar {
   white-space: nowrap;
+  margin-right: var(--spacing-2);
 }
 
 /* ---------- Panel "Personalizar" ---------- */

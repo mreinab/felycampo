@@ -1,7 +1,10 @@
-/* Placeholder — pendiente de maquetar. Ruta: /atelier/fiesta */
+/* Ruta: /atelier/fiesta — catálogo real de la colección Furisode (ver
+   furisodeProductos.js); el resto de colecciones del desplegable
+   (COLECCIONES_FIESTA) sigue siendo solo visual, sin datos propios
+   todavía, ver comentario "colecciones" en CuadriculaProductos.jsx. */
 
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
-import { productosEjemplo } from '@/components/layout/productosEjemplo';
+import { furisodeProductos } from '@/components/layout/furisodeProductos';
 
 // Colecciones de Fiesta, de la más reciente a la más antigua — ver
 // comentario de "colecciones" en CuadriculaProductos.jsx (de momento
@@ -24,7 +27,7 @@ export default function Pagina() {
     <section className="seccion">
       <ProductHero imagen="/img/invitadas-sección-FelyCampo.jpg" />
       <CuadriculaProductos
-        productos={productosEjemplo}
+        productos={furisodeProductos}
         disposicion="grid"
         tituloKey="nav.links.atelier"
         coleccionKey="nav.submenus.atelier.fiesta"

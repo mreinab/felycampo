@@ -2,92 +2,93 @@
    ver page.js. Bilingüe por entrada ({es, en}), mismo criterio que
    "descripcion" en visita-fely-campo/ubicaciones.js.
 
-   Placeholder puro: los 4 talleres repiten el mismo texto (datos +
-   párrafos) por encargo directo del usuario, hasta que llegue el
-   contenido real de cada uno — solo cambian el id y la foto.
+   Solo 2 talleres reales: Béjar (taller-1) y Tamames (taller-2) — los
+   otros dos placeholder se han retirado por encargo directo del
+   usuario. Los párrafos de Béjar ya son el texto real (de encargo,
+   recibido el 2026-09-14) — antes reutilizaban el de Tamames como
+   relleno temporal, marcado con "(Pendiente)".
 
-   OJO con las imágenes: los dos .webp de public/img/talleres/ con
-   nombre en hash (388bbd0..., c4fcfd2...) NO son fotos de taller —
-   son AVIF de zapatos mal etiquetados con extensión .webp. No
-   reutilizar aquí por error (ver historial: se usaron por error una
-   vez y se corrigieron). */
+   MEDIOS: sin vídeos ni gif (a petición directa del usuario, no le
+   gustaban en el carrusel — se han borrado también los .mp4 que
+   había en public/img/talleres/{bejar,tamares}/, solo quedan fotos).
+   Las fotos están reexportadas a .webp, ancho máximo 1600px, calidad
+   78 (las originales eran JPG de hasta 20MP/~2MB — de foto de
+   cámara, no pensadas para web). Varias venían giradas 90° sin
+   metadato EXIF de orientación (el "Orientation" tag no estaba
+   presente), así que además de comprimir hubo que rotarlas a mano
+   una a una (no todas necesitaban lo mismo, ver historial de
+   conversión). Reduce el peso de esta carpeta en más de un 90% sin
+   pérdida apreciable de calidad a los tamaños en los que se muestran
+   (ver .marco en page.module.css). */
 
-const PLACEHOLDER = {
-  tipo: { es: 'Taller costura atelier', en: 'Atelier sewing workshop' },
-  distancia: { es: 'En Béjar, a 18km de nuestro estudio', en: 'In Béjar, 18km from our studio' },
-  trabajadores: { es: '10 costureras', en: '10 seamstresses' },
-  liderazgo: { es: 'Liderado por mujeres', en: 'Woman-led' },
-  parrafos: {
-    es: [
-      'Esta proveedora lleva más de 37 años dedicada a la industria de la confección. Actualmente dirige un pequeño atelier, aunque lleno de luz. Cuenta con ocho costureras más y con su hijo, que se encarga principalmente de la logística, aunque también ayuda a rematar prendas cuando hace falta. Este taller está a 28 minutos en coche de nuestra sede, en una zona cultural en expansión.',
-      'Colaborar con este atelier nos ha permitido crear prendas experimentales y de gran calidad, o como dice su propietaria, «hacer realidad los deseos de la diseñadora». Ella y las costureras cuentan con mucha experiencia y saben coser las sedas más finas y delicadas para que todo salga perfecto.',
-      'El atelier no es solo una instalación de fabricación; es también un taller de desarrollo y producción. Este formato está desapareciendo poco a poco en España, y estamos muy orgullosas de habernos aliado con este tipo de empresas y de apoyarlas. Trabajan de una forma particular: no funcionan en cadena, sino que cada costurera confecciona la misma prenda de principio a fin. Aun así, se apoyan mutuamente, buscando siempre maneras de mejorar las prendas y su construcción.',
-      'El lema de la propietaria para el atelier es el trabajo en equipo, y así se refleja en el ambiente de trabajo. Esta misma mentalidad está muy presente en el equipo de Paloma y en los otros pequeños talleres a los que recurre para externalizar algunas tareas, como el corte, el planchado, el lavado y el patronaje. Cada prenda que confecciona es un testimonio de su pasión.',
-    ],
-    en: [
-      'This provider has been dedicated to the tailoring industry for over 37 years. She now runs a small—although full of light—atelier. She counts on eight other seamstresses and her son, who mainly takes care of logistics but will also help finish garments if needed. This atelier is located 28 minutes by car from our headquarters, in a growing cultural area.',
-      'Partnering with this atelier has allowed us to create high-quality and experimental garments, as the owner says, "making the designer’s wishes come true." She and the seamstresses have a lot of experience and know how to sew the finest and most delicate silks to ensure everything comes out perfectly.',
-      'The atelier is not just a manufacturing facility; it is also a development and production atelier. This format is slowly disappearing in Spain, and we are very proud to have partnered with and supported such companies. They work uniquely: they don’t work in an assembly line; instead, each seamstress produces the same garment from start to finish. However, they will offer mutual support to each other, always finding ways to improve garments and their construction.',
-      'The owner’s motto towards the atelier is teamwork, which is reflected in the work environment. This mindset is also very present within Paloma’s team and the other small ateliers she supports to outsource some tasks such as cutting, ironing, washing, and pattern making. Every garment that she makes is a testament to her passion.',
-    ],
-  },
-};
-
-const TALLERES_FOTOS = [
-  { id: 'taller-1', imagen: '/img/atelier/ateliernovia-lamedida-felycampo-2.webp' },
-  { id: 'taller-2', imagen: '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp' },
-  { id: 'taller-3', imagen: '/img/talleres/salamanca-ateliernovia-ateliernoviasalamanca-ubicacion-felycampo.webp' },
-  { id: 'taller-4', imagen: '/img/talleres/madrid-atelier_madrid_fiesta_novia_medida.webp' },
-];
-
-// Solo hay 1 foto real por taller (imagen, arriba) — para que el
-// carrusel (ver .imagenes en page.js) no se vea con la misma foto
-// repetida 6 veces, "medios" recicla las 4 fotos del conjunto entero
-// en grupos de 3 distintas por taller (la propia + las 2 siguientes
-// del conjunto, con vuelta al principio) — sigue siendo placeholder,
-// pero ya se nota el efecto de una galería real. Talleres 3-4 (aún sin
-// fotos/vídeo propios) usan esto; talleres 1-2 tienen su propio set
-// real más abajo, que sustituye por completo a este reciclado.
-const IMAGENES_POOL = TALLERES_FOTOS.map((taller) => taller.imagen);
-
-// "medios": {tipo, src} en vez de solo la URL — a partir de taller-2
-// el carrusel mezcla fotos y vídeo (ver .marco/.imagen en
-// page.module.css, mismo elemento para ambos tipos vía object-fit).
-const imagen = (src) => ({ tipo: 'imagen', src });
-const video = (src) => ({ tipo: 'video', src });
-
-// Taller 1: set propio de fotos reales (public/img/talleres/taller-1/).
+// Taller 1 (Béjar): 6 fotos reales, en public/img/talleres/bejar/.
 const MEDIOS_TALLER_1 = [
-  imagen('/img/talleres/taller-1/IMG_9719.JPG'),
-  imagen('/img/talleres/taller-1/IMG_9725.JPG'),
-  imagen('/img/talleres/taller-1/IMG_9730.JPG'),
-  imagen('/img/talleres/taller-1/IMG_9738.JPG'),
-  imagen('/img/talleres/taller-1/IMG_9742.JPG'),
-  imagen('/img/talleres/taller-1/IMG_9760.JPG'),
+  '/img/talleres/bejar/bejar-taller-felycampo-01.webp',
+  '/img/talleres/bejar/bejar-taller-felycampo-02.webp',
+  '/img/talleres/bejar/bejar-taller-felycampo-03.webp',
+  '/img/talleres/bejar/bejar-taller-felycampo-04.webp',
+  '/img/talleres/bejar/bejar-taller-felycampo-05.webp',
+  '/img/talleres/bejar/bejar-taller-felycampo-06.webp',
 ];
 
-// Taller 2: 5 fotos reales (public/img/talleres/taller-2/) + 1 vídeo,
-// en autoplay silencioso en bucle (ver .imagen/video en page.js) —
-// mismo criterio que MEDIOS_POR_CIUDAD en
-// visita-fely-campo/ListadoUbicaciones.jsx.
+// Taller 2 (Tamames): 8 fotos reales, en public/img/talleres/tamares/
+// (nombre de carpeta tal cual lo subió el usuario, con esa grafía).
 const MEDIOS_TALLER_2 = [
-  imagen('/img/talleres/taller-2/IMG_9844.JPG'),
-  imagen('/img/talleres/taller-2/IMG_9881.JPG'),
-  imagen('/img/talleres/taller-2/IMG_9884.JPG'),
-  imagen('/img/talleres/taller-2/IMG_9888.JPG'),
-  imagen('/img/talleres/taller-2/IMG_9904.JPG'),
-  video('/img/talleres/taller-2/MVI_9790.MP4'),
+  '/img/talleres/tamares/00-taller.webp',
+  '/img/talleres/tamares/01-taller.webp',
+  '/img/talleres/tamares/02-taller.webp',
+  '/img/talleres/tamares/03-taller.webp',
+  '/img/talleres/tamares/04-taller.webp',
+  '/img/talleres/tamares/05-taller.webp',
+  '/img/talleres/tamares/06-taller.webp',
+  '/img/talleres/tamares/07-taller.webp',
 ];
 
-const MEDIOS_PROPIOS = {
-  'taller-1': MEDIOS_TALLER_1,
-  'taller-2': MEDIOS_TALLER_2,
-};
-
-export const TALLERES = TALLERES_FOTOS.map(({ id, imagen: imagenPrincipal }, indice) => ({
-  id,
-  imagen: imagenPrincipal,
-  medios: MEDIOS_PROPIOS[id]
-    ?? [0, 1, 2].map((paso) => imagen(IMAGENES_POOL[(indice + paso) % IMAGENES_POOL.length])),
-  ...PLACEHOLDER,
-}));
+export const TALLERES = [
+  {
+    id: 'taller-1',
+    imagen: '/img/talleres/bejar/bejar-taller-felycampo-01.webp',
+    medios: MEDIOS_TALLER_1,
+    tipo: { es: 'Taller Béjar', en: 'Béjar workshop' },
+    distancia: { es: '72 km desde nuestro taller en Salamanca', en: '72 km from our workshop in Salamanca' },
+    liderazgo: { es: 'Liderado por Blanca', en: 'Led by Blanca' },
+    parrafos: {
+      es: [
+        'Su historia con la costura inició cuando ella cumple 12 años, cuando su madre la llevó a aprender con una modista. A los 16, cuando antaño se podía empezar a trabajar, entró en una fábrica y desde entonces coser se convirtió en su manera de estar en el mundo: es lo que ama, lo que conoce y lo que sigue haciendo, cada día, con la misma entrega.',
+        'Después de pasar por distintas fábricas y ver cómo fueron cerrando una tras otra, hace 13 años abrió su propio taller. Fue entonces cuando comenzó también su historia con Fely Campo, una relación construida puntada a puntada, desde el oficio, la constancia y el amor por hacer las cosas bien.',
+        'Su lugar de trabajo habla de ella. Está lleno de plantas y flores, de fotos de sus mascotas y de su familia, de dos canarios en la ventana rodeados de verde, y de frases sobre la historia de la moda que cubren las paredes. Un taller lleno de vida, donde la costura no es solo un oficio, sino una forma de habitar el tiempo.',
+      ],
+      en: [
+        'Her story with sewing began when she turned 12, when her mother took her to learn from a dressmaker. At 16 — back when you could start working at that age — she joined a factory, and from then on sewing became her way of being in the world: it’s what she loves, what she knows, and what she still does, every day, with the same dedication.',
+        'After working in several factories and watching them close down one after another, she opened her own workshop 13 years ago. That was also when her story with Fely Campo began — a relationship built stitch by stitch, out of craft, perseverance and a love of doing things well.',
+        'Her workshop speaks of her. It’s full of plants and flowers, photos of her pets and her family, two canaries by the window surrounded by greenery, and quotes about the history of fashion covering the walls. A workshop full of life, where sewing isn’t just a craft but a way of inhabiting time.',
+      ],
+    },
+  },
+  {
+    id: 'taller-2',
+    imagen: '/img/talleres/tamares/00-taller.webp',
+    medios: MEDIOS_TALLER_2,
+    tipo: { es: 'Taller Tamames', en: 'Tamames workshop' },
+    distancia: { es: '54 km desde nuestro taller en Salamanca', en: '54 km from our workshop in Salamanca' },
+    liderazgo: { es: 'Liderado por María José', en: 'Led by María José' },
+    parrafos: {
+      es: [
+        'En Tamames, el tiempo se mide con experiencia y sueños cumplidos.',
+        'María José lleva 44 años dedicándose a la costura. Amalia, 25. Isabel, 36. Amalia e Isabel son hermanas, y las tres comparten mucho más que un oficio. Realmente es una pasión.',
+        'Hace 35 años trabajaban juntas en un pequeño taller de la misma calle para otros costureros. Desde su ventana veían, justo enfrente, el espacio que algún día imaginaron como propio. Un lugar más grande, más suyo, donde continuar haciendo aquello que sabían hacer con las manos y con el corazón.',
+        'Un día cruzaron la calle.',
+        'Desde entonces, aquel taller soñado se convirtió en su lugar de trabajo. Y desde hace 19 años, también forma parte de la historia de Fely Campo. En los tablones de corcho conviven pequeñas estampas religiosas, que colecciona Amalia, con una fotografía de David Bustamante, el favorito de María José. Pequeños gestos que han acumulado por el paso de los años y hablan de ellas, convirtiendo el espacio de trabajo en algo íntimo y propio.',
+        'Tres mujeres, décadas de oficio y una manera de entender la costura que no se aprende deprisa. Se transmite, se perfecciona y se conserva.',
+      ],
+      en: [
+        'In Tamames, time is measured in experience and dreams come true.',
+        'María José has been sewing for 44 years. Amalia, 25. Isabel, 36. Amalia and Isabel are sisters, and the three of them share much more than a craft — it’s truly a passion.',
+        'Thirty-five years ago they worked together in a small workshop on the same street, for other tailors. From their window they could see, right across the street, the space they once imagined as their own: somewhere bigger, more theirs, where they could keep doing what they knew how to do with their hands and their heart.',
+        'One day they crossed the street.',
+        'Since then, that dreamed-of workshop became their workplace. And for the past 19 years, it has also been part of Fely Campo’s story. On the corkboards, small religious prints collected by Amalia sit alongside a photo of David Bustamante, María José’s favourite. Small details gathered over the years that speak of who they are, turning the workspace into something intimate and their own.',
+        'Three women, decades of craft, and a way of understanding sewing that isn’t learned quickly. It’s passed down, refined, and kept alive.',
+      ],
+    },
+  },
+];

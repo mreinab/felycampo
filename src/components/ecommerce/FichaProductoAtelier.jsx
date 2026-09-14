@@ -28,6 +28,10 @@
    compartido (productosEjemplo.js), sin backend real todavía que
    cruce productos por colección/categoría de verdad. Enlaza a esta
    misma ficha (hrefBase) y sin precio (ocultarPrecio), no a Tienda.
+   Fiesta es la excepción: busca y enseña relacionados dentro de
+   furisodeProductos.js (catálogo real de la colección Furisode), no del
+   placeholder genérico — Novias sigue igual, sin catálogo propio
+   todavía.
    "Categorías" (debajo del Acordeon): las combinaciones en sí son
    PLACEHOLDER, mismo criterio que "relacionados" — productosEjemplo no
    tiene todavía un campo propio de categoría/silueta, así que aquí se
@@ -55,6 +59,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { productosEjemplo } from '@/components/layout/productosEjemplo';
+import { furisodeProductos } from '@/components/layout/furisodeProductos';
 import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
 import { ProductosRecomendados, ResenasClientes } from '@/components/layout';
 import GaleriaProducto from './GaleriaProducto';
@@ -77,16 +82,20 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   const tProducto = await getTranslations('producto');
   const tFiltros = await getTranslations('filtros');
 
-  const producto = productosEjemplo.find((candidato) => slugify(candidato.nombre) === slug);
+  // Fiesta ya tiene catálogo real (furisodeProductos) — Novias sigue
+  // con el placeholder genérico hasta que tenga el suyo.
+  const catalogo = seccion === 'fiesta' ? furisodeProductos : productosEjemplo;
+
+  const producto = catalogo.find((candidato) => slugify(candidato.nombre) === slug);
   if (!producto) notFound();
 
-  const indiceProducto = productosEjemplo.indexOf(producto);
+  const indiceProducto = catalogo.indexOf(producto);
   const categorias = COMBOS_ESTILO_SILUETA[indiceProducto % COMBOS_ESTILO_SILUETA.length];
 
-  // Mismo catálogo de ejemplo, excluyendo el producto actual — hasta
-  // 10, la misma cantidad que espera ProductosRecomendados en su
-  // carrusel (ver tienda/[producto]/page.js).
-  const relacionados = productosEjemplo.filter((candidato) => candidato !== producto).slice(0, 10);
+  // Mismo catálogo que "producto", excluyendo el actual — hasta 10, la
+  // misma cantidad que espera ProductosRecomendados en su carrusel (ver
+  // tienda/[producto]/page.js).
+  const relacionados = catalogo.filter((candidato) => candidato !== producto).slice(0, 10);
 
   return (
     <section className="seccion contenedor">

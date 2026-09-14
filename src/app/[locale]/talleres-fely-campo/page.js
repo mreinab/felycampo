@@ -21,7 +21,6 @@ export default async function Pagina({ params }) {
     <section className="seccion">
       <div className="contenedor">
         <CabeceraSeccion
-          subtitleKey="talleres.eyebrow"
           titleKey="talleres.titulo"
           descriptionKey="talleres.intro"
           alinear="start"
@@ -29,29 +28,31 @@ export default async function Pagina({ params }) {
         />
 
         {/* Un taller por fila (ver .grid): dentro de cada uno, el
-            carrusel de medios (.imagenes) va arriba y .info debajo,
-            apilados en columna (ver .taller). 6 huecos, ciclando
-            taller.medios (fotos y, a partir de taller-2, algún vídeo
-            en autoplay — ver talleres.js) — el último solo se ve
-            parcialmente en escritorio, como pista de que se puede
-            seguir scrolleando (ver .marco:nth-child en
-            page.module.css). */}
+            carrusel de fotos (.imagenes) va arriba y .info debajo,
+            apilados en columna (ver .taller). Se pinta cada foto de
+            taller.medios tal cual (sin recortar ni reciclar — eso era
+            solo para el placeholder antiguo, ver historial), así que
+            el taller con más fotos simplemente scrollea más.
+            loading="lazy" en todas salvo la primera del primer
+            taller (ya visible al cargar la página), para no forzar
+            la descarga de todo el carrusel de golpe (ver
+            .marco:nth-child en page.module.css para el "asoma el
+            borde" de los últimos huecos). */}
         <ul className={styles.grid}>
-          {TALLERES.map((taller) => (
+          {TALLERES.map((taller, indiceTaller) => (
             <li key={taller.id} className={styles.taller}>
               <CarruselImagenes className={styles.imagenes}>
-                {[0, 1, 2, 3, 4, 5].map((indice) => {
-                  const medio = taller.medios[indice % taller.medios.length];
-                  return (
-                    <div key={indice} className={styles.marco}>
-                      {medio.tipo === 'video' ? (
-                        <video src={medio.src} className={styles.imagen} autoPlay muted loop playsInline />
-                      ) : (
-                        <img src={medio.src} alt="" className={styles.imagen} />
-                      )}
-                    </div>
-                  );
-                })}
+                {taller.medios.map((src, indiceMedio) => (
+                  <div key={indiceMedio} className={styles.marco}>
+                    <img
+                      src={src}
+                      alt=""
+                      className={styles.imagen}
+                      loading={indiceTaller === 0 && indiceMedio === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                    />
+                  </div>
+                ))}
               </CarruselImagenes>
 
               <div className={styles.info}>
@@ -59,7 +60,6 @@ export default async function Pagina({ params }) {
                   <div className={styles.meta}>
                     <p>{taller.tipo[locale]}</p>
                     <p>{taller.distancia[locale]}</p>
-                    <p>{taller.trabajadores[locale]}</p>
                     <p>{taller.liderazgo[locale]}</p>
                   </div>
 

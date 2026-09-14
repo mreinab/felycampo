@@ -19,9 +19,9 @@
    (nombre/temporada → "Fely Campo"/"La Diseñadora", ver page.js) +
    RunwayDescripcion (historia de la firma, unida en un único párrafo
    — ahí es siempre un texto corrido) + RunwayBackstage (cuadrícula
-   editorial con las fotos de trayectoria que sí existen — ver "Hoy"
-   más abajo — con el manifiesto poético intercalado en medio: su
-   foto en columna izquierda + el poema en la derecha, misma fila —
+   editorial con la foto de cada etapa de la trayectoria — con el
+   manifiesto poético intercalado en medio: sus fotos en columna
+   izquierda + el poema en la derecha, misma fila —
    prop "poema" de RunwayBackstage, ver ese componente) + la
    biografía completa en
    texto corrido debajo (.biografia, un bloque por
@@ -33,15 +33,22 @@
    propio todavía.
 
    "trayectoria": un bloque por año/etapa, cada uno con su año, imagen
-   y uno o más párrafos. 2003 trae dos párrafos (el viaje a París + el
-   arranque de la internacionalización que sigue de ese mismo hecho,
-   sin año propio). Imágenes: 2 fotos reales de Fely Campo en
-   public/img/about-felycampo/ (una en el hero, otra en "Hoy") +
-   reciclado de fondo real ya usado en otras páginas (artesany.jpg —
-   encaja literalmente con "taller de costura" de 1972 — atelier de
-   Salamanca, taller-1, portadas de Runway/Novia) donde aún no hay
-   foto de archivo propia para esa etapa, mismo criterio documentado
-   en atelieres.js.
+   (opcional) y uno o más párrafos. 2003 trae dos párrafos (el viaje a
+   París + el arranque de la internacionalización que sigue de ese
+   mismo hecho, sin año propio). Imágenes: todas salen de
+   public/img/about-felycampo/ a petición directa del usuario (nada
+   reciclado de otras páginas, a diferencia del criterio de
+   atelieres.js) — la carpeta trae más fotos de las que hacían falta
+   aquí (de podcast, revista y una entrevista en vídeo, todas con
+   texto/logos superpuestos, ver "enlacesExternos" más abajo) que se
+   descartan para esta cuadrícula editorial, que solo lleva foto
+   limpia. Solo hay 6 fotos limpias para 9 huecos (hero + 6 años + 2
+   del poema) y cada una se usa una única vez en toda la página (a
+   petición directa del usuario, sin repetir ninguna) — así que 1972,
+   1975 y 1995 se quedan sin "imagen" (mismo criterio que ya traía
+   "Hoy" antes de tener foto propia: RunwayBackstage/fotosBackstage
+   filtra las entradas sin imagen, ver page.js, no deja un <img>
+   roto ni un hueco vacío en la cuadrícula).
 
    "historia": "texto" — historia de la firma (fundación en 1997,
    expansión nacional e internacional desde 2003, cifras actuales de
@@ -57,7 +64,14 @@
    RunwayBackstage.jsx/.module.css), no sueltas entre el resto de fotos
    de trayectoria. El poema ya no va corrido en RunwayDescripcion —
    así se veía en el primer maquetado de la página, antes de sumar la
-   historia de la firma. */
+   historia de la firma.
+
+   "enlacesExternos": tarjetas de podcast/prensa al final de la página
+   (ver page.js), incluyendo el resto de fotos de about-felycampo/ que
+   no encajaban en la cuadrícula editorial de trayectoria por llevar
+   texto/logo superpuesto (ver ese comentario más arriba) — aquí ese
+   texto ya no estorba, la tarjeta entera es un enlace de salida a la
+   aparición real (vídeo/pódcast/prensa), no una foto de archivo. */
 
 export const SOBRE_FELY = {
   // Hero de RunwayMediaLateral (ver page.js) — mismo campo "medios[0]"
@@ -69,7 +83,13 @@ export const SOBRE_FELY = {
   trayectoria: [
     {
       anio: { es: '1972', en: '1972' },
-      imagen: '/img/artesany.jpg',
+      // Sin "imagen": cada foto limpia de about-felycampo/ se usa una
+      // sola vez en toda la página (a petición directa del usuario) y
+      // las 6 disponibles ya se reparten entre el hero, 1981, 2003,
+      // "Hoy" y las 2 del poema (ver comentario de "trayectoria" más
+      // arriba) — no queda ninguna libre para 1972/1975/1995, así que
+      // se quitan en vez de repetir una imagen (mismo criterio que
+      // "Hoy" ya usaba antes de tener foto propia).
       texto: {
         es: [
           'Eran las 7:00 de la mañana de un frío día de otoño. Yo tenía 13 años cuando mi madre me llevó a un taller de costura en Salamanca. Ninguna de las dos podía imaginar el impacto que aquello tendría en mi vida. Allí comencé a aprender mi oficio, un aprendizaje que nunca he dejado de cultivar. Pero, más importante aún, fue mi puerta de entrada al mundo de la moda, un universo que me apasionó desde el primer momento, me fascinó y sigue haciéndolo hoy.',
@@ -81,7 +101,6 @@ export const SOBRE_FELY = {
     },
     {
       anio: { es: '1975', en: '1975' },
-      imagen: '/img/collections/novia/Bride27-cover.webp',
       texto: {
         es: [
           'Con 16 años diseñé mi primer vestido de novia para una vecina que también tenía 16 años. Empezaba a descubrir cómo, a través de los tejidos y el diseño, podía expresar quién era y proyectarme al mundo. Sin embargo, aún me quedaba camino por recorrer antes de poder dar plena libertad al impulso creativo que llevaba dentro.',
@@ -93,7 +112,7 @@ export const SOBRE_FELY = {
     },
     {
       anio: { es: '1981', en: '1981' },
-      imagen: '/img/talleres/taller-1/IMG_9719.JPG',
+      imagen: '/img/about-felycampo/elmundodefelycampo-ladisenadora-felycampo.webp',
       texto: {
         es: [
           'Abrí la Academia de Corte y Confección, que en 1986 se transformó en una Escuela de Diseño. Recuerdo la emoción de llegar el primer día y ver, por primera vez, mi nombre en la puerta. Fue una etapa apasionante, llena de desfiles, profesores inspiradores y, sobre todo, mucha creatividad.',
@@ -105,7 +124,6 @@ export const SOBRE_FELY = {
     },
     {
       anio: { es: '1995', en: '1995' },
-      imagen: '/img/atelier/atelier-salamanca/tienda-salamanca.webp',
       texto: {
         es: [
           'Ese recorrido me llevó a abrir mi primera tienda Fely Campo, dedicada a la moda femenina. A través de los tejidos, el diseño y una manera muy personal de vestir, comencé a conectar con mi comunidad. Poco a poco fui creando una clientela que buscaba elegancia, frescura y un estilo diferente al de los demás. Así comenzó el crecimiento de la firma Fely Campo en España.',
@@ -117,7 +135,7 @@ export const SOBRE_FELY = {
     },
     {
       anio: { es: '2003', en: '2003' },
-      imagen: '/img/collections/runway/FW23_diafonia-cover.webp',
+      imagen: '/img/about-felycampo/PM26_Fely_Campo_0934.jpg',
       texto: {
         es: [
           'Preparé una colección, la metí en dos maletas y viajé a la feria Who\'s Next de París. Pasara lo que pasara, sabía que sería una experiencia de aprendizaje. El tercer día de mi primera participación, una tienda de Kuwait realizó un pedido. Fue suficiente para regresar. Y volví durante siete colecciones consecutivas.',
@@ -131,11 +149,7 @@ export const SOBRE_FELY = {
     },
     {
       anio: { es: 'Hoy', en: 'Today' },
-      // Sin "imagen": la foto de archivo que traía este bloque
-      // (Copia-de-Cabecera-Noticias-12.jpg) no existe en
-      // public/img/about-felycampo/ — se quita en vez de dejar un
-      // <img> roto en RunwayBackstage (ver "fotosBackstage" en
-      // page.js, filtra las entradas sin imagen).
+      imagen: '/img/about-felycampo/fely-campo-portada.webp',
       texto: {
         es: [
           'Fely Campo está presente en toda Europa, con colecciones que se distribuyen en España, Italia, Reino Unido e Irlanda, Francia, Bélgica, Suiza y Alemania. Mantengo la tienda original de Salamanca y otra en Oviedo, además de los ateliers especializados en moda nupcial y de fiesta en Salamanca y Madrid. El trabajo constante, la pasión por los tejidos y el diseño bien elaborado, unidos al espíritu emprendedor propio de una Serrano, me han permitido construir un universo al que he dedicado toda mi vida.',
@@ -150,12 +164,12 @@ export const SOBRE_FELY = {
   historia: {
     texto: {
       es: [
-        'Fely Campo nace en Salamanca como firma de moda femenina en 1997. Especializada en colecciones de fiesta y novia, la firma ha logrado ser un referente en el sector, dentro y fuera de nuestras fronteras gracias al compromiso con la calidad y el diseño atemporal.',
+        'Con 54 años de trayectoria, Fely Campo está profundamente ligada a la tierra charra, de piedra, luz y oficio. Especializada en fiesta, novia y prêt-à-porter, Fely Campo crea piezas desde el patronaje, la elección de tejidos y el conocimiento de unas manos que entienden como un oficio que se transmite y permanece.',
         'Desde su fundación y manteniendo su sede en Salamanca, la firma fue llegando cada vez a más puntos de venta, a nivel nacional, hasta que en 2003 decide que es el momento de dar el paso a su expansión internacional.',
         'A partir de esa fecha y con las mismas constantes e ideales que las de su creadora: pasión, fuerza y trabajo, comienza el proceso de expansión de la firma. Actualmente cuenta con un equipo de 12 trabajadores y 22 mujeres costureras colaborando con la marca en los pueblos de Castilla y León, además posee casi 200 puntos de venta en el ámbito nacional e internacional.',
       ],
       en: [
-        'Fely Campo was born in Salamanca as a womenswear label in 1997. Specialising in eveningwear and bridal collections, the firm has become a benchmark in the industry, both within and beyond our borders, thanks to its commitment to quality and timeless design.',
+        'With 54 years of history, Fely Campo is deeply rooted in the Charra land of Salamanca, of stone, light and craft. Specialising in occasion wear, bridal and prêt-à-porter, Fely Campo creates pieces from the pattern-making, the choice of fabrics and the knowledge of hands that understand it as a craft passed down and enduring.',
         "Since its founding, and while keeping its headquarters in Salamanca, the firm steadily reached more points of sale across Spain, until in 2003 it decided the time had come to take the step into international expansion.",
         "From that date on, and guided by the same constants and ideals as its creator — passion, strength and hard work — the firm's expansion process began. Today it has a team of 12 employees and 22 seamstresses collaborating with the brand in the villages of Castilla y León, and it now has almost 200 points of sale nationally and internationally.",
       ],
@@ -163,12 +177,12 @@ export const SOBRE_FELY = {
   },
 
   manifiesto: {
-    // Foto que acompaña al poema en RunwayBackstage (ver page.js,
-    // prop "poema.imagenes" — admite una o dos, aquí solo una), la
-    // que hacía de heroImagen antes de cambiarla por
-    // fely-campo-conoce-a-la-disenadora.jpg, reaprovechada aquí en vez
-    // de quedar sin usar.
-    imagenesPoema: ['/img/about-felycampo/6738f8cc5cdea.jpeg'],
+    // Fotos que acompañan al poema en RunwayBackstage (ver page.js,
+    // prop "poema.imagenes").
+    imagenesPoema: [
+      '/img/about-felycampo/6738f8cc5cdea.jpeg',
+      '/img/about-felycampo/elegir-fely-27.jpeg',
+    ],
     texto: {
       es: [
         'La austeridad y la oscuridad de la sierra de Salamanca se doblegan ante la luz que atraviesa la negrura.',
@@ -209,5 +223,38 @@ export const SOBRE_FELY = {
         'By women.',
       ],
     },
+  },
+
+  // Tarjetas de podcast/prensa al final de la página (ver page.js,
+  // TarjetaEnlaceExterno — mismo diseño que BlogTarjetaPodcastDestacado
+  // de /blog, pero enlazando fuera del sitio). "titulo" no lleva
+  // traducción (nombre propio del programa/episodio, igual que
+  // "nombre" de UBICACIONES en visita-fely-campo/ubicaciones.js).
+  enlacesExternos: [
+    {
+      // (Pendiente) falta el enlace real del vídeo — de momento apunta a
+      // "#" para no dejar un <a> sin destino.
+      href: '#',
+      titulo: 'Madrid, Capital de Moda',
+      meta: { es: 'Entrevista en vídeo', en: 'Video interview' },
+      imagen: '/img/about-felycampo/madrid-moda-de-capital-felycampo-podcast.jpg',
+    },
+    {
+      href: 'https://www.youtube.com/watch?v=daejHVPhdJM',
+      titulo: 'Haz que pase ¡Emprende!',
+      meta: { es: 'Pódcast', en: 'Podcast' },
+      imagen: '/img/about-felycampo/haz-que-pase-felycampo-podcast.jpg',
+    },
+  ],
+
+  // Aparición en prensa escrita — debajo de "enlacesExternos" en vez de
+  // dentro de esa cuadrícula de 2 columnas (ver page.js): a diferencia
+  // del vídeo/pódcast, aquí "icono" de TarjetaEnlaceExterno es
+  // "revista" en vez de "play" (ver ese componente).
+  prensaDestacada: {
+    href: 'https://www.theworldkats.com/2023/09/Fely-Campo-Fashion-Designer-Interview.html',
+    titulo: 'The World Kats',
+    meta: { es: 'Revista', en: 'Magazine' },
+    imagen: '/img/about-felycampo/magazine-fely-campo-entrevista.jpg',
   },
 };

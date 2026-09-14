@@ -84,7 +84,7 @@
    artificial para que el efecto funcione. */
 .filaNewsletterWrap {
   margin-block: auto;
-  padding-top: var(--spacing-2);
+  padding-top: auto;
 }
 
 /* Mismo input+botón+consentimiento que Footer.module.css
@@ -117,7 +117,7 @@
   flex: 1;
   min-width: 0;
   border: none;
-  padding: 8px 4px;
+  padding: 4px 4px;
   font-family: var(--font-base);
   font-size: var(--text-small);
 }
@@ -143,11 +143,18 @@
 .estadoExito { color: var(--color-verde); }
 .estadoError { color: var(--color-rojo); }
 
+/* Bloque propio para "No, gracias", separado de .filaNewsletterWrap
+   (que centra formulario+consentimiento en el hueco bajo el título) y
+   empujado al fondo de .columnaTexto con margin-top:auto, igual que
+   .filaNewsletterWrap se centra con margin-block:auto. */
+.pie {
+  margin-top: auto;
+}
+
 .consentimiento {
   font-size: var(--text-caption);
   color: var(--color-gris-600);
   line-height: var(--leading-base);
-  margin-top: var(--spacing-1);
   text-align: center;
 }
 

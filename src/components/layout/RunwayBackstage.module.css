@@ -102,11 +102,25 @@
     width: 100%;
     grid-template-columns: 1fr;
     gap: var(--spacing-6);
+    /* Sin esto las fotos llegan a tocar el borde de la pantalla — a
+       diferencia del 80% + margin-inline:auto de desktop, aquí no hay
+       nada que las separe del viewport. Mismo valor que .biografia de
+       /sobre-fely en mobile (page.module.css). */
+    padding-inline: var(--spacing-4);
   }
 
   /* En una sola columna el patrón de cascada no aplica — todas las
-     fotos apiladas, cada una a todo el ancho. */
-  .grid > * {
+     fotos apiladas, cada una a todo el ancho. ".grid > *" no basta:
+     pesa menos (una clase) que las reglas de arriba que fuerzan
+     columna 2 (".grid > *:nth-child(4n+3)", ".grid > .poema" — dos
+     "clases" cada una, incluido el pseudo-clase) así que en mobile se
+     quedaban ganando ellas — el grid creaba una segunda columna
+     implícita que le robaba el ancho a la columna 1fr real, dejando
+     esas piezas a 0×0px. ".grid.grid" (misma clase repetida) iguala
+     esa especificidad a propósito; al ir después en la hoja de
+     estilos, gana siempre aquí, sin tener que enumerar cada regla de
+     la cascada de arriba una por una. */
+  .grid.grid > * {
     grid-column: 1;
   }
 }
