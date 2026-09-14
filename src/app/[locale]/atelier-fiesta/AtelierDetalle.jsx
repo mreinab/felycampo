@@ -145,15 +145,18 @@ async function AtelierDetalle({ datos, locale }) {
         )}
 
         <CarruselImagenes className={styles.imagenes}>
-          {[0, 1, 2, 3, 4].map((indice) => (
-            <EnVista key={indice} className={styles.marco}>
-              <img
-                src={datos.imagenesTira[indice % datos.imagenesTira.length]}
-                alt=""
-                className={styles.imagen}
-              />
-            </EnVista>
-          ))}
+          {[0, 1, 2, 3, 4].map((indice) => {
+            const medio = datos.imagenesTira[indice % datos.imagenesTira.length];
+            return (
+              <EnVista key={indice} className={styles.marco}>
+                {medio.tipo === 'video' ? (
+                  <video src={medio.src} className={styles.imagen} autoPlay muted loop playsInline />
+                ) : (
+                  <img src={medio.src} alt="" className={styles.imagen} />
+                )}
+              </EnVista>
+            );
+          })}
         </CarruselImagenes>
       </div>
     </section>

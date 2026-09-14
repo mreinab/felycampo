@@ -31,18 +31,27 @@
    pero ya admite imagen O vídeo) son cada uno un {tipo, src}, igual
    forma que "medio" en RunwayMediaLateral.jsx — así cualquiera de los
    dos puede ser imagen o vídeo según lo que tenga cada atelier, sin
-   dos campos separados por tipo. Salamanca/Oviedo: imagen en el hero,
-   vídeo debajo. Madrid: al revés — vídeo en el hero, imagen
-   (horizontal) debajo, ver su reportaje propio en
-   public/img/atelier/showroom-madrid/.
+   dos campos separados por tipo. Si tipo es 'video', admite además un
+   "poster" opcional (frame de reserva mientras carga o si no llega a
+   reproducirse — ver RunwayMediaLateral.jsx; Madrid es el único con
+   vídeo en el hero, así que el único que lo usa por ahora). Salamanca:
+   imagen en ambos (hero y elemento inferior), todo de su propio
+   reportaje. Oviedo: imagen en
+   el hero (reportaje propio, ver public/img/atelier/atelier-oviedo/),
+   vídeo debajo (todavía placeholder de taller-2 — el reportaje de
+   Oviedo no trae nada apaisado 16/9 propio, ver más abajo). Madrid: al
+   revés — vídeo en el hero, imagen (horizontal) debajo, ver su
+   reportaje propio en public/img/atelier/showroom-madrid/.
 
-   "imagenesTira": Salamanca y Madrid ya tienen reportaje propio (ver
-   public/img/atelier/atelier-salamanca/ y showroom-madrid/) — Oviedo
-   todavía no, así que sigue reciclando el fondo real de taller
-   (public/img/talleres/taller-1/ y taller-2/, incluidos los vídeos de
-   taller-2, ver talleres.js) que ya usa /talleres-fely-campo. Ese
-   reciclado es placeholder puro, igual que ese archivo: sustituir por
-   el reportaje real de Oviedo en cuanto exista.
+   "imagenesTira": array de {tipo, src} (mismo shape que
+   "heroMedio"/"medioSuperior" de arriba, no un array de src sueltos)
+   para poder mezclar imagen y vídeo — ver el bucle en
+   AtelierDetalle.jsx, que renderiza <video autoPlay muted loop> o
+   <img> según el tipo de cada uno. Las 3 fichas ya tienen reportaje
+   propio (ver public/img/atelier/atelier-salamanca/, showroom-madrid/
+   y atelier-oviedo/) — Oviedo es la única que alterna imagen/vídeo por
+   ahora (sus vídeos vienen comprimidos, ver los -original.mp4 al lado
+   de cada uno con el archivo tal cual llegó).
 
    Ubicación + "Pedir cita" (ver AtelierDetalle.jsx, cierre de la
    página antes de .imagenes): no vive aquí — se resuelve ahí mismo
@@ -51,24 +60,20 @@
    ListadoUbicaciones.jsx — así no se duplica la dirección en dos sitios
    que podrían desincronizarse. */
 
-const heroImagenes = {
-  oviedo: '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp',
-};
-
 export const ATELIERES = {
   salamanca: {
     id: 'salamanca',
     // Reportaje propio (ver public/img/atelier/atelier-salamanca/) —
     // igual que Madrid con showroom-madrid/, ya no hace falta reciclar
     // el fondo de taller-1/ para esta ficha (ver comentario de cabecera).
-    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/atelier-fiesta-salamanca-felycampo (1).jpg' },
-    medioSuperior: { tipo: 'video', src: '/img/talleres/taller-2/MVI_9790.MP4' },
+    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.05.40.jpeg' },
+    medioSuperior: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/rbksom_blobid1671730782555.jpg' },
     imagenesTira: [
-      '/img/atelier/atelier-salamanca/tienda-salamanca.webp',
-      '/img/atelier/atelier-salamanca/atelier-fiesta-salamanca-felycampo (1).jpg',
-      '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
-      '/img/atelier/atelier-salamanca/atelier-fiesta-salamanca-felycampo (3).jpg',
-      '/img/atelier/atelier-salamanca/atelierfiesta-atelierfiestasalamanca-felycampo-10.webp',
+      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.29.jpeg' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.07.jpeg' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.12.jpeg' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/qywohc_blobid1671730830904.jpg' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/unnamed (1).webp' },
     ],
     descripcion: {
       es: "En Salamanca, el atelier convive con el corazón creativo de la firma. Charo, que lleva 15 años con la firma, te atenderá con todo detalle. Completamente acristalado, el espacio se abre a dos universos que forman parte de la identidad de Fely Campo: a un lado, los campos dorados de Castilla; al otro, el taller, donde cada día tejidos, patrones y manos expertas dan forma a las colecciones. Desde el atelier puede contemplarse el ritmo real de la maison: el proceso, el oficio y la precisión que existen detrás de cada pieza. Un lugar donde paisaje y creación conviven, y donde la esencia de Castilla entra directamente en el universo de Fely Campo.",
@@ -77,7 +82,7 @@ export const ATELIERES = {
     secciones: [
       {
         titulo: { es: 'Experiencia única', en: 'A Unique Experience' },
-        imagen: '/img/atelier/atelier-salamanca/atelier-fiesta-salamanca-felycampo (3).jpg',
+        imagen: '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
         texto: {
           es: [
             'En nuestro Atelier Fiesta en Salamanca podrás vivir la magia de Fely Campo. Un lugar donde disfrutar del universo de la firma, en el que cada rincón y cada detalle está diseñado para que vivas una experiencia única en la que encontrar tu vestido para un evento. Hay un carácter atemporal en nuestros diseños, por lo que también podrás probarte los icónicos modelos de colecciones previas que siguen enamorando.',
@@ -91,7 +96,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Nuestro equipo', en: 'Our Team' },
-        imagen: '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
+        imagen: '/img/atelier/atelier-salamanca/atelier-fiesta-salamanca-felycampo (3).jpg',
         texto: {
           es: [
             'Recibirás la atención de un equipo que está deseando compartir contigo la búsqueda del look que te haga sentir cómoda y espectacular.',
@@ -108,7 +113,7 @@ export const ATELIERES = {
       {
         // Texto de encargo (4 párrafos) resumido a 2.
         titulo: { es: 'Asesoramiento personalizado', en: 'Personalised styling' },
-        imagen: '/img/atelier/atelier-salamanca/atelierfiesta-atelierfiestasalamanca-felycampo-10.webp',
+        imagen: '/img/atelier/atelier-salamanca/ysqruc_blobid1671730852312.jpg',
         texto: {
           es: [
             'De la mano de nuestro equipo tendrás un asesoramiento personalizado desde la primera cita: se sentarán contigo, te escucharán y buscarán junto a ti ese diseño de nuestras colecciones con el que te sientas identificada y segura, recomendándote los cortes, colores y tejidos que más favorecen tu silueta y asesorándote sobre las modificaciones posibles dentro del diseño elegido.',
@@ -124,14 +129,21 @@ export const ATELIERES = {
   },
   madrid: {
     id: 'madrid',
-    heroMedio: { tipo: 'video', src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid.mp4' },
+    heroMedio: {
+      tipo: 'video',
+      src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid.mp4',
+      poster: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
+    },
     // pretaporter-3-1024x683: la única de las 6 explícitamente
     // horizontal (1024x683 en el propio nombre de archivo) — encaja
     // mejor que las demás (de retrato) en la caja apaisada de .video.
     medioSuperior: { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_pretaporter-3-1024x683.jpg' },
     imagenesTira: [
-      '/img/atelier/showroom-madrid/atelier_madrid_fiesta_novia_medida_2.webp',
-      '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_showroom-3.jpg',
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_medida-2.jpg' },
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg' },
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/atelier_medida_madrid_fiesta_novia_felycampo.webp' },
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/unnamed (1).webp' },
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.jpg' },
     ],
     descripcion: {
       es: 'Nuestro atelier de Madrid ocupa un emplazamiento muy especial en la calle Jorge Juan, en pleno Barrio de Salamanca. Una elección que no es casual: Fely Campo nació en Salamanca y, de algún modo, la diseñadora continúa en Salamanca incluso cuando está en Madrid. El atelier es un espacio íntimo, pensado para descubrir la firma de una forma cercana y personal. Está atendido de manera permanente y, una vez a la semana, Fely Campo recibe personalmente las citas de diseño a medida. Un encuentro con la diseñadora en el que cada detalle, cada proporción y cada tejido comienzan a dar forma a una pieza única: un espacio donde el tiempo se detiene para vestir a cada mujer desde su propia esencia.',
@@ -143,7 +155,7 @@ export const ATELIERES = {
         // de cabecera) — ahora es una sección más, misma imagen de la
         // sala de pruebas/diseño a medida que ya tenía.
         titulo: { es: 'A medida', en: 'Made-to-measure' },
-        imagen: '/img/atelier/showroom-madrid/atelier_medida_madrid_fiesta_novia_felycampo.webp',
+        imagen: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp',
         texto: {
           es: [
             'Fely Campo busca crear una experiencia de absoluta complicidad con cada persona que decide crear el vestido perfecto junto a ella. Este espacio dentro del Atelier de Madrid es el lugar donde la diseñadora realiza el diseño a medida de piezas únicas e irrepetibles pensadas especialmente para cada mujer.',
@@ -155,7 +167,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Showroom', en: 'Showroom' },
-        imagen: '/img/atelier/showroom-madrid/15.jpg',
+        imagen: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_showroom-3.jpg',
         texto: {
           es: ["El Showroom de Fely Campo es el lugar dentro de su Atelier en Madrid donde la diseñadora expone muchas de las prendas más icónicas de la firma. Piezas que reflejan el alma y la esencia de su creadora durante sus 50 años de trayectoria en el mundo de la moda. Un lugar donde poder sumergirte en el mundo Fely Campo a través de vestidos e historia propias que reflejan el alma creadora de su diseñadora y toda la filosofía de la firma. Además de las últimas novedades y las colecciones al completo que la diseñadora presenta en la pasarela Mercedes Benz Fashion Week Madrid cada temporada."],
           en: ["The Fely Campo Showroom is the space within her Madrid Atelier where the designer displays many of the label's most iconic pieces — garments that reflect the soul and essence of their creator across her 50-year career in fashion. A place to immerse yourself in the Fely Campo world through dresses and stories of their own that reflect the designer's creative spirit and the full philosophy of the label, alongside the latest releases and the complete collections she presents on the Mercedes Benz Fashion Week Madrid runway each season."],
@@ -187,12 +199,18 @@ export const ATELIERES = {
   },
   oviedo: {
     id: 'oviedo',
-    heroMedio: { tipo: 'imagen', src: heroImagenes.oviedo },
+    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp' },
     medioSuperior: { tipo: 'video', src: '/img/talleres/taller-2/MVI_9853.MP4' },
+    // Reportaje propio (ver public/img/atelier/atelier-oviedo/) — igual
+    // que Salamanca/Madrid, ya cubre el carrusel. Alterna imagen/vídeo
+    // (ver "imagenesTira" en el comentario de cabecera) — quedan más
+    // fotos y 2 vídeos de sobra en la carpeta sin usar todavía.
     imagenesTira: [
-      '/img/talleres/taller-2/IMG_9881.JPG',
-      '/img/talleres/taller-2/IMG_9884.JPG',
-      '/img/talleres/taller-2/IMG_9888.JPG',
+      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/5-copia-2048x1365.jpg' },
+      { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.07.mp4' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_3-scaled.webp' },
+      { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.15.mp4' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_2-scaled.webp' },
     ],
     descripcion: {
       es: 'Desde 2015, un universo de moda y emoción en el corazón de Asturias. En pleno centro de Oviedo, corazón neurálgico de Asturias, nace nuestro espacio como punto de encuentro para quienes entienden la moda como una forma de expresión, de personalidad y de emoción. Porque el verdadero lujo no es llevar un vestido: es sentir que fue creado para ti. Aquí, cada mujer encuentra mucho más que un vestido, encuentra una manera única de sentirse ella misma. Un universo de tejidos, colores, texturas y siluetas en el que cada detalle importa, porque no existen dos mujeres iguales, ni dos sueños que puedan vestirse de la misma manera. Por eso, nuestro equipo de cuatro personas personaliza cada ilusión, cada deseo y cada sueño, cuidando cada elección para crear una propuesta que hable de ti y solo de ti. Desde la primera cita hasta el último detalle, nuestro compromiso es ofrecer una experiencia cercana, exclusiva y cuidadosamente personalizada, combinando la esencia de la alta costura con una mirada fresca, actual y joven.',

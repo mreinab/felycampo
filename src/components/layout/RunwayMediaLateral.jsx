@@ -20,7 +20,7 @@ function RunwayMediaLateral({ medio, alt }) {
   return (
     <div className={styles.medio}>
       {medio.tipo === 'video' ? (
-        <video src={medio.src} className={styles.media} autoPlay muted loop playsInline />
+        <video src={medio.src} poster={medio.poster} className={styles.media} autoPlay muted loop playsInline />
       ) : (
         <img src={medio.src} alt={alt} className={styles.media} />
       )}
