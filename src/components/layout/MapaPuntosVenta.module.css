@@ -7,6 +7,7 @@
 
 .seccion {
   padding-bottom: var(--spacing-10);
+  background: var(--color-fondo);
 }
 
 /* Mapa (65%) + listado accesible (35%) lado a lado — mismo criterio
@@ -124,9 +125,9 @@
   background: var(--color-details);
 }
 
-/* Aún no hay foto propia por punto de venta (ver IMAGENES_PLACEHOLDER
-   en MapaPuntosVenta.jsx — 3 fotos de atelier en bucle según posición
-   en el listado). Ancho fijo + aspect-ratio (no al revés): un ancho
+/* Foto real por punto de venta cuando existe, si no cae en un ciclo de
+   3 fotos de atelier de respaldo (ver IMAGEN_POR_ID/IMAGENES_FALLBACK
+   en MapaPuntosVenta.jsx). Ancho fijo + aspect-ratio (no al revés): un ancho
    fijo con alto derivado del aspect-ratio es el único de los dos
    sentidos que los navegadores resuelven de forma fiable dentro de un
    flex item — derivar el ancho desde el alto real del botón (variable,

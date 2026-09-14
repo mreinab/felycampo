@@ -63,7 +63,8 @@
     "origenFabricado": "Fabricado en: Salamanca, España",
     "origenTintura": "Tintura y estampación: Italia",
     "origenTejido": "Origen tejido: India",
-    "categorias": "Categorías",
+    "sku": "Ref.",
+  "categorias": "Categorías",
     "porEncargoTitulo": "Producto por Encargo (PRE-ORDER)",
     "porEncargoTexto": "Esta prenda se realiza por encargo específicamente para cada pedido y cliente, por lo que no se admite realizar devolución una vez confirmado el pedido. Por ello puedes contactar con nosotros para más información y para hacer el pedido a través de nuestro botón de más información.",
     "envios": "Envíos y devoluciones",
@@ -397,7 +398,9 @@
   },
   "vosotras": {
     "descripcion": "Nuestras clientas, con sus propias palabras y sus propias fotos, llevando Fely Campo en sus momentos especiales.",
-    "verGaleria": "Ver galería"
+    "verGaleria": "Ver galería",
+    "invitadas": "Invitadas",
+    "novias": "Novias"
   },
   "atelierCategoriaSeo": {
     "titulo": "{categoria} · {seccion} · Atelier — Fely Campo",

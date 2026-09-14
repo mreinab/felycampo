@@ -3,6 +3,19 @@
    Esquinas rectas en todo, radio 0 en todas partes (--radius-botones).
    ============================================================ */
 
+/* Mobile: por delante del ProductHero fijo que va justo antes (ver
+   ProductHero.module.css) — fondo opaco + posicionada + z-index por
+   encima, mismo mecanismo exacto que .seccion.seccionGrid en
+   CuadriculaProductos.module.css, así lo va tapando a medida que se
+   hace scroll en vez de dejarlo asomar por los lados/debajo. */
+@media (max-width: 767px) {
+  .seccionUbicaciones {
+    position: relative;
+    z-index: 1;
+    background: var(--color-fondo);
+  }
+}
+
 /* Pasada a CabeceraSeccion como "className" — pone en columna su
    .cabeceraProductos.cabeceraInicio (fila en el resto del sitio, ver
    CabeceraSeccion.module.css) solo en esta página. !important a
@@ -42,20 +55,52 @@
   }
 }
 
-/* Una sola foto/vídeo, a sangre en su mitad — sin grid/columnas (ver
-   MEDIOS_TALLERES/medioDe en ListadoUbicaciones.jsx). */
+/* Mini-galería de la sede (CarruselFotos, ui/ — cross-fade al hover,
+   ver FOTOS_POR_CIUDAD/fotosDe en ListadoUbicaciones.jsx). .galeria
+   solo reparte el ancho/padding (mitad de .tarjeta, con hueco a la
+   izquierda); .marco es quien de verdad aloja el carrusel —
+   position:relative + overflow:hidden, lo que CarruselFotos pide de su
+   contenedor (ver "Uso" en CarruselFotos.jsx). Van separados a
+   propósito: el padding-left tiene que quedar FUERA de ese contenedor
+   posicionado, porque CarruselFotos rellena su contenedor con
+   position:absolute + inset:0 — el "containing block" de eso es la
+   padding box del ancestro posicionado más cercano, así que un
+   padding-left puesto en el propio .galeria (si fuera el posicionado)
+   quedaría cubierto igualmente y no se vería. Aquí no hace falta
+   aspect-ratio aparte en .marco, la propia altura de .tarjeta (flex
+   row) ya le da tamaño. */
 .galeria {
   width: 50%;
   flex: none;
   padding-left: var(--spacing-7);
 }
 
-.celda {
+.marco {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+/* Tira móvil (ver media query de abajo) — CarruselFotos (cross-fade al
+   HOVER) no tiene sentido en táctil puro: en vez de eso, en mobile/
+   tablet se enseña esta tira de las mismas fotos a pantalla completa
+   con scroll-snap horizontal nativo (el propio gesto de swipe basta,
+   sin JS — a diferencia de .imagenes/.marco de atelier-fiesta, que sí
+   necesita CarruselImagenes.jsx para el wheel del ratón en escritorio;
+   aquí no hay modo escritorio que soportar). Los dos bloques (.marco y
+   .galeriaMovil) conviven en el DOM siempre; la media query de abajo
+   decide cuál se ve — con display:none desde el primer render, el
+   navegador ni siquiera llega a pedir las imágenes del que no toca. */
+.galeriaMovil {
+  display: none;
+}
+
+.fotoMovil {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
 }
 
 .fila {
@@ -202,6 +247,36 @@
   .galeria {
     width: 100%;
     height: 50vh;
+    /* El padding-left de escritorio (hueco antes del .marco, separado
+       a propósito del posicionado — ver comentario de arriba) no pinta
+       nada aquí: en mobile la galería va a sangre completa. */
+    padding-left: 0;
+  }
+
+  /* Cross-fade de escritorio oculto; en su lugar, la tira con swipe de
+     abajo (ver comentario en .galeriaMovil arriba). */
+  .marco {
+    display: none;
+  }
+
+  .galeriaMovil {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .galeriaMovil::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fotoMovil {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
   }
 
   .fila {

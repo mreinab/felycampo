@@ -10,6 +10,36 @@
    "Look X" + productos de RunwayGaleria.
    ============================================================ */
 
+/* Toggle "Invitadas"/"Novias" — children de CabeceraSeccion, mismo
+   lenguaje visual que .toggleBoton/.toggleBotonActivo de
+   CuadriculaProductos.module.css (opacidad baja + subrayado solo en el
+   activo/hover), aquí con texto en vez de iconos. */
+.toggleCategoria {
+  display: flex;
+  gap: var(--spacing-5);
+}
+
+.toggleCategoriaBoton {
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid transparent;
+  padding: var(--spacing-1) 2px;
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-tinta);
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.25s var(--ease-marca), border-color 0.25s var(--ease-marca);
+}
+
+.toggleCategoriaBoton:hover,
+.toggleCategoriaBotonActivo {
+  opacity: 1;
+  border-bottom-color: var(--color-tinta);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

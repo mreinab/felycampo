@@ -12,25 +12,23 @@
    RUTAS_CON_PRODUCT_HERO, ver layout.js), así que el Navbar se queda
    con su aspecto normal (logo oscuro) desde el principio.
 
-   PRIMER PASO nada más, a petición: solo la cuadrícula de fotos
-   placeholder todavía (ver GaleriaVosotras.jsx) — ni clicables ni con
-   reseña debajo. Al clicar una foto se abrirá más adelante algo
-   parecido a GaleriaProductoLightbox.jsx, pero ese comportamiento se
-   implementa en un paso aparte, pendiente de describir. */
+   La CabeceraSeccion (subtítulo/título/descripción) y el toggle
+   "Invitadas"/"Novias" que filtra la cuadrícula viven dentro de
+   GaleriaVosotras.jsx, no aquí — mismo criterio que CuadriculaProductos,
+   que también resuelve su propia cabecera a partir de props en vez de
+   que la página la monte aparte. */
 
 import { GaleriaVosotras } from '@/components/layout';
-import { CabeceraSeccion } from '@/components/ui';
 
 export default function Pagina() {
   return (
     <section className="seccion">
-      <CabeceraSeccion
+      <GaleriaVosotras
         subtitleKey="nav.links.atelier"
         titleKey="nav.submenus.atelier.vosotras"
         descriptionKey="vosotras.descripcion"
         margenSuperiorAmplio
       />
-      <GaleriaVosotras />
     </section>
   );
 }

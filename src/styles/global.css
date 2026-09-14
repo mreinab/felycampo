@@ -266,6 +266,15 @@ img { display: block; max-width: 100%; height: auto; }
   background: var(--color-fondo);
 }
 
+/* Recorta ProductHero (o cualquier fondo con background-size:cover)
+   desde arriba en vez de centrado — para fotos donde lo importante
+   (una cara, la parte de arriba de una prenda) queda cerca del borde
+   superior y el recorte centrado por defecto lo corta. Añadir como
+   "className" a <ProductHero>, igual que "entrada-suave" arriba. */
+.hero-arriba {
+  background-position: top !important;
+}
+
 /* Entrada suave (fundido + subida) para transiciones entre pasos/
    pantallas — pensada para reutilizarse en cualquier componente, no
    solo en /visita-fely-campo/cita: añade esta clase (junto a las

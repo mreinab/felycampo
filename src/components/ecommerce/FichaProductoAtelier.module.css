@@ -63,6 +63,16 @@
   font-size: var(--text-h3);
 }
 
+/* "Ref. N0028" entre el nombre y la descripción (ver InfoAtelier.jsx) —
+   mismo tono apagado que .categorias más abajo (metadato secundario),
+   no el color de .descripcion. */
+.sku {
+  font-size: var(--text-caption);
+  font-weight: 400;
+  color: var(--color-gris-600);
+  margin-top: var(--spacing-1);
+}
+
 .descripcion {
   font-size: var(--text-small);
   font-weight: 400;

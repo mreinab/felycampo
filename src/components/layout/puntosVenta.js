@@ -10,8 +10,7 @@
    los facilita. */
 
 export const PUNTOS_VENTA = [
-  { id: 'fely-campo-salamanca', nombre: 'Fely Campo Salamanca', direccion: ['C/ Laguna Negra, 17-19', 'Polígono El Montalvo II', 'Salamanca 37008'], pais: 'España', telefono: '+34 923 26 60 93', email: null, lat: 40.9701, lng: -5.6635 },
-  { id: 'fely-campo-atelier-novias-salamanca', nombre: 'Fely Campo Atelier Novias Salamanca', direccion: ['C/ Laguna Negra, 17-19', 'Polígono El Montalvo II', 'Salamanca 37008'], pais: 'España', telefono: '923 19 00 53', email: 'info@felycampo.com', lat: 40.9705, lng: -5.6631 },
+  { id: 'fely-campo-atelier-novias-salamanca', nombre: 'Fely Campo Atelier Novias y fiesta Salamanca', direccion: ['C/ Laguna Negra, 17-19', 'Polígono El Montalvo II', 'Salamanca 37008'], pais: 'España', telefono: '923 19 00 53', email: 'info@felycampo.com', lat: 40.9705, lng: -5.6631 },
   { id: 'fely-campo-madrid-atelier', nombre: 'Fely Campo Madrid Atelier', direccion: ['C/ Jorge Juan 29, 1º Derecha', 'Madrid 28001'], pais: 'España', telefono: '683 70 36 44', email: 'info@felycampo.com', lat: 40.4257, lng: -3.6836 },
   { id: 'teresa-justel', nombre: 'Teresa Justel', direccion: ['Travesía de Colombia 6', 'Toledo 45004'], pais: 'España', telefono: '925 57 88 71', email: 'compras@teresajustel.com', lat: 39.8628, lng: -4.0273 },
   { id: 'for-you', nombre: 'For You', direccion: ['C/ Federico García Lorca 1', 'Burgos 09007'], pais: 'España', telefono: '947 47 09 18', email: 'tienda@ropaforyouburgos.com', lat: 42.3439, lng: -3.6969 },

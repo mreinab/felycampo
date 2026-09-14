@@ -11,29 +11,45 @@
    un listado sin más.
    CabeceraSeccion vive aquí (no en page.js) por si en el futuro vuelve
    a necesitar pasarle contenido como "children" (chips, filtros...).
-   Cada tarjeta abre con una foto/vídeo (ver .galeria en
-   page.module.css), sacada del fondo común de public/img/talleres/ —
-   ver MEDIOS_TALLERES/medioDe más abajo. Cada tarjeta aparece con
-   scroll (<EnVista>, @/components/ui) — no se llama useEnVista a mano
-   aquí porque el hook no puede invocarse dentro del .map de abajo. */
+   Cada tarjeta abre con una mini-galería de 2-3 fotos propias de la
+   sede (ver .galeria en page.module.css y FOTOS_POR_CIUDAD/fotosDe más
+   abajo) que ciclan con cross-fade al hover — CarruselFotos, ui/,
+   mismo componente que ResenasClientes/GaleriaVosotras — en vez de una
+   sola foto fija. Cada tarjeta aparece con scroll (<EnVista>,
+   @/components/ui) — no se llama useEnVista a mano aquí porque el hook
+   no puede invocarse dentro del .map de abajo. */
 
 import { useTranslations } from 'next-intl';
-import { CabeceraSeccion, EnVista } from '@/components/ui';
+import { CabeceraSeccion, CarruselFotos, EnVista } from '@/components/ui';
 import { UBICACIONES } from './ubicaciones';
 import styles from './page.module.css';
 
-// Fondo común de fotos de talleres (public/img/talleres/) — sin imagen
-// propia por sede todavía (ver ubicaciones.js), cada tarjeta saca la
-// suya de aquí por ciudad. Placeholders: los tres únicos archivos
-// nombrados con la ciudad (el resto del fondo son hash sin identificar).
-const MEDIOS_POR_CIUDAD = {
-  Salamanca: { src: '/img/talleres/salamanca-ateliernovia-ateliernoviasalamanca-ubicacion-felycampo.webp', tipo: 'imagen' },
-  Madrid: { src: '/img/talleres/madrid-atelier_madrid_fiesta_novia_medida.webp', tipo: 'imagen' },
-  Oviedo: { src: '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp', tipo: 'imagen' },
+// Fotos propias de cada sede (antes reciclaban un fondo común de
+// public/img/talleres/, ver ubicaciones.js) — 2-3 por ciudad, mismo
+// reportaje que ya usan sus fichas de /atelier-fiesta/[ciudad]. Ciclan
+// con cross-fade al hover vía CarruselFotos (ui/, compartido con
+// ResenasClientes/GaleriaVosotras) en vez de una sola foto fija — ver
+// .galeria/.marco en page.module.css (position:relative +
+// overflow:hidden va en .marco, no en .galeria — ver el porqué ahí).
+const FOTOS_POR_CIUDAD = {
+  Salamanca: [
+    '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
+    '/img/atelier/atelier-salamanca/ateliernovia-lamedida-felycampo-2.webp',
+    '/img/atelier/atelier-salamanca/atelierfiesta-atelierfiestasalamanca-felycampo-10.webp',
+  ],
+  Madrid: [
+    '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_pretaporter-3-1024x683.jpg',
+    '/img/atelier/showroom-madrid/unnamed (1).webp',
+    '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
+  ],
+  Oviedo: [
+    '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp',
+    '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_5-2048x1365.webp',
+  ],
 };
 
-function medioDe(ciudad) {
-  return MEDIOS_POR_CIUDAD[ciudad];
+function fotosDe(ciudad) {
+  return FOTOS_POR_CIUDAD[ciudad];
 }
 
 function ListadoUbicaciones({ locale }) {
@@ -62,17 +78,23 @@ function ListadoUbicaciones({ locale }) {
             .join('\n');
           const whatsappHref = `https://wa.me/${ubicacion.whatsapp.replace(/\D/g, '')}`;
 
-          const medio = medioDe(ubicacion.ciudad);
-
           return (
             <li key={ubicacion.id}>
               <EnVista as="article" className={styles.tarjeta}>
                 <div className={styles.galeria}>
-                  {medio.tipo === 'video' ? (
-                    <video src={medio.src} className={styles.celda} autoPlay muted loop playsInline />
-                  ) : (
-                    <img src={medio.src} alt="" className={styles.celda} />
-                  )}
+                  <div className={styles.marco}>
+                    <CarruselFotos fotos={fotosDe(ubicacion.ciudad)} />
+                  </div>
+
+                  {/* Mobile/tablet (ver media query en page.module.css):
+                      tira con swipe nativo en vez del cross-fade al
+                      hover de arriba, que no tiene mucho sentido en
+                      táctil puro. */}
+                  <div className={styles.galeriaMovil}>
+                    {fotosDe(ubicacion.ciudad).map((foto) => (
+                      <img key={foto} src={foto} alt="" className={styles.fotoMovil} />
+                    ))}
+                  </div>
                 </div>
 
                 <div className={styles.fila}>

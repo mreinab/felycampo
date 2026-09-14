@@ -63,8 +63,13 @@ export const ATELIER_INDEX = {
   },
 
   ateliers: [
-    { id: 'salamanca', ciudad: 'Atelier Salamanca', imagen: '/img/talleres/salamanca-ateliernovia-ateliernoviasalamanca-ubicacion-felycampo.webp' },
-    { id: 'madrid', ciudad: 'Atelier & Showroom Madrid', imagen: '/img/talleres/madrid-atelier_madrid_fiesta_novia_medida.webp' },
-    { id: 'oviedo', ciudad: 'Atelier Oviedo', imagen: '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp' },
+    // Misma foto que el heroMedio (o su poster, si es vídeo) de la ficha
+    // real de cada sede en atelier-fiesta/atelieres.js — reciclada aquí
+    // a propósito para que la tarjeta anticipe la misma imagen de
+    // cabecera que verá la visitante al entrar. Sustituyen a las de
+    // /img/talleres/, que ya no existen en el repo.
+    { id: 'salamanca', ciudad: 'Atelier Salamanca', imagen: '/img/atelier/atelier-salamanca/atelierfiesta-atelierfiestasalamanca-felycampo-10.webp' },
+    { id: 'madrid', ciudad: 'Atelier & Showroom Madrid', imagen: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg' },
+    { id: 'oviedo', ciudad: 'Atelier Oviedo', imagen: '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp' },
   ],
 };

@@ -33,14 +33,23 @@
    look" el panel muestra el nombre de la clienta + su comentario, no
    "Look X" — mismo tratamiento tipográfico que .pie de
    ResenasClientes.module.css (cita + nombre).
+
+   La propia CabeceraSeccion vive aquí dentro (no en page.js, que solo
+   le reenvía subtitleKey/titleKey/descriptionKey/margenSuperiorAmplio)
+   — mismo criterio que CuadriculaProductos.jsx con su toggle de
+   densidad: el toggle "Invitadas"/"Novias" (.toggleCategoria, mismo
+   lenguaje visual que .toggleBoton ahí — subrayado en el activo) sale
+   como "children" de CabeceraSeccion y filtra LOOKS_EJEMPLO por su
+   campo "categoria" (alternado por índice, PLACEHOLDER: sin backend
+   real que distinga looks de invitada/novia todavía).
    Uso:
-     <GaleriaVosotras />
+     <GaleriaVosotras titleKey="..." />
    ============================================================ */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Plus, X } from 'lucide-react';
-import { CarruselFotos } from '../ui';
+import { CabeceraSeccion, CarruselFotos } from '../ui';
 import { RESENAS_EJEMPLO } from './resenasEjemplo';
 import { productosEjemplo } from './productosEjemplo';
 import { slugify } from '@/lib/slugify';
@@ -63,6 +72,9 @@ const CANTIDAD_EJEMPLO = 12;
 // vez de inventar textos nuevos) + un producto "vinculado" ("Consigue
 // el look") — sin backend real que cruce clienta-look con un producto
 // de verdad, se turna aquí uno de productosEjemplo.js por índice.
+// "categoria" (PLACEHOLDER, alternada por índice): para que el toggle
+// "Invitadas"/"Novias" tenga algo real que filtrar antes de que lleguen
+// las fotos/reseñas reales de cada grupo.
 const LOOKS_EJEMPLO = Array.from({ length: CANTIDAD_EJEMPLO }, (_, indice) => {
   const portada = FOTOS_EJEMPLO[indice % FOTOS_EJEMPLO.length];
   const resena = RESENAS_EJEMPLO[indice % RESENAS_EJEMPLO.length];
@@ -71,21 +83,27 @@ const LOOKS_EJEMPLO = Array.from({ length: CANTIDAD_EJEMPLO }, (_, indice) => {
     nombre: resena.nombre,
     comentario: resena.texto,
     productos: [productosEjemplo[indice % productosEjemplo.length]],
+    categoria: indice % 2 === 0 ? 'invitadas' : 'novias',
   };
 });
 
-function GaleriaVosotras() {
+function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperiorAmplio }) {
   const t = useTranslations();
   const locale = useLocale();
   const pistaRef = useRef(null);
   const cerrarRef = useRef(null);
   const ruedaEnCooldownRef = useRef(false);
 
+  const [categoria, setCategoria] = useState('invitadas');
   const [abierta, setAbierta] = useState(false);
   const [indiceLook, setIndiceLook] = useState(0);
   const [indiceFoto, setIndiceFoto] = useState(0);
 
-  const lookActivo = LOOKS_EJEMPLO[indiceLook];
+  const looksVisibles = useMemo(
+    () => LOOKS_EJEMPLO.filter((look) => look.categoria === categoria),
+    [categoria]
+  );
+  const lookActivo = looksVisibles[indiceLook];
 
   const abrir = (indice) => {
     setIndiceLook(indice);
@@ -93,6 +111,16 @@ function GaleriaVosotras() {
     setAbierta(true);
   };
   const cerrar = () => setAbierta(false);
+
+  // Cambiar de categoría cierra el lightbox y vuelve a "indiceLook" 0 —
+  // el índice pertenece a la lista ya filtrada, así que no tiene
+  // sentido mantenerlo al cambiar de lista.
+  const cambiarCategoria = (nueva) => {
+    if (nueva === categoria) return;
+    setCategoria(nueva);
+    setIndiceLook(0);
+    setAbierta(false);
+  };
 
   // Foco en cerrar + sin scroll de la página detrás mientras está
   // abierto — mismo criterio que RunwayGaleria/GaleriaProductoLightbox.
@@ -158,8 +186,34 @@ function GaleriaVosotras() {
 
   return (
     <>
+      <CabeceraSeccion
+        subtitleKey={subtitleKey}
+        titleKey={titleKey}
+        descriptionKey={descriptionKey}
+        margenSuperiorAmplio={margenSuperiorAmplio}
+      >
+        <div className={styles.toggleCategoria}>
+          <button
+            type="button"
+            className={`${styles.toggleCategoriaBoton} ${categoria === 'invitadas' ? styles.toggleCategoriaBotonActivo : ''}`}
+            aria-pressed={categoria === 'invitadas'}
+            onClick={() => cambiarCategoria('invitadas')}
+          >
+            {t('vosotras.invitadas')}
+          </button>
+          <button
+            type="button"
+            className={`${styles.toggleCategoriaBoton} ${categoria === 'novias' ? styles.toggleCategoriaBotonActivo : ''}`}
+            aria-pressed={categoria === 'novias'}
+            onClick={() => cambiarCategoria('novias')}
+          >
+            {t('vosotras.novias')}
+          </button>
+        </div>
+      </CabeceraSeccion>
+
       <div className={styles.grid}>
-        {LOOKS_EJEMPLO.map((look, indice) => (
+        {looksVisibles.map((look, indice) => (
           <div key={indice} className={styles.item} onClick={() => abrir(indice)}>
             <CarruselFotos fotos={look.fotos} />
             <button

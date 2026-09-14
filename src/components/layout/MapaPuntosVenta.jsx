@@ -42,15 +42,47 @@ import 'leaflet/dist/leaflet.css';
 const CENTRO_EUROPA = [47, 8];
 const ZOOM_INICIAL = 4;
 
-// Aún no hay foto por punto de venta (ver puntosVenta.js) — 3
-// fotos de atelier ya usadas en visita-fely-campo/ListadoUbicaciones.jsx,
-// repetidas en bucle según la posición en el listado (ver puntoBtn
-// más abajo), a modo de marcador de posición.
-const IMAGENES_PLACEHOLDER = [
-  '/img/talleres/salamanca-ateliernovia-ateliernoviasalamanca-ubicacion-felycampo.webp',
-  '/img/talleres/madrid-atelier_madrid_fiesta_novia_medida.webp',
-  '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp',
+// Foto real por punto de venta (ver public/img/atelier/puntos-de-venta/,
+// el reportaje que cada distribuidor ha ido mandando) — nuestros 3
+// ateliers propios (Salamanca/Madrid/Oviedo) no están ahí, así que
+// toman una foto de su propia carpeta de reportaje en su lugar (mismas
+// carpetas que usa visita-fely-campo/ListadoUbicaciones.jsx). El resto
+// de distribuidores (todavía sin foto propia) cae en
+// IMAGENES_FALLBACK, ver imagenDe más abajo.
+const IMAGEN_POR_ID = {
+  'fely-campo-atelier-novias-salamanca': '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
+  'fely-campo-madrid-atelier': '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_pretaporter-3-1024x683.jpg',
+  'fely-campo-oviedo': '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp',
+  'teresa-justel': '/img/atelier/puntos-de-venta/teresa-justerl.jpg',
+  'for-you': '/img/atelier/puntos-de-venta/for-you-burgos.jpg',
+  'lm-company': '/img/atelier/puntos-de-venta/lmcompany.jjpg.webp',
+  'pilar-y-carmen': '/img/atelier/puntos-de-venta/pilarycarmen.webp',
+  'paqui-muriel': '/img/atelier/puntos-de-venta/paquimuriel.webp',
+  'angela-serrano': '/img/atelier/puntos-de-venta/angelaserrano.webp',
+  'boutique-tess': '/img/atelier/puntos-de-venta/boutiquetess.webp',
+  marengo: '/img/atelier/puntos-de-venta/marengoboutique.webp',
+  'miguel-angel-jacinto': '/img/atelier/puntos-de-venta/miguelangeljacinto.jfif',
+  'sancresp-21': '/img/atelier/puntos-de-venta/sancrespt21.webp',
+  'atelier-by-penhalta': '/img/atelier/puntos-de-venta/atelierpenthalta.webp',
+  'juan-y-ana-amante': '/img/atelier/puntos-de-venta/juanyanaamante.webp',
+  bolta: '/img/atelier/puntos-de-venta/boltaboutique.webp',
+  'gala-garcia-novias': '/img/atelier/puntos-de-venta/galagarcianovias.webp',
+  'mamen-gonzalez-novias': '/img/atelier/puntos-de-venta/mamengonzaleznovia.webp',
+};
+
+// Sin foto propia todavía (el resto de distribuidores, sobre todo los
+// internacionales) — cicla por posición en el listado, mismo criterio
+// que antes tenía IMAGENES_PLACEHOLDER completo, ahora con fotos de
+// nuestras 3 carpetas de atelier en vez de public/img/talleres/.
+const IMAGENES_FALLBACK = [
+  '/img/atelier/atelier-salamanca/atelierfiesta-atelierfiestasalamanca-felycampo-10.webp',
+  '/img/atelier/showroom-madrid/atelier_medida_madrid_fiesta_novia_felycampo.webp',
+  '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_5-2048x1365.webp',
 ];
+
+function imagenDe(punto, indice) {
+  return IMAGEN_POR_ID[punto.id] || IMAGENES_FALLBACK[indice % IMAGENES_FALLBACK.length];
+}
 
 // Coordenadas aproximadas (capital) de cada país presente en
 // puntosVenta.js — usadas SOLO para ordenar los países por cercanía a
@@ -272,7 +304,7 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
                     <li key={punto.id}>
                       <button type="button" className={styles.puntoBtn} onClick={() => irAPunto(punto)}>
                         <img
-                          src={IMAGENES_PLACEHOLDER[indice % IMAGENES_PLACEHOLDER.length]}
+                          src={imagenDe(punto, indice)}
                           alt=""
                           aria-hidden="true"
                           className={styles.puntoImagen}

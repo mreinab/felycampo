@@ -9,6 +9,10 @@
    Component y esto necesita useState, mismo motivo que
    FichaProductoAcciones.jsx en /tienda/[producto].
 
+   "sku": referencia real del look (ver noviaProductos.js) — se pinta
+   debajo del nombre, encima de la descripción, solo si llega (Bride 27
+   no trae sku, ver comentario de excepción en noviaProductos.js; el
+   resto de Atelier con el catálogo de ejemplo tampoco).
    "colores": mismo SelectorColor que la ficha de Tienda, pero aquí NO
    cambia la foto de la galería al elegir uno (estas piezas no tienen
    variantes de imagen por color todavía) — es solo para que el equipo
@@ -32,7 +36,7 @@ import { Boton, SelectorColor, BotonGuardar } from '../ui';
 import ModalSolicitudAtelier from './ModalSolicitudAtelier';
 import styles from './FichaProductoAtelier.module.css';
 
-function InfoAtelier({ imagen, nombre, descripcion, colores = [], tallas = [] }) {
+function InfoAtelier({ imagen, nombre, sku, descripcion, colores = [], tallas = [] }) {
   const t = useTranslations('producto');
   const [color, setColor] = useState(null);
   const [avisoColor, setAvisoColor] = useState(false);
@@ -50,6 +54,7 @@ function InfoAtelier({ imagen, nombre, descripcion, colores = [], tallas = [] })
     <>
       <div className={styles.cabecera}>
         <h1 className={styles.nombre}>{nombre}</h1>
+        {sku && <p className={styles.sku}>{t('sku')}: {sku}</p>}
         <p className={styles.descripcion}>{descripcion}</p>
 
         {colores.length > 0 && (

@@ -19,7 +19,7 @@
 
 import { notFound } from 'next/navigation';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
-import { productosEjemplo } from '@/components/layout/productosEjemplo';
+import { noviaProductos } from '@/components/layout/noviaProductos';
 import { encontrarCategoria } from '@/components/layout/estiloSiluetaGrupos';
 import { parametrosCategoria, metadataCategoria, breadcrumbJsonLd } from '@/lib/atelierCategoriaSeo';
 
@@ -27,10 +27,10 @@ const ES_FIESTA = false;
 const SECCION_KEY = 'nav.submenus.atelier.novias';
 const SECCION_HREF = 'atelier/novias';
 
-// Mismas colecciones que ../page.js (COLECCIONES_NOVIAS) — solo
-// alimentan el desplegable "Colección" de PanelFiltros, no filtran de
-// verdad (ver comentario en CuadriculaProductos.jsx), así que no
-// dependen de la categoría.
+// Mismas colecciones y mismo orden que ../page.js (COLECCIONES_NOVIAS)
+// — solo alimentan el desplegable "Colección" de PanelFiltros, no
+// filtran de verdad (ver comentario en CuadriculaProductos.jsx), así
+// que no dependen de la categoría.
 const COLECCIONES_NOVIAS = [
   'Bride 27',
   'ME',
@@ -62,7 +62,7 @@ export default async function Pagina({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductHero imagen="/img/novias-sección-FelyCampo3.jpg" />
       <CuadriculaProductos
-        productos={productosEjemplo}
+        productos={noviaProductos}
         disposicion="grid"
         tituloKey="nav.links.atelier"
         coleccionKey={SECCION_KEY}

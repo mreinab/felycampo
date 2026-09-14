@@ -7,7 +7,7 @@
 
 import { notFound } from 'next/navigation';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
-import { productosEjemplo } from '@/components/layout/productosEjemplo';
+import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { encontrarCategoria } from '@/components/layout/estiloSiluetaGrupos';
 import { parametrosCategoria, metadataCategoria, breadcrumbJsonLd } from '@/lib/atelierCategoriaSeo';
 
@@ -18,6 +18,7 @@ const SECCION_HREF = 'atelier/fiesta';
 // Mismas colecciones que ../page.js (COLECCIONES_FIESTA) — ver
 // comentario en atelier/novias/categoria/[categoria]/page.js.
 const COLECCIONES_FIESTA = [
+  'Primavera Verano 2027',
   'Primavera Verano 2026',
   'Primavera Verano 2025',
   'Prêt-à-porter',
@@ -52,7 +53,7 @@ export default async function Pagina({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductHero imagen="/img/invitadas-sección-FelyCampo.jpg" />
       <CuadriculaProductos
-        productos={productosEjemplo}
+        productos={fiestaProductos}
         disposicion="grid"
         tituloKey="nav.links.atelier"
         coleccionKey={SECCION_KEY}

@@ -63,7 +63,8 @@
     "origenFabricado": "Made in: Salamanca, Spain",
     "origenTintura": "Dyeing and printing: Italy",
     "origenTejido": "Fabric origin: India",
-    "categorias": "Categories",
+    "sku": "Ref.",
+  "categorias": "Categories",
     "porEncargoTitulo": "Made-to-Order Product (PRE-ORDER)",
     "porEncargoTexto": "This garment is made to order specifically for each order and customer, so returns are not accepted once the order has been confirmed. For this reason, you can contact us for more information and to place your order through our information button.",
     "envios": "Shipping and returns",
@@ -397,7 +398,9 @@
   },
   "vosotras": {
     "descripcion": "Our clients, in their own words and their own photos, wearing Fely Campo in their special moments.",
-    "verGaleria": "View gallery"
+    "verGaleria": "View gallery",
+    "invitadas": "Guests",
+    "novias": "Bridal"
   },
   "atelierCategoriaSeo": {
     "titulo": "{categoria} · {seccion} · Atelier — Fely Campo",

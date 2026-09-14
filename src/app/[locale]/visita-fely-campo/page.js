@@ -11,6 +11,7 @@
 
 import { MapaPuntosVenta, ProductHero } from '@/components/layout';
 import ListadoUbicaciones from './ListadoUbicaciones';
+import styles from './page.module.css';
 
 export default async function Pagina({ params }) {
   const { locale } = await params;
@@ -18,10 +19,15 @@ export default async function Pagina({ params }) {
   return (
     <>
       <section className="seccion">
-        <ProductHero imagen="/img/atelier/ateliernovia-lamedida-felycampo-3.webp" />
+        <ProductHero imagen="/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg" className="hero-arriba" />
       </section>
 
-      <section className="seccion">
+      {/* .seccionUbicaciones (ver page.module.css): en mobile el hero de
+          arriba es position:fixed (ProductHero.module.css) — esta es la
+          sección que le sigue en el flujo, necesita fondo opaco +
+          posicionada + z-index por encima para taparlo al hacer scroll
+          (mismo mecanismo que .seccionGrid en Tienda). */}
+      <section className={`seccion ${styles.seccionUbicaciones}`}>
         <div className="contenedor">
           <ListadoUbicaciones locale={locale} />
         </div>

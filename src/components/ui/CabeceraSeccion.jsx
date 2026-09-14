@@ -47,9 +47,9 @@ import useEnVista from '@/hooks/useEnVista';
  *
  * "margenSuperiorAmplio" (opcional, false por defecto): margin-top
  * var(--spacing-6) en vez del var(--spacing-4) normal de .cabecera —
- * la pasa /atelier/vosotras/page.js, único consumidor (sin
- * ProductHero encima que ya aporte separación propia, a diferencia de
- * Novias/Fiesta).
+ * la pasa GaleriaVosotras.jsx (única consumidora, para /atelier/vosotras,
+ * reenviada desde su page.js) sin ProductHero encima que ya aporte
+ * separación propia, a diferencia de Novias/Fiesta.
  *
  * "className" (opcional): clases extra en el contenedor raíz, además de
  * .cabecera/.cabeceraProductos/.cabeceraInicio — para un ajuste puntual

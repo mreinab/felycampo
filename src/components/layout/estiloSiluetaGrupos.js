@@ -31,3 +31,50 @@ export function encontrarCategoria(opcion, { esFiesta = false } = {}) {
   }
   return null;
 }
+
+// Etiqueta en español de cada opción (mismo texto que
+// filtros.estiloYSilueta.grupos.*.opciones.* en messages/es.json,
+// normalizado sin acentos/mayúsculas) — solo para reconocer, dentro de
+// un tag REAL del excel de una colección (ver "Tags (categoría)" en
+// noviaProductos.js), cuál coincide con una opción de este filtro y
+// así poder enlazarlo a su página de categoría real
+// (FichaProductoAtelier.jsx). Los tags sin entrada aquí (tejidos,
+// "Colección", el nombre de la propia colección...) no tienen
+// categoría equivalente — se pintan como texto suelto, sin forzarlos.
+const ETIQUETAS_ES = {
+  corteA: ['corte a'],
+  recto: ['recto'],
+  sirena: ['sirena'],
+  princesa: ['princesa'],
+  dosPiezas: ['dos piezas'],
+  corto: ['corto'],
+  midi: ['midi'],
+  largo: ['largo'],
+  cola: ['cola'],
+  minimal: ['minimal'],
+  lencero: ['lencero'],
+  diferente: ['diferente'],
+  clasico: ['clasico'],
+  romantico: ['romantico'],
+  asimetrico: ['asimetrico'],
+  escoteEspalda: ['escote espalda'],
+  fluido: ['fluido'],
+  mangas: ['mangas', 'manga'],
+};
+
+function normalizarEtiqueta(texto) {
+  return texto.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+}
+
+// Tag real (string, tal cual viene del excel) -> {grupo, opcion}, o
+// null si no coincide con ninguna opción conocida.
+export function tagACategoria(tag, { esFiesta = false } = {}) {
+  const normalizado = normalizarEtiqueta(tag);
+  for (const grupo of GRUPOS_ESTILO_SILUETA) {
+    if (grupo.soloFiesta && !esFiesta) continue;
+    for (const opcion of grupo.opciones) {
+      if ((ETIQUETAS_ES[opcion] || []).includes(normalizado)) return { grupo: grupo.id, opcion };
+    }
+  }
+  return null;
+}
