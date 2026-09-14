@@ -36,11 +36,10 @@
    reproducirse — ver RunwayMediaLateral.jsx; Madrid es el único con
    vídeo en el hero, así que el único que lo usa por ahora). Salamanca:
    imagen en ambos (hero y elemento inferior), todo de su propio
-   reportaje. Oviedo: imagen en
-   el hero (reportaje propio, ver public/img/atelier/atelier-oviedo/),
-   vídeo debajo (todavía placeholder de taller-2 — el reportaje de
-   Oviedo no trae nada apaisado 16/9 propio, ver más abajo). Madrid: al
-   revés — vídeo en el hero, imagen (horizontal) debajo, ver su
+   reportaje. Oviedo: imagen en el hero, vídeo debajo — igual que
+   Salamanca, todo de su propio reportaje (ver
+   public/img/atelier/atelier-oviedo/). Madrid: al revés — vídeo en el
+   hero, imagen (horizontal) debajo, ver su
    reportaje propio en public/img/atelier/showroom-madrid/.
 
    "imagenesTira": array de {tipo, src} (mismo shape que
@@ -200,17 +199,21 @@ export const ATELIERES = {
   oviedo: {
     id: 'oviedo',
     heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp' },
-    medioSuperior: { tipo: 'video', src: '/img/talleres/taller-2/MVI_9853.MP4' },
+    medioSuperior: { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.12.mp4' },
     // Reportaje propio (ver public/img/atelier/atelier-oviedo/) — igual
-    // que Salamanca/Madrid, ya cubre el carrusel. Alterna imagen/vídeo
-    // (ver "imagenesTira" en el comentario de cabecera) — quedan más
-    // fotos y 2 vídeos de sobra en la carpeta sin usar todavía.
+    // que Salamanca/Madrid, ya cubre toda la ficha (medioSuperior,
+    // carrusel y las 3 secciones) — ya no queda nada reciclado de
+    // taller-1/taller-2. Alterna imagen/vídeo en el carrusel (ver
+    // "imagenesTira" en el comentario de cabecera) — el último par es
+    // vídeo/vídeo en vez de imagen/vídeo porque espacio_2-scaled.webp
+    // (la imagen que iba ahí) se borró de la carpeta fuera de sesión;
+    // sustituir por una foto en cuanto haya una nueva.
     imagenesTira: [
       { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/5-copia-2048x1365.jpg' },
       { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.07.mp4' },
       { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_3-scaled.webp' },
       { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.15.mp4' },
-      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_2-scaled.webp' },
+      { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.10.mp4' },
     ],
     descripcion: {
       es: 'Desde 2015, un universo de moda y emoción en el corazón de Asturias. En pleno centro de Oviedo, corazón neurálgico de Asturias, nace nuestro espacio como punto de encuentro para quienes entienden la moda como una forma de expresión, de personalidad y de emoción. Porque el verdadero lujo no es llevar un vestido: es sentir que fue creado para ti. Aquí, cada mujer encuentra mucho más que un vestido, encuentra una manera única de sentirse ella misma. Un universo de tejidos, colores, texturas y siluetas en el que cada detalle importa, porque no existen dos mujeres iguales, ni dos sueños que puedan vestirse de la misma manera. Por eso, nuestro equipo de cuatro personas personaliza cada ilusión, cada deseo y cada sueño, cuidando cada elección para crear una propuesta que hable de ti y solo de ti. Desde la primera cita hasta el último detalle, nuestro compromiso es ofrecer una experiencia cercana, exclusiva y cuidadosamente personalizada, combinando la esencia de la alta costura con una mirada fresca, actual y joven.',
@@ -220,7 +223,7 @@ export const ATELIERES = {
       {
         // Texto de encargo (3 párrafos) resumido a 2.
         titulo: { es: 'Asesoramiento personalizado', en: 'Personalised styling' },
-        imagen: '/img/talleres/taller-1/IMG_9742.JPG',
+        imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp',
         texto: {
           es: [
             'El equipo Fely Campo Oviedo te acompañará durante toda la búsqueda del vestido para tu evento. Desde la primera cita tendrás un asesoramiento personalizado: escucharán tus necesidades y te ayudarán a encontrar esa pieza de nuestras colecciones de fiesta con la que te veas espectacular y refleje tu personalidad, reformulando juntos el diseño de colección —el tejido, las modificaciones y el color que resalte tu silueta natural.',
@@ -234,7 +237,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Espacio', en: 'The Space' },
-        imagen: '/img/talleres/taller-2/IMG_9844.JPG',
+        imagen: '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg',
         texto: {
           es: ['En el corazón de Oviedo, se encuentra la fachada acristalada del Atelier Fiesta Fely Campo. Un espacio abierto a la ciudad, a través de un escaparate único que muestra las creaciones de la diseñadora.'],
           en: ["In the heart of Oviedo stands the glass façade of the Fely Campo Atelier Fiesta. A space open to the city, through a unique shop window that showcases the designer's creations."],
@@ -242,7 +245,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Novia', en: 'Bridal' },
-        imagen: '/img/talleres/taller-1/IMG_9760.JPG',
+        imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_5-2048x1365.webp',
         texto: {
           es: ['El Atelier Fiesta Oviedo cuenta con una estudiada selección de vestidos nupciales. Se trata de un rincón donde podrás disfrutar de las colecciones de novia que la diseñadora propone cada temporada. Un lugar perfecto para vivir el instante mágico de encontrar tu vestido de novia, de poder sentir el tacto de nuestras colecciones.'],
           en: ["Atelier Fiesta Oviedo has a carefully curated selection of bridal gowns. It's a corner where you can discover the bridal collections the designer presents each season — the perfect place to live the magical moment of finding your wedding dress, to feel the touch of our collections."],
