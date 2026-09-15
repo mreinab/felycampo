@@ -45,7 +45,7 @@
 /* ---------- Cuadrícula ---------- */
 .cuadricula {
   display: flex;
-  gap: 0.04rem;
+  gap: 16px;
   padding-inline: 0px;
 }
 
@@ -71,7 +71,7 @@
 .cuadriculaGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px 0.04rem;
+  gap: 16px .04rem;
 }
 
 .itemGrid {
@@ -90,7 +90,7 @@
 .cuadriculaGridCompacta {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px 0.04rem;
+  gap: 16px;
   width: 60%;
   margin-inline: auto;
 }

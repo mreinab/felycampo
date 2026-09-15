@@ -136,7 +136,8 @@ versión usaba una cápsula rellena de rosa; no existe ese tratamiento en Cecili
 Bahnsen y se ha quitado.
 
 ### Selector de talla
-Fila de tallas. Activa en tinta, agotadas tachadas y deshabilitadas. Radio 0.
+Fila de tallas. Activa en tinta, stock bajo con opacidad reducida (clicable: abre
+"Avísame cuando esté disponible"). Radio 0.
 
 ### Selector de cantidad
 Control − / n / + para carrito. Borde gris, radio 0.

@@ -52,6 +52,7 @@
     "anadirWishlist": "Add to Wishlist",
     "fichaCaption": "Product page",
     "anadirCesta": "Add",
+    "avisame": "Notify me when available",
     "avisoTalla": "Please select a size before adding to cart.",
     "talla": "Size",
     "contactar": "Contact us",
@@ -264,6 +265,20 @@
     "enviar": "Send request",
     "confirmacionTitulo": "Request sent!",
     "confirmacionTexto": "Thank you for your interest. Our team will get in touch with you as soon as possible.",
+    "cerrar": "Close"
+  },
+  "avisoDisponibilidad": {
+    "titulo": "Notify me when available",
+    "subtitulo": "We'll email you as soon as this size is back in stock.",
+    "talla": "Size",
+    "nombre": "Name",
+    "nombrePlaceholder": "Jane Smith",
+    "email": "Email",
+    "emailPlaceholder": "jane@example.com",
+    "avisoDatos": "Please fill in your name and email to continue.",
+    "enviar": "Notify me",
+    "confirmacionTitulo": "All set!",
+    "confirmacionTexto": "We'll email you as soon as this size is available.",
     "cerrar": "Close"
   },
   "pedirCitaAtelier": {

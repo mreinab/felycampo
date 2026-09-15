@@ -2,9 +2,13 @@
    GALERÍA DE PRODUCTO — Fely Campo
    ============================================================ */
 
+/* 110vh sin descontar --nav-height: el Navbar de esta página es
+   transparent+fixed (ver layout.js "esFichaProducto"), no reserva
+   hueco propio en el flujo — mismo criterio que .hero de
+   ProductHero.module.css, que tampoco descuenta nada. */
 .galeria {
   position: relative;
-  height: calc(110vh - var(--nav-height));
+  height: 110vh;
 }
 
 /* Sin scroll-snap: el scroll manual (rueda o arrastre) queda libre y
@@ -23,6 +27,16 @@
 
 .pista::-webkit-scrollbar {
   display: none;
+}
+
+/* Con una única foto no hay nada que "hojear" — se alinea al borde
+   derecho de la pista en vez de quedarse pegada al izquierdo
+   (comportamiento por defecto de flex, justify-content:flex-start).
+   Solo se aplica con una imagen (ver GaleriaProducto.jsx): con varias,
+   el contenido excede el ancho de la pista y una alineación que no sea
+   flex-start puede dejar contenido fuera de alcance del scroll. */
+.pistaUnica {
+  justify-content: flex-end;
 }
 
 /* Ancho al contenido (fit-content): cada botón mide lo que mida su
@@ -95,35 +109,45 @@
 }
 
 @media (max-width: 767px) {
-  /* La imagen se queda fija justo debajo del navbar (sticky de
-     siempre, ver Navbar.module.css — ya no se hace position:absolute
-     ni desaparece con el scroll) en vez de desplazarse con la página.
-     .galeria (arriba) pasa a reservar exactamente ese hueco restante
-     (100vh - nav-height, no 110vh: ya no hace falta el "de más" que
-     compensaba el navbar flotando encima) — mismo criterio que
-     .envoltorio de ProductHero.module.css, así el flujo no colapsa
-     nada. El resto del contenido de la ficha (.info y todo lo que
-     viene después — reseñas, recomendados, "sigue explorando", ver
-     page.module.css/FichaProductoAtelier.module.css) la va tapando
-     según se hace scroll (position:relative + z-index por encima).
-     Las flechas pasan también a fijas, centradas en ese mismo hueco,
-     para que no se "despeguen" de la pista al primer scroll. */
+  /* La imagen se queda fija (position:fixed, no desaparece con el
+     scroll) en vez de desplazarse con la página — el Navbar
+     transparent+fixed flota encima desde el primer píxel (mismo
+     criterio que .hero de ProductHero.module.css en mobile). Alto por
+     aspect-ratio (2:3, misma proporción recomendada para las fotos de
+     producto — ver docs/design.md) en vez de 100vh: a pantalla
+     completa, un aspect-ratio de pantalla más estrecho que el de la
+     foto (habitual en móvil) obligaba a object-fit:cover a recortar
+     los lados para cubrir el hueco. Con la caja ya en la proporción
+     real de la foto no hace falta recortar nada.
+     .galeria (arriba) reserva el mismo aspect-ratio en el flujo normal
+     — mismo ancho que .pista (100%), así el hueco reservado coincide
+     exactamente con la imagen fija que tapa. El resto del contenido de
+     la ficha (.info y todo lo que viene después — reseñas,
+     recomendados, "sigue explorando", ver page.module.css/
+     FichaProductoAtelier.module.css) la va tapando según se hace
+     scroll (position:relative + z-index por encima). Las flechas
+     pasan también a fijas: su "top" no puede ser un simple 50% (fixed
+     se centra respecto al viewport, no a la imagen) — 75vw es la mitad
+     exacta del alto real (100vw de ancho × 1.5 del aspect-ratio 2:3),
+     hay que ajustarlo a mano si el aspect-ratio cambia. */
   .galeria {
-    height: calc(100vh - var(--nav-height));
+    aspect-ratio: 2 / 3;
+    height: auto;
   }
 
   .pista {
     position: fixed;
-    top: var(--nav-height);
+    top: 0;
     left: 0;
     width: 100%;
-    height: calc(100vh - var(--nav-height));
+    aspect-ratio: 2 / 3;
+    height: auto;
     z-index: 0;
   }
 
   .flecha {
     position: fixed;
-    top: calc(var(--nav-height) + (100vh - var(--nav-height)) / 2);
+    top: 75vw;
     width: 32px;
     height: 32px;
   }

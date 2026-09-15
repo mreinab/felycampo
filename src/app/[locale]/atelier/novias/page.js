@@ -22,7 +22,14 @@ const COLECCIONES_NOVIAS = [
   'Introspección',
 ];
 
-export default function Pagina() {
+export default async function Pagina({ searchParams }) {
+  // "?coleccion=" (ver FichaProductoAtelier.jsx, tags de colección):
+  // solo se preselecciona si coincide EXACTO con una de las 6 reales —
+  // cualquier otro valor de la URL se ignora en vez de intentar
+  // adivinar una colección que no existe.
+  const { coleccion } = await searchParams;
+  const coleccionActiva = COLECCIONES_NOVIAS.includes(coleccion) ? coleccion : null;
+
   return (
     <section className="seccion">
       <ProductHero imagen="/img/novias-sección-FelyCampo3.jpg" />
@@ -34,6 +41,7 @@ export default function Pagina() {
         descriptionKey="cuadriculaTabs.descripcion"
         ocultarPrecio
         colecciones={COLECCIONES_NOVIAS}
+        coleccionActiva={coleccionActiva}
         hrefBase="atelier/novias"
         estiloYSilueta
       />

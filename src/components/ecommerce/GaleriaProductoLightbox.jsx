@@ -20,6 +20,14 @@
    de InfoAtelier, pero es el mismo modal/flujo). Sin selector de talla
    aquí tampoco: en Atelier la talla se pide dentro del propio modal,
    igual que desde InfoAtelier.
+   Portal a document.body (igual que Modal.jsx, mismo motivo): vive
+   dentro de GaleriaProducto, que cuelga de .debajoNavbar en
+   tienda/[producto]/page.js y FichaProductoAtelier.jsx
+   (position:relative + z-index:1, para que la página quede por debajo
+   del Navbar transparent+fixed) — sin portal, ese ancestro crea su
+   propio contexto de apilamiento y atrapa dentro el z-index:100 de
+   .lightbox, que entonces nunca podría ganarle a los z-index:50 del
+   Navbar por mucho que se suba ese número.
    Uso:
      <GaleriaProductoLightbox
        imagenes={['/a.jpg', '/b.jpg']} alt="Vestido Aurora"
@@ -29,6 +37,7 @@
    ============================================================ */
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
 import { SelectorColor, SelectorTalla, Boton, BotonGuardar } from '../ui';
@@ -58,6 +67,11 @@ function GaleriaProductoLightbox({
   const [mostrarTallas, setMostrarTallas] = useState(false);
   const [avisoColor, setAvisoColor] = useState(false);
   const [modalAtelierAbierto, setModalAtelierAbierto] = useState(false);
+  // Portal a document.body (ver comentario de arriba) — solo existe en
+  // cliente, así que se espera a montar antes de renderizarlo (mismo
+  // patrón que Modal.jsx).
+  const [montado, setMontado] = useState(false);
+  useEffect(() => setMontado(true), []);
 
   // Cada apertura empieza de cero — sin esto, reabrir el lightbox en
   // otro producto (o en el mismo tras elegir talla) heredaría la talla
@@ -165,11 +179,11 @@ function GaleriaProductoLightbox({
     setTimeout(() => { ruedaEnCooldownRef.current = false; }, 500);
   };
 
-  if (imagenes.length === 0) return null;
+  if (imagenes.length === 0 || !montado) return null;
 
   const tabIndexInteractivo = abierta ? 0 : -1;
 
-  return (
+  return createPortal(
     <div className={`${styles.lightbox} ${abierta ? styles.abierta : ''}`} aria-hidden={!abierta}>
       <div className={styles.cabecera}>
         <a href={`/${locale}`} className={styles.logoLink} tabIndex={tabIndexInteractivo}>
@@ -265,7 +279,8 @@ function GaleriaProductoLightbox({
           tallas={tallas}
         />
       )}
-    </div>
+    </div>,
+    document.body,
   );
 }
 

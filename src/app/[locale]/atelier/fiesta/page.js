@@ -10,8 +10,7 @@ import { fiestaProductos } from '@/components/layout/fiestaProductos';
 // Colecciones de Fiesta, de la más reciente a la más antigua — mismo
 // orden real en que aparecen los looks en la cuadrícula (ver
 // fiestaProductos.js); ver también comentario de "colecciones" en
-// CuadriculaProductos.jsx (de momento solo alimentan el desplegable de
-// PanelFiltros, no filtran de verdad).
+// CuadriculaProductos.jsx (filtra la cuadrícula de verdad).
 const COLECCIONES_FIESTA = [
   'Primavera Verano 2027',
   'Primavera Verano 2026',
@@ -26,7 +25,12 @@ const COLECCIONES_FIESTA = [
   'Furisode',
 ];
 
-export default function Pagina() {
+export default async function Pagina({ searchParams }) {
+  // "?coleccion=" (ver comentario de novias/page.js): solo se
+  // preselecciona si coincide exacto con una de las colecciones reales.
+  const { coleccion } = await searchParams;
+  const coleccionActiva = COLECCIONES_FIESTA.includes(coleccion) ? coleccion : null;
+
   return (
     <section className="seccion">
       <ProductHero imagen="/img/invitadas-sección-FelyCampo.jpg" />
@@ -38,6 +42,7 @@ export default function Pagina() {
         descriptionKey="cuadriculaTabs.descripcion"
         ocultarPrecio
         colecciones={COLECCIONES_FIESTA}
+        coleccionActiva={coleccionActiva}
         hrefBase="atelier/fiesta"
         estiloYSilueta
         esFiesta

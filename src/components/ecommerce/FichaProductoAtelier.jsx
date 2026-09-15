@@ -103,6 +103,12 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   // Con "tags" reales (Novias, ver noviaProductos.js) se enseñan tal
   // cual en vez del placeholder — ver comentario "Categorías" arriba.
   const categorias = producto.tags || COMBOS_ESTILO_SILUETA[indiceProducto % COMBOS_ESTILO_SILUETA.length];
+  // Nombres de colección reales del catálogo actual (ver "coleccion" en
+  // noviaProductos.js/fiestaProductos.js) — un tag real que coincida
+  // exactamente con uno de ellos enlaza a la cuadrícula filtrada por
+  // esa colección (ver CuadriculaProductos.jsx), igual que un tag de
+  // Estilo y silueta enlaza a su página de categoría.
+  const nombresColeccion = new Set(catalogo.map((candidato) => candidato.coleccion).filter(Boolean));
 
   // Mismo catálogo que "producto", excluyendo el actual — hasta 10, la
   // misma cantidad que espera ProductosRecomendados en su carrusel (ver
@@ -110,7 +116,7 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   const relacionados = catalogo.filter((candidato) => candidato !== producto).slice(0, 10);
 
   return (
-    <section className="seccion contenedor">
+    <section className={`seccion contenedor ${styles.debajoNavbar}`}>
       <div className={styles.ficha}>
         <GaleriaProducto
           imagenes={producto.imagenes?.length ? producto.imagenes : [producto.imagen]}
@@ -149,16 +155,22 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
           <p className={styles.categorias}>
             {tProducto('categorias')}: {categorias.map((tag, indice) => {
               // Tag real (string, ver comentario "Categorías" arriba) vs.
-              // placeholder ({grupo, opcion}) — mismo destino de enlace
-              // (/atelier/{seccion}/categoria/{opcion}) en los dos casos,
-              // solo cambia de dónde sale la etiqueta visible y la key.
+              // placeholder ({grupo, opcion}) — dos destinos de enlace
+              // posibles para un tag real: página de categoría (Estilo y
+              // silueta) o cuadrícula filtrada por colección (nombre de
+              // colección exacto, ver "nombresColeccion" arriba); el
+              // placeholder siempre va a categoría, nunca a colección.
               const esTagReal = typeof tag === 'string';
               const categoria = esTagReal ? tagACategoria(tag, { esFiesta: seccion === 'fiesta' }) : tag;
+              const esColeccion = esTagReal && !categoria && nombresColeccion.has(tag);
               const etiqueta = esTagReal ? tag : tFiltros(`estiloYSilueta.grupos.${tag.grupo}.opciones.${tag.opcion}`);
+              let href = null;
+              if (categoria) href = `/${locale}/atelier/${seccion}/categoria/${categoria.opcion}`;
+              else if (esColeccion) href = `/${locale}/atelier/${seccion}?coleccion=${encodeURIComponent(tag)}`;
               return (
                 <span key={esTagReal ? tag : `${tag.grupo}-${tag.opcion}`}>
-                  {categoria ? (
-                    <Link href={`/${locale}/atelier/${seccion}/categoria/${categoria.opcion}`} className={styles.categoriaTag}>
+                  {href ? (
+                    <Link href={href} className={styles.categoriaTag}>
                       {etiqueta}
                     </Link>
                   ) : etiqueta}

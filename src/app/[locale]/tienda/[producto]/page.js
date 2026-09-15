@@ -1,17 +1,18 @@
 /* Ruta DINÁMICA: una plantilla para TODOS los productos.
-   /tienda/vestido-aurora, /tienda/falda-vera... El parámetro llega en
-   params.producto — el slug de "nombre" (ver src/lib/slugify.js),
-   mismo algoritmo que usa TarjetaProducto para enlazar aquí. Busca en
-   el catálogo de ejemplo compartido por las páginas de categoría
-   (productosEjemplo.js) mientras no hay backend real. */
+   /tienda/falda-basilea... El parámetro llega en params.producto — el
+   slug de "nombre" (ver src/lib/slugify.js), mismo algoritmo que usa
+   TarjetaProducto para enlazar aquí. Busca en el catálogo real de
+   Tienda (tiendaProductos.js), mismo criterio que
+   atelier/{novias,fiesta}/[producto]/page.js con sus propios catálogos. */
 
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 import { ProductosRecomendados, ResenasClientes } from '@/components/layout';
-import { productosEjemplo } from '@/components/layout/productosEjemplo';
+import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
 import { FichaProductoAcciones, GaleriaProducto, LookPasarela } from '@/components/ecommerce';
+import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
 import { Acordeon, FilaAcordeon, Boton } from '@/components/ui';
 import { slugify } from '@/lib/slugify';
 import styles from './page.module.css';
@@ -27,21 +28,27 @@ export default async function FichaProducto({ params }) {
   const { locale, producto: slug } = await params;
   const t = await getTranslations('producto');
 
-  const producto = productosEjemplo.find((candidato) => slugify(candidato.nombre) === slug);
+  const producto = tiendaProductos.find((candidato) => slugify(candidato.nombre) === slug);
   if (!producto) notFound();
 
-  // Mismo catálogo de ejemplo, excluyendo el producto actual — hasta
-  // 10, la misma cantidad que espera ProductosRecomendados en su carrusel.
-  const relacionados = productosEjemplo.filter((candidato) => candidato !== producto).slice(0, 10);
+  // El rango completo de tallas menos "tallasDisponibles" (las que de
+  // verdad se pueden comprar, ver tiendaProductos.js) — el resto se
+  // enseña en SelectorTalla con opacidad reducida, vía
+  // FichaProductoAcciones ("agotadas" ahí abre "Avísame cuando esté
+  // disponible" en vez de dejar comprarla).
+  const agotadas = TALLAS_DISPONIBLES.filter((talla) => !producto.tallasDisponibles.includes(talla));
+
+  // Mismo catálogo real, excluyendo el producto actual — hasta 10, la
+  // misma cantidad que espera ProductosRecomendados en su carrusel.
+  const relacionados = tiendaProductos.filter((candidato) => candidato !== producto).slice(0, 10);
 
   // "Sigue explorando" (ver debajo de ProductosRecomendados más abajo):
   // vuelve a la categoría de la que vino la visita, leyendo el Referer
-  // del navegador — no hay campo de categoría en productosEjemplo (es
-  // el mismo catálogo de ejemplo compartido por todas las páginas de
-  // listado, ver productosEjemplo.js), así que no hay otra forma de
-  // saber "de qué categoría viene" este producto en concreto. Sin
-  // Referer reconocible (visita directa, marcador, fuera del sitio),
-  // cae a /tienda como categoría por defecto.
+  // del navegador — más fiable que "producto.categoria" (llevaría a la
+  // categoría real del producto, no a la página de la que vino de
+  // verdad la visita: pudo llegar aquí desde /tienda, un enlace
+  // externo, o buscador). Sin Referer reconocible (visita directa,
+  // marcador, fuera del sitio), cae a /tienda como categoría por defecto.
   const referer = (await headers()).get('referer') || '';
   let rutaOrigen = null;
   try {
@@ -55,7 +62,7 @@ export default async function FichaProducto({ params }) {
   const keySeguirExplorando = esOrigenAtelier ? 'seguirExplorandoAtelier' : 'seguirExplorandoTienda';
 
   return (
-    <section className="seccion contenedor">
+    <section className={`seccion contenedor ${styles.debajoNavbar}`}>
       <div className={styles.ficha}>
         <GaleriaProducto
           imagenes={producto.imagenes?.length ? producto.imagenes : [producto.imagen]}
@@ -67,62 +74,66 @@ export default async function FichaProducto({ params }) {
         />
 
         <div className={styles.info}>
-          <div className={styles.cabecera}>
-            <h1 className={styles.nombre}>{producto.nombre}</h1>
-            <p className={styles.precio}>{producto.precio}</p>
-            <p className={styles.descripcion}>{producto.descripcion}</p>
+          <div className={styles.bloquePrincipal}>
+            <div className={styles.cabecera}>
+              <h1 className={styles.nombre}>{producto.nombre}</h1>
+              <p className={styles.precio}>{producto.precio}</p>
+              <p className={styles.descripcion}>{producto.descripcion}</p>
+            </div>
+
+            <FichaProductoAcciones
+              nombre={producto.nombre}
+              precio={producto.precio}
+              imagen={producto.imagen}
+              colores={producto.colores}
+              tallas={producto.tallas}
+              agotadas={agotadas}
+            />
+
+            <Acordeon>
+              <FilaAcordeon titulo={t('composicion')}>
+                <p>{t('composicionTexto')}</p>
+                <div>
+                  <p>{t('origenDisenado')}</p>
+                  <p>{t('origenFabricado')}</p>
+                  <p>{t('origenTintura')}</p>
+                  <p>{t('origenTejido')}</p>
+                </div>
+              </FilaAcordeon>
+              <FilaAcordeon titulo={t('envios')}>
+                <div>
+                  <p>{t('enviosSubtitulo')}</p>
+                  <p>{t('entregaEstimada')}</p>
+                </div>
+                <div>
+                  <p>{t('devolucionesSubtitulo')}</p>
+                  <p>
+                    {t.rich('devolucionesTexto', {
+                      email: (chunks) => <a href="mailto:info@felycampo.com" className="enlace-texto">{chunks}</a>,
+                      telefono: (chunks) => <a href="tel:+34683703644" className="enlace-texto">{chunks}</a>,
+                      atencion: (chunks) => <a href={`/${locale}/ayuda/atencion-cliente`} className="enlace-texto">{chunks}</a>,
+                    })}
+                  </p>
+                </div>
+              </FilaAcordeon>
+            </Acordeon>
           </div>
-
-          <FichaProductoAcciones
-            nombre={producto.nombre}
-            precio={producto.precio}
-            imagen={producto.imagen}
-            colores={producto.colores}
-            tallas={producto.tallas}
-          />
-
-          <Acordeon>
-            <FilaAcordeon titulo={t('composicion')}>
-              <p>{t('composicionTexto')}</p>
-              <div>
-                <p>{t('origenDisenado')}</p>
-                <p>{t('origenFabricado')}</p>
-                <p>{t('origenTintura')}</p>
-                <p>{t('origenTejido')}</p>
-              </div>
-            </FilaAcordeon>
-            <FilaAcordeon titulo={t('envios')}>
-              <div>
-                <p>{t('enviosSubtitulo')}</p>
-                <p>{t('entregaEstimada')}</p>
-              </div>
-              <div>
-                <p>{t('devolucionesSubtitulo')}</p>
-                <p>
-                  {t.rich('devolucionesTexto', {
-                    email: (chunks) => <a href="mailto:info@felycampo.com" className="enlace-texto">{chunks}</a>,
-                    telefono: (chunks) => <a href="tel:+34683703644" className="enlace-texto">{chunks}</a>,
-                    atencion: (chunks) => <a href={`/${locale}/ayuda/atencion-cliente`} className="enlace-texto">{chunks}</a>,
-                  })}
-                </p>
-              </div>
-            </FilaAcordeon>
-          </Acordeon>
-
-          {/* PLACEHOLDER a propósito, ver LookPasarela.jsx — se
-              renderiza siempre con una imagen fija, sin lógica real
-              de selección todavía (pendiente de admin panel). Detalle
-              completo en docs/design.md, sección "Look de pasarela
-              (placeholder)". */}
-          <LookPasarela
-            titulo={t('runwayLook')}
-            imagen="/img/collections/runway/fw27-lacoleccion/FelyCampo_01.webp"
-            alt={t('runwayLook')}
-          />
         </div>
       </div>
 
       <div className={styles.debajoFicha}>
+        {/* PLACEHOLDER a propósito, ver LookPasarela.jsx — se
+            renderiza siempre con una imagen fija, sin lógica real de
+            selección todavía (pendiente de admin panel). Detalle
+            completo en docs/design.md, sección "Look de pasarela
+            (placeholder)". Fuera de .info (ver más arriba), alineado a
+            la derecha, justo encima de ResenasClientes. */}
+        <LookPasarela
+          titulo={t('runwayLook')}
+          imagen="/img/collections/runway/fw27-lacoleccion/FelyCampo_01.webp"
+          alt={t('runwayLook')}
+        />
+
         <ResenasClientes resenas={RESENAS_EJEMPLO} />
 
         {relacionados.length > 0 && (

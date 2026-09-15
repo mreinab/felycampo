@@ -91,7 +91,7 @@ const NAV_ITEMS = [
 const CLOSE_DELAY_MS = 200;
 const SCROLL_THRESHOLD_PX = 50;
 
-function Navbar({ transparent = false, crecerLogo = false }) {
+function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }) {
   const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
@@ -240,7 +240,16 @@ function Navbar({ transparent = false, crecerLogo = false }) {
   // mouseleave del header dispara igual, y sin "activeSubmenu" aquí el
   // fondo se volvía transparente con el panel (blanco) todavía abierto.
   const solido = scrolled || headerHovered || !!activeSubmenu;
-  const isLight = transparent && !solido;
+  // "textoOscuro" (ficha de producto, ver layout.js "esFichaProducto"):
+  // el Hero de esta página es GaleriaProducto, con object-fit:contain
+  // (no recorta la foto, ver GaleriaProducto.module.css) — normalmente
+  // deja aire/fondo claro alrededor de la prenda, así que el texto/logo
+  // en blanco de siempre (pensado para un Hero oscuro a sangre,
+  // ProductHero/home) quedaría invisible ahí. Aquí el fondo sigue
+  // siendo transparente igual (isLight solo decide el color de texto,
+  // no el fondo, ver headerClass más abajo), el texto/logo se quedan en
+  // --color-tinta de siempre.
+  const isLight = transparent && !solido && !textoOscuro;
 
   const headerClass = [
     styles.header,

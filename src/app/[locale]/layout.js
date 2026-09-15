@@ -98,6 +98,17 @@ export default async function RootLayout({ children, params }) {
   const matchBlog = rutaSinLocale.match(/^\/blog\/([^/]+)$/);
   const tipoBlog = matchBlog && entradaPorSlug(matchBlog[1])?.tipo;
   const esHeroBlog = tipoBlog === 'articulo' || tipoBlog === 'podcast';
+  // Ficha de producto (/tienda/[producto], /atelier/{novias,fiesta}/
+  // [producto], rutas dinámicas — mismo motivo que esFichaRunway: no
+  // pueden vivir en RUTAS_CON_PRODUCT_HERO, que solo hace match exacto):
+  // mismo Navbar transparente que las páginas de listado, con
+  // GaleriaProducto haciendo de Hero (data-navbar-hero en su
+  // .galeria, ver GaleriaProducto.jsx/.module.css) en vez de
+  // ProductHero. El regex de Tienda también hace match con sus páginas
+  // de categoría (ya cubiertas por RUTAS_CON_PRODUCT_HERO arriba) —
+  // solapamiento sin efecto, las dos evalúan a transparente igual.
+  const esFichaProducto = /^\/tienda\/[^/]+$/.test(rutaSinLocale)
+    || /^\/atelier\/(novias|fiesta)\/[^/]+$/.test(rutaSinLocale);
 
   return (
     <html lang={locale}>
@@ -108,7 +119,11 @@ export default async function RootLayout({ children, params }) {
         <NextIntlClientProvider messages={messages}>
           <CarritoProvider>
             <MiCuentaProvider>
-              <Navbar transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier || esHeroBlog} crecerLogo={isHome} />
+              <Navbar
+                transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier || esHeroBlog || esFichaProducto}
+                crecerLogo={isHome}
+                textoOscuro={esFichaProducto}
+              />
               <main>{children}</main>
               <Footer />
               {isHome && <NewsletterModalGlobal />}

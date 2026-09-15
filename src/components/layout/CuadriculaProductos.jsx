@@ -80,10 +80,15 @@ function familiaDeHex(hex) {
  * "colecciones" (opcional, array de nombres): activa un desplegable
  * más en PanelFiltros ("Colección") — lista de nombres, selección
  * única (clicar el ya activo lo quita), mismo patrón que "ordenar por".
- * Usado por Atelier (Novias/Fiesta), no por Tienda. De momento es solo
- * selección visual: productosEjemplo no tiene todavía un campo
- * "colección" con el que cruzarla, así que no filtra la cuadrícula de
- * verdad (ver coleccionSeleccionada más abajo).
+ * Usado por Atelier (Novias/Fiesta), no por Tienda. Filtra la
+ * cuadrícula de verdad contra "producto.coleccion" (ver noviaProductos.js/
+ * fiestaProductos.js — productosEjemplo no tiene ese campo, pero
+ * tampoco le llega nunca esta prop). "coleccionActiva" (opcional,
+ * nombre exacto): preselecciona el filtro al montar — la pasan
+ * atelier/{novias,fiesta}/page.js leyendo "?coleccion=" de la URL
+ * (searchParams, Server Component), mismo mecanismo que
+ * "categoriaActiva" para el query de ese propio segmento. Enlazado
+ * desde los tags de colección de FichaProductoAtelier.jsx.
  * "estiloYSilueta" (opcional): activa el bloque "Estilo y silueta" en
  * PanelFiltros (Silueta/Volumen/Largo/Estilo/Detalles, y "Ocasión" si
  * además "esFiesta"). Usado por Atelier (Novias/Fiesta) — mismo caso
@@ -128,7 +133,7 @@ function familiaDeHex(hex) {
  * carga 8 más, con tarjetas-esqueleto (.skeleton) mientras "llega"
  * (simulado con un timeout — aquí no hay backend real todavía).
  */
-function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase, estiloYSilueta = false, esFiesta = false, categoriaActiva = null, ocultarSubtitulo = false }) {
+function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase, estiloYSilueta = false, esFiesta = false, categoriaActiva = null, coleccionActiva = null, ocultarSubtitulo = false }) {
   const t = useTranslations();
   const locale = useLocale();
 
@@ -141,7 +146,11 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
   const [orden, setOrden] = useState('recomendados');
   const [tallasSeleccionadas, setTallasSeleccionadas] = useState([]);
   const [familiasSeleccionadas, setFamiliasSeleccionadas] = useState([]);
-  const [coleccionSeleccionada, setColeccionSeleccionada] = useState(null);
+  // Preseleccionada desde "coleccionActiva" (prop, resuelta en el Server
+  // Component de la página a partir de "?coleccion=" en la URL) cuando
+  // se llega desde un tag de colección de FichaProductoAtelier.jsx —
+  // mismo mecanismo que "categoriaActiva" con estiloSiluetaSeleccionados.
+  const [coleccionSeleccionada, setColeccionSeleccionada] = useState(coleccionActiva || null);
   // Preseleccionado desde "categoriaActiva" (prop, resuelta en el
   // Server Component de la página) cuando se llega a una URL de
   // categoría — ver comentario de "categoriaActiva" arriba.
@@ -215,13 +224,14 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
       const pasaColor = familiasSeleccionadas.length === 0
         || (producto.colores || []).some(({ hex }) => familiasSeleccionadas.includes(familiaDeHex(hex)));
       const pasaPrecio = parsearPrecio(producto.precio) <= precioMax;
-      return pasaTalla && pasaColor && pasaPrecio;
+      const pasaColeccion = !coleccionSeleccionada || producto.coleccion === coleccionSeleccionada;
+      return pasaTalla && pasaColor && pasaPrecio && pasaColeccion;
     });
 
     if (orden === 'precioAsc') return [...filtrados].sort((a, b) => parsearPrecio(a.precio) - parsearPrecio(b.precio));
     if (orden === 'precioDesc') return [...filtrados].sort((a, b) => parsearPrecio(b.precio) - parsearPrecio(a.precio));
     return filtrados;
-  }, [productos, esGrid, tallasSeleccionadas, familiasSeleccionadas, precioMax, orden]);
+  }, [productos, esGrid, tallasSeleccionadas, familiasSeleccionadas, precioMax, orden, coleccionSeleccionada]);
 
   // ---------- Paginación por scroll (solo "grid") ----------
   const [visibles, setVisibles] = useState(LOTE_INICIAL);
@@ -232,10 +242,11 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
   // estricto podría dejar "visibles" apuntando más allá del final.
   useEffect(() => {
     setVisibles(LOTE_INICIAL);
-  }, [tallasSeleccionadas, familiasSeleccionadas, precioMax, orden]);
-  // "estiloSiluetaSeleccionados"/"coleccionSeleccionada" no filtran la
-  // cuadrícula de verdad (ver comentario de "estiloYSilueta"/
-  // "colecciones" más arriba), así que no reinician "visibles".
+  }, [tallasSeleccionadas, familiasSeleccionadas, precioMax, orden, coleccionSeleccionada]);
+  // "estiloSiluetaSeleccionados" no filtra la cuadrícula de verdad (ver
+  // comentario de "estiloYSilueta" más arriba), así que no reinicia
+  // "visibles" — a diferencia de "coleccionSeleccionada", que ya sí
+  // filtra de verdad (ver "colecciones" arriba).
 
   useEffect(() => {
     if (!esGrid || cargandoMas || visibles >= productosOrdenados.length) return undefined;

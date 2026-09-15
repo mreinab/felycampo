@@ -4,10 +4,21 @@
    (galería a la izquierda, info sticky a la derecha), sin precio.
    ============================================================ */
 
+/* Mismo motivo que .debajoNavbar en tienda/[producto]/page.module.css:
+   contiene el apilamiento de toda la ficha por debajo del Navbar
+   (z-index:50, transparent+fixed en esta página — ver layout.js
+   "esFichaProducto"), así ningún hijo (.galeria, .info en mobile...)
+   puede pintar por encima suyo pese a compartir z-index:auto/orden de
+   DOM con él. */
+.debajoNavbar {
+  position: relative;
+  z-index: 1;
+}
+
 .ficha {
   display: grid;
   grid-template-columns: 3fr 2fr;
-  gap: var(--spacing-8);
+  gap: var(--spacing-9);
 }
 
 @media (max-width: 767px) {

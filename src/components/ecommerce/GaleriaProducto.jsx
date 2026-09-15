@@ -117,6 +117,15 @@ function GaleriaProducto({ imagenes = [], alt, nombre, precio, colores = [], tal
     };
 
     const alRueda = (evento) => {
+      // Mobile (.pista a pantalla completa, ver GaleriaProducto.module.css):
+      // reinterpretar la rueda vertical como scroll horizontal de la
+      // pista bloqueaba TODA la página, porque .galeria ocupa aquí el
+      // 100% del viewport — un móvil real nunca dispara "wheel" al
+      // deslizar con el dedo, pero sí lo hace el modo "dispositivo
+      // móvil" de las devtools con rueda/trackpad, o un portátil táctil
+      // en una ventana estrecha. Por debajo de 768px se deja pasar el
+      // evento tal cual, para que la página scrollee con normalidad.
+      if (window.innerWidth < 768) return;
       if (Math.abs(evento.deltaY) <= Math.abs(evento.deltaX)) return;
       const pista = pistaRef.current;
       if (!pista) return;
@@ -145,8 +154,16 @@ function GaleriaProducto({ imagenes = [], alt, nombre, precio, colores = [], tal
   if (imagenes.length === 0) return null;
 
   return (
-    <div className={styles.galeria} ref={galeriaRef}>
-      <div ref={pistaRef} className={styles.pista} onScroll={actualizarFlechas}>
+    // data-navbar-hero: hace de Hero de la página de producto (Tienda/
+    // Atelier, ver layout.js "esFichaProducto") — mismo mecanismo que
+    // ProductHero.jsx en las páginas de listado, Navbar.jsx vigila este
+    // nodo para saber cuándo volverse sólido.
+    <div className={styles.galeria} ref={galeriaRef} data-navbar-hero>
+      <div
+        ref={pistaRef}
+        className={`${styles.pista} ${imagenes.length === 1 ? styles.pistaUnica : ''}`}
+        onScroll={actualizarFlechas}
+      >
         {imagenes.map((src, indice) => (
           <button
             key={src}

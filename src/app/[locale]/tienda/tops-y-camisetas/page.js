@@ -1,14 +1,17 @@
-/* Placeholder — pendiente de maquetar. Ruta: /tienda/tops-y-camisetas */
+/* Ruta: /tienda/tops-y-camisetas — catálogo real, filtrado por
+   categoria (ver tiendaProductos.js). */
 
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
-import { productosEjemplo } from '@/components/layout/productosEjemplo';
+import { tiendaProductos } from '@/components/layout/tiendaProductos';
 
 export default function Pagina() {
+  const productos = tiendaProductos.filter((producto) => producto.categoria === 'tops-y-camisetas');
+
   return (
     <section className="seccion">
       <ProductHero imagen="/img/ecommerce/Categorias/camisa.webp" />
       <CuadriculaProductos
-        productos={productosEjemplo}
+        productos={productos}
         disposicion="grid"
         tituloKey="catalogo.subtituloTienda"
         coleccionKey="nav.submenus.tienda.tops"
