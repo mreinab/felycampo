@@ -52,6 +52,36 @@
   display: none;
 }
 
+/* Por debajo de tablet, las 4 columnas fijas (25% cada una) encogían
+   las tarjetas a un cuarto del ancho de un móvil — con solo 2 reseñas
+   (RESENAS_EJEMPLO) eso las dejaba en una tira centrada de apenas la
+   mitad de la pantalla, diminuta y con el texto partido en muchas
+   líneas estrechas. Mismo criterio que .pista de
+   ProductosRecomendados.module.css (carrusel de scroll libre, tarjeta
+   de 260px fijos) en vez de forzar columnas que no caben: cada reseña
+   respira a tamaño legible, con gap real entre ellas (aquí no hace
+   falta imitar el 0.04rem de ProductosRecomendados). */
+@media (max-width: 767px) {
+  .fila {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .fila::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tarjeta {
+    flex: 0 0 260px;
+    max-width: none;
+    width: 260px;
+  }
+}
+
 /* Mismo aspect-ratio que .marco+.marcoCarrusel de
    TarjetaProducto.module.css (2/3 — variante "carrusel", la que usa
    ProductosRecomendados, no la base 3/4 de la cuadrícula normal) y

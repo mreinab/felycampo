@@ -23,13 +23,14 @@ import { entradaPorSlug } from './blog/blog';
 // Client Component, y solo sus componentes (no valores sueltos)
 // cruzan de forma fiable la frontera a un Server Component como este
 // layout — mantener en sync con SUBMENU_STRUCTURE.tienda.items de
-// Navbar.jsx si cambian las categorías de Tienda.
+// Navbar.jsx si cambian las categorías de Prêt-à-porter.
 const RUTAS_CON_PRODUCT_HERO = [
-  '/tienda',
-  '/tienda/tops-y-camisetas',
-  '/tienda/chaquetas-y-abrigos',
-  '/tienda/faldas',
-  '/tienda/vestidos',
+  '/pret-a-porter',
+  '/pret-a-porter/tops-y-camisetas',
+  '/pret-a-porter/chaquetas-y-abrigos',
+  '/pret-a-porter/faldas',
+  '/pret-a-porter/pantalones',
+  '/pret-a-porter/vestidos',
   '/atelier',
   '/atelier/novias',
   '/atelier/fiesta',
@@ -98,16 +99,16 @@ export default async function RootLayout({ children, params }) {
   const matchBlog = rutaSinLocale.match(/^\/blog\/([^/]+)$/);
   const tipoBlog = matchBlog && entradaPorSlug(matchBlog[1])?.tipo;
   const esHeroBlog = tipoBlog === 'articulo' || tipoBlog === 'podcast';
-  // Ficha de producto (/tienda/[producto], /atelier/{novias,fiesta}/
+  // Ficha de producto (/pret-a-porter/[producto], /atelier/{novias,fiesta}/
   // [producto], rutas dinámicas — mismo motivo que esFichaRunway: no
   // pueden vivir en RUTAS_CON_PRODUCT_HERO, que solo hace match exacto):
   // mismo Navbar transparente que las páginas de listado, con
   // GaleriaProducto haciendo de Hero (data-navbar-hero en su
   // .galeria, ver GaleriaProducto.jsx/.module.css) en vez de
-  // ProductHero. El regex de Tienda también hace match con sus páginas
-  // de categoría (ya cubiertas por RUTAS_CON_PRODUCT_HERO arriba) —
-  // solapamiento sin efecto, las dos evalúan a transparente igual.
-  const esFichaProducto = /^\/tienda\/[^/]+$/.test(rutaSinLocale)
+  // ProductHero. El regex de Prêt-à-porter también hace match con sus
+  // páginas de categoría (ya cubiertas por RUTAS_CON_PRODUCT_HERO
+  // arriba) — solapamiento sin efecto, las dos evalúan a transparente igual.
+  const esFichaProducto = /^\/pret-a-porter\/[^/]+$/.test(rutaSinLocale)
     || /^\/atelier\/(novias|fiesta)\/[^/]+$/.test(rutaSinLocale);
 
   return (

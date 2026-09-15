@@ -6,14 +6,14 @@
    cuadrícula, ver TarjetaCarrito), resumen del pedido a la derecha,
    pegado arriba mientras la columna de productos es más alta que él
    (mismo patrón que la ficha de producto, ver
-   tienda/[producto]/page.module.css). Apiladas en mobile: productos
-   primero, resumen debajo.
+   pret-a-porter/[producto]/page.module.css). Apiladas en mobile:
+   productos primero, resumen debajo.
 
    'use client' en el propio page.js (no un Server Component
    delegando en un componente cliente aparte) porque toda la página
    depende de CarritoContext — no hay parte server-only que aislar
-   (a diferencia de tienda/[producto], que sí resuelve el producto por
-   slug en el servidor).
+   (a diferencia de pret-a-porter/[producto], que sí resuelve el
+   producto por slug en el servidor).
    ============================================================ */
 
 import { useState } from 'react';
@@ -43,7 +43,7 @@ export default function Pagina() {
         <div className={styles.vacio}>
           <ShoppingBasket className={styles.vacioIcono} strokeWidth={1} />
           <p className={styles.vacioTexto}>{t('vacio')}</p>
-          <Boton variante="solido" tamano="m" href={`/${locale}/tienda`}>{t('explorarTienda')}</Boton>
+          <Boton variante="solido" tamano="m" href={`/${locale}/pret-a-porter`}>{t('explorarTienda')}</Boton>
         </div>
       ) : (
         <div className={styles.layout}>

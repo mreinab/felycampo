@@ -118,7 +118,7 @@ function MiCuentaModal() {
 
       <div className={styles.layout}>
         <div className={styles.imagenPanel}>
-          <img src="/img/felycampo-lacoleccion-3.webp" alt="" className={styles.imagen} />
+          <img src="/img/atelier/login-atelier-felycampo.jpg" alt="" className={styles.imagen} />
         </div>
 
         <div className={styles.formPanel}>

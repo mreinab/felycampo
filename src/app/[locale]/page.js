@@ -56,13 +56,13 @@ const slidesHero = [
     src: '/img/FW27-Hero3.mp4',
     tipo: 'video',
     titulo: 'Prêt-à-porter',
-    ctaHref: '/tienda',
+    ctaHref: '/pret-a-porter',
   },
   {
     src: '/img/HERO-2.jpg',
     tipo: 'imagen',
     titulo: 'Prêt-à-porter',
-    ctaHref: '/tienda',
+    ctaHref: '/pret-a-porter',
   },
   {
     src: '/img/novias-sección-FelyCampo3.jpg',
@@ -104,14 +104,14 @@ export default async function Home({ params }) {
             tipo: 'imagen',
             tituloKey: 'splitMediaCategorias.item1.titulo',
             ctaKey: 'splitMediaCategorias.item1.cta',
-            href: `/${locale}/tienda/vestidos`,
+            href: `/${locale}/pret-a-porter/vestidos`,
           },
           {
             src: '/img/ecommerce/Categorias/chaqueta.webp',
             tipo: 'imagen',
             tituloKey: 'splitMediaCategorias.item2.titulo',
             ctaKey: 'splitMediaCategorias.item2.cta',
-            href: `/${locale}/tienda/chaquetas-y-abrigos`,
+            href: `/${locale}/pret-a-porter/chaquetas-y-abrigos`,
           },
         ]}
       />

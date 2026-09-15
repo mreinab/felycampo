@@ -11,14 +11,19 @@
    productos en venta. Por eso no lleva PanelFiltros (sin talla/color/
    precio que filtrar) ni CuadriculaProductos.
 
-   Cada tile de la cuadrícula es un "look" (PLACEHOLDER, ver
-   LOOKS_EJEMPLO más abajo — sin backend real que permita a las
-   clientas subir sus propias fotos/reseña todavía): su propia mini-
-   galería de fotos (CarruselFotos.jsx, ui/ — cross-fade + barra de
-   progreso al hover, mismo componente que ResenasClientes.jsx) más un
-   botón "+" (40px, esquina inferior derecha, ver .abrirBtn) que —
-   igual que clicar la propia foto — abre un lightbox a pantalla
-   completa con esa mini-galería.
+   Cada tile de la cuadrícula es un "look": su propia mini-galería de
+   fotos (CarruselFotos.jsx, ui/ — cross-fade + barra de progreso al
+   hover, mismo componente que ResenasClientes.jsx) más un botón "+"
+   (40px, esquina inferior derecha, ver .abrirBtn) que — igual que
+   clicar la propia foto — abre un lightbox a pantalla completa con esa
+   mini-galería. Las fotos son reales (público/img/Clientes/CLIENTAS,
+   ver FOTOS_INVITADAS/FOTOS_NOVIAS más abajo): cada array interior es
+   UN grupo de fotos que a simple vista parecen de la misma clienta/
+   misma boda (mismo vestido, mismo acompañante, mismo lugar) — se
+   agruparon a mano revisando las fotos una a una, no hay metadato real
+   que las una todavía. nombre/comentario/producto vinculado siguen
+   siendo PLACEHOLDER (no hay reseña real de estas clientas), ver
+   comentario de LOOKS más abajo.
 
    El lightbox reutiliza el mecanismo de RunwayGaleria.jsx (mismo
    .lightbox/.abierta, cabecera con logo + cerrar, pista con scroll-
@@ -40,8 +45,8 @@
    densidad: el toggle "Invitadas"/"Novias" (.toggleCategoria, mismo
    lenguaje visual que .toggleBoton ahí — subrayado en el activo) sale
    como "children" de CabeceraSeccion y filtra LOOKS_EJEMPLO por su
-   campo "categoria" (alternado por índice, PLACEHOLDER: sin backend
-   real que distinga looks de invitada/novia todavía).
+   campo "categoria" (real: viene de qué carpeta sale cada grupo de
+   fotos, FOTOS_INVITADAS o FOTOS_NOVIAS, ver más abajo).
    Uso:
      <GaleriaVosotras titleKey="..." />
    ============================================================ */
@@ -50,42 +55,99 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Plus, X } from 'lucide-react';
 import { CabeceraSeccion, CarruselFotos } from '../ui';
+import useEnVista from '@/hooks/useEnVista';
 import { RESENAS_EJEMPLO } from './resenasEjemplo';
 import { productosEjemplo } from './productosEjemplo';
 import { slugify } from '@/lib/slugify';
 import styles from './GaleriaVosotras.module.css';
 
-// Mismas 3 fotos que FOTOS_CARRUSEL_EJEMPLO en ResenasClientes.jsx —
-// sin backend real que permita a las clientas subir sus propias fotos
-// todavía, se turnan aquí para simular la mini-galería de cada look.
-const FOTOS_EJEMPLO = [
-  '/img/Clientes/ClientReview- (1).jpg',
-  '/img/Clientes/ClientReview- (2).jpg',
-  '/img/Clientes/vestido-2clienta.JPG',
+// Fotos reales de clientas, agrupadas a mano (ver comentario de
+// cabecera) — cada array interior es un look/carrusel. Carpeta
+// public/img/Clientes/CLIENTAS/ (invitadas de boda) y su subcarpeta
+// novias/ (la propia novia). Nombrado nuestras-{invitadas,novias}-
+// felycampo-GRUPO-FOTO — GRUPO agrupa qué fotos van juntas, FOTO su
+// orden dentro de ese grupo.
+const RUTA_INVITADAS = '/img/Clientes/CLIENTAS';
+const RUTA_NOVIAS = '/img/Clientes/CLIENTAS/novias';
+
+// Orden de la cuadrícula (de arriba a abajo/izquierda a derecha):
+// pedido explícito para los primeros 4 grupos (14, 11, 23, 07), el
+// resto sigue el orden en que se fueron agrupando.
+const FOTOS_INVITADAS = [
+  ['14-01'],
+  ['11-01', '11-02', '11-03', '11-04'],
+  ['23-01'],
+  ['07-01', '07-02', '07-03', '07-04', '07-05', '07-06'],
+  ['04-01', '04-02', '04-03'],
+  ['13-01', '13-02', '13-03'],
+  ['16-01', '16-02'],
+  ['19-01', '19-02'],
+  ['20-01', '20-02', '20-03'],
+  ['21-01', '21-02'],
+  ['25-01', '25-02', '25-03', '25-04', '25-05'],
+  ['27-01', '27-02'],
+  ['28-01'],
+  ['30-01', '30-02', '30-03'],
+  ['31-01'],
+  ['32-01', '32-02'],
+].map((grupo) => grupo.map((sufijo) => `${RUTA_INVITADAS}/nuestras-invitadas-felycampo-${sufijo}.${sufijo === '30-01' ? 'png' : 'jpg'}`));
+
+const FOTOS_NOVIAS = [
+  ['01-01', '01-02', '01-03', '01-04', '01-05', '01-06', '01-07', '01-08'],
+  ['03-01'],
+  ['04-01', '04-02'],
+  ['05-01', '05-02', '05-03', '05-04', '05-05'],
+  ['09-01', '09-02', '09-03', '09-04'],
+  ['10-01', '10-02'],
+  ['13-01', '13-02', '13-03'],
+].map((grupo) => grupo.map((sufijo) => `${RUTA_NOVIAS}/nuestras-novias-felycampo-${sufijo}.jpg`));
+
+// Cada look: su propia mini-galería (grupo real de fotos, portada
+// siempre primera) + nombre/comentario (reutiliza RESENAS_EJEMPLO,
+// resenasEjemplo.js, en vez de inventar reseñas reales de estas
+// clientas concretas — no hay backend todavía que las capture) + un
+// producto "vinculado" ("Consigue el look"), turnado de
+// productosEjemplo.js por índice — mismo criterio que antes, ahora
+// sobre grupos de fotos reales en vez de 3 fotos de ejemplo repetidas.
+function construirLooks(gruposFotos, categoria, indiceInicial) {
+  return gruposFotos.map((fotos, indice) => {
+    const indiceGlobal = indiceInicial + indice;
+    const resena = RESENAS_EJEMPLO[indiceGlobal % RESENAS_EJEMPLO.length];
+    return {
+      fotos,
+      nombre: resena.nombre,
+      comentario: resena.texto,
+      productos: [productosEjemplo[indiceGlobal % productosEjemplo.length]],
+      categoria,
+    };
+  });
+}
+
+const LOOKS_EJEMPLO = [
+  ...construirLooks(FOTOS_INVITADAS, 'invitadas', 0),
+  ...construirLooks(FOTOS_NOVIAS, 'novias', FOTOS_INVITADAS.length),
 ];
 
-const CANTIDAD_EJEMPLO = 12;
+// Mismo fundido+subida al entrar en el viewport que TarjetaProducto.jsx
+// (useEnVista + .al-scroll/.en-vista de global.css) — aparte porque un
+// hook no puede llamarse dentro del .map() de la cuadrícula más abajo.
+function TileVosotras({ onAbrir, fotos, etiquetaAbrir }) {
+  const [ref, enVista] = useEnVista();
 
-// Cada look: su propia mini-galería (la foto de portada siempre
-// primera, mismo criterio que TarjetaResena en ResenasClientes.jsx) +
-// nombre/comentario (reutiliza RESENAS_EJEMPLO, resenasEjemplo.js, en
-// vez de inventar textos nuevos) + un producto "vinculado" ("Consigue
-// el look") — sin backend real que cruce clienta-look con un producto
-// de verdad, se turna aquí uno de productosEjemplo.js por índice.
-// "categoria" (PLACEHOLDER, alternada por índice): para que el toggle
-// "Invitadas"/"Novias" tenga algo real que filtrar antes de que lleguen
-// las fotos/reseñas reales de cada grupo.
-const LOOKS_EJEMPLO = Array.from({ length: CANTIDAD_EJEMPLO }, (_, indice) => {
-  const portada = FOTOS_EJEMPLO[indice % FOTOS_EJEMPLO.length];
-  const resena = RESENAS_EJEMPLO[indice % RESENAS_EJEMPLO.length];
-  return {
-    fotos: [portada, ...FOTOS_EJEMPLO.filter((foto) => foto !== portada)],
-    nombre: resena.nombre,
-    comentario: resena.texto,
-    productos: [productosEjemplo[indice % productosEjemplo.length]],
-    categoria: indice % 2 === 0 ? 'invitadas' : 'novias',
-  };
-});
+  return (
+    <div ref={ref} className={`${styles.item} al-scroll ${enVista ? 'en-vista' : ''}`} onClick={onAbrir}>
+      <CarruselFotos fotos={fotos} />
+      <button
+        type="button"
+        className={styles.abrirBtn}
+        onClick={(evento) => { evento.stopPropagation(); onAbrir(); }}
+        aria-label={etiquetaAbrir}
+      >
+        <Plus size={20} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
 
 function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperiorAmplio }) {
   const t = useTranslations();
@@ -214,17 +276,12 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
 
       <div className={styles.grid}>
         {looksVisibles.map((look, indice) => (
-          <div key={indice} className={styles.item} onClick={() => abrir(indice)}>
-            <CarruselFotos fotos={look.fotos} />
-            <button
-              type="button"
-              className={styles.abrirBtn}
-              onClick={(evento) => { evento.stopPropagation(); abrir(indice); }}
-              aria-label={t('vosotras.verGaleria')}
-            >
-              <Plus size={20} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" />
-            </button>
-          </div>
+          <TileVosotras
+            key={indice}
+            fotos={look.fotos}
+            onAbrir={() => abrir(indice)}
+            etiquetaAbrir={t('vosotras.verGaleria')}
+          />
         ))}
       </div>
 
@@ -285,7 +342,7 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
                   {lookActivo.productos.map((producto) => (
                     <a
                       key={producto.nombre}
-                      href={`/${locale}/tienda/${slugify(producto.nombre)}`}
+                      href={`/${locale}/pret-a-porter/${slugify(producto.nombre)}`}
                       className={styles.panelProducto}
                       tabIndex={tabIndexInteractivo}
                     >

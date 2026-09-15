@@ -1354,10 +1354,10 @@ export const disenoMock = [
     // selector de idioma único para toda la página en vez de uno por bloque.
     slides: [
       {
-        id: 's1', src: '/img/FW27-Hero3.mp4', tipo: 'video', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/tienda',
+        id: 's1', src: '/img/FW27-Hero3.mp4', tipo: 'video', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
       },
       {
-        id: 's2', src: '/img/HERO-2.jpg', tipo: 'imagen', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/tienda',
+        id: 's2', src: '/img/HERO-2.jpg', tipo: 'imagen', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
       },
       {
         id: 's3', src: '/img/novias-sección-FelyCampo3.jpg', tipo: 'imagen', titulo: { es: 'Bride 27', en: 'Bride 27' }, ctaTexto: { es: 'Ver colección', en: 'View collection' }, destino: '/atelier/novias',
@@ -1437,13 +1437,14 @@ export const disenoMock = [
 // guiones — /archivo/colecciones/[coleccion] es una plantilla genérica
 // que acepta cualquier slug, así que estos 9 ya navegan de verdad).
 export const paginasInternas = [
-  { valor: '/tienda', etiqueta: 'Prêt-à-porter' },
-  { valor: '/tienda/tops-y-camisetas', etiqueta: 'Prêt-à-porter — Tops y Camisas' },
-  { valor: '/tienda/chaquetas-y-abrigos', etiqueta: 'Prêt-à-porter — Chaquetas y Abrigos' },
-  { valor: '/tienda/faldas', etiqueta: 'Prêt-à-porter — Faldas' },
-  { valor: '/tienda/vestidos', etiqueta: 'Prêt-à-porter — Vestidos' },
-  { valor: '/tienda/zapatos', etiqueta: 'Prêt-à-porter — Zapatos' },
-  { valor: '/tienda/accesorios', etiqueta: 'Prêt-à-porter — Accesorios' },
+  { valor: '/pret-a-porter', etiqueta: 'Prêt-à-porter' },
+  { valor: '/pret-a-porter/tops-y-camisetas', etiqueta: 'Prêt-à-porter — Tops y Camisas' },
+  { valor: '/pret-a-porter/chaquetas-y-abrigos', etiqueta: 'Prêt-à-porter — Chaquetas y Abrigos' },
+  { valor: '/pret-a-porter/faldas', etiqueta: 'Prêt-à-porter — Faldas' },
+  { valor: '/pret-a-porter/pantalones', etiqueta: 'Prêt-à-porter — Pantalones' },
+  { valor: '/pret-a-porter/vestidos', etiqueta: 'Prêt-à-porter — Vestidos' },
+  { valor: '/pret-a-porter/zapatos', etiqueta: 'Prêt-à-porter — Zapatos' },
+  { valor: '/pret-a-porter/accesorios', etiqueta: 'Prêt-à-porter — Accesorios' },
   { valor: '/atelier', etiqueta: 'Atelier' },
   { valor: '/atelier/novias', etiqueta: 'Atelier — Novias' },
   { valor: '/atelier/fiesta', etiqueta: 'Atelier — Fiesta' },

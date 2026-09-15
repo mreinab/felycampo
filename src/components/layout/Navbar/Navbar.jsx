@@ -15,27 +15,31 @@ import { useMiCuenta } from '@/context/MiCuentaContext';
 import NavbarPanelLateralContent from './NavbarPanelLateralContent';
 import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 
-// Enlaces con submenú (Tienda, Atelier — coinciden con las categorías
-// reales del sitemap). El resto son enlaces simples, sin panel.
+// Enlaces con submenú (Prêt-à-porter, Atelier — coinciden con las
+// categorías reales del sitemap). El resto son enlaces simples, sin panel.
 // Los labels viven en messages/{locale}.json bajo el namespace "nav" —
 // aquí solo se guarda la estructura (hrefs, claves de traducción, imagen).
+// "items" alimenta la lista de texto (NavbarPanelLateralContent) tal
+// cual, en su propio orden. "cards" es independiente (1 o 2 MediaLink,
+// NavbarPanelLateralCards): cada una con su propia imagen, elegida a
+// mano para que combine con lo que enlaza (misma foto que usa esa
+// página como hero/categoría, no una genérica compartida como antes).
 const SUBMENU_STRUCTURE = {
   tienda: {
-    // "verTodos" va primero a propósito: alimenta tanto la lista de
-    // texto (arriba del todo) como la única MediaLink de este submenú
-    // (cardsUnico, toma items[0] — ver NavbarPanelLateralCards.jsx), así
-    // la imagen enlaza y rotula "Ver todos" en vez de una categoría.
     items: [
-      { key: 'verTodos', href: '/tienda' },
-      { key: 'tops', href: '/tienda/tops-y-camisetas' },
-      { key: 'coats', href: '/tienda/chaquetas-y-abrigos' },
-      { key: 'faldas', href: '/tienda/faldas' },
-      { key: 'vestidos', href: '/tienda/vestidos' },
+      { key: 'verTodos', href: '/pret-a-porter' },
+      { key: 'tops', href: '/pret-a-porter/tops-y-camisetas' },
+      { key: 'coats', href: '/pret-a-porter/chaquetas-y-abrigos' },
+      { key: 'faldas', href: '/pret-a-porter/faldas' },
+      { key: 'pantalones', href: '/pret-a-porter/pantalones' },
+      { key: 'vestidos', href: '/pret-a-porter/vestidos' },
     ],
-    image: '/img/styleguide/prod-tarjeta.webp',
-    // Una sola imagen a todo el ancho en vez de las dos MediaLink
-    // habituales (ver NavbarPanelLateralCards.jsx).
-    cardsUnico: true,
+    // Mismas fotos de categoría que ProductHero en vestidos/page.js y
+    // chaquetas-y-abrigos/page.js.
+    cards: [
+      { key: 'vestidos', href: '/pret-a-porter/vestidos', image: '/img/ecommerce/Categorias/vestido.webp' },
+      { key: 'coats', href: '/pret-a-porter/chaquetas-y-abrigos', image: '/img/ecommerce/Categorias/chaqueta.webp' },
+    ],
   },
   atelier: {
     items: [
@@ -50,7 +54,12 @@ const SUBMENU_STRUCTURE = {
       { key: 'fiesta', href: '/atelier/fiesta', labelKey: 'fiestaSubmenu' },
       { key: 'vosotras', href: '/atelier/vosotras' },
     ],
-    image: '/img/styleguide/punto-venta.webp',
+    // Una sola MediaLink (a todo el ancho, ver NavbarPanelLateralCards)
+    // — foto real de una novia (GaleriaVosotras.jsx) en vez de las de
+    // punto de venta que llevaba antes.
+    cards: [
+      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/Clientes/CLIENTAS/novias/nuestras-novias-felycampo-01-01.jpg' },
+    ],
   },
   elMundoDeFely: {
     items: [
@@ -58,15 +67,16 @@ const SUBMENU_STRUCTURE = {
       { key: 'runway', href: '/colecciones-fely-campo' },
       { key: 'talleres', href: '/talleres-fely-campo' },
     ],
-    image: '/img/styleguide/prod-tarjeta-relacionado.webp',
+    // Portada de la colección más reciente (colecciones.js) y una foto
+    // real de taller (talleres.js, mismo criterio que arriba).
+    cards: [
+      { key: 'runway', href: '/colecciones-fely-campo', image: '/img/collections/runway/fw27-lacoleccion/backstage/HERO-2.jpg' },
+      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/talleres/bejar/bejar-taller-felycampo-01.webp' },
+    ],
   },
   visitanos: {
     // Orden fijo por encargo: las 3 sedes primero, luego Puntos de
-    // venta y Pedir cita al final. "salamanca" va primero — mismo
-    // criterio que "verTodos" en tienda: alimenta tanto la lista de
-    // texto (arriba del todo) como la única MediaLink de este submenú
-    // (cardsUnico, toma items[0] — ver NavbarPanelLateralCards.jsx),
-    // así la imagen enlaza y rotula "Atelier Salamanca".
+    // venta y Pedir cita al final.
     items: [
       { key: 'salamanca', href: '/atelier-fiesta/salamanca' },
       { key: 'madrid', href: '/atelier-fiesta/madrid' },
@@ -74,18 +84,21 @@ const SUBMENU_STRUCTURE = {
       { key: 'puntosDeVenta', href: '/puntos-de-venta-fely-campo' },
       { key: 'reservarCita', href: '/visita-fely-campo/cita' },
     ],
-    image: '/img/styleguide/prod-tarjeta-hover.webp',
-    // Una sola imagen a todo el ancho en vez de las dos MediaLink
-    // habituales (ver NavbarPanelLateralCards.jsx).
-    cardsUnico: true,
+    // Una sola MediaLink a "Pedir cita" — misma foto que usa esa propia
+    // página (visita-fely-campo/cita/page.js).
+    cards: [
+      { key: 'reservarCita', href: '/visita-fely-campo/cita', image: '/img/atelier/citas-atelier-felycampo.jpg' },
+    ],
   },
 };
 
+// Orden fijo por encargo: Atelier, Sobre Fely, Visítanos y, al final,
+// Prêt-à-porter (antes "Tienda", segundo en la lista).
 const NAV_ITEMS = [
   { key: 'atelier', href: '/atelier', submenu: 'atelier' },
-  { key: 'tienda', href: '/tienda', submenu: 'tienda' },
   { key: 'elMundoDeFely', href: '/sobre-fely', submenu: 'elMundoDeFely' },
   { key: 'visitanos', href: '/visita-fely-campo', submenu: 'visitanos' },
+  { key: 'tienda', href: '/pret-a-porter', submenu: 'tienda' },
 ];
 
 const CLOSE_DELAY_MS = 200;
@@ -208,9 +221,9 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   const withLocale = (href) => (href === '/' ? `/${locale}` : `/${locale}${href}`);
 
   // Activo = la ruta actual es ese enlace o vive debajo de él (ej.
-  // /tienda/chaquetas-y-abrigos marca activo "Tienda", cuyo href es
-  // /tienda) — así funciona para toda la sección, no solo su
-  // portada exacta.
+  // /pret-a-porter/chaquetas-y-abrigos marca activo "Prêt-à-porter",
+  // cuyo href es /pret-a-porter) — así funciona para toda la sección,
+  // no solo su portada exacta.
   const esRutaActiva = (href) => {
     const destino = withLocale(href);
     return pathname === destino || pathname?.startsWith(`${destino}/`);

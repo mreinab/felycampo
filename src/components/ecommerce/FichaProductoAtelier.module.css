@@ -24,7 +24,15 @@
 @media (max-width: 767px) {
   .ficha {
     grid-template-columns: 1fr;
+    /* padding-bottom compensa el margin-top:-60px de .info (ver más
+       abajo): un margin negativo resta de lo que el item aporta al
+       alto de la fila del grid, así que sin esto .ficha terminaba
+       calculando su propio alto ~60px más corto de lo que .info ocupa
+       de verdad en pantalla — y .debajoFicha (justo debajo, ver
+       FichaProductoAtelier.jsx) empezaba a solaparse con el borde
+       inferior real de .info, quedando tapado por su z-index más alto. */
     gap: 0;
+    padding-bottom: 60px;
   }
 }
 

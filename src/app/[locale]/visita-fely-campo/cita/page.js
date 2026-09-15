@@ -9,69 +9,47 @@
    — ver page.module.css para el porqué de position:fixed/z-index en
    vez de la clase "abierta" del modal real.
 
-   Tres pasos dentro del mismo panel derecho:
+   Dos pasos dentro del mismo panel derecho:
    0. Bienvenida (pasoIntro): texto editorial de presentación +
       "Continuar", pantalla propia (no un párrafo suelto encima del
       paso 1) para que se lea como apertura, no como una etiqueta más
       del formulario.
    1. "¿Dónde quieres pedir la cita?" — tres botones grandes
       (Salamanca/Madrid/Oviedo, UBICACIONES de ../ubicaciones.js). El
-      panel de la foto muestra la imagen de esa sede en cuanto se
-      elige (MEDIOS_TALLERES, mismas fotos que ListadoUbicaciones.jsx).
-   2. El formulario que ya existía (trasladado desde /pedir-cita-atelier,
-      ruta eliminada): motivo + día/hora + datos de contacto. Un enlace
-      "Cambiar ubicación" vuelve al paso 1.
+      panel de la foto es siempre IMAGEN_LATERAL, la misma en los tres
+      pasos.
+   2. Contacto directo con la sede elegida: WhatsApp (wa.me,
+      "ubicacion.whatsapp" — mismo dato/mismo formato de enlace que
+      ListadoUbicaciones.jsx/AtelierDetalle.jsx) o email (mailto, mismo
+      correo general que el resto del sitio, ver "enlace-texto" en
+      ayuda/contacto/page.js). Ya no hay formulario de día/hora ni
+      pantalla de confirmación propia — la cita se cierra por esos dos
+      canales, no en la propia web (PLACEHOLDER de reserva real
+      retirado, ver historial de este archivo si hiciera falta
+      recuperar ese flujo). Un enlace "Cambiar ubicación" vuelve al
+      paso 1.
    "?ubicacion=<id>" en la URL (lo mandan ListadoUbicaciones.jsx y
    AtelierDetalle.jsx) preselecciona la sede y salta directo al paso 2,
    saltándose también la bienvenida (pasoIntro arranca en false) — ya
-   viene de un enlace con contexto propio, no hace falta la apertura.
+   viene de un enlace con contexto propio, no hace falta la apertura. */
 
-   PLACEHOLDER a propósito, mismo criterio que ModalSolicitudAtelier:
-   "confirmar" no manda nada a ningún backend real todavía, solo pasa
-   a la pantalla de confirmación. DIAS_DISPONIBLES son los próximos 14
-   días naturales a partir de mañana — no hay disponibilidad real que
-   consultar, así que se generan en el cliente en vez de venir de datos
-   (por eso cambian según cuándo se visite la página, no están fijados
-   en el propio código). HORAS_DISPONIBLES es un horario fijo de
-   ejemplo (con hueco de comida 13-16h). */
-
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { X } from 'lucide-react';
-import { Boton, Input } from '@/components/ui';
+import { Boton } from '@/components/ui';
 import { UBICACIONES } from '../ubicaciones';
 import styles from './page.module.css';
 
-const DIAS_A_MOSTRAR = 14;
-const HORAS_DISPONIBLES = ['10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00'];
-const MOTIVOS = ['vestidoNovia', 'vestidoFiesta', 'probarColeccion'];
+// Mismo correo que el resto del sitio (ver ayuda/contacto, envios,
+// devoluciones, atencion-cliente).
+const EMAIL_CONTACTO = 'info@felycampo.com';
 
-// Mismas fotos que MEDIOS_TALLERES en ../ListadoUbicaciones.jsx — una
-// por sede, para el panel izquierdo una vez elegida.
-const IMAGEN_POR_UBICACION = {
-  salamanca: '/img/talleres/salamanca-ateliernovia-ateliernoviasalamanca-ubicacion-felycampo.webp',
-  madrid: '/img/talleres/madrid-atelier_madrid_fiesta_novia_medida.webp',
-  oviedo: '/img/talleres/oviedo-atelier_fiesta_oviedo_felycampo_espacio_9-2048x1365.webp',
-};
-// Antes de elegir sede — la misma foto que MiCuentaModal.jsx, mismo
-// espíritu de "imagen de marca" genérica.
-const IMAGEN_POR_DEFECTO = '/img/felycampo-lacoleccion-3.webp';
-
-function generarDias(locale) {
-  const formateador = new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short' });
-
-  return Array.from({ length: DIAS_A_MOSTRAR }, (_, indice) => {
-    const fecha = new Date();
-    fecha.setDate(fecha.getDate() + indice + 1);
-    const etiqueta = formateador.format(fecha);
-    return {
-      // Clave estable para el chip — no depende del formato de fecha.
-      id: fecha.toISOString().slice(0, 10),
-      etiqueta: etiqueta.charAt(0).toUpperCase() + etiqueta.slice(1),
-    };
-  });
-}
+// Misma foto para el panel izquierdo durante todo el proceso (bienvenida,
+// elegir sede y contacto) — antes cambiaba según la sede elegida
+// (MEDIOS_TALLERES en ../ListadoUbicaciones.jsx), ahora es siempre esta.
+const IMAGEN_LATERAL = '/img/atelier/citas-atelier-felycampo.jpg';
 
 export default function Pagina() {
   const t = useTranslations('pedirCitaAtelier');
@@ -81,7 +59,6 @@ export default function Pagina() {
   const tAtelier = useTranslations('atelierFiesta');
   const locale = useLocale();
   const searchParams = useSearchParams();
-  const dias = useMemo(() => generarDias(locale), [locale]);
 
   // "?ubicacion=" preselecciona la sede y salta al paso 2 — solo si
   // coincide con un id real de UBICACIONES, si no se ignora y se
@@ -95,17 +72,6 @@ export default function Pagina() {
   // salta directo al paso 2, ver comentario de cabecera).
   const [pasoIntro, setPasoIntro] = useState(!ubicacionInicial);
 
-  const [motivo, setMotivo] = useState(null);
-  const [diaSeleccionado, setDiaSeleccionado] = useState(null);
-  const [horaSeleccionada, setHoraSeleccionada] = useState(null);
-  const [nombre, setNombre] = useState('');
-  const [apellidos, setApellidos] = useState('');
-  const [email, setEmail] = useState('');
-  const [avisoMotivo, setAvisoMotivo] = useState(false);
-  const [avisoFecha, setAvisoFecha] = useState(false);
-  const [avisoDatos, setAvisoDatos] = useState(false);
-  const [enviado, setEnviado] = useState(false);
-
   // Sin scroll de la página detrás mientras esta pantalla completa
   // está montada — mismo criterio que MiCuentaModal.jsx al abrir.
   useEffect(() => {
@@ -114,27 +80,22 @@ export default function Pagina() {
     return () => { document.body.style.overflow = overflowPrevio; };
   }, []);
 
-  const alEnviar = (evento) => {
-    evento.preventDefault();
-    if (!motivo) {
-      setAvisoMotivo(true);
-      return;
-    }
-    if (!diaSeleccionado || !horaSeleccionada) {
-      setAvisoFecha(true);
-      return;
-    }
-    if (!nombre.trim() || !apellidos.trim() || !email.trim()) {
-      setAvisoDatos(true);
-      return;
-    }
-    // Placeholder — ver comentario de cabecera.
-    setEnviado(true);
-  };
+  // Portal a document.body (igual que GaleriaProductoLightbox.jsx/
+  // RunwayGaleria.jsx, mismo motivo): esta "página" vive dentro de
+  // <main>, que tiene isolation:isolate (ver global.css) — sin portal,
+  // ese ancestro atrapa el z-index:100 de .pagina, que entonces nunca
+  // podría ganarle al Footer real (position:relative + z-index:2,
+  // hermano de <main>, fuera de su contexto de apilamiento) — solo
+  // existe en cliente, así que se espera a montar antes de renderizarlo.
+  const [montado, setMontado] = useState(false);
+  useEffect(() => setMontado(true), []);
 
-  const imagenActual = IMAGEN_POR_UBICACION[ubicacionId] ?? IMAGEN_POR_DEFECTO;
+  if (!montado) return null;
 
-  return (
+  const whatsappHref = ubicacionSeleccionada && `https://wa.me/${ubicacionSeleccionada.whatsapp.replace(/\D/g, '')}`;
+  const mailtoHref = ubicacionSeleccionada && `mailto:${EMAIL_CONTACTO}?subject=${encodeURIComponent(t('emailAsunto', { sede: ubicacionSeleccionada.nombre }))}`;
+
+  return createPortal(
     <div className={styles.pagina}>
       <a href={`/${locale}/visita-fely-campo`} className={styles.cerrar} aria-label={t('cerrar')}>
         <X size={28} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" />
@@ -142,7 +103,7 @@ export default function Pagina() {
 
       <div className={styles.layout}>
         <div className={styles.imagenPanel}>
-          <img src={imagenActual} alt="" className={styles.imagen} />
+          <img src={IMAGEN_LATERAL} alt="" className={styles.imagen} />
         </div>
 
         <div className={styles.formPanel}>
@@ -177,14 +138,8 @@ export default function Pagina() {
                   ))}
                 </div>
               </div>
-            ) : enviado ? (
-              <div key="confirmacion" className={`${styles.confirmacion} entrada-suave`}>
-                <h2 className={styles.tituloConfirmacion}>{t('confirmacionTitulo')}</h2>
-                <p>{t('confirmacionTexto')}</p>
-                <Boton variante="solido" tamano="full" href={`/${locale}/visita-fely-campo`}>{t('volver')}</Boton>
-              </div>
             ) : (
-              <div key="form" className={`${styles.paso} entrada-suave`}>
+              <div key="contacto" className={`${styles.paso} entrada-suave`}>
                 <button
                   type="button"
                   className={styles.cambiarUbicacion}
@@ -199,93 +154,19 @@ export default function Pagina() {
                 <div className={styles.cabecera}>
                   <span className={styles.subtituloUbicacion}>{ubicacionSeleccionada.nombre}</span>
                   <h1 className={styles.titulo}>{t('titulo')}</h1>
+                  <p className={styles.dondeIntro}>{t('contactoTexto')}</p>
                 </div>
 
-                <form className={styles.form} onSubmit={alEnviar}>
-                  <div className={styles.campo}>
-                    <span className={styles.etiqueta}>{t('motivo')}</span>
-                    <div className={styles.chips}>
-                      {MOTIVOS.map((clave) => (
-                        <button
-                          key={clave}
-                          type="button"
-                          className={`${styles.chip} ${motivo === clave ? styles.chipActivo : ''}`}
-                          aria-pressed={motivo === clave}
-                          onClick={() => { setMotivo(clave); setAvisoMotivo(false); }}
-                        >
-                          {t(`motivo${clave.charAt(0).toUpperCase()}${clave.slice(1)}`)}
-                        </button>
-                      ))}
-                    </div>
-                    {avisoMotivo && <p className={styles.aviso}>{t('avisoMotivo')}</p>}
-                  </div>
-
-                  <div className={styles.campo}>
-                    <span className={styles.etiqueta}>{t('dia')}</span>
-                    <div className={`${styles.chips} ${styles.chipsScroll}`}>
-                      {dias.map((dia) => (
-                        <button
-                          key={dia.id}
-                          type="button"
-                          className={`${styles.chip} ${diaSeleccionado === dia.id ? styles.chipActivo : ''}`}
-                          aria-pressed={diaSeleccionado === dia.id}
-                          onClick={() => { setDiaSeleccionado(dia.id); setAvisoFecha(false); }}
-                        >
-                          {dia.etiqueta}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className={styles.campo}>
-                    <span className={styles.etiqueta}>{t('hora')}</span>
-                    <div className={styles.chips}>
-                      {HORAS_DISPONIBLES.map((hora) => (
-                        <button
-                          key={hora}
-                          type="button"
-                          className={`${styles.chip} ${horaSeleccionada === hora ? styles.chipActivo : ''}`}
-                          aria-pressed={horaSeleccionada === hora}
-                          onClick={() => { setHoraSeleccionada(hora); setAvisoFecha(false); }}
-                        >
-                          {hora}
-                        </button>
-                      ))}
-                    </div>
-                    {avisoFecha && <p className={styles.aviso}>{t('avisoFecha')}</p>}
-                  </div>
-
-                  <Input
-                    etiqueta={t('nombre')}
-                    nombre="nombre"
-                    placeholder={t('nombrePlaceholder')}
-                    valor={nombre}
-                    onChange={(evento) => { setNombre(evento.target.value); setAvisoDatos(false); }}
-                  />
-                  <Input
-                    etiqueta={t('apellidos')}
-                    nombre="apellidos"
-                    placeholder={t('apellidosPlaceholder')}
-                    valor={apellidos}
-                    onChange={(evento) => { setApellidos(evento.target.value); setAvisoDatos(false); }}
-                  />
-                  <Input
-                    etiqueta={t('email')}
-                    tipo="email"
-                    nombre="email"
-                    placeholder={t('emailPlaceholder')}
-                    valor={email}
-                    onChange={(evento) => { setEmail(evento.target.value); setAvisoDatos(false); }}
-                  />
-                  {avisoDatos && <p className={styles.aviso}>{t('avisoDatos')}</p>}
-
-                  <Boton variante="solido" tamano="full" type="submit">{t('enviar')}</Boton>
-                </form>
+                <div className={styles.contactoBotones}>
+                  <Boton variante="solido" tamano="full" href={whatsappHref}>{t('contactarWhatsapp')}</Boton>
+                  <Boton variante="contorno" tamano="full" href={mailtoHref}>{t('contactarEmail')}</Boton>
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

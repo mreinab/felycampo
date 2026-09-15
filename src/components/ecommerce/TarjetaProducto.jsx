@@ -52,16 +52,16 @@ import useEnVista from '@/hooks/useEnVista';
  *
  * "ocultarPrecio" (opcional): no pinta el precio en absoluto — usado
  * por Atelier (Novias/Fiesta, precio bajo cita/presupuesto, no de
- * catálogo), no por Tienda.
- * "hrefBase" ('tienda' por defecto): primer segmento de la ficha a la
- * que enlaza la tarjeta (`/${locale}/${hrefBase}/${slug}`) — Atelier
- * (Novias/Fiesta) pasa 'atelier/novias'/'atelier/fiesta' en vez de
- * 'tienda': esas piezas no se compran online (sin precio de catálogo,
- * sin carrito) así que necesitan su propia ficha, no la de Tienda (ver
- * FichaProductoAtelier.jsx).
+ * catálogo), no por Prêt-à-porter.
+ * "hrefBase" ('pret-a-porter' por defecto): primer segmento de la
+ * ficha a la que enlaza la tarjeta (`/${locale}/${hrefBase}/${slug}`)
+ * — Atelier (Novias/Fiesta) pasa 'atelier/novias'/'atelier/fiesta' en
+ * vez de 'pret-a-porter': esas piezas no se compran online (sin precio
+ * de catálogo, sin carrito) así que necesitan su propia ficha, no la
+ * de Prêt-à-porter (ver FichaProductoAtelier.jsx).
  *
  * Imagen + nombre/precio enlazan a la ficha de producto
- * (/tienda/[producto], slug de "nombre" — ver src/lib/slugify.js);
+ * (/pret-a-porter/[producto], slug de "nombre" — ver src/lib/slugify.js);
  * ".enlace" usa display:contents para no romper el layout en flex/
  * grid de quien la use. El botón de wishlist y los puntos de color
  * (dentro de ese enlace cuando "coloresSiempreVisibles") paran la
@@ -83,7 +83,7 @@ function TarjetaProducto({
   variante,
   coloresSiempreVisibles = false,
   ocultarPrecio = false,
-  hrefBase = 'tienda',
+  hrefBase = 'pret-a-porter',
 }) {
   const locale = useLocale();
   const hrefProducto = `/${locale}/${hrefBase}/${slugify(nombre)}`;

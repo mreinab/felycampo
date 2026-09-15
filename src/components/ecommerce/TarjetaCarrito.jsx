@@ -26,7 +26,7 @@ const DURACION_SALIDA_MS = 300;
 function TarjetaCarrito({ imagen, nombre, precio, talla, tallasDisponibles = [], color, colorHex, cantidad, onCantidad, onTalla, onQuitar }) {
   const t = useTranslations('carrito');
   const locale = useLocale();
-  const hrefProducto = `/${locale}/tienda/${slugify(nombre)}`;
+  const hrefProducto = `/${locale}/pret-a-porter/${slugify(nombre)}`;
 
   // Bajar a 0 no actualiza el contexto directamente (actualizarCantidad
   // ya la fuerza de vuelta a 1, ver CarritoContext) — en vez de eso se

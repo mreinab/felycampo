@@ -199,9 +199,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* isolation:isolate — crea su propio contexto de apilamiento: sin
+   esto, un z-index usado dentro de <main> (ej. .debajoNavbar en
+   tienda/[producto]/page.js/FichaProductoAtelier.jsx, para que la
+   ficha quede por debajo del Navbar transparente) no queda contenido
+   por <main> (position:static, sin z-index propio) y "se escapa" a
+   competir en el nivel raíz — ahí gana a CUALQUIER contenido sin
+   posicionar por tarde que llegue en el DOM, incluido <footer>
+   (hermano de <main>, ver layout.js), tapándolo aunque venga después.
+   No afecta a <header> (Navbar): vive fuera de <main>, como hermano
+   suyo, así que su z-index:50 sigue comparándose igual que antes. */
 main {
   flex: 1 0 auto;
   width: 100%;
+  isolation: isolate;
 }
 
 h1, h2, h3, h4 {

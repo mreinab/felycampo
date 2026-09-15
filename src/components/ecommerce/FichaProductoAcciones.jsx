@@ -4,7 +4,7 @@
 
 /* ============================================================
    ACCIONES DE FICHA DE PRODUCTO — Fely Campo
-   Panel interactivo de la ficha de producto (/tienda/[producto]):
+   Panel interactivo de la ficha de producto (/pret-a-porter/[producto]):
    color + talla (SelectorColor/SelectorTalla, ya existentes) y el
    CTA de compra — el resto de la ficha (galería, acordeón, "también
    te puede interesar") vive directamente en page.js porque no

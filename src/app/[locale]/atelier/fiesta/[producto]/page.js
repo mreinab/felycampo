@@ -4,7 +4,7 @@
    algoritmo que usa TarjetaProducto para enlazar aquí (hrefBase=
    "atelier/fiesta", ver ../page.js). Plantilla compartida con
    atelier/novias/[producto]/page.js — ver FichaProductoAtelier.jsx: a
-   propósito NO es la misma ficha que /tienda/[producto] (sin precio ni
+   propósito NO es la misma ficha que /pret-a-porter/[producto] (sin precio ni
    carrito). */
 
 import { FichaProductoAtelier } from '@/components/ecommerce';

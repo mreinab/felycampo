@@ -24,7 +24,7 @@ import useEnVista from '@/hooks/useEnVista';
 function TarjetaWishlist({ imagen, nombre, precio, colores = [], onQuitar }) {
   const t = useTranslations('carrito');
   const locale = useLocale();
-  const hrefProducto = `/${locale}/tienda/${slugify(nombre)}`;
+  const hrefProducto = `/${locale}/pret-a-porter/${slugify(nombre)}`;
   const color = colores[0];
   const [ref, enVista] = useEnVista();
 

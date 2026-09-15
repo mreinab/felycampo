@@ -50,7 +50,7 @@ export default function Pagina() {
         <div className={styles.vacio}>
           <Heart className={styles.vacioIcono} strokeWidth={1} />
           <p className={styles.vacioTexto}>{t('vacio')}</p>
-          <Boton variante="solido" tamano="m" href={`/${locale}/tienda`}>{t('explorarTienda')}</Boton>
+          <Boton variante="solido" tamano="m" href={`/${locale}/pret-a-porter`}>{t('explorarTienda')}</Boton>
         </div>
       ) : (
         <>

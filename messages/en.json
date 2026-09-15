@@ -1,7 +1,7 @@
 {
   "nav": {
     "links": {
-      "tienda": "Shop",
+      "tienda": "Prêt-à-porter",
       "atelier": "Atelier",
       "elMundoDeFely": "About Fely",
       "visitanos": "Visit Us"
@@ -12,6 +12,7 @@
         "tops": "Tops & Shirts",
         "coats": "Coats & Jackets",
         "faldas": "Skirts",
+        "pantalones": "Trousers",
         "vestidos": "Dresses"
       },
       "atelier": {
@@ -288,26 +289,11 @@
     "dondeTitulo": "Where would you like to book your appointment?",
     "cambiarUbicacion": "Change location",
     "cerrar": "Close",
-    "titulo": "Book an appointment",
-    "dia": "Day",
-    "hora": "Time",
-    "avisoFecha": "Select a day and a time.",
-    "nombre": "Name",
-    "nombrePlaceholder": "Jane",
-    "apellidos": "Surname",
-    "apellidosPlaceholder": "Smith",
-    "email": "Email",
-    "emailPlaceholder": "jane@example.com",
-    "motivo": "Reason for your visit",
-    "motivoVestidoNovia": "Atelier, Bridal Gowns",
-    "motivoVestidoFiesta": "Atelier, Party Dresses",
-    "motivoProbarColeccion": "Try on the collection",
-    "avisoMotivo": "Select the reason for your visit.",
-    "avisoDatos": "Please fill in your name, surname and email to continue.",
-    "enviar": "Confirm appointment",
-    "confirmacionTitulo": "Appointment requested!",
-    "confirmacionTexto": "You'll receive a confirmation email for your request. Within the next 24 to 48 working hours, we'll get in touch with you by phone call or WhatsApp to confirm your appointment as soon as possible.",
-    "volver": "Back to home"
+    "titulo": "Contact us",
+    "contactoTexto": "Message us on WhatsApp or by email and we'll help you set the day and time for your appointment.",
+    "contactarWhatsapp": "Message us on WhatsApp",
+    "contactarEmail": "Email us",
+    "emailAsunto": "Appointment at {sede}"
   },
   "escribirResena": {
     "titulo": "Write your review",

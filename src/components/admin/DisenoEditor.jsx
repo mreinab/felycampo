@@ -79,7 +79,7 @@ const TIPOS_PRODUCTO_DESTACADOS = tiposProducto.filter((t) => ['pret-a-porter', 
 // entrada de nivel superior sin " — " (p.ej. "Prêt-à-porter" a secas)
 // pasa a "Todo el catálogo".
 const GRUPOS_DESTINO = [
-  { grupo: 'Prêt-à-porter', prefijo: '/tienda' },
+  { grupo: 'Prêt-à-porter', prefijo: '/pret-a-porter' },
   { grupo: 'Atelier', prefijo: '/atelier' },
   { grupo: 'Archivo', prefijo: '/archivo' },
   { grupo: 'Visítanos', prefijo: '/visita-fely-campo' },

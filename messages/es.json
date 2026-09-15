@@ -1,7 +1,7 @@
 {
   "nav": {
     "links": {
-      "tienda": "Tienda",
+      "tienda": "Prêt-à-porter",
       "atelier": "Atelier",
       "elMundoDeFely": "Sobre Fely",
       "visitanos": "Visítanos"
@@ -12,6 +12,7 @@
         "tops": "Tops y Camisas",
         "coats": "Chaquetas y Abrigos",
         "faldas": "Faldas",
+        "pantalones": "Pantalones",
         "vestidos": "Vestidos"
       },
       "atelier": {
@@ -288,26 +289,11 @@
     "dondeTitulo": "¿Dónde quieres pedir la cita?",
     "cambiarUbicacion": "Cambiar ubicación",
     "cerrar": "Cerrar",
-    "titulo": "Reserva tu cita",
-    "dia": "Día",
-    "hora": "Hora",
-    "avisoFecha": "Selecciona un día y una hora.",
-    "nombre": "Nombre",
-    "nombrePlaceholder": "María",
-    "apellidos": "Apellidos",
-    "apellidosPlaceholder": "Martín",
-    "email": "Email",
-    "emailPlaceholder": "maria@ejemplo.com",
-    "motivo": "Motivo de la visita",
-    "motivoVestidoNovia": "Atelier, Vestidos de Novia",
-    "motivoVestidoFiesta": "Atelier, Vestidos de Fiesta",
-    "motivoProbarColeccion": "Probar la colección",
-    "avisoMotivo": "Selecciona el motivo de la visita.",
-    "avisoDatos": "Completa tu nombre, apellidos y email para continuar.",
-    "enviar": "Confirmar cita",
-    "confirmacionTitulo": "¡Cita solicitada!",
-    "confirmacionTexto": "Recibirás un email de confirmación de la solicitud. En los siguientes días laborables, de 24 a 48h, nos pondremos en contacto contigo por llamada telefónica o WhatsApp para confirmar tu cita a la mayor brevedad.",
-    "volver": "Volver al inicio"
+    "titulo": "Contacta con nosotros",
+    "contactoTexto": "Escríbenos por WhatsApp o email y te ayudaremos a concretar el día y la hora de tu cita.",
+    "contactarWhatsapp": "Escríbenos por WhatsApp",
+    "contactarEmail": "Escríbenos por email",
+    "emailAsunto": "Cita en {sede}"
   },
   "escribirResena": {
     "titulo": "Escribe tu reseña",

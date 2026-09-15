@@ -4,30 +4,32 @@
    FICHA DE PRODUCTO — ATELIER (Novias/Fiesta) — Fely Campo
    Plantilla propia para /atelier/novias/[producto] y
    /atelier/fiesta/[producto] — a propósito NO es la misma que
-   /tienda/[producto]/page.js: estas piezas no se compran online (sin
-   precio de catálogo, a presupuesto/cita) así que no llevan precio ni
-   FichaProductoAcciones (talla + "añadir a la cesta"). En su lugar,
-   InfoAtelier.jsx (color + CTA "Contacta con nosotros", ver ahí).
+   /pret-a-porter/[producto]/page.js: estas piezas no se compran online
+   (sin precio de catálogo, a presupuesto/cita) así que no llevan
+   precio ni FichaProductoAcciones (talla + "añadir a la cesta"). En su
+   lugar, InfoAtelier.jsx (color + CTA "Contacta con nosotros", ver ahí).
    GaleriaProducto también lleva "esAtelier" (mismo CTA en el panel de
    compra rápida del lightbox, ver GaleriaProductoLightbox.jsx) — sin
    precio ni "tallas" ahí, solo nombre/colores.
    TarjetaProducto enlaza aquí vía su prop "hrefBase"
-   ('atelier/novias'/'atelier/fiesta' en vez de 'tienda', ver
+   ('atelier/novias'/'atelier/fiesta' en vez de 'pret-a-porter', ver
    CuadriculaProductos.jsx) — mismo slug que /lib/slugify.js.
-   Acordeon: "Composición" (mismos textos que tienda/[producto]/page.js)
-   + "Producto por Encargo (PRE-ORDER)" — aquí no tiene sentido "Envíos
-   y devoluciones" (piezas por encargo, no venta online), así que esa
-   fila se sustituye por la de PRE-ORDER, explicando que no se admite
-   devolución una vez confirmado el pedido.
+   Acordeon: "Composición" (mismos textos que
+   pret-a-porter/[producto]/page.js) + "Producto por Encargo
+   (PRE-ORDER)" — aquí no tiene sentido "Envíos y devoluciones" (piezas
+   por encargo, no venta online), así que esa fila se sustituye por la
+   de PRE-ORDER, explicando que no se admite devolución una vez
+   confirmado el pedido.
    "ResenasClientes" (debajo de la ficha, antes de "relacionados"):
-   mismo PLACEHOLDER y mismo orden que tienda/[producto]/page.js —
-   RESENAS_EJEMPLO compartido entre las dos (ver resenasEjemplo.js), no
-   una copia propia de Atelier.
+   mismo PLACEHOLDER y mismo orden que pret-a-porter/[producto]/page.js
+   — RESENAS_EJEMPLO compartido entre las dos (ver resenasEjemplo.js),
+   no una copia propia de Atelier.
    "relacionados" (ProductosRecomendados, debajo de la ficha): mismo
-   PLACEHOLDER que tienda/[producto]/page.js — catálogo de ejemplo
-   compartido (productosEjemplo.js), sin backend real todavía que
-   cruce productos por colección/categoría de verdad. Enlaza a esta
-   misma ficha (hrefBase) y sin precio (ocultarPrecio), no a Tienda.
+   PLACEHOLDER que pret-a-porter/[producto]/page.js — catálogo de
+   ejemplo compartido (productosEjemplo.js), sin backend real todavía
+   que cruce productos por colección/categoría de verdad. Enlaza a esta
+   misma ficha (hrefBase) y sin precio (ocultarPrecio), no a
+   Prêt-à-porter.
    Fiesta y Novias son la excepción: buscan y enseñan relacionados
    dentro de su propio catálogo real (fiestaProductos.js /
    noviaProductos.js), no del placeholder genérico.
@@ -112,7 +114,7 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
 
   // Mismo catálogo que "producto", excluyendo el actual — hasta 10, la
   // misma cantidad que espera ProductosRecomendados en su carrusel (ver
-  // tienda/[producto]/page.js).
+  // pret-a-porter/[producto]/page.js).
   const relacionados = catalogo.filter((candidato) => candidato !== producto).slice(0, 10);
 
   return (

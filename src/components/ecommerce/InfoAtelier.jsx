@@ -7,7 +7,7 @@
    Parte interactiva de FichaProductoAtelier.jsx (cabecera + color +
    CTA) — aparte porque page.js/FichaProductoAtelier.jsx es un Server
    Component y esto necesita useState, mismo motivo que
-   FichaProductoAcciones.jsx en /tienda/[producto].
+   FichaProductoAcciones.jsx en /pret-a-porter/[producto].
 
    "sku": referencia real del look (ver noviaProductos.js) — se pinta
    debajo del nombre, encima de la descripción, solo si llega (Bride 27

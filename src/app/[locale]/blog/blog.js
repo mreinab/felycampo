@@ -60,7 +60,7 @@
    "campana.creditos" + "campana.bloques" (ver los @typedef de
    BlogCampana.jsx para la forma exacta de cada tipo de bloque:
    "split" | "hero" | "texto-sobre-imagen" | "texto-centrado"). Los
-   "ctaHref" de este ejemplo apuntan a /tienda (catálogo general) en
+   "ctaHref" de este ejemplo apuntan a /pret-a-porter (catálogo general) en
    vez de a una ficha de producto concreta — productosEjemplo.js no
    tiene productos con nombre real que enlazar de forma fiable. */
 

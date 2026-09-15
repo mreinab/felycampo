@@ -11,10 +11,11 @@
    vuelta a /visita-fely-campo). Tres pasos dentro del mismo
    .formContenedor (ver page.js): "intro" (bienvenida editorial +
    Continuar), "ubicación" (3 botones grandes, Salamanca/Madrid/Oviedo)
-   y "form" (el formulario ya existente, motivo/día/hora/datos) — el
-   panel de la izquierda cambia de foto según la ubicación elegida.
-   Esquinas rectas en todo (--radius-botones/--radius-inputs a 0, igual
-   que el resto del sitio) — mismo criterio que ModalSolicitudAtelier.
+   y "contacto" (botones a WhatsApp/email de la sede elegida, ver
+   .contactoBotones más abajo) — el panel de la izquierda es siempre la
+   misma foto (IMAGEN_LATERAL en page.js). Esquinas rectas en todo
+   (--radius-botones/--radius-inputs a 0, igual que el resto del sitio)
+   — mismo criterio que ModalSolicitudAtelier.
    ============================================================ */
 
 .pagina {
@@ -215,102 +216,13 @@
   opacity: 1;
 }
 
-.form {
+/* ---------- Paso 2: contacto directo (WhatsApp/email) con la sede
+   elegida — sustituye al formulario de día/hora/datos que había antes
+   aquí. ---------- */
+.contactoBotones {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-5);
-  min-width: 0;
-}
-
-.campo {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-  min-width: 0;
-}
-
-.etiqueta {
-  font-size: var(--text-caption);
-  color: var(--color-gris-500);
-}
-
-/* Mismo elemento .chips/.chip/.chipActivo que visita-fely-campo/
-   page.module.css y MapaPuntosVenta.module.css — aquí para elegir
-   motivo/día/hora en vez de filtrar un listado. */
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-2);
-}
-
-/* Días: en una sola fila con scroll horizontal (14 chips no caben
-   envueltos sin alargar mucho el formulario) — mismo scrollbar
-   invisible que .imagenes en talleres-fely-campo/page.module.css. */
-.chipsScroll {
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  padding-bottom: var(--spacing-1);
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.chipsScroll::-webkit-scrollbar {
-  display: none;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  min-width: 44px;
-  min-height: 32px;
-  padding: var(--spacing-2) var(--spacing-4);
-  font-family: var(--font-base);
-  font-size: var(--text-small);
-  text-align: center;
-  white-space: nowrap;
-  background: var(--color-fondo);
-  color: var(--color-tinta);
-  border: 1px solid var(--color-gris-300);
-  border-radius: 0;
-  cursor: pointer;
-  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
-}
-
-.chip:hover {
-  border-color: var(--color-tinta);
-}
-
-.chipActivo {
-  background: var(--color-tinta);
-  color: var(--color-fondo);
-  border-color: var(--color-tinta);
-}
-
-.aviso {
-  color: var(--color-rosa-oscuro);
-  font-size: var(--text-caption);
-}
-
-.confirmacion {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-  text-align: center;
-  padding-top: var(--spacing-6);
-}
-
-.tituloConfirmacion {
-  font-size: var(--text-h4);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-tinta);
-  text-transform: uppercase;
-}
-
-.confirmacion p {
-  font-size: var(--text-small);
-  color: var(--color-gris-500);
+  gap: var(--spacing-3);
 }
 
 @media (max-width: 767px) {
