@@ -1354,10 +1354,10 @@ export const disenoMock = [
     // selector de idioma único para toda la página en vez de uno por bloque.
     slides: [
       {
-        id: 's1', src: '/img/FW27-Hero3.mp4', tipo: 'video', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
+        id: 's1', src: '/img/landing/FW27-Hero3.mp4', tipo: 'video', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
       },
       {
-        id: 's2', src: '/img/HERO-2.jpg', tipo: 'imagen', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
+        id: 's2', src: '/img/hero-portada-felycampo-landing.jpg', tipo: 'imagen', titulo: { es: 'Prêt-à-porter', en: 'Ready-to-wear' }, ctaTexto: { es: 'Explorar', en: 'Explore' }, destino: '/pret-a-porter',
       },
       {
         id: 's3', src: '/img/novias-sección-FelyCampo3.jpg', tipo: 'imagen', titulo: { es: 'Bride 27', en: 'Bride 27' }, ctaTexto: { es: 'Ver colección', en: 'View collection' }, destino: '/atelier/novias',
@@ -1469,7 +1469,7 @@ export const paginasInternas = [
 
 // Banco de vídeos ya subidos, mismo criterio que bancoImagenes.
 export const bancoVideos = [
-  '/img/FW27-Hero3.mp4',
+  '/img/landing/FW27-Hero3.mp4',
   '/img/artesany.mp4',
   '/img/artesany-2.mp4',
   '/img/ecommerce/27FW/27fw-video.mp4',

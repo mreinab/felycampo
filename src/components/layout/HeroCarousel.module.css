@@ -78,7 +78,7 @@
   inset: 0;
   width: 0%;
   background: var(--color-tinta);
-  animation: avanceProgreso 8s linear forwards;
+  animation: avanceProgreso 6s linear forwards;
 }
 
 @keyframes avanceProgreso {

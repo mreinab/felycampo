@@ -4,7 +4,7 @@
    TARJETA DE RUNWAY — Fely Campo
    Uso:
      <RunwayTarjeta href="/archivo/colecciones/la-coleccion" nombre="La Colección"
-        temporada="AW27" medios={[{ src: '/img/FW27-Hero3.mp4', tipo: 'video' }]} />
+        temporada="AW27" medios={[{ src: '/img/landing/FW27-Hero3.mp4', tipo: 'video' }]} />
      <RunwayTarjeta ... medios={[{ src: 'a.webp' }, { src: 'b.webp' }]} /> // "split" a dos columnas
    'use client' por useEnVista: la tarjeta entera aparece con scroll
    (ver .al-scroll/.en-vista en global.css), no de golpe con la

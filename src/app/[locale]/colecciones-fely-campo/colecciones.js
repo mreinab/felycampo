@@ -243,7 +243,7 @@ export const COLECCIONES = [
     medios: [{ src: '/img/collections/runway/fw27-lacoleccion/backstage/HERO-2.jpg' }],
     looks: looksLaColeccion,
     descripcion: 'Esta colección celebra la riqueza de los tejidos y la elegancia de sus combinaciones. Desde la suavidad y el brillo del satén hasta la textura envolvente del tweed y los brocados, cada material aporta carácter y sofisticación. Los paillettes y la paleta que va del beige al negro, con delicados toques de rosa viejo, añaden un juego de luces y matices que atraen la mirada y enriquecen cada prenda. Los abrigos se presentan con formas envolventes y el prêt-à-porter se caracteriza por su versatilidad, capaz de transformarse del día a la noche con pequeños cambios en los accesorios. Todos los tejidos han sido seleccionados por su calidad y sostenibilidad, asegurando que las prendas puedan disfrutarse temporada tras temporada, de un armario a otro, con elegancia y conciencia.',
-    video: '/img/FW27-Hero3.mp4',
+    video: '/img/landing/FW27-Hero3.mp4',
     backstage: [
       '/img/collections/runway/fw27-lacoleccion/backstage/FelyCampo_AW2026_KristenWicce_ALTA-30.jpg',
       '/img/collections/runway/fw27-lacoleccion/backstage/FelyCampo_AW2026_KristenWicce_ALTA-183.jpg',

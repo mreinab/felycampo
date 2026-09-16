@@ -9,7 +9,7 @@ export default function Pagina() {
 
   return (
     <section className="seccion">
-      <ProductHero imagen="/img/ecommerce/Categorias/camisa.webp" />
+      <ProductHero imagen="/img/hero-pages/hero-pages-pretaporter-tops-y-camisas.jpg" />
       <CuadriculaProductos
         productos={productos}
         disposicion="grid"

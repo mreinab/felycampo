@@ -60,7 +60,15 @@
   display: flex;
   gap: var(--spacing-2);
   height: 100%;
-  max-width: 480px;
+  /* 760px (=~685px que piden las dos tarjetas "horizontal" 4/3, ver
+     .horizontal en MediaLink.module.css, + el padding-right de aquí
+     mismo, box-sizing:border-box): cabe de sobra también el par 3/4 de
+     siempre (~350px) — antes se quedaba en 480px y el par 4/3 se
+     desbordaba/recortaba (las tarjetas se dimensionan por ALTO, ver
+     ".submenuCards > a" más abajo, así que este max-width nunca las
+     encoge, solo evita que el hueco crezca de más si algún día hay
+     menos de dos). */
+  max-width: 760px;
   padding: var(--spacing-8) var(--spacing-7) var(--spacing-6) 0;
 }
 

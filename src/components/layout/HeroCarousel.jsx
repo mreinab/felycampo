@@ -7,16 +7,20 @@ import { ImageTitle } from '../ui';
 import styles from './HeroCarousel.module.css';
 
 // Debe coincidir con la duración de la animación @keyframes avanceProgreso
-// en HeroCarousel.module.css (8s) — la barra de progreso y el cambio de
+// en HeroCarousel.module.css (6s) — la barra de progreso y el cambio de
 // slide van sincronizados.
-const SLIDE_DURATION_MS = 8000;
+const SLIDE_DURATION_MS = 6000;
 
 /**
  * Hero a pantalla completa de la home: 3 slides (imagen o vídeo) que
- * rotan solos cada 8s, con una barra de progreso lineal. El único
+ * rotan solos cada 6s, con una barra de progreso lineal. El único
  * elemento clicable de cada slide es el CTA (ImageTitle) — la imagen no
  * lleva su propio enlace, para no anidar/duplicar <a> dentro del slide.
  * Los datos vienen por props, nada hardcodeado aquí.
+ * "srcMobile" (opcional, solo slides de imagen): recorte propio para
+ * mobile vía <picture>/<source> (max-width:768px, mismo corte que el
+ * resto del sitio) — sin recorte por vídeo, ese siempre usa "src" tal
+ * cual en cualquier ancho.
  */
 function HeroCarousel({ slides }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -55,6 +59,11 @@ function HeroCarousel({ slides }) {
                 loop
                 playsInline
               />
+            ) : slide.srcMobile ? (
+              <picture>
+                <source media="(max-width: 768px)" srcSet={slide.srcMobile} />
+                <img src={slide.src} alt="" className={styles.media} />
+              </picture>
             ) : (
               <img src={slide.src} alt="" className={styles.media} />
             )}

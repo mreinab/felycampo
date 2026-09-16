@@ -45,7 +45,7 @@
 /* ---------- Cuadrícula ---------- */
 .cuadricula {
   display: flex;
-  gap: 16px;
+  gap: 0.04rem;
   padding-inline: 0px;
 }
 

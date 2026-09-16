@@ -17,12 +17,45 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { parsearPrecio } from '@/lib/precio';
+import { tiendaProductos } from '@/components/layout/tiendaProductos';
+import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
 
 const CarritoContext = createContext(null);
 const CLAVE_STORAGE = 'fely-campo-carrito';
 
 function idLinea({ nombre, talla, color }) {
   return [nombre, talla, color].filter(Boolean).join('__');
+}
+
+// PLACEHOLDER a propósito, mismo criterio que WISHLIST_EJEMPLO en
+// wishlist/page.js: sin backend real que traiga un carrito ya empezado
+// para una clienta que vuelve, así que la primera vez que se visita el
+// sitio (CLAVE_STORAGE todavía no existe en localStorage, ver más abajo)
+// se siembra con un par de líneas del catálogo real de
+// tiendaProductos.js, para poder ver /carrito con contenido de verdad
+// sin tener que añadir nada a mano primero. Solo pasa esa PRIMERA vez:
+// en cuanto hay algo guardado (aunque sea un carrito vacío de verdad,
+// tras quitarlas todas), esta siembra no vuelve a aplicarse — a
+// diferencia de la wishlist, aquí sí hay estado real (persistencia +
+// añadir/quitar de verdad), así que no puede repetirse en cada visita
+// o pisaría lo que la clienta haya hecho de verdad.
+function lineasEjemplo() {
+  const buscar = (nombre) => tiendaProductos.find((producto) => producto.nombre === nombre);
+  const falda = buscar('Falda Basilea');
+  const vestido = buscar('Vestido Largo Chicago');
+  const chaqueta = buscar('Chaqueta Aranjuez');
+
+  return [falda, vestido, chaqueta].filter(Boolean).map((producto, indice) => ({
+    id: idLinea({ nombre: producto.nombre, talla: producto.tallasDisponibles[0], color: producto.colores[0]?.nombre }),
+    nombre: producto.nombre,
+    precio: producto.precio,
+    imagen: producto.imagen,
+    talla: producto.tallasDisponibles[0],
+    color: producto.colores[0]?.nombre,
+    colorHex: producto.colores[0]?.hex,
+    tallasDisponibles: TALLAS_DISPONIBLES,
+    cantidad: indice === 2 ? 2 : 1,
+  }));
 }
 
 export function CarritoProvider({ children }) {
@@ -39,7 +72,11 @@ export function CarritoProvider({ children }) {
   useEffect(() => {
     try {
       const guardado = window.localStorage.getItem(CLAVE_STORAGE);
-      if (guardado) setLineas(JSON.parse(guardado));
+      // "guardado === null": todavía no existe la clave, primera visita
+      // de verdad — distinto de "[]" (carrito vaciado a mano), que sí
+      // debe quedarse vacío. Ver lineasEjemplo() más arriba.
+      if (guardado === null) setLineas(lineasEjemplo());
+      else setLineas(JSON.parse(guardado));
     } catch {
       // localStorage no disponible (privado, bloqueado...) — el carrito
       // sigue funcionando durante la carga actual, solo no sobrevive a

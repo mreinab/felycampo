@@ -19,6 +19,14 @@
   aspect-ratio: 3 / 2;
 }
 
+/* Dos tarjetas lado a lado, pero más rectangulares que el 3/4 de
+   siempre (más ancho, menos alto) — usado por submenús cuyas fotos
+   piden ese encuadre en vez del vertical habitual (Sobre Fely, ver
+   SUBMENU_STRUCTURE.elMundoDeFely.cardsVariante en Navbar.jsx). */
+.horizontal {
+  aspect-ratio: 4 / 3;
+}
+
 .image {
   position: absolute;
   inset: 0;

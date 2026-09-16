@@ -8,7 +8,7 @@ import { tiendaProductos } from '@/components/layout/tiendaProductos';
 export default function Pagina() {
   return (
     <section className="seccion">
-      <ProductHero imagen="/img/FW27-HERO.webp" />
+      <ProductHero imagen="/img/hero-pages/hero-pages-pretaporter-cover.jpg" />
       <CuadriculaProductos
         productos={tiendaProductos}
         disposicion="grid"

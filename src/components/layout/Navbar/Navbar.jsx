@@ -34,11 +34,16 @@ const SUBMENU_STRUCTURE = {
       { key: 'pantalones', href: '/pret-a-porter/pantalones' },
       { key: 'vestidos', href: '/pret-a-porter/vestidos' },
     ],
-    // Mismas fotos de categoría que ProductHero en vestidos/page.js y
-    // chaquetas-y-abrigos/page.js.
+    // Imágenes en public/img/hero-pages/submenu/ (mismo criterio que
+    // public/img/ecommerce para las de la cuadrícula de la home:
+    // duplicadas ahí para tener en un solo sitio todas las que usa el
+    // Navbar, ver también atelier/elMundoDeFely/visitanos más abajo).
+    // "cardsVariante: horizontal" — mismo encuadre 4/3 que Sobre Fely,
+    // para que las dos parejas de tarjetas midan lo mismo de ancho.
+    cardsVariante: 'horizontal',
     cards: [
-      { key: 'vestidos', href: '/pret-a-porter/vestidos', image: '/img/ecommerce/Categorias/vestido.webp' },
-      { key: 'coats', href: '/pret-a-porter/chaquetas-y-abrigos', image: '/img/ecommerce/Categorias/chaqueta.webp' },
+      { key: 'vestidos', href: '/pret-a-porter/vestidos', image: '/img/hero-pages/submenu/vestidos-felycampo-submenu-image.jpg' },
+      { key: 'coats', href: '/pret-a-porter/chaquetas-y-abrigos', image: '/img/hero-pages/submenu/chaquetas-felycampo-submenu-image.jpg' },
     ],
   },
   atelier: {
@@ -58,7 +63,7 @@ const SUBMENU_STRUCTURE = {
     // — foto real de una novia (GaleriaVosotras.jsx) en vez de las de
     // punto de venta que llevaba antes.
     cards: [
-      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/Clientes/CLIENTAS/novias/nuestras-novias-felycampo-01-01.jpg' },
+      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/hero-pages/submenu/vosotras-submenu-image.jpg' },
     ],
   },
   elMundoDeFely: {
@@ -69,9 +74,12 @@ const SUBMENU_STRUCTURE = {
     ],
     // Portada de la colección más reciente (colecciones.js) y una foto
     // real de taller (talleres.js, mismo criterio que arriba).
+    // "cardsVariante: horizontal": estas dos fotos piden un encuadre
+    // más ancho que el 3/4 por defecto (ver MediaLink.module.css).
+    cardsVariante: 'horizontal',
     cards: [
-      { key: 'runway', href: '/colecciones-fely-campo', image: '/img/collections/runway/fw27-lacoleccion/backstage/HERO-2.jpg' },
-      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/talleres/bejar/bejar-taller-felycampo-01.webp' },
+      { key: 'runway', href: '/colecciones-fely-campo', image: '/img/hero-pages/submenu/runway-submenu-image.jpg' },
+      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/hero-pages/submenu/talleres-felycampo-submenu-image.jpg' },
     ],
   },
   visitanos: {
@@ -87,7 +95,7 @@ const SUBMENU_STRUCTURE = {
     // Una sola MediaLink a "Pedir cita" — misma foto que usa esa propia
     // página (visita-fely-campo/cita/page.js).
     cards: [
-      { key: 'reservarCita', href: '/visita-fely-campo/cita', image: '/img/atelier/citas-atelier-felycampo.jpg' },
+      { key: 'reservarCita', href: '/visita-fely-campo/cita', image: '/img/hero-pages/submenu/pedir-cita-felycampo-submenu-image.jpg' },
     ],
   },
 };

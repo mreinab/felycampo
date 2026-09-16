@@ -9,7 +9,7 @@ export default function ChaquetasYAbrigosPagina() {
 
   return (
     <section className="seccion">
-      <ProductHero imagen="/img/ecommerce/Categorias/chaqueta.webp" />
+      <ProductHero imagen="/img/hero-pages/hero-pages-pretaporter-chaquetas-y-abrigos.jpg" />
       <CuadriculaProductos
         productos={productos}
         disposicion="grid"

@@ -19,7 +19,9 @@
    TarjetaProducto y compañía) todavía no está conectado a ningún
    estado global — a diferencia del carrito (CarritoContext +
    localStorage) no hay de dónde leer una wishlist real todavía, así
-   que esta página arranca con un puñado fijo de productosEjemplo.js.
+   que esta página arranca con un puñado fijo del catálogo real de
+   tiendaProductos.js (antes productosEjemplo.js — ya no hace falta el
+   catálogo de ejemplo aquí, con el real hay de sobra).
    "Quitar" sí funciona de verdad (quita la tarjeta de la lista), pero
    solo en memoria de esta página — recargar la trae de vuelta, no hay
    persistencia real hasta que exista ese contexto.
@@ -30,12 +32,15 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Heart } from 'lucide-react';
 import { Boton, CabeceraSeccion } from '@/components/ui';
 import { TarjetaWishlist } from '@/components/ecommerce';
-import { productosEjemplo } from '@/components/layout/productosEjemplo';
+import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import styles from './page.module.css';
 
 // PLACEHOLDER — ver comentario de arriba: un puñado fijo de ejemplo,
 // no una wishlist real todavía.
-const WISHLIST_EJEMPLO = productosEjemplo.slice(0, 6);
+const NOMBRES_EJEMPLO = ['Falda Basilea', 'Vestido Largo Chicago', 'Chaqueta Sucre', 'Top Ubud', 'Pantalón Goree', 'Abrigo Copenhague'];
+const WISHLIST_EJEMPLO = NOMBRES_EJEMPLO
+  .map((nombre) => tiendaProductos.find((producto) => producto.nombre === nombre))
+  .filter(Boolean);
 
 export default function Pagina() {
   const t = useTranslations('wishlist');

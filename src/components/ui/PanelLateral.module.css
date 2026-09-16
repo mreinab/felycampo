@@ -136,7 +136,7 @@
    más arriba), no el resto del hueco disponible. */
 .debajoHeader .contenido {
   padding-top: var(--spacing-9);
-  width: 260px;
+  width: 200px;
   flex: none;
 }
 

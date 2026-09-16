@@ -105,10 +105,19 @@ export default async function RootLayout({ children, params }) {
   // mismo Navbar transparente que las páginas de listado, con
   // GaleriaProducto haciendo de Hero (data-navbar-hero en su
   // .galeria, ver GaleriaProducto.jsx/.module.css) en vez de
-  // ProductHero. El regex de Prêt-à-porter también hace match con sus
-  // páginas de categoría (ya cubiertas por RUTAS_CON_PRODUCT_HERO
-  // arriba) — solapamiento sin efecto, las dos evalúan a transparente igual.
-  const esFichaProducto = /^\/pret-a-porter\/[^/]+$/.test(rutaSinLocale)
+  // ProductHero, pero con el logo/texto OSCURO (textoOscuro más abajo)
+  // en vez de blanco — la galería no es una foto a sangre tan oscura
+  // como el resto de Heroes. El slug de un producto real ocupa el
+  // mismo hueco de URL que una categoría (/pret-a-porter/<slug>), así
+  // que hace falta descartar a mano las categorías conocidas
+  // (CATEGORIAS_PRET_A_PORTER, derivado de RUTAS_CON_PRODUCT_HERO) —
+  // si no, esas páginas de listado también entrarían aquí y su Navbar
+  // se quedaría con el logo oscuro en vez de blanco.
+  const CATEGORIAS_PRET_A_PORTER = RUTAS_CON_PRODUCT_HERO
+    .filter((ruta) => ruta.startsWith('/pret-a-porter/'))
+    .map((ruta) => ruta.split('/').pop());
+  const matchPretAPorter = rutaSinLocale.match(/^\/pret-a-porter\/([^/]+)$/);
+  const esFichaProducto = (matchPretAPorter && !CATEGORIAS_PRET_A_PORTER.includes(matchPretAPorter[1]))
     || /^\/atelier\/(novias|fiesta)\/[^/]+$/.test(rutaSinLocale);
 
   return (

@@ -279,4 +279,50 @@ export const tiendaProductos = [
       '/img/ecommerce/tops-y-camisas/vestido-plisado-felycampo-front.jpg',
     ],
   },
+  // Los siguientes 3 son las mismas fotos que enseña la home en su
+  // primera cuadrícula (productosDestacados en app/[locale]/page.js) —
+  // sin descripción ni sku, mismo criterio que el resto del catálogo
+  // cuando no llega ese dato.
+  {
+    nombre: 'Vestido Ciruela',
+    categoria: 'vestidos',
+    precio: '700 €',
+    colores: [{ hex: '#5A2A4A', nombre: 'Ciruela' }],
+    tallas: TALLAS_DISPONIBLES,
+    tallasDisponibles: [40],
+    imagen: '/img/ecommerce/vestido-producto-portada-felycampo.jpg',
+    imagenHover: '/img/ecommerce/FW27-Look02.webp',
+    imagenes: [
+      '/img/ecommerce/vestido-producto-portada-felycampo.jpg',
+      '/img/ecommerce/FW27-Look02.webp',
+    ],
+  },
+  {
+    nombre: 'Top lencero',
+    categoria: 'tops-y-camisetas',
+    precio: '350 €',
+    colores: [{ hex: '#111111', nombre: 'Negro' }],
+    tallas: TALLAS_DISPONIBLES,
+    tallasDisponibles: [42],
+    imagen: '/img/ecommerce/top-encaje-producto-portada-felycampo.jpg',
+    imagenHover: '/img/ecommerce/FW27-Look01.webp',
+    imagenes: [
+      '/img/ecommerce/top-encaje-producto-portada-felycampo.jpg',
+      '/img/ecommerce/FW27-Look01.webp',
+    ],
+  },
+  {
+    nombre: 'Chaqueta',
+    categoria: 'chaquetas-y-abrigos',
+    precio: '400 €',
+    colores: [{ hex: '#4A4A48', nombre: 'Antracita' }],
+    tallas: TALLAS_DISPONIBLES,
+    tallasDisponibles: [40, 42],
+    imagen: '/img/ecommerce/chaqueta-producto-portada-felycampo.jpg',
+    imagenHover: '/img/ecommerce/FW27-Look03.webp',
+    imagenes: [
+      '/img/ecommerce/chaqueta-producto-portada-felycampo.jpg',
+      '/img/ecommerce/FW27-Look03.webp',
+    ],
+  },
 ];
