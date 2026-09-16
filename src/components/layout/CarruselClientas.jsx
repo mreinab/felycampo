@@ -17,12 +17,12 @@
    miniaturas a la izquierda para saltar entre fotos sin cerrar) pero
    sin su panel inferior (nombre/comentario/"Consigue el look"): aquí
    son solo fotos de clientas, no reseñas con producto vinculado.
-   Al menos 8 tiles (PLACEHOLDER: mismas 3 fotos de /img/Clientes que
-   el resto del sitio, sin backend real que permita a las clientas
-   subir las suyas todavía — ver FOTOS_EJEMPLO), en una tira sin gap
-   entre sí (ver .item en CarruselClientas.module.css) que muestra 4
-   fotos enteras + 1/4 de la 5ª asomando, para insinuar que se puede
-   seguir scrolleando.
+   Fotos reales de clientas (mismos grupos que GaleriaVosotras.jsx,
+   /atelier/vosotras, ver vosotrasFotos.js — invitadas + novias, cada
+   grupo ya trae su portada primera), en una tira sin gap entre sí (ver
+   .item en CarruselClientas.module.css) que muestra 4 fotos enteras +
+   1/4 de la 5ª asomando, para insinuar que se puede seguir
+   scrolleando.
    Uso:
      <CarruselClientas />
    ============================================================ */
@@ -31,25 +31,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Plus, X } from 'lucide-react';
 import { CarruselFotos } from '../ui';
+import { FOTOS_INVITADAS, FOTOS_NOVIAS } from './vosotrasFotos';
 import styles from './CarruselClientas.module.css';
 
-// Mismas 3 fotos que FOTOS_EJEMPLO en GaleriaVosotras.jsx/
-// FOTOS_CARRUSEL_EJEMPLO en ResenasClientes.jsx.
-const FOTOS_EJEMPLO = [
-  '/img/Clientes/ClientReview- (1).jpg',
-  '/img/Clientes/ClientReview- (2).jpg',
-  '/img/Clientes/vestido-2clienta.JPG',
-];
-
-const CANTIDAD = 8;
-
-// Cada tile: su propia mini-galería, la portada siempre primera (mismo
-// criterio que LOOKS_EJEMPLO en GaleriaVosotras.jsx) para que el hover
-// no dé un salto respecto a la foto ya visible en reposo.
-const LOOKS = Array.from({ length: CANTIDAD }, (_, indice) => {
-  const portada = FOTOS_EJEMPLO[indice % FOTOS_EJEMPLO.length];
-  return [portada, ...FOTOS_EJEMPLO.filter((foto) => foto !== portada)];
-});
+// Mismos grupos de fotos que GaleriaVosotras.jsx — cada uno ya trae su
+// portada primera.
+const LOOKS = [...FOTOS_INVITADAS, ...FOTOS_NOVIAS];
 
 function CarruselClientas() {
   const t = useTranslations();

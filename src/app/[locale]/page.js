@@ -48,10 +48,10 @@ const productosDestacados = [
 // fija (antes tenía tabs para rotar entre ocasiones, quitados por no
 // ser necesarios).
 const productosOcasion = [
-  { imagen: '/img/ecommerce/FC-2_NEW.webp', nombre: 'Vestido Alba', precio: '620 €', colores: [{ hex: '#EFD9D0', nombre: 'Nude' }, { hex: '#F5F1EE', nombre: 'Crema' }] },
-  { imagen: '/img/ecommerce/LOOK9_1-scaled.webp', nombre: 'Vestido Iris', precio: '580 €', colores: [{ hex: '#6B7A8F', nombre: 'Azul piedra' }, { hex: '#202020', nombre: 'Tinta' }] },
-  { imagen: '/img/ecommerce/LOOK12_2-scaled.webp', nombre: 'Vestido Coral', precio: '650 €', colores: [{ hex: '#D96C5F', nombre: 'Coral' }, { hex: '#F7F7F7', nombre: 'Blanco' }] },
-  { imagen: '/img/ecommerce/LOOK18_1-scaled.webp', nombre: 'Vestido Bruma', precio: '590 €', colores: [{ hex: '#B8C4C2', nombre: 'Gris verdoso' }, { hex: '#3A3A3A', nombre: 'Grafito' }] },
+  { imagen: '/img/collections/novia/bride-27/LOOK-2-scaled.webp', nombre: 'Look 2 - Bride 27' },
+  { imagen: '/img/collections/novia/bride-27/LOOK-8-scaled.webp', nombre: 'Look 8 - Bride 27' },
+  { imagen: '/img/collections/fiesta/ss27-coleccion/27052-461_02.jpg', nombre: 'Look 23 SS27' },
+  { imagen: '/img/collections/fiesta/ss27-coleccion/27069_01.jpg', nombre: 'Look 30 SS27' },
 ];
 
 const slidesHero = [
@@ -106,14 +106,14 @@ export default async function Home({ params }) {
         variante="landing"
         items={[
           {
-            src: '/img/ecommerce/Categorias/vestido.webp',
+            src: '/img/landing/vestidos-felycampo-landing.jpg',
             tipo: 'imagen',
             tituloKey: 'splitMediaCategorias.item1.titulo',
             ctaKey: 'splitMediaCategorias.item1.cta',
             href: `/${locale}/pret-a-porter/vestidos`,
           },
           {
-            src: '/img/ecommerce/Categorias/chaqueta.webp',
+            src: '/img/landing/chaquetas-felycampo-landing.jpg',
             tipo: 'imagen',
             tituloKey: 'splitMediaCategorias.item2.titulo',
             ctaKey: 'splitMediaCategorias.item2.cta',
@@ -128,6 +128,7 @@ export default async function Home({ params }) {
         descriptionKey="cuadriculaTabs.descripcion"
         botonTextKey="cuadriculaTabs.reservarCita"
         verMasHref={`/${locale}/visita-fely-campo/cita`}
+        ocultarPrecio
       />
       <SplitMedia
         variante="landing"

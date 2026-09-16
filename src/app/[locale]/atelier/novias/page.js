@@ -32,7 +32,7 @@ export default async function Pagina({ searchParams }) {
 
   return (
     <section className="seccion">
-      <ProductHero imagen="/img/novias-sección-FelyCampo3.jpg" />
+      <ProductHero imagen="/img/landing/hero-atelier-novia-felycampo.jpg" />
       <CuadriculaProductos
         productos={noviaProductos}
         disposicion="grid"

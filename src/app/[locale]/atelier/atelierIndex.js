@@ -39,7 +39,7 @@ export const ATELIER_INDEX = {
   },
 
   novias: {
-    imagen: '/img/atelier/ateliernovia-lamedida-felycampo-3.webp',
+    imagen: '/img/landing/atelier-novia-info-felycampo.jpg',
     titulo: {
       es: 'Atelier Novias',
       en: 'Bridal Atelier',
@@ -51,7 +51,7 @@ export const ATELIER_INDEX = {
   },
 
   fiesta: {
-    imagen: '/img/invitadas-sección-FelyCampo.jpg',
+    imagen: '/img/landing/atelier-fiesta-info-felycampo.jpg',
     titulo: {
       es: 'Atelier Fiesta',
       en: 'Fiesta Atelier',
