@@ -43,7 +43,8 @@
     "aria": {
       "abrirMenu": "Open menu",
       "cerrarMenu": "Close menu",
-      "carrito": "Cart"
+      "carrito": "Cart",
+      "volverMenu": "Back"
     }
   },
   "breadcrumb": {

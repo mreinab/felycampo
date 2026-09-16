@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, ChevronRight, ChevronLeft } from 'lucide-react';
 import styles from './Navbar.module.css';
 import { PanelLateral } from '../../ui';
 import CarritoPanel from '../../ecommerce/CarritoPanel';
@@ -112,6 +112,28 @@ const NAV_ITEMS = [
 const CLOSE_DELAY_MS = 200;
 const SCROLL_THRESHOLD_PX = 50;
 
+// Remate del menú móvil (ver "debajo" en el <PanelLateral> de más abajo):
+// misma foto que el ProductHero de /pret-a-porter (horizontal de verdad,
+// no recortada a la fuerza — ver hero-pages-pretaporter-cover.jpg),
+// pegada al fondo del panel entero, a todo su ancho. Aparte de
+// NavbarPanelLateralCards (esa es la fila de dos MediaLink del submenú
+// de escritorio, con hover — esto es una sola imagen fija, pensada
+// para dedo, sin esa lógica).
+function MobileMenuBanner({ locale, onNavegar }) {
+  const t = useTranslations('nav');
+
+  return (
+    <a
+      href={`/${locale}/pret-a-porter`}
+      className={styles.mobileMenuBanner}
+      onClick={onNavegar}
+    >
+      <img src="/img/hero-pages/hero-pages-pretaporter-cover.jpg" alt="" className={styles.mobileMenuBannerImagen} />
+      <span className={styles.mobileMenuBannerLabel}>{t('links.tienda')}</span>
+    </a>
+  );
+}
+
 function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }) {
   const t = useTranslations('nav');
   const locale = useLocale();
@@ -120,6 +142,11 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   const { abrir: abrirMiCuenta } = useMiCuenta();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // Submenú abierto DENTRO del menú móvil (drill-down: la lista raíz
+  // desliza a la izquierda y la del submenú entra desde la derecha, ver
+  // .mobileMenuTrack más abajo) — independiente de "activeSubmenu"
+  // (ese es el hover de escritorio). null = viendo la lista raíz.
+  const [mobileSubmenu, setMobileSubmenu] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [lastSubmenu, setLastSubmenu] = useState(null);
   const [scrolled, setScrolled] = useState(false);
@@ -228,6 +255,17 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   // cualquier ruta sin prefijo al locale por defecto (es).
   const withLocale = (href) => (href === '/' ? `/${locale}` : `/${locale}${href}`);
 
+  // Cierra el menú móvil entero y lo resetea a la lista raíz (nunca se
+  // queda abierto "a medias" dentro de un submenú la próxima vez) — el
+  // salto a la raíz ocurre a la vez que el panel entero sale deslizando
+  // hacia fuera (ver .panel.sobreNavbar en PanelLateral.module.css), así
+  // que no se nota. Usarla en vez de "setMobileMenuOpen(false)" a pelo
+  // en cualquier sitio que cierre el menú móvil (enlaces, X, overlay).
+  const cerrarMenuMobile = () => {
+    setMobileMenuOpen(false);
+    setMobileSubmenu(null);
+  };
+
   // Activo = la ruta actual es ese enlace o vive debajo de él (ej.
   // /pret-a-porter/chaquetas-y-abrigos marca activo "Prêt-à-porter",
   // cuyo href es /pret-a-porter) — así funciona para toda la sección,
@@ -302,7 +340,7 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
         <button
           type="button"
           className={styles.navToggle}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          onClick={() => (mobileMenuOpen ? cerrarMenuMobile() : setMobileMenuOpen(true))}
           aria-label={mobileMenuOpen ? t('aria.cerrarMenu') : t('aria.abrirMenu')}
           aria-expanded={mobileMenuOpen}
         >
@@ -376,28 +414,98 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
       </PanelLateral>
 
       {/* Menú móvil: mismo panel lateral, pero a pantalla completa por
-          debajo del navRow y solo con la lista de enlaces. Se cierra con
-          el propio botón hamburguesa/X del header, no tiene botón de
-          cerrar propio. */}
-      <PanelLateral abierto={mobileMenuOpen} sobreNavbar onCerrar={() => setMobileMenuOpen(false)}>
+          debajo del navRow. Se cierra con el propio botón hamburguesa/X
+          del header, no tiene botón de cerrar propio.
+          Drill-down de dos "pantallas" (.mobileMenuTrack, ancho 200%):
+          la raíz (los 4 NAV_ITEMS, cada uno con submenú de verdad) y el
+          submenú activo (mobileSubmenu) — tocar una categoría desliza a
+          la segunda pantalla en vez de navegar directo, igual que el
+          hover de escritorio pero pensado para dedo, con su propio
+          botón atrás. "debajo" (fuera de .contenido, ver
+          PanelLateral.jsx) cuelga la foto editorial a todo el ancho,
+          empujada al fondo del panel por el justify-content:space-between
+          de .panel — el remate "visualmente fuerte" pedido, no una
+          lista de texto sola. */}
+      <PanelLateral
+        abierto={mobileMenuOpen}
+        sobreNavbar
+        onCerrar={cerrarMenuMobile}
+        debajo={<MobileMenuBanner locale={locale} onNavegar={cerrarMenuMobile} />}
+      >
         <nav className={styles.mobileMenu}>
-          {NAV_ITEMS.map((item) => (
-            <a key={item.href} href={withLocale(item.href)} className={styles.mobileMenuLink}>
-              {t(`links.${item.key}`)}
-            </a>
-          ))}
-          <div className={styles.mobileMenuDivider} />
-          <a href={withLocale('/wishlist')} className={styles.mobileMenuLink}>{t('actions.wishlist')}</a>
-          {/* Mismo criterio que en .navActions de escritorio: botón que
-              abre MiCuentaModal, no un enlace — cierra antes el propio
-              menú móvil, si no quedarían los dos superpuestos. */}
-          <button
-            type="button"
-            className={styles.mobileMenuLink}
-            onClick={() => { setMobileMenuOpen(false); abrirMiCuenta(); }}
-          >
-            {t('actions.miCuenta')}
-          </button>
+          <div className={`${styles.mobileMenuTrack} ${mobileSubmenu ? styles.mobileMenuTrackSub : ''}`}>
+            <div className={styles.mobileMenuScreen}>
+              <ul className={styles.mobileMenuList}>
+                {NAV_ITEMS.map((item) => (
+                  <li key={item.key}>
+                    <button
+                      type="button"
+                      className={styles.mobileMenuRow}
+                      onClick={() => setMobileSubmenu(item.submenu)}
+                    >
+                      {t(`links.${item.key}`)}
+                      <ChevronRight size={20} strokeWidth={1.5} aria-hidden="true" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              <div className={styles.mobileMenuDivider} />
+
+              <div className={styles.mobileMenuUtilities}>
+                <a href={withLocale('/wishlist')} className={styles.mobileMenuLink} onClick={cerrarMenuMobile}>
+                  {t('actions.wishlist')}
+                </a>
+                {/* Mismo criterio que en .navActions de escritorio: botón
+                    que abre MiCuentaModal, no un enlace — cierra antes el
+                    propio menú móvil, si no quedarían los dos superpuestos. */}
+                <button
+                  type="button"
+                  className={styles.mobileMenuLink}
+                  onClick={() => { cerrarMenuMobile(); abrirMiCuenta(); }}
+                >
+                  {t('actions.miCuenta')}
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.mobileMenuScreen}>
+              {mobileSubmenu && (
+                <>
+                  <button
+                    type="button"
+                    className={styles.mobileMenuBack}
+                    onClick={() => setMobileSubmenu(null)}
+                    aria-label={t('aria.volverMenu')}
+                  >
+                    <ChevronLeft size={20} strokeWidth={1.5} aria-hidden="true" />
+                  </button>
+
+                  <a
+                    href={withLocale(NAV_ITEMS.find((item) => item.submenu === mobileSubmenu).href)}
+                    className={styles.mobileMenuTitulo}
+                    onClick={cerrarMenuMobile}
+                  >
+                    {t(`links.${mobileSubmenu}`)}
+                  </a>
+
+                  <ul className={styles.mobileMenuList}>
+                    {SUBMENU_STRUCTURE[mobileSubmenu].items.map((subItem) => (
+                      <li key={subItem.href}>
+                        <a
+                          href={withLocale(subItem.href)}
+                          className={styles.mobileMenuSubLink}
+                          onClick={cerrarMenuMobile}
+                        >
+                          {t(`submenus.${mobileSubmenu}.${subItem.labelKey || subItem.key}`)}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          </div>
         </nav>
       </PanelLateral>
 
