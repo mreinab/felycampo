@@ -65,7 +65,7 @@ export const ATELIERES = {
     // Reportaje propio (ver public/img/atelier/atelier-salamanca/) —
     // igual que Madrid con showroom-madrid/, ya no hace falta reciclar
     // el fondo de taller-1/ para esta ficha (ver comentario de cabecera).
-    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.05.40.jpeg' },
+    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/felycampo-salamnca-atelier.webp' },
     medioSuperior: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/rbksom_blobid1671730782555.jpg' },
     imagenesTira: [
       { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.29.jpeg' },
@@ -116,11 +116,11 @@ export const ATELIERES = {
         texto: {
           es: [
             'De la mano de nuestro equipo tendrás un asesoramiento personalizado desde la primera cita: se sentarán contigo, te escucharán y buscarán junto a ti ese diseño de nuestras colecciones con el que te sientas identificada y segura, recomendándote los cortes, colores y tejidos que más favorecen tu silueta y asesorándote sobre las modificaciones posibles dentro del diseño elegido.',
-            'Una vez elijas tu vestido y aceptes el presupuesto, comienza el proceso de las siguientes citas: te probarás el vestido en el tejido, color y talla elegidos, y en las pruebas siguientes el equipo terminará de adaptarlo a tu cuerpo y de pulir cada detalle de tu look. En nuestro Atelier Fiesta en Salamanca contamos además con una selección de zapatos y tocados que podemos adaptar a los colores que necesites.',
+            'Una vez elijas tu vestido y aceptes el presupuesto, comienza el proceso de las siguientes citas: la primera prueba se hace sobre el toile, el primer boceto real de tu vestido, y en las pruebas siguientes ya te lo probarás en el tejido, color y talla elegidos, mientras el equipo termina de adaptarlo a tu cuerpo y de pulir cada detalle de tu look. En nuestro Atelier Fiesta en Salamanca contamos además con una selección de zapatos y tocados que podemos adaptar a los colores que necesites.',
           ],
           en: [
             "With the help of our team you'll receive personalised guidance from the very first appointment: they'll sit down with you, listen, and search together for the design from our collections you feel most like yourself and most confident in, recommending the cuts, colours and fabrics that best flatter your silhouette and advising you on the changes possible within the chosen design.",
-            "Once you choose your dress and approve the quote, the process of further appointments begins: you'll try on the dress in the fabric, colour and size you chose, and at the following fittings the team will finish adapting it to your body and polishing every detail of your look. At our Atelier Fiesta in Salamanca we also have a selection of shoes and headpieces we can adapt to the colours you need.",
+            "Once you choose your dress and approve the quote, the process of further appointments begins: the first fitting takes place on the toile, the first real sketch of your dress, and at the following fittings you'll try it on in the fabric, colour and size you chose, while the team finishes adapting it to your body and polishing every detail of your look. At our Atelier Fiesta in Salamanca we also have a selection of shoes and headpieces we can adapt to the colours you need.",
           ],
         },
       },
@@ -145,8 +145,8 @@ export const ATELIERES = {
       { tipo: 'imagen', src: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.jpg' },
     ],
     descripcion: {
-      es: 'Nuestro atelier de Madrid ocupa un emplazamiento muy especial en la calle Jorge Juan, en pleno Barrio de Salamanca. Una elección que no es casual: Fely Campo nació en Salamanca y, de algún modo, la diseñadora continúa en Salamanca incluso cuando está en Madrid. El atelier es un espacio íntimo, pensado para descubrir la firma de una forma cercana y personal. Está atendido de manera permanente y, una vez a la semana, Fely Campo recibe personalmente las citas de diseño a medida. Un encuentro con la diseñadora en el que cada detalle, cada proporción y cada tejido comienzan a dar forma a una pieza única: un espacio donde el tiempo se detiene para vestir a cada mujer desde su propia esencia.',
-      en: "Our Madrid atelier occupies a very special spot on Calle Jorge Juan, in the heart of Barrio de Salamanca. It's no coincidence: Fely Campo was born in Salamanca, and in a way, the designer stays close to Salamanca even while in Madrid. The atelier is an intimate space, designed to discover the label in a close, personal way. It's permanently staffed, and once a week Fely Campo herself receives made-to-measure design appointments. A meeting with the designer where every detail, every proportion and every fabric begins to take the shape of a one-of-a-kind piece: a space where time stands still to dress each woman from her own essence.",
+      es: 'Nuestro atelier de Madrid ocupa un emplazamiento muy especial en la calle Jorge Juan, en pleno Barrio de Salamanca. Una elección que no es casual: Fely Campo nació en Salamanca y, de algún modo, la diseñadora continúa en Salamanca incluso cuando está en Madrid. El atelier es un espacio íntimo, pensado para descubrir la firma de una forma cercana y personal. Está atendido de manera permanente y, una vez a la semana, Fely Campo recibe personalmente las citas de diseño a medida. Un encuentro con la diseñadora en el que cada detalle, cada proporción y cada tejido comienzan a dar forma a una pieza única: un espacio donde el tiempo se detiene para vestir a cada mujer desde su propia esencia. El equipo de Fely Campo estará siempre a tu disposición para cuanto necesites, y cada semana la propia diseñadora viaja a Madrid para atender a sus clientas en persona.',
+      en: "Our Madrid atelier occupies a very special spot on Calle Jorge Juan, in the heart of Barrio de Salamanca. It's no coincidence: Fely Campo was born in Salamanca, and in a way, the designer stays close to Salamanca even while in Madrid. The atelier is an intimate space, designed to discover the label in a close, personal way. It's permanently staffed, and once a week Fely Campo herself receives made-to-measure design appointments. A meeting with the designer where every detail, every proportion and every fabric begins to take the shape of a one-of-a-kind piece: a space where time stands still to dress each woman from her own essence. The Fely Campo team is always on hand for whatever you may need, and every week the designer herself travels to Madrid to attend to her clients in person.",
     },
     secciones: [
       {
@@ -198,7 +198,7 @@ export const ATELIERES = {
   },
   oviedo: {
     id: 'oviedo',
-    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp' },
+    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg' },
     medioSuperior: { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.12.mp4' },
     // Reportaje propio (ver public/img/atelier/atelier-oviedo/) — igual
     // que Salamanca/Madrid, ya cubre toda la ficha (medioSuperior,
@@ -226,7 +226,7 @@ export const ATELIERES = {
         imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp',
         texto: {
           es: [
-            'El equipo Fely Campo Oviedo te acompañará durante toda la búsqueda del vestido para tu evento. Desde la primera cita tendrás un asesoramiento personalizado: escucharán tus necesidades y te ayudarán a encontrar esa pieza de nuestras colecciones de fiesta con la que te veas espectacular y refleje tu personalidad, reformulando juntos el diseño de colección —el tejido, las modificaciones y el color que resalte tu silueta natural.',
+            'El equipo Fely Campo Oviedo, liderado por Carlos Albuixech, te acompañará durante toda la búsqueda del vestido para tu evento. Desde la primera cita tendrás un asesoramiento personalizado: escucharán tus necesidades y te ayudarán a encontrar esa pieza de nuestras colecciones de fiesta con la que te veas espectacular y refleje tu personalidad, reformulando juntos el diseño de colección —el tejido, las modificaciones y el color que resalte tu silueta natural.',
             'En las siguientes citas te probarás tu vestido tal y como lo elegiste, y el equipo de profesionales terminará de adaptarlo a tu silueta mientras te asesora en cada detalle del look. En el Atelier Fiesta Oviedo contamos además con una selección de complementos que podrás personalizar para dar ese toque sutil y sugerente a tu estilismo.',
           ],
           en: [
@@ -237,7 +237,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Espacio', en: 'The Space' },
-        imagen: '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg',
+        imagen: '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp',
         texto: {
           es: ['En el corazón de Oviedo, se encuentra la fachada acristalada del Atelier Fiesta Fely Campo. Un espacio abierto a la ciudad, a través de un escaparate único que muestra las creaciones de la diseñadora.'],
           en: ["In the heart of Oviedo stands the glass façade of the Fely Campo Atelier Fiesta. A space open to the city, through a unique shop window that showcases the designer's creations."],

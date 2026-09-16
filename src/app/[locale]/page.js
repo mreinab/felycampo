@@ -150,7 +150,7 @@ export default async function Home({ params }) {
         ]}
       />
       <BloqueSeccion
-        imagen="/img/atelier/ateliernovia-lamedida-felycampo-3.webp"
+        imagen="/img/landing/landing-section-about-fely.jpg"
         titulo={tVisitaAtelier('titulo')}
         texto={tVisitaAtelier('texto')}
         enlace={tVisitaAtelier('enlace')}

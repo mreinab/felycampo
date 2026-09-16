@@ -19,7 +19,7 @@ export default async function Pagina({ params }) {
   return (
     <>
       <section className="seccion">
-        <ProductHero imagen="/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg" className="hero-arriba" />
+        <ProductHero imagen="/img/landing/hero-visitanos-felycampo.jpg" className="hero-arriba" />
       </section>
 
       {/* .seccionUbicaciones (ver page.module.css): en mobile el hero de

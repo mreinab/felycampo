@@ -49,7 +49,7 @@ export const TALLERES = [
     id: 'taller-1',
     imagen: '/img/talleres/bejar/bejar-taller-felycampo-01.webp',
     medios: MEDIOS_TALLER_1,
-    tipo: { es: 'Taller Béjar', en: 'Béjar workshop' },
+    tipo: { es: 'Taller I', en: 'Workshop I' },
     distancia: { es: '72 km desde nuestro taller en Salamanca', en: '72 km from our workshop in Salamanca' },
     liderazgo: { es: 'Liderado por Blanca', en: 'Led by Blanca' },
     parrafos: {
@@ -69,7 +69,7 @@ export const TALLERES = [
     id: 'taller-2',
     imagen: '/img/talleres/tamares/00-taller.webp',
     medios: MEDIOS_TALLER_2,
-    tipo: { es: 'Taller Tamames', en: 'Tamames workshop' },
+    tipo: { es: 'Taller II', en: 'Workshop II' },
     distancia: { es: '54 km desde nuestro taller en Salamanca', en: '54 km from our workshop in Salamanca' },
     liderazgo: { es: 'Liderado por María José', en: 'Led by María José' },
     parrafos: {

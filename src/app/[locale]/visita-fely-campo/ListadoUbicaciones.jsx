@@ -35,15 +35,15 @@ const FOTOS_POR_CIUDAD = {
   Salamanca: [
     '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
     '/img/atelier/atelier-salamanca/ateliernovia-lamedida-felycampo-2.webp',
-    '/img/atelier/atelier-salamanca/atelierfiesta-atelierfiestasalamanca-felycampo-10.webp',
+    '/img/atelier/atelier-salamanca/20221222185015_relacionada2.jpg',
   ],
   Madrid: [
     '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_pretaporter-3-1024x683.jpg',
-    '/img/atelier/showroom-madrid/unnamed (1).webp',
-    '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
+    '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp',
+    '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_showroom-3.jpg',
   ],
   Oviedo: [
-    '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp',
+    '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg',
     '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_5-2048x1365.webp',
   ],
 };

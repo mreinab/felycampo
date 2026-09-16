@@ -68,8 +68,8 @@ export const ATELIER_INDEX = {
     // a propósito para que la tarjeta anticipe la misma imagen de
     // cabecera que verá la visitante al entrar. Sustituyen a las de
     // /img/talleres/, que ya no existen en el repo.
-    { id: 'salamanca', ciudad: 'Atelier Salamanca', imagen: '/img/atelier/atelier-salamanca/atelierfiesta-atelierfiestasalamanca-felycampo-10.webp' },
-    { id: 'madrid', ciudad: 'Atelier & Showroom Madrid', imagen: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg' },
-    { id: 'oviedo', ciudad: 'Atelier Oviedo', imagen: '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp' },
+    { id: 'salamanca', ciudad: 'Atelier Salamanca', imagen: '/img/atelier/atelier-salamanca/ateliernovia-lamedida-felycampo-2.webp' },
+    { id: 'madrid', ciudad: 'Atelier & Showroom Madrid', imagen: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.jpg' },
+    { id: 'oviedo', ciudad: 'Atelier Oviedo', imagen: '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg' },
   ],
 };

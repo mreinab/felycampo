@@ -165,13 +165,13 @@ export const SOBRE_FELY = {
     texto: {
       es: [
         'Con 54 años de trayectoria, Fely Campo está profundamente ligada a la tierra charra, de piedra, luz y oficio. Especializada en fiesta, novia y prêt-à-porter, Fely Campo crea piezas desde el patronaje, la elección de tejidos y el conocimiento de unas manos que entienden como un oficio que se transmite y permanece.',
-        'Desde su fundación y manteniendo su sede en Salamanca, la firma fue llegando cada vez a más puntos de venta, a nivel nacional, hasta que en 2003 decide que es el momento de dar el paso a su expansión internacional.',
-        'A partir de esa fecha y con las mismas constantes e ideales que las de su creadora: pasión, fuerza y trabajo, comienza el proceso de expansión de la firma. Actualmente cuenta con un equipo de 12 trabajadores y 22 mujeres costureras colaborando con la marca en los pueblos de Castilla y León, además posee casi 200 puntos de venta en el ámbito nacional e internacional.',
+        'Desde su fundación y manteniendo su sede en Salamanca, la firma fue llegando cada vez a más puntos de venta, a nivel nacional, hasta que en 2015 decide que es el momento de dar el paso a su expansión internacional.',
+        'A partir de esa fecha y con las mismas constantes e ideales que las de su creadora: pasión, fuerza y trabajo, comienza el proceso de expansión de la firma. Actualmente cuenta con un equipo de 12 trabajadores y varias asociaciones de mujeres costureras colaborando con la marca en los pueblos de la sierra de Castilla y León, además, posee casi 200 puntos de venta en el ámbito nacional e internacional.',
       ],
       en: [
         'With 54 years of history, Fely Campo is deeply rooted in the Charra land of Salamanca, of stone, light and craft. Specialising in occasion wear, bridal and prêt-à-porter, Fely Campo creates pieces from the pattern-making, the choice of fabrics and the knowledge of hands that understand it as a craft passed down and enduring.',
-        "Since its founding, and while keeping its headquarters in Salamanca, the firm steadily reached more points of sale across Spain, until in 2003 it decided the time had come to take the step into international expansion.",
-        "From that date on, and guided by the same constants and ideals as its creator — passion, strength and hard work — the firm's expansion process began. Today it has a team of 12 employees and 22 seamstresses collaborating with the brand in the villages of Castilla y León, and it now has almost 200 points of sale nationally and internationally.",
+        "Since its founding, and while keeping its headquarters in Salamanca, the firm steadily reached more points of sale across Spain, until in 2015 it decided the time had come to take the step into international expansion.",
+        "From that date on, and guided by the same constants and ideals as its creator — passion, strength and hard work — the firm's expansion process began. Today it has a team of 12 employees and several associations of seamstresses collaborating with the brand in the villages of the Sierra de Castilla y León, and it now has almost 200 points of sale nationally and internationally.",
       ],
     },
   },
