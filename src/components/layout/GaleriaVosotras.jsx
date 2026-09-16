@@ -57,18 +57,24 @@ import { Plus, X } from 'lucide-react';
 import { CabeceraSeccion, CarruselFotos } from '../ui';
 import useEnVista from '@/hooks/useEnVista';
 import { RESENAS_EJEMPLO } from './resenasEjemplo';
-import { productosEjemplo } from './productosEjemplo';
+import { fiestaProductos } from './fiestaProductos';
 import { slugify } from '@/lib/slugify';
 import { FOTOS_INVITADAS, FOTOS_NOVIAS } from './vosotrasFotos';
 import styles from './GaleriaVosotras.module.css';
 
+// "Consigue el look" — vínculo aún de mentira (no hay backend que sepa
+// qué prenda real lleva cada clienta), pero en vez de productosEjemplo.js
+// (nombre/imagen inventados, sin ficha real detrás) apunta siempre a la
+// misma pieza real del catálogo de Fiesta (mismo objeto que ya vende
+// /atelier/fiesta/look-1-ss27, ver fiestaProductos.js) — así el enlace
+// aterriza en una ficha de producto que existe de verdad.
+const PRODUCTO_VINCULADO = fiestaProductos.find((p) => p.nombre === 'Look 1 SS27');
+
 // Cada look: su propia mini-galería (grupo real de fotos, portada
 // siempre primera) + nombre/comentario (reutiliza RESENAS_EJEMPLO,
 // resenasEjemplo.js, en vez de inventar reseñas reales de estas
-// clientas concretas — no hay backend todavía que las capture) + un
-// producto "vinculado" ("Consigue el look"), turnado de
-// productosEjemplo.js por índice — mismo criterio que antes, ahora
-// sobre grupos de fotos reales en vez de 3 fotos de ejemplo repetidas.
+// clientas concretas — no hay backend todavía que las capture) + el
+// producto vinculado de arriba.
 function construirLooks(gruposFotos, categoria, indiceInicial) {
   return gruposFotos.map((fotos, indice) => {
     const indiceGlobal = indiceInicial + indice;
@@ -77,7 +83,7 @@ function construirLooks(gruposFotos, categoria, indiceInicial) {
       fotos,
       nombre: resena.nombre,
       comentario: resena.texto,
-      productos: [productosEjemplo[indiceGlobal % productosEjemplo.length]],
+      productos: PRODUCTO_VINCULADO ? [PRODUCTO_VINCULADO] : [],
       categoria,
     };
   });
@@ -146,12 +152,18 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
 
   // Foco en cerrar + sin scroll de la página detrás mientras está
   // abierto — mismo criterio que RunwayGaleria/GaleriaProductoLightbox.
+  // También marca <body> con "vosotras-lightbox-abierta" mientras dura:
+  // el lightbox ya trae su propia cabecera (logo + cerrar, ver más abajo)
+  // así que el Navbar de siempre no pinta nada ahí — global.css lo
+  // esconde con esa clase en vez de duplicar aquí la lógica de
+  // scrolled/transparent que ya tiene Navbar.jsx.
   useEffect(() => {
     if (!abierta) return undefined;
     const enfocadoAntes = document.activeElement;
     cerrarRef.current?.focus();
     const overflowPrevio = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('vosotras-lightbox-abierta');
 
     const alTeclado = (evento) => {
       if (evento.key === 'Escape') cerrar();
@@ -161,6 +173,7 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
     return () => {
       document.removeEventListener('keydown', alTeclado);
       document.body.style.overflow = overflowPrevio;
+      document.body.classList.remove('vosotras-lightbox-abierta');
       enfocadoAntes?.focus?.();
     };
   }, [abierta]);
@@ -302,7 +315,7 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
                   {lookActivo.productos.map((producto) => (
                     <a
                       key={producto.nombre}
-                      href={`/${locale}/pret-a-porter/${slugify(producto.nombre)}`}
+                      href={`/${locale}/atelier/fiesta/${slugify(producto.nombre)}`}
                       className={styles.panelProducto}
                       tabIndex={tabIndexInteractivo}
                     >

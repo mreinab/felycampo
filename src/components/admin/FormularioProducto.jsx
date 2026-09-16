@@ -29,7 +29,7 @@ import {
 } from '@/components/admin';
 import { Boton, Input } from '@/components/ui';
 import {
-  tiposProducto, coleccionesMock, coloresMock, familiasColorMock, categoriasCuidadoMock, cuidadosMock, resenasMock, tallasEstandar, ajustesTiendaMock, rutaTipoProducto,
+  tiposProducto, coleccionesMock, coloresMock, familiasColorMock, resenasMock, tallasEstandar, ajustesTiendaMock, rutaTipoProducto,
 } from '@/components/admin/mockData';
 import styles from './FormularioProducto.module.css';
 
@@ -216,8 +216,8 @@ function FormularioProducto({
   // Variantes de color — un producto puede subirse (o editarse) con varias
   // variantes de color a la vez, una pestaña por variante con SU PROPIA
   // Imágenes/Color o Estampado/Tallas y Stock (lo único que cambia entre
-  // colores); el resto del formulario (nombre, precio, composición,
-  // cuidados...) es compartido y se rellena una sola vez. Disponible al
+  // colores); el resto del formulario (nombre, precio, composición...)
+  // es compartido y se rellena una sola vez. Disponible al
   // dar de alta un producto nuevo de cero y también al editar uno ya
   // existente (así se puede añadir un color más sin salir del panel de
   // edición) — solo "Duplicar" (productoBase) sigue trabajando sobre una
@@ -320,15 +320,6 @@ function FormularioProducto({
   const [fabricadoEn, setFabricadoEn] = useState({ es: semilla?.fabricadoEn?.es || '', en: semilla?.fabricadoEn?.en || '' });
   const [tinturaEstampacion, setTinturaEstampacion] = useState({ es: semilla?.tinturaEstampacion?.es || '', en: semilla?.tinturaEstampacion?.en || '' });
   const [origenTejido, setOrigenTejido] = useState({ es: semilla?.origenTejido?.es || '', en: semilla?.origenTejido?.en || '' });
-  // Cuidados: selección múltiple — una prenda suele llevar
-  // varias instrucciones a la vez (lavado + planchado + secado...), no una
-  // sola. cuidadosMock trae ya las más comunes agrupadas por categoría
-  // (ver categoriasCuidadoMock); el admin puede añadir cualquier otra.
-  const [cuidadosDisponibles, setCuidadosDisponibles] = useState(cuidadosMock);
-  const [cuidadoIds, setCuidadoIds] = useState(semilla?.cuidadoIds || []);
-  const [nombreCuidadoNuevoEs, setNombreCuidadoNuevoEs] = useState('');
-  const [nombreCuidadoNuevoEn, setNombreCuidadoNuevoEn] = useState('');
-  const [categoriaCuidadoNueva, setCategoriaCuidadoNueva] = useState(categoriasCuidadoMock[0]?.id || '');
   // Vínculo con el look de Runway/Novia/Fiesta que enseña esta misma
   // pieza en pasarela — `categorias` viene de CategoriasProvider (mismo
   // Context que ListaProductos.jsx/FormularioLook.jsx), así que un look
@@ -432,10 +423,10 @@ function FormularioProducto({
 
   // Numeración de secciones — Imágenes, Datos comunes y Prendas y SKU son
   // siempre 1, 2 y 3; el resto se calcula con un contador porque "Tipo de
-  // producto" es opcional (ocultarSeccionTipo) y "Colores"/"Composición y
-  // Cuidados" solo existen para los tipos que los usan (CAMPOS_TIPO) —
-  // evita reescribir ternarios a mano en cada FormSeccion cuando cambia
-  // qué va antes de qué. Colores y Estampados va antes que Tallas y Stock
+  // producto" es opcional (ocultarSeccionTipo) y "Colores"/"Composición"
+  // solo existen para los tipos que los usan (CAMPOS_TIPO) — evita
+  // reescribir ternarios a mano en cada FormSeccion cuando cambia qué va
+  // antes de qué. Colores y Estampados va antes que Tallas y Stock
   // (numeroColores se calcula antes que numeroTallas) a propósito.
   let contadorSeccion = 3;
   const numeroTipo = !ocultarSeccionTipo ? (contadorSeccion += 1) : null;
@@ -444,7 +435,6 @@ function FormularioProducto({
   const numeroColores = campos?.colores ? (contadorSeccion += 1) : null;
   const numeroTallas = campos?.tallas ? (contadorSeccion += 1) : null;
   const numeroComposicion = campos?.telas ? (contadorSeccion += 1) : null;
-  const numeroCuidados = campos?.telas ? (contadorSeccion += 1) : null;
   const numeroVinculo = esVendible ? (contadorSeccion += 1) : null;
   const numeroResenas = esVendible ? (contadorSeccion += 1) : null;
 
@@ -615,19 +605,6 @@ function FormularioProducto({
     setImagenEstampadoNueva('');
   }
 
-  function anadirCuidadoNuevo() {
-    if (!nombreCuidadoNuevoEs.trim() || !nombreCuidadoNuevoEn.trim() || !categoriaCuidadoNueva) return;
-    const nuevo = {
-      id: `cui${Date.now()}`,
-      categoria: categoriaCuidadoNueva,
-      texto: { es: nombreCuidadoNuevoEs.trim(), en: nombreCuidadoNuevoEn.trim() },
-    };
-    setCuidadosDisponibles((actual) => [...actual, nuevo]);
-    setCuidadoIds((actual) => [...actual, nuevo.id]);
-    setNombreCuidadoNuevoEs('');
-    setNombreCuidadoNuevoEn('');
-  }
-
   function anadirColeccionNueva() {
     const anio = parseInt(anioColeccionNuevo, 10);
     if (!anio || anio < 2000 || anio > 2099) {
@@ -700,7 +677,6 @@ function FormularioProducto({
           fabricadoEn: (fabricadoEn.es.trim() || fabricadoEn.en.trim()) ? fabricadoEn : undefined,
           tinturaEstampacion: (tinturaEstampacion.es.trim() || tinturaEstampacion.en.trim()) ? tinturaEstampacion : undefined,
           origenTejido: (origenTejido.es.trim() || origenTejido.en.trim()) ? origenTejido : undefined,
-          cuidadoIds,
         }),
         ...(campos.coleccion && { coleccion }),
         prendas: prendas.filter((p) => p.nombre.trim() || p.sku.trim()),
@@ -1253,67 +1229,6 @@ function FormularioProducto({
                     onChange={(e) => setOrigenTejido({ ...origenTejido, [idiomaComposicion]: e.target.value })}
                     placeholder="India"
                   />
-                </div>
-              </div>
-            </FormSeccion>
-          )}
-
-          {campos.telas && (
-            <FormSeccion
-              numero={numeroCuidados}
-              titulo="Cuidados"
-              descripcion={`Instrucciones de conservación del producto${campos.telas === 'opcional' ? ' (opcional)' : ''}.`}
-            >
-              <div className={styles.campoAncho}>
-                <div className={styles.cuidadosLista}>
-                  {categoriasCuidadoMock.map((cat) => {
-                    const items = cuidadosDisponibles.filter((c) => c.categoria === cat.id);
-                    if (!items.length) return null;
-                    return (
-                      <div key={cat.id} className={styles.cuidadoCategoria}>
-                        <span className={styles.cuidadoCategoriaTitulo}>{cat.etiqueta.es}</span>
-                        <div className={styles.telasGrid}>
-                          {items.map((c) => {
-                            const activo = cuidadoIds.includes(c.id);
-                            return (
-                              <button
-                                key={c.id}
-                                type="button"
-                                className={`${styles.telaChip} ${activo ? styles.telaChipActivo : ''}`}
-                                onClick={() => setCuidadoIds(activo ? cuidadoIds.filter((id) => id !== c.id) : [...cuidadoIds, c.id])}
-                              >
-                                <span className={styles.telaChipTexto}>
-                                  <span className={styles.telaChipNombre}>{c.texto.es}</span>
-                                  <span className={styles.telaChipComposicion}>{c.texto.en}</span>
-                                </span>
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className={styles.anadirFila}>
-                  <Input etiqueta="Nueva instrucción (ES)" valor={nombreCuidadoNuevoEs} onChange={(e) => setNombreCuidadoNuevoEs(e.target.value)} placeholder="Secar a la sombra" />
-                  <Input etiqueta="New instruction (EN)" valor={nombreCuidadoNuevoEn} onChange={(e) => setNombreCuidadoNuevoEn(e.target.value)} placeholder="Dry in shade" />
-                  <label>
-                    <span className={styles.etiquetaCampo}>Categoría</span>
-                    <select className={styles.selectInput} value={categoriaCuidadoNueva} onChange={(e) => setCategoriaCuidadoNueva(e.target.value)}>
-                      {categoriasCuidadoMock.map((cat) => (
-                        <option key={cat.id} value={cat.id}>{cat.etiqueta.es}</option>
-                      ))}
-                    </select>
-                  </label>
-                  <Boton
-                    variante="contorno"
-                    tamano="s"
-                    onClick={anadirCuidadoNuevo}
-                    desactivado={!nombreCuidadoNuevoEs.trim() || !nombreCuidadoNuevoEn.trim()}
-                  >
-                    <Plus size={14} />
-                    Añadir cuidado
-                  </Boton>
                 </div>
               </div>
             </FormSeccion>

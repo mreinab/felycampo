@@ -5,6 +5,8 @@
 // panel se vea coherente con la web, no con placeholders genéricos.
 
 import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
+import { noviaProductos } from '@/components/layout/noviaProductos';
+import { fiestaProductos } from '@/components/layout/fiestaProductos';
 
 // ---------- PRODUCTOS ----------
 // tipo: 'pret-a-porter' | 'atelier' | 'archivo'
@@ -164,60 +166,6 @@ export const telasMock = [
   { id: 'tel5', nombre: 'Popelín', composicion: '97% algodón, 3% elastano' },
 ];
 
-// ---------- CUIDADOS (etiqueta de conservación) ----------
-// Lista maestra oficial (careInstructionsMaster) — 5 categorías estándar
-// de una etiqueta textil, cada instrucción con nombre bilingüe (mismo
-// criterio que coloresMock: `texto.es`/`texto.en`, no un string suelto).
-// `id` reutiliza el `code` de la lista maestra en vez de generar uno
-// nuevo, para poder cruzar contra la fuente original si hace falta.
-export const categoriasCuidadoMock = [
-  { id: 'washing', etiqueta: { es: 'Lavado', en: 'Washing' } },
-  { id: 'bleaching', etiqueta: { es: 'Blanqueo', en: 'Bleaching' } },
-  { id: 'drying', etiqueta: { es: 'Secado', en: 'Drying' } },
-  { id: 'ironing', etiqueta: { es: 'Planchado', en: 'Ironing' } },
-  { id: 'professionalCleaning', etiqueta: { es: 'Limpieza profesional', en: 'Professional cleaning' } },
-];
-
-export const cuidadosMock = [
-  // Lavado
-  { id: 'wash_95', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 95 °C', en: 'Machine wash max. 95 °C' } },
-  { id: 'wash_60', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 60 °C', en: 'Machine wash max. 60 °C' } },
-  { id: 'wash_60_mild', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 60 °C, ciclo suave', en: 'Machine wash max. 60 °C, mild' } },
-  { id: 'wash_40', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 40 °C', en: 'Machine wash max. 40 °C' } },
-  { id: 'wash_40_mild', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 40 °C, ciclo suave', en: 'Machine wash max. 40 °C, mild' } },
-  { id: 'wash_40_verymild', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 40 °C, muy suave', en: 'Machine wash max. 40 °C, very mild' } },
-  { id: 'wash_30', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 30 °C', en: 'Machine wash max. 30 °C' } },
-  { id: 'wash_30_mild', categoria: 'washing', texto: { es: 'Lavar a máquina máx. 30 °C, ciclo suave', en: 'Machine wash max. 30 °C, mild' } },
-  { id: 'wash_hand', categoria: 'washing', texto: { es: 'Lavar a mano máx. 40 °C', en: 'Hand wash max. 40 °C' } },
-  { id: 'wash_no', categoria: 'washing', texto: { es: 'No lavar', en: 'Do not wash' } },
-  // Blanqueo
-  { id: 'bleach_any', categoria: 'bleaching', texto: { es: 'Se puede usar lejía', en: 'Bleach allowed' } },
-  { id: 'bleach_oxygen', categoria: 'bleaching', texto: { es: 'Solo blanqueo con oxígeno / sin cloro', en: 'Oxygen/non-chlorine bleach only' } },
-  { id: 'bleach_no', categoria: 'bleaching', texto: { es: 'No usar lejía', en: 'Do not bleach' } },
-  // Secado
-  { id: 'tumble_normal', categoria: 'drying', texto: { es: 'Secar en secadora, temperatura normal', en: 'Tumble dry, normal' } },
-  { id: 'tumble_low', categoria: 'drying', texto: { es: 'Secar en secadora, temperatura baja', en: 'Tumble dry, low heat' } },
-  { id: 'tumble_no', categoria: 'drying', texto: { es: 'No usar secadora', en: 'Do not tumble dry' } },
-  { id: 'dry_line', categoria: 'drying', texto: { es: 'Secar tendido', en: 'Line dry' } },
-  { id: 'dry_flat', categoria: 'drying', texto: { es: 'Secar en horizontal', en: 'Dry flat' } },
-  { id: 'dry_drip', categoria: 'drying', texto: { es: 'Secar sin escurrir', en: 'Drip dry' } },
-  { id: 'dry_shade', categoria: 'drying', texto: { es: 'Secar a la sombra', en: 'Dry in shade' } },
-  // Planchado
-  { id: 'iron_high', categoria: 'ironing', texto: { es: 'Planchar máx. 200 °C (alta)', en: 'Iron max. 200 °C (high)' } },
-  { id: 'iron_medium', categoria: 'ironing', texto: { es: 'Planchar máx. 150 °C (media)', en: 'Iron max. 150 °C (medium)' } },
-  { id: 'iron_low', categoria: 'ironing', texto: { es: 'Planchar máx. 110 °C (baja)', en: 'Iron max. 110 °C (low)' } },
-  { id: 'iron_no_steam', categoria: 'ironing', texto: { es: 'Planchar sin vapor', en: 'Iron without steam' } },
-  { id: 'iron_no', categoria: 'ironing', texto: { es: 'No planchar', en: 'Do not iron' } },
-  // Limpieza profesional
-  { id: 'dryclean_p', categoria: 'professionalCleaning', texto: { es: 'Limpieza en seco con percloroetileno', en: 'Dry clean, perchloroethylene' } },
-  { id: 'dryclean_p_mild', categoria: 'professionalCleaning', texto: { es: 'Limpieza en seco (perclo), proceso suave', en: 'Dry clean, PCE, mild process' } },
-  { id: 'dryclean_f', categoria: 'professionalCleaning', texto: { es: 'Limpieza en seco con hidrocarburos', en: 'Dry clean, hydrocarbons only' } },
-  { id: 'dryclean_f_mild', categoria: 'professionalCleaning', texto: { es: 'Limpieza en seco (hidrocarburos), suave', en: 'Dry clean, hydrocarbons, mild' } },
-  { id: 'dryclean_no', categoria: 'professionalCleaning', texto: { es: 'No limpiar en seco', en: 'Do not dry clean' } },
-  { id: 'wetclean_w', categoria: 'professionalCleaning', texto: { es: 'Limpieza profesional en húmedo', en: 'Professional wet clean' } },
-  { id: 'wetclean_no', categoria: 'professionalCleaning', texto: { es: 'No usar limpieza en húmedo', en: 'Do not wet clean' } },
-];
-
 export const productosMock = [
   {
     id: 'p1',
@@ -316,7 +264,7 @@ export const productosMock = [
   {
     id: 'p7',
     tipo: 'pret-a-porter',
-    categoriaId: 'cat1',
+    categoriaId: 'cat8',
     nombre: 'Abrigo Nieve',
     descripcionCorta: 'Abrigo oversize en paño de lana, colección Otoño-Invierno 2027.',
     imagen: '/img/abrigos-2026.jpg',
@@ -500,6 +448,107 @@ export const productosMock = [
     coleccion: 'fw26',
     estado: 'Programado',
     sku: 'FC-ARC-N26',
+  },
+  // p19-p23: cat7 (Tops y Camisas), cat8 (Chaquetas y Abrigos) y cat36
+  // (Pantalones) no tenían ningún producto todavía — cuadrícula vacía en
+  // /admin/productos/pret-a-porter para esas 3 secciones. Fotos/nombre/
+  // precio/color tomados tal cual de tiendaProductos.js (catálogo real de
+  // /pret-a-porter), así el panel enseña de dónde sale cada pieza.
+  {
+    id: 'p19',
+    tipo: 'pret-a-porter',
+    categoriaId: 'cat7',
+    nombre: 'Top Ubud',
+    descripcionCorta: 'Top Ubud de cuerpo pellizcado color rojo y negro.',
+    imagen: '/img/ecommerce/tops-y-camisas/top-ubud-felycampo-front.jpg',
+    imagenes: ['/img/ecommerce/tops-y-camisas/top-ubud-felycampo-front.jpg'],
+    precio: '350 €',
+    tallas: [
+      { talla: 42, stock: 4 },
+    ],
+    colorIds: ['black'],
+    telaIds: ['tel3'],
+    estado: 'Activo',
+    coleccion: 'ss26',
+    sku: 'MBO2723',
+  },
+  {
+    id: 'p20',
+    tipo: 'pret-a-porter',
+    categoriaId: 'cat7',
+    nombre: 'Top Encaje París',
+    descripcionCorta: 'Top Encaje París de encaje en diversos colores.',
+    imagen: '/img/ecommerce/tops-y-camisas/top-encaje-rosa-front.jpg',
+    imagenes: ['/img/ecommerce/tops-y-camisas/top-encaje-rosa-front.jpg', '/img/ecommerce/tops-y-camisas/top-encaje-rosa-back.jpg'],
+    precio: '350 €',
+    tallas: [
+      { talla: 42, stock: 6 },
+    ],
+    colorIds: ['fuchsia', 'bordeaux', 'black'],
+    telaIds: ['tel3'],
+    estado: 'Activo',
+    coleccion: 'ss26',
+    sku: 'MBO2746',
+  },
+  {
+    id: 'p21',
+    tipo: 'pret-a-porter',
+    categoriaId: 'cat8',
+    nombre: 'Chaqueta Samarcanda',
+    descripcionCorta: 'Chaqueta Samarcanda a cuadros marrón y negro.',
+    imagen: '/img/ecommerce/chaquetas-y-abrigos/MBO3739-chaquetacuadros-felycampo-front.jpg',
+    imagenes: ['/img/ecommerce/chaquetas-y-abrigos/MBO3739-chaquetacuadros-felycampo-front.jpg', '/img/ecommerce/chaquetas-y-abrigos/MBO3739-chaquetacuadros-felycampo-back.jpg'],
+    precio: '600 €',
+    tallas: [
+      { talla: 38, stock: 2 },
+    ],
+    colorIds: ['chocolate'],
+    telaIds: ['tel5'],
+    estado: 'Activo',
+    coleccion: 'FW27',
+    sku: 'MBO3739',
+  },
+  {
+    id: 'p22',
+    tipo: 'pret-a-porter',
+    categoriaId: 'cat8',
+    nombre: 'Abrigo Copenhague',
+    descripcionCorta: 'Abrigo Copenhague de lana color rosa palo.',
+    imagen: '/img/ecommerce/chaquetas-y-abrigos/abrigo-lana-felycampo-front.jpg',
+    imagenes: [
+      '/img/ecommerce/chaquetas-y-abrigos/abrigo-lana-felycampo-front.jpg',
+      '/img/ecommerce/chaquetas-y-abrigos/abrigo-lana-felycampo-back.jpg',
+      '/img/ecommerce/chaquetas-y-abrigos/abrigo-lana-felycampo-model.jpg',
+    ],
+    precio: '600 €',
+    tallas: [
+      { talla: 38, stock: 3 },
+    ],
+    colorIds: ['dusty-rose'],
+    telaIds: ['tel5'],
+    estado: 'Borrador',
+    coleccion: 'FW27',
+    sku: 'FC-CHA-COP',
+  },
+  {
+    id: 'p23',
+    tipo: 'pret-a-porter',
+    categoriaId: 'cat36',
+    nombre: 'Pantalón Goree',
+    descripcionCorta: 'Pantalón Goree a rayas color antracita.',
+    imagen: '/img/ecommerce/pantalones/MBO2724-pantalon-raya-front.jpg',
+    imagenes: ['/img/ecommerce/pantalones/MBO2724-pantalon-raya-front.jpg', '/img/ecommerce/pantalones/MBO2724-pantalon-raya-back.jpg'],
+    precio: '450 €',
+    tallas: [
+      { talla: 38, stock: 3 },
+      { talla: 40, stock: 2 },
+      { talla: 42, stock: 0 },
+    ],
+    colorIds: ['anthracite'],
+    telaIds: ['tel5'],
+    estado: 'Activo',
+    coleccion: 'ss26',
+    sku: 'MBO2724',
   },
 ];
 
@@ -907,14 +956,37 @@ const looksFurisode = [
   { nombre: 'Furisode Fiesta 31', prendas: [{ nombre: '', sku: '18148 V' }], tags: ['Clásico', 'Colección', 'Corte A', 'Diferente', 'Escote Espalda', 'Fiesta', 'Furisode', 'Midi', 'Noche', 'Volumen'], imagenes: [`${RUTA_FURISODE}/047coleccionesfiesta-furisodefiesta-look31-felycampo2-1.webp`, `${RUTA_FURISODE}/048coleccionesfiesta-furisodefiesta-look31-felycampo-1.webp`] },
 ];
 
+// Looks de las 6 colecciones de Novia y de Primavera Verano 2027
+// (Fiesta) — a diferencia de looksLaColeccion/looksFurisode (tecleados a
+// mano aquí mismo), estos reutilizan tal cual noviaProductos.js/
+// fiestaProductos.js, el mismo catálogo real que ya enseña /atelier/
+// novias y /atelier/fiesta en la web pública: filtra su lista plana por
+// "coleccion" y se queda con nombre/sku/imagenes, así el admin nunca
+// puede desincronizarse de lo que la web ya enseña (ninguna de las dos
+// colecciones tenía looks todavía — cuadrícula vacía de "Añadir
+// imágenes" en /admin/colecciones/novia y ninguna portada de SS27 en
+// /admin/colecciones/fiesta).
+function looksDeColeccion(productos, nombreColeccion) {
+  return productos
+    .filter((producto) => producto.coleccion === nombreColeccion)
+    .map(({ nombre, sku, imagenes }) => ({ nombre, sku, imagenes }));
+}
+
+const looksBride27 = looksDeColeccion(noviaProductos, 'Bride 27');
+const looksME = looksDeColeccion(noviaProductos, 'ME');
+const looksBambuNovia = looksDeColeccion(noviaProductos, 'Bambú Novia');
+const looksSaviaNovia = looksDeColeccion(noviaProductos, 'Savia Novia');
+const looksInside = looksDeColeccion(noviaProductos, 'Inside');
+const looksIntrospeccion = looksDeColeccion(noviaProductos, 'Introspección');
+const looksSS27 = looksDeColeccion(fiestaProductos, 'Primavera Verano 2027');
+
 export const categoriasMock = {
   'pret-a-porter': [
     { id: 'cat7', nombre: 'Tops y Camisas', visible: true, orden: 1 },
     { id: 'cat8', nombre: 'Chaquetas y Abrigos', visible: true, orden: 2 },
     { id: 'cat2', nombre: 'Faldas', visible: true, orden: 3 },
-    { id: 'cat1', nombre: 'Vestidos', visible: true, orden: 4 },
-    { id: 'cat9', nombre: 'Zapatos', visible: true, orden: 5 },
-    { id: 'cat10', nombre: 'Accesorios', visible: true, orden: 6 },
+    { id: 'cat36', nombre: 'Pantalones', visible: true, orden: 4 },
+    { id: 'cat1', nombre: 'Vestidos', visible: true, orden: 5 },
   ],
   atelier: [
     { id: 'cat3', nombre: 'Novias', visible: true, orden: 1 },
@@ -960,60 +1032,71 @@ export const categoriasMock = {
     },
   ],
   // Archivo de colecciones de Novia — mismo criterio que `archivo` (fija,
-  // sin reordenar/añadir desde la UI, numeroLooks: 12), pero sin
-  // `temporada`: estos nombres no siguen el patrón limpio "Estación Año"
-  // de Runway, así que no llevan badge AW/SS.
+  // sin reordenar/añadir desde la UI), pero sin `temporada`: estos
+  // nombres no siguen el patrón limpio "Estación Año" de Runway, así que
+  // no llevan badge AW/SS. `numeroLooks`/`looks` ya no es el 12 fijo de
+  // antes (cuadrícula vacía de "Añadir imágenes") — usa el recuento y las
+  // fotos reales de noviaProductos.js (ver looksDeColeccion arriba), así
+  // coincide con lo que ya enseña /atelier/novias.
   novia: [
     {
-      id: 'cat20', nombre: 'Bride 27', visible: true, orden: 1, fija: true, numeroLooks: 12,
+      id: 'cat20', nombre: 'Bride 27', visible: true, orden: 1, fija: true, numeroLooks: looksBride27.length, looks: looksBride27,
     },
     {
-      id: 'cat21', nombre: 'ME', visible: true, orden: 2, fija: true, numeroLooks: 12,
+      id: 'cat21', nombre: 'ME', visible: true, orden: 2, fija: true, numeroLooks: looksME.length, looks: looksME,
     },
     {
-      id: 'cat22', nombre: 'Bambú Novia', visible: true, orden: 3, fija: true, numeroLooks: 12,
+      id: 'cat22', nombre: 'Bambú Novia', visible: true, orden: 3, fija: true, numeroLooks: looksBambuNovia.length, looks: looksBambuNovia,
     },
     {
-      id: 'cat23', nombre: 'Savia Novia', visible: true, orden: 4, fija: true, numeroLooks: 12,
+      id: 'cat23', nombre: 'Savia Novia', visible: true, orden: 4, fija: true, numeroLooks: looksSaviaNovia.length, looks: looksSaviaNovia,
     },
     {
-      id: 'cat24', nombre: 'Inside', visible: true, orden: 5, fija: true, numeroLooks: 12,
+      id: 'cat24', nombre: 'Inside', visible: true, orden: 5, fija: true, numeroLooks: looksInside.length, looks: looksInside,
     },
     {
-      id: 'cat25', nombre: 'Introspección', visible: true, orden: 6, fija: true, numeroLooks: 12,
+      id: 'cat25', nombre: 'Introspección', visible: true, orden: 6, fija: true, numeroLooks: looksIntrospeccion.length, looks: looksIntrospeccion,
     },
   ],
-  // Archivo de colecciones de Fiesta — mismo criterio que `novia`.
+  // Archivo de colecciones de Fiesta — mismo criterio que `novia`. cat37
+  // (Primavera Verano 2027/SS27) faltaba entera — es la colección más
+  // reciente en /atelier/fiesta (ver COLECCIONES_FIESTA en esa page.js,
+  // SS27 siempre primera) así que entra en orden:1 y el resto baja un
+  // puesto; sus looks/numeroLooks salen de fiestaProductos.js igual que
+  // `novia` arriba, así que también trae portada real en vez de vacío.
   fiesta: [
     {
-      id: 'cat26', nombre: 'Primavera Verano 2026', visible: true, orden: 1, fija: true, numeroLooks: 12,
+      id: 'cat37', nombre: 'Primavera Verano 2027', visible: true, orden: 1, fija: true, numeroLooks: looksSS27.length, looks: looksSS27,
     },
     {
-      id: 'cat27', nombre: 'Primavera Verano 2025', visible: true, orden: 2, fija: true, numeroLooks: 12,
+      id: 'cat26', nombre: 'Primavera Verano 2026', visible: true, orden: 2, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat28', nombre: 'Prêt-à-porter', visible: true, orden: 3, fija: true, numeroLooks: 12,
+      id: 'cat27', nombre: 'Primavera Verano 2025', visible: true, orden: 3, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat29', nombre: 'En Madrid', visible: true, orden: 4, fija: true, numeroLooks: 12,
+      id: 'cat28', nombre: 'Prêt-à-porter', visible: true, orden: 4, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat30', nombre: 'A Walk', visible: true, orden: 5, fija: true, numeroLooks: 12,
+      id: 'cat29', nombre: 'En Madrid', visible: true, orden: 5, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat31', nombre: 'Bambú', visible: true, orden: 6, fija: true, numeroLooks: 12,
+      id: 'cat30', nombre: 'A Walk', visible: true, orden: 6, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat32', nombre: 'Savia', visible: true, orden: 7, fija: true, numeroLooks: 12,
+      id: 'cat31', nombre: 'Bambú', visible: true, orden: 7, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat33', nombre: 'Miscelanea', visible: true, orden: 8, fija: true, numeroLooks: 12,
+      id: 'cat32', nombre: 'Savia', visible: true, orden: 8, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat34', nombre: 'Essentielle', visible: true, orden: 9, fija: true, numeroLooks: 12,
+      id: 'cat33', nombre: 'Miscelanea', visible: true, orden: 9, fija: true, numeroLooks: 12,
     },
     {
-      id: 'cat35', nombre: 'Furisode', visible: true, orden: 10, fija: true, numeroLooks: 31, looks: looksFurisode,
+      id: 'cat34', nombre: 'Essentielle', visible: true, orden: 10, fija: true, numeroLooks: 12,
+    },
+    {
+      id: 'cat35', nombre: 'Furisode', visible: true, orden: 11, fija: true, numeroLooks: 31, looks: looksFurisode,
     },
   ],
 };
@@ -1430,7 +1513,7 @@ export const disenoMock = [
 // Páginas internas disponibles para los desplegables "destino" de Diseño
 // (DisenoEditor.jsx "Destino del CTA") — cada valor es una ruta REAL de
 // src/app/[locale]/ (aunque su contenido siga "pendiente de maquetar",
-// la ruta ya existe y navega, ver comentarios de cada page.js). Las 6
+// la ruta ya existe y navega, ver comentarios de cada page.js). Las 5
 // categorías de Prêt-à-porter son las mismas que categoriasMock['pret-a-porter']
 // (sección 5); las 9 colecciones de Archivo son categoriasMock.archivo
 // (sus slugs son categoriasMock.archivo[].nombre en minúsculas/con
@@ -1443,8 +1526,6 @@ export const paginasInternas = [
   { valor: '/pret-a-porter/faldas', etiqueta: 'Prêt-à-porter — Faldas' },
   { valor: '/pret-a-porter/pantalones', etiqueta: 'Prêt-à-porter — Pantalones' },
   { valor: '/pret-a-porter/vestidos', etiqueta: 'Prêt-à-porter — Vestidos' },
-  { valor: '/pret-a-porter/zapatos', etiqueta: 'Prêt-à-porter — Zapatos' },
-  { valor: '/pret-a-porter/accesorios', etiqueta: 'Prêt-à-porter — Accesorios' },
   { valor: '/atelier', etiqueta: 'Atelier' },
   { valor: '/atelier/novias', etiqueta: 'Atelier — Novias' },
   { valor: '/atelier/fiesta', etiqueta: 'Atelier — Fiesta' },

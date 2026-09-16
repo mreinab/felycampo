@@ -22,7 +22,6 @@ import {
   Star,
   Package,
   MessageCircle,
-  Tag,
   Shirt,
   Layers,
   Newspaper,
@@ -71,7 +70,6 @@ const grupos = [
       {
         href: '/admin/productos/atelier', label: 'Atelier', icono: Scissors, tipo: 'atelier',
       },
-      { href: '/admin/categorias', label: 'Categorías', icono: Tag },
       { href: '/admin/stock', label: 'Stock', icono: Boxes },
       {
         href: '/admin/materiales/colores',

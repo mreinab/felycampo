@@ -2,12 +2,16 @@
 
 import ListaProductos from '@/components/admin/ListaProductos';
 
-// cat26 Primavera Verano 2026 / cat27 Primavera Verano 2025 / cat28
-// Prêt-à-porter / cat29 En Madrid / cat30 A Walk / cat31 Bambú / cat32
-// Savia / cat33 Miscelanea / cat34 Essentielle / cat35 Furisode — ids
-// fijados en mockData.js categoriasMock.fiesta, portadas en
-// public/img/collections/fiesta.
+// cat37 Primavera Verano 2027 (SS27) / cat26 Primavera Verano 2026 /
+// cat27 Primavera Verano 2025 / cat28 Prêt-à-porter / cat29 En Madrid /
+// cat30 A Walk / cat31 Bambú / cat32 Savia / cat33 Miscelanea / cat34
+// Essentielle / cat35 Furisode — ids fijados en mockData.js
+// categoriasMock.fiesta, portadas en public/img/collections/fiesta. SS27
+// no tiene un -cover.webp propio como el resto (colección sin editorial
+// dedicado todavía) — usa la primera foto real de su Look 1 (ver
+// looksSS27 en mockData.js, mismo orden que /atelier/fiesta).
 const IMAGENES_CATEGORIA = {
+  cat37: '/img/collections/fiesta/ss27-coleccion/27006-127_03.jpg',
   cat26: '/img/collections/fiesta/PrimaveraVerano-cover.webp',
   cat27: '/img/collections/fiesta/PrimaveraVerano25-cover.webp',
   cat28: '/img/collections/fiesta/pretaporter-cover.webp',

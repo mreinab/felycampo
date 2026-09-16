@@ -215,6 +215,15 @@ main {
   isolation: isolate;
 }
 
+/* GaleriaVosotras.jsx marca <body> con esta clase mientras su lightbox
+   (galería de fotos de clientas, /atelier/vosotras) está abierto — ese
+   lightbox ya trae su propia cabecera (logo + cerrar, a pantalla
+   completa por encima de todo), así que el Navbar de siempre no pinta
+   nada ahí y solo estorbaría. */
+body.vosotras-lightbox-abierta header {
+  display: none;
+}
+
 h1, h2, h3, h4 {
   font-weight: var(--font-weight-medium);
   line-height: normal;
