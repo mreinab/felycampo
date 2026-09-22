@@ -24,7 +24,7 @@
 
 /* Flotante sobre las imágenes (no reserva alto propio) — así .pista
    ocupa la pantalla entera y las imágenes hacen de fondo. Misma altura
-   de fila que .navRow del Navbar real en escritorio (91px, ver
+   de fila que .navRow del Navbar real en escritorio (82px, ver
    --nav-height-desktop en global.css) y mismo sitio (arriba, ancho
    completo): el logo queda visualmente donde estaba, aunque esto no
    sea el Navbar. En mobile vuelve a 76px, ver media query al final. */

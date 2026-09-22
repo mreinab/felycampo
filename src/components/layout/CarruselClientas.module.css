@@ -96,7 +96,7 @@
 }
 
 /* Misma altura de fila que .navRow del Navbar real en escritorio
-   (91px, ver --nav-height-desktop en global.css) — en mobile vuelve a
+   (82px, ver --nav-height-desktop en global.css) — en mobile vuelve a
    76px, ver media query al final. */
 .cabecera {
   position: absolute;

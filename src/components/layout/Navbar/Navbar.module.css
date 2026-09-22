@@ -62,10 +62,10 @@
   text-decoration-color: var(--color-fondo);
 }
 
-/* Escritorio por defecto: 91px (--nav-height-desktop en global.css,
-   más alta que antes a petición explícita para que el logo pueda
-   crecer sin quedar apretado, ver .navLogo más abajo) — la media query
-   de mobile/tablet portrait al final del archivo la baja de vuelta a
+/* Escritorio por defecto: 82px (--nav-height-desktop en global.css,
+   más alta que antes a petición explícita, en la misma proporción que
+   el logo más grande, ver .navLogo más abajo) — la media query de
+   mobile/tablet portrait al final del archivo la baja de vuelta a
    --nav-height (76px), mismo corte que ya usaba antes de crecer en
    escritorio. */
 .navRow {
@@ -87,9 +87,11 @@
    recoge hacia arriba hasta él, nunca simétrico desde el centro.
    "-36px" (en vez de "-32px" antes de crecer .navRow/.navLogo en
    escritorio): recalculado para centrar un logo de 56px + su
-   margin-top (--spacing-2, 8px) dentro de una fila de 91px — mobile
-   sigue con su propio valor de siempre en la media query de abajo, sin
-   tocar. */
+   margin-top (--spacing-2, 8px) — depende solo del tamaño del logo, no
+   de la altura de la fila (mismo valor sirviera cual fuera
+   --nav-height-desktop), así que no hace falta tocarlo si esa altura
+   cambia. Mobile sigue con su propio valor de siempre en la media
+   query de abajo, sin tocar. */
 .navLogoLink {
   position: absolute;
   left: 50%;

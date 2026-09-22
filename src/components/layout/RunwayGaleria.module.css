@@ -57,7 +57,7 @@
 
 /* Flotante sobre las imágenes (no reserva alto propio) — mismo criterio
    que .cabecera de GaleriaProductoLightbox.module.css: misma altura de
-   fila que .navRow del Navbar real en escritorio (91px, ver
+   fila que .navRow del Navbar real en escritorio (82px, ver
    --nav-height-desktop en global.css) y mismo sitio, para que el logo
    quede visualmente donde estaba aunque esto no sea el Navbar. En
    mobile vuelve a 76px, ver media query al final. */

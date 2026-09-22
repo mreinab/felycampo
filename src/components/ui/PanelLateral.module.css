@@ -129,7 +129,7 @@
 
 /* Submenú de escritorio del Navbar: el panel arranca en top:0 pero por
    DEBAJO del header en z-index (ver "debajoHeader" en PanelLateral.jsx)
-   — sin este colchón, el header (--nav-height-desktop, 91px en
+   — sin este colchón, el header (--nav-height-desktop, 82px en
    escritorio — este submenú solo se abre por hover desde .navLinks,
    oculto en mobile, así que siempre es ese alto) tapa el principio de
    la lista de enlaces (los primeros ítems quedan ocultos detrás, solo
