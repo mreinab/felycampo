@@ -10,6 +10,58 @@
   background: var(--color-fondo);
 }
 
+/* Buscador "más cercano por código postal" (ver buscarPorCp en
+   MapaPuntosVenta.jsx) — entre la intro y el mapa. Sin "etiqueta"
+   propia en el Input (ver comentario en MapaPuntosVenta.jsx), así que
+   input y botón quedan a la misma altura de por sí — align-items:center
+   en vez del flex-end que hacía falta antes con la etiqueta encima. */
+.buscarCp {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  max-width: 400px;
+  margin: 0 auto var(--spacing-5);
+  padding-inline: var(--spacing-7);
+}
+
+.buscarCp > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Pasada a Input (ui/) como "className" (ver MapaPuntosVenta.jsx) —
+   solo borde inferior en vez del borde completo de .input de
+   Input.module.css, únicamente en este buscador. Selector duplicado
+   (mismo criterio que .descripcionTexto.descripcionTexto en
+   atelier/page.module.css): gana especificidad sobre .input sin
+   depender del orden de carga entre los dos módulos CSS. */
+.buscarCpInput.buscarCpInput {
+  border: none;
+  border-bottom: 1px solid var(--color-gris-300);
+  border-radius: 0;
+}
+
+.buscarCpInput.buscarCpInput:focus {
+  border-bottom-color: var(--color-tinta);
+}
+
+.buscarCpAviso {
+  max-width: 400px;
+  margin: calc(var(--spacing-3) * -1) auto var(--spacing-5);
+  padding-inline: var(--spacing-7);
+  font-size: var(--text-caption);
+  text-align: center;
+  color: var(--color-rosa-oscuro);
+}
+
+@media (max-width: 767px) {
+  .buscarCp,
+  .buscarCpAviso {
+    max-width: none;
+    padding-inline: var(--spacing-4);
+  }
+}
+
 /* Mapa (65%) + listado accesible (35%) lado a lado — mismo criterio
    50/50-ish que .tarjeta en visita-fely-campo/page.module.css, aquí
    con reparto desigual porque el mapa necesita más aire. */

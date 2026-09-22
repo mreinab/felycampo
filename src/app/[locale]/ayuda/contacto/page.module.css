@@ -8,10 +8,15 @@
    (margin-inline:auto) aunque el texto largo no vaya centrado.
    ============================================================ */
 
-/* Solo espaciado — la tipografía viene de collectionTitleStyles.titulo
-   (CollectionTitle.module.css), aplicada junto a esta en page.js. */
+/* Tipografía viene de collectionTitleStyles.titulo
+   (CollectionTitle.module.css), aplicada junto a esta en page.js —
+   pero ese título vive normalmente dentro de .bloque (CollectionTitle.jsx,
+   text-align:center ahí), que aquí no se usa: el <h1> se queda tal
+   cual dentro de .contenedor, alineado a la izquierda por defecto sin
+   este centrado propio. */
 .titulo {
   margin-block: var(--spacing-8) var(--spacing-6);
+  text-align: center;
 }
 
 .grupos {

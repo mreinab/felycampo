@@ -13,13 +13,18 @@
    Navbar de verdad (viven
    en sitios distintos del árbol, sin forma de ocultar uno desde el
    otro sin acoplarlos).
+   Sin precio en ningún caso (a petición explícita — ver
+   FichaProductoAcciones.jsx): ni Prêt-à-porter ni Atelier enseñan ya
+   precio de catálogo, así que este panel nunca lo pinta.
    "esAtelier" (Atelier Novias/Fiesta, ver FichaProductoAtelier.jsx):
-   sin precio ni "añadir a la cesta" — el panel de compra rápida pasa a
-   ser el mismo CTA "Contacta con nosotros" que InfoAtelier.jsx, con su
-   propia instancia de ModalSolicitudAtelier (no comparte estado con la
-   de InfoAtelier, pero es el mismo modal/flujo). Sin selector de talla
-   aquí tampoco: en Atelier la talla se pide dentro del propio modal,
-   igual que desde InfoAtelier.
+   el CTA "Contacta con nosotros" abre ModalSolicitudAtelier (pide
+   talla dentro del propio modal, mismo flujo que InfoAtelier.jsx, sin
+   compartir estado con esa instancia) y muestra BotonGuardar
+   (wishlist). Sin "esAtelier" (Prêt-à-porter, único otro caso): el
+   mismo CTA abre ModalContactoProducto en su lugar (sin talla en
+   ningún sitio, a petición explícita) y sin BotonGuardar — Prêt-à-porter
+   ya no enseña wishlist en la ficha de producto (ver
+   FichaProductoAcciones.jsx).
    Portal a document.body (igual que Modal.jsx, mismo motivo): vive
    dentro de GaleriaProducto, que cuelga de .debajoNavbar en
    tienda/[producto]/page.js y FichaProductoAtelier.jsx
@@ -40,9 +45,9 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
-import { SelectorColor, SelectorTalla, Boton, BotonGuardar } from '../ui';
+import { SelectorColor, Boton, BotonGuardar } from '../ui';
 import ModalSolicitudAtelier from './ModalSolicitudAtelier';
-import { TALLAS_AGOTADAS_EJEMPLO } from './guiaTallasData';
+import ModalContactoProducto from './ModalContactoProducto';
 import styles from './GaleriaProductoLightbox.module.css';
 
 function GaleriaProductoLightbox({
@@ -53,7 +58,6 @@ function GaleriaProductoLightbox({
   onCambiarIndice,
   onCerrar,
   nombre,
-  precio,
   colores = [],
   tallas = [],
   esAtelier = false,
@@ -63,10 +67,9 @@ function GaleriaProductoLightbox({
   const pistaRef = useRef(null);
   const cerrarRef = useRef(null);
   const [color, setColor] = useState(colores[0]?.nombre ?? null);
-  const [talla, setTalla] = useState(null);
-  const [mostrarTallas, setMostrarTallas] = useState(false);
   const [avisoColor, setAvisoColor] = useState(false);
   const [modalAtelierAbierto, setModalAtelierAbierto] = useState(false);
+  const [modalContactoAbierto, setModalContactoAbierto] = useState(false);
   // Portal a document.body (ver comentario de arriba) — solo existe en
   // cliente, así que se espera a montar antes de renderizarlo (mismo
   // patrón que Modal.jsx).
@@ -74,16 +77,13 @@ function GaleriaProductoLightbox({
   useEffect(() => setMontado(true), []);
 
   // Cada apertura empieza de cero — sin esto, reabrir el lightbox en
-  // otro producto (o en el mismo tras elegir talla) heredaría la talla
-  // ya escogida y el selector de tallas seguiría desplegado.
+  // otro producto heredaría el aviso de color de la vez anterior.
   useEffect(() => {
     if (!abierta) return;
-    setTalla(null);
-    setMostrarTallas(false);
     setAvisoColor(false);
   }, [abierta]);
 
-  const alClicComprar = () => {
+  const alClicContactar = () => {
     if (esAtelier) {
       // Mismo criterio que InfoAtelier.alContactar: sin color elegido,
       // "Contacta con nosotros" no abre el modal, solo avisa.
@@ -94,13 +94,7 @@ function GaleriaProductoLightbox({
       setModalAtelierAbierto(true);
       return;
     }
-    if (!mostrarTallas) {
-      setMostrarTallas(true);
-      return;
-    }
-    // Sin backend real todavía (ver FichaProductoAcciones) — el botón
-    // solo llega aquí habiendo talla elegida, listo para conectar el
-    // "añadir a la cesta" de verdad más adelante.
+    setModalContactoAbierto(true);
   };
 
   // Al abrir: foco en el botón cerrar, sin scroll de la página detrás.
@@ -229,11 +223,10 @@ function GaleriaProductoLightbox({
 
       {nombre && (
         <div className={styles.panelInfo}>
-          <BotonGuardar variante="compacto" tabIndex={tabIndexInteractivo} />
+          {esAtelier && <BotonGuardar variante="compacto" tabIndex={tabIndexInteractivo} />}
 
           <div className={styles.panelCabecera}>
             <p className={styles.panelNombre}>{nombre}</p>
-            {precio && <p className={styles.panelPrecio}>{precio}</p>}
           </div>
 
           {colores.length > 0 && (
@@ -246,29 +239,18 @@ function GaleriaProductoLightbox({
           )}
           {esAtelier && avisoColor && <p className={styles.avisoColor}>{t('avisoColor')}</p>}
 
-          {!esAtelier && mostrarTallas && tallas.length > 0 && (
-            <SelectorTalla
-              tallas={tallas}
-              agotadas={TALLAS_AGOTADAS_EJEMPLO}
-              seleccionada={talla}
-              onSelect={setTalla}
-              tabIndex={tabIndexInteractivo}
-            />
-          )}
-
           <Boton
             variante="solido"
             tamano="full"
-            onClick={alClicComprar}
-            desactivado={!esAtelier && mostrarTallas && tallas.length > 0 && !talla}
+            onClick={alClicContactar}
             tabIndex={tabIndexInteractivo}
           >
-            {esAtelier ? t('contactar') : t('anadirCesta')}
+            {t('contactar')}
           </Boton>
         </div>
       )}
 
-      {esAtelier && (
+      {esAtelier ? (
         <ModalSolicitudAtelier
           abierto={modalAtelierAbierto}
           onCerrar={() => setModalAtelierAbierto(false)}
@@ -277,6 +259,15 @@ function GaleriaProductoLightbox({
           color={color}
           colorHex={colores.find((candidato) => candidato.nombre === color)?.hex}
           tallas={tallas}
+        />
+      ) : (
+        <ModalContactoProducto
+          abierto={modalContactoAbierto}
+          onCerrar={() => setModalContactoAbierto(false)}
+          imagen={imagenes[0]}
+          producto={nombre}
+          color={color}
+          colorHex={colores.find((candidato) => candidato.nombre === color)?.hex}
         />
       )}
     </div>,

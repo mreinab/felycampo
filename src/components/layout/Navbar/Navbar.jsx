@@ -15,99 +15,111 @@ import { useMiCuenta } from '@/context/MiCuentaContext';
 import NavbarPanelLateralContent from './NavbarPanelLateralContent';
 import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 
-// Enlaces con submenú (Prêt-à-porter, Atelier — coinciden con las
-// categorías reales del sitemap). El resto son enlaces simples, sin panel.
-// Los labels viven en messages/{locale}.json bajo el namespace "nav" —
-// aquí solo se guarda la estructura (hrefs, claves de traducción, imagen).
+// Enlaces con submenú — coinciden con las categorías reales del
+// sitemap. El resto son enlaces simples, sin panel (ver "pedirCita" en
+// NAV_ITEMS, sin "submenu"). Los labels viven en messages/{locale}.json
+// bajo el namespace "nav" — aquí solo se guarda la estructura (hrefs,
+// claves de traducción, imagen).
 // "items" alimenta la lista de texto (NavbarPanelLateralContent) tal
 // cual, en su propio orden. "cards" es independiente (1 o 2 MediaLink,
 // NavbarPanelLateralCards): cada una con su propia imagen, elegida a
 // mano para que combine con lo que enlaza (misma foto que usa esa
-// página como hero/categoría, no una genérica compartida como antes).
+// página como hero/categoría) — no una por cada "item" (con 3-4 items
+// por submenú, dos tarjetas destacadas bastan, ver ".submenuCards" en
+// NavbarPanelLateralContent.module.css, pensado para 1-2, no más).
+//
+// Reorganización (encargo): antes "Atelier" llevaba Novias/Fiesta/
+// Vosotras y "Visítanos" las 3 sedes + puntos de venta + pedir cita;
+// ahora "Atelier" son las sedes físicas (Salamanca/Madrid/Oviedo/
+// Vosotras), "Colecciones" agrupa todo lo que se compra (Fiesta/
+// Novias/Prêt-à-porter sin categorías propias/Runway), "Sobre Fely"
+// se queda con Historia/Podcast (antes "Blog")/Talleres, "Puntos de
+// Venta" separa tiendas propias de externas, y "Pedir cita" pasa a
+// ser un enlace de primer nivel sin desplegable (ver NAV_ITEMS).
 const SUBMENU_STRUCTURE = {
-  tienda: {
-    items: [
-      { key: 'verTodos', href: '/pret-a-porter' },
-      { key: 'tops', href: '/pret-a-porter/tops-y-camisetas' },
-      { key: 'coats', href: '/pret-a-porter/chaquetas-y-abrigos' },
-      { key: 'faldas', href: '/pret-a-porter/faldas' },
-      { key: 'pantalones', href: '/pret-a-porter/pantalones' },
-      { key: 'vestidos', href: '/pret-a-porter/vestidos' },
-    ],
-    // Imágenes en public/img/hero-pages/submenu/ (mismo criterio que
-    // public/img/ecommerce para las de la cuadrícula de la home:
-    // duplicadas ahí para tener en un solo sitio todas las que usa el
-    // Navbar, ver también atelier/elMundoDeFely/visitanos más abajo).
-    // "cardsVariante: horizontal" — mismo encuadre 4/3 que Sobre Fely,
-    // para que las dos parejas de tarjetas midan lo mismo de ancho.
-    cardsVariante: 'horizontal',
-    cards: [
-      { key: 'vestidos', href: '/pret-a-porter/vestidos', image: '/img/hero-pages/submenu/vestidos-felycampo-submenu-image.jpg' },
-      { key: 'coats', href: '/pret-a-porter/chaquetas-y-abrigos', image: '/img/hero-pages/submenu/chaquetas-felycampo-submenu-image.jpg' },
-    ],
-  },
   atelier: {
-    items: [
-      // "labelKey": el submenú enseña "Colección Novias"/"Colección
-      // Fiesta" (nav.submenus.atelier.noviasSubmenu/fiestaSubmenu),
-      // distinto del "Novias"/"Fiesta" que usan la miga de pan y el
-      // título de CabeceraSeccion en esas mismas páginas
-      // (nav.submenus.atelier.novias/fiesta, ver
-      // CuadriculaProductos.jsx) — mismo "key"/href para todo lo
-      // demás (routing, "key" de React), ver NavbarPanelLateralContent.jsx.
-      { key: 'novias', href: '/atelier/novias', labelKey: 'noviasSubmenu' },
-      { key: 'fiesta', href: '/atelier/fiesta', labelKey: 'fiestaSubmenu' },
-      { key: 'vosotras', href: '/atelier/vosotras' },
-    ],
-    // Una sola MediaLink (a todo el ancho, ver NavbarPanelLateralCards)
-    // — foto real de una novia (GaleriaVosotras.jsx) en vez de las de
-    // punto de venta que llevaba antes.
-    cards: [
-      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/hero-pages/submenu/vosotras-submenu-image.jpg' },
-    ],
-  },
-  elMundoDeFely: {
-    items: [
-      { key: 'blog', href: '/blog' },
-      { key: 'runway', href: '/colecciones-fely-campo' },
-      { key: 'talleres', href: '/talleres-fely-campo' },
-    ],
-    // Portada de la colección más reciente (colecciones.js) y una foto
-    // real de taller (talleres.js, mismo criterio que arriba).
-    // "cardsVariante: horizontal": estas dos fotos piden un encuadre
-    // más ancho que el 3/4 por defecto (ver MediaLink.module.css).
-    cardsVariante: 'horizontal',
-    cards: [
-      { key: 'runway', href: '/colecciones-fely-campo', image: '/img/hero-pages/submenu/runway-submenu-image.jpg' },
-      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/hero-pages/submenu/talleres-felycampo-submenu-image.jpg' },
-    ],
-  },
-  visitanos: {
-    // Orden fijo por encargo: las 3 sedes primero, luego Puntos de
-    // venta y Pedir cita al final.
     items: [
       { key: 'salamanca', href: '/atelier-fiesta/salamanca' },
       { key: 'madrid', href: '/atelier-fiesta/madrid' },
       { key: 'oviedo', href: '/atelier-fiesta/oviedo' },
-      { key: 'puntosDeVenta', href: '/puntos-de-venta-fely-campo' },
-      { key: 'reservarCita', href: '/visita-fely-campo/cita' },
+      // "separador": "Vosotras" no es una sede — un hueco de una fila
+      // por encima (ver NavbarPanelLateralContent.jsx) la separa
+      // visualmente de las 3 ciudades de arriba.
+      { key: 'vosotras', href: '/atelier/vosotras', separador: true },
     ],
-    // Una sola MediaLink a "Pedir cita" — misma foto que usa esa propia
-    // página (visita-fely-campo/cita/page.js).
+    cardsVariante: 'horizontal',
     cards: [
-      { key: 'reservarCita', href: '/visita-fely-campo/cita', image: '/img/hero-pages/submenu/pedir-cita-felycampo-submenu-image.jpg' },
+      // Antes "Atelier Salamanca" (misma foto/href que el item de la
+      // lista) — foto de una novia probándose el vestido dentro del
+      // atelier (Clientes/CLIENTAS/novias, no una sede en concreto) y
+      // "Nuestro Atelier" en vez del nombre de una ciudad, para que la
+      // tarjeta hable del atelier en general, no de Salamanca.
+      { key: 'salamanca', labelKey: 'nuestroAtelier', href: '/atelier-fiesta/salamanca', image: '/img/Clientes/CLIENTAS/novias/nuestras-novias-felycampo-05-01.jpg' },
+      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/hero-pages/submenu/vosotras-submenu-image.jpg' },
+    ],
+  },
+  colecciones: {
+    // "pretaporter" enlaza a la tienda entera, sin desplegar sus
+    // categorías (tops/faldas/pantalones...) como antes — esas
+    // siguen existiendo como páginas propias, solo no se listan aquí.
+    items: [
+      { key: 'fiesta', href: '/atelier/fiesta' },
+      { key: 'novias', href: '/atelier/novias' },
+      { key: 'pretaporter', href: '/pret-a-porter' },
+      { key: 'runway', href: '/colecciones-fely-campo' },
+    ],
+    cardsVariante: 'horizontal',
+    cards: [
+      { key: 'novias', href: '/atelier/novias', image: '/img/landing/hero-atelier-novia-felycampo.jpg' },
+      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/hero-atelier-fiesta-felycampo.jpg' },
+    ],
+  },
+  elMundoDeFely: {
+    // "podcast" enlaza a /podcast (antes /blog — ver comentario de
+    // cabecera en podcast/page.js para el porqué del cambio de URL).
+    items: [
+      { key: 'historia', href: '/sobre-fely' },
+      { key: 'podcast', href: '/podcast' },
+      { key: 'talleres', href: '/talleres-fely-campo' },
+    ],
+    cardsVariante: 'horizontal',
+    cards: [
+      { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/madrid-moda-de-capital-felycampo-podcast.jpg' },
+      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/hero-pages/submenu/talleres-felycampo-submenu-image.jpg' },
+    ],
+  },
+  puntosDeVenta: {
+    items: [
+      { key: 'propios', href: '/visita-fely-campo' },
+      { key: 'externos', href: '/puntos-de-venta-fely-campo' },
+    ],
+    cardsVariante: 'horizontal',
+    cards: [
+      { key: 'propios', href: '/visita-fely-campo', image: '/img/landing/hero-visitanos-felycampo.jpg' },
+      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/styleguide/punto-venta.webp' },
     ],
   },
 };
 
-// Orden fijo por encargo: Atelier, Sobre Fely, Visítanos y, al final,
-// Prêt-à-porter (antes "Tienda", segundo en la lista).
+// Orden fijo por encargo: Atelier, Colecciones, Sobre Fely, Puntos de
+// Venta y Pedir cita — "pedirCita" sin "submenu": enlace directo (un
+// formulario, /visita-fely-campo/cita), no despliega panel.
 const NAV_ITEMS = [
   { key: 'atelier', href: '/atelier', submenu: 'atelier' },
+  { key: 'colecciones', href: '/colecciones-fely-campo', submenu: 'colecciones' },
   { key: 'elMundoDeFely', href: '/sobre-fely', submenu: 'elMundoDeFely' },
-  { key: 'visitanos', href: '/visita-fely-campo', submenu: 'visitanos' },
-  { key: 'tienda', href: '/pret-a-porter', submenu: 'tienda' },
+  { key: 'puntosDeVenta', href: '/puntos-de-venta-fely-campo', submenu: 'puntosDeVenta' },
+  { key: 'pedirCita', href: '/visita-fely-campo/cita' },
 ];
+
+// En escritorio, NAV_ITEMS se reparte en dos grupos (ver .navLinks/
+// .navActions más abajo) — el propio menú móvil sigue usando NAV_ITEMS
+// entero (ver "debajo" del <header>), esto solo afecta al layout de
+// escritorio. "Puntos de Venta"/"Pedir cita" viven ahora en el lateral
+// derecho, donde antes iban Wishlist/Mi cuenta/Carrito (comentados a
+// petición, ver más abajo).
+const NAV_ITEMS_IZQUIERDA = NAV_ITEMS.filter(({ key }) => key !== 'puntosDeVenta' && key !== 'pedirCita');
+const NAV_ITEMS_DERECHA = NAV_ITEMS.filter(({ key }) => key === 'puntosDeVenta' || key === 'pedirCita');
 
 const CLOSE_DELAY_MS = 200;
 const SCROLL_THRESHOLD_PX = 50;
@@ -279,7 +291,7 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   // es la de cualquiera de sus items — en Atelier/Tienda esto ya salía
   // gratis porque sus hrefs de submenú viven bajo el propio href del
   // enlace (/atelier/novias bajo /atelier), pero en Sobre Fely no: sus
-  // items (/blog, /colecciones-fely-campo...) no cuelgan de /sobre-fely,
+  // items (/podcast, /colecciones-fely-campo...) no cuelgan de /sobre-fely,
   // así que sin este chequeo extra el enlace no se subrayaba en esas páginas.
   const esActivo = (item) => {
     if (typeof item === 'string') return esRutaActiva(item);
@@ -355,7 +367,7 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
             la fila (o entrar en un enlace sin submenú, que lo cierra a
             propósito — "siguiente navegación" sin desplegable). */}
         <nav className={styles.navLinks} onMouseLeave={scheduleSubmenuClose}>
-          {NAV_ITEMS.map((item) => (
+          {NAV_ITEMS_IZQUIERDA.map((item) => (
             <a
               key={item.href}
               href={withLocale(item.href)}
@@ -376,15 +388,27 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
           />
         </a>
 
-        {/* Utilidades — escritorio: texto completo */}
-        <div className={styles.navActions}>
+        {/* Utilidades — escritorio: antes Wishlist/Mi cuenta/Carrito
+            (comentado a petición, ver debajo, recuperable tal cual),
+            ahora Puntos de Venta y Pedir cita — mismo comportamiento de
+            hover/submenú que NAV_ITEMS_IZQUIERDA (ver "nav" de arriba),
+            por eso el propio onMouseLeave se repite aquí. */}
+        <div className={styles.navActions} onMouseLeave={scheduleSubmenuClose}>
+          {NAV_ITEMS_DERECHA.map((item) => (
+            <a
+              key={item.href}
+              href={withLocale(item.href)}
+              className={`${styles.navLink} ${esActivo(item) ? styles.navLinkActivo : ''}`}
+              onMouseEnter={() => (item.submenu ? openSubmenu(item.submenu) : scheduleSubmenuClose())}
+            >
+              {t(`links.${item.key}`)}
+            </a>
+          ))}
+          {/*
           <a href={withLocale('/wishlist')} className={`${styles.navLink} ${esActivo('/wishlist') ? styles.navLinkActivo : ''}`}>{t('actions.wishlist')}</a>
-          {/* Botón, no enlace: abre MiCuentaModal (ver useMiCuenta más
-              arriba) en vez de navegar a una página — por eso no lleva
-              "esActivo" tampoco, ya no hay una ruta /mi-cuenta que
-              pueda ser la actual. */}
           <button type="button" className={styles.navLink} onClick={abrirMiCuenta}>{t('actions.miCuenta')}</button>
           <a href={withLocale('/carrito')} className={`${styles.navLink} ${esActivo('/carrito') ? styles.navLinkActivo : ''}`}>{t('actions.carrito')} ({cantidadTotal})</a>
+          */}
         </div>
 
         {/* Utilidades — móvil: solo el icono del carrito, el resto vive en el menú hamburguesa */}
@@ -438,14 +462,26 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
               <ul className={styles.mobileMenuList}>
                 {NAV_ITEMS.map((item) => (
                   <li key={item.key}>
-                    <button
-                      type="button"
-                      className={styles.mobileMenuRow}
-                      onClick={() => setMobileSubmenu(item.submenu)}
-                    >
-                      {t(`links.${item.key}`)}
-                      <ChevronRight size={20} strokeWidth={1.5} aria-hidden="true" />
-                    </button>
+                    {/* "Pedir cita" (sin "submenu"): enlace directo, sin
+                        drill-down ni chevron — no hay panel que abrir. */}
+                    {item.submenu ? (
+                      <button
+                        type="button"
+                        className={styles.mobileMenuRow}
+                        onClick={() => setMobileSubmenu(item.submenu)}
+                      >
+                        {t(`links.${item.key}`)}
+                        <ChevronRight size={20} strokeWidth={1.5} aria-hidden="true" />
+                      </button>
+                    ) : (
+                      <a
+                        href={withLocale(item.href)}
+                        className={styles.mobileMenuRow}
+                        onClick={cerrarMenuMobile}
+                      >
+                        {t(`links.${item.key}`)}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -491,7 +527,7 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
 
                   <ul className={styles.mobileMenuList}>
                     {SUBMENU_STRUCTURE[mobileSubmenu].items.map((subItem) => (
-                      <li key={subItem.href}>
+                      <li key={subItem.href} className={subItem.separador ? styles.mobileMenuSubItemSeparador : undefined}>
                         <a
                           href={withLocale(subItem.href)}
                           className={styles.mobileMenuSubLink}

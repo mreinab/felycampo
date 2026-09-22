@@ -3,8 +3,10 @@
     "links": {
       "tienda": "Prêt-à-porter",
       "atelier": "Atelier",
+      "colecciones": "Colecciones",
       "elMundoDeFely": "Sobre Fely",
-      "visitanos": "Visítanos"
+      "puntosDeVenta": "Puntos de Venta",
+      "pedirCita": "Pedir cita"
     },
     "submenus": {
       "tienda": {
@@ -19,20 +21,25 @@
         "novias": "Novias",
         "fiesta": "Fiesta",
         "vosotras": "Vosotras",
-        "noviasSubmenu": "Colección Novias",
-        "fiestaSubmenu": "Colección Fiesta"
-      },
-      "elMundoDeFely": {
-        "blog": "Blog",
-        "runway": "Runway",
-        "talleres": "Conoce nuestros talleres"
-      },
-      "visitanos": {
         "salamanca": "Atelier Salamanca",
         "madrid": "Atelier Madrid",
         "oviedo": "Atelier Oviedo",
-        "puntosDeVenta": "Puntos de venta",
-        "reservarCita": "Pedir cita"
+        "nuestroAtelier": "Nuestro Atelier"
+      },
+      "colecciones": {
+        "fiesta": "Colección Fiesta",
+        "novias": "Colección Novias",
+        "pretaporter": "Prêt-à-porter",
+        "runway": "Runway"
+      },
+      "elMundoDeFely": {
+        "historia": "Historia",
+        "podcast": "Podcast",
+        "talleres": "Nuestros talleres"
+      },
+      "puntosDeVenta": {
+        "propios": "Propios",
+        "externos": "Boutiques Selectas"
       }
     },
     "actions": {
@@ -104,13 +111,18 @@
   "puntosVenta": {
     "eyebrow": "Dónde encontrarnos",
     "titulo": "Puntos de venta",
-    "intro": "Descubre nuestros ateliers y la red de boutiques que trabajan con Fely Campo, en España y el resto del mundo.",
-    "direcciones": "Cómo llegar"
+    "intro": "Descubre nuestros ateliers y la red de boutique que trabajan con Fely Campo, en España y en el resto del mundo. Contamos con más de 200 puntos de venta. Encuentra tu punto de venta más cercano",
+    "direcciones": "Cómo llegar",
+    "buscarCpPlaceholder": "Código postal",
+    "buscarCpBoton": "Buscar",
+    "buscarCpError": "Introduce un código postal español válido (5 dígitos).",
+    "internacionalTitulo": "Boutiques internacionales",
+    "internacionalIntro": "Milán ocupa un lugar especial en nuestra red internacional, gracias a la estrecha relación que mantenemos con el mercado italiano."
   },
   "talleres": {
     "eyebrow": "Nuestro proceso",
     "titulo": "Nuestros talleres",
-    "intro": "Donde las manos cuentan historias\n\nCada pieza Fely Campo nace cerca. En nuestro taller in-house y en dos pequeños talleres de la sierra, manos expertas transforman cada tejido con tiempo, precisión y sensibilidad.\n\nDetrás de esas manos hay mujeres, oficio y territorio. Mujeres que pueden seguir creando desde el lugar al que pertenecen, manteniendo vivo un saber hacer que forma parte de nuestra identidad.\n\nPara Fely Campo, el lujo también significa esto: crear belleza respetando a quienes la hacen posible, generando oportunidades y defendiendo la independencia económica de las mujeres, también en el entorno rural."
+    "intro": "Donde las manos cuentan historias\n\nCada pieza Fely Campo nace cerca. En nuestro atelier y en dos pequeños talleres de la sierra, manos expertas transforman cada tejido con tiempo, precisión y sensibilidad. Detrás de esas manos hay mujeres, oficio y territorio."
   },
   "atelierFiesta": {
     "salamanca": {
@@ -269,32 +281,42 @@
     "confirmacionTexto": "Gracias por tu interés. Nuestro equipo se pondrá en contacto contigo lo antes posible.",
     "cerrar": "Cerrar"
   },
-  "avisoDisponibilidad": {
-    "titulo": "Avísame cuando esté disponible",
-    "subtitulo": "Te avisamos por email en cuanto esta talla vuelva a estar disponible.",
-    "talla": "Talla",
+  "contactoProducto": {
+    "titulo": "Contacta con nosotros",
+    "subtitulo": "Cuéntanos qué necesitas y te contestamos lo antes posible.",
     "nombre": "Nombre",
     "nombrePlaceholder": "María Martín",
     "email": "Email",
     "emailPlaceholder": "maria@ejemplo.com",
     "avisoDatos": "Completa tu nombre y email para continuar.",
-    "enviar": "Avisarme",
+    "enviar": "Enviar",
     "confirmacionTitulo": "¡Listo!",
-    "confirmacionTexto": "Te avisaremos por email en cuanto esta talla esté disponible.",
+    "confirmacionTexto": "Hemos recibido tu mensaje. Nuestro equipo se pondrá en contacto contigo enseguida.",
     "cerrar": "Cerrar"
   },
   "pedirCitaAtelier": {
-    "introTitulo": "Bienvenida a Fely Campo",
-    "dondeIntro": "Ven a vivir la experiencia en una de nuestras tiendas. Nuestros asesores de imagen te acompañarán durante todo el proceso para que encuentres el vestido perfecto.",
-    "continuar": "Continuar",
-    "dondeTitulo": "¿Dónde quieres pedir la cita?",
-    "cambiarUbicacion": "Cambiar ubicación",
     "cerrar": "Cerrar",
-    "titulo": "Contacta con nosotros",
-    "contactoTexto": "Escríbenos por WhatsApp o email y te ayudaremos a concretar el día y la hora de tu cita.",
-    "contactarWhatsapp": "Escríbenos por WhatsApp",
-    "contactarEmail": "Escríbenos por email",
-    "emailAsunto": "Cita en {sede}"
+    "titulo": "Pide tu cita con nosotros",
+    "nombreCompleto": "Nombre completo",
+    "nombreCompletoPlaceholder": "María Martín García",
+    "email": "Email de contacto",
+    "emailPlaceholder": "maria@ejemplo.com",
+    "telefono": "Teléfono de contacto",
+    "telefonoPlaceholder": "+34 600 000 000",
+    "fechaEvento": "Fecha del evento (opcional)",
+    "dia": "Día",
+    "mes": "Mes",
+    "anio": "Año",
+    "codigoPostal": "Código postal",
+    "codigoPostalPlaceholder": "37001",
+    "ciudad": "Ciudad",
+    "ciudadPlaceholder": "Salamanca",
+    "mensaje": "Cuéntanos lo que estás buscando y nosotros te ayudaremos",
+    "aceptoLegal": "Acepto la <privacidad>política de privacidad</privacidad> y los <terminos>términos y condiciones</terminos>.",
+    "avisoDatos": "Completa los campos obligatorios y acepta la política de privacidad para continuar.",
+    "enviar": "Enviar solicitud",
+    "confirmacionTitulo": "¡Solicitud enviada!",
+    "confirmacionTexto": "Gracias por tu interés. Nuestro equipo se pondrá en contacto contigo lo antes posible para concretar el día y la hora de tu cita."
   },
   "escribirResena": {
     "titulo": "Escribe tu reseña",
@@ -347,7 +369,8 @@
     "cerrar": "Cerrar"
   },
   "heroCarousel": {
-    "cta": "Ver más"
+    "titulo": "El universo de Fely Campo",
+    "cta": "Descubre más"
   },
   "collectionTitle": {
     "edicionMujer": {
@@ -378,7 +401,9 @@
     "titulo": "Atelier",
     "conoceColeccion": "Conoce la colección",
     "pedirCita": "Pide cita",
-    "conoceAteliers": "Conoce nuestros ateliers"
+    "conoceAteliers": "Conoce nuestros ateliers",
+    "visitanosTitulo": "Visítanos",
+    "visitanosDescripcion": "Ven a conocer como trabajamos, te atenderemos presencialmente en uno de nuestros atelieres"
   },
   "splitMediaCategorias": {
     "item1": {
@@ -399,7 +424,7 @@
     "reservarCita": "Reserva tu cita"
   },
   "vosotras": {
-    "descripcion": "Nuestras clientas, con sus propias palabras y sus propias fotos, llevando Fely Campo en sus momentos especiales.",
+    "descripcion": "¿Y qué decir de vosotras? Si las palabras no son suficientes, que hablen las fotos.",
     "verGaleria": "Ver galería",
     "invitadas": "Invitadas",
     "novias": "Novias"

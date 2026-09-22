@@ -87,17 +87,16 @@
   letter-spacing: normal;
 }
 
+/* Mismo diseño que Boton .texto/.textoCrema (enlace subrayado, sin
+   caja) — antes llevaba borde+padding propios que lo convertían en un
+   botón con contorno, distinto del resto del sistema. Solo el color
+   se sobrescribe aquí (mismo criterio que .contenido .cta arriba),
+   todo lo demás (subrayado, mayúsculas, grosor en hover) ya lo trae
+   Boton.module.css de fábrica. */
 .contenidoLanding .cta {
   color: var(--color-fondo);
-  border: var(--border-regular) solid var(--color-fondo);
-  padding: var(--spacing-2) var(--spacing-4);
+  border-bottom-color: var(--color-fondo);
   font-size: var(--text-caption);
-  text-transform: none;
-}
-
-.contenidoLanding .cta:hover {
-  border-width: var(--border-regular);
-  padding: var(--spacing-2) var(--spacing-4);
 }
 
 /* El CTA solo aparece en hover/foco — oculto por opacidad, no por
@@ -195,6 +194,29 @@
   /* Sin hover en mobile: el CTA de "landing" no puede depender de
      :hover/:focus-within para aparecer, así que aquí queda siempre
      visible en vez de oculto por opacidad. */
+  .grid.landing .cta {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Tablet/laptop en vertical (p.ej. iPad en portrait, hasta 1023px de
+   ancho — mismo corte de tablet que .landing en page.module.css): el
+   bloque de arriba (max-width:767px) ya cubre mobile, pero un tablet
+   en portrait puede ser más ancho que eso y aquí seguiría en 2
+   columnas si no fuera por esto — mismo criterio que mobile: apilado
+   en columna, sin depender de hover para el CTA. En horizontal (o en
+   laptop, siempre landscape) sigue en 2 columnas — no toca .grid a
+   secas, solo la variante "landing". */
+@media (max-width: 1023px) and (orientation: portrait) {
+  .grid.landing {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .grid.landing .pieza {
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
   .grid.landing .cta {
     opacity: 1;
     pointer-events: auto;

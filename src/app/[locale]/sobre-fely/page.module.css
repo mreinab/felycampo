@@ -2,8 +2,9 @@
    SOBRE FELY — Fely Campo. Ruta: /sobre-fely
    .hero/.textoDescripcion/.textoRow/.nombre/.temporada son una copia
    1:1 de ../colecciones-fely-campo/[coleccion]/page.module.css (mismo
-   diseño, ver page.js) — .biografia es lo único propio de esta
-   página, para el texto corrido de la trayectoria que ahí no existe.
+   diseño, ver page.js). La biografía en texto corrido (un bloque por
+   año/etapa) que vivía aquí se quitó a petición — ver historial si
+   hiciera falta recuperarla.
    ============================================================ */
 
 .hero {
@@ -68,113 +69,29 @@
   }
 }
 
-/* ---------- Biografía (texto corrido, 1972 → hoy) ----------
-   Debajo de RunwayBackstage (ver page.js) — un bloque por año/etapa,
-   año pequeño en mayúsculas (mismo tratamiento que .subtitle de
-   CabeceraSeccion.module.css) seguido de su párrafo/s, mismo ancho y
-   justificado que .texto de RunwayDescripcion.module.css (no lo
-   reutiliza tal cual: aquí son varios bloques con su propio año, no un
-   único párrafo). */
-.biografia {
-  max-width: 70%;
-  margin-inline: auto;
-  padding-block: var(--spacing-8);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-7);
-}
-
-.biografiaItem {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-}
-
-.biografiaAnio {
-  margin: 0;
-  font-size: var(--text-caption);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--color-gris-500);
-}
-
-.biografiaTexto {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-}
-
-.biografiaTexto p {
-  margin: 0;
-  font-size: var(--text-body);
-  line-height: var(--leading-base);
-  text-align: justify;
-  color: var(--color-tinta);
-}
-
-@media (max-width: 767px) {
-  .biografia {
-    max-width: none;
-    padding-block: var(--spacing-6);
-    /* Sin esto el texto corrido llega a tocar el borde de la pantalla
-       — a diferencia de .enlacesExternos, aquí no hay foto a sangre
-       que lo justifique. Mismo valor que .texto de RunwayDescripcion.
-       module.css en mobile. */
-    padding-inline: var(--spacing-4);
-  }
-}
-
-/* ---------- Enlaces externos (podcast/prensa) ----------
-   Debajo de .biografia: tarjetas a la misma altura (TarjetaEnlaceExterno,
-   mismo diseño que BlogTarjetaPodcastDestacado de /blog — foto a
-   sangre + botón de play) que enlazan fuera del sitio, a apariciones
-   de Fely Campo en podcasts/prensa. Esa tarjeta llena el 100% de su
-   celda (ver BlogTarjetaPodcastDestacado.module.css), así que aquí
-   hace falta darle una altura real a la celda — aspect-ratio en vez
-   de un alto fijo, para que escale bien en cualquier ancho.
-   .enlaceExternoDestacado (prensa escrita, ver page.js/sobreFely.js
-   "prensaDestacada") va debajo de la cuadrícula de 2 columnas en vez
-   de dentro — a todo el ancho, no encaja bien en la misma cuadrícula
-   con las tarjetas de vídeo/pódcast. */
+/* ---------- Enlace externo (documental) ----------
+   Debajo de RunwayBackstage (ver page.js) — una única tarjeta grande (TarjetaEnlaceExterno,
+   mismo diseño que BlogTarjetaPodcastDestacado de /podcast — foto a
+   sangre + botón/flecha) que enlaza fuera del sitio, al documental de
+   Fely Campo — antes 3 tarjetas (cuadrícula de 2 + prensa destacada
+   debajo, ver historial), sustituidas a petición por esta sola. Esa
+   tarjeta llena el 100% de su celda (ver BlogTarjetaPodcastDestacado.
+   module.css), así que aquí hace falta darle una altura real —
+   aspect-ratio en vez de un alto fijo, para que escale bien en
+   cualquier ancho. */
 .enlacesExternos {
   max-width: 70%;
   margin-inline: auto;
   padding-block: 0 var(--spacing-8);
 }
 
-.enlacesExternosGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-6);
-}
-
-.enlaceExternoCelda {
-  aspect-ratio: 16 / 10;
-  /* Sin esto, el min-height:320px de .tarjeta (BlogTarjetaPodcastDestacado.
-     module.css) se traduce, vía aspect-ratio, en un ancho mínimo implícito
-     de 512px (320 × 16/10) que el grid no encoge (min-width:auto por
-     defecto) — desbordaba el contenedor en cualquier ancho por debajo de
-     ~1050px, incluido mobile (ahí es la única columna). */
-  min-width: 0;
-}
-
 .enlaceExternoDestacado {
-  aspect-ratio: 16 / 10;
-  margin-top: var(--spacing-6);
+  aspect-ratio: 16 / 9;
 }
 
 @media (max-width: 767px) {
   .enlacesExternos {
     max-width: none;
     padding-block: 0 var(--spacing-6);
-  }
-
-  .enlacesExternosGrid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-4);
-  }
-
-  .enlaceExternoDestacado {
-    margin-top: var(--spacing-4);
   }
 }

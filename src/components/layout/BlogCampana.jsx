@@ -2,8 +2,8 @@
 
 /* ============================================================
    HISTORIA DE CAMPAÑA — Fely Campo
-   Plantilla editorial reutilizable para /blog/[entrada] cuando
-   "entrada.tipo" es "campana" (ver ../../app/[locale]/blog/blog.js y
+   Plantilla editorial reutilizable para /podcast/[entrada] cuando
+   "entrada.tipo" es "campana" (ver ../../app/[locale]/podcast/blog.js y
    [entrada]/page.js) — alterna imagen a pantalla casi completa con
    texto narrativo, estilo "lookbook" de campaña (ref. la petición
    original: página larga tipo producto/historia). Mismos tokens que
@@ -79,7 +79,7 @@
        bloques={entrada.campana.bloques}
        locale={locale}
        ctaTexto={t('shopHere')}
-       volverHref={`/${locale}/blog`}
+       volverHref={`/${locale}/podcast`}
        volverTexto={t('volver')}
      />
    ============================================================ */

@@ -10,7 +10,7 @@ export { default as PanelInfoEnvios } from './PanelInfoEnvios';
 export { default as TarjetaTienda } from './TarjetaTienda';
 export { default as CargarMas } from './CargarMas';
 export { default as FichaProductoAcciones } from './FichaProductoAcciones';
-export { default as ModalAvisoDisponibilidad } from './ModalAvisoDisponibilidad';
+export { default as ModalContactoProducto } from './ModalContactoProducto';
 export { default as FichaProductoAtelier } from './FichaProductoAtelier';
 export { default as GaleriaProducto } from './GaleriaProducto';
 export { default as GaleriaProductoLightbox } from './GaleriaProductoLightbox';

@@ -11,16 +11,17 @@
    flechas (ver desplazar()), el scroll manual no fuerza ninguna parada
    a media imagen. Clicar una imagen abre GaleriaProductoLightbox
    a pantalla completa, en la misma posición.
-   nombre/precio/colores/tallas solo se usan en el lightbox, para el
-   panel de compra rápida sobre la imagen. "esAtelier" (Atelier Novias/
-   Fiesta, ver FichaProductoAtelier.jsx): ese panel cambia a "Contacta
-   con nosotros" en vez de "Añadir a la cesta" (sin precio ni talla,
-   ver GaleriaProductoLightbox.jsx) — ahí no se pasa "precio"/"tallas",
-   solo "nombre"/"colores".
+   nombre/colores/tallas solo se usan en el lightbox, para el panel de
+   contacto rápido sobre la imagen. "esAtelier" (Atelier Novias/Fiesta,
+   ver FichaProductoAtelier.jsx): ese panel abre ModalSolicitudAtelier
+   (con talla) en vez de ModalContactoProducto (sin talla), ver
+   GaleriaProductoLightbox.jsx. Sin precio (a petición explícita, ni
+   aquí ni en Prêt-à-porter — ver FichaProductoAcciones.jsx): ningún
+   producto del sitio se enseña ya con precio de catálogo.
    Uso:
      <GaleriaProducto imagenes={['/a.jpg', '/b.jpg']} alt="Vestido Aurora"
-        nombre="Vestido Aurora" precio="890 €"
-        colores={[{ hex: '#EED3E8', nombre: 'Rosa suave' }]} tallas={[38, 40, 42]} />
+        nombre="Vestido Aurora"
+        colores={[{ hex: '#EED3E8', nombre: 'Rosa suave' }]} />
    ============================================================ */
 
 import { useEffect, useRef, useState } from 'react';
@@ -29,7 +30,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import GaleriaProductoLightbox from './GaleriaProductoLightbox';
 import styles from './GaleriaProducto.module.css';
 
-function GaleriaProducto({ imagenes = [], alt, nombre, precio, colores = [], tallas = [], esAtelier = false }) {
+function GaleriaProducto({ imagenes = [], alt, nombre, colores = [], tallas = [], esAtelier = false }) {
   const t = useTranslations('producto');
   const galeriaRef = useRef(null);
   const pistaRef = useRef(null);
@@ -207,7 +208,6 @@ function GaleriaProducto({ imagenes = [], alt, nombre, precio, colores = [], tal
         onCambiarIndice={setIndiceActivo}
         onCerrar={() => setLightboxAbierta(false)}
         nombre={nombre}
-        precio={precio}
         colores={colores}
         tallas={tallas}
         esAtelier={esAtelier}

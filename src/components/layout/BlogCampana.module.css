@@ -28,7 +28,7 @@
 /* ---------- Volver al blog (fijo, arriba a la derecha) ---------- */
 
 /* top: debajo de la Navbar del sitio (--nav-height, sticky y sólida
-   en esta página — /blog/[entrada] no lleva Navbar transparente, ver
+   en esta página — /podcast/[entrada] no lleva Navbar transparente, ver
    layout.js), nunca superpuesto a ella — la Navbar ya usa z-index:50
    y un fondo blanco sólido propio que taparía este overlay si
    coincidieran en la misma franja. */

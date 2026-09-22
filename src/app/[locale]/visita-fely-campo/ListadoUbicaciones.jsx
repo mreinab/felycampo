@@ -108,6 +108,13 @@ function ListadoUbicaciones({ locale }) {
                       </a>
                     </address>
 
+                    {/* Justo debajo de la dirección (no al final, tras
+                        teléfono/WhatsApp) — a petición, para que el
+                        horario se lea junto a dónde está la sede. */}
+                    <p className={styles.horario}>
+                      {ubicacion.horario ? ubicacion.horario[locale] : t('showroomNota')}
+                    </p>
+
                     <p className={styles.telefono}>{lineaContacto}</p>
 
                     <a
@@ -118,10 +125,6 @@ function ListadoUbicaciones({ locale }) {
                     >
                       {t('whatsapp')}: {ubicacion.whatsapp}
                     </a>
-
-                    <p className={styles.horario}>
-                      {ubicacion.horario ? ubicacion.horario[locale] : t('showroomNota')}
-                    </p>
 
                     <p className={styles.descripcion}>
                       {ubicacion.descripcion[locale]}{' '}

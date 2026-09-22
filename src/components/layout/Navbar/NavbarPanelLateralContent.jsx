@@ -38,7 +38,7 @@ function NavbarPanelLateralContent({ submenuKey, submenu }) {
         ].filter(Boolean).join(' ');
 
         return (
-          <li key={link.href}>
+          <li key={link.href} className={link.separador ? styles.itemSeparador : undefined}>
             <a href={withLocale(link.href)} className={clase}>
               {t(`submenus.${submenuKey}.${link.labelKey || link.key}`)}
             </a>

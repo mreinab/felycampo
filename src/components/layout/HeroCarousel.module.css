@@ -65,11 +65,14 @@
 }
 
 /* Pista y relleno son hermanos (no padre/hijo): así la opacidad de la
-   pista no se le pega también al relleno por composición. */
+   pista no se le pega también al relleno por composición. Colores
+   invertidos respecto al resto del sitio (pista oscura, relleno
+   claro) — sobre el hero (foto/vídeo oscuro) el hairline claro de
+   siempre casi no se veía. */
 .progresoPista {
   position: absolute;
   inset: 0;
-  background: var(--color-hairline);
+  background: var(--color-tinta);
   opacity: 0.4;
 }
 
@@ -77,7 +80,7 @@
   position: absolute;
   inset: 0;
   width: 0%;
-  background: var(--color-tinta);
+  background: var(--color-fondo);
   animation: avanceProgreso 6s linear forwards;
 }
 

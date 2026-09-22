@@ -129,13 +129,15 @@
 
 /* Submenú de escritorio del Navbar: el panel arranca en top:0 pero por
    DEBAJO del header en z-index (ver "debajoHeader" en PanelLateral.jsx)
-   — sin este colchón, el header (76px, Navbar.module.css) tapa el
-   principio de la lista de enlaces (los primeros ítems quedan ocultos
-   detrás, solo asoma el último). Ancho fijo y sin crecer (flex: none):
-   columna angosta de texto junto a las imágenes (ver .panel.debajoHeader
-   más arriba), no el resto del hueco disponible. */
+   — sin este colchón, el header (--nav-height-desktop, 91px en
+   escritorio — este submenú solo se abre por hover desde .navLinks,
+   oculto en mobile, así que siempre es ese alto) tapa el principio de
+   la lista de enlaces (los primeros ítems quedan ocultos detrás, solo
+   asoma el último). Ancho fijo y sin crecer (flex: none): columna
+   angosta de texto junto a las imágenes (ver .panel.debajoHeader más
+   arriba), no el resto del hueco disponible. */
 .debajoHeader .contenido {
-  padding-top: var(--spacing-9);
+  padding-top: calc(var(--nav-height-desktop) + var(--spacing-1));
   width: 200px;
   flex: none;
 }

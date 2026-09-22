@@ -59,7 +59,7 @@ function Footer() {
 
   const columnas = [
     { titulo: 'Atención cliente', enlaces: ['Envíos', 'Devoluciones', 'Contacto'] },
-    { titulo: 'Fely Campo', enlaces: ['Sostenibilidad', 'Sobre Nosotros', 'Puntos de venta'] },
+    { titulo: 'Fely Campo', enlaces: ['Historia', 'Nuestros talleres', 'Puntos de venta'] },
     { titulo: 'Síguenos', enlaces: ['Instagram', 'YouTube'] },
   ];
 
@@ -70,8 +70,8 @@ function Footer() {
     'Envíos': '/ayuda/envios',
     'Devoluciones': '/ayuda/devoluciones',
     'Contacto': '/ayuda/contacto',
-    'Sostenibilidad': '/responsabilidad',
-    'Sobre Nosotros': '/sobre-fely',
+    'Historia': '/sobre-fely',
+    'Nuestros talleres': '/talleres-fely-campo',
     'Puntos de venta': '/puntos-de-venta-fely-campo',
   };
   const hrefColumna = (enlace) => (RUTAS_COLUMNAS[enlace] ? withLocale(RUTAS_COLUMNAS[enlace]) : '#');

@@ -135,7 +135,6 @@ export const SOBRE_FELY = {
     },
     {
       anio: { es: '2003', en: '2003' },
-      imagen: '/img/about-felycampo/PM26_Fely_Campo_0934.jpg',
       texto: {
         es: [
           'Preparé una colección, la metí en dos maletas y viajé a la feria Who\'s Next de París. Pasara lo que pasara, sabía que sería una experiencia de aprendizaje. El tercer día de mi primera participación, una tienda de Kuwait realizó un pedido. Fue suficiente para regresar. Y volví durante siete colecciones consecutivas.',
@@ -149,7 +148,6 @@ export const SOBRE_FELY = {
     },
     {
       anio: { es: 'Hoy', en: 'Today' },
-      imagen: '/img/about-felycampo/fely-campo-portada.webp',
       texto: {
         es: [
           'Fely Campo está presente en toda Europa, con colecciones que se distribuyen en España, Italia, Reino Unido e Irlanda, Francia, Bélgica, Suiza y Alemania. Mantengo la tienda original de Salamanca y otra en Oviedo, además de los ateliers especializados en moda nupcial y de fiesta en Salamanca y Madrid. El trabajo constante, la pasión por los tejidos y el diseño bien elaborado, unidos al espíritu emprendedor propio de una Serrano, me han permitido construir un universo al que he dedicado toda mi vida.',
@@ -164,14 +162,10 @@ export const SOBRE_FELY = {
   historia: {
     texto: {
       es: [
-        'Con 54 años de trayectoria, Fely Campo está profundamente ligada a la tierra charra, de piedra, luz y oficio. Especializada en fiesta, novia y prêt-à-porter, Fely Campo crea piezas desde el patronaje, la elección de tejidos y el conocimiento de unas manos que entienden como un oficio que se transmite y permanece.',
-        'Desde su fundación y manteniendo su sede en Salamanca, la firma fue llegando cada vez a más puntos de venta, a nivel nacional, hasta que en 2015 decide que es el momento de dar el paso a su expansión internacional.',
-        'A partir de esa fecha y con las mismas constantes e ideales que las de su creadora: pasión, fuerza y trabajo, comienza el proceso de expansión de la firma. Actualmente cuenta con un equipo de 12 trabajadores y varias asociaciones de mujeres costureras colaborando con la marca en los pueblos de la sierra de Castilla y León, además, posee casi 200 puntos de venta en el ámbito nacional e internacional.',
+        'Si el tiempo contara su experiencia, la edad su mentalidad y el oficio su constancia, la pasión resumiría a Fely Campo. Una pasión sin límite que la ha llevado a posicionarse como una de las firmas más importantes de nuestro país, traspasando sus fronteras, en constante evolución y aprendizaje de quien se sabe conocedora de un oficio único del que nunca hay que perder la distancia. Más de 200 puntos de venta nos unen.',
       ],
       en: [
-        'With 54 years of history, Fely Campo is deeply rooted in the Charra land of Salamanca, of stone, light and craft. Specialising in occasion wear, bridal and prêt-à-porter, Fely Campo creates pieces from the pattern-making, the choice of fabrics and the knowledge of hands that understand it as a craft passed down and enduring.',
-        "Since its founding, and while keeping its headquarters in Salamanca, the firm steadily reached more points of sale across Spain, until in 2015 it decided the time had come to take the step into international expansion.",
-        "From that date on, and guided by the same constants and ideals as its creator — passion, strength and hard work — the firm's expansion process began. Today it has a team of 12 employees and several associations of seamstresses collaborating with the brand in the villages of the Sierra de Castilla y León, and it now has almost 200 points of sale nationally and internationally.",
+        "If time could measure her experience, age her mindset and craft her perseverance, passion would sum up Fely Campo. A limitless passion that has led her to establish herself as one of the most important labels in our country, crossing its borders, in constant evolution and learning as someone who knows a unique craft from which one must never lose perspective. More than 200 points of sale bring us together.",
       ],
     },
   },
@@ -225,36 +219,18 @@ export const SOBRE_FELY = {
     },
   },
 
-  // Tarjetas de podcast/prensa al final de la página (ver page.js,
+  // Una única tarjeta grande al final de la página (ver page.js,
   // TarjetaEnlaceExterno — mismo diseño que BlogTarjetaPodcastDestacado
-  // de /blog, pero enlazando fuera del sitio). "titulo" no lleva
-  // traducción (nombre propio del programa/episodio, igual que
-  // "nombre" de UBICACIONES en visita-fely-campo/ubicaciones.js).
-  enlacesExternos: [
-    {
-      // (Pendiente) falta el enlace real del vídeo — de momento apunta a
-      // "#" para no dejar un <a> sin destino.
-      href: '#',
-      titulo: 'Madrid, Capital de Moda',
-      meta: { es: 'Entrevista en vídeo', en: 'Video interview' },
-      imagen: '/img/about-felycampo/madrid-moda-de-capital-felycampo-podcast.jpg',
-    },
-    {
-      href: 'https://www.youtube.com/watch?v=daejHVPhdJM',
-      titulo: 'Haz que pase ¡Emprende!',
-      meta: { es: 'Pódcast', en: 'Podcast' },
-      imagen: '/img/about-felycampo/haz-que-pase-felycampo-podcast.jpg',
-    },
-  ],
-
-  // Aparición en prensa escrita — debajo de "enlacesExternos" en vez de
-  // dentro de esa cuadrícula de 2 columnas (ver page.js): a diferencia
-  // del vídeo/pódcast, aquí "icono" de TarjetaEnlaceExterno es
-  // "revista" en vez de "play" (ver ese componente).
-  prensaDestacada: {
-    href: 'https://www.theworldkats.com/2023/09/Fely-Campo-Fashion-Designer-Interview.html',
-    titulo: 'The World Kats',
-    meta: { es: 'Revista', en: 'Magazine' },
-    imagen: '/img/about-felycampo/magazine-fely-campo-entrevista.jpg',
+  // de /podcast, pero enlazando fuera del sitio) — antes eran 3 (2 en
+  // cuadrícula + prensa destacada debajo, ver historial), sustituidas a
+  // petición por esta sola. Icono "play" por defecto (ver
+  // TarjetaEnlaceExterno.jsx). "titulo" no lleva traducción (nombre
+  // propio, igual que "nombre" de UBICACIONES en
+  // visita-fely-campo/ubicaciones.js).
+  documental: {
+    href: 'https://www.youtube.com/watch?is=8lcOXOn4hPIHgaWe&v=QgepxasStTI&feature=youtu.be',
+    titulo: 'Conoce a Fely Campo - Documental',
+    meta: { es: '54 cintas de vídeo resumen parte de mi historia', en: '54 video tapes summarise part of my story' },
+    imagen: '/img/about-felycampo/felycampo-documental.jpg',
   },
 };

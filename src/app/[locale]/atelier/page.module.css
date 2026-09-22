@@ -28,8 +28,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-6);
   padding-block: var(--spacing-8);
+}
+
+/* Pasada a CabeceraSeccion como "className" (ver page.js) — pone en
+   columna su .cabeceraProductos.cabeceraInicio (fila en el resto del
+   sitio, ver CabeceraSeccion.module.css) solo aquí, mismo criterio que
+   .cabeceraColumna en visita-fely-campo/page.module.css. !important a
+   propósito: una sola clase no le gana en especificidad a ese
+   selector compuesto de dos. */
+.cabeceraColumna {
+  flex-direction: column !important;
 }
 
 /* Inspirada en Tarjeta de tienda (styleguide.html #tarjeta-tienda /
@@ -108,20 +117,6 @@
   text-decoration-color: var(--color-gris-300);
   text-decoration-thickness: 1px;
   text-underline-offset: var(--spacing-1);
-}
-
-/* Mismo botón que .contenidoTexto .enlace en BloqueSeccion.module.css
-   (el "Pedir cita" de los dos BloqueSeccion de esta página): inline-flex
-   + fit-content + texto más pequeño en vez del .contorno de ancho
-   completo por defecto, replicado tal cual para que ambos CTA de
-   /atelier compartan el mismo tratamiento visual. Selector
-   ".atelierItem .atelierPedirCita" (no la clase sola) por el mismo
-   motivo que allí: ganarle especificidad a .contorno de
-   Boton.module.css sin depender del orden de carga entre módulos. */
-.atelierItem .atelierPedirCita {
-  display: inline-flex;
-  width: fit-content;
-  font-size: var(--text-label);
 }
 
 @media (max-width: 767px) {

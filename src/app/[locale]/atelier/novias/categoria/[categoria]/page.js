@@ -15,7 +15,14 @@
    de pan + título de categoría salgan ya en el HTML servido. Enlazada
    desde los tags de categoría de FichaProductoAtelier.jsx. Sigue sin
    filtrar la cuadrícula de verdad (mismo placeholder de
-   "estiloYSilueta" que ../page.js — ver CuadriculaProductos.jsx). */
+   "estiloYSilueta" que ../page.js — ver CuadriculaProductos.jsx).
+
+   Mismo criterio que ../page.js: la web pública deja de listar las 6
+   colecciones de Novia y se queda solo con Bride 27 (noviaProductos.js
+   NO se toca, sigue con las 6 completas para /admin y las fichas de
+   producto) — aquí se filtra "productos" igual que allí, y ya no hace
+   falta el desplegable "Colección" de PanelFiltros (una sola opción no
+   aporta nada), así que tampoco se pasa "colecciones". */
 
 import { notFound } from 'next/navigation';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
@@ -27,18 +34,7 @@ const ES_FIESTA = false;
 const SECCION_KEY = 'nav.submenus.atelier.novias';
 const SECCION_HREF = 'atelier/novias';
 
-// Mismas colecciones y mismo orden que ../page.js (COLECCIONES_NOVIAS)
-// — solo alimentan el desplegable "Colección" de PanelFiltros, no
-// filtran de verdad (ver comentario en CuadriculaProductos.jsx), así
-// que no dependen de la categoría.
-const COLECCIONES_NOVIAS = [
-  'Bride 27',
-  'ME',
-  'Bambú Novia',
-  'Savia Novia',
-  'Inside',
-  'Introspección',
-];
+const PRODUCTOS_BRIDE_27 = noviaProductos.filter((producto) => producto.coleccion === 'Bride 27');
 
 export function generateStaticParams() {
   return parametrosCategoria(ES_FIESTA);
@@ -62,13 +58,12 @@ export default async function Pagina({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductHero imagen="/img/novias-sección-FelyCampo3.jpg" />
       <CuadriculaProductos
-        productos={noviaProductos}
+        productos={PRODUCTOS_BRIDE_27}
         disposicion="grid"
         tituloKey="nav.links.atelier"
         coleccionKey={SECCION_KEY}
         descriptionKey="cuadriculaTabs.descripcion"
         ocultarPrecio
-        colecciones={COLECCIONES_NOVIAS}
         hrefBase={SECCION_HREF}
         estiloYSilueta
         categoriaActiva={categoriaActiva}

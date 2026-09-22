@@ -3,7 +3,13 @@
    criterio que atelier/novias/categoria/[categoria]/page.js (ver los
    comentarios ahí) — aquí además acepta las opciones del grupo
    "ocasion" (soloFiesta: true en GRUPOS_ESTILO_SILUETA), que Novias no
-   tiene sentido que sirva. */
+   tiene sentido que sirva.
+
+   Sin "Prêt-à-porter" en COLECCIONES_FIESTA (no pertenece a este
+   listado de colecciones de Fiesta, a petición explícita) — mismo
+   criterio que ../page.js. fiestaProductos.js NO se toca (sigue con
+   las 11 completas, catálogo real que también alimenta
+   /admin/colecciones/fiesta), aquí solo se filtra lo que se enseña. */
 
 import { notFound } from 'next/navigation';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
@@ -21,7 +27,6 @@ const COLECCIONES_FIESTA = [
   'Primavera Verano 2027',
   'Primavera Verano 2026',
   'Primavera Verano 2025',
-  'Prêt-à-porter',
   'En Madrid',
   'A Walk',
   'Bambú',
@@ -30,6 +35,8 @@ const COLECCIONES_FIESTA = [
   'Essentielle',
   'Furisode',
 ];
+
+const PRODUCTOS_FIESTA = fiestaProductos.filter((producto) => producto.coleccion !== 'Prêt-à-porter');
 
 export function generateStaticParams() {
   return parametrosCategoria(ES_FIESTA);
@@ -53,7 +60,7 @@ export default async function Pagina({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductHero imagen="/img/invitadas-sección-FelyCampo.jpg" />
       <CuadriculaProductos
-        productos={fiestaProductos}
+        productos={PRODUCTOS_FIESTA}
         disposicion="grid"
         tituloKey="nav.links.atelier"
         coleccionKey={SECCION_KEY}

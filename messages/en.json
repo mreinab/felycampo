@@ -3,8 +3,10 @@
     "links": {
       "tienda": "Prêt-à-porter",
       "atelier": "Atelier",
+      "colecciones": "Collections",
       "elMundoDeFely": "About Fely",
-      "visitanos": "Visit Us"
+      "puntosDeVenta": "Store Locations",
+      "pedirCita": "Book an Appointment"
     },
     "submenus": {
       "tienda": {
@@ -19,20 +21,25 @@
         "novias": "Bridal",
         "fiesta": "Evening Wear",
         "vosotras": "For You",
-        "noviasSubmenu": "Bridal Collection",
-        "fiestaSubmenu": "Evening Wear Collection"
-      },
-      "elMundoDeFely": {
-        "blog": "Blog",
-        "runway": "Runway",
-        "talleres": "Discover our workshops"
-      },
-      "visitanos": {
         "salamanca": "Atelier Salamanca",
         "madrid": "Atelier Madrid",
         "oviedo": "Atelier Oviedo",
-        "puntosDeVenta": "Store Locations",
-        "reservarCita": "Book an Appointment"
+        "nuestroAtelier": "Our Atelier"
+      },
+      "colecciones": {
+        "fiesta": "Evening Wear Collection",
+        "novias": "Bridal Collection",
+        "pretaporter": "Prêt-à-porter",
+        "runway": "Runway"
+      },
+      "elMundoDeFely": {
+        "historia": "Our Story",
+        "podcast": "Podcast",
+        "talleres": "Our workshops"
+      },
+      "puntosDeVenta": {
+        "propios": "Our Stores",
+        "externos": "Selected Boutiques"
       }
     },
     "actions": {
@@ -104,13 +111,18 @@
   "puntosVenta": {
     "eyebrow": "Where to find us",
     "titulo": "Points of sale",
-    "intro": "Our ateliers and the network of boutiques that carry Fely Campo, in Spain and worldwide.",
-    "direcciones": "Directions"
+    "intro": "Our ateliers and the network of boutiques that carry Fely Campo, in Spain and around the world. We have more than 200 points of sale. Find your nearest store",
+    "direcciones": "Directions",
+    "buscarCpPlaceholder": "Postal code",
+    "buscarCpBoton": "Search",
+    "buscarCpError": "Enter a valid Spanish postal code (5 digits).",
+    "internacionalTitulo": "International Boutiques",
+    "internacionalIntro": "Milan holds a special place in our international network, thanks to our close relationship with the Italian market."
   },
   "talleres": {
     "eyebrow": "Our process",
     "titulo": "Our Workshops",
-    "intro": "Where hands tell stories\n\nEvery Fely Campo piece is born close by. In our in-house workshop and two small workshops in the sierra, skilled hands transform each fabric with time, precision and sensitivity.\n\nBehind those hands are women, craft and territory. Women who can keep creating from the place they belong to, keeping alive a know-how that's part of our identity.\n\nFor Fely Campo, luxury also means this: creating beauty while respecting those who make it possible, generating opportunities and defending women's economic independence, in rural areas too."
+    "intro": "Where hands tell stories\n\nEvery Fely Campo piece is born close by. In our atelier and two small workshops in the sierra, skilled hands transform each fabric with time, precision and sensitivity. Behind those hands are women, craft and territory."
   },
   "atelierFiesta": {
     "salamanca": {
@@ -269,32 +281,42 @@
     "confirmacionTexto": "Thank you for your interest. Our team will get in touch with you as soon as possible.",
     "cerrar": "Close"
   },
-  "avisoDisponibilidad": {
-    "titulo": "Notify me when available",
-    "subtitulo": "We'll email you as soon as this size is back in stock.",
-    "talla": "Size",
+  "contactoProducto": {
+    "titulo": "Contact us",
+    "subtitulo": "Tell us what you're looking for and we'll get back to you as soon as possible.",
     "nombre": "Name",
     "nombrePlaceholder": "Jane Smith",
     "email": "Email",
     "emailPlaceholder": "jane@example.com",
     "avisoDatos": "Please fill in your name and email to continue.",
-    "enviar": "Notify me",
+    "enviar": "Send",
     "confirmacionTitulo": "All set!",
-    "confirmacionTexto": "We'll email you as soon as this size is available.",
+    "confirmacionTexto": "We've received your message. Our team will get in touch with you shortly.",
     "cerrar": "Close"
   },
   "pedirCitaAtelier": {
-    "introTitulo": "Welcome to Fely Campo",
-    "dondeIntro": "Come experience it at one of our boutiques/ateliers in Madrid, Salamanca or Oviedo.\n\nOur personal stylists will guide you through the whole process until you find the perfect dress.",
-    "continuar": "Continue",
-    "dondeTitulo": "Where would you like to book your appointment?",
-    "cambiarUbicacion": "Change location",
     "cerrar": "Close",
-    "titulo": "Contact us",
-    "contactoTexto": "Message us on WhatsApp or by email and we'll help you set the day and time for your appointment.",
-    "contactarWhatsapp": "Message us on WhatsApp",
-    "contactarEmail": "Email us",
-    "emailAsunto": "Appointment at {sede}"
+    "titulo": "Book your appointment with us",
+    "nombreCompleto": "Full name",
+    "nombreCompletoPlaceholder": "Jane Smith",
+    "email": "Contact email",
+    "emailPlaceholder": "jane@example.com",
+    "telefono": "Contact phone",
+    "telefonoPlaceholder": "+1 555 000 0000",
+    "fechaEvento": "Event date (optional)",
+    "dia": "Day",
+    "mes": "Month",
+    "anio": "Year",
+    "codigoPostal": "Postal code",
+    "codigoPostalPlaceholder": "10001",
+    "ciudad": "City",
+    "ciudadPlaceholder": "New York",
+    "mensaje": "Tell us what you're looking for and we'll help you",
+    "aceptoLegal": "I accept the <privacidad>privacy policy</privacidad> and the <terminos>terms and conditions</terminos>.",
+    "avisoDatos": "Fill in the required fields and accept the privacy policy to continue.",
+    "enviar": "Send request",
+    "confirmacionTitulo": "Request sent!",
+    "confirmacionTexto": "Thanks for your interest. Our team will get in touch with you as soon as possible to confirm the day and time of your appointment."
   },
   "escribirResena": {
     "titulo": "Write your review",
@@ -347,6 +369,7 @@
     "cerrar": "Close"
   },
   "heroCarousel": {
+    "titulo": "The world of Fely Campo",
     "cta": "Discover more"
   },
   "collectionTitle": {
@@ -378,7 +401,9 @@
     "titulo": "Atelier",
     "conoceColeccion": "Discover the collection",
     "pedirCita": "Book an appointment",
-    "conoceAteliers": "Discover our ateliers"
+    "conoceAteliers": "Discover our ateliers",
+    "visitanosTitulo": "Visit us",
+    "visitanosDescripcion": "Come and see how we work — we'll welcome you in person at one of our ateliers"
   },
   "splitMediaCategorias": {
     "item1": {
@@ -399,7 +424,7 @@
     "reservarCita": "Book your appointment"
   },
   "vosotras": {
-    "descripcion": "Our clients, in their own words and their own photos, wearing Fely Campo in their special moments.",
+    "descripcion": "And what can we say about you? If words aren't enough, let the photos speak.",
     "verGaleria": "View gallery",
     "invitadas": "Guests",
     "novias": "Bridal"

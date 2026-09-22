@@ -17,8 +17,10 @@
    poético intercalado en medio: sus fotos en columna izquierda + el
    poema en la derecha, misma fila
    — prop "poema" con "imagenes"/"indice", tratado como una imagen más
-   de la cuadrícula, ver ese componente) → biografía completa en texto
-   corrido, un bloque por año/etapa (.biografia en page.module.css).
+   de la cuadrícula, ver ese componente) → tarjeta del documental
+   (TarjetaEnlaceExterno) — la biografía en texto corrido que vivía
+   debajo se quitó a petición (ver historial), "trayectoria" en
+   sobreFely.js se sigue usando solo para las fotos de RunwayBackstage.
 
    Server Component — "sobreFely.eyebrow" ("La Diseñadora"/"The
    Designer") se resuelve con getTranslations (versión servidor de
@@ -66,42 +68,14 @@ export default async function Pagina({ params }) {
       </div>
 
       <div className="contenedor">
-        <div className={styles.biografia}>
-          {SOBRE_FELY.trayectoria.map((entrada) => (
-            <div key={entrada.anio.es} className={styles.biografiaItem}>
-              <p className={styles.biografiaAnio}>{entrada.anio[locale]}</p>
-              <div className={styles.biografiaTexto}>
-                {entrada.texto[locale].map((parrafo, indice) => (
-                  <p key={indice}>{parrafo}</p>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
         <div className={styles.enlacesExternos}>
-          <div className={styles.enlacesExternosGrid}>
-            {SOBRE_FELY.enlacesExternos.map((enlace) => (
-              <div key={enlace.href} className={styles.enlaceExternoCelda}>
-                <TarjetaEnlaceExterno
-                  href={enlace.href}
-                  titulo={enlace.titulo}
-                  meta={enlace.meta[locale]}
-                  imagen={enlace.imagen}
-                  alt={enlace.titulo}
-                />
-              </div>
-            ))}
-          </div>
-
           <div className={styles.enlaceExternoDestacado}>
             <TarjetaEnlaceExterno
-              href={SOBRE_FELY.prensaDestacada.href}
-              titulo={SOBRE_FELY.prensaDestacada.titulo}
-              meta={SOBRE_FELY.prensaDestacada.meta[locale]}
-              imagen={SOBRE_FELY.prensaDestacada.imagen}
-              alt={SOBRE_FELY.prensaDestacada.titulo}
-              icono="revista"
+              href={SOBRE_FELY.documental.href}
+              titulo={SOBRE_FELY.documental.titulo}
+              meta={SOBRE_FELY.documental.meta[locale]}
+              imagen={SOBRE_FELY.documental.imagen}
+              alt={SOBRE_FELY.documental.titulo}
             />
           </div>
         </div>

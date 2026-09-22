@@ -10,11 +10,5 @@
 .landing {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
-}
-
-@media (max-width: 1023px) {
-  .landing {
-    gap: var(--spacing-5);
-  }
+  gap: 0;
 }

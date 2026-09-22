@@ -24,7 +24,6 @@ export default function Pagina() {
   return (
     <section className="seccion">
       <GaleriaVosotras
-        subtitleKey="nav.links.atelier"
         titleKey="nav.submenus.atelier.vosotras"
         descriptionKey="vosotras.descripcion"
         margenSuperiorAmplio

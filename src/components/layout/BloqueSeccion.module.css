@@ -16,18 +16,28 @@
    alto "editorial" cuando el contenido cabe, y crece si no. */
 @media (min-width: 768px) {
   .seccion {
-    min-height: 80dvh;
+    min-height: 38vh;
     grid-template-columns: 1fr 1fr;
   }
 }
 
-/* align-self:stretch invalida el align-items:center de .seccion solo
-   para .marco: sin esto, al no tener una altura definida, img
-   height:100% se resuelve a auto (tamaño natural de la imagen) y
-   object-fit:cover no tiene nada que recortar. */
+/* aspect-ratio en vez de height:100% (ver historial): con solo
+   min-height en .seccion (no height), la fila del grid no tiene una
+   altura definida — un height:100% ahí no tiene contra qué resolverse
+   y el navegador termina usando el tamaño natural de la imagen. Con
+   fotos en vertical (frecuente en Novias, ver noviaEditorial.js) esto
+   disparaba la fila entera a ~850-1000px de alto, muy por encima del
+   38vh pensado como alto "editorial". aspect-ratio fija el alto de
+   .marco desde su propio ancho (columna, no fila), así ya no depende
+   de qué tan alta sea la imagen de origen ni de qué altura acabe
+   teniendo la fila — mismo criterio que ya usaba mobile/tablet más
+   abajo, ahora también en desktop. 3/4 (retrato, en vez de 20/21 casi
+   cuadrado) a petición explícita — mucho de lo que ilustra este bloque
+   son fotos verticales (Novias/Fiesta, ver noviaEditorial.js/
+   fiestaEditorial.js), así que .marco pasa a un ratio pensado para eso
+   en vez de uno casi cuadrado. */
 .marco {
-  height: 100%;
-  align-self: stretch;
+  aspect-ratio: 3 / 4;
   background: var(--color-crema);
   border-radius: var(--radius-imagenes);
   overflow: hidden;
@@ -39,20 +49,45 @@
   object-fit: cover;
 }
 
-/* En mobile ni .seccion ni .marco tienen altura fija (heredada del
-   height:100% de desktop): apilada (imagen + texto) con esa altura
-   fija el texto desbordaba la caja y el Footer (siguiente en el DOM)
-   se pintaba encima. aspect-ratio en .marco regula el alto de la
-   imagen en su lugar, en vez de dejarla a su tamaño natural. */
 @media (max-width: 767px) {
   .seccion { height: auto; }
-  .marco { height: auto; aspect-ratio: 4 / 3; }
+}
+
+/* Tablet en vertical (portrait, hasta 1023px — mismo criterio que
+   SplitMedia/Navbar): la rejilla a dos columnas de la regla de arriba
+   (a partir de 768px) dejaba imagen y texto demasiado apretados en un
+   tablet en portrait — aquí vuelve a apilarse en una sola columna,
+   igual que mobile (el "order" de ".invertido"/".textoInvertido" se
+   resetea más abajo, después de definirse, para las dos: imagen
+   siempre primero al apilarse). En landscape (tablet apaisado o
+   laptop) sigue la rejilla de dos columnas de siempre. */
+@media (max-width: 1023px) and (orientation: portrait) {
+  .seccion {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    height: auto;
+  }
 }
 
 .invertido { order: 2; }
 @media (min-width: 768px) {
   .invertido { order: 2; }
   .textoInvertido { order: 1; }
+}
+
+/* Imagen siempre primero al apilarse en una sola columna (mobile
+   siempre, tablet solo en portrait, ver los dos bloques de arriba) —
+   sin esto, ".invertido" (order:2, justo arriba) dejaba la imagen
+   después del texto también apilada, no solo en la rejilla de dos
+   columnas. Después en el archivo que la regla de arriba a propósito,
+   así gana pese a la misma especificidad. En landscape (tablet
+   apaisado o laptop) no aplica: el zigzag de dos columnas de siempre
+   sigue intacto. */
+@media (max-width: 767px), (max-width: 1023px) and (orientation: portrait) {
+  .invertido,
+  .textoInvertido {
+    order: 0;
+  }
 }
 
 .contenidoTexto {
@@ -68,8 +103,23 @@
   }
 }
 
+/* Mobile y tablet en portrait (mismo corte que el resto del archivo):
+   contenido centrado horizontalmente, no pegado a la izquierda como en
+   desktop — título/texto/CTA quedan centrados bajo la imagen apilada. */
+@media (max-width: 767px), (max-width: 1023px) and (orientation: portrait) {
+  .contenidoTexto {
+    padding: var(--spacing-6);
+    display: flex;
+    align-items: center;
+  }
+  .texto {
+    text-align: center;
+  }
+}
+
 .titulo {
   font-size: var(--text-h3);
+  text-transform: uppercase;
 }
 
 .texto {
@@ -86,9 +136,16 @@
    variante="texto" (--text-small por defecto). display:inline-flex
    sobrescribe el display:flex (block-level) de .contorno en
    Boton.module.css — sin esto el botón se estira al ancho completo de
-   .contenidoTexto en vez de ajustarse a su contenido. */
+   .contenidoTexto en vez de ajustarse a su contenido.
+   Color/fondo igual que Boton variante="solido" (relleno oscuro, texto
+   claro) en vez del contorno vacío que trae "contorno" de fábrica — el
+   propio componente sigue recibiendo variante="contorno" (mismo hover
+   que ya invierte a estos colores, ver Boton.module.css), esto solo
+   iguala el estado base al de "solido". */
 .contenidoTexto .enlace {
   display: inline-flex;
   width: fit-content;
   font-size: var(--text-label);
+  background: var(--color-tinta);
+  color: var(--color-fondo);
 }

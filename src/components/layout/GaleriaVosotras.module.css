@@ -116,12 +116,15 @@
   transition: opacity 0.35s var(--ease-marca);
 }
 
+/* Misma altura de fila que .navRow del Navbar real en escritorio
+   (91px, ver --nav-height-desktop en global.css) — en mobile vuelve a
+   76px, ver media query al final. */
 .cabecera {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 76px;
+  height: var(--nav-height-desktop);
   z-index: 1;
   display: flex;
   align-items: center;
@@ -133,7 +136,7 @@
 }
 
 .logo {
-  height: 50px;
+  height: 65px;
   width: auto;
 }
 
@@ -240,6 +243,13 @@
     display: none;
   }
 
+  .cabecera {
+    height: var(--nav-height);
+  }
+  .logo {
+    height: 50px;
+  }
+
   .pistaImagen {
     width: 100%;
     height: 100%;
@@ -249,128 +259,7 @@
   }
 }
 
-/* Panel inferior: nombre + comentario de la clienta (no "Look X") y,
-   debajo, "Consigue el look" — contenido siempre del mismo tamaño (a
-   diferencia de RunwayGaleria, donde descripción/productos son
-   opcionales según el look y hacen falta un alto animado con
-   ResizeObserver): aquí un alto fijo basta. Nombre/comentario con la
-   misma tipografía que .pie/.texto/.nombre de
-   ResenasClientes.module.css; "Consigue el look" es una copia 1:1 de
-   .panelProductosBloque y siguientes en RunwayGaleria.module.css. */
-.panelInfo {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  z-index: 2;
-  width: min(320px, calc(100% - 48px));
-  background: var(--color-fondo);
-}
-
-.panelInfoInterior {
-  padding: var(--spacing-5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-}
-
-/* Agrupa .panelTexto + .panelNombre con su propio gap, más ajustado
-   (spacing-2) que el gap-4 de .panelInfoInterior que las separa del
-   bloque "Consigue el look". */
-.panelResena {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-}
-
-.panelTexto {
-  font-size: var(--text-small);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-tinta);
-}
-
-.panelNombre {
-  font-size: var(--text-small);
-  color: var(--color-tinta);
-  letter-spacing: var(--tracking-label);
-}
-
-.panelProductosBloque {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-}
-
-/* Mismo font-size que .subtitle de CabeceraSeccion.module.css. */
-.panelProductosTitulo {
-  font-size: var(--text-caption);
-  text-transform: uppercase;
-}
-
-.panelProductos {
-  flex-wrap: wrap;
-  display: flex;
-  justify-content: space-between;
-  gap: var(--spacing-3);
-}
-
-.panelProducto {
-  width: fit-content;
-  max-width: 110px;
-  color: inherit;
-  flex-direction: column;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  gap: var(--spacing-2);
-}
-
-.panelProductoImagenWrap {
-  position: relative;
-}
-
-.panelProductoImagen {
-  width: 90px;
-  height: auto;
-  aspect-ratio: 3 / 4.5;
-  object-fit: cover;
-  flex-shrink: 0;
-  background: var(--color-crema);
-}
-
-/* Botón "añadir" flotante, esquina inferior derecha de la foto — mismo
-   criterio que .wishlist de TarjetaProducto.module.css. Sin backend
-   real todavía (ver FichaProductoAcciones). */
-.panelProductoAnadir {
-  position: absolute;
-  bottom: var(--spacing-1);
-  right: var(--spacing-1);
-  z-index: 1;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  background: var(--color-tinta);
-  color: var(--color-fondo);
-  border: none;
-  border-radius: var(--radius-botones);
-  cursor: pointer;
-  transition: opacity 0.25s var(--ease-marca);
-}
-
-.panelProductoAnadir:hover {
-  opacity: 0.7;
-}
-
-.panelProductoNombre {
-  font-size: var(--text-small);
-  color: var(--color-tinta);
-}
-
-@media (max-width: 767px) {
-  .panelInfo {
-    width: calc(100% - 48px);
-  }
-}
+/* Panel inferior (nombre/comentario de la clienta + "Consigue el
+   look") quitado a petición — era placeholder puro (ver comentario de
+   cabecera del .jsx). Sin ".panelInfo"/".panelInfoInterior" y
+   siguientes: el lightbox se queda solo en fotos + miniaturas. */

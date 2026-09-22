@@ -10,6 +10,16 @@
   list-style: none;
 }
 
+/* Separa un enlace del resto de la lista dejando el hueco de una fila
+   vacía por encima (ver "separador" en SUBMENU_STRUCTURE, Navbar.jsx —
+   ej. "Vosotras" en Atelier, para que no se lea como una sede más
+   junto a Salamanca/Madrid/Oviedo). --spacing-6 de margen, sumado al
+   --spacing-2 de gap que ya trae cada item, para que se note como una
+   fila en blanco, no solo un poco más de aire. */
+.itemSeparador {
+  margin-top: var(--spacing-6);
+}
+
 .submenuLink {
   font-size: var(--text-small);
   color: var(--color-tinta);

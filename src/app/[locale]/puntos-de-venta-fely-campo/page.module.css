@@ -1,0 +1,81 @@
+/* ============================================================
+   PUNTOS DE VENTA — Fely Campo
+   .tarjeta (ver page.js, EnVista): mismo diseño a dos mitades que
+   .tarjeta en visita-fely-campo/page.module.css (foto 50% + info 50%,
+   editorial a toda la altura) — aquí una única tarjeta (Showroom
+   Milán), sin foto real todavía (bloque gris en vez de galería, ver
+   .marcoVacio) ni datos reales (solo nombre + un párrafo, sin
+   dirección/teléfono/WhatsApp/horario — se añadirán cuando haya).
+   Esquinas rectas en todo, radio 0 (--radius-botones), igual que el
+   resto del sitio.
+   ============================================================ */
+
+/* Espacio antes del Footer, que si no quedaba pegado justo debajo de
+   .tarjeta (última pieza de la página). */
+.seccionMilan {
+  margin-bottom: var(--spacing-10);
+}
+
+.tarjeta {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.galeria {
+  width: 50%;
+  flex: none;
+  padding-left: var(--spacing-7);
+}
+
+.marcoVacio {
+  width: 100%;
+  height: 100%;
+  background: var(--color-gris-200);
+}
+
+.fila {
+  width: 50%;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: 0 var(--spacing-5);
+}
+
+.nombre {
+  font-size: var(--text-small);
+  line-height: var(--leading-base);
+  color: var(--color-tinta);
+  text-transform: uppercase;
+}
+
+/* Texto de relleno (lorem ipsum, ver page.js) — en rojo a propósito,
+   mismo criterio que "REVISAR"/"(Pendiente)" en otros puntos del
+   código: marca visualmente que es contenido temporal, a sustituir en
+   cuanto haya texto real del showroom. Quitar este color (y este
+   comentario) junto con el lorem ipsum cuando llegue ese texto. */
+.textoRelleno {
+  font-size: var(--text-small);
+  line-height: var(--leading-base);
+  color: #c00;
+}
+
+@media (max-width: 767px) {
+  .tarjeta {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .galeria {
+    width: 100%;
+    height: 50vh;
+    padding-left: 0;
+  }
+
+  .fila {
+    width: 100%;
+    padding: var(--spacing-4);
+  }
+}

@@ -2,7 +2,7 @@
 
 /* ============================================================
    TARJETA DESTACADA DE PODCAST — Fely Campo
-   Celda especial de la cuadrícula de /blog (ver page.js, prop
+   Celda especial de la cuadrícula de /podcast (ver page.js, prop
    "entrada.destacado" en blog.js) — foto a sangre (cubre toda la
    celda, no "imagen arriba + texto debajo" como BlogTarjeta), degradado
    oscuro abajo para legibilidad y, encima, el botón de "play" seguido
@@ -18,7 +18,7 @@
    sigue usándose en el aria-label del enlace.
    Uso:
      <BlogTarjetaPodcastDestacado
-       href="/es/blog/podcast-01-crear-sin-pedir-permiso"
+       href="/es/podcast/podcast-01-crear-sin-pedir-permiso"
        titulo="Crear sin pedir permiso"
        meta="34 min"
        imagen="/img/..."

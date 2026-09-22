@@ -5,10 +5,18 @@
 .descripcion {
   padding-inline: var(--spacing-6);
   padding-block: var(--spacing-8);
+  /* display:flex + gap (en vez del margin de <p> por defecto): con un
+     único texto (string, la mayoría de usos) se comporta igual que
+     antes; con varias frases (array, ver RunwayDescripcion.jsx) las
+     separa sin depender del margen por defecto del navegador. */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
 }
 
 .texto {
-  max-width: 70%;
+  max-width: 40%;
+  margin: 0;
   margin-inline: auto;
   font-size: var(--text-body);
   line-height: var(--leading-base);

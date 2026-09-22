@@ -17,6 +17,7 @@ export default function Pagina() {
         coleccionKey="nav.submenus.tienda.tops"
         descriptionKey="cuadriculaProductos.novedadesDescripcion"
         ocultarSubtitulo
+        ocultarPrecio
       />
     </section>
   );

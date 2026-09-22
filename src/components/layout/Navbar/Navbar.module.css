@@ -62,8 +62,14 @@
   text-decoration-color: var(--color-fondo);
 }
 
+/* Escritorio por defecto: 91px (--nav-height-desktop en global.css,
+   más alta que antes a petición explícita para que el logo pueda
+   crecer a 65px sin quedar apretado, ver .navLogo más abajo) — la
+   media query de mobile/tablet portrait al final del archivo la baja
+   de vuelta a --nav-height (76px), mismo corte que ya usaba antes de
+   crecer en escritorio. */
 .navRow {
-  min-height: var(--nav-height);
+  min-height: var(--nav-height-desktop);
   position: relative;
   display: flex;
   align-items: center;
@@ -78,16 +84,21 @@
    (50% - la mitad del alto por defecto, 64px/2). Mismo anclaje para
    los dos estados (normal y .navLogoGrande, ver más abajo) — al
    crecer se desplaza hacia abajo desde ese punto fijo, al encoger se
-   recoge hacia arriba hasta él, nunca simétrico desde el centro. */
+   recoge hacia arriba hasta él, nunca simétrico desde el centro.
+   "-40.5px" (en vez de "-32px" antes de crecer .navRow/.navLogo en
+   escritorio): recalculado para centrar un logo de 65px + su
+   margin-top (--spacing-2, 8px) dentro de una fila de 91px — mobile
+   sigue con su propio valor de siempre en la media query de abajo, sin
+   tocar. */
 .navLogoLink {
   position: absolute;
   left: 50%;
-  top: calc(50% - 32px);
+  top: calc(50% - 40.5px);
   transform: translateX(-50%);
 }
 
 .navLogo {
-  height: 50px;
+  height: 65px;
   width: auto;
   margin-top: var(--spacing-2);
   transition: height 0.45s var(--ease-marca);
@@ -112,6 +123,7 @@
 .navLink {
   font-family: var(--font-base);
   font-size: 0.95rem;
+  line-height: 3rem;
   color: var(--color-tinta);
   background: none;
   border: none;
@@ -336,6 +348,13 @@
   color: var(--color-tinta);
 }
 
+/* Mismo criterio que .itemSeparador en NavbarPanelLateralContent.module.css
+   (submenú de escritorio) — aquí para el drill-down móvil, ver
+   "separador" en SUBMENU_STRUCTURE (Navbar.jsx). */
+.mobileMenuSubItemSeparador {
+  margin-top: var(--spacing-6);
+}
+
 /* ---------- Remate: foto editorial a todo el ancho ---------- */
 /* Mismo tratamiento imagen+velo+label que .card/.label en
    MediaLink.module.css (submenú de escritorio) — coherencia visual
@@ -381,10 +400,21 @@
 }
 
 /* ---------- RESPONSIVE ---------- */
-/* Por debajo de 768px: se esconden los enlaces de escritorio y aparece la hamburguesa */
-@media (max-width: 767px) {
+/* Por debajo de 768px (cualquier orientación) o en tablet vertical
+   (hasta 1024px de ancho — cubre también el 12.9" de iPad en
+   portrait, un poco por encima del corte de 1023px que se usa en el
+   resto del sitio): se esconden los enlaces de escritorio y aparece
+   la hamburguesa. Sin esto, un tablet en portrait mostraba la fila de
+   escritorio completa (enlaces + logo centrado + utilidades) en un
+   ancho pensado para más espacio del que hay ahí, y o bien el texto
+   se comprimía o el logo centrado (posición absoluta, ver
+   .navLogoLink) acababa solapando enlaces/utilidades. En landscape
+   (tablet apaisado o laptop) sigue siendo el mismo ancho de siempre,
+   así que se queda con la fila de escritorio. */
+@media (max-width: 767px), (max-width: 1024px) and (orientation: portrait) {
 
   .navRow {
+    min-height: var(--nav-height);
     padding: var(--spacing-4);
   }
   .navLinks {

@@ -18,9 +18,12 @@
    también. Título con el mismo estilo que CollectionTitle.module.css
    (.titulo, reutilizado tal cual como en CabeceraSeccion.jsx, no el
    componente entero porque este solo admite claves de traducción y
-   aquí el texto ya viene resuelto de getTranslations). Los párrafos
-   largos van justificados (no centrados: se leerían peor en varias
-   líneas) — el resto (grupos de contacto) se queda centrado. */
+   aquí el texto ya viene resuelto de getTranslations) — ese .titulo no
+   trae su propio centrado (vive normalmente dentro de .bloque en
+   CollectionTitle.jsx), así que aquí se centra a mano en
+   page.module.css. Los párrafos largos van justificados (no centrados:
+   se leerían peor en varias líneas) — el resto (grupos de contacto) se
+   queda centrado. */
 
 import { getTranslations } from 'next-intl/server';
 import { ProductHero } from '@/components/layout';
@@ -33,7 +36,7 @@ export default async function Pagina() {
 
   return (
     <section>
-      <ProductHero imagen="/img/felycampo-lacoleccion-3.webp" className="entrada-suave" />
+      <ProductHero imagen="/img/FelyCampo_AW2026_KristenWicce_ALTA-52.jpg" className="entrada-suave" />
 
       <div className="seccion contenedor">
         <h1 className={`${collectionTitleStyles.titulo} ${styles.titulo}`}>{t('titulo')}</h1>

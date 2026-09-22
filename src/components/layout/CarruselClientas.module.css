@@ -95,12 +95,15 @@
   transition: opacity 0.35s var(--ease-marca);
 }
 
+/* Misma altura de fila que .navRow del Navbar real en escritorio
+   (91px, ver --nav-height-desktop en global.css) — en mobile vuelve a
+   76px, ver media query al final. */
 .cabecera {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 76px;
+  height: var(--nav-height-desktop);
   z-index: 1;
   display: flex;
   align-items: center;
@@ -112,7 +115,7 @@
 }
 
 .logo {
-  height: 50px;
+  height: 65px;
   width: auto;
 }
 
@@ -216,6 +219,13 @@
 @media (max-width: 767px) {
   .miniaturas {
     display: none;
+  }
+
+  .cabecera {
+    height: var(--nav-height);
+  }
+  .logo {
+    height: 50px;
   }
 
   .pistaImagen {

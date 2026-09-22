@@ -12,7 +12,7 @@
    la colección). Orden: fecha, título, extracto.
    Uso:
      <BlogTarjeta
-       href="/es/blog/manifiesto-coleccion-ibiza"
+       href="/es/podcast/manifiesto-coleccion-ibiza"
        titulo="El manifiesto detrás de la colección de Ibiza"
        extracto="Luz y oscuridad, fuerza y calma: cómo un poema..."
        meta="12 jun 2026"

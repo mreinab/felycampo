@@ -17,6 +17,7 @@ export default function ChaquetasYAbrigosPagina() {
         coleccionKey="nav.submenus.tienda.coats"
         descriptionKey="cuadriculaProductos.novedadesDescripcion"
         ocultarSubtitulo
+        ocultarPrecio
       />
     </section>
   );

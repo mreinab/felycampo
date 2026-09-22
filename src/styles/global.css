@@ -160,7 +160,8 @@
   --max-texto:       700px;   /* ancho de bloques de texto legibles */
   --max-contenido:   1440px;  /* ancho de contenido */
   --max-sitio:       2100px;  /* ancho máximo del sitio */
-  --nav-height:      76px;    /* alto de .navRow (Navbar) — min-height + padding-block, box-sizing: border-box */
+  --nav-height:      76px;    /* alto de .navRow (Navbar) en mobile/tablet portrait — min-height + padding-block, box-sizing: border-box */
+  --nav-height-desktop: 91px; /* alto de .navRow en escritorio (min-width:768px) — logo más grande (65px, ver .navLogo en Navbar.module.css), navbar blanca crece con él */
 
   /* ---------- INTERLINEADO (line-height) ---------- */
   --leading-tight: 1.15;

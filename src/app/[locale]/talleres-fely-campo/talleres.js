@@ -2,11 +2,15 @@
    ver page.js. Bilingüe por entrada ({es, en}), mismo criterio que
    "descripcion" en visita-fely-campo/ubicaciones.js.
 
-   Solo 2 talleres reales: Béjar (taller-1) y Tamames (taller-2) — los
-   otros dos placeholder se han retirado por encargo directo del
-   usuario. Los párrafos de Béjar ya son el texto real (de encargo,
-   recibido el 2026-09-14) — antes reutilizaban el de Tamames como
-   relleno temporal, marcado con "(Pendiente)".
+   3 talleres: Béjar (taller-1) y Tamames (taller-2), reales, más
+   "taller-inhouse" (nuestro taller principal, añadido a petición) —
+   ya con reportaje propio (MEDIOS_TALLER_INHOUSE), pero todavía con
+   texto de relleno (parrafos en lorem ipsum) a la espera del real. Los
+   párrafos de Béjar/Tamames ya son el texto real (de encargo, recibido
+   el 2026-09-14) — antes reutilizaban el de Tamames como relleno
+   temporal, marcado con "(Pendiente)". "antiguedad" (Béjar/Tamames,
+   no en taller-inhouse todavía): años reales pendientes de confirmar,
+   "X" de relleno mientras tanto.
 
    MEDIOS: sin vídeos ni gif (a petición directa del usuario, no le
    gustaban en el carrusel — se han borrado también los .mp4 que
@@ -20,6 +24,18 @@
    conversión). Reduce el peso de esta carpeta en más de un 90% sin
    pérdida apreciable de calidad a los tamaños en los que se muestran
    (ver .marco en page.module.css). */
+
+// Taller inhouse: 5 fotos + 1 vídeo reales, en
+// public/img/talleres/inhouse/ — el vídeo va en 2ª posición (ver
+// "esVideo" en page.js, que lo distingue de las fotos por extensión).
+const MEDIOS_TALLER_INHOUSE = [
+  '/img/talleres/inhouse/rbksom_blobid1671730782555.jpg',
+  '/img/talleres/inhouse/artesany-2.mp4',
+  '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp',
+  '/img/talleres/inhouse/WhatsApp Image 2026-08-25 at 14.06.07.jpeg',
+  '/img/talleres/inhouse/WhatsApp Image 2026-08-25 at 14.06.12.jpeg',
+  '/img/talleres/inhouse/WhatsApp Image 2026-08-25 at 14.06.29.jpeg',
+];
 
 // Taller 1 (Béjar): 6 fotos reales, en public/img/talleres/bejar/.
 const MEDIOS_TALLER_1 = [
@@ -46,12 +62,33 @@ const MEDIOS_TALLER_2 = [
 
 export const TALLERES = [
   {
+    // Nuevo, a petición — texto todavía de relleno (lorem ipsum) hasta
+    // que llegue el contenido real, pero ya con reportaje propio (ver
+    // MEDIOS_TALLER_INHOUSE arriba). Primero en la lista: es "nuestro
+    // taller principal", antes de los dos de la sierra.
+    id: 'taller-inhouse',
+    medios: MEDIOS_TALLER_INHOUSE,
+    tipo: { es: 'TALLER INHOUSE', en: 'IN-HOUSE WORKSHOP' },
+    distancia: { es: 'Nuestro taller principal', en: 'Our main workshop' },
+    liderazgo: { es: 'Liderado por X', en: 'Led by X' },
+    parrafos: {
+      es: [
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      ],
+      en: [
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      ],
+    },
+  },
+  {
     id: 'taller-1',
     imagen: '/img/talleres/bejar/bejar-taller-felycampo-01.webp',
     medios: MEDIOS_TALLER_1,
     tipo: { es: 'Taller I', en: 'Workshop I' },
     distancia: { es: '72 km desde nuestro taller en Salamanca', en: '72 km from our workshop in Salamanca' },
     liderazgo: { es: 'Liderado por Blanca', en: 'Led by Blanca' },
+    // (Pendiente) años reales — "X" de relleno hasta que se confirme.
+    antiguedad: { es: 'X años trabajando con nosotros', en: 'X years working with us' },
     parrafos: {
       es: [
         'Su historia con la costura inició cuando ella cumple 12 años, cuando su madre la llevó a aprender con una modista. A los 16, cuando antaño se podía empezar a trabajar, entró en una fábrica y desde entonces coser se convirtió en su manera de estar en el mundo: es lo que ama, lo que conoce y lo que sigue haciendo, cada día, con la misma entrega.',
@@ -72,6 +109,8 @@ export const TALLERES = [
     tipo: { es: 'Taller II', en: 'Workshop II' },
     distancia: { es: '54 km desde nuestro taller en Salamanca', en: '54 km from our workshop in Salamanca' },
     liderazgo: { es: 'Liderado por María José', en: 'Led by María José' },
+    // (Pendiente) años reales — "X" de relleno hasta que se confirme.
+    antiguedad: { es: 'X años trabajando con nosotros', en: 'X years working with us' },
     parrafos: {
       es: [
         'En Tamames, el tiempo se mide con experiencia y sueños cumplidos.',

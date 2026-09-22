@@ -3,7 +3,12 @@
    — el slug de "nombre" (ver src/lib/slugify.js), mismo algoritmo que
    usa TarjetaProducto para enlazar aquí. Busca en el catálogo real de
    Prêt-à-porter (tiendaProductos.js), mismo criterio que
-   atelier/{novias,fiesta}/[producto]/page.js con sus propios catálogos. */
+   atelier/{novias,fiesta}/[producto]/page.js con sus propios catálogos.
+
+   Sin precio ni tallas (a petición explícita, mismo criterio que
+   Atelier): ni "producto.precio" ni "producto.tallas"/"agotadas" se
+   pasan ya a GaleriaProducto/FichaProductoAcciones — ver el detalle
+   completo en FichaProductoAcciones.jsx. */
 
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
@@ -12,7 +17,6 @@ import { ProductosRecomendados, ResenasClientes } from '@/components/layout';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
 import { FichaProductoAcciones, GaleriaProducto, LookPasarela } from '@/components/ecommerce';
-import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
 import { Acordeon, FilaAcordeon, Boton } from '@/components/ui';
 import { slugify } from '@/lib/slugify';
 import styles from './page.module.css';
@@ -30,13 +34,6 @@ export default async function FichaProducto({ params }) {
 
   const producto = tiendaProductos.find((candidato) => slugify(candidato.nombre) === slug);
   if (!producto) notFound();
-
-  // El rango completo de tallas menos "tallasDisponibles" (las que de
-  // verdad se pueden comprar, ver tiendaProductos.js) — el resto se
-  // enseña en SelectorTalla con opacidad reducida, vía
-  // FichaProductoAcciones ("agotadas" ahí abre "Avísame cuando esté
-  // disponible" en vez de dejar comprarla).
-  const agotadas = TALLAS_DISPONIBLES.filter((talla) => !producto.tallasDisponibles.includes(talla));
 
   // Mismo catálogo real, excluyendo el producto actual — hasta 10, la
   // misma cantidad que espera ProductosRecomendados en su carrusel.
@@ -69,26 +66,20 @@ export default async function FichaProducto({ params }) {
           imagenes={producto.imagenes?.length ? producto.imagenes : [producto.imagen]}
           alt={producto.nombre}
           nombre={producto.nombre}
-          precio={producto.precio}
           colores={producto.colores}
-          tallas={producto.tallas}
         />
 
         <div className={styles.info}>
           <div className={styles.bloquePrincipal}>
             <div className={styles.cabecera}>
               <h1 className={styles.nombre}>{producto.nombre}</h1>
-              <p className={styles.precio}>{producto.precio}</p>
               <p className={styles.descripcion}>{producto.descripcion}</p>
             </div>
 
             <FichaProductoAcciones
               nombre={producto.nombre}
-              precio={producto.precio}
               imagen={producto.imagen}
               colores={producto.colores}
-              tallas={producto.tallas}
-              agotadas={agotadas}
             />
 
             <Acordeon>
@@ -139,7 +130,7 @@ export default async function FichaProducto({ params }) {
 
         {relacionados.length > 0 && (
           <>
-            <ProductosRecomendados productos={relacionados} />
+            <ProductosRecomendados productos={relacionados} ocultarPrecio />
             <div className={styles.seguirExplorando}>
               <Boton variante="solido" href={hrefSeguirExplorando}>{t(keySeguirExplorando)}</Boton>
             </div>

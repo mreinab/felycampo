@@ -14,7 +14,7 @@ import { Navbar, Footer, NewsletterModalGlobal, CookieConsent } from '@/componen
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
-import { entradaPorSlug } from './blog/blog';
+import { entradaPorSlug } from './podcast/blog';
 
 // Páginas con su propio ProductHero (ver
 // src/components/layout/ProductHero.jsx) — nacen con el Navbar
@@ -89,14 +89,15 @@ export default async function RootLayout({ children, params }) {
   // ver ese page.js) llevan el mismo ProductHero que ../page.js, así
   // que necesitan el mismo Navbar transparente.
   const esCategoriaAtelier = /^\/atelier\/(novias|fiesta)\/categoria\//.test(rutaSinLocale);
-  // Ficha de entrada de blog (/blog/[slug], ruta dinámica — igual que
-  // esFichaRunway, no puede vivir en RUTAS_CON_PRODUCT_HERO): "articulo"
-  // y "podcast" llevan foto a sangre con data-navbar-hero (ver
-  // BlogArticulo.jsx/BlogPodcast.jsx) — "campana" no (gestiona su
+  // Ficha de entrada de blog (/podcast/[slug], ruta dinámica — antes
+  // /blog, ver podcast/page.js para el porqué del cambio de URL; igual
+  // que esFichaRunway, no puede vivir en RUTAS_CON_PRODUCT_HERO):
+  // "articulo" y "podcast" llevan foto a sangre con data-navbar-hero
+  // (ver BlogArticulo.jsx/BlogPodcast.jsx) — "campana" no (gestiona su
   // propio Navbar sólido con un offset interno, ver BlogCampana.jsx),
   // así que hace falta mirar el dato real de blog.js, no solo el
   // prefijo de la URL.
-  const matchBlog = rutaSinLocale.match(/^\/blog\/([^/]+)$/);
+  const matchBlog = rutaSinLocale.match(/^\/podcast\/([^/]+)$/);
   const tipoBlog = matchBlog && entradaPorSlug(matchBlog[1])?.tipo;
   const esHeroBlog = tipoBlog === 'articulo' || tipoBlog === 'podcast';
   // Ficha de producto (/pret-a-porter/[producto], /atelier/{novias,fiesta}/

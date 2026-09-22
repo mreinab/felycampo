@@ -2,7 +2,7 @@
 
 /* ============================================================
    EPISODIO DE PODCAST — Fely Campo
-   Ficha de una entrada de tipo "podcast" en /blog/[entrada] (ver ese
+   Ficha de una entrada de tipo "podcast" en /podcast/[entrada] (ver ese
    page.js) — a diferencia de BlogArticulo, aquí TODA la página es un
    único bloque a pantalla completa (min-height:100dvh, puede crecer
    si las notas no caben): la portada del episodio a sangre de fondo,
@@ -36,7 +36,7 @@
    falta de esos archivos, para no fingir una reproducción que no
    existe): decorativos, aria-hidden, no <button>.
    Uso:
-     <BlogPodcast entrada={entrada} locale={locale} volverHref="/es/blog" volverTexto="Volver al blog" textos={{...}} />
+     <BlogPodcast entrada={entrada} locale={locale} volverHref="/es/podcast" volverTexto="Volver al blog" textos={{...}} />
    ============================================================ */
 
 import { Etiqueta } from '@/components/ui';

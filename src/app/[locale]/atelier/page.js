@@ -8,19 +8,23 @@
    presentación) + dos BloqueSeccion en zigzag (Novias/Fiesta, el
    segundo "invertido" para que la foto cambie de lado), cada uno con
    su propio CTA "Pedir cita" (enlace/href de BloqueSeccion) +
-   "Conoce nuestros ateliers" (foto de Salamanca/Madrid/Oviedo — foto y
-   ciudad enlazan a su ficha real en /atelier-fiesta/[sede]; debajo, la
-   propia dirección es el enlace a Google Maps —dirección de
-   UBICACIONES en ../visita-fely-campo/ubicaciones.js por id, mismo
-   patrón de URL que MapaPuntosVenta.jsx— y "Pedir cita" cierra la
-   columna) + CarruselClientas al final, mismo componente que la home.
+   cabecera "Visítanos" (CabeceraSeccion, mismo patrón que
+   ListadoUbicaciones.jsx en visita-fely-campo/ — .cabeceraColumna en
+   page.module.css) + tarjetas por sede (foto de Salamanca/Madrid/
+   Oviedo — foto y ciudad enlazan a su ficha real en
+   /atelier-fiesta/[sede]; debajo, la propia dirección es el enlace a
+   Google Maps —dirección de UBICACIONES en
+   ../visita-fely-campo/ubicaciones.js por id, mismo patrón de URL que
+   MapaPuntosVenta.jsx— sin CTA propio por tarjeta, quitado a
+   petición). CarruselClientas (mismo componente que la home) comentado
+   a petición — sin fotos de clientas justo antes del Footer.
    Contenido bilingüe en atelierIndex.js (texto largo y propio de esta
    página, no encaja en messages/{locale}.json).
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';
-import { SplitMedia, RunwayDescripcion, BloqueSeccion, CarruselClientas } from '@/components/layout';
-import { Boton } from '@/components/ui';
+import { SplitMedia, RunwayDescripcion, BloqueSeccion /* , CarruselClientas */ } from '@/components/layout';
+import { CabeceraSeccion } from '@/components/ui';
 import { ATELIER_INDEX } from './atelierIndex';
 import { UBICACIONES } from '../visita-fely-campo/ubicaciones';
 import styles from './page.module.css';
@@ -73,6 +77,14 @@ export default async function Pagina({ params }) {
       />
 
       <div className={styles.ateliersSeccion}>
+        <CabeceraSeccion
+          titleKey="atelierIndex.visitanosTitulo"
+          descriptionKey="atelierIndex.visitanosDescripcion"
+          alinear="start"
+          enCuadricula
+          className={styles.cabeceraColumna}
+        />
+
         <div className={styles.ateliersGrid}>
           {ATELIER_INDEX.ateliers.map((atelier) => {
             // Misma dirección que ya muestra ListadoUbicaciones.jsx
@@ -101,21 +113,15 @@ export default async function Pagina({ params }) {
                     {ubicacion.direccion.join('\n')}
                   </a>
                 )}
-
-                <Boton
-                  variante="contorno"
-                  href={`/${locale}/visita-fely-campo/cita?ubicacion=${atelier.id}`}
-                  className={styles.atelierPedirCita}
-                >
-                  {t('pedirCita')}
-                </Boton>
               </div>
             );
           })}
         </div>
       </div>
 
+      {/* Comentado a petición — sin fotos de clientas justo antes del Footer.
       <CarruselClientas />
+      */}
     </section>
   );
 }

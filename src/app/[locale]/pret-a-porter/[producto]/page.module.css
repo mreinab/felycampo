@@ -1,8 +1,9 @@
 /* ============================================================
    FICHA DE PRODUCTO — Fely Campo
    Dos columnas en escritorio: galería a la izquierda, info (nombre,
-   precio, selectores, acordeón) a la derecha, pegada arriba mientras
-   la galería es más alta que ella. Apiladas en mobile.
+   descripción, color, acordeón) a la derecha, pegada arriba mientras
+   la galería es más alta que ella. Apiladas en mobile. Sin precio ni
+   selector de talla (a petición explícita, ver FichaProductoAcciones.jsx).
    ============================================================ */
 
 /* Navbar transparent+fixed en esta página (ver layout.js
@@ -118,14 +119,10 @@
   font-size: var(--text-h3);
 }
 
-.precio {
-  font-size: var(--text-small);
-  color: var(--color-tinta);
-  letter-spacing: var(--tracking-label);
-}
-
 /* Antes vivía en el acordeón "Detalles" (ver page.js) — ahora se
-   muestra siempre, justo debajo del precio, sin plegar. */
+   muestra siempre, justo debajo del nombre, sin plegar. Sin precio (a
+   petición explícita, ver FichaProductoAcciones.jsx): margin-top igual
+   que antes, ahora contando desde .cabecera directamente. */
 .descripcion {
   font-size: var(--text-small);
   font-weight: 400;

@@ -8,14 +8,14 @@
    (no un estado de apertura/cierre), no hace falta la clase
    "abierta"/transición de opacidad de MiCuentaModal, ni su mecanismo
    de foco/Escape (eso es de modal; aquí "cerrar" es solo un enlace de
-   vuelta a /visita-fely-campo). Tres pasos dentro del mismo
-   .formContenedor (ver page.js): "intro" (bienvenida editorial +
-   Continuar), "ubicación" (3 botones grandes, Salamanca/Madrid/Oviedo)
-   y "contacto" (botones a WhatsApp/email de la sede elegida, ver
-   .contactoBotones más abajo) — el panel de la izquierda es siempre la
-   misma foto (IMAGEN_LATERAL en page.js). Esquinas rectas en todo
-   (--radius-botones/--radius-inputs a 0, igual que el resto del sitio)
-   — mismo criterio que ModalSolicitudAtelier.
+   vuelta a /visita-fely-campo). Un único formulario dentro de
+   .formContenedor (ver page.js) — antes tres pasos (bienvenida,
+   ubicación, contacto), simplificado a petición. El panel de la foto
+   (.imagenPanel) se oculta del todo en mobile y tablet en vertical
+   (ver media query al final) — antes pasaba a ser una franja fija
+   arriba, ahora directamente no se pinta ahí, solo el formulario.
+   Esquinas rectas en todo (--radius-botones/--radius-inputs a 0, igual
+   que el resto del sitio) — mismo criterio que ModalSolicitudAtelier.
    ============================================================ */
 
 .pagina {
@@ -25,6 +25,36 @@
   z-index: 100;
   background: var(--color-fondo);
   overflow: hidden;
+}
+
+/* Antes de montar el portal de arriba (ver "montado" en page.js) —
+   dentro del flujo normal (no fixed), a toda la altura de viewport
+   para que ocupe el hueco entre Navbar y Footer en vez de dejarlo en
+   blanco mientras React hidrata. */
+.cargando {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-fondo);
+}
+
+.cargandoLogo {
+  height: 40px;
+  width: auto;
+  animation: cargandoPulso 1.4s ease-in-out infinite;
+}
+
+@keyframes cargandoPulso {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cargandoLogo {
+    animation: none;
+    opacity: 0.6;
+  }
 }
 
 /* Mismo tamaño/diseño que .cerrar de MiCuentaModal.module.css — aquí
@@ -49,9 +79,9 @@
 }
 
 /* 50%/50% en escritorio (foto a sangre a la izquierda, contenido
-   centrado a la derecha) — en mobile la foto pasa a ser una franja
-   fija arriba, mismo criterio que .pieza de SplitMedia.module.css al
-   apilarse. */
+   centrado a la derecha) — en mobile/tablet vertical desaparece del
+   todo (ver media query al final), el formulario pasa a ocupar el
+   ancho completo. */
 .layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -69,7 +99,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: opacity 0.35s var(--ease-marca);
 }
 
 /* "grid"/"place-items", no flex/align-items: centrar con flex cuando
@@ -84,15 +113,18 @@
   padding: var(--spacing-8) var(--spacing-6);
 }
 
-/* min-width:0 en toda esta cadena (aquí, .form y .campo más abajo):
-   sin él, un item de flex/grid no encoge nunca por debajo del ancho
-   de su contenido (min-width:auto por defecto) — y aquí el contenido
-   incluye .chipsScroll, una fila de hasta 14 chips con scroll propio
-   (overflow-x:auto). Sin este min-width:0 en la cadena, ese ancho
-   "natural" (todos los chips en fila, sin envolver) se propaga hacia
-   arriba y ensancha .formContenedor por encima del viewport en
-   mobile, en vez de quedarse dentro de sus 100%/400px y dejar que
-   .chipsScroll scrollee por su cuenta. */
+/* Oculto por defecto (desktop/landscape ya tiene la foto de
+   .imagenPanel como marca visible) — solo aparece en mobile/tablet
+   vertical, ver media query al final, donde esa foto desaparece del
+   todo y si no el formulario quedaría sin ninguna marca visible. Mismo
+   "top"/altura de fila que .cerrar (arriba): position:fixed + mismo
+   valor de "top", height:40px igual que ese botón, flex centrado para
+   que la imagen (más baja que la fila) quede a la misma altura visual
+   que el icono de cerrar, no solo en el mismo "top" numérico. */
+.logoMobile {
+  display: none;
+}
+
 .formContenedor {
   width: 100%;
   max-width: 400px;
@@ -102,22 +134,11 @@
   gap: var(--spacing-6);
 }
 
-/* Envoltorio de cada paso ("ubicación" y "form"): antes eran hijos
-   directos de .formContenedor (vía Fragment) y heredaban su gap; al
-   envolverlos en un nodo propio (para poder animarlos con
-   entrada-suave, ver global.css) hace falta repetir aquí ese mismo
-   gap/min-width para que la separación interna no cambie. */
-.paso {
+.form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-6);
+  gap: var(--spacing-4);
   min-width: 0;
-}
-
-.cabecera {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
 }
 
 .titulo {
@@ -127,22 +148,142 @@
   text-align: center;
 }
 
-/* ---------- Paso 0: bienvenida (antes de elegir sede) ---------- */
-.introPaso {
+/* Código postal + ciudad, uno al lado del otro — cada Input (ui/) ya
+   trae su propio ancho al 100%, min-width:0 en los dos para que
+   encojan por igual en vez de desbordar en mobile (mismo motivo que
+   .fechaFila .select más abajo). */
+.fila2Columnas {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.fila2Columnas > * {
+  min-width: 0;
+  flex: 1 1 0;
+}
+
+/* Campo propio (ubicación/mensaje) — mismo diseño que .campo/.etiqueta
+   de ModalSolicitudAtelier.module.css (Input, ui/, ya trae el suyo
+   para nombre/email/teléfono). */
+.campo {
   display: flex;
   flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.etiqueta {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+}
+
+/* Mismo aspecto que .input de Input.module.css — sin componente
+   Select propio todavía en ui/, así que se replica aquí a mano. */
+.select {
+  width: 100%;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: 12px var(--spacing-1);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease-marca);
+}
+
+.select:focus {
+  border-color: var(--color-tinta);
+}
+
+/* Fecha del evento: 3 selects propios (día/mes/año) en fila, no
+   <input type="date"> — a petición, para no depender del calendario
+   nativo del navegador/SO. min-width:0 en cada uno: sin él, un select
+   no encoge por debajo de su contenido (el mes más largo) y la fila
+   desborda en mobile. */
+.fechaFila {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.fechaFila .select {
+  min-width: 0;
+  flex: 1 1 0;
+}
+
+/* Mismo aspecto que .input de Input.module.css — sin componente
+   Textarea propio todavía en ui/, así que se replica aquí a mano. */
+.textarea {
+  width: 100%;
+  border: 1px solid var(--color-gris-300);
+  border-radius: var(--radius-inputs);
+  padding: 12px var(--spacing-1);
+  font-family: var(--font-base);
+  font-size: var(--text-small);
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.25s var(--ease-marca);
+}
+
+.textarea::placeholder {
+  color: var(--color-gris-400);
+}
+
+.textarea:focus {
+  border-color: var(--color-tinta);
+}
+
+.aviso {
+  color: var(--color-rosa-oscuro);
+  font-size: var(--text-caption);
+}
+
+/* Casilla de privacidad/términos — obligatoria (ver "aceptaLegal" en
+   page.js). */
+.legalFila {
+  display: flex;
   align-items: center;
-  gap: var(--spacing-6);
+  gap: var(--spacing-2);
+  cursor: pointer;
 }
 
-.introTexto {
+.legalCheckbox {
+  flex-shrink: 0;
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-tinta);
+  cursor: pointer;
+}
+
+.legalTexto {
+  font-size: var(--text-caption);
+  color: var(--color-gris-500);
+  line-height: var(--leading-base);
+}
+
+.legalEnlace {
+  color: var(--color-tinta);
+  text-decoration: underline;
+  transition: color 0.25s var(--ease-marca);
+}
+
+.legalEnlace:hover {
+  color: var(--color-rosa-oscuro);
+}
+
+/* ---------- Confirmación tras "Enviar solicitud" ---------- */
+.confirmacion {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-3);
+  gap: var(--spacing-4);
+  text-align: center;
 }
 
-/* white-space:pre-line respeta los saltos de párrafo reales ("\n\n")
-   del texto en pedirCitaAtelier.dondeIntro. */
+/* white-space:pre-line respeta saltos de párrafo reales si hiciera
+   falta en pedirCitaAtelier.confirmacionTexto. */
 .dondeIntro {
   font-size: var(--text-body-lg);
   line-height: var(--leading-base);
@@ -151,104 +292,49 @@
   white-space: pre-line;
 }
 
-.subtituloUbicacion {
-  font-size: var(--text-small);
-  text-align: center;
-  color: var(--color-tinta);
-}
-
-/* ---------- Paso 1: elegir ubicación ---------- */
-.ubicaciones {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-}
-
-.ubicacionBtn {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-1);
-  padding: var(--spacing-4) var(--spacing-5);
-  font-family: var(--font-base);
-  text-align: center;
-  background: var(--color-fondo);
-  color: var(--color-tinta);
-  border: var(--border-regular) solid var(--color-gris-300);
-  border-radius: var(--radius-botones);
-  cursor: pointer;
-  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca), color 0.25s var(--ease-marca);
-}
-
-.ubicacionBtn:hover {
-  background: var(--color-tinta);
-  color: var(--color-fondo);
-  border-color: var(--color-tinta);
-}
-
-.ubicacionCiudad {
-  font-size: var(--text-body-lg);
-}
-
-/* Menor y atenuado — se atenúa igual en hover (color:inherit hereda
-   el --color-fondo que .ubicacionBtn:hover ya pone en el texto). */
-.ubicacionTipo {
-  font-size: var(--text-caption);
-  opacity: 0.6;
-}
-
-/* ---------- Paso 2: botón de solo icono (flecha), vuelve al paso 1 —
-   mismo icono que .cerrar de BlogPodcast.module.css/BlogArticulo.module.css. ---------- */
-.cambiarUbicacion {
-  align-self: flex-start;
-  display: flex;
-  background: none;
-  border: none;
-  padding: 0;
-  color: var(--color-tinta);
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.25s var(--ease-marca);
-}
-
-.cambiarUbicacion:hover {
-  opacity: 1;
-}
-
-/* ---------- Paso 2: contacto directo (WhatsApp/email) con la sede
-   elegida — sustituye al formulario de día/hora/datos que había antes
-   aquí. ---------- */
-.contactoBotones {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-}
-
-@media (max-width: 767px) {
-  /* En mobile ya no hace falta que .formPanel sea la única zona con
-     scroll propio (eso dejaba la foto fija arriba, sin poder
-     scrollearla junto al resto) — .pagina entero scrollea, .layout
-     crece a su altura real (foto 240px + formulario) y .formPanel deja
-     de recortar/scrollear por su cuenta. */
+/* Mobile y tablet en vertical (portrait, hasta 1023px — mismo criterio
+   que Navbar/SplitMedia/BloqueSeccion): sin panel de foto, solo el
+   formulario a todo el ancho. En landscape (tablet apaisado o laptop)
+   sigue el 50/50 de siempre. */
+@media (max-width: 767px), (max-width: 1023px) and (orientation: portrait) {
   .pagina {
     overflow-y: auto;
   }
 
   .layout {
     grid-template-columns: 1fr;
-    grid-template-rows: 240px auto;
     height: auto;
     min-height: 100vh;
   }
 
   .imagenPanel {
-    height: 240px;
+    display: none;
   }
 
   .formPanel {
     height: auto;
     overflow-y: visible;
-    padding: var(--spacing-6) var(--spacing-4);
+    padding: var(--spacing-8) var(--spacing-4);
+    /* Sitio para .logoMobile (fixed, fuera del flujo) encima del
+       formulario — sin este padding, el título del formulario
+       quedaría tapado por el logo al hacer scroll hasta arriba. */
+    padding-top: calc(var(--spacing-4) + 40px + var(--spacing-4));
+  }
+
+  .logoMobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: var(--spacing-4);
+    left: 0;
+    right: 0;
+    height: 40px;
+    z-index: 1;
+  }
+
+  .logoMobileImagen {
+    height: 28px;
+    width: auto;
   }
 }

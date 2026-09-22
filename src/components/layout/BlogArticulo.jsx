@@ -2,7 +2,7 @@
 
 /* ============================================================
    ARTÍCULO DE BLOG — Fely Campo
-   Ficha de una entrada de tipo "articulo" en /blog/[entrada] (ver ese
+   Ficha de una entrada de tipo "articulo" en /podcast/[entrada] (ver ese
    page.js) — LA plantilla del blog, en dos mitades:
    1) Cabecera calcada de la ficha de colección de Runway
       (/colecciones-fely-campo/la-coleccion-aw27, ver ese page.js/
@@ -16,7 +16,7 @@
       (solo icono, sin texto — mismo patrón que .volver en
       BlogPodcast.jsx), no dentro de .textoDescripcion: Runway no trae
       un enlace de vuelta de por sí, así que aquí se resuelve como en
-      el resto de fichas de /blog con hero a sangre. .metaHero, dentro
+      el resto de fichas de /podcast con hero a sangre. .metaHero, dentro
       de .textoRow, es solo la fecha — sin categoría ni autor, a
       propósito (entrada.categoria/entrada.autor siguen viviendo en
       blog.js para BlogTarjeta/otros usos, no se borran) — el mismo
@@ -74,7 +74,7 @@
    Ver la entrada "mbfw-madrid-tempore" en blog.js para un ejemplo
    completo con los seis tipos de bloque, incluida "galeria" repetida
    varias veces siguiendo el patrón texto → imágenes:
-     <BlogArticulo entrada={entrada} locale={locale} volverHref="/es/blog" volverTexto="Volver al blog" />
+     <BlogArticulo entrada={entrada} locale={locale} volverHref="/es/podcast" volverTexto="Volver al blog" />
    ============================================================ */
 
 import RunwayMediaLateral from './RunwayMediaLateral';

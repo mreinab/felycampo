@@ -66,6 +66,24 @@
   object-fit: cover;
 }
 
+/* Sin fotos todavía (ver taller.medios en talleres.js/page.js) — un
+   único bloque a todo el ancho en vez de la tira de 5 columnas de
+   .marco, en gris claro para que se lea como placeholder a propósito,
+   no como una imagen que tarda en cargar (--color-details, que sí usa
+   .marco, es demasiado sutil para eso). */
+.marcoVacio {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  background: var(--color-gris-200);
+  border-radius: var(--radius-imagenes);
+}
+
+@media (max-width: 1023px) {
+  .marcoVacio {
+    aspect-ratio: 4 / 3;
+  }
+}
+
 /* Mismas 5 columnas que .imagenes, para que .infoContenido (columnas
    2-4, centrado, ver más abajo) quede alineado con la tira de
    imágenes de arriba — las columnas 1 y 5 quedan vacías a los lados

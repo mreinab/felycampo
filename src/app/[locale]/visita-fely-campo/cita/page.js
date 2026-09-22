@@ -3,74 +3,65 @@
 /* ============================================================
    RESERVAR CITA — ATELIER — Fely Campo. Ruta: /visita-fely-campo/cita
    Página a pantalla completa (no modal — ver respuesta a "modal vs.
-   página" en la conversación: SEO/enlace directo/?ubicacion= piden
-   una URL real), pero calcada del DISEÑO de MiCuentaModal.jsx/.css
-   (foto 50% izquierda + contenido 50% derecha, X arriba a la derecha)
-   — ver page.module.css para el porqué de position:fixed/z-index en
-   vez de la clase "abierta" del modal real.
+   página" en la conversación: SEO/enlace directo piden una URL real),
+   calcada del DISEÑO de MiCuentaModal.jsx/.css (foto 50% izquierda +
+   contenido 50% derecha, X arriba a la derecha) — ver page.module.css
+   para el porqué de position:fixed/z-index en vez de la clase
+   "abierta" del modal real.
 
-   Dos pasos dentro del mismo panel derecho:
-   0. Bienvenida (pasoIntro): texto editorial de presentación +
-      "Continuar", pantalla propia (no un párrafo suelto encima del
-      paso 1) para que se lea como apertura, no como una etiqueta más
-      del formulario.
-   1. "¿Dónde quieres pedir la cita?" — tres botones grandes
-      (Salamanca/Madrid/Oviedo, UBICACIONES de ../ubicaciones.js). El
-      panel de la foto es siempre IMAGEN_LATERAL, la misma en los tres
-      pasos.
-   2. Contacto directo con la sede elegida: WhatsApp (wa.me,
-      "ubicacion.whatsapp" — mismo dato/mismo formato de enlace que
-      ListadoUbicaciones.jsx/AtelierDetalle.jsx) o email (mailto, mismo
-      correo general que el resto del sitio, ver "enlace-texto" en
-      ayuda/contacto/page.js). Ya no hay formulario de día/hora ni
-      pantalla de confirmación propia — la cita se cierra por esos dos
-      canales, no en la propia web (PLACEHOLDER de reserva real
-      retirado, ver historial de este archivo si hiciera falta
-      recuperar ese flujo). Un enlace "Cambiar ubicación" vuelve al
-      paso 1.
-   "?ubicacion=<id>" en la URL (lo mandan ListadoUbicaciones.jsx y
-   AtelierDetalle.jsx) preselecciona la sede y salta directo al paso 2,
-   saltándose también la bienvenida (pasoIntro arranca en false) — ya
-   viene de un enlace con contexto propio, no hace falta la apertura. */
+   Un único formulario pequeño (sin pasos ni bienvenida editorial, ver
+   historial de este archivo para el flujo de bienvenida/ubicación/
+   WhatsApp-email que llevaba antes): nombre completo, email y teléfono
+   de contacto, fecha del evento (opcional, día/mes/año en selects
+   propios — no <input type="date">, a petición), código postal,
+   mensaje libre y la casilla de aceptar privacidad/términos
+   (obligatoria). "Enviar solicitud" pasa a una pantalla de
+   confirmación — PLACEHOLDER a propósito, sin backend real todavía
+   (mismo criterio que ModalSolicitudAtelier.jsx). El panel de la foto
+   (IMAGEN_LATERAL) se oculta en mobile/tablet vertical (ver
+   .imagenPanel en page.module.css) — ahí solo queda el formulario. */
 
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { X } from 'lucide-react';
-import { Boton } from '@/components/ui';
-import { UBICACIONES } from '../ubicaciones';
+import { Boton, Input } from '@/components/ui';
 import styles from './page.module.css';
 
-// Mismo correo que el resto del sitio (ver ayuda/contacto, envios,
-// devoluciones, atencion-cliente).
-const EMAIL_CONTACTO = 'info@felycampo.com';
+const IMAGEN_LATERAL = '/img/citas-atelier-felycampo-2.jpg';
 
-// Misma foto para el panel izquierdo durante todo el proceso (bienvenida,
-// elegir sede y contacto) — antes cambiaba según la sede elegida
-// (MEDIOS_TALLERES en ../ListadoUbicaciones.jsx), ahora es siempre esta.
-const IMAGEN_LATERAL = '/img/atelier/citas-atelier-felycampo.jpg';
+// Nombres de mes propios (no hay diccionario de meses en messages/
+// {locale}.json todavía) — mismo criterio bilingüe por campo que
+// atelierIndex.js, aquí como array fijo en vez de {es, en} por entrada.
+const MESES = {
+  es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+};
+
+const DIAS = Array.from({ length: 31 }, (_, i) => i + 1);
+// El evento es a futuro (es la fecha para la que se pide el vestido,
+// no una fecha pasada) — año actual + 3 basta de sobra para una boda/
+// fiesta ya planeada con antelación.
+const ANIO_ACTUAL = new Date().getFullYear();
+const ANIOS = Array.from({ length: 4 }, (_, i) => ANIO_ACTUAL + i);
 
 export default function Pagina() {
   const t = useTranslations('pedirCitaAtelier');
-  // Mismo "Atelier"/"Atelier & Showroom"/"Atelier" que ya usan las
-  // fichas de /atelier-fiesta/[sede] — se reutiliza tal cual en vez de
-  // duplicar el texto aquí.
-  const tAtelier = useTranslations('atelierFiesta');
   const locale = useLocale();
-  const searchParams = useSearchParams();
+  const meses = MESES[locale] || MESES.es;
 
-  // "?ubicacion=" preselecciona la sede y salta al paso 2 — solo si
-  // coincide con un id real de UBICACIONES, si no se ignora y se
-  // queda en el paso 1.
-  const ubicacionInicial = UBICACIONES.find((u) => u.id === searchParams.get('ubicacion'))?.id ?? null;
-  const [ubicacionId, setUbicacionId] = useState(ubicacionInicial);
-  const ubicacionSeleccionada = UBICACIONES.find((u) => u.id === ubicacionId) ?? null;
-
-  // Paso 0: bienvenida (texto editorial) antes de preguntar la sede —
-  // se salta si "?ubicacion=" ya trae una sede válida (mismo caso que
-  // salta directo al paso 2, ver comentario de cabecera).
-  const [pasoIntro, setPasoIntro] = useState(!ubicacionInicial);
+  const [nombreCompleto, setNombreCompleto] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [fechaDia, setFechaDia] = useState('');
+  const [fechaMes, setFechaMes] = useState('');
+  const [fechaAnio, setFechaAnio] = useState('');
+  const [codigoPostal, setCodigoPostal] = useState('');
+  const [ciudad, setCiudad] = useState('');
+  const [mensaje, setMensaje] = useState('');
+  const [aceptaLegal, setAceptaLegal] = useState(false);
+  const [avisoDatos, setAvisoDatos] = useState(false);
+  const [enviado, setEnviado] = useState(false);
 
   // Sin scroll de la página detrás mientras esta pantalla completa
   // está montada — mismo criterio que MiCuentaModal.jsx al abrir.
@@ -90,16 +81,47 @@ export default function Pagina() {
   const [montado, setMontado] = useState(false);
   useEffect(() => setMontado(true), []);
 
-  if (!montado) return null;
+  // Antes de montar (SSR y el primer tick en cliente, ver comentario de
+  // arriba) no se puede pintar el portal — sin nada aquí, se veía el
+  // Navbar y el Footer del layout con un hueco en blanco entre medias
+  // mientras React hidrata. En su lugar, un logo pulsante a toda la
+  // altura de la sección (misma .color-fondo que .pagina) — normal,
+  // dentro del flujo (no fixed/portal, no le hace falta ganarle al
+  // Footer todavía: eso solo importa una vez montado el portal real).
+  if (!montado) {
+    return (
+      <div className={styles.cargando}>
+        <img src="/img/logo/logo-felycampo.png" alt="" className={styles.cargandoLogo} />
+      </div>
+    );
+  }
 
-  const whatsappHref = ubicacionSeleccionada && `https://wa.me/${ubicacionSeleccionada.whatsapp.replace(/\D/g, '')}`;
-  const mailtoHref = ubicacionSeleccionada && `mailto:${EMAIL_CONTACTO}?subject=${encodeURIComponent(t('emailAsunto', { sede: ubicacionSeleccionada.nombre }))}`;
+  const withLocale = (href) => `/${locale}${href}`;
+
+  const alEnviar = (evento) => {
+    evento.preventDefault();
+    if (!nombreCompleto.trim() || !email.trim() || !telefono.trim() || !codigoPostal.trim() || !ciudad.trim() || !aceptaLegal) {
+      setAvisoDatos(true);
+      return;
+    }
+    // Placeholder — sin backend real todavía, ver comentario de cabecera.
+    setEnviado(true);
+  };
 
   return createPortal(
     <div className={styles.pagina}>
       <a href={`/${locale}/visita-fely-campo`} className={styles.cerrar} aria-label={t('cerrar')}>
         <X size={28} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" />
       </a>
+
+      {/* Solo visible cuando .imagenPanel se oculta (mobile y tablet en
+          vertical, ver page.module.css) — sin la foto ahí no queda
+          ninguna marca visible. Misma fila/altura que "cerrar" de
+          arriba (mismo "top", centrado vertical propio dentro de esa
+          fila vía .logoMobile). */}
+      <div className={styles.logoMobile}>
+        <img src="/img/logo/logo-felycampo.png" alt="Fely Campo" className={styles.logoMobileImagen} />
+      </div>
 
       <div className={styles.layout}>
         <div className={styles.imagenPanel}>
@@ -108,60 +130,132 @@ export default function Pagina() {
 
         <div className={styles.formPanel}>
           <div className={styles.formContenedor}>
-            {pasoIntro ? (
-              <div key="intro" className={`${styles.introPaso} entrada-suave`}>
-                <div className={styles.introTexto}>
-                  <h2 className={styles.titulo}>{t('introTitulo')}</h2>
-                  <p className={styles.dondeIntro}>{t('dondeIntro')}</p>
-                </div>
-                <Boton variante="solido" tamano="full" onClick={() => setPasoIntro(false)}>
-                  {t('continuar')}
-                </Boton>
-              </div>
-            ) : !ubicacionSeleccionada ? (
-              <div key="ubicacion" className={`${styles.paso} entrada-suave`}>
-                <div className={styles.cabecera}>
-                  <h1 className={styles.titulo}>{t('dondeTitulo')}</h1>
-                </div>
-
-                <div className={styles.ubicaciones}>
-                  {UBICACIONES.map((ubicacion) => (
-                    <button
-                      key={ubicacion.id}
-                      type="button"
-                      className={styles.ubicacionBtn}
-                      onClick={() => setUbicacionId(ubicacion.id)}
-                    >
-                      <span className={styles.ubicacionCiudad}>{ubicacion.ciudad}</span>
-                      <span className={styles.ubicacionTipo}>{tAtelier(`${ubicacion.id}.eyebrow`)}</span>
-                    </button>
-                  ))}
-                </div>
+            {enviado ? (
+              <div className={styles.confirmacion}>
+                <h1 className={styles.titulo}>{t('confirmacionTitulo')}</h1>
+                <p className={styles.dondeIntro}>{t('confirmacionTexto')}</p>
               </div>
             ) : (
-              <div key="contacto" className={`${styles.paso} entrada-suave`}>
-                <button
-                  type="button"
-                  className={styles.cambiarUbicacion}
-                  onClick={() => setUbicacionId(null)}
-                  aria-label={t('cambiarUbicacion')}
-                >
-                  <svg width="20" height="16" viewBox="0 0 20 16" fill="none" aria-hidden="true">
-                    <path d="M8 1L1 8L8 15M1 8H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" />
-                  </svg>
-                </button>
+              <form className={styles.form} onSubmit={alEnviar}>
+                <h1 className={styles.titulo}>{t('titulo')}</h1>
 
-                <div className={styles.cabecera}>
-                  <span className={styles.subtituloUbicacion}>{ubicacionSeleccionada.nombre}</span>
-                  <h1 className={styles.titulo}>{t('titulo')}</h1>
-                  <p className={styles.dondeIntro}>{t('contactoTexto')}</p>
+                <Input
+                  etiqueta={t('nombreCompleto')}
+                  nombre="nombreCompleto"
+                  placeholder={t('nombreCompletoPlaceholder')}
+                  valor={nombreCompleto}
+                  onChange={(evento) => { setNombreCompleto(evento.target.value); setAvisoDatos(false); }}
+                />
+                <Input
+                  etiqueta={t('email')}
+                  tipo="email"
+                  nombre="email"
+                  placeholder={t('emailPlaceholder')}
+                  valor={email}
+                  onChange={(evento) => { setEmail(evento.target.value); setAvisoDatos(false); }}
+                />
+                <Input
+                  etiqueta={t('telefono')}
+                  tipo="tel"
+                  nombre="telefono"
+                  placeholder={t('telefonoPlaceholder')}
+                  valor={telefono}
+                  onChange={(evento) => { setTelefono(evento.target.value); setAvisoDatos(false); }}
+                />
+
+                <div className={styles.campo}>
+                  <span className={styles.etiqueta}>{t('fechaEvento')}</span>
+                  <div className={styles.fechaFila}>
+                    <select
+                      className={styles.select}
+                      aria-label={t('dia')}
+                      value={fechaDia}
+                      onChange={(evento) => setFechaDia(evento.target.value)}
+                    >
+                      <option value="">{t('dia')}</option>
+                      {DIAS.map((dia) => (
+                        <option key={dia} value={dia}>{dia}</option>
+                      ))}
+                    </select>
+                    <select
+                      className={styles.select}
+                      aria-label={t('mes')}
+                      value={fechaMes}
+                      onChange={(evento) => setFechaMes(evento.target.value)}
+                    >
+                      <option value="">{t('mes')}</option>
+                      {meses.map((nombreMes, indice) => (
+                        <option key={nombreMes} value={indice + 1}>{nombreMes}</option>
+                      ))}
+                    </select>
+                    <select
+                      className={styles.select}
+                      aria-label={t('anio')}
+                      value={fechaAnio}
+                      onChange={(evento) => setFechaAnio(evento.target.value)}
+                    >
+                      <option value="">{t('anio')}</option>
+                      {ANIOS.map((anio) => (
+                        <option key={anio} value={anio}>{anio}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
-                <div className={styles.contactoBotones}>
-                  <Boton variante="solido" tamano="full" href={whatsappHref}>{t('contactarWhatsapp')}</Boton>
-                  <Boton variante="contorno" tamano="full" href={mailtoHref}>{t('contactarEmail')}</Boton>
+                <div className={styles.fila2Columnas}>
+                  <Input
+                    etiqueta={t('codigoPostal')}
+                    nombre="codigoPostal"
+                    placeholder={t('codigoPostalPlaceholder')}
+                    valor={codigoPostal}
+                    onChange={(evento) => { setCodigoPostal(evento.target.value); setAvisoDatos(false); }}
+                  />
+                  <Input
+                    etiqueta={t('ciudad')}
+                    nombre="ciudad"
+                    placeholder={t('ciudadPlaceholder')}
+                    valor={ciudad}
+                    onChange={(evento) => { setCiudad(evento.target.value); setAvisoDatos(false); }}
+                  />
                 </div>
-              </div>
+
+                <label className={styles.campo}>
+                  <span className={styles.etiqueta}>{t('mensaje')}</span>
+                  <textarea
+                    className={styles.textarea}
+                    value={mensaje}
+                    onChange={(evento) => setMensaje(evento.target.value)}
+                    rows={3}
+                  />
+                </label>
+
+                <label className={styles.legalFila}>
+                  <input
+                    type="checkbox"
+                    className={styles.legalCheckbox}
+                    checked={aceptaLegal}
+                    onChange={(evento) => { setAceptaLegal(evento.target.checked); setAvisoDatos(false); }}
+                  />
+                  <span className={styles.legalTexto}>
+                    {t.rich('aceptoLegal', {
+                      privacidad: (chunks) => (
+                        <a href={withLocale('/legal/privacidad')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
+                          {chunks}
+                        </a>
+                      ),
+                      terminos: (chunks) => (
+                        <a href={withLocale('/legal/terminos')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
+                          {chunks}
+                        </a>
+                      ),
+                    })}
+                  </span>
+                </label>
+
+                {avisoDatos && <p className={styles.aviso}>{t('avisoDatos')}</p>}
+
+                <Boton variante="solido" tamano="full" type="submit">{t('enviar')}</Boton>
+              </form>
             )}
           </div>
         </div>

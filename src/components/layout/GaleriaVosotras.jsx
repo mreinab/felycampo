@@ -21,23 +21,19 @@
    UN grupo de fotos que a simple vista parecen de la misma clienta/
    misma boda (mismo vestido, mismo acompañante, mismo lugar) — se
    agruparon a mano revisando las fotos una a una, no hay metadato real
-   que las una todavía. nombre/comentario/producto vinculado siguen
-   siendo PLACEHOLDER (no hay reseña real de estas clientas), ver
-   comentario de LOOKS más abajo.
+   que las una todavía.
 
    El lightbox reutiliza el mecanismo de RunwayGaleria.jsx (mismo
    .lightbox/.abierta, cabecera con logo + cerrar, pista con scroll-
    snap + rueda con cooldown, franja de miniaturas a la izquierda para
-   saltar entre fotos sin cerrar, y el propio bloque "Consigue el look"
-   — .panelProductosBloque, productos reales de productosEjemplo.js
-   enlazando a su ficha de Tienda, mismo criterio que "productos" en
-   colecciones.js) pero con contenido propio: las miniaturas son las
-   fotos DE ESE MISMO look (no otros looks de la cuadrícula — no hay
-   forma de saltar de un look a otro sin cerrar, a diferencia de
-   RunwayGaleria con sus looks de colección), y encima de "Consigue el
-   look" el panel muestra el nombre de la clienta + su comentario, no
-   "Look X" — mismo tratamiento tipográfico que .pie de
-   ResenasClientes.module.css (cita + nombre).
+   saltar entre fotos sin cerrar) pero sin su panel inferior ("Look X" +
+   "Consigue el look"): aquí ese panel (nombre/comentario de la clienta
+   + producto vinculado) era placeholder puro, sin reseña real de estas
+   clientas ni prenda real detrás, así que se quitó a petición — solo
+   fotos + miniaturas, sin nada debajo. Las miniaturas son las fotos DE
+   ESE MISMO look (no otros looks de la cuadrícula — no hay forma de
+   saltar de un look a otro sin cerrar, a diferencia de RunwayGaleria
+   con sus looks de colección).
 
    La propia CabeceraSeccion vive aquí dentro (no en page.js, que solo
    le reenvía subtitleKey/titleKey/descriptionKey/margenSuperiorAmplio)
@@ -56,42 +52,20 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Plus, X } from 'lucide-react';
 import { CabeceraSeccion, CarruselFotos } from '../ui';
 import useEnVista from '@/hooks/useEnVista';
-import { RESENAS_EJEMPLO } from './resenasEjemplo';
-import { fiestaProductos } from './fiestaProductos';
-import { slugify } from '@/lib/slugify';
 import { FOTOS_INVITADAS, FOTOS_NOVIAS } from './vosotrasFotos';
 import styles from './GaleriaVosotras.module.css';
 
-// "Consigue el look" — vínculo aún de mentira (no hay backend que sepa
-// qué prenda real lleva cada clienta), pero en vez de productosEjemplo.js
-// (nombre/imagen inventados, sin ficha real detrás) apunta siempre a la
-// misma pieza real del catálogo de Fiesta (mismo objeto que ya vende
-// /atelier/fiesta/look-1-ss27, ver fiestaProductos.js) — así el enlace
-// aterriza en una ficha de producto que existe de verdad.
-const PRODUCTO_VINCULADO = fiestaProductos.find((p) => p.nombre === 'Look 1 SS27');
-
 // Cada look: su propia mini-galería (grupo real de fotos, portada
-// siempre primera) + nombre/comentario (reutiliza RESENAS_EJEMPLO,
-// resenasEjemplo.js, en vez de inventar reseñas reales de estas
-// clientas concretas — no hay backend todavía que las capture) + el
-// producto vinculado de arriba.
-function construirLooks(gruposFotos, categoria, indiceInicial) {
-  return gruposFotos.map((fotos, indice) => {
-    const indiceGlobal = indiceInicial + indice;
-    const resena = RESENAS_EJEMPLO[indiceGlobal % RESENAS_EJEMPLO.length];
-    return {
-      fotos,
-      nombre: resena.nombre,
-      comentario: resena.texto,
-      productos: PRODUCTO_VINCULADO ? [PRODUCTO_VINCULADO] : [],
-      categoria,
-    };
-  });
+// siempre primera). Sin nombre/comentario ni "Consigue el look" —
+// quitados a petición (placeholder, sin reseña real de estas
+// clientas ni prenda real vinculada detrás).
+function construirLooks(gruposFotos, categoria) {
+  return gruposFotos.map((fotos) => ({ fotos, categoria }));
 }
 
 const LOOKS_EJEMPLO = [
-  ...construirLooks(FOTOS_INVITADAS, 'invitadas', 0),
-  ...construirLooks(FOTOS_NOVIAS, 'novias', FOTOS_INVITADAS.length),
+  ...construirLooks(FOTOS_INVITADAS, 'invitadas'),
+  ...construirLooks(FOTOS_NOVIAS, 'novias'),
 ];
 
 // Mismo fundido+subida al entrar en el viewport que TarjetaProducto.jsx
@@ -300,45 +274,6 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
             ))}
           </div>
         )}
-
-        <div className={styles.panelInfo}>
-          <div className={styles.panelInfoInterior}>
-            <div className={styles.panelResena}>
-              <p className={styles.panelTexto}>&ldquo;{lookActivo.comentario}&rdquo;</p>
-              <p className={styles.panelNombre}>{lookActivo.nombre}</p>
-            </div>
-
-            {lookActivo.productos.length > 0 && (
-              <div className={styles.panelProductosBloque}>
-                <p className={styles.panelProductosTitulo}>{t('producto.consigueElLook')}</p>
-                <div className={styles.panelProductos}>
-                  {lookActivo.productos.map((producto) => (
-                    <a
-                      key={producto.nombre}
-                      href={`/${locale}/atelier/fiesta/${slugify(producto.nombre)}`}
-                      className={styles.panelProducto}
-                      tabIndex={tabIndexInteractivo}
-                    >
-                      <span className={styles.panelProductoImagenWrap}>
-                        <img src={producto.imagen} alt="" className={styles.panelProductoImagen} />
-                        <button
-                          type="button"
-                          className={styles.panelProductoAnadir}
-                          onClick={(evento) => evento.preventDefault()}
-                          aria-label={t('producto.anadirCesta')}
-                          tabIndex={tabIndexInteractivo}
-                        >
-                          <Plus size={12} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" />
-                        </button>
-                      </span>
-                      <span className={styles.panelProductoNombre}>{producto.nombre}</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
       </div>
     </>
   );

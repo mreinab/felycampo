@@ -1,0 +1,85 @@
+/* ============================================================
+   PODCAST — Fely Campo (antes BLOG, ver page.js para el porqué del
+   cambio de URL/contenido)
+   .gridPodcast/.podcastDestacado: el/los episodios de podcast, a todo
+   el ancho y centrados (antes vivían en una celda fija de una rejilla
+   de 2 columnas compartida con artículos, ver .grid/.celdaPodcast más
+   abajo — comentados, no borrados, junto con el código que los usaba
+   en page.js). BlogTarjetaPodcastDestacado.jsx ya trae su propio
+   min-height, así que un max-width centrado basta aquí, sin el truco
+   de "estirar por la fila del grid" que hacía falta antes.
+   ============================================================ */
+
+.pagina {
+  padding-inline: var(--spacing-7);
+  padding-block: var(--spacing-8) var(--spacing-10);
+}
+
+.gridPodcast {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  margin-top: var(--spacing-4);
+}
+
+.podcastDestacado {
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 767px) {
+  .pagina {
+    padding-inline: 0;
+  }
+
+  .gridPodcast {
+    margin-top: 0;
+  }
+
+  .podcastDestacado {
+    max-width: none;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ---------- Comentado a petición junto con el código de page.js que
+   lo usaba (artículos/campañas mezclados con el podcast en una misma
+   rejilla de 2 columnas) — ver historial si hiciera falta recuperarlo.
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  gap: var(--spacing-10);
+  margin-top: var(--spacing-4);
+}
+
+.grid > a {
+  width: 100%;
+  max-width: 550px;
+}
+
+.celdaPodcast {
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+    margin-top: 0;
+  }
+
+  .grid > a {
+    max-width: none;
+  }
+
+  .celdaPodcast {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+---- fin comentado ---- */
