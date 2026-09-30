@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { LayoutGrid, Square, SlidersHorizontal } from 'lucide-react';
 import TarjetaProducto from '../ecommerce/TarjetaProducto';
@@ -11,6 +11,7 @@ import { Boton, CabeceraSeccion } from '../ui';
 import PanelFiltros from './PanelFiltros';
 import { familiasColorMock, coloresMock } from '@/components/admin/mockData';
 import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
+import { slugify } from '@/lib/slugify';
 import styles from './CuadriculaProductos.module.css';
 
 const LOTE_INICIAL = 8;
@@ -350,15 +351,41 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
       )}
 
       <div className={claseCuadricula}>
-        {productosVisibles.map((producto) => (
-          <div key={producto.nombre || producto.src} className={claseItem}>
-            {producto.media ? (
-              <TarjetaMedia {...producto} />
-            ) : (
-              <TarjetaProducto {...producto} coloresSiempreVisibles={esGrid} ocultarPrecio={ocultarPrecio} hrefBase={hrefBase} />
-            )}
-          </div>
-        ))}
+        {/* "imagenEditorial" (opcional, en el objeto del producto): una
+            foto de pasarela/campaña que se pinta JUSTO DESPUÉS de su
+            producto, en su propia celda (TarjetaMedia, mismo marco 3/4
+            que la foto del producto) y enlaza a la misma ficha —
+            rompe el ritmo de la cuadrícula sin salirse de ella. Va
+            pegada a su producto, así que si un filtro lo oculta, la
+            foto también desaparece con él. */}
+        {productosVisibles.map((producto) => {
+          // "imagenEditorialAntes": la foto va delante del producto en vez
+          // de detrás (para variar en qué columna cae, ver /pret-a-porter).
+          const celdaEditorial = producto.imagenEditorial && !producto.media && (
+            <div className={`${claseItem} ${styles.itemEditorial}`}>
+              <TarjetaMedia
+                src={producto.imagenEditorial}
+                alt={producto.nombre}
+                // Mismo destino que la propia TarjetaProducto (hrefBase por
+                // defecto "pret-a-porter" allí también).
+                href={`/${locale}/${hrefBase || 'pret-a-porter'}/${slugify(producto.nombre)}`}
+              />
+            </div>
+          );
+          return (
+            <Fragment key={producto.nombre || producto.src}>
+              {producto.imagenEditorialAntes && celdaEditorial}
+              <div className={claseItem}>
+                {producto.media ? (
+                  <TarjetaMedia {...producto} />
+                ) : (
+                  <TarjetaProducto {...producto} coloresSiempreVisibles={esGrid} ocultarPrecio={ocultarPrecio} hrefBase={hrefBase} />
+                )}
+              </div>
+              {!producto.imagenEditorialAntes && celdaEditorial}
+            </Fragment>
+          );
+        })}
 
         {cargandoMas && Array.from({ length: loteCargando }, (_, indice) => (
           <div key={`skeleton-${indice}`} className={claseItem}>

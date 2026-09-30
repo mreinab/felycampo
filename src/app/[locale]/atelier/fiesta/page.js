@@ -1,7 +1,7 @@
 /* Ruta: /atelier/fiesta — catálogo real de las 11 colecciones de Fiesta
    (ver fiestaProductos.js): Primavera Verano 2027 (SS27), Primavera
    Verano 2026, Primavera Verano 2025, Prêt-à-porter, En Madrid, A
-   Walk, Bambú, Savia, Miscelanea, Essentielle y Furisode, cada una con
+   Walk, Bambú, Savia, Miscelanea y Furisode (Essentielle eliminada), cada una con
    sus looks reales. Mismo criterio que atelier/novias/page.js.
 
    Hero + título: mismo patrón que la ficha de colección de Runway (ver
@@ -38,15 +38,14 @@ import styles from './page.module.css';
 // CuadriculaProductos.jsx (filtra la cuadrícula de verdad). Sin
 // "Prêt-à-porter" (ver comentario de arriba).
 const COLECCIONES_FIESTA = [
-  'Primavera Verano 2027',
-  'Primavera Verano 2026',
-  'Primavera Verano 2025',
+  '27_Eclat',
+  '26_Opaline',
+  "25_L'Allure",
   'En Madrid',
   'A Walk',
   'Bambú',
   'Savia',
   'Miscelanea',
-  'Essentielle',
   'Furisode',
 ];
 

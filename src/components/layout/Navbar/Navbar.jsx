@@ -101,13 +101,14 @@ const SUBMENU_STRUCTURE = {
   },
 };
 
-// Orden fijo por encargo: Atelier, Colecciones, Sobre Fely, Puntos de
-// Venta y Pedir cita — "pedirCita" sin "submenu": enlace directo (un
+// Orden fijo por encargo: Sobre Fely, Atelier, Colecciones, Dónde
+// encontrar Fely Campo (clave "puntosDeVenta", solo cambió el label) y
+// Pedir cita — "pedirCita" sin "submenu": enlace directo (un
 // formulario, /visita-fely-campo/cita), no despliega panel.
 const NAV_ITEMS = [
+  { key: 'elMundoDeFely', href: '/sobre-fely', submenu: 'elMundoDeFely' },
   { key: 'atelier', href: '/atelier', submenu: 'atelier' },
   { key: 'colecciones', href: '/colecciones-fely-campo', submenu: 'colecciones' },
-  { key: 'elMundoDeFely', href: '/sobre-fely', submenu: 'elMundoDeFely' },
   { key: 'puntosDeVenta', href: '/puntos-de-venta-fely-campo', submenu: 'puntosDeVenta' },
   { key: 'pedirCita', href: '/visita-fely-campo/cita' },
 ];
@@ -115,11 +116,11 @@ const NAV_ITEMS = [
 // En escritorio, NAV_ITEMS se reparte en dos grupos (ver .navLinks/
 // .navActions más abajo) — el propio menú móvil sigue usando NAV_ITEMS
 // entero (ver "debajo" del <header>), esto solo afecta al layout de
-// escritorio. "Puntos de Venta"/"Pedir cita" viven ahora en el lateral
-// derecho, donde antes iban Wishlist/Mi cuenta/Carrito (comentados a
-// petición, ver más abajo).
-const NAV_ITEMS_IZQUIERDA = NAV_ITEMS.filter(({ key }) => key !== 'puntosDeVenta' && key !== 'pedirCita');
-const NAV_ITEMS_DERECHA = NAV_ITEMS.filter(({ key }) => key === 'puntosDeVenta' || key === 'pedirCita');
+// escritorio. Solo "Pedir cita" vive en el lateral derecho (donde antes
+// iban Wishlist/Mi cuenta/Carrito, comentados a petición, ver más
+// abajo) — el resto, "Puntos de Venta" incluido, a la izquierda.
+const NAV_ITEMS_IZQUIERDA = NAV_ITEMS.filter(({ key }) => key !== 'pedirCita');
+const NAV_ITEMS_DERECHA = NAV_ITEMS.filter(({ key }) => key === 'pedirCita');
 
 const CLOSE_DELAY_MS = 200;
 const SCROLL_THRESHOLD_PX = 50;
@@ -390,7 +391,7 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
 
         {/* Utilidades — escritorio: antes Wishlist/Mi cuenta/Carrito
             (comentado a petición, ver debajo, recuperable tal cual),
-            ahora Puntos de Venta y Pedir cita — mismo comportamiento de
+            ahora solo Pedir cita — mismo comportamiento de
             hover/submenú que NAV_ITEMS_IZQUIERDA (ver "nav" de arriba),
             por eso el propio onMouseLeave se repite aquí. */}
         <div className={styles.navActions} onMouseLeave={scheduleSubmenuClose}>

@@ -70,7 +70,7 @@ const slidesHero = [
   },
   {
     // Mismo vídeo en mobile y escritorio — sin recorte propio.
-    src: '/img/landing/Diafonia-hero-landing-FelyCampo.mp4',
+    src: '/img/landing/FW27-Hero3.mp4',
     tipo: 'video',
     ctaHref: '/sobre-fely',
   },
@@ -112,14 +112,14 @@ export default async function Home({ params }) {
           variante="landing"
           items={[
             {
-              src: '/img/novias-sección-FelyCampo2.jpg',
+              src: '/img/landing/hero-portada-felycampo-landing-3-mobile-2.jpg',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item1.titulo',
               ctaKey: 'splitMedia.item1.cta',
               href: `/${locale}/atelier/novias`,
             },
             {
-              src: '/img/invitadas-sección-FelyCampo.jpg',
+              src: '/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item2.titulo',
               ctaKey: 'splitMedia.item2.cta',

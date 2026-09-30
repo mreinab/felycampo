@@ -120,6 +120,10 @@ export default async function RootLayout({ children, params }) {
   const matchPretAPorter = rutaSinLocale.match(/^\/pret-a-porter\/([^/]+)$/);
   const esFichaProducto = (matchPretAPorter && !CATEGORIAS_PRET_A_PORTER.includes(matchPretAPorter[1]))
     || /^\/atelier\/(novias|fiesta)\/[^/]+$/.test(rutaSinLocale);
+  // /pret-a-porter (portada exacta, no categorías ni fichas): su Hero es
+  // un carrusel de looks recortados sobre fondo claro (CarruselInfinito),
+  // no una foto oscura — mismo logo/texto oscuro que la ficha de producto.
+  const esPretAPorterPortada = rutaSinLocale === '/pret-a-porter';
 
   return (
     <html lang={locale}>
@@ -133,7 +137,7 @@ export default async function RootLayout({ children, params }) {
               <Navbar
                 transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier || esHeroBlog || esFichaProducto}
                 crecerLogo={isHome}
-                textoOscuro={esFichaProducto}
+                textoOscuro={esFichaProducto || esPretAPorterPortada}
               />
               <main>{children}</main>
               <Footer />

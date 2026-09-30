@@ -71,11 +71,35 @@
 .cuadriculaGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px .04rem;
+  gap: 0.04rem;
 }
 
 .itemGrid {
   min-width: 0;
+}
+
+/* Foto de pasarela junto a su producto ("imagenEditorial", ver
+   CuadriculaProductos.jsx): ocupa la celda ENTERA, alto incluido —
+   no solo el marco 3/4 de la foto del producto, sino también el hueco
+   de nombre/colores de debajo. La celda ya mide el alto de la fila
+   (align-items: stretch por defecto del grid); aquí la TarjetaMedia de
+   dentro deja su aspect-ratio y se estira a ese alto. */
+.itemEditorial > * {
+  height: 100%;
+  aspect-ratio: auto;
+  /* Sin el fondo crema de TarjetaMedia: los recortes PNG quedan sobre el
+     fondo de la página, sin caja detrás. */
+  background: transparent;
+}
+
+/* Recortes PNG con fondo transparente (figura alta y estrecha): con el
+   "cover" de siempre se cortarían cabeza y pies — aquí se ve la figura
+   entera, centrada, con un poco de aire arriba/abajo. Las fotos de
+   pasarela completas (.webp/.jpg) siguen llenando la celda. */
+.itemEditorial img[src$=".png"] {
+  object-fit: contain;
+  padding-block: var(--spacing-5);
+  box-sizing: border-box;
 }
 
 @media (max-width: 767px) {

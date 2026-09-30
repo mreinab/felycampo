@@ -24,15 +24,14 @@ const SECCION_HREF = 'atelier/fiesta';
 // Mismas colecciones que ../page.js (COLECCIONES_FIESTA) — ver
 // comentario en atelier/novias/categoria/[categoria]/page.js.
 const COLECCIONES_FIESTA = [
-  'Primavera Verano 2027',
-  'Primavera Verano 2026',
-  'Primavera Verano 2025',
+  '27_Eclat',
+  '26_Opaline',
+  "25_L'Allure",
   'En Madrid',
   'A Walk',
   'Bambú',
   'Savia',
   'Miscelanea',
-  'Essentielle',
   'Furisode',
 ];
 

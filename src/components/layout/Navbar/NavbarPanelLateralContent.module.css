@@ -79,7 +79,12 @@
      encoge, solo evita que el hueco crezca de más si algún día hay
      menos de dos). */
   max-width: 760px;
-  padding: var(--spacing-8) var(--spacing-7) var(--spacing-6) 0;
+  /* padding-top: el de ".debajoHeader .contenido" (PanelLateral.module.css)
+     pero con --spacing-4 en vez de --spacing-1 — ese pequeño extra
+     compensa el interlineado del texto de la lista, así el borde de las
+     imágenes cae en la misma línea visual que la primera palabra. Si
+     cambia uno, revisar el otro. */
+  padding: calc(var(--nav-height-desktop) + var(--spacing-4)) var(--spacing-7) var(--spacing-6) 0;
 }
 
 /* Las MediaLink (.card en MediaLink.module.css) se reparten el ancho

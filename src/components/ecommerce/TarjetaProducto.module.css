@@ -99,6 +99,15 @@
   color: var(--color-tinta);
 }
 
+/* Segunda línea opcional bajo .nombre (prop "subtitulo" en
+   TarjetaProducto.jsx) — más pequeña y más suave, para que se lea como
+   dato secundario (ej. la colección de un look de Fiesta). */
+.subtitulo {
+  font-size: var(--text-caption);
+  color: var(--color-tinta);
+  opacity: 0.7;
+}
+
 .precios {
   display: flex;
   justify-content: center;

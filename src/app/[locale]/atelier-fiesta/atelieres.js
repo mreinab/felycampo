@@ -193,51 +193,74 @@ export const ATELIERES = {
     // que Salamanca/Madrid, ya cubre toda la ficha (medioSuperior,
     // carrusel y las 3 secciones) — ya no queda nada reciclado de
     // taller-1/taller-2. Alterna imagen/vídeo en el carrusel (ver
-    // "imagenesTira" en el comentario de cabecera) — el último par es
-    // vídeo/vídeo en vez de imagen/vídeo porque espacio_2-scaled.webp
-    // (la imagen que iba ahí) se borró de la carpeta fuera de sesión;
-    // sustituir por una foto en cuanto haya una nueva.
+    // "imagenesTira" en el comentario de cabecera) — 4 piezas: el vídeo
+    // vídeo 10.18.07 quitado a petición (antes entre las dos fotos); su
+    // hueco lo cubre espacio_1 entre los dos vídeos (sin repetir dentro del
+    // carrusel, aunque es también la foto de la sección "El proceso").
     imagenesTira: [
       { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/5-copia-2048x1365.jpg' },
-      { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.07.mp4' },
       { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_3-scaled.webp' },
       { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.15.mp4' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp' },
       { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.10.mp4' },
     ],
+    // Texto de encargo: la descripción va frase a frase (array, ver
+    // RunwayDescripcion.jsx) y cada sección en dos párrafos cortos.
     descripcion: {
-      es: 'Desde 2015, un universo de moda y emoción en el corazón de Asturias. En pleno centro de Oviedo, corazón neurálgico de Asturias, nace nuestro espacio como punto de encuentro para quienes entienden la moda como una forma de expresión, de personalidad y de emoción. Porque el verdadero lujo no es llevar un vestido: es sentir que fue creado para ti. Aquí, cada mujer encuentra mucho más que un vestido, encuentra una manera única de sentirse ella misma. Un universo de tejidos, colores, texturas y siluetas en el que cada detalle importa, porque no existen dos mujeres iguales, ni dos sueños que puedan vestirse de la misma manera. Por eso, nuestro equipo de cuatro personas personaliza cada ilusión, cada deseo y cada sueño, cuidando cada elección para crear una propuesta que hable de ti y solo de ti. Desde la primera cita hasta el último detalle, nuestro compromiso es ofrecer una experiencia cercana, exclusiva y cuidadosamente personalizada, combinando la esencia de la alta costura con una mirada fresca, actual y joven.',
-      en: "Since 2015, a world of fashion and emotion in the heart of Asturias. Right in the centre of Oviedo, the beating heart of Asturias, our space was born as a meeting point for those who understand fashion as a form of expression, of personality and of emotion. Because true luxury isn't wearing a dress: it's feeling that it was made for you. Here, every woman finds far more than a dress — she finds a unique way of feeling like herself. A world of fabrics, colours, textures and silhouettes where every detail matters, because no two women are alike, and no two dreams can be dressed the same way. That's why our team of four people personalises every hope, every wish and every dream, taking care with each choice to create a proposal that speaks of you, and only you. From the first appointment to the very last detail, our commitment is to offer a warm, exclusive and carefully personalised experience, combining the essence of haute couture with a fresh, contemporary, youthful outlook.",
+      es: [
+        'En el corazón de Asturias, un espacio donde la moda se encuentra con la emoción.',
+        'Desde 2015, Fely Campo acompaña a cada mujer en la elección de una pieza especial, cuidando cada silueta, cada tejido y cada detalle.',
+        'Asesoramiento personalizado por nuestro equipo de cuatro personas liderado por Carlos Albuixech.',
+        'Te escuchamos para encontrar la silueta, el color y los detalles que mejor hablan de ti.',
+      ],
+      en: [
+        'In the heart of Asturias, a space where fashion meets emotion.',
+        'Since 2015, Fely Campo has accompanied every woman in choosing a special piece, caring for every silhouette, every fabric and every detail.',
+        'Personalised styling from our team of four, led by Carlos Albuixech.',
+        'We listen to you to find the silhouette, the colour and the details that best speak of you.',
+      ],
     },
     secciones: [
       {
-        // Texto de encargo (3 párrafos) resumido a 2.
-        titulo: { es: 'Asesoramiento personalizado', en: 'Personalised styling' },
+        titulo: { es: 'El proceso', en: 'The Process' },
         imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp',
         texto: {
           es: [
-            'El equipo Fely Campo Oviedo, liderado por Carlos Albuixech, te acompañará durante toda la búsqueda del vestido para tu evento. Desde la primera cita tendrás un asesoramiento personalizado: escucharán tus necesidades y te ayudarán a encontrar esa pieza de nuestras colecciones de fiesta con la que te veas espectacular y refleje tu personalidad, reformulando juntos el diseño de colección —el tejido, las modificaciones y el color que resalte tu silueta natural.',
-            'En las siguientes citas te probarás tu vestido tal y como lo elegiste, y el equipo de profesionales terminará de adaptarlo a tu silueta mientras te asesora en cada detalle del look. En el Atelier Fiesta Oviedo contamos además con una selección de complementos que podrás personalizar para dar ese toque sutil y sugerente a tu estilismo.',
+            'Detrás de cada creación hay tiempo, oficio y una mirada precisa.',
+            'Te acompañamos en cada prueba para que el vestido encuentre su forma definitiva: la tuya.',
           ],
           en: [
-            "The Fely Campo Oviedo team will accompany you throughout the search for your dress, whatever the occasion. From the very first appointment you'll receive personalised styling: they'll listen to what you need and help you find the piece from our eveningwear collections that makes you look spectacular and reflects your personality, reworking a collection design together — the fabric, the changes and the colour that flatters your natural silhouette.",
-            'At the following appointments you\'ll try on your dress just as you chose it, and our team of professionals will finish adapting it to your silhouette while advising you on every detail of the look. At Atelier Fiesta Oviedo we also have a selection of accessories you can personalise to add that subtle, alluring finishing touch to your style.',
+            'Behind every creation lies time, craft and a precise eye.',
+            'We accompany you at every fitting so the dress finds its final shape: yours.',
           ],
         },
       },
       {
-        titulo: { es: 'Espacio', en: 'The Space' },
+        titulo: { es: 'El espacio', en: 'The Space' },
         imagen: '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp',
         texto: {
-          es: ['En el corazón de Oviedo, se encuentra la fachada acristalada del Atelier Fiesta Fely Campo. Un espacio abierto a la ciudad, a través de un escaparate único que muestra las creaciones de la diseñadora.'],
-          en: ["In the heart of Oviedo stands the glass façade of the Fely Campo Atelier Fiesta. A space open to the city, through a unique shop window that showcases the designer's creations."],
+          es: [
+            'Un lugar para descubrir Fely Campo de cerca.',
+            'Un espacio íntimo donde conocer nuestras colecciones, tocar los tejidos y dejarse llevar por los detalles.',
+          ],
+          en: [
+            'A place to discover Fely Campo up close.',
+            'An intimate space to explore our collections, feel the fabrics and let yourself be carried away by the details.',
+          ],
         },
       },
       {
         titulo: { es: 'Novia', en: 'Bridal' },
         imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_5-2048x1365.webp',
         texto: {
-          es: ['El Atelier Fiesta Oviedo cuenta con una estudiada selección de vestidos nupciales. Se trata de un rincón donde podrás disfrutar de las colecciones de novia que la diseñadora propone cada temporada. Un lugar perfecto para vivir el instante mágico de encontrar tu vestido de novia, de poder sentir el tacto de nuestras colecciones.'],
-          en: ["Atelier Fiesta Oviedo has a carefully curated selection of bridal gowns. It's a corner where you can discover the bridal collections the designer presents each season — the perfect place to live the magical moment of finding your wedding dress, to feel the touch of our collections."],
+          es: [
+            'Para un día que merece ser único.',
+            'Creaciones pensadas para acompañarte con naturalidad, elegancia y personalidad desde el primer momento.',
+          ],
+          en: [
+            'For a day that deserves to be unique.',
+            'Creations designed to accompany you with naturalness, elegance and personality from the very first moment.',
+          ],
         },
       },
     ],

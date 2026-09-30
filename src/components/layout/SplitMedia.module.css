@@ -33,6 +33,18 @@
   object-fit: cover;
 }
 
+/* landing: velo oscuro entre la imagen y el texto (en --color-fondo,
+   centrado sobre la foto) para que se lea sobre cualquier imagen, sea
+   clara u oscura. Plano, no degradado: el texto va en el centro, no
+   abajo. .contenidoLanding lleva z-index:1 para quedar por encima. */
+.grid.landing .pieza::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
 /* Abajo, centrado, en las dos variantes — solo cambia el color del
    texto (--color-fondo en "etiqueta", --color-tinta vía ImageTitle en
    "imageTitle"), no la posición. */
@@ -68,6 +80,7 @@
   height: 100%;
 
   position: absolute;
+  z-index: 1;
   left: var(--spacing-5);
   right: var(--spacing-5);
   bottom: var(--spacing-5);

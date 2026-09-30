@@ -73,6 +73,8 @@ function TarjetaProducto({
   tipo = 'imagen',
   tipoHover = 'imagen',
   nombre,
+  titulo,
+  subtitulo,
   precio,
   precioRebajado,
   badge,
@@ -196,7 +198,12 @@ function TarjetaProducto({
         </div>
 
         <div className={styles.encabezado}>
-          <p className={`${styles.nombre} ${esCarrusel ? styles.nombreCarrusel : ''}`}>{nombre}</p>
+          {/* "titulo"/"subtitulo" (opcionales): texto visible en vez de
+              "nombre" — que sigue dando el slug del href (ver
+              hrefProducto) — más una segunda línea más pequeña debajo
+              (ej. Atelier > Fiesta: "Look 3" + "27_Eclat"). */}
+          <p className={`${styles.nombre} ${esCarrusel ? styles.nombreCarrusel : ''}`}>{titulo || nombre}</p>
+          {subtitulo && <p className={styles.subtitulo}>{subtitulo}</p>}
 
           {preciosBloque}
 

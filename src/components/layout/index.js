@@ -9,6 +9,7 @@ export { default as RunwayDescripcion } from './RunwayDescripcion';
 export { default as RunwayBackstage } from './RunwayBackstage';
 export { default as RunwayVideoCierre } from './RunwayVideoCierre';
 export { default as HeroCarousel } from './HeroCarousel';
+export { default as CarruselInfinito } from './CarruselInfinito';
 export { default as CuadriculaProductos } from './CuadriculaProductos';
 export { default as PanelFiltros } from './PanelFiltros';
 export { default as MediaBanner } from './MediaBanner';

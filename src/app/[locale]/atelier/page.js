@@ -40,14 +40,14 @@ export default async function Pagina({ params }) {
           variante="landing"
           items={[
             {
-              src: '/img/novias-sección-FelyCampo2.jpg',
+              src: '/img/landing/hero-portada-felycampo-landing-3-mobile-2.jpg',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item1.titulo',
               ctaKey: 'splitMedia.item1.cta',
               href: `/${locale}/atelier/novias`,
             },
             {
-              src: '/img/invitadas-sección-FelyCampo.jpg',
+              src: '/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item2.titulo',
               ctaKey: 'splitMedia.item2.cta',
