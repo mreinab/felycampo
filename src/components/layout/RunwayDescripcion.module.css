@@ -33,8 +33,10 @@
 
   /* max-width:70% (ver base) se queda demasiado angosto en mobile —
      width fijo a todo el ancho disponible en vez de un tope relativo. */
+  /* text-align:center en mobile (a petición) en vez del justify de base. */
   .texto {
     width: 100%;
     max-width: none;
+    text-align: center;
   }
 }

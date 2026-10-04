@@ -121,9 +121,12 @@ export default async function Pagina({ params }) {
       <CuadriculaProductos
         productos={PRODUCTOS_CON_PASARELA}
         disposicion="grid"
-        tituloKey="catalogo.subtituloFelyCampo"
-        coleccionKey="catalogo.tituloTienda"
-        descriptionKey="cuadriculaProductos.novedadesDescripcion"
+        // Cabecera (CabeceraSeccion) comentada a petición: sin "tituloKey"
+        // CuadriculaProductos no la pinta (ni el botón de filtros, que va
+        // dentro de ella).
+        // tituloKey="catalogo.subtituloFelyCampo"
+        // coleccionKey="catalogo.tituloTienda"
+        // descriptionKey="cuadriculaProductos.novedadesDescripcion"
         ocultarSubtitulo
         ocultarPrecio
       />
