@@ -346,7 +346,6 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
   return (
     <div className={`${styles.seccion} ${className || ''}`}>
       <CabeceraSeccion
-        subtitleKey="puntosVenta.eyebrow"
         titleKey="puntosVenta.titulo"
         descriptionKey="puntosVenta.intro"
         alinear="start"

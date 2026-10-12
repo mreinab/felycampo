@@ -9,6 +9,7 @@
 import { getTranslations } from 'next-intl/server';
 import { HeroCarousel, SplitMedia /* , CuadriculaProductos, CarruselClientas, BloqueSeccion */ } from '@/components/layout';
 // import { CabeceraSeccion } from '@/components/ui'; // sin cabecera por ahora, ver comentario más abajo
+import { Boton } from '@/components/ui';
 import cuadriculaStyles from '@/components/layout/CuadriculaProductos.module.css';
 import styles from './page.module.css';
 
@@ -79,15 +80,19 @@ const slidesHero = [
 export default async function Home({ params }) {
   const { locale } = await params;
   const tHero = await getTranslations('heroCarousel');
+  const tCitaFely = await getTranslations('citaFelyLanding');
+  const tDescubreFely = await getTranslations('descubreFely');
+  const tPedirCita = await getTranslations('pedirCitaLanding');
   // const tVisitaAtelier = await getTranslations('visitaAtelier'); // BloqueSeccion comentado más abajo
 
   // Igual que en el Navbar (ver withLocale en Navbar.jsx): los hrefs
   // internos llevan el locale por delante para no perder el idioma
-  // elegido al navegar. Mismo título y CTA en los dos slides — no cada
+  // elegido al navegar. Misma descripción y CTA en los dos slides — no cada
   // uno con su propio texto.
   const slidesConLocale = slidesHero.map((slide) => ({
     ...slide,
-    titulo: tHero('titulo'),
+    entradilla: tHero('entradilla'),
+    descripcion: tHero('descripcion'),
     ctaTexto: tHero('cta'),
     ctaHref: `/${locale}${slide.ctaHref}`,
   }));
@@ -127,6 +132,39 @@ export default async function Home({ params }) {
             },
           ]}
         />
+      </section>
+
+      {/* Cita de Fely — antesala de "Descubre a Fely": en la fuente
+          del sitio (--font-base), centrada y con mucho aire, sin firma. */}
+      <section className={styles.citaFely}>
+        <blockquote className={styles.citaFelyTexto}>
+          <p>{tCitaFely.rich('texto', { em: (chunks) => <em>{chunks}</em> })}</p>
+        </blockquote>
+      </section>
+
+      {/* "Descubre a Fely" — inspirado en la tarjeta del documental que
+          cierra /sobre-fely (TarjetaEnlaceExterno), con su propia foto de
+          las cintas (felycampo-documenta-54oldtapes-2.jpg), mismo
+          formato centrado (aquí al 80% y 100vh de alto), pero con otro texto: título grande
+          centrado + CTA abajo, y lleva a /sobre-fely en vez de a YouTube.
+          Toda la tarjeta es un único <a> (Boton sin href = <span>). */}
+      <section className={styles.descubreFely}>
+        <a href={`/${locale}/sobre-fely`} className={styles.descubreFelyTarjeta}>
+          <img src="/img/about-felycampo/felycampo-documenta-54oldtapes-2.jpg" alt="" className={styles.descubreFelyImagen} />
+          <p className={styles.descubreFelyTitulo}>
+            {tDescubreFely('titulo')}
+          </p>
+          <div className={styles.descubreFelyPie}>
+            <Boton variante="texto-crema">{tDescubreFely('cta')}</Boton>
+          </div>
+        </a>
+      </section>
+
+      {/* Pedir cita — último bloque antes del footer: texto centrado sobre
+          el fondo de la página + CTA al formulario de cita. */}
+      <section className={styles.pedirCita}>
+        <p className={styles.pedirCitaTitulo}>{tPedirCita('titulo')}</p>
+        <Boton variante="texto" href={`/${locale}/visita-fely-campo/cita`}>{tPedirCita('cta')}</Boton>
       </section>
 
       {/* ---- Comentado a petición (rediseño de landing en curso) ----

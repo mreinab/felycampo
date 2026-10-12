@@ -65,7 +65,7 @@ export const ATELIERES = {
     // Reportaje propio (ver public/img/atelier/atelier-salamanca/) —
     // igual que Madrid con showroom-madrid/, ya no hace falta reciclar
     // el fondo de taller-1/ para esta ficha (ver comentario de cabecera).
-    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/felycampo-salamnca-atelier.webp' },
+    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
     medioSuperior: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/rbksom_blobid1671730782555.jpg' },
     imagenesTira: [
       { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/buscador_tiendas.webp' },

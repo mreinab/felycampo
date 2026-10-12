@@ -9,17 +9,24 @@
    archivo y ubicaciones.js) + MapaPuntosVenta al final.
    ============================================================ */
 
+import { getTranslations } from 'next-intl/server';
 import { MapaPuntosVenta, ProductHero } from '@/components/layout';
 import ListadoUbicaciones from './ListadoUbicaciones';
 import styles from './page.module.css';
 
 export default async function Pagina({ params }) {
   const { locale } = await params;
+  const t = await getTranslations();
 
   return (
     <>
       <section className="seccion">
-        <ProductHero imagen="/img/landing/hero-visitanos-felycampo.jpg" className="hero-arriba" />
+        <ProductHero
+          imagen="/img/landing/hero-visitanos-felycampo.jpg"
+          titulo={t('visitenos.titulo')}
+          subtitulo={t('heroPagina.atelierCiudad')}
+          className="hero-arriba"
+        />
       </section>
 
       {/* .seccionUbicaciones (ver page.module.css): en mobile el hero de

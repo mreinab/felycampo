@@ -77,7 +77,7 @@
      <BlogArticulo entrada={entrada} locale={locale} volverHref="/es/podcast" volverTexto="Volver al blog" />
    ============================================================ */
 
-import RunwayMediaLateral from './RunwayMediaLateral';
+import HeroPagina from './HeroPagina';
 import styles from './BlogArticulo.module.css';
 
 // Agrupa cada tramo consecutivo de bloques "titulo"/"parrafo" en un
@@ -173,21 +173,19 @@ function BlogArticulo({ entrada, locale, volverHref, volverTexto }) {
 
   return (
     <article className={styles.pagina}>
-      <div className={styles.hero} data-navbar-hero>
-        <a href={volverHref} className={styles.volver} aria-label={volverTexto}>
-          <svg width="20" height="16" viewBox="0 0 20 16" fill="none" aria-hidden="true">
-            <path d="M8 1L1 8L8 15M1 8H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" />
-          </svg>
-        </a>
-        <RunwayMediaLateral medio={{ src: imagenCubierta }} alt={titulo[locale]} />
-      </div>
-
-      <div className={styles.textoDescripcion}>
-        <div className={styles.textoRow}>
-          <h1 className={styles.tituloHero}>{titulo[locale]}</h1>
-          <p className={styles.metaHero}>{fechaLegible}</p>
-        </div>
-      </div>
+      <HeroPagina
+        imagen={imagenCubierta}
+        alt={titulo[locale]}
+        titulo={titulo[locale]}
+        subtitulo={fechaLegible}
+        extra={(
+          <a href={volverHref} className={styles.volver} aria-label={volverTexto}>
+            <svg width="20" height="16" viewBox="0 0 20 16" fill="none" aria-hidden="true">
+              <path d="M8 1L1 8L8 15M1 8H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter" />
+            </svg>
+          </a>
+        )}
+      />
 
       <div className={`${styles.cuerpo} contenedor`}>
         {agruparEnSecciones(bloques).map((item, indice) => {

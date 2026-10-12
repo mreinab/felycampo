@@ -22,7 +22,8 @@ import styles from './SplitMedia.module.css';
  * <div>, no un <a>: la imagen deja de ser clicable por sí sola, solo
  * el CTA (enlace real) navega. Evita anidar <a> dentro de <a>.
  * variante="landing": sin gap entre piezas (ver .grid.landing) y sin
- * etiqueta — solo un <h1> en mayúsculas alineado a la izquierda + CTA.
+ * etiqueta — fila inferior con el <h1> a la izquierda y el CTA (siempre
+ * visible) en la esquina derecha, sobre un degradado de abajo arriba.
  * Como "etiqueta": toda la pieza es un único <a> clicable (href en la
  * pieza, no en el CTA — Boton sin href renderiza un <span>, solo
  * visual). tituloKey y ctaKey son opcionales: un item sin ninguno de

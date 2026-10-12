@@ -78,17 +78,20 @@
   display: block;
   height: 90vh;
   aspect-ratio: 16 / 9;
-  max-width: 70%;
+  max-width: 90%;
   object-fit: cover;
-  margin: var(--spacing-8) auto;
+  margin: 0 auto var(--spacing-8);
 }
 
 /* Imagen del bloque (ver .seccion más abajo — único bloque de cuerpo de
    la ficha, en zigzag). 45/55, mismo reparto que .info/.acciones de
    visita-fely-campo/page.module.css. */
+/* Escritorio: alto completo de .seccion (100vh) y el ancho sale del
+   aspect-ratio 2.5/3 — mobile: 4/3 a todo el ancho, ver media query. */
 .bloqueImagen {
-  flex: 0 0 45%;
-  aspect-ratio: 3 / 2;
+  flex: none;
+  height: 100%;
+  aspect-ratio: 2.5 / 3;
   background: var(--color-details);
   border-radius: var(--radius-imagenes);
   overflow: hidden;
@@ -107,10 +110,13 @@
    (secciones en índice impar, ver AtelierDetalle.jsx) invierte el lado
    con row-reverse, así se lee en zigzag bajando la página en vez de
    siempre "imagen a la izquierda". */
+/* 100vh en escritorio, con la imagen a alto completo (ver
+   .bloqueImagen). */
 .seccion {
   display: flex;
   align-items: center;
   gap: var(--spacing-8);
+  height: 100vh;
   max-width: 70%;
   margin-inline: auto;
   margin-bottom: var(--spacing-9);
@@ -124,7 +130,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-3);
+  gap: var(--spacing-5);
   padding-inline: var(--spacing-4);
 }
 
@@ -253,11 +259,13 @@
     flex-direction: column;
     align-items: stretch;
     gap: var(--spacing-4);
+    height: auto;
     margin-bottom: var(--spacing-7);
   }
 
   .bloqueImagen {
     flex: none;
+    height: auto;
     aspect-ratio: 4 / 3;
   }
 

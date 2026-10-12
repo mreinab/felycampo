@@ -12,21 +12,25 @@
    largo y propio de esta página).
    ============================================================ */
 
-import { RunwayDescripcion, RunwayMediaLateral } from '@/components/layout';
-import { CabeceraSeccion } from '@/components/ui';
+import { getTranslations } from 'next-intl/server';
+import { HeroPagina, RunwayDescripcion } from '@/components/layout';
 import { RESPONSABILIDAD } from './responsabilidad';
 import styles from './page.module.css';
 
 export default async function Pagina({ params }) {
   const { locale } = await params;
+  const t = await getTranslations('responsabilidad');
 
   return (
     <section>
-      <div className={styles.hero} data-navbar-hero>
-        <RunwayMediaLateral medio={{ src: RESPONSABILIDAD.heroImagen }} alt="Fely Campo" />
-      </div>
-
-      <CabeceraSeccion subtitleKey="responsabilidad.eyebrow" titleKey="responsabilidad.titulo" />
+      {/* Antes CabeceraSeccion (eyebrow + título) debajo de la foto — ahora
+          el título va en el hero y el eyebrow como su línea corta. */}
+      <HeroPagina
+        imagen={RESPONSABILIDAD.heroImagen}
+        alt="Fely Campo"
+        titulo={t('titulo')}
+        subtitulo={t('eyebrow')}
+      />
 
       <RunwayDescripcion texto={RESPONSABILIDAD.texto[locale]} />
     </section>

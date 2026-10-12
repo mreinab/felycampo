@@ -31,7 +31,7 @@
    pintar aquí. */
 
 import { getTranslations } from 'next-intl/server';
-import { BloqueSeccion, /* CuadriculaProductos, */ RunwayBackstage, RunwayDescripcion, RunwayMediaLateral } from '@/components/layout';
+import { BloqueSeccion, /* CuadriculaProductos, */ HeroPagina, RunwayBackstage, RunwayDescripcion } from '@/components/layout';
 // import { noviaProductos } from '@/components/layout/noviaProductos';
 import { NOVIA_EDITORIAL } from './noviaEditorial';
 import styles from './page.module.css';
@@ -44,19 +44,14 @@ export default async function Pagina({ params }) {
 
   return (
     <section className="seccion">
-      <div className={styles.hero} data-navbar-hero>
-        <RunwayMediaLateral
-          medio={{ tipo: 'imagen', src: '/img/landing/hero-atelier-novia-felycampo.jpg' }}
-          alt={t('nav.submenus.atelier.novias')}
-        />
-      </div>
+      <HeroPagina
+        imagen="/img/landing/hero-atelier-novia-felycampo.jpg"
+        alt={t('nav.submenus.atelier.novias')}
+        titulo={[t('nav.links.atelier'), t('nav.submenus.atelier.novias')]}
+        subtitulo={t('heroPagina.atelierNovias')}
+      />
 
       <div className={styles.textoDescripcion}>
-        <div className={styles.textoRow}>
-          <p className={styles.nombre}>{t('nav.links.atelier')}</p>
-          <p className={styles.temporada}>{t('nav.submenus.atelier.novias')}</p>
-        </div>
-
         <RunwayDescripcion texto={NOVIA_EDITORIAL.descripcion[locale]} />
       </div>
 

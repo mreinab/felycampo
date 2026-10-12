@@ -12,6 +12,7 @@
    /admin/colecciones/fiesta), aquí solo se filtra lo que se enseña. */
 
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { encontrarCategoria } from '@/components/layout/estiloSiluetaGrupos';
@@ -52,12 +53,16 @@ export default async function Pagina({ params }) {
   const categoriaActiva = encontrarCategoria(categoria, { esFiesta: ES_FIESTA });
   if (!categoriaActiva) notFound();
 
+  const t = await getTranslations();
   const jsonLd = await breadcrumbJsonLd({ locale, seccionKey: SECCION_KEY, seccionHref: SECCION_HREF, categoriaActiva });
 
   return (
     <section className="seccion">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <ProductHero imagen="/img/invitadas-sección-FelyCampo.jpg" />
+      <ProductHero
+        imagen="/img/invitadas-sección-FelyCampo.jpg"
+        titulo={[t('nav.links.atelier'), t(SECCION_KEY)]}
+      />
       <CuadriculaProductos
         productos={PRODUCTOS_FIESTA}
         disposicion="grid"

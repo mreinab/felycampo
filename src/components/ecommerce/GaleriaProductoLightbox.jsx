@@ -19,12 +19,10 @@
    "esAtelier" (Atelier Novias/Fiesta, ver FichaProductoAtelier.jsx):
    el CTA "Contacta con nosotros" abre ModalSolicitudAtelier (pide
    talla dentro del propio modal, mismo flujo que InfoAtelier.jsx, sin
-   compartir estado con esa instancia) y muestra BotonGuardar
-   (wishlist). Sin "esAtelier" (Prêt-à-porter, único otro caso): el
+   compartir estado con esa instancia). Ninguno de los dos casos
+   muestra ya BotonGuardar (wishlist). Sin "esAtelier" (Prêt-à-porter, único otro caso): el
    mismo CTA abre ModalContactoProducto en su lugar (sin talla en
-   ningún sitio, a petición explícita) y sin BotonGuardar — Prêt-à-porter
-   ya no enseña wishlist en la ficha de producto (ver
-   FichaProductoAcciones.jsx).
+   ningún sitio, a petición explícita).
    Portal a document.body (igual que Modal.jsx, mismo motivo): vive
    dentro de GaleriaProducto, que cuelga de .debajoNavbar en
    tienda/[producto]/page.js y FichaProductoAtelier.jsx
@@ -45,7 +43,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocale, useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
-import { SelectorColor, Boton, BotonGuardar } from '../ui';
+import { SelectorColor, Boton } from '../ui';
 import ModalSolicitudAtelier from './ModalSolicitudAtelier';
 import ModalContactoProducto from './ModalContactoProducto';
 import styles from './GaleriaProductoLightbox.module.css';
@@ -223,8 +221,6 @@ function GaleriaProductoLightbox({
 
       {nombre && (
         <div className={styles.panelInfo}>
-          {esAtelier && <BotonGuardar variante="compacto" tabIndex={tabIndexInteractivo} />}
-
           <div className={styles.panelCabecera}>
             <p className={styles.panelNombre}>{nombre}</p>
           </div>

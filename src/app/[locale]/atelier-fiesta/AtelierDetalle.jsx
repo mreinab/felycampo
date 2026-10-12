@@ -59,7 +59,7 @@
    entero a cliente). */
 
 import { getTranslations } from 'next-intl/server';
-import { RunwayMediaLateral, RunwayDescripcion } from '@/components/layout';
+import { HeroPagina, RunwayDescripcion } from '@/components/layout';
 import { CarruselImagenes, Boton, EnVista } from '@/components/ui';
 import { UBICACIONES } from '../visita-fely-campo/ubicaciones';
 import styles from './page.module.css';
@@ -67,6 +67,7 @@ import styles from './page.module.css';
 async function AtelierDetalle({ datos, locale }) {
   const t = await getTranslations('atelierFiesta');
   const tVisitenos = await getTranslations('visitenos');
+  const tHero = await getTranslations('heroPagina');
   const nombreCiudad = t(`${datos.id}.titulo`);
   const ubicacion = UBICACIONES.find((candidata) => candidata.id === datos.id);
 
@@ -80,15 +81,14 @@ async function AtelierDetalle({ datos, locale }) {
 
   return (
     <section>
-      <div className={styles.hero} data-navbar-hero>
-        <RunwayMediaLateral medio={datos.heroMedio} alt={nombreCiudad} />
-      </div>
+      <HeroPagina
+        medio={datos.heroMedio}
+        alt={nombreCiudad}
+        titulo={[t(`${datos.id}.eyebrow`), nombreCiudad]}
+        subtitulo={tHero('atelierCiudad')}
+      />
 
       <div className={styles.textoDescripcion}>
-        <div className={styles.textoRow}>
-          <p className={styles.eyebrowGrande}>{t(`${datos.id}.eyebrow`)}</p>
-          <p className={styles.ciudad}>{nombreCiudad}</p>
-        </div>
 
         <RunwayDescripcion texto={datos.descripcion[locale]} />
       </div>

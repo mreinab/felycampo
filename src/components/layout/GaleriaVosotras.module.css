@@ -263,3 +263,51 @@
    look") quitado a petición — era placeholder puro (ver comentario de
    cabecera del .jsx). Sin ".panelInfo"/".panelInfoInterior" y
    siguientes: el lightbox se queda solo en fotos + miniaturas. */
+
+/* Looks con reseña real de la clienta (RESENAS_VOSOTRAS en
+   vosotrasFotos.js): las fotos ocupan el 60% izquierdo y el texto, el
+   40% derecho, centrado en vertical — mismo tamaño/color de texto que
+   las columnas de texto del resto del sitio. En mobile las fotos van
+   arriba (60% del alto) y el texto debajo, con su propio scroll. */
+.conResena .pista {
+  right: 40%;
+}
+
+.resena {
+  position: absolute;
+  top: var(--nav-height-desktop);
+  right: 0;
+  bottom: 0;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin: 0;
+  padding: var(--spacing-7) var(--spacing-9) var(--spacing-7) var(--spacing-7);
+  overflow-y: auto;
+}
+
+.resenaTexto {
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-tinta);
+}
+
+@media (max-width: 767px) {
+  .conResena .pista {
+    right: 0;
+    bottom: 40%;
+  }
+
+  .resena {
+    top: 60%;
+    width: 100%;
+    justify-content: flex-start;
+    padding: var(--spacing-5) var(--spacing-4);
+  }
+
+  .resenaTexto {
+    font-size: var(--text-small);
+  }
+}

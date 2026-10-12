@@ -23,7 +23,8 @@
 
 .ficha {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  /* 1fr 1fr (antes 3fr 2fr): galería más estrecha, a petición. */
+  grid-template-columns: 1fr 1fr;
   gap: var(--spacing-9);
 }
 

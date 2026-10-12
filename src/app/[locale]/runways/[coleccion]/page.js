@@ -27,7 +27,8 @@
    página, sonido opcional). */
 
 import { notFound } from 'next/navigation';
-import { RunwayBackstage, RunwayDescripcion, RunwayGaleria, RunwayMediaLateral, RunwayVideoCierre } from '@/components/layout';
+import { getTranslations } from 'next-intl/server';
+import { HeroPagina, RunwayBackstage, RunwayDescripcion, RunwayGaleria, RunwayVideoCierre } from '@/components/layout';
 import { COLECCIONES } from '../../colecciones-fely-campo/colecciones';
 import styles from './page.module.css';
 
@@ -37,19 +38,18 @@ export default async function Coleccion({ params }) {
   if (!coleccion) notFound();
 
   const medioHero = coleccion.medios[0];
+  const t = await getTranslations('heroPagina');
 
   return (
     <section>
-      <div className={styles.hero} data-navbar-hero>
-        <RunwayMediaLateral medio={medioHero} alt={coleccion.nombre} />
-      </div>
+      <HeroPagina
+        medio={medioHero}
+        alt={coleccion.nombre}
+        titulo={[coleccion.nombre, coleccion.temporada]}
+        subtitulo={t('runway')}
+      />
 
       <div className={styles.textoDescripcion}>
-        <div className={styles.textoRow}>
-          <p className={styles.nombre}>{coleccion.nombre}</p>
-          <p className={styles.temporada}>{coleccion.temporada}</p>
-        </div>
-
         <RunwayDescripcion texto={coleccion.descripcion} />
       </div>
 

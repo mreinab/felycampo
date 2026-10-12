@@ -10,7 +10,7 @@ import { headers } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
-import { Navbar, Footer, NewsletterModalGlobal, CookieConsent } from '@/components/layout';
+import { Navbar, Footer, NewsletterModalGlobal, CookieConsent, BotonWhatsapp } from '@/components/layout';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
@@ -41,6 +41,9 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/atelier-fiesta/oviedo',
   '/sobre-fely',
   '/responsabilidad',
+  '/colecciones-fely-campo',
+  '/podcast',
+  '/talleres-fely-campo',
   '/ayuda/envios',
   '/ayuda/devoluciones',
   '/ayuda/contacto',
@@ -120,10 +123,6 @@ export default async function RootLayout({ children, params }) {
   const matchPretAPorter = rutaSinLocale.match(/^\/pret-a-porter\/([^/]+)$/);
   const esFichaProducto = (matchPretAPorter && !CATEGORIAS_PRET_A_PORTER.includes(matchPretAPorter[1]))
     || /^\/atelier\/(novias|fiesta)\/[^/]+$/.test(rutaSinLocale);
-  // /pret-a-porter (portada exacta, no categorías ni fichas): su Hero es
-  // un carrusel de looks recortados sobre fondo claro (CarruselInfinito),
-  // no una foto oscura — mismo logo/texto oscuro que la ficha de producto.
-  const esPretAPorterPortada = rutaSinLocale === '/pret-a-porter';
 
   return (
     <html lang={locale}>
@@ -137,11 +136,12 @@ export default async function RootLayout({ children, params }) {
               <Navbar
                 transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier || esHeroBlog || esFichaProducto}
                 crecerLogo={isHome}
-                textoOscuro={esFichaProducto || esPretAPorterPortada}
+                textoOscuro={esFichaProducto}
               />
               <main>{children}</main>
               <Footer />
               {isHome && <NewsletterModalGlobal />}
+              <BotonWhatsapp />
               <CookieConsent />
             </MiCuentaProvider>
           </CarritoProvider>

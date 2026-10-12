@@ -22,9 +22,10 @@
   overflow: hidden;
 }
 
-/* landing: más alto que el resto de variantes (100vh vs 80vh). */
+/* landing: más alto que el resto de variantes (110vh vs 80vh), algo
+   más que la pantalla. */
 .grid.landing .pieza {
-  height: 100vh;
+  height: 110vh;
 }
 
 .media {
@@ -33,15 +34,15 @@
   object-fit: cover;
 }
 
-/* landing: velo oscuro entre la imagen y el texto (en --color-fondo,
-   centrado sobre la foto) para que se lea sobre cualquier imagen, sea
-   clara u oscura. Plano, no degradado: el texto va en el centro, no
-   abajo. .contenidoLanding lleva z-index:1 para quedar por encima. */
+/* landing: degradado oscuro de abajo arriba (mismo que el hero de la
+   home, ver HeroCarousel.module.css), ya transparente a mitad de
+   altura — el texto va abajo, así que solo se oscurece esa franja.
+   .contenidoLanding lleva z-index:1 para quedar por encima. */
 .grid.landing .pieza::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.15);
+  background: linear-gradient(to top, rgb(0 0 0 / 0.6) 0%, rgb(0 0 0 / 0) 50%);
   pointer-events: none;
 }
 
@@ -74,28 +75,25 @@
   font-size: var(--text-caption);
 }
 
-/* landing: abajo pero pegado a la izquierda, no centrado — mismo
-   bottom que .contenido, solo cambia el eje horizontal. */
+/* landing: fila inferior — título a la izquierda, CTA en la esquina
+   derecha, alineados por la base (mismo esquema que el hero de la
+   home). */
 .contenidoLanding {
-  height: 100%;
-
   position: absolute;
   z-index: 1;
   left: var(--spacing-5);
   right: var(--spacing-5);
   bottom: var(--spacing-5);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-end;
   gap: var(--spacing-3);
-  text-align: center;
 }
 
+/* Sin mayúsculas, 2px más grande que --text-body-lg. */
 .tituloLanding {
-  font-size: var(--text-body-lg);
+  font-size: calc(var(--text-body-lg) + 2px);
   font-weight: 400;
-  text-transform: uppercase;
   color: var(--color-fondo);
   letter-spacing: normal;
 }
@@ -109,19 +107,20 @@
 .contenidoLanding .cta {
   color: var(--color-fondo);
   border-bottom-color: var(--color-fondo);
-  font-size: var(--text-caption);
 }
 
 /* El CTA solo aparece en hover/foco — oculto por opacidad, no por
    display, así que sigue ocupando su sitio en el flex column y el
-   título/etiqueta de encima no se mueve al aparecer. */
+   título/etiqueta de encima no se mueve al aparecer. En "landing"
+   siempre visible (justo debajo). */
 .cta {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s var(--ease-marca);
 }
 .pieza:hover .cta,
-.pieza:focus-within .cta {
+.pieza:focus-within .cta,
+.grid.landing .cta {
   opacity: 1;
   pointer-events: auto;
 }
@@ -138,16 +137,27 @@
 .tituloLanding {
   opacity: 0;
 }
+.contenido.enVista .etiqueta {
+  margin-top: var(--spacing-6);
+}
 .contenido.enVista .etiqueta,
 .contenidoLanding.enVista .tituloLanding {
-  margin-top: var(--spacing-6);
   animation: entradaContenido 0.9s var(--ease-marca) forwards;
 }
 
-.contenido.enVista .cta,
-.contenidoLanding.enVista .cta {
+.contenido.enVista .cta {
   animation: entradaCta 0.9s var(--ease-marca) forwards;
   animation-delay: 0.3s;
+}
+
+/* landing: el CTA siempre está visible, así que entra igual y a la vez
+   que el título (fundido + subida, sin retraso) — oculto hasta .enVista
+   para que no se vea antes que él. */
+.contenidoLanding:not(.enVista) .cta {
+  opacity: 0;
+}
+.contenidoLanding.enVista .cta {
+  animation: entradaContenido 0.9s var(--ease-marca) forwards;
 }
 
 @keyframes entradaContenido {
@@ -173,11 +183,23 @@
     opacity: 1;
   }
   /* Sin "opacity: 1" aquí a propósito: la visibilidad del CTA sigue
-     gobernada por el hover/focus (o por mobile landing, ver abajo) —
+     gobernada por el hover/focus (o siempre visible en "landing") —
      reducir movimiento solo quita la animación de entrada, no cambia
      esa lógica. */
   .cta {
     animation: none;
+  }
+  /* Mismos selectores que las reglas de entrada de arriba, para
+     ganarles en especificidad (con .tituloLanding/.cta a secas no
+     bastaba y la animación seguía). */
+  .contenido.enVista .etiqueta,
+  .contenido.enVista .cta,
+  .contenidoLanding.enVista .tituloLanding,
+  .contenidoLanding.enVista .cta {
+    animation: none;
+  }
+  .contenidoLanding:not(.enVista) .cta {
+    opacity: 1;
   }
 }
 
@@ -204,13 +226,6 @@
     right: var(--spacing-4);
     bottom: var(--spacing-4);
   }
-  /* Sin hover en mobile: el CTA de "landing" no puede depender de
-     :hover/:focus-within para aparecer, así que aquí queda siempre
-     visible en vez de oculto por opacidad. */
-  .grid.landing .cta {
-    opacity: 1;
-    pointer-events: auto;
-  }
 }
 
 /* Tablet/laptop en vertical (p.ej. iPad en portrait, hasta 1023px de
@@ -218,7 +233,7 @@
    bloque de arriba (max-width:767px) ya cubre mobile, pero un tablet
    en portrait puede ser más ancho que eso y aquí seguiría en 2
    columnas si no fuera por esto — mismo criterio que mobile: apilado
-   en columna, sin depender de hover para el CTA. En horizontal (o en
+   en columna. En horizontal (o en
    laptop, siempre landscape) sigue en 2 columnas — no toca .grid a
    secas, solo la variante "landing". */
 @media (max-width: 1023px) and (orientation: portrait) {
@@ -229,9 +244,5 @@
   .grid.landing .pieza {
     height: auto;
     aspect-ratio: 3 / 4;
-  }
-  .grid.landing .cta {
-    opacity: 1;
-    pointer-events: auto;
   }
 }

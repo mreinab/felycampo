@@ -156,3 +156,48 @@
     object-fit: cover;
   }
 }
+
+/* Escritorio: en vez de la banda horizontal, las fotos van apiladas en
+   columna dentro de .pista, que tiene su propio scroll vertical. Con
+   el ratón encima de la galería, la rueda pasa de una foto a otra y la
+   página no se mueve hasta llegar a la última: es el encadenamiento de
+   scroll nativo del navegador (overscroll-behavior:auto), sin JS — al
+   tocar el final, el siguiente giro ya mueve la página. Empieza justo
+   DEBAJO del Navbar (margin-top = su alto) y mide el resto de la
+   pantalla, así ninguna foto queda tapada por él. Cada foto ocupa
+   todo el ancho de la columna a su proporción natural (height:auto),
+   sin recortes — si es más alta que el hueco, el resto se ve al hacer
+   scroll. Sin flechas: la rueda hace su trabajo. Mobile se queda como
+   estaba (banda horizontal fija, ver la media query de arriba). */
+@media (min-width: 768px) {
+  .galeria {
+    height: calc(100vh - var(--nav-height-desktop));
+    margin-top: var(--nav-height-desktop);
+  }
+
+  .pista {
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: auto;
+  }
+
+  .pistaUnica {
+    justify-content: flex-start;
+  }
+
+  .imagenBoton {
+    flex: none;
+    width: 100%;
+    height: auto;
+  }
+
+  .imagen {
+    width: 100%;
+    height: auto;
+  }
+
+  .flecha {
+    display: none;
+  }
+}

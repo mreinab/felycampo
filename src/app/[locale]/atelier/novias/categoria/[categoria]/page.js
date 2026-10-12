@@ -25,6 +25,7 @@
    aporta nada), así que tampoco se pasa "colecciones". */
 
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
 import { noviaProductos } from '@/components/layout/noviaProductos';
 import { encontrarCategoria } from '@/components/layout/estiloSiluetaGrupos';
@@ -51,12 +52,16 @@ export default async function Pagina({ params }) {
   const categoriaActiva = encontrarCategoria(categoria, { esFiesta: ES_FIESTA });
   if (!categoriaActiva) notFound();
 
+  const t = await getTranslations();
   const jsonLd = await breadcrumbJsonLd({ locale, seccionKey: SECCION_KEY, seccionHref: SECCION_HREF, categoriaActiva });
 
   return (
     <section className="seccion">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <ProductHero imagen="/img/novias-sección-FelyCampo3.jpg" />
+      <ProductHero
+        imagen="/img/novias-sección-FelyCampo3.jpg"
+        titulo={[t('nav.links.atelier'), t(SECCION_KEY)]}
+      />
       <CuadriculaProductos
         productos={PRODUCTOS_BRIDE_27}
         disposicion="grid"

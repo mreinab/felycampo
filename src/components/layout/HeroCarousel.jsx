@@ -3,19 +3,24 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ImageTitle } from '../ui';
+import Boton from '../ui/Boton';
 import styles from './HeroCarousel.module.css';
 
-// Debe coincidir con la duración de la animación @keyframes avanceProgreso
-// en HeroCarousel.module.css (6s) — la barra de progreso y el cambio de
-// slide van sincronizados.
+// Duración de cada slide: el primero se queda más (8s), el resto rota
+// cada 6s. La barra de progreso recibe la misma duración por inline
+// style (ver .progresoRelleno abajo), así que van siempre sincronizadas.
 const SLIDE_DURATION_MS = 6000;
+const PRIMER_SLIDE_DURATION_MS = 8000;
+const duracionSlide = (index) => (index === 0 ? PRIMER_SLIDE_DURATION_MS : SLIDE_DURATION_MS);
 
 /**
  * Hero a pantalla completa de la home: 3 slides (imagen o vídeo) que
- * rotan solos cada 6s, con una barra de progreso lineal. El único
- * elemento clicable de cada slide es el CTA (ImageTitle) — la imagen no
- * lleva su propio enlace, para no anidar/duplicar <a> dentro del slide.
+ * rotan solos (8s el primero, 6s el resto). La barra de progreso lineal
+ * está oculta (comentada al final del JSX).
+ * Encima de cada slide, abajo,
+ * una fila con la descripción a la izquierda y el CTA a la derecha. El
+ * único elemento clicable es el CTA — la imagen no lleva su propio
+ * enlace, para no anidar/duplicar <a> dentro del slide.
  * Los datos vienen por props, nada hardcodeado aquí.
  * "srcMobile" (opcional, solo slides de imagen): recorte propio para
  * mobile vía <picture>/<source> (max-width:768px, mismo corte que el
@@ -33,12 +38,13 @@ function HeroCarousel({ slides }) {
     const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefiereMenosMovimiento) return undefined;
 
-    const intervalo = setInterval(() => {
+    // setTimeout por slide (no setInterval): cada uno tiene su duración.
+    const temporizador = setTimeout(() => {
       setActiveIndex((actual) => (actual + 1) % slides.length);
-    }, SLIDE_DURATION_MS);
+    }, duracionSlide(activeIndex));
 
-    return () => clearInterval(intervalo);
-  }, [slides.length]);
+    return () => clearTimeout(temporizador);
+  }, [activeIndex, slides.length]);
 
   return (
     <section className={styles.hero}>
@@ -68,26 +74,37 @@ function HeroCarousel({ slides }) {
               <img src={slide.src} alt="" className={styles.media} />
             )}
 
-            <div className={styles.contenido}>
-              <ImageTitle
-                titulo={slide.titulo}
-                ctaTexto={slide.ctaTexto}
+            <div className={styles.pie}>
+              {/* Solo la entradilla, en mayúsculas y centrada con el CTA
+                  debajo (a petición). La segunda frase (slide.descripcion)
+                  sigue en los datos por si se recupera:
+                  <span>{slide.descripcion}</span> */}
+              <p className={styles.descripcion}>{slide.entradilla}</p>
+              <Boton
+                variante="texto-crema"
                 href={slide.ctaHref}
                 tabIndex={activo ? 0 : -1}
-                variante="blanco"
-              />
+              >
+                {slide.ctaTexto}
+              </Boton>
             </div>
           </div>
         );
       })}
 
+      {/* Barra de progreso oculta a petición — recuperable tal cual
+          (los estilos .progreso* siguen en HeroCarousel.module.css).
       <div className={styles.progreso}>
         <div className={styles.progresoPista} />
-        {/* key={activeIndex}: fuerza a React a remontar el div en cada
-            cambio de slide, lo que reinicia la animación CSS desde 0%
-            sin tener que controlar el ancho a mano desde JS. */}
-        <div key={activeIndex} className={styles.progresoRelleno} />
+        // key={activeIndex}: fuerza a React a remontar el div en cada
+        // cambio de slide, lo que reinicia la animación CSS desde 0%.
+        <div
+          key={activeIndex}
+          className={styles.progresoRelleno}
+          style={{ animationDuration: `${duracionSlide(activeIndex)}ms` }}
+        />
       </div>
+      */}
     </section>
   );
 }

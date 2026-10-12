@@ -16,7 +16,6 @@
 
 import { getTranslations } from 'next-intl/server';
 import { ProductHero } from '@/components/layout';
-import collectionTitleStyles from '@/components/ui/CollectionTitle.module.css';
 import styles from './page.module.css';
 
 export default async function Pagina({ params }) {
@@ -25,10 +24,9 @@ export default async function Pagina({ params }) {
 
   return (
     <section>
-      <ProductHero imagen="/img/felycampo-lacoleccion-3.webp" className="entrada-suave" />
+      <ProductHero imagen="/img/felycampo-lacoleccion-3.webp" titulo={t('titulo')} className="entrada-suave" />
 
       <div className="seccion contenedor">
-        <h1 className={`${collectionTitleStyles.titulo} ${styles.titulo}`}>{t('titulo')}</h1>
 
         <p className={styles.texto}>
           {t.rich('texto', {

@@ -3,6 +3,9 @@
 /* ============================================================
    INPUT — Fely Campo
    Uso: <Input etiqueta="Email" tipo="email" placeholder="nombre@email.com" />
+   "etiquetaOculta": la etiqueta no se ve (sigue ahí para lectores de
+   pantalla) — para formularios que usan el propio placeholder como
+   título del campo (ej. /visita-fely-campo/cita).
    ============================================================ */
 
 import styles from './Input.module.css';
@@ -14,10 +17,10 @@ import styles from './Input.module.css';
  * de código postal en MapaPuntosVenta.jsx, con solo borde inferior en
  * vez del borde completo de siempre) sin tocar el resto de usos.
  */
-function Input({ etiqueta, tipo = 'text', placeholder, valor, onChange, nombre, tabIndex, className }) {
+function Input({ etiqueta, etiquetaOculta = false, tipo = 'text', placeholder, valor, onChange, nombre, tabIndex, className }) {
   return (
     <label className={styles.campo}>
-      {etiqueta && <span className={styles.etiqueta}>{etiqueta}</span>}
+      {etiqueta && <span className={etiquetaOculta ? styles.etiquetaOculta : styles.etiqueta}>{etiqueta}</span>}
       <input
         type={tipo}
         name={nombre}

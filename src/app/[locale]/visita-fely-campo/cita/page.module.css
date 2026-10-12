@@ -1,131 +1,26 @@
 /* ============================================================
    RESERVAR CITA — ATELIER — Fely Campo
-   Mismo diseño que MiCuentaModal.module.css (foto a la izquierda 50%,
-   contenido a la derecha 50%, a pantalla completa), pero como PÁGINA
-   real, no modal: .pagina es position:fixed/inset:0/height:100vh, por
-   encima del Navbar (z-index más alto que su 50) y con fondo sólido,
-   así que lo tapa igual que el modal — pero al ser una URL de verdad
-   (no un estado de apertura/cierre), no hace falta la clase
-   "abierta"/transición de opacidad de MiCuentaModal, ni su mecanismo
-   de foco/Escape (eso es de modal; aquí "cerrar" es solo un enlace de
-   vuelta a /visita-fely-campo). Un único formulario dentro de
-   .formContenedor (ver page.js) — antes tres pasos (bienvenida,
-   ubicación, contacto), simplificado a petición. El panel de la foto
-   (.imagenPanel) se oculta del todo en mobile y tablet en vertical
-   (ver media query al final) — antes pasaba a ser una franja fija
-   arriba, ahora directamente no se pinta ahí, solo el formulario.
-   Esquinas rectas en todo (--radius-botones/--radius-inputs a 0, igual
-   que el resto del sitio) — mismo criterio que ModalSolicitudAtelier.
+   Página normal: Navbar arriba (el sólido de siempre), fondo blanco y
+   solo el formulario, centrado — antes una capa fija a pantalla
+   completa por encima del Navbar con foto al 50% y una X (calcada de
+   MiCuentaModal), quitadas a petición. Esquinas rectas en todo
+   (--radius-botones/--radius-inputs a 0, igual que el resto del sitio).
    ============================================================ */
 
+/* Ocupa al menos el alto de la pantalla bajo el Navbar, con el
+   formulario centrado en los dos ejes. "grid"/"place-items" (no flex):
+   si el formulario no cabe, el scroll llega hasta su principio. */
 .pagina {
-  position: fixed;
-  inset: 0;
-  height: 100vh;
-  z-index: 100;
-  background: var(--color-fondo);
-  overflow: hidden;
-}
-
-/* Antes de montar el portal de arriba (ver "montado" en page.js) —
-   dentro del flujo normal (no fixed), a toda la altura de viewport
-   para que ocupe el hueco entre Navbar y Footer en vez de dejarlo en
-   blanco mientras React hidrata. */
-.cargando {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-fondo);
-}
-
-.cargandoLogo {
-  height: 40px;
-  width: auto;
-  animation: cargandoPulso 1.4s ease-in-out infinite;
-}
-
-@keyframes cargandoPulso {
-  0%, 100% { opacity: 0.25; }
-  50% { opacity: 0.9; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cargandoLogo {
-    animation: none;
-    opacity: 0.6;
-  }
-}
-
-/* Mismo tamaño/diseño que .cerrar de MiCuentaModal.module.css — aquí
-   es un enlace real (vuelve a /visita-fely-campo), no un botón que
-   cierra un estado. */
-.cerrar {
-  position: fixed;
-  top: var(--spacing-4);
-  right: var(--spacing-4);
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  color: var(--color-tinta);
-  transition: opacity 0.25s var(--ease-marca);
-}
-
-.cerrar:hover {
-  opacity: 0.6;
-}
-
-/* 50%/50% en escritorio (foto a sangre a la izquierda, contenido
-   centrado a la derecha) — en mobile/tablet vertical desaparece del
-   todo (ver media query al final), el formulario pasa a ocupar el
-   ancho completo. */
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 100vh;
-}
-
-.imagenPanel {
-  position: relative;
-  height: 100%;
-  overflow: hidden;
-}
-
-.imagen {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* "grid"/"place-items", no flex/align-items: centrar con flex cuando
-   el contenido no cabe recorta el principio por arriba y no deja
-   llegar a él con scroll (bug conocido de flexbox) — grid no tiene
-   ese problema, el scroll llega hasta el principio del todo. */
-.formPanel {
-  height: 100%;
-  overflow-y: auto;
+  min-height: calc(100vh - var(--nav-height-desktop));
   display: grid;
   place-items: center;
-  padding: var(--spacing-8) var(--spacing-6);
+  padding: var(--spacing-8) var(--spacing-6) var(--spacing-10);
+  background: var(--color-fondo);
 }
 
-/* Oculto por defecto (desktop/landscape ya tiene la foto de
-   .imagenPanel como marca visible) — solo aparece en mobile/tablet
-   vertical, ver media query al final, donde esa foto desaparece del
-   todo y si no el formulario quedaría sin ninguna marca visible. Mismo
-   "top"/altura de fila que .cerrar (arriba): position:fixed + mismo
-   valor de "top", height:40px igual que ese botón, flex centrado para
-   que la imagen (más baja que la fila) quede a la misma altura visual
-   que el icono de cerrar, no solo en el mismo "top" numérico. */
-.logoMobile {
-  display: none;
-}
-
+/* margin-top: separa el formulario del Navbar (a petición, 5vh). */
 .formContenedor {
+  margin-top: 5vh;
   width: 100%;
   max-width: 400px;
   min-width: 0;
@@ -137,8 +32,17 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--spacing-5);
   min-width: 0;
+}
+
+/* Título + subtítulo del formulario, centrados y juntos. */
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  margin-bottom: 3vh;
+  text-align: center;
 }
 
 .titulo {
@@ -146,6 +50,26 @@
   font-weight: var(--font-weight-medium);
   color: var(--color-tinta);
   text-align: center;
+}
+
+.subtitulo {
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+}
+
+/* Inputs de texto (los <Input> de ui/: nombre, email, teléfono, código
+   postal, ciudad) solo con línea inferior — la fecha (selects) y el
+   mensaje (textarea) mantienen su caja. Solo en esta página: Input.
+   module.css no se toca. Sin padding lateral, el texto arranca alineado
+   con la etiqueta de encima. */
+.form input:not([type="checkbox"]) {
+  border: none;
+  border-bottom: 1px solid var(--color-gris-300);
+  padding-inline: 0;
+  background: transparent;
+}
+.form input:not([type="checkbox"]):focus {
+  border-bottom-color: var(--color-tinta);
 }
 
 /* Código postal + ciudad, uno al lado del otro — cada Input (ui/) ya
@@ -169,6 +93,18 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
+}
+
+/* Solo para lectores de pantalla — el título del campo va como
+   placeholder (ver la etiqueta del mensaje en page.js). */
+.etiquetaOculta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .etiqueta {
@@ -249,13 +185,32 @@
   cursor: pointer;
 }
 
+/* Mismo diseño que las cajas del formulario (selects/mensaje): borde
+   fino gris, esquinas rectas, sin el estilo nativo del navegador.
+   Marcada: cuadrado relleno en tinta, con un margen blanco interior. */
 .legalCheckbox {
+  appearance: none;
+  -webkit-appearance: none;
   flex-shrink: 0;
-  margin-top: 3px;
+  margin: 0;
   width: 16px;
   height: 16px;
-  accent-color: var(--color-tinta);
+  border: 1px solid var(--color-gris-300);
+  border-radius: 0;
+  background: var(--color-fondo);
   cursor: pointer;
+  transition: border-color 0.25s var(--ease-marca), background-color 0.25s var(--ease-marca);
+}
+
+.legalCheckbox:focus-visible,
+.legalCheckbox:hover {
+  border-color: var(--color-tinta);
+}
+
+.legalCheckbox:checked {
+  border-color: var(--color-tinta);
+  background: var(--color-tinta);
+  box-shadow: inset 0 0 0 3px var(--color-fondo);
 }
 
 .legalTexto {
@@ -264,14 +219,16 @@
   line-height: var(--leading-base);
 }
 
+/* Mismo color que el resto de la frase — solo el subrayado los marca
+   como enlace. */
 .legalEnlace {
-  color: var(--color-tinta);
+  color: inherit;
   text-decoration: underline;
   transition: color 0.25s var(--ease-marca);
 }
 
 .legalEnlace:hover {
-  color: var(--color-rosa-oscuro);
+  color: var(--color-tinta);
 }
 
 /* ---------- Confirmación tras "Enviar solicitud" ---------- */
@@ -292,49 +249,9 @@
   white-space: pre-line;
 }
 
-/* Mobile y tablet en vertical (portrait, hasta 1023px — mismo criterio
-   que Navbar/SplitMedia/BloqueSeccion): sin panel de foto, solo el
-   formulario a todo el ancho. En landscape (tablet apaisado o laptop)
-   sigue el 50/50 de siempre. */
-@media (max-width: 767px), (max-width: 1023px) and (orientation: portrait) {
+@media (max-width: 767px) {
   .pagina {
-    overflow-y: auto;
-  }
-
-  .layout {
-    grid-template-columns: 1fr;
-    height: auto;
-    min-height: 100vh;
-  }
-
-  .imagenPanel {
-    display: none;
-  }
-
-  .formPanel {
-    height: auto;
-    overflow-y: visible;
-    padding: var(--spacing-8) var(--spacing-4);
-    /* Sitio para .logoMobile (fixed, fuera del flujo) encima del
-       formulario — sin este padding, el título del formulario
-       quedaría tapado por el logo al hacer scroll hasta arriba. */
-    padding-top: calc(var(--spacing-4) + 40px + var(--spacing-4));
-  }
-
-  .logoMobile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: var(--spacing-4);
-    left: 0;
-    right: 0;
-    height: 40px;
-    z-index: 1;
-  }
-
-  .logoMobileImagen {
-    height: 28px;
-    width: auto;
+    min-height: calc(100vh - var(--nav-height));
+    padding: var(--spacing-6) var(--spacing-4) var(--spacing-8);
   }
 }

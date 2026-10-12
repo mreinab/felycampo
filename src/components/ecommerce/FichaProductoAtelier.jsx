@@ -20,7 +20,7 @@
    por encargo, no venta online), así que esa fila se sustituye por la
    de PRE-ORDER, explicando que no se admite devolución una vez
    confirmado el pedido.
-   "ResenasClientes" (debajo de la ficha, antes de "relacionados"):
+   "ResenasClientes" (COMENTADO por ahora, a petición — ver JSX):
    mismo PLACEHOLDER y mismo orden que pret-a-porter/[producto]/page.js
    — RESENAS_EJEMPLO compartido entre las dos (ver resenasEjemplo.js),
    no una copia propia de Atelier.
@@ -68,8 +68,8 @@ import { getTranslations } from 'next-intl/server';
 import { productosEjemplo } from '@/components/layout/productosEjemplo';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { noviaProductos } from '@/components/layout/noviaProductos';
-import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
-import { ProductosRecomendados, ResenasClientes } from '@/components/layout';
+// import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
+import { ProductosRecomendados /* , ResenasClientes */ } from '@/components/layout';
 import { tagACategoria } from '@/components/layout/estiloSiluetaGrupos';
 import GaleriaProducto from './GaleriaProducto';
 import InfoAtelier from './InfoAtelier';
@@ -185,7 +185,10 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
       </div>
 
       <div className={styles.debajoFicha}>
-        <ResenasClientes resenas={RESENAS_EJEMPLO} />
+        {/* Reseñas comentadas a petición hasta que hagan falta — para
+            recuperarlas, descomentar esta línea y los dos imports de
+            arriba (RESENAS_EJEMPLO, ResenasClientes).
+        <ResenasClientes resenas={RESENAS_EJEMPLO} /> */}
 
         {relacionados.length > 0 && (
           <ProductosRecomendados

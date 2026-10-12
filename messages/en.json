@@ -6,6 +6,7 @@
       "colecciones": "Collections",
       "elMundoDeFely": "About Fely",
       "puntosDeVenta": "Where to Find Fely Campo",
+      "puntosDeVentaCorto": "Where to Find Us",
       "pedirCita": "Book an Appointment"
     },
     "submenus": {
@@ -109,6 +110,8 @@
     "showroomNota": "By-appointment showroom"
   },
   "puntosVenta": {
+    "tituloHero": "Selected Boutiques",
+    "subtituloHero": "Find your Fely Campo at our points of sale.",
     "eyebrow": "Where to find us",
     "titulo": "Points of sale",
     "intro": "Our ateliers and the network of boutiques that carry Fely Campo, in Spain and around the world. We have more than 200 points of sale. Find your nearest store",
@@ -140,6 +143,7 @@
   },
   "sobreFely": {
     "eyebrow": "The Designer",
+    "tituloHero": "Fely Campo, the designer",
     "titulo": "Meet Fely Campo",
     "trayectoria": "Our Story",
     "manifiestoEyebrow": "Manifesto — Ibiza Collection"
@@ -184,6 +188,10 @@
     "gastos": "Covered by the customer, except for defective items or an order error.",
     "masInfoTexto": "Visit our <atencion>Customer Service</atencion> page for more information."
   },
+  "whatsappFlotante": {
+    "label": "Message us on WhatsApp",
+    "mensaje": "Hello, I would like some information about Fely Campo."
+  },
   "contacto": {
     "titulo": "Contact",
     "tiendasTitulo": "Store enquiries",
@@ -191,6 +199,7 @@
     "emailTitulo": "E-mail",
     "pretaporterTitulo": "Prêt-à-porter enquiries",
     "chatOnline": "Online chat",
+    "whatsapp": "WhatsApp",
     "clickCollectTitulo": "Click & Collect",
     "direccion": "C/ Laguna Negra 17-19, Salamanca",
     "parrafos": [
@@ -296,7 +305,8 @@
   },
   "pedirCitaAtelier": {
     "cerrar": "Close",
-    "titulo": "Book your appointment with us",
+    "titulo": "Book your appointment",
+    "subtitulo": "Fill in the form and we will get in touch with you.",
     "nombreCompleto": "Full name",
     "nombreCompletoPlaceholder": "Jane Smith",
     "email": "Contact email",
@@ -368,8 +378,30 @@
     "preguntaLogin": "Already have an account?",
     "cerrar": "Close"
   },
+  "heroPagina": {
+    "podcast": "Between fabrics and words.",
+    "runwayArchivo": "All our runway collections.",
+    "atelierNovias": "Made-to-measure bridal gowns, crafted in our atelier.",
+    "atelierFiesta": "Made-to-measure evening and guest dresses.",
+    "pretAPorter": "Everyday pieces, made with atelier care.",
+    "sobreFely": "A whole life devoted to fashion.",
+    "runway": "Runway collection",
+    "atelierCiudad": "Visit us, always by appointment."
+  },
+  "pedirCitaLanding": {
+    "titulo": "Discover the collection at our ateliers",
+    "cta": "Book an appointment"
+  },
+  "citaFelyLanding": {
+    "texto": "What I want to convey through my dresses is <em>a feeling, a passion</em> for my craft and my profession, <em>fashion</em>."
+  },
+  "descubreFely": {
+    "titulo": "Discover Fely",
+    "cta": "About the designer"
+  },
   "heroCarousel": {
-    "titulo": "The world of Fely Campo",
+    "entradilla": "The world of Fely Campo",
+    "descripcion": "Elegance, restraint and exceptional pattern-making.",
     "cta": "Discover more"
   },
   "collectionTitle": {
@@ -541,6 +573,8 @@
       "consentimiento": "By submitting your email, you agree to our <privacidad>Privacy Policy</privacidad>.",
       "politicaEnlace": "Privacy Policy",
       "enviar": "Submit",
+      "suscribirse": "Subscribe",
+      "placeholder": "E-mail",
       "exito": "Thank you — you're subscribed!",
       "error": "Something went wrong. Please try again."
     }

@@ -5,7 +5,6 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import Boton from '@/components/ui/Boton';
 import styles from './Footer.module.css';
@@ -21,8 +20,6 @@ const suscribirNewsletter = (correo) => new Promise((resolve) => setTimeout(reso
 function Footer() {
   const t = useTranslations('footer');
   const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [estado, setEstado] = useState(null); // null | 'cargando' | 'exito' | 'error'
@@ -43,36 +40,31 @@ function Footer() {
     enviarNewsletter();
   };
 
-  // Mismo mecanismo que tenía el Navbar: reemplaza el segmento de locale
-  // en la ruta actual, conservando la página en la que estabas.
-  const otherLocale = locale === 'es' ? 'en' : 'es';
-
   // Mismo helper que usa el Navbar para anteponer el locale a las rutas
   // internas (ej. el enlace a la política de privacidad).
   const withLocale = (href) => `/${locale}${href}`;
 
-  const switchLocale = () => {
-    const segments = pathname.split('/');
-    segments[1] = otherLocale;
-    router.replace(segments.join('/'));
-  };
 
+  // "Atención cliente" quitada (a petición) — "Contacto" pasa al final
+  // de "Fely Campo", que cierra con "Pedir cita" ("Nuestros talleres" fuera); las páginas legales, antes solo en la barra de
+  // abajo, tienen ahora su propia columna "Información".
   const columnas = [
-    { titulo: 'Atención cliente', enlaces: ['Envíos', 'Devoluciones', 'Contacto'] },
-    { titulo: 'Fely Campo', enlaces: ['Historia', 'Nuestros talleres', 'Puntos de venta'] },
+    { titulo: 'Fely Campo', enlaces: ['Historia', 'Puntos de venta', 'Contacto', 'Pedir cita'] },
     { titulo: 'Síguenos', enlaces: ['Instagram', 'YouTube'] },
+    { titulo: 'Información', enlaces: ['Términos y condiciones', 'Política de cookies', 'Política de privacidad'] },
   ];
 
   // Enlaces reales de las 3 columnas (el resto — de momento solo
   // "Instagram"/"YouTube" — siguen siendo placeholders "#", ver el <a>
   // más abajo) — por etiqueta en vez del nombre técnico de cada ruta.
   const RUTAS_COLUMNAS = {
-    'Envíos': '/ayuda/envios',
-    'Devoluciones': '/ayuda/devoluciones',
     'Contacto': '/ayuda/contacto',
     'Historia': '/sobre-fely',
-    'Nuestros talleres': '/talleres-fely-campo',
+    'Pedir cita': '/visita-fely-campo/cita',
     'Puntos de venta': '/puntos-de-venta-fely-campo',
+    'Términos y condiciones': '/legal/terminos',
+    'Política de cookies': '/legal/cookies',
+    'Política de privacidad': '/legal/privacidad',
   };
   const hrefColumna = (enlace) => (RUTAS_COLUMNAS[enlace] ? withLocale(RUTAS_COLUMNAS[enlace]) : '#');
 
@@ -102,27 +94,28 @@ function Footer() {
               de las columnas (order:-1), es lo que más importa aquí. */}
           <div className={styles.newsletter}>
             <p className={styles.titulo}>Newsletter</p>
-            <p className={styles.parrafo}>{t('newsletter.texto')}</p>
             <div className={styles.filaNewsletter}>
               <form className={styles.formNewsletter} onSubmit={handleSubmitNewsletter}>
                 <input
                   type="email"
-                  placeholder="nombre@email.com"
+                  placeholder={t('newsletter.placeholder')}
                   className={styles.input}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </form>
+              {/* Debajo del input, a todo su ancho: sin fondo, texto oscuro y
+                  borde (variante "contorno"). */}
               <Boton
-                variante="solido"
-                tamano="s"
+                variante="contorno"
+                tamano="full"
                 type="button"
                 onClick={enviarNewsletter}
                 desactivado={estado === 'cargando' || email.trim().length === 0}
                 className={styles.botonEnviar}
               >
-                {t('newsletter.enviar')}
+                {t('newsletter.suscribirse')}
               </Boton>
             </div>
             {estado === 'exito' && (
@@ -135,41 +128,6 @@ function Footer() {
                 {t('newsletter.error')}
               </p>
             )}
-            <p className={styles.consentimiento}>
-              {t.rich('newsletter.consentimiento', {
-                privacidad: (chunks) => (
-                  <a href={withLocale('/legal/privacidad')} className={styles.consentimientoEnlace}>
-                    {chunks}
-                  </a>
-                ),
-              })}
-            </p>
-          </div>
-        </div>
-
-        <div className={styles.legal}>
-          <span className={styles.copy}>Fely Campo © {new Date().getFullYear()}</span>
-          <div className={styles.legalLista}>
-            <a href="#" className={styles.legalEnlace}>Términos y condiciones</a>
-            <a href={withLocale('/legal/cookies')} className={styles.legalEnlace}>Política de cookies</a>
-            <a href="#" className={styles.legalEnlace}>Política de privacidad</a>
-          </div>
-          <div className={styles.languageSelector}>
-            <button
-              className={`${styles.languageOption} ${locale === 'es' ? styles.languageOptionActivo : ''}`}
-              onClick={locale === 'es' ? undefined : switchLocale}
-              disabled={locale === 'es'}
-            >
-              ES
-            </button>
-            <span className={styles.languageDivider}>|</span>
-            <button
-              className={`${styles.languageOption} ${locale === 'en' ? styles.languageOptionActivo : ''}`}
-              onClick={locale === 'en' ? undefined : switchLocale}
-              disabled={locale === 'en'}
-            >
-              EN
-            </button>
           </div>
         </div>
       </div>

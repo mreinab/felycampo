@@ -20,9 +20,8 @@
    obligatorio: sin color elegido, "Contacta con nosotros" no abre el
    modal, solo avisa (mismo patrón que avisoTalla en
    FichaProductoAcciones.jsx).
-   ".fila" (Boton + BotonGuardar): mismo patrón que .fila de
-   FichaProductoAcciones.jsx en Tienda — el CTA principal reparte el
-   ancho con el botón de wishlist, en vez de ir solo a todo el ancho.
+   ".fila": solo el CTA a todo el ancho — sin BotonGuardar (wishlist),
+   quitado a petición: en los looks de Atelier no hace falta guardar.
    "Contacta con nosotros" abre ModalSolicitudAtelier.jsx (talla +
    datos de contacto + comentario) en vez de navegar directamente.
    Uso:
@@ -32,7 +31,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Boton, SelectorColor, BotonGuardar } from '../ui';
+import { Boton, SelectorColor } from '../ui';
 import ModalSolicitudAtelier from './ModalSolicitudAtelier';
 import styles from './FichaProductoAtelier.module.css';
 
@@ -73,7 +72,6 @@ function InfoAtelier({ imagen, nombre, sku, descripcion, colores = [], tallas = 
           <Boton variante="solido" tamano="full" onClick={alContactar}>
             {t('contactar')}
           </Boton>
-          <BotonGuardar variante="solido" />
         </div>
         {avisoColor && <p className={styles.avisoColor}>{t('avisoColor')}</p>}
       </div>

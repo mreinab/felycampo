@@ -8,14 +8,25 @@
    ej. /runways-dreaming, /runways-diafonia).
    ============================================================ */
 
-import { RunwayTarjeta } from '@/components/layout';
+import { getTranslations } from 'next-intl/server';
+import { HeroPagina, RunwayTarjeta } from '@/components/layout';
 import { COLECCIONES } from './colecciones';
 import styles from './page.module.css';
 
 export default async function Pagina({ params }) {
   const { locale } = await params;
+  const t = await getTranslations();
 
   return (
+    <>
+    {/* Hero común (HeroPagina): portada de la colección más reciente
+        (La Colección FW27, primera de COLECCIONES). */}
+    <HeroPagina
+      imagen={COLECCIONES[0].medios[0].src}
+      alt={t('nav.submenus.colecciones.runway')}
+      titulo={t('nav.submenus.colecciones.runway')}
+      subtitulo={t('heroPagina.runwayArchivo')}
+    />
     <section className={`${styles.pagina} contenedor`}>
       <div className={styles.grid}>
         {COLECCIONES.map((coleccion) => (
@@ -29,5 +40,6 @@ export default async function Pagina({ params }) {
         ))}
       </div>
     </section>
+    </>
   );
 }

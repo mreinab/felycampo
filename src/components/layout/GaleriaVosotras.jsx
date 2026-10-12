@@ -52,15 +52,16 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Plus, X } from 'lucide-react';
 import { CabeceraSeccion, CarruselFotos } from '../ui';
 import useEnVista from '@/hooks/useEnVista';
-import { FOTOS_INVITADAS, FOTOS_NOVIAS } from './vosotrasFotos';
+import { FOTOS_INVITADAS, FOTOS_NOVIAS, RESENAS_VOSOTRAS } from './vosotrasFotos';
 import styles from './GaleriaVosotras.module.css';
 
 // Cada look: su propia mini-galería (grupo real de fotos, portada
-// siempre primera). Sin nombre/comentario ni "Consigue el look" —
-// quitados a petición (placeholder, sin reseña real de estas
-// clientas ni prenda real vinculada detrás).
+// siempre primera). Sin "Consigue el look". "resena": solo los looks
+// con reseña REAL de la clienta (RESENAS_VOSOTRAS, por su foto de
+// portada) — se pinta en el lightbox junto a las fotos (.resena); el
+// resto se queda solo en fotos.
 function construirLooks(gruposFotos, categoria) {
-  return gruposFotos.map((fotos) => ({ fotos, categoria }));
+  return gruposFotos.map((fotos) => ({ fotos, categoria, resena: RESENAS_VOSOTRAS[fotos[0]] }));
 }
 
 const LOOKS_EJEMPLO = [
@@ -232,7 +233,7 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
         ))}
       </div>
 
-      <div className={`${styles.lightbox} ${abierta ? styles.abierta : ''}`} aria-hidden={!abierta}>
+      <div className={`${styles.lightbox} ${abierta ? styles.abierta : ''} ${lookActivo.resena ? styles.conResena : ''}`} aria-hidden={!abierta}>
         <div className={styles.cabecera}>
           <a href={`/${locale}`} className={styles.logoLink} tabIndex={tabIndexInteractivo}>
             <img src="/img/logo/logo-felycampo.png" alt="Fely Campo" className={styles.logo} />
@@ -273,6 +274,14 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
               </button>
             ))}
           </div>
+        )}
+
+        {lookActivo.resena && (
+          <blockquote className={styles.resena}>
+            {lookActivo.resena.parrafos.map((parrafo) => (
+              <p key={parrafo} className={styles.resenaTexto}>{parrafo}</p>
+            ))}
+          </blockquote>
         )}
       </div>
     </>

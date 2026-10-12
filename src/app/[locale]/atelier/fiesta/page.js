@@ -27,7 +27,7 @@
    se enseña en esta página. */
 
 import { getTranslations } from 'next-intl/server';
-import { BloqueSeccion, CuadriculaProductos, RunwayBackstage, RunwayDescripcion, RunwayMediaLateral } from '@/components/layout';
+import { BloqueSeccion, CuadriculaProductos, HeroPagina, RunwayBackstage, RunwayDescripcion } from '@/components/layout';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { FIESTA_EDITORIAL } from './fiestaEditorial';
 import styles from './page.module.css';
@@ -61,19 +61,14 @@ export default async function Pagina({ params, searchParams }) {
 
   return (
     <section className="seccion">
-      <div className={styles.hero} data-navbar-hero>
-        <RunwayMediaLateral
-          medio={{ tipo: 'imagen', src: '/img/landing/hero-atelier-fiesta-felycampo.jpg' }}
-          alt={t('nav.submenus.atelier.fiesta')}
-        />
-      </div>
+      <HeroPagina
+        imagen="/img/landing/hero-atelier-fiesta-felycampo.jpg"
+        alt={t('nav.submenus.atelier.fiesta')}
+        titulo={[t('nav.links.atelier'), t('nav.submenus.atelier.fiesta')]}
+        subtitulo={t('heroPagina.atelierFiesta')}
+      />
 
       <div className={styles.textoDescripcion}>
-        <div className={styles.textoRow}>
-          <p className={styles.nombre}>{t('nav.links.atelier')}</p>
-          <p className={styles.temporada}>{t('nav.submenus.atelier.fiesta')}</p>
-        </div>
-
         <RunwayDescripcion texto={FIESTA_EDITORIAL.descripcion[locale]} />
       </div>
 

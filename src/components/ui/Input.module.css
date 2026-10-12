@@ -11,6 +11,17 @@
   margin-bottom: var(--spacing-1);
 }
 
+/* Solo para lectores de pantalla (ver "etiquetaOculta" en Input.jsx). */
+.etiquetaOculta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .input {
   width: 100%;
   border: 1px solid var(--color-gris-300);

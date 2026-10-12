@@ -231,6 +231,6 @@ export const SOBRE_FELY = {
     href: 'https://www.youtube.com/watch?is=8lcOXOn4hPIHgaWe&v=QgepxasStTI&feature=youtu.be',
     titulo: 'Conoce a Fely Campo - Documental',
     meta: { es: '54 cintas de vídeo resumen parte de mi historia', en: '54 video tapes summarise part of my story' },
-    imagen: '/img/about-felycampo/felycampo-documental.jpg',
+    imagen: '/img/about-felycampo/felycampo-documenta-54oldtapes-2.jpg',
   },
 };

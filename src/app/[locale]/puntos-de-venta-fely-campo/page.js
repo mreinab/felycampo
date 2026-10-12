@@ -23,15 +23,22 @@
    margin-bottom en la propia sección (ver .seccionMilan) para separar
    del Footer, que si no quedaba pegado justo debajo. */
 
+import { getTranslations } from 'next-intl/server';
 import { MapaPuntosVenta, ProductHero } from '@/components/layout';
 import { CabeceraSeccion, EnVista } from '@/components/ui';
 import styles from './page.module.css';
 
-export default function Pagina() {
+export default async function Pagina() {
+  const t = await getTranslations('puntosVenta');
+
   return (
     <>
       <section className="seccion">
-        <ProductHero imagen="/img/styleguide/punto-venta.webp" />
+        <ProductHero
+          imagen="/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg"
+          titulo={t('tituloHero')}
+          subtitulo={t('subtituloHero')}
+        />
       </section>
 
       <section className="seccion" id="mapa-puntos-venta">
@@ -49,7 +56,13 @@ export default function Pagina() {
 
         <EnVista as="article" className={styles.tarjeta}>
           <div className={styles.galeria}>
-            <div className={styles.marcoVacio} aria-hidden="true" />
+            <img
+              src="/img/atelier/felycampo-punto-venta-internacional.webp"
+              alt="Showroom Milan"
+              className={styles.foto}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
 
           <div className={styles.fila}>

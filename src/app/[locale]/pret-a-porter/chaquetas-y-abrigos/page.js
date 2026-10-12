@@ -1,15 +1,20 @@
 /* Ruta: /pret-a-porter/chaquetas-y-abrigos — catálogo real, filtrado por
    categoria (ver tiendaProductos.js). */
 
+import { getTranslations } from 'next-intl/server';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
 
-export default function ChaquetasYAbrigosPagina() {
+export default async function ChaquetasYAbrigosPagina() {
+  const t = await getTranslations();
   const productos = tiendaProductos.filter((producto) => producto.categoria === 'chaquetas-y-abrigos');
 
   return (
     <section className="seccion">
-      <ProductHero imagen="/img/hero-pages/hero-pages-pretaporter-chaquetas-y-abrigos.jpg" />
+      <ProductHero
+        imagen="/img/hero-pages/hero-pages-pretaporter-chaquetas-y-abrigos.jpg"
+        titulo={[t('catalogo.tituloTienda'), t('nav.submenus.tienda.coats')]}
+      />
       <CuadriculaProductos
         productos={productos}
         disposicion="grid"

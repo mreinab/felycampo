@@ -26,7 +26,7 @@
    enseña ya. */
 
 import { getTranslations } from 'next-intl/server';
-import { /* BloqueSeccion, */ CarruselInfinito, CuadriculaProductos, RunwayDescripcion } from '@/components/layout';
+import { /* BloqueSeccion, */ CarruselInfinito, CuadriculaProductos, HeroPagina, RunwayDescripcion } from '@/components/layout';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { PRET_A_PORTER_EDITORIAL } from './pretAPorterEditorial';
 import styles from './page.module.css';
@@ -92,16 +92,17 @@ export default async function Pagina({ params }) {
 
   return (
     <section className="seccion">
-      <div className={`${styles.hero} ${styles.heroCarrusel}`} data-navbar-hero>
+      {/* Mismo hero que el resto: texto en blanco, degradado oscuro
+          arriba (Navbar) y abajo (título) sobre el carrusel. */}
+      <HeroPagina
+        titulo={[t('catalogo.subtituloFelyCampo'), t('catalogo.tituloTienda')]}
+        subtitulo={t('heroPagina.pretAPorter')}
+        className={styles.heroCarrusel}
+      >
         <CarruselInfinito imagenes={IMAGENES_HERO} alt={t('catalogo.tituloTienda')} />
-      </div>
+      </HeroPagina>
 
       <div className={styles.textoDescripcion}>
-        <div className={styles.textoRow}>
-          <p className={styles.nombre}>{t('catalogo.subtituloFelyCampo')}</p>
-          <p className={styles.temporada}>{t('catalogo.tituloTienda')}</p>
-        </div>
-
         <RunwayDescripcion texto={PRET_A_PORTER_EDITORIAL.descripcion[locale]} />
       </div>
 

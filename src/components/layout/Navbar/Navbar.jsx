@@ -21,12 +21,12 @@ import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 // bajo el namespace "nav" — aquí solo se guarda la estructura (hrefs,
 // claves de traducción, imagen).
 // "items" alimenta la lista de texto (NavbarPanelLateralContent) tal
-// cual, en su propio orden. "cards" es independiente (1 o 2 MediaLink,
-// NavbarPanelLateralCards): cada una con su propia imagen, elegida a
+// cual, en su propio orden. "cards" es independiente
+// (NavbarPanelLateralCards): cada una con su propia imagen, elegida a
 // mano para que combine con lo que enlaza (misma foto que usa esa
-// página como hero/categoría) — no una por cada "item" (con 3-4 items
-// por submenú, dos tarjetas destacadas bastan, ver ".submenuCards" en
-// NavbarPanelLateralContent.module.css, pensado para 1-2, no más).
+// página como hero/categoría). Hoy solo se pinta la PRIMERA, cuadrada y
+// sin texto encima — la segunda se queda en los datos por si se
+// recupera la fila de dos. "cardsVariante" ya no se usa.
 //
 // Reorganización (encargo): antes "Atelier" llevaba Novias/Fiesta/
 // Vosotras y "Visítanos" las 3 sedes + puntos de venta + pedir cita;
@@ -39,13 +39,13 @@ import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 const SUBMENU_STRUCTURE = {
   atelier: {
     items: [
-      { key: 'salamanca', href: '/atelier-fiesta/salamanca' },
-      { key: 'madrid', href: '/atelier-fiesta/madrid' },
-      { key: 'oviedo', href: '/atelier-fiesta/oviedo' },
+      { key: 'salamanca', href: '/atelier-fiesta/salamanca', image: '/img/atelier/atelier-salamanca/felycampo-salamnca-atelier.webp' },
+      { key: 'madrid', href: '/atelier-fiesta/madrid', image: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_pretaporter-3-1024x683.jpg' },
+      { key: 'oviedo', href: '/atelier-fiesta/oviedo', image: '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg' },
       // "separador": "Vosotras" no es una sede — un hueco de una fila
       // por encima (ver NavbarPanelLateralContent.jsx) la separa
       // visualmente de las 3 ciudades de arriba.
-      { key: 'vosotras', href: '/atelier/vosotras', separador: true },
+      { key: 'vosotras', href: '/atelier/vosotras', separador: true, image: '/img/hero-pages/submenu/vosotras-submenu-image.jpg' },
     ],
     cardsVariante: 'horizontal',
     cards: [
@@ -63,10 +63,10 @@ const SUBMENU_STRUCTURE = {
     // categorías (tops/faldas/pantalones...) como antes — esas
     // siguen existiendo como páginas propias, solo no se listan aquí.
     items: [
-      { key: 'fiesta', href: '/atelier/fiesta' },
-      { key: 'novias', href: '/atelier/novias' },
-      { key: 'pretaporter', href: '/pret-a-porter' },
-      { key: 'runway', href: '/colecciones-fely-campo' },
+      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/hero-atelier-fiesta-felycampo.jpg' },
+      { key: 'novias', href: '/atelier/novias', image: '/img/landing/hero-atelier-novia-felycampo.jpg' },
+      { key: 'pretaporter', href: '/pret-a-porter', image: '/img/hero-pages/hero-pages-pretaporter-cover.jpg' },
+      { key: 'runway', href: '/colecciones-fely-campo', image: '/img/hero-pages/submenu/runway-submenu-image.jpg' },
     ],
     cardsVariante: 'horizontal',
     cards: [
@@ -78,25 +78,25 @@ const SUBMENU_STRUCTURE = {
     // "podcast" enlaza a /podcast (antes /blog — ver comentario de
     // cabecera en podcast/page.js para el porqué del cambio de URL).
     items: [
-      { key: 'historia', href: '/sobre-fely' },
-      { key: 'podcast', href: '/podcast' },
-      { key: 'talleres', href: '/talleres-fely-campo' },
+      { key: 'historia', href: '/sobre-fely', image: '/img/about-felycampo/fely-campo-conoce-a-la-disenadora.jpg' },
+      { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/madrid-moda-de-capital-felycampo-podcast.jpg' },
+      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp' },
     ],
     cardsVariante: 'horizontal',
     cards: [
       { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/madrid-moda-de-capital-felycampo-podcast.jpg' },
-      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/hero-pages/submenu/talleres-felycampo-submenu-image.jpg' },
+      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp' },
     ],
   },
   puntosDeVenta: {
     items: [
-      { key: 'propios', href: '/visita-fely-campo' },
-      { key: 'externos', href: '/puntos-de-venta-fely-campo' },
+      { key: 'propios', href: '/visita-fely-campo', image: '/img/landing/hero-visitanos-felycampo.jpg' },
+      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
     ],
     cardsVariante: 'horizontal',
     cards: [
       { key: 'propios', href: '/visita-fely-campo', image: '/img/landing/hero-visitanos-felycampo.jpg' },
-      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/styleguide/punto-venta.webp' },
+      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
     ],
   },
 };
@@ -121,6 +121,13 @@ const NAV_ITEMS = [
 // abajo) — el resto, "Puntos de Venta" incluido, a la izquierda.
 const NAV_ITEMS_IZQUIERDA = NAV_ITEMS.filter(({ key }) => key !== 'pedirCita');
 const NAV_ITEMS_DERECHA = NAV_ITEMS.filter(({ key }) => key === 'pedirCita');
+
+// Selector de idioma del lateral derecho — cada idioma en su propia
+// lengua, por eso no pasa por messages/{locale}.json.
+const IDIOMAS = [
+  { code: 'es', label: 'Español' },
+  { code: 'en', label: 'English' },
+];
 
 const CLOSE_DELAY_MS = 200;
 const SCROLL_THRESHOLD_PX = 50;
@@ -162,6 +169,11 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   const [mobileSubmenu, setMobileSubmenu] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [lastSubmenu, setLastSubmenu] = useState(null);
+  // Enlace de la lista del submenú de escritorio con el ratón encima: su
+  // "image" sustituye a la imagen de la derecha (ver
+  // NavbarPanelLateralCards). Se resetea al cambiar de submenú.
+  const [itemHover, setItemHover] = useState(null);
+  useEffect(() => setItemHover(null), [lastSubmenu]);
   const [scrolled, setScrolled] = useState(false);
   const [headerHovered, setHeaderHovered] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
@@ -267,6 +279,14 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   // no resetee el idioma elegido — el middleware, si no, redirigiría
   // cualquier ruta sin prefijo al locale por defecto (es).
   const withLocale = (href) => (href === '/' ? `/${locale}` : `/${locale}${href}`);
+
+  // Misma página actual con otro locale (mismo mecanismo que el selector
+  // del Footer: sustituye el primer segmento de la ruta).
+  const conLocale = (code) => {
+    const segments = pathname.split('/');
+    segments[1] = code;
+    return segments.join('/');
+  };
 
   // Cierra el menú móvil entero y lo resetea a la lista raíz (nunca se
   // queda abierto "a medias" dentro de un submenú la próxima vez) — el
@@ -375,7 +395,15 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
               className={`${styles.navLink} ${esActivo(item) ? styles.navLinkActivo : ''}`}
               onMouseEnter={() => (item.submenu ? openSubmenu(item.submenu) : scheduleSubmenuClose())}
             >
-              {t(`links.${item.key}`)}
+              {/* "puntosDeVenta" tiene versión corta ("Dónde encontrarnos")
+                  para anchos estrechos de escritorio — se alternan por CSS
+                  (.textoLargo/.textoCorto, ver Navbar.module.css). */}
+              {t.has(`links.${item.key}Corto`) ? (
+                <>
+                  <span className={styles.textoLargo}>{t(`links.${item.key}`)}</span>
+                  <span className={styles.textoCorto}>{t(`links.${item.key}Corto`)}</span>
+                </>
+              ) : t(`links.${item.key}`)}
             </a>
           ))}
         </nav>
@@ -405,6 +433,20 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
               {t(`links.${item.key}`)}
             </a>
           ))}
+          {/* Selector de idioma — el activo subrayado (.navLinkActivo),
+              el otro enlaza a la misma página con el locale cambiado. */}
+          <div className={styles.navIdiomas} onMouseEnter={scheduleSubmenuClose}>
+            {IDIOMAS.map(({ code, label }, i) => (
+              <span key={code} className={styles.navIdiomasItem}>
+                {i > 0 && <span className={styles.navIdiomasDivider}>|</span>}
+                {code === locale ? (
+                  <span className={`${styles.navLink} ${styles.navLinkActivo}`} aria-current="true">{label}</span>
+                ) : (
+                  <a href={conLocale(code)} className={styles.navLink} hrefLang={code} lang={code}>{label}</a>
+                )}
+              </span>
+            ))}
+          </div>
           {/*
           <a href={withLocale('/wishlist')} className={`${styles.navLink} ${esActivo('/wishlist') ? styles.navLinkActivo : ''}`}>{t('actions.wishlist')}</a>
           <button type="button" className={styles.navLink} onClick={abrirMiCuenta}>{t('actions.miCuenta')}</button>
@@ -430,11 +472,11 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
         onMouseLeave={scheduleSubmenuClose}
         onCerrar={closeSubmenu}
         debajo={displayedSubmenu && (
-          <NavbarPanelLateralCards submenuKey={lastSubmenu} submenu={displayedSubmenu} />
+          <NavbarPanelLateralCards submenuKey={lastSubmenu} submenu={displayedSubmenu} itemHover={itemHover} />
         )}
       >
         {displayedSubmenu && (
-          <NavbarPanelLateralContent submenuKey={lastSubmenu} submenu={displayedSubmenu} />
+          <NavbarPanelLateralContent submenuKey={lastSubmenu} submenu={displayedSubmenu} onItemHover={setItemHover} />
         )}
       </PanelLateral>
 

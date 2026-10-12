@@ -15,11 +15,13 @@
    propia en el Input (ver comentario en MapaPuntosVenta.jsx), así que
    input y botón quedan a la misma altura de por sí — align-items:center
    en vez del flex-end que hacía falta antes con la etiqueta encima. */
+/* Mismo ancho que .descripcion de CabeceraSeccion (550px) — el
+   padding lateral se suma para que el campo + botón midan justo eso. */
 .buscarCp {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
-  max-width: 400px;
+  max-width: calc(550px + 2 * var(--spacing-7));
   margin: 0 auto var(--spacing-5);
   padding-inline: var(--spacing-7);
 }
@@ -46,7 +48,7 @@
 }
 
 .buscarCpAviso {
-  max-width: 400px;
+  max-width: calc(550px + 2 * var(--spacing-7));
   margin: calc(var(--spacing-3) * -1) auto var(--spacing-5);
   padding-inline: var(--spacing-7);
   font-size: var(--text-caption);

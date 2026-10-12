@@ -17,13 +17,18 @@
 
 .ficha {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  /* 1fr 1fr (antes 3fr 2fr): galería más estrecha, a petición. */
+  grid-template-columns: 1fr 1fr;
   gap: var(--spacing-9);
+  /* Aire antes de lo que viene debajo (relacionados), que si no
+     quedaba pegado al final de la galería. */
+  margin-bottom: var(--spacing-10);
 }
 
 @media (max-width: 767px) {
   .ficha {
     grid-template-columns: 1fr;
+    margin-bottom: 0; /* mobile se queda como estaba */
     /* padding-bottom compensa el margin-top:-60px de .info (ver más
        abajo): un margin negativo resta de lo que el item aporta al
        alto de la fila del grid, así que sin esto .ficha terminaba

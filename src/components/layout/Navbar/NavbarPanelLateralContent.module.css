@@ -6,22 +6,23 @@
 .submenuList {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
+  gap: var(--spacing-4);
   list-style: none;
+  margin-top: var(--spacing-3);
 }
 
 /* Separa un enlace del resto de la lista dejando el hueco de una fila
    vacía por encima (ver "separador" en SUBMENU_STRUCTURE, Navbar.jsx —
    ej. "Vosotras" en Atelier, para que no se lea como una sede más
    junto a Salamanca/Madrid/Oviedo). --spacing-6 de margen, sumado al
-   --spacing-2 de gap que ya trae cada item, para que se note como una
+   --spacing-4 de gap que ya trae cada item, para que se note como una
    fila en blanco, no solo un poco más de aire. */
 .itemSeparador {
   margin-top: var(--spacing-6);
 }
 
 .submenuLink {
-  font-size: var(--text-small);
+  font-size: 1.2rem; /* ~17px */
   color: var(--color-tinta);
   text-decoration: underline;
   text-decoration-color: transparent;
@@ -36,7 +37,7 @@
    frente a las categorías para que se lea como acción, no como una más.
    Mismo criterio de subrayado que .submenuLink (solo al hover). */
 .submenuLinkTodos {
-  font-size: var(--text-small);
+  font-size: 1.2rem;
   font-weight: var(--font-weight-medium);
   color: var(--color-tinta);
   text-decoration: underline;
@@ -56,45 +57,49 @@
   text-decoration-color: var(--color-tinta);
 }
 
-/* Fila con los dos MediaLink — fuera de .contenido, así puede llevar su
-   propio padding en vez del heredado del resto del contenido. Columna
-   derecha del submenú (ver .panel.debajoHeader en PanelLateral.module.css,
-   height: 350px fijo): se dimensiona por ALTO, no por ancho — height
-   fijo aquí (230px = 350 - el padding vertical de abajo) en vez del
-   width fijo de antes, para que las tarjetas quepan siempre dentro del
-   tope de 350px del panel en vez de desbordarlo. Mismo colchón superior
-   que .contenido (ver ".debajoHeader .contenido" en PanelLateral.module.css)
-   para que las dos columnas arranquen a la misma altura, ya libres del
-   header. */
+/* Columna derecha del submenú (ver .panel.debajoHeader en
+   PanelLateral.module.css, 80vh de alto): una sola imagen cuadrada, sin
+   texto encima (ver NavbarPanelLateralCards.jsx). Fuera de .contenido,
+   con su propio padding. Mismo colchón superior que la lista
+   (".debajoHeader .contenido") más --spacing-4, que compensa el
+   interlineado del texto: así el borde de la imagen cae en la misma
+   línea visual que la primera palabra. Si cambia uno, revisar el otro. */
 .submenuCards {
   display: flex;
-  gap: var(--spacing-2);
   height: 100%;
-  /* 760px (=~685px que piden las dos tarjetas "horizontal" 4/3, ver
-     .horizontal en MediaLink.module.css, + el padding-right de aquí
-     mismo, box-sizing:border-box): cabe de sobra también el par 3/4 de
-     siempre (~350px) — antes se quedaba en 480px y el par 4/3 se
-     desbordaba/recortaba (las tarjetas se dimensionan por ALTO, ver
-     ".submenuCards > a" más abajo, así que este max-width nunca las
-     encoge, solo evita que el hueco crezca de más si algún día hay
-     menos de dos). */
-  max-width: 760px;
-  /* padding-top: el de ".debajoHeader .contenido" (PanelLateral.module.css)
-     pero con --spacing-4 en vez de --spacing-1 — ese pequeño extra
-     compensa el interlineado del texto de la lista, así el borde de las
-     imágenes cae en la misma línea visual que la primera palabra. Si
-     cambia uno, revisar el otro. */
   padding: calc(var(--nav-height-desktop) + var(--spacing-4)) var(--spacing-7) var(--spacing-6) 0;
 }
 
-/* Las MediaLink (.card en MediaLink.module.css) se reparten el ancho
-   por defecto vía flex:1 + aspect-ratio partiendo del ANCHO — aquí se
-   anula (flex: none, width: auto) para que sea el alto explícito de
-   arriba el que mande: cada tarjeta ocupa el 100% del alto de la fila y
-   su propio aspect-ratio (heredado de MediaLink.module.css, distinto en
-   "ancho") calcula el ancho a partir de él, no al revés. */
-.submenuCards > a {
+/* Ocupa el 100% del alto de la columna y, de ancho, el 50% del panel
+   (50vw) — pero nunca menos que cuadrada: el mínimo es su propio alto
+   (80vh del panel menos el padding vertical de .submenuCards). En
+   pantallas estrechas/altas se queda cuadrada; en anchas se alarga
+   hasta la mitad del panel. La foto rellena con object-fit:cover. */
+.submenuImagen {
+  --alto-imagen: calc(80vh - var(--nav-height-desktop) - var(--spacing-4) - var(--spacing-6));
+  display: block;
   flex: none;
-  width: auto;
   height: 100%;
+  width: max(50vw, var(--alto-imagen));
+  overflow: hidden;
+}
+
+.submenuImagen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: submenuImagenEntrada 0.35s var(--ease-marca);
+}
+
+/* Fundido al cambiar de imagen (hover sobre otro enlace de la lista). */
+@keyframes submenuImagenEntrada {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submenuImagen img {
+    animation: none;
+  }
 }

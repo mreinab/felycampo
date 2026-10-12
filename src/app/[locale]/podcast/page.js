@@ -3,27 +3,36 @@
    la URL y la página se quedan solo con el/los episodios de podcast;
    el resto de contenido de blog.js (artículos/campañas) se deja
    comentado más abajo, no borrado, por si se recupera).
-   BlogTarjetaPodcastDestacado (mismo diseño que llevaba en la
-   cuadrícula de 2 columnas de antes — foto a sangre + botón de play,
-   estilo Spotify) ahora a todo el ancho, centrada, sin la rejilla ni
-   la posición fija de columna 2 que necesitaba al convivir con
-   artículos (ver .podcastDestacado en page.module.css). Sigue siendo
+   Hero común (HeroPagina) arriba, y debajo BlogTarjetaPodcastDestacado
+   (foto a sangre + botón de play, estilo Spotify) ocupando una de las
+   dos columnas de .gridPodcast (50% del ancho), ver page.module.css. Sigue siendo
    solo un enlace a /podcast/[slug] (ver [entrada]/page.js): no
    reproduce nada aquí.
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';
-import { BlogTarjetaPodcastDestacado /* , BlogTarjeta */ } from '@/components/layout';
+import { BlogTarjetaPodcastDestacado, HeroPagina /* , BlogTarjeta */ } from '@/components/layout';
 import { BLOG_ENTRADAS } from './blog';
 import styles from './page.module.css';
 
 export default async function Pagina({ params }) {
   const { locale } = await params;
   const t = await getTranslations('blog');
+  const tNav = await getTranslations('nav');
+  const tHero = await getTranslations('heroPagina');
 
   const entradasPodcast = BLOG_ENTRADAS.filter((entrada) => entrada.tipo === 'podcast');
 
   return (
+    <>
+    {/* Hero común (HeroPagina), con la misma foto que "Podcast" en el
+        submenú del Navbar. */}
+    <HeroPagina
+      imagen="/img/about-felycampo/madrid-moda-de-capital-felycampo-podcast.jpg"
+      alt={tNav('submenus.elMundoDeFely.podcast')}
+      titulo={tNav('submenus.elMundoDeFely.podcast')}
+      subtitulo={tHero('podcast')}
+    />
     <section className={`${styles.pagina} contenedor`}>
       <div className={styles.gridPodcast}>
         {entradasPodcast.map((entrada) => (
@@ -82,5 +91,6 @@ export default async function Pagina({ params }) {
       </div>
       ---- fin comentado ---- */}
     </section>
+    </>
   );
 }

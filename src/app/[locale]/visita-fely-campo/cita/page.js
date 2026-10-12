@@ -2,33 +2,23 @@
 
 /* ============================================================
    RESERVAR CITA — ATELIER — Fely Campo. Ruta: /visita-fely-campo/cita
-   Página a pantalla completa (no modal — ver respuesta a "modal vs.
-   página" en la conversación: SEO/enlace directo piden una URL real),
-   calcada del DISEÑO de MiCuentaModal.jsx/.css (foto 50% izquierda +
-   contenido 50% derecha, X arriba a la derecha) — ver page.module.css
-   para el porqué de position:fixed/z-index en vez de la clase
-   "abierta" del modal real.
+   Página normal (con el Navbar arriba y el fondo blanco del sitio): solo
+   el formulario, centrado en la página — antes era una capa a pantalla
+   completa por encima del Navbar, con una foto al 50% a la izquierda y
+   una X para cerrar (calcada de MiCuentaModal); quitadas a petición.
 
-   Un único formulario pequeño (sin pasos ni bienvenida editorial, ver
-   historial de este archivo para el flujo de bienvenida/ubicación/
-   WhatsApp-email que llevaba antes): nombre completo, email y teléfono
-   de contacto, fecha del evento (opcional, día/mes/año en selects
-   propios — no <input type="date">, a petición), código postal,
+   Un único formulario pequeño: nombre completo, email y teléfono de
+   contacto, fecha del evento (opcional, día/mes/año en selects propios
+   — no <input type="date">, a petición), código postal, ciudad,
    mensaje libre y la casilla de aceptar privacidad/términos
    (obligatoria). "Enviar solicitud" pasa a una pantalla de
    confirmación — PLACEHOLDER a propósito, sin backend real todavía
-   (mismo criterio que ModalSolicitudAtelier.jsx). El panel de la foto
-   (IMAGEN_LATERAL) se oculta en mobile/tablet vertical (ver
-   .imagenPanel en page.module.css) — ahí solo queda el formulario. */
+   (mismo criterio que ModalSolicitudAtelier.jsx). */
 
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { X } from 'lucide-react';
 import { Boton, Input } from '@/components/ui';
 import styles from './page.module.css';
-
-const IMAGEN_LATERAL = '/img/citas-atelier-felycampo-2.jpg';
 
 // Nombres de mes propios (no hay diccionario de meses en messages/
 // {locale}.json todavía) — mismo criterio bilingüe por campo que
@@ -63,39 +53,6 @@ export default function Pagina() {
   const [avisoDatos, setAvisoDatos] = useState(false);
   const [enviado, setEnviado] = useState(false);
 
-  // Sin scroll de la página detrás mientras esta pantalla completa
-  // está montada — mismo criterio que MiCuentaModal.jsx al abrir.
-  useEffect(() => {
-    const overflowPrevio = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = overflowPrevio; };
-  }, []);
-
-  // Portal a document.body (igual que GaleriaProductoLightbox.jsx/
-  // RunwayGaleria.jsx, mismo motivo): esta "página" vive dentro de
-  // <main>, que tiene isolation:isolate (ver global.css) — sin portal,
-  // ese ancestro atrapa el z-index:100 de .pagina, que entonces nunca
-  // podría ganarle al Footer real (position:relative + z-index:2,
-  // hermano de <main>, fuera de su contexto de apilamiento) — solo
-  // existe en cliente, así que se espera a montar antes de renderizarlo.
-  const [montado, setMontado] = useState(false);
-  useEffect(() => setMontado(true), []);
-
-  // Antes de montar (SSR y el primer tick en cliente, ver comentario de
-  // arriba) no se puede pintar el portal — sin nada aquí, se veía el
-  // Navbar y el Footer del layout con un hueco en blanco entre medias
-  // mientras React hidrata. En su lugar, un logo pulsante a toda la
-  // altura de la sección (misma .color-fondo que .pagina) — normal,
-  // dentro del flujo (no fixed/portal, no le hace falta ganarle al
-  // Footer todavía: eso solo importa una vez montado el portal real).
-  if (!montado) {
-    return (
-      <div className={styles.cargando}>
-        <img src="/img/logo/logo-felycampo.png" alt="" className={styles.cargandoLogo} />
-      </div>
-    );
-  }
-
   const withLocale = (href) => `/${locale}${href}`;
 
   const alEnviar = (evento) => {
@@ -108,159 +65,148 @@ export default function Pagina() {
     setEnviado(true);
   };
 
-  return createPortal(
+  return (
     <div className={styles.pagina}>
-      <a href={`/${locale}/visita-fely-campo`} className={styles.cerrar} aria-label={t('cerrar')}>
-        <X size={28} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" />
-      </a>
-
-      {/* Solo visible cuando .imagenPanel se oculta (mobile y tablet en
-          vertical, ver page.module.css) — sin la foto ahí no queda
-          ninguna marca visible. Misma fila/altura que "cerrar" de
-          arriba (mismo "top", centrado vertical propio dentro de esa
-          fila vía .logoMobile). */}
-      <div className={styles.logoMobile}>
-        <img src="/img/logo/logo-felycampo.png" alt="Fely Campo" className={styles.logoMobileImagen} />
-      </div>
-
-      <div className={styles.layout}>
-        <div className={styles.imagenPanel}>
-          <img src={IMAGEN_LATERAL} alt="" className={styles.imagen} />
-        </div>
-
-        <div className={styles.formPanel}>
-          <div className={styles.formContenedor}>
-            {enviado ? (
-              <div className={styles.confirmacion}>
-                <h1 className={styles.titulo}>{t('confirmacionTitulo')}</h1>
-                <p className={styles.dondeIntro}>{t('confirmacionTexto')}</p>
-              </div>
-            ) : (
-              <form className={styles.form} onSubmit={alEnviar}>
-                <h1 className={styles.titulo}>{t('titulo')}</h1>
-
-                <Input
-                  etiqueta={t('nombreCompleto')}
-                  nombre="nombreCompleto"
-                  placeholder={t('nombreCompletoPlaceholder')}
-                  valor={nombreCompleto}
-                  onChange={(evento) => { setNombreCompleto(evento.target.value); setAvisoDatos(false); }}
-                />
-                <Input
-                  etiqueta={t('email')}
-                  tipo="email"
-                  nombre="email"
-                  placeholder={t('emailPlaceholder')}
-                  valor={email}
-                  onChange={(evento) => { setEmail(evento.target.value); setAvisoDatos(false); }}
-                />
-                <Input
-                  etiqueta={t('telefono')}
-                  tipo="tel"
-                  nombre="telefono"
-                  placeholder={t('telefonoPlaceholder')}
-                  valor={telefono}
-                  onChange={(evento) => { setTelefono(evento.target.value); setAvisoDatos(false); }}
-                />
-
-                <div className={styles.campo}>
-                  <span className={styles.etiqueta}>{t('fechaEvento')}</span>
-                  <div className={styles.fechaFila}>
-                    <select
-                      className={styles.select}
-                      aria-label={t('dia')}
-                      value={fechaDia}
-                      onChange={(evento) => setFechaDia(evento.target.value)}
-                    >
-                      <option value="">{t('dia')}</option>
-                      {DIAS.map((dia) => (
-                        <option key={dia} value={dia}>{dia}</option>
-                      ))}
-                    </select>
-                    <select
-                      className={styles.select}
-                      aria-label={t('mes')}
-                      value={fechaMes}
-                      onChange={(evento) => setFechaMes(evento.target.value)}
-                    >
-                      <option value="">{t('mes')}</option>
-                      {meses.map((nombreMes, indice) => (
-                        <option key={nombreMes} value={indice + 1}>{nombreMes}</option>
-                      ))}
-                    </select>
-                    <select
-                      className={styles.select}
-                      aria-label={t('anio')}
-                      value={fechaAnio}
-                      onChange={(evento) => setFechaAnio(evento.target.value)}
-                    >
-                      <option value="">{t('anio')}</option>
-                      {ANIOS.map((anio) => (
-                        <option key={anio} value={anio}>{anio}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className={styles.fila2Columnas}>
-                  <Input
-                    etiqueta={t('codigoPostal')}
-                    nombre="codigoPostal"
-                    placeholder={t('codigoPostalPlaceholder')}
-                    valor={codigoPostal}
-                    onChange={(evento) => { setCodigoPostal(evento.target.value); setAvisoDatos(false); }}
-                  />
-                  <Input
-                    etiqueta={t('ciudad')}
-                    nombre="ciudad"
-                    placeholder={t('ciudadPlaceholder')}
-                    valor={ciudad}
-                    onChange={(evento) => { setCiudad(evento.target.value); setAvisoDatos(false); }}
-                  />
-                </div>
-
-                <label className={styles.campo}>
-                  <span className={styles.etiqueta}>{t('mensaje')}</span>
-                  <textarea
-                    className={styles.textarea}
-                    value={mensaje}
-                    onChange={(evento) => setMensaje(evento.target.value)}
-                    rows={3}
-                  />
-                </label>
-
-                <label className={styles.legalFila}>
-                  <input
-                    type="checkbox"
-                    className={styles.legalCheckbox}
-                    checked={aceptaLegal}
-                    onChange={(evento) => { setAceptaLegal(evento.target.checked); setAvisoDatos(false); }}
-                  />
-                  <span className={styles.legalTexto}>
-                    {t.rich('aceptoLegal', {
-                      privacidad: (chunks) => (
-                        <a href={withLocale('/legal/privacidad')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
-                          {chunks}
-                        </a>
-                      ),
-                      terminos: (chunks) => (
-                        <a href={withLocale('/legal/terminos')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
-                          {chunks}
-                        </a>
-                      ),
-                    })}
-                  </span>
-                </label>
-
-                {avisoDatos && <p className={styles.aviso}>{t('avisoDatos')}</p>}
-
-                <Boton variante="solido" tamano="full" type="submit">{t('enviar')}</Boton>
-              </form>
-            )}
+      <div className={styles.formContenedor}>
+        {enviado ? (
+          <div className={styles.confirmacion}>
+            <h1 className={styles.titulo}>{t('confirmacionTitulo')}</h1>
+            <p className={styles.dondeIntro}>{t('confirmacionTexto')}</p>
           </div>
-        </div>
+        ) : (
+          <form className={styles.form} onSubmit={alEnviar}>
+            <div className={styles.cabecera}>
+              <h1 className={styles.titulo}>{t('titulo')}</h1>
+              <p className={styles.subtitulo}>{t('subtitulo')}</p>
+            </div>
+
+            {/* "*" delante del placeholder = campo obligatorio (los mismos
+                que comprueba alEnviar). */}
+            <Input
+              etiqueta={t('nombreCompleto')}
+              etiquetaOculta
+              nombre="nombreCompleto"
+              placeholder={`*${t('nombreCompleto')}`}
+              valor={nombreCompleto}
+              onChange={(evento) => { setNombreCompleto(evento.target.value); setAvisoDatos(false); }}
+            />
+            <Input
+              etiqueta={t('email')}
+              etiquetaOculta
+              tipo="email"
+              nombre="email"
+              placeholder={`*${t('email')}`}
+              valor={email}
+              onChange={(evento) => { setEmail(evento.target.value); setAvisoDatos(false); }}
+            />
+            <Input
+              etiqueta={t('telefono')}
+              etiquetaOculta
+              tipo="tel"
+              nombre="telefono"
+              placeholder={`*${t('telefono')}`}
+              valor={telefono}
+              onChange={(evento) => { setTelefono(evento.target.value); setAvisoDatos(false); }}
+            />
+
+            <div className={styles.campo}>
+              <span className={styles.etiqueta}>{t('fechaEvento')}</span>
+              <div className={styles.fechaFila}>
+                <select
+                  className={styles.select}
+                  aria-label={t('dia')}
+                  value={fechaDia}
+                  onChange={(evento) => setFechaDia(evento.target.value)}
+                >
+                  <option value="">{t('dia')}</option>
+                  {DIAS.map((dia) => (
+                    <option key={dia} value={dia}>{dia}</option>
+                  ))}
+                </select>
+                <select
+                  className={styles.select}
+                  aria-label={t('mes')}
+                  value={fechaMes}
+                  onChange={(evento) => setFechaMes(evento.target.value)}
+                >
+                  <option value="">{t('mes')}</option>
+                  {meses.map((nombreMes, indice) => (
+                    <option key={nombreMes} value={indice + 1}>{nombreMes}</option>
+                  ))}
+                </select>
+                <select
+                  className={styles.select}
+                  aria-label={t('anio')}
+                  value={fechaAnio}
+                  onChange={(evento) => setFechaAnio(evento.target.value)}
+                >
+                  <option value="">{t('anio')}</option>
+                  {ANIOS.map((anio) => (
+                    <option key={anio} value={anio}>{anio}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className={styles.fila2Columnas}>
+              <Input
+                etiqueta={t('codigoPostal')}
+                etiquetaOculta
+                nombre="codigoPostal"
+                placeholder={`*${t('codigoPostal')}`}
+                valor={codigoPostal}
+                onChange={(evento) => { setCodigoPostal(evento.target.value); setAvisoDatos(false); }}
+              />
+              <Input
+                etiqueta={t('ciudad')}
+                etiquetaOculta
+                nombre="ciudad"
+                placeholder={`*${t('ciudad')}`}
+                valor={ciudad}
+                onChange={(evento) => { setCiudad(evento.target.value); setAvisoDatos(false); }}
+              />
+            </div>
+
+            <label className={styles.campo}>
+              <span className={styles.etiquetaOculta}>{t('mensaje')}</span>
+              <textarea
+                className={styles.textarea}
+                placeholder={t('mensaje')}
+                value={mensaje}
+                onChange={(evento) => setMensaje(evento.target.value)}
+                rows={3}
+              />
+            </label>
+
+            <label className={styles.legalFila}>
+              <input
+                type="checkbox"
+                className={styles.legalCheckbox}
+                checked={aceptaLegal}
+                onChange={(evento) => { setAceptaLegal(evento.target.checked); setAvisoDatos(false); }}
+              />
+              <span className={styles.legalTexto}>
+                {t.rich('aceptoLegal', {
+                  privacidad: (chunks) => (
+                    <a href={withLocale('/legal/privacidad')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
+                      {chunks}
+                    </a>
+                  ),
+                  terminos: (chunks) => (
+                    <a href={withLocale('/legal/terminos')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
+                      {chunks}
+                    </a>
+                  ),
+                })}
+              </span>
+            </label>
+
+            {avisoDatos && <p className={styles.aviso}>{t('avisoDatos')}</p>}
+
+            <Boton variante="solido" tamano="full" type="submit">{t('enviar')}</Boton>
+          </form>
+        )}
       </div>
-    </div>,
-    document.body,
+    </div>
   );
 }

@@ -36,6 +36,7 @@
   --color-gris-100:       #F2F2F2;   /* alias: --g100 */
   --color-hairline:       #EFEFEF;   /* alias: --hairline */
   --color-details:        #f6f6f7;   /* alias: --details */
+  --color-details-oscuro: #EDEDEF;   /* un punto más oscuro que --color-details (bloque "Pedir cita" de la home, sobre el footer) */
   --color-light-details:  #fdfdfd;   /* alias: --light-details */
 
   /* Rosa de marca — ACENTO, nunca superficie grande */

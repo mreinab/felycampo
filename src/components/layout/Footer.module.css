@@ -1,7 +1,7 @@
 /* ============================================================
    FOOTER — Fely Campo
    Rediseño minimalista: firma (logo pequeño) → newsletter, sola y
-   destacada → columnas de enlaces, discretas → barra legal. Cada
+   destacada → columnas de enlaces, discretas (sin barra legal). Cada
    tramo separado por un hairline, sin cajas ni fondos de por medio.
    ============================================================ */
 
@@ -17,11 +17,12 @@
   position: relative;
   z-index: 2;
   width: 100%;
+  padding-bottom: var(--spacing-9);
   background: var(--color-details);
 }
 
 /* Escritorio: el footer ocupa al menos el 60% de la pantalla — los 4
-   tramos (logo, newsletter, columnas, legal) se reparten con
+   tramos (logo, columnas + newsletter) se reparten con
    space-between en vez de apilarse con su alto natural, que se
    quedaba corto y dejaba hueco vacío debajo. min-height (no
    height+max-height) para que si el contenido real supera ese 60vh
@@ -62,29 +63,25 @@
   }
 }
 
-.parrafo {
-  font-size: var(--text-small);
-  color: var(--color-gris-600);
-  font-weight: 400;
-  line-height: var(--leading-base);
-  margin-bottom: var(--spacing-2);
-}
-
-/* Fila que aloja el form (input) y el Boton por fuera de él, uno al
-   lado del otro — el Boton no es hijo de .formNewsletter. */
+/* Columna: el input arriba y el Boton debajo, a todo el ancho (el
+   Boton no es hijo de .formNewsletter). */
 .filaNewsletter {
   display: flex;
+  flex-direction: column;
   align-items: stretch;
-  gap: var(--spacing-2);
+  gap: var(--spacing-5);
 }
 
+/* Input y botón con el mismo alto (40px). flex:none: en la columna de
+   .filaNewsletter, "flex:1" (flex-basis 0) anulaba el height. */
 .formNewsletter {
-  flex: 1;
+  flex: none;
   min-width: 0;
   display: flex;
   align-items: center;
+  height: 40px;
   border-bottom: 1px solid var(--color-gris-500);
-  padding: var(--spacing-2);
+  padding: 0;
   transition: border-color 0.25s var(--ease-marca);
 }
 .formNewsletter:focus-within {
@@ -95,7 +92,7 @@
   flex: 1;
   min-width: 0;
   border: none;
-  padding: 8px 4px;
+  padding: 0;
   font-family: var(--font-base);
   font-size: var(--text-small);
   background: none;
@@ -113,6 +110,21 @@
   flex-shrink: 0;
 }
 
+/* .filaNewsletter delante para ganarle a .full (padding de 16px) de
+   Boton.module.css, sin depender del orden de carga de los módulos. */
+.filaNewsletter .botonEnviar {
+  height: 40px;
+  padding-block: 0;
+}
+
+/* Sin el hover relleno en negro de "contorno": se queda sin fondo,
+   solo el borde engrosa un punto. */
+.botonEnviar:hover:not(:disabled) {
+  background: transparent;
+  color: var(--color-tinta);
+  box-shadow: inset 0 0 0 1px var(--color-tinta);
+}
+
 .estado {
   font-size: var(--text-caption);
   margin-top: var(--spacing-3);
@@ -120,23 +132,7 @@
 .estadoExito { color: var(--color-verde); }
 .estadoError { color: var(--color-rojo); }
 
-.consentimiento {
-  font-size: var(--text-caption);
-  color: var(--color-gris-600);
-  line-height: var(--leading-base);
-  margin-top: var(--spacing-2);
-}
-
-.consentimientoEnlace {
-  color: var(--color-gris-500);
-  text-decoration: underline;
-  transition: color 0.25s var(--ease-marca);
-}
-.consentimientoEnlace:hover {
-  color: var(--color-tinta);
-}
-
-/* Envuelve grid + legal: en escritorio se reparte el resto del alto
+/* Envuelve el grid: en escritorio se reparte el resto del alto
    de .footer entre los dos (space-between) como antes. */
 @media (min-width: 768px) {
   .contenido {
@@ -147,6 +143,8 @@
   }
 }
 
+/* padding lateral amplio en escritorio (ver media query más abajo):
+   el footer queda más recogido en el centro, con más aire a los lados. */
 .grid {
   width: 100%;
   max-width: var(--max-sitio);
@@ -157,7 +155,11 @@
   gap: var(--spacing-6);
 }
 @media (min-width: 768px) {
-  .grid { flex-direction: row; }
+  .grid {
+    flex-direction: row;
+    gap: var(--spacing-8);
+    padding-inline: max(var(--spacing-7), 12vw);
+  }
 }
 
 .columnas {
@@ -177,9 +179,10 @@
    que tenía antes — menos peso visual, más discreto. */
 .titulo {
   color: var(--color-gris-600);
-  margin-bottom: var(--spacing-3);
+  margin-bottom: var(--spacing-5);
   font-size: 1rem;
   font-weight: 400;
+  text-transform: uppercase;
 }
 
 .lista { list-style: none; display: flex; flex-direction: column; gap: var(--spacing-2); }
@@ -191,54 +194,3 @@
   transition: color 0.25s var(--ease-marca);
 }
 .enlace:hover { color: var(--color-tinta); }
-
-.legal {
-  width: 100%;
-  max-width: var(--max-sitio);
-  margin-inline: auto;
-  padding: var(--spacing-4) var(--spacing-7);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--spacing-1);
-}
-
-.copy { font-size: var(--text-caption); color: var(--color-gris-500); }
-
-.legalLista { display: flex; gap: var(--spacing-5); }
-.legalEnlace {
-  font-size: var(--text-caption);
-  color: var(--color-gris-500);
-  transition: color 0.25s var(--ease-marca);
-}
-.legalEnlace:hover { color: var(--color-tinta); }
-
-/* ES | EN — botón por idioma; el activo va marcado y sin acción,
-   el otro navega al hacer clic (ver switchLocale en Footer.jsx). */
-.languageSelector {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-1);
-}
-
-.languageOption {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: var(--text-caption);
-  color: var(--color-gris-500);
-  cursor: pointer;
-  transition: color 0.25s var(--ease-marca);
-}
-.languageOption:hover:not(:disabled) { color: var(--color-tinta); }
-.languageOption:disabled { cursor: default; }
-
-.languageOptionActivo {
-  color: var(--color-tinta);
-  font-weight: var(--font-weight-medium);
-}
-
-.languageDivider {
-  font-size: var(--text-caption);
-  color: var(--color-gris-300);
-}

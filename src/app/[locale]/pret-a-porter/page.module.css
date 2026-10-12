@@ -56,7 +56,6 @@
      por alto) — aquí va uno explícito, como los 60vh de
      RunwayMediaLateral en mobile. */
   .heroCarrusel {
-    height: 60vh;
     padding-top: var(--nav-height);
   }
 

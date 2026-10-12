@@ -4,9 +4,12 @@
 
 /* ============================================================
    GALERÍA DE PRODUCTO — Fely Campo
-   Banda horizontal de scroll totalmente libre y fluido (arrastre
-   táctil/trackpad, o la rueda del ratón — vertical se traduce a
-   horizontal en .pista) + flechas para avanzar exactamente una imagen.
+   Escritorio: columna vertical de fotos a pantalla completa con su
+   propio scroll (ver .pista en GaleriaProducto.module.css) — con el
+   ratón encima, la rueda va pasando las fotos y la página no se mueve
+   hasta llegar a la última (encadenamiento de scroll nativo del
+   navegador, sin JS). Mobile: banda horizontal (arrastre táctil) +
+   flechas para avanzar exactamente una imagen.
    Sin scroll-snap: la parada fija en cada imagen la dan solo las
    flechas (ver desplazar()), el scroll manual no fuerza ninguna parada
    a media imagen. Clicar una imagen abre GaleriaProductoLightbox
@@ -32,10 +35,7 @@ import styles from './GaleriaProducto.module.css';
 
 function GaleriaProducto({ imagenes = [], alt, nombre, colores = [], tallas = [], esAtelier = false }) {
   const t = useTranslations('producto');
-  const galeriaRef = useRef(null);
   const pistaRef = useRef(null);
-  const objetivoScrollRef = useRef(0);
-  const animandoRef = useRef(false);
   const [puedeAnterior, setPuedeAnterior] = useState(false);
   const [puedeSiguiente, setPuedeSiguiente] = useState(imagenes.length > 1);
   const [lightboxAbierta, setLightboxAbierta] = useState(false);
@@ -68,84 +68,8 @@ function GaleriaProducto({ imagenes = [], alt, nombre, colores = [], tallas = []
       ? botones.find((boton) => boton.offsetLeft > actual + 8)
       : [...botones].reverse().find((boton) => boton.offsetLeft < actual - 8);
     if (!objetivo) return;
-    // El objetivo de la animación de rueda (ver el useEffect de abajo) se
-    // sincroniza aquí también — si no, tras usar una flecha, el próximo
-    // giro de rueda partiría del último objetivo de rueda (desactualizado)
-    // en vez de la posición real, y pegaría un salto hacia atrás.
-    objetivoScrollRef.current = objetivo.offsetLeft;
     nodo.scrollTo({ left: objetivo.offsetLeft, behavior: 'smooth' });
   };
-
-  // La rueda del ratón suele traer solo movimiento vertical (deltaY) —
-  // se traduce a scroll horizontal para poder hojear la galería sin
-  // depender de un trackpad. Si el gesto ya viene horizontal (deltaX,
-  // trackpad/touchpad), se deja pasar tal cual. Se engancha en .galeria
-  // (no solo en .pista) para que también funcione al pasar la rueda
-  // sobre las flechas, que son hermanas de .pista y no reciben su
-  // burbujeo de evento.
-  // Va como listener nativo con passive:false: React registra los onWheel
-  // de JSX como pasivos, así que evento.preventDefault() no hace nada ahí
-  // y la página sigue haciendo scroll vertical de fondo.
-  //
-  // Un ratón físico manda pocos "notches" grandes y espaciados (a
-  // diferencia de un trackpad, que manda muchos deltas pequeños y
-  // seguidos) — sumar cada notch directo a scrollLeft es un salto
-  // instantáneo sin transición, y encadenados se ven como paradas
-  // secas, no como un scroll fluido. Aquí cada notch solo mueve un
-  // "objetivo", y un bucle por requestAnimationFrame va acercando el
-  // scrollLeft real a ese objetivo con un lerp — así la pista frena en
-  // vez de saltar, y varios notches seguidos se funden en un único
-  // movimiento continuo.
-  useEffect(() => {
-    const nodo = galeriaRef.current;
-    if (!nodo) return undefined;
-
-    const animar = () => {
-      const pista = pistaRef.current;
-      if (!pista) {
-        animandoRef.current = false;
-        return;
-      }
-      const actual = pista.scrollLeft;
-      const diferencia = objetivoScrollRef.current - actual;
-      if (Math.abs(diferencia) < 0.5) {
-        pista.scrollLeft = objetivoScrollRef.current;
-        animandoRef.current = false;
-        return;
-      }
-      pista.scrollLeft = actual + diferencia * 0.2;
-      requestAnimationFrame(animar);
-    };
-
-    const alRueda = (evento) => {
-      // Mobile (.pista a pantalla completa, ver GaleriaProducto.module.css):
-      // reinterpretar la rueda vertical como scroll horizontal de la
-      // pista bloqueaba TODA la página, porque .galeria ocupa aquí el
-      // 100% del viewport — un móvil real nunca dispara "wheel" al
-      // deslizar con el dedo, pero sí lo hace el modo "dispositivo
-      // móvil" de las devtools con rueda/trackpad, o un portátil táctil
-      // en una ventana estrecha. Por debajo de 768px se deja pasar el
-      // evento tal cual, para que la página scrollee con normalidad.
-      if (window.innerWidth < 768) return;
-      if (Math.abs(evento.deltaY) <= Math.abs(evento.deltaX)) return;
-      const pista = pistaRef.current;
-      if (!pista) return;
-      evento.preventDefault();
-      // Si no hay una animación en marcha, el objetivo parte de la
-      // posición real actual (no del último objetivo, que puede estar
-      // desactualizado si el usuario arrastró la pista a mano mientras
-      // tanto sin pasar por aquí).
-      if (!animandoRef.current) objetivoScrollRef.current = pista.scrollLeft;
-      const maximo = pista.scrollWidth - pista.clientWidth;
-      objetivoScrollRef.current = Math.min(maximo, Math.max(0, objetivoScrollRef.current + evento.deltaY));
-      if (!animandoRef.current) {
-        animandoRef.current = true;
-        requestAnimationFrame(animar);
-      }
-    };
-    nodo.addEventListener('wheel', alRueda, { passive: false });
-    return () => nodo.removeEventListener('wheel', alRueda);
-  }, []);
 
   const abrirLightbox = (indice) => {
     setIndiceActivo(indice);
@@ -159,7 +83,7 @@ function GaleriaProducto({ imagenes = [], alt, nombre, colores = [], tallas = []
     // Atelier, ver layout.js "esFichaProducto") — mismo mecanismo que
     // ProductHero.jsx en las páginas de listado, Navbar.jsx vigila este
     // nodo para saber cuándo volverse sólido.
-    <div className={styles.galeria} ref={galeriaRef} data-navbar-hero>
+    <div className={styles.galeria} data-navbar-hero>
       <div
         ref={pistaRef}
         className={`${styles.pista} ${imagenes.length === 1 ? styles.pistaUnica : ''}`}

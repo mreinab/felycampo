@@ -33,7 +33,7 @@ import styles from './page.module.css';
 // overflow:hidden va en .marco, no en .galeria — ver el porqué ahí).
 const FOTOS_POR_CIUDAD = {
   Salamanca: [
-    '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
+    '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg',
     '/img/atelier/atelier-salamanca/ateliernovia-lamedida-felycampo-2.webp',
     '/img/atelier/atelier-salamanca/20221222185015_relacionada2.jpg',
   ],

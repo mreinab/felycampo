@@ -1,73 +1,100 @@
 /* ============================================================
-   CONTACTO — Fely Campo
-   Título (mismo estilo que CollectionTitle.module.css, ver page.js) +
-   cuadrícula de 4 grupos de contacto (tiendas/email/prêt-à-porter/
-   click&collect), centrada, + párrafos de presentación, justificados
-   — mismo ancho legible (--max-texto) que RunwayDescripcion/
-   .texto-legible en los dos casos, centrados como bloque
-   (margin-inline:auto) aunque el texto largo no vaya centrado.
+   CONTACTO — Fely Campo (ver page.js)
+   Debajo del hero: los grupos de contacto en fila, con el mismo margen
+   lateral amplio y el mismo diseño de columna que el footer (título en
+   mayúsculas + líneas pequeñas en gris, ver Footer.module.css).
    ============================================================ */
 
-/* Tipografía viene de collectionTitleStyles.titulo
-   (CollectionTitle.module.css), aplicada junto a esta en page.js —
-   pero ese título vive normalmente dentro de .bloque (CollectionTitle.jsx,
-   text-align:center ahí), que aquí no se usa: el <h1> se queda tal
-   cual dentro de .contenedor, alineado a la izquierda por defecto sin
-   este centrado propio. */
-.titulo {
-  margin-block: var(--spacing-8) var(--spacing-6);
-  text-align: center;
+.contacto {
+  width: 100%;
+  max-width: var(--max-sitio);
+  margin-inline: auto;
+  padding: 0 max(var(--spacing-7), 12vw) var(--spacing-8);
 }
 
 .grupos {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--spacing-6);
-  max-width: var(--max-texto);
-  margin-inline: auto;
-  padding-bottom: var(--spacing-8);
-  text-align: center;
+  padding-top: var(--spacing-9);
 }
 
+/* Columna = .lista del footer (gap --spacing-2). */
 .grupo {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-1);
+  align-items: flex-start;
+  gap: var(--spacing-2);
 }
 
+/* = .titulo del footer. margin-bottom descontando el gap de .grupo,
+   para que quede el mismo --spacing-5 hasta la primera línea. */
 .grupoTitulo {
-  font-size: var(--text-caption);
-  font-weight: var(--font-weight-medium);
+  margin-bottom: calc(var(--spacing-5) - var(--spacing-2));
+  font-size: 1rem;
+  font-weight: 400;
   text-transform: uppercase;
-  color: var(--color-gris-700);
-  margin-bottom: var(--spacing-1);
+  color: var(--color-gris-600);
 }
 
-.chat {
+/* = .enlace del footer: pequeño, gris, a tinta al hover. */
+.enlace,
+.horario {
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--color-gris-600);
+}
+
+.enlace {
+  transition: color 0.25s var(--ease-marca);
+}
+
+.enlace:hover {
   color: var(--color-tinta);
 }
 
-.horario {
-  font-size: var(--text-small);
-  color: var(--color-gris-500);
+.cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-9);
 }
 
-.parrafos {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-  max-width: var(--max-texto);
-  margin-inline: auto;
-  padding-bottom: var(--spacing-10);
-  color: var(--color-gris-600);
-  line-height: var(--leading-base);
-  text-align: justify;
+/* = .botonEnviar del footer (Footer.module.css): Boton "contorno" a
+   40px de alto, y al hover sin el relleno negro — solo engrosa el
+   borde. .cta delante para ganarle a .full de Boton.module.css. Ancho
+   tope parecido al de la columna de newsletter del footer. */
+.cta .ctaBoton {
+  width: 100%;
+  max-width: 360px;
+  height: 40px;
+  padding-block: 0;
+}
+
+.cta .ctaBoton:hover {
+  background: transparent;
+  color: var(--color-tinta);
+  box-shadow: inset 0 0 0 1px var(--color-tinta);
+}
+
+@media (max-width: 1023px) {
+  .grupos {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: var(--spacing-7);
+  }
 }
 
 @media (max-width: 767px) {
+  .contacto {
+    padding: 0 var(--spacing-4) var(--spacing-7);
+  }
+
   .grupos {
     grid-template-columns: 1fr;
-    gap: var(--spacing-5);
+    gap: var(--spacing-6);
+    padding-top: var(--spacing-8);
+  }
+
+  .cta {
+    margin-top: var(--spacing-8);
   }
 }

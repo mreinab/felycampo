@@ -84,11 +84,10 @@
    así que variaba entre submenús (más corto en Atelier/Sobre Fely,
    más largo en Tienda/Visítanos — más enlaces de texto, aunque en la
    práctica quien manda es la columna de imágenes). Un alto fijo evita
-   ese salto al pasar el ratón de un enlace a otro. 350px es el tope
-   que se quiere para el panel en escritorio — las tarjetas (ver
-   .submenuCards en NavbarPanelLateralContent.module.css) se dimensionan
-   por alto en vez de por ancho precisamente para caber en él, en vez
-   de desbordar y depender del overflow-y de aquí abajo. */
+   ese salto al pasar el ratón de un enlace a otro. 80vh de alto (antes
+   350px fijos) — la imagen cuadrada de la derecha (ver .submenuCards/
+   .submenuImagen en NavbarPanelLateralContent.module.css) se dimensiona
+   por alto, así que crece en proporción con él sin desbordar. */
 .panel.debajoHeader {
   z-index: 40;
   left: 0;
@@ -96,8 +95,8 @@
   width: 100%;
   max-width: 100%;
   bottom: auto;
-  height: 350px;
-  max-height: 350px;
+  height: 80vh;
+  max-height: 80vh;
   overflow-y: auto;
   flex-direction: row;
   align-items: flex-start;
@@ -138,7 +137,7 @@
    arriba), no el resto del hueco disponible. */
 .debajoHeader .contenido {
   padding-top: calc(var(--nav-height-desktop) + var(--spacing-1));
-  width: 200px;
+  width: 300px; /* antes 200px — más ancho para los enlaces a 1.35rem */
   flex: none;
 }
 

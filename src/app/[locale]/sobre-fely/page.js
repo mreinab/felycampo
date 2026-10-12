@@ -29,29 +29,31 @@
    propio de la página y vive en sobreFely.js. */
 
 import { getTranslations } from 'next-intl/server';
-import { RunwayBackstage, RunwayDescripcion, RunwayMediaLateral, TarjetaEnlaceExterno } from '@/components/layout';
+import { HeroPagina, RunwayBackstage, RunwayDescripcion, TarjetaEnlaceExterno } from '@/components/layout';
 import { SOBRE_FELY } from './sobreFely';
 import styles from './page.module.css';
 
 export default async function Pagina({ params }) {
   const { locale } = await params;
   const t = await getTranslations('sobreFely');
+  const tHero = await getTranslations('heroPagina');
 
   const descripcion = SOBRE_FELY.historia.texto[locale].join(' ');
   const fotosBackstage = SOBRE_FELY.trayectoria.map((entrada) => entrada.imagen).filter(Boolean);
 
   return (
     <section>
-      <div className={styles.hero} data-navbar-hero>
-        <RunwayMediaLateral medio={{ src: SOBRE_FELY.heroImagen }} alt="Fely Campo" />
-      </div>
+      {/* fijarEnMobile: efecto "pin" en mobile (ver HeroPagina.jsx) — el
+          .textoDescripcion que sigue lleva fondo opaco para taparla. */}
+      <HeroPagina
+        imagen={SOBRE_FELY.heroImagen}
+        alt="Fely Campo"
+        titulo={t('tituloHero')}
+        subtitulo={tHero('sobreFely')}
+        fijarEnMobile
+      />
 
       <div className={styles.textoDescripcion}>
-        <div className={styles.textoRow}>
-          <p className={styles.nombre}>Fely Campo</p>
-          <p className={styles.temporada}>{t('eyebrow')}</p>
-        </div>
-
         <RunwayDescripcion texto={descripcion} />
       </div>
 

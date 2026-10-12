@@ -1,16 +1,19 @@
 /* ============================================================
    NUESTROS TALLERES — Fely Campo. Ruta: /talleres-fely-campo
    (antes /sobre-fely/talleres — renombrada, ver Navbar.jsx).
-   Server Component: cabecera (CabeceraSeccion, enCuadricula +
-   alinear="start" — mismo combo "fila" que usa CuadriculaProductos en
-   "grid", ver CuadriculaProductos.jsx) + cuadrícula de talleres (ver
-   talleres.js). El único trocito interactivo (scroll del carrusel de
+   Server Component: hero común (HeroPagina — "Nuestros talleres" + la
+   primera línea de talleres.intro como subtítulo) + el resto de la
+   intro en RunwayDescripcion (mismo tratamiento que /sobre-fely) +
+   cuadrícula de talleres (ver talleres.js). Antes la cabecera era una
+   CabeceraSeccion con título e intro, sin foto. El único trocito interactivo (scroll del carrusel de
    imágenes con la rueda del ratón) vive aparte en
    @/components/ui/CarruselImagenes.jsx (Client Component, compartido
    con atelier-fiesta/AtelierDetalle.jsx), no aquí.
    ============================================================ */
 
-import { CabeceraSeccion, CarruselImagenes } from '@/components/ui';
+import { getTranslations } from 'next-intl/server';
+import { HeroPagina, RunwayDescripcion } from '@/components/layout';
+import { CarruselImagenes } from '@/components/ui';
 import { TALLERES } from './talleres';
 import styles from './page.module.css';
 
@@ -22,16 +25,23 @@ const esVideo = (src) => /\.(mp4|webm|mov)$/i.test(src);
 
 export default async function Pagina({ params }) {
   const { locale } = await params;
+  const t = await getTranslations('talleres');
+  // talleres.intro = "frase corta\n\npárrafo": la frase va de subtítulo
+  // del hero y el párrafo, debajo, en RunwayDescripcion.
+  const [lema, ...resto] = t('intro').split('\n\n');
 
   return (
     <section className="seccion">
+      <HeroPagina
+        imagen="/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp"
+        alt={t('titulo')}
+        titulo={t('titulo')}
+        subtitulo={lema}
+      />
+
+      <RunwayDescripcion texto={resto.join('\n\n')} />
+
       <div className="contenedor">
-        <CabeceraSeccion
-          titleKey="talleres.titulo"
-          descriptionKey="talleres.intro"
-          alinear="start"
-          enCuadricula
-        />
 
         {/* Un taller por fila (ver .grid): dentro de cada uno, el
             carrusel de fotos (.imagenes) va arriba y .info debajo,

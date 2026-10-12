@@ -6,6 +6,7 @@
       "colecciones": "Colecciones",
       "elMundoDeFely": "Sobre Fely",
       "puntosDeVenta": "Dónde encontrar Fely Campo",
+      "puntosDeVentaCorto": "Dónde encontrarnos",
       "pedirCita": "Pedir cita"
     },
     "submenus": {
@@ -109,6 +110,8 @@
     "showroomNota": "Showroom con cita previa"
   },
   "puntosVenta": {
+    "tituloHero": "Boutique Selectas",
+    "subtituloHero": "Encuentra tu Fely Campo en nuestros puntos de venta.",
     "eyebrow": "Dónde encontrarnos",
     "titulo": "Puntos de venta",
     "intro": "Descubre nuestros ateliers y la red de boutique que trabajan con Fely Campo, en España y en el resto del mundo. Contamos con más de 200 puntos de venta. Encuentra tu punto de venta más cercano",
@@ -140,6 +143,7 @@
   },
   "sobreFely": {
     "eyebrow": "La Diseñadora",
+    "tituloHero": "Fely Campo, la diseñadora",
     "titulo": "Conoce a Fely Campo",
     "trayectoria": "Trayectoria",
     "manifiestoEyebrow": "Manifiesto — Colección Ibiza"
@@ -184,6 +188,10 @@
     "gastos": "A cargo de la clienta, salvo prenda defectuosa o error en el pedido.",
     "masInfoTexto": "Visita nuestra página de <atencion>Atención al cliente</atencion> para más información."
   },
+  "whatsappFlotante": {
+    "label": "Escríbenos por WhatsApp",
+    "mensaje": "Hola, me gustaría recibir información sobre Fely Campo."
+  },
   "contacto": {
     "titulo": "Contacto",
     "tiendasTitulo": "Atención a tiendas",
@@ -191,6 +199,7 @@
     "emailTitulo": "E-mail",
     "pretaporterTitulo": "Atención Prêt-à-porter",
     "chatOnline": "Chat online",
+    "whatsapp": "WhatsApp",
     "clickCollectTitulo": "Click & Collect",
     "direccion": "C/ Laguna Negra 17-19, Salamanca",
     "parrafos": [
@@ -296,7 +305,8 @@
   },
   "pedirCitaAtelier": {
     "cerrar": "Cerrar",
-    "titulo": "Pide tu cita con nosotros",
+    "titulo": "Pide tu cita",
+    "subtitulo": "Rellena el formulario y nos pondremos en contacto contigo.",
     "nombreCompleto": "Nombre completo",
     "nombreCompletoPlaceholder": "María Martín García",
     "email": "Email de contacto",
@@ -368,8 +378,30 @@
     "preguntaLogin": "¿Ya tienes cuenta?",
     "cerrar": "Cerrar"
   },
+  "heroPagina": {
+    "podcast": "Entre telas y palabras.",
+    "runwayArchivo": "Todas nuestras colecciones de pasarela.",
+    "atelierNovias": "Vestidos de novia hechos a medida en nuestro atelier.",
+    "atelierFiesta": "Vestidos de fiesta e invitada, hechos a medida.",
+    "pretAPorter": "Prendas para el día a día, con el cuidado del atelier.",
+    "sobreFely": "Toda una vida dedicada a la moda.",
+    "runway": "Colección de pasarela",
+    "atelierCiudad": "Visítanos siempre con cita previa."
+  },
+  "pedirCitaLanding": {
+    "titulo": "Conoce la colección en nuestros ateliers",
+    "cta": "Pedir cita"
+  },
+  "citaFelyLanding": {
+    "texto": "Lo que quiero transmitir con mis vestidos es <em>un sentimiento y una pasión</em> por lo que es mi oficio y mi profesión, <em>la moda</em>."
+  },
+  "descubreFely": {
+    "titulo": "Descubre a Fely",
+    "cta": "Sobre la diseñadora"
+  },
   "heroCarousel": {
-    "titulo": "El universo de Fely Campo",
+    "entradilla": "El universo de Fely Campo",
+    "descripcion": "Elegancia, sobriedad y un patronaje excelente.",
     "cta": "Descubre más"
   },
   "collectionTitle": {
@@ -541,6 +573,8 @@
       "consentimiento": "Al enviar tu email, aceptas nuestra <privacidad>Política de privacidad</privacidad>.",
       "politicaEnlace": "Política de privacidad",
       "enviar": "Enviar",
+      "suscribirse": "Suscribirse",
+      "placeholder": "E-mail",
       "exito": "¡Gracias! Ya estás suscrita.",
       "error": "Algo ha ido mal. Inténtalo de nuevo."
     }   
