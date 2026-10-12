@@ -75,25 +75,25 @@ export const ATELIERES = {
       { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.12.jpeg' },
     ],
     descripcion: {
-      es: 'En Salamanca, el atelier convive con el corazón creativo de la firma. El proceso, el oficio y la precisión que existen detrás de cada pieza se plasman en un lugar donde paisaje y creación conviven, y donde la esencia de Castilla entra directamente en el universo de Fely Campo.',
-      en: 'In Salamanca, the atelier lives alongside the creative heart of the label. The process, the craft and the precision behind every piece take shape in a place where landscape and creation coexist, and where the essence of Castile enters directly into the world of Fely Campo.',
+      es: 'En Salamanca, el atelier convive con el corazón creativo de Fely Campo. Un espacio donde oficio, precisión y creación se encuentran, con la esencia de Castilla como parte del universo de la firma.',
+      en: 'In Salamanca, the atelier lives alongside the creative heart of Fely Campo. A space where craft, precision and creation meet, with the essence of Castile as part of the world of the label.',
     },
     // "Nuestro equipo" (bloque intermedio) quitado a petición — quedan
     // solo estas dos, alternando de lado automáticamente por índice
     // (ver "indice % 2" en AtelierDetalle.jsx): sin el bloque de en
     // medio, "Asesoramiento personalizado" pasa de índice 2 a 1 y por
-    // tanto al lado opuesto de "Experiencia única", sin tocar el
+    // tanto al lado opuesto de "El Atelier", sin tocar el
     // componente.
     secciones: [
       {
-        titulo: { es: 'Experiencia única', en: 'A Unique Experience' },
+        titulo: { es: 'El Atelier', en: 'The Atelier' },
         imagen: '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
         texto: {
           es: [
-            'En nuestro Atelier Fiesta en Salamanca podrás vivir la magia de Fely Campo. Un lugar donde disfrutar del universo de la firma, en el que cada rincón y cada detalle está diseñado para que vivas una experiencia única. Hay un carácter atemporal en nuestros diseños, por lo que también podrás probarte los icónicos modelos de colecciones previas que siguen enamorando.',
+            'Un espacio para descubrir Fely Campo, probar sus colecciones y conocer de cerca el universo de la firma. Diseños atemporales y piezas que permanecen más allá de cada temporada.',
           ],
           en: [
-            "At our Atelier Fiesta in Salamanca you can experience the magic of Fely Campo. A place to enjoy the world of the label, where every corner and every detail is designed for you to live a unique experience. There's a timeless character to our designs, so you can also try on the iconic pieces from previous collections that continue to captivate.",
+            'A space to discover Fely Campo, try on its collections and get to know the world of the label up close. Timeless designs and pieces that endure beyond each season.',
           ],
         },
       },
@@ -105,10 +105,10 @@ export const ATELIERES = {
         imagen: "/img/atelier/atelier-salamanca/atelier-fiesta-salamanca-felycampo (3).jpg",
         texto: {
           es: [
-            'De la mano de nuestro equipo tendrás un asesoramiento personalizado desde la primera cita, te escucharán y buscarán junto a ti ese diseño de nuestras colecciones con el que te sientas identificada y segura, recomendándote los cortes, colores y tejidos que más favorezcan a tu silueta y te asesorarán sobre las modificaciones posibles dentro del diseño elegido.',
+            'Cada cita comienza contigo. Nuestro equipo te acompaña para encontrar el diseño, corte, color y tejido que mejor encajen contigo, y valorar las posibles modificaciones de la pieza elegida.',
           ],
           en: [
-            "With the help of our team you'll receive personalised guidance from the very first appointment: they'll listen and search together with you for the design from our collections that makes you feel like yourself and confident, recommending the cuts, colours and fabrics that best flatter your silhouette, and advising you on the possible modifications within the chosen design.",
+            'Every appointment begins with you. Our team guides you to find the design, cut, colour and fabric that suit you best, and to consider the possible alterations to the chosen piece.',
           ],
         },
       },

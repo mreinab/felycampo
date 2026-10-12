@@ -36,43 +36,53 @@
   gap: var(--spacing-10);
   margin-top: var(--spacing-8);
   padding-bottom: var(--spacing-10);
+  /* Gutter lateral en la lista, no en los hijos de .tarjeta (que van
+     sin padding lateral): foto y texto alinean con este mismo borde. */
+  padding-inline: var(--spacing-6);
   list-style: none;
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
 }
 
-/* Dos mitades lado a lado — .galeria (foto) + .fila (info/acciones),
-   50%/50%, mismo criterio que .layout de MiCuentaModal.module.css. */
+/* Texto (.fila) a la izquierda y foto (.galeria) a la derecha, sin
+   cambiar el orden del DOM (en mobile la foto sigue arriba). Grid y no
+   flex: la fila del grid toma el alto de la foto (aspect-ratio 2.5/3),
+   .fila se estira a ese mismo alto (así su space-evenly reparte datos y
+   botón a lo alto de la foto). Columnas con ancho tope (texto 22rem,
+   foto el ancho que da 80vh de alto a 2.5/3) y justify-content:center:
+   el conjunto queda centrado en horizontal; align-content:center lo
+   centra en vertical en los 80vh de la tarjeta. */
 .tarjeta {
   min-height: 80vh;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: minmax(0, 22rem) minmax(0, calc(80vh * 2.5 / 3));
+  justify-content: center;
+  align-content: center;
+  column-gap: var(--spacing-10);
 }
 
 @media (min-width: 1024px) {
-  .tarjeta {
-    min-height: 70vh;
+  .lista {
+    padding-inline: var(--spacing-10);
   }
 }
 
 /* Mini-galería de la sede (CarruselFotos, ui/ — cross-fade al hover,
    ver FOTOS_POR_CIUDAD/fotosDe en ListadoUbicaciones.jsx). .galeria
-   solo reparte el ancho/padding (mitad de .tarjeta, con hueco a la
-   izquierda); .marco es quien de verdad aloja el carrusel —
-   position:relative + overflow:hidden, lo que CarruselFotos pide de su
-   contenedor (ver "Uso" en CarruselFotos.jsx). Van separados a
-   propósito: el padding-left tiene que quedar FUERA de ese contenedor
-   posicionado, porque CarruselFotos rellena su contenedor con
-   position:absolute + inset:0 — el "containing block" de eso es la
-   padding box del ancestro posicionado más cercano, así que un
-   padding-left puesto en el propio .galeria (si fuera el posicionado)
-   quedaría cubierto igualmente y no se vería. Aquí no hace falta
-   aspect-ratio aparte en .marco, la propia altura de .tarjeta (flex
-   row) ya le da tamaño. */
+   solo reparte el ancho (sin padding — el hueco con el texto es el
+   gap de .tarjeta); .marco es quien de verdad aloja el
+   carrusel — position:relative + overflow:hidden, lo que CarruselFotos
+   pide de su contenedor (ver "Uso" en CarruselFotos.jsx). Aquí no hace falta
+   aspect-ratio aparte en .marco, el aspect-ratio de .galeria (ver
+   abajo) ya le da tamaño. */
+/* Ancho = el de su columna (tope en .tarjeta: el que da 80vh de alto
+   a 2.5/3), así la foto nunca pasa de la altura de la tarjeta. */
 .galeria {
-  width: 50%;
-  flex: none;
-  padding-left: var(--spacing-7);
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+  aspect-ratio: 2.5 / 3;
+  min-width: 0;
 }
 
 .marco {
@@ -104,15 +114,15 @@
 }
 
 /* Columna: datos de la sede arriba y el botón "Pedir cita" debajo, a
-   todo el ancho, el conjunto centrado en vertical en la tarjeta. */
+   todo el ancho, repartidos con el mismo hueco arriba, entre y abajo (space-evenly). */
 .fila {
-  width: 50%;
-  flex: none;
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: var(--spacing-5);
-  padding: 0 var(--spacing-5);
 }
 
 .info {
@@ -183,6 +193,8 @@
    .info arriba. */
 .nombre {
   text-transform: uppercase;
+  /* Separa el nombre de la sede de la dirección de debajo. */
+  padding-bottom: var(--spacing-3);
 }
 
 /* "Conoce más." — al final de .descripcion, en la misma línea (ver
@@ -248,21 +260,17 @@
    ya cae en el bucle de escritorio de arriba, min-width 1024). Aquí
    .tarjeta ya no fuerza una altura (min-height/max-height de la
    versión escritorio no aplican): se ajusta al contenido, .galeria
-   pasa a una altura fija de 50vh y .fila gana padding en las 4
-   direcciones en vez de solo horizontal. */
+   mantiene su 2.5/3 a todo el ancho y .fila gana padding vertical (el
+   lateral lo sigue poniendo .lista). */
 @media (max-width: 1023px) {
   .tarjeta {
+    display: flex;
     flex-direction: column;
     min-height: 0;
   }
 
   .galeria {
     width: 100%;
-    height: 50vh;
-    /* El padding-left de escritorio (hueco antes del .marco, separado
-       a propósito del posicionado — ver comentario de arriba) no pinta
-       nada aquí: en mobile la galería va a sangre completa. */
-    padding-left: 0;
   }
 
   /* Cross-fade de escritorio oculto; en su lugar, la tira con swipe de
@@ -295,7 +303,8 @@
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
-    padding: var(--spacing-4);
+    /* Solo vertical — el lateral lo pone .lista. */
+    padding-block: var(--spacing-4);
   }
 
   .info {
