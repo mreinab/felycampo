@@ -45,7 +45,7 @@ const SUBMENU_STRUCTURE = {
       // "separador": "Vosotras" no es una sede — un hueco de una fila
       // por encima (ver NavbarPanelLateralContent.jsx) la separa
       // visualmente de las 3 ciudades de arriba.
-      { key: 'vosotras', href: '/atelier/vosotras', separador: true, image: '/img/Clientes/CLIENTAS/nuestras-invitadas-felycampo-13-03.jpg' },
+      { key: 'vosotras', href: '/atelier/vosotras', separador: true, image: '/img/Clientes/CLIENTAS/finales/IMG_6068.jpg' },
     ],
     cardsVariante: 'horizontal',
     cards: [
@@ -55,7 +55,7 @@ const SUBMENU_STRUCTURE = {
       // "Nuestro Atelier" en vez del nombre de una ciudad, para que la
       // tarjeta hable del atelier en general, no de Salamanca.
       { key: 'salamanca', labelKey: 'nuestroAtelier', href: '/atelier-fiesta/salamanca', image: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp' },
-      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/Clientes/CLIENTAS/nuestras-invitadas-felycampo-13-03.jpg' },
+      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/Clientes/CLIENTAS/finales/IMG_6068.jpg' },
     ],
   },
   colecciones: {

@@ -13,6 +13,30 @@
 
 const RUTA_INVITADAS = '/img/Clientes/CLIENTAS';
 const RUTA_NOVIAS = '/img/Clientes/CLIENTAS/novias';
+const RUTA_FINALES = '/img/Clientes/CLIENTAS/finales';
+
+// Fotos nuevas de novias (carpeta finales/, a petición): cada una es su
+// propia casilla (no se agrupan) y van las primeras de la pestaña
+// Novias, por delante de los grupos antiguos.
+const NOVIAS_FINALES = [
+  '_MG_9830_1.jpg',
+  '_MG_9858_ByN.jpg',
+  '631d2890-aeb6-469c-a502-3ca1b57acf47.jpg',
+  '8b393a07-01c3-48ad-baa6-363f0e5421c9.jpg',
+  '8c8b3cc3-c0a2-4e89-8e4d-f716fb297f41.jpg',
+  'BODA-ESTEFANIA_ADRIAN07166.jpg',
+  'Captura de pantalla 2026-01-31 a las 21.32.36.png',
+  'f7eb2328-1a1d-42a8-b318-84555ae88b05.jpg',
+  'IMG_6067.jpg',
+  'IMG_6068.jpg',
+  'IMG_6071.jpg',
+  'IMG-20260922-WA0007.jpg',
+  'PHOTO-2025-10-16-13-35-59 6.jpg',
+  'PHOTO-2025-10-16-13-55-08 2.jpg',
+  'PHOTO-2025-10-16-13-55-09 2.jpg',
+  'Unknown.jpeg',
+  'WhatsApp Image 2026-08-11 at 17.48.25 (1).jpeg',
+].map((archivo) => [`${RUTA_FINALES}/${archivo}`]);
 
 // Orden de la cuadrícula (de arriba a abajo/izquierda a derecha):
 // pedido explícito para los primeros grupos (madrina con reseña,
@@ -43,14 +67,17 @@ export const FOTOS_INVITADAS = [
 ].map((grupo) => grupo.map((sufijo) => sufijo.startsWith('/') ? sufijo : `${RUTA_INVITADAS}/nuestras-invitadas-felycampo-${sufijo}.${sufijo === '30-01' ? 'png' : 'jpg'}`));
 
 export const FOTOS_NOVIAS = [
-  ['01-01', '01-02', '01-03', '01-04', '01-05', '01-06', '01-07', '01-08'],
-  ['03-01'],
-  ['04-01', '04-02'],
-  // 05 (fila 1, columna 4) quitado a petición — fotos siguen en novias/.
-  ['09-01', '09-02', '09-03', '09-04'],
-  ['10-01', '10-02'],
-  ['13-01', '13-02', '13-03'],
-].map((grupo) => grupo.map((sufijo) => `${RUTA_NOVIAS}/nuestras-novias-felycampo-${sufijo}.jpg`));
+  ...NOVIAS_FINALES,
+  ...[
+    ['01-01', '01-02', '01-03', '01-04', '01-05', '01-06', '01-07', '01-08'],
+    ['03-01'],
+    ['04-01', '04-02'],
+    // 05 (fila 1, columna 4) quitado a petición — fotos siguen en novias/.
+    ['09-01', '09-02', '09-03', '09-04'],
+    ['10-01', '10-02'],
+    ['13-01', '13-02', '13-03'],
+  ].map((grupo) => grupo.map((sufijo) => `${RUTA_NOVIAS}/nuestras-novias-felycampo-${sufijo}.jpg`)),
+];
 
 // Reseñas reales de clientas, por la foto de portada de su grupo (la
 // primera del array en FOTOS_INVITADAS/FOTOS_NOVIAS). Se muestran en el

@@ -9,9 +9,24 @@
 import { getTranslations } from 'next-intl/server';
 import { HeroCarousel, SplitMedia /* , CuadriculaProductos, CarruselClientas, BloqueSeccion */ } from '@/components/layout';
 // import { CabeceraSeccion } from '@/components/ui'; // sin cabecera por ahora, ver comentario más abajo
-import { Boton } from '@/components/ui';
+import { Boton, EnVista } from '@/components/ui';
 import cuadriculaStyles from '@/components/layout/CuadriculaProductos.module.css';
+import { ATELIERES } from './atelier-fiesta/atelieres';
 import styles from './page.module.css';
+
+// Bloque "Pedir cita" de la landing: una columna por atelier, en este
+// orden. Foto = la del hero de su propia ficha (/atelier-fiesta/[id],
+// ver atelieres.js) salvo que la entrada traiga la suya (Madrid, a
+// petición: su hero es vídeo). Rótulo de los tres: "Atelier {ciudad}"
+// y, en otra línea, "& Showroom" (ver JSX).
+const ATELIERES_CITA = [
+  { id: 'salamanca' },
+  { id: 'madrid', imagen: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp' },
+  { id: 'oviedo' },
+].map(({ id, imagen }) => ({
+  id,
+  imagen: imagen ?? ATELIERES[id].heroMedio.src,
+}));
 
 // ---- Datos de las secciones comentadas más abajo — se quedan aquí
 // tal cual por si se reactivan (ver bloque comentado en el return). ----
@@ -83,6 +98,7 @@ export default async function Home({ params }) {
   const tCitaFely = await getTranslations('citaFelyLanding');
   const tDescubreFely = await getTranslations('descubreFely');
   const tPedirCita = await getTranslations('pedirCitaLanding');
+  const tAtelierFiesta = await getTranslations('atelierFiesta');
   // const tVisitaAtelier = await getTranslations('visitaAtelier'); // BloqueSeccion comentado más abajo
 
   // Igual que en el Navbar (ver withLocale en Navbar.jsx): los hrefs
@@ -134,37 +150,60 @@ export default async function Home({ params }) {
         />
       </section>
 
-      {/* Cita de Fely — antesala de "Descubre a Fely": en la fuente
-          del sitio (--font-base), centrada y con mucho aire, sin firma. */}
-      <section className={styles.citaFely}>
-        <blockquote className={styles.citaFelyTexto}>
-          <p>{tCitaFely.rich('texto', { em: (chunks) => <em>{chunks}</em> })}</p>
-        </blockquote>
-      </section>
-
-      {/* "Descubre a Fely" — inspirado en la tarjeta del documental que
-          cierra /sobre-fely (TarjetaEnlaceExterno), con su propia foto de
-          las cintas (felycampo-documenta-54oldtapes-2.jpg), mismo
-          formato centrado (aquí al 80% y 100vh de alto), pero con otro texto: título grande
-          centrado + CTA abajo, y lleva a /sobre-fely en vez de a YouTube.
-          Toda la tarjeta es un único <a> (Boton sin href = <span>). */}
+      {/* "Descubre a Fely" — misma estructura y estilos que las
+          tarjetas de /visita-fely-campo (.tarjeta/.fila/.info/.acciones
+          de su page.module.css, ver ListadoUbicaciones.jsx): a la
+          izquierda el título y debajo la cita de Fely, con el botón a
+          /sobre-fely como último elemento; a la derecha la foto de Fely
+          (elegir-fely-27.jpeg). Aparece con scroll (<EnVista>). */}
       <section className={styles.descubreFely}>
-        <a href={`/${locale}/sobre-fely`} className={styles.descubreFelyTarjeta}>
-          <img src="/img/about-felycampo/felycampo-documenta-54oldtapes-2.jpg" alt="" className={styles.descubreFelyImagen} />
-          <p className={styles.descubreFelyTitulo}>
-            {tDescubreFely('titulo')}
-          </p>
-          <div className={styles.descubreFelyPie}>
-            <Boton variante="texto-crema">{tDescubreFely('cta')}</Boton>
+        <EnVista as="article" className={styles.descubreFelyTarjeta}>
+          <div className={styles.descubreFelyGaleria}>
+            <img src="/img/about-felycampo/elegir-fely-27.jpeg" alt="Fely Campo" className={styles.descubreFelyImagen} />
           </div>
-        </a>
+
+          <div className={styles.descubreFelyFila}>
+            <div className={styles.descubreFelyInfo}>
+              <p className={styles.descubreFelyTitulo}>{tDescubreFely('titulo')}</p>
+              <blockquote className={styles.descubreFelyCita}>
+                <p>{tCitaFely.rich('texto', { em: (chunks) => <em>{chunks}</em> })}</p>
+              </blockquote>
+            </div>
+
+            <div className={styles.descubreFelyAcciones}>
+              {/* Enlace subrayado (Boton "texto"), no el botón con borde
+                  de visita-fely-campo — a petición. */}
+              <Boton variante="texto" href={`/${locale}/sobre-fely`}>{tDescubreFely('cta')}</Boton>
+            </div>
+          </div>
+        </EnVista>
       </section>
 
-      {/* Pedir cita — último bloque antes del footer: texto centrado sobre
-          el fondo de la página + CTA al formulario de cita. */}
-      <section className={styles.pedirCita}>
-        <p className={styles.pedirCitaTitulo}>{tPedirCita('titulo')}</p>
-        <Boton variante="texto" href={`/${locale}/visita-fely-campo/cita`}>{tPedirCita('cta')}</Boton>
+      {/* Pedir cita — último bloque antes del footer: tres columnas
+          (Salamanca, Madrid, Oviedo), cada una con la foto de su atelier
+          y el mismo diseño de texto que el SplitMedia de arriba (velo
+          oscuro, título en crema, CTA subrayado), pero en columna:
+          nombre arriba y "Pedir cita" abajo. Toda la pieza es un único
+          <a> al formulario de cita (Boton sin href = <span>). */}
+      <section className={styles.ateliersCita}>
+        {ATELIERES_CITA.map(({ id, imagen }) => (
+          <EnVista
+            key={id}
+            as="a"
+            href={`/${locale}/visita-fely-campo/cita`}
+            className={styles.atelierCita}
+          >
+            <img src={imagen} alt="" className={styles.atelierCitaImagen} />
+            <div className={styles.atelierCitaContenido}>
+              <p className={styles.atelierCitaTitulo}>
+                Atelier {tAtelierFiesta(`${id}.titulo`)}
+                <br />
+                &amp; Showroom
+              </p>
+              <Boton variante="texto" className={styles.atelierCitaCta}>{tPedirCita('cta')}</Boton>
+            </div>
+          </EnVista>
+        ))}
       </section>
 
       {/* ---- Comentado a petición (rediseño de landing en curso) ----
