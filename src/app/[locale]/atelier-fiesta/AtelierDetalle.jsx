@@ -104,7 +104,12 @@ async function AtelierDetalle({ datos, locale }) {
             playsInline
           />
         ) : (
-          <EnVista as="img" src={datos.medioSuperior.src} alt="" className={styles.video} />
+          <EnVista
+            as="img"
+            src={datos.medioSuperior.src}
+            alt=""
+            className={`${styles.video} ${datos.medioSuperior.ajustarAlto ? styles.videoAjusteAlto : ''}`}
+          />
         )}
 
         {datos.secciones.map((seccion, indice) => (
@@ -145,8 +150,10 @@ async function AtelierDetalle({ datos, locale }) {
         )}
 
         <CarruselImagenes className={styles.imagenes}>
-          {[0, 1, 2, 3, 4].map((indice) => {
-            const medio = datos.imagenesTira[indice % datos.imagenesTira.length];
+          {/* Solo los medios reales de la ficha (antes 5 huecos fijos con
+              "indice % length": en Madrid, con 4, repetía la primera foto
+              al final). .imagenes ajusta sus columnas al número real. */}
+          {datos.imagenesTira.map((medio, indice) => {
             return (
               <EnVista key={indice} className={styles.marco}>
                 {medio.tipo === 'video' ? (

@@ -103,7 +103,7 @@ const CAPITALES_PROVINCIA = {
 // IMAGENES_FALLBACK, ver imagenDe más abajo.
 const IMAGEN_POR_ID = {
   'fely-campo-atelier-novias-salamanca': '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
-  'fely-campo-madrid-atelier': '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_pretaporter-3-1024x683.jpg',
+  'fely-campo-madrid-atelier': '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
   'fely-campo-oviedo': '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp',
   'teresa-justel': '/img/atelier/puntos-de-venta/teresa-justerl.jpg',
   'for-you': '/img/atelier/puntos-de-venta/for-you-burgos.jpg',

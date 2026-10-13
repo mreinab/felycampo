@@ -112,7 +112,7 @@ export const SOBRE_FELY = {
     },
     {
       anio: { es: '1981', en: '1981' },
-      imagen: '/img/about-felycampo/elmundodefelycampo-ladisenadora-felycampo.webp',
+      imagen: '/img/about-felycampo/felycampo-website-about (1).jpg',
       texto: {
         es: [
           'Abrí la Academia de Corte y Confección, que en 1986 se transformó en una Escuela de Diseño. Recuerdo la emoción de llegar el primer día y ver, por primera vez, mi nombre en la puerta. Fue una etapa apasionante, llena de desfiles, profesores inspiradores y, sobre todo, mucha creatividad.',
@@ -148,6 +148,7 @@ export const SOBRE_FELY = {
     },
     {
       anio: { es: 'Hoy', en: 'Today' },
+      imagen: '/img/about-felycampo/felycampo-website-about (3).jpg',
       texto: {
         es: [
           'Fely Campo está presente en toda Europa, con colecciones que se distribuyen en España, Italia, Reino Unido e Irlanda, Francia, Bélgica, Suiza y Alemania. Mantengo la tienda original de Salamanca y otra en Oviedo, además de los ateliers especializados en moda nupcial y de fiesta en Salamanca y Madrid. El trabajo constante, la pasión por los tejidos y el diseño bien elaborado, unidos al espíritu emprendedor propio de una Serrano, me han permitido construir un universo al que he dedicado toda mi vida.',
@@ -174,7 +175,7 @@ export const SOBRE_FELY = {
     // Fotos que acompañan al poema en RunwayBackstage (ver page.js,
     // prop "poema.imagenes").
     imagenesPoema: [
-      '/img/about-felycampo/6738f8cc5cdea.jpeg',
+      '/img/about-felycampo/felycampo-website-about (2).jpg',
       '/img/about-felycampo/elegir-fely-27.jpeg',
     ],
     texto: {

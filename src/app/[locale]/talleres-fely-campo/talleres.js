@@ -25,11 +25,10 @@
    pérdida apreciable de calidad a los tamaños en los que se muestran
    (ver .marco en page.module.css). */
 
-// Taller inhouse: 5 fotos + 1 vídeo reales, en
-// public/img/talleres/inhouse/ — el vídeo va en 2ª posición (ver
+// Taller inhouse: 4 fotos + 1 vídeo reales, en
+// public/img/talleres/inhouse/ — el vídeo va en 1ª posición (ver
 // "esVideo" en page.js, que lo distingue de las fotos por extensión).
 const MEDIOS_TALLER_INHOUSE = [
-  '/img/talleres/inhouse/rbksom_blobid1671730782555.jpg',
   '/img/talleres/inhouse/artesany-2.mp4',
   '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp',
   '/img/talleres/inhouse/WhatsApp Image 2026-08-25 at 14.06.07.jpeg',

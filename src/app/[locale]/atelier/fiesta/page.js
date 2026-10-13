@@ -27,7 +27,7 @@
    se enseña en esta página. */
 
 import { getTranslations } from 'next-intl/server';
-import { BloqueSeccion, CuadriculaProductos, HeroPagina, RunwayBackstage, RunwayDescripcion } from '@/components/layout';
+import { CuadriculaProductos, HeroPagina, RunwayDescripcion /* , BloqueSeccion, RunwayBackstage */ } from '@/components/layout';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { FIESTA_EDITORIAL } from './fiestaEditorial';
 import styles from './page.module.css';
@@ -62,7 +62,7 @@ export default async function Pagina({ params, searchParams }) {
   return (
     <section className="seccion">
       <HeroPagina
-        imagen="/img/landing/hero-atelier-fiesta-felycampo.jpg"
+        imagen="/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg"
         alt={t('nav.submenus.atelier.fiesta')}
         titulo={[t('nav.links.atelier'), t('nav.submenus.atelier.fiesta')]}
         subtitulo={t('heroPagina.atelierFiesta')}
@@ -72,6 +72,8 @@ export default async function Pagina({ params, searchParams }) {
         <RunwayDescripcion texto={FIESTA_EDITORIAL.descripcion[locale]} />
       </div>
 
+      {/* Comentado a petición — sin imágenes entre la descripción y la
+          cuadrícula (título, filtros y looks van justo después del texto).
       {FIESTA_EDITORIAL.bloques.map((bloque, indice) => (
         <BloqueSeccion
           key={bloque.imagen}
@@ -85,13 +87,17 @@ export default async function Pagina({ params, searchParams }) {
       <div className="contenedor">
         <RunwayBackstage imagenes={FIESTA_EDITORIAL.backstage} alt={t('nav.submenus.atelier.fiesta')} />
       </div>
+      */}
 
       <CuadriculaProductos
         productos={PRODUCTOS_FIESTA}
         disposicion="grid"
-        tituloKey="nav.links.atelier"
-        coleccionKey="nav.submenus.atelier.fiesta"
-        descriptionKey="cuadriculaTabs.descripcion"
+        // Cabecera (CabeceraSeccion) comentada a petición, igual que en
+        // pret-a-porter/page.js: sin "tituloKey" CuadriculaProductos no la
+        // pinta (ni el botón de filtros ni el cambio de columnas, que van dentro).
+        // tituloKey="nav.links.atelier"
+        // coleccionKey="nav.submenus.atelier.fiesta"
+        // descriptionKey="cuadriculaTabs.descripcion"
         ocultarPrecio
         colecciones={COLECCIONES_FIESTA}
         coleccionActiva={coleccionActiva}

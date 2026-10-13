@@ -38,7 +38,7 @@ const FOTOS_POR_CIUDAD = {
     '/img/atelier/atelier-salamanca/20221222185015_relacionada2.jpg',
   ],
   Madrid: [
-    '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_pretaporter-3-1024x683.jpg',
+    '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
     '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp',
     '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_showroom-3.jpg',
   ],

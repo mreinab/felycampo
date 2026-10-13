@@ -83,15 +83,23 @@
   margin: 0 auto var(--spacing-8);
 }
 
+/* Variante opt-in (medioSuperior.ajustarAlto en atelieres.js, hoy solo
+   Madrid): se ajusta al alto (90vh) en vez de al ancho — sin
+   aspect-ratio 16/9 ni recorte, el ancho sale de la propia foto. */
+.videoAjusteAlto {
+  width: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
 /* Imagen del bloque (ver .seccion más abajo — único bloque de cuerpo de
    la ficha, en zigzag). 45/55, mismo reparto que .info/.acciones de
    visita-fely-campo/page.module.css. */
-/* Escritorio: alto completo de .seccion (100vh) y el ancho sale del
-   aspect-ratio 2.5/3 — mobile: 4/3 a todo el ancho, ver media query. */
+/* Ancho completo de su columna (mitad de .seccion en escritorio, todo
+   el ancho en mobile) y alto natural de la foto — se ajusta al ancho,
+   no al alto disponible: sin aspect-ratio ni recorte. */
 .bloqueImagen {
-  flex: none;
-  height: 100%;
-  aspect-ratio: 2.5 / 3;
+  width: 100%;
   background: var(--color-details);
   border-radius: var(--radius-imagenes);
   overflow: hidden;
@@ -100,34 +108,34 @@
 .bloqueImg {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
 }
 
 /* Imagen + texto corrido (título + uno o más párrafos, ver "secciones"
-   en atelieres.js) — 70% de ancho centrado, mismo ancho que el resto
-   de la ficha (ver .textoRow/.video arriba). .seccionInvertida
-   (secciones en índice impar, ver AtelierDetalle.jsx) invierte el lado
-   con row-reverse, así se lee en zigzag bajando la página en vez de
-   siempre "imagen a la izquierda". */
-/* 100vh en escritorio, con la imagen a alto completo (ver
-   .bloqueImagen). */
+   en atelieres.js) — 80% de ancho centrado (a petición, antes 70%).
+   .seccionInvertida
+   (secciones en índice impar, ver AtelierDetalle.jsx) pasa la imagen a
+   la columna derecha, así se lee en zigzag bajando la página en vez de
+   siempre "imagen a la izquierda". Grid de dos columnas iguales (y no
+   flex con la imagen a su ancho natural): imagen y texto miden lo
+   mismo, así el hueco entre ellos cae en el centro en todas las
+   secciones, vaya la imagen a un lado o al otro. */
 .seccion {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
-  gap: var(--spacing-8);
-  height: 100vh;
-  max-width: 70%;
+  column-gap: var(--spacing-8);
+  min-height: 80vh;
+  max-width: 80%;
   margin-inline: auto;
   margin-bottom: var(--spacing-9);
 }
 
-.seccionInvertida {
-  flex-direction: row-reverse;
+.seccionInvertida .bloqueImagen {
+  order: 2;
 }
 
 .seccionTexto {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-5);
@@ -152,7 +160,7 @@
 
 /* ---------- Cuadrícula de imágenes (último elemento de la página) ----------
    Escritorio: cuadrícula de 5 fotos que caben enteras sin scroll (ver
-   [0,1,2,3,4] en AtelierDetalle.jsx — antes eran 6 en carrusel). Solo
+   imagenesTira en AtelierDetalle.jsx — antes eran 6 en carrusel). Solo
    en mobile/tablet (ver media query) vuelve a ser el carrusel
    horizontal con scroll por rueda del ratón (mismo elemento
    .imagenes/.marco/.imagen que talleres-fely-campo/page.module.css,
@@ -254,20 +262,27 @@
     margin: var(--spacing-6) 0;
   }
 
+  /* En mobile 90vh de alto con su ancho natural se saldría de pantalla
+     — a todo el ancho y alto natural. */
+  .videoAjusteAlto {
+    height: auto;
+  }
+
   .seccion,
   .seccionInvertida {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: var(--spacing-4);
-    height: auto;
+    min-height: 0;
     margin-bottom: var(--spacing-7);
   }
 
-  .bloqueImagen {
-    flex: none;
-    height: auto;
-    aspect-ratio: 4 / 3;
+  /* Apilado: imagen siempre arriba, también en las invertidas. */
+  .seccionInvertida .bloqueImagen {
+    order: 0;
   }
+
 
   /* Cuadrícula de 5 columnas → carrusel horizontal con scroll snap
      (mismo mecanismo de scroll por rueda del ratón que

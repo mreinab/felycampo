@@ -21,16 +21,15 @@
    en page.js). El primero usa la misma foto editorial que ya ilustra
    "Novias" en Madrid (atelieres.js) y en /atelier (atelierIndex.js) —
    reutilizada aquí a propósito, mismo criterio que esas dos páginas.
-   El segundo usa una foto real de Bride 27.
+   El segundo usa una foto de public/img/collections/novia/novias-page/.
 
-   "backstage": fotos reales de Bride 27 (LOOK-*-scaled.webp, ver
-   public/img/collections/novia/bride-27/) para RunwayBackstage — la
-   misma cuadrícula editorial que ya usa La Colección en
-   /runways-la-coleccion, aquí con looks de novia en vez de backstage
-   de pasarela. Selección a mano de las fotos más fuertes/editoriales,
-   sin repetir las dos ya usadas en "bloques". */
+   "backstage": el resto de fotos de novias-page/ para RunwayBackstage —
+   la misma cuadrícula editorial que ya usa La Colección en
+   /runways-la-coleccion, sin repetir la ya usada en
+   "bloques". */
 
-const RUTA_BRIDE_27 = '/img/collections/novia/bride-27';
+// Fotos propias de la página (a petición): segundo bloque + backstage.
+const RUTA_NOVIAS_PAGE = '/img/collections/novia/novias-page';
 
 export const NOVIA_EDITORIAL = {
   descripcion: {
@@ -46,7 +45,7 @@ export const NOVIA_EDITORIAL = {
 
   bloques: [
     {
-      imagen: '/img/novias-sección-FelyCampo4.jpg',
+      imagen: '/img/Clientes/novias-felycampo-atelier.jpg',
       titulo: {
         es: 'Una historia, un vestido',
         en: 'One story, one dress',
@@ -57,7 +56,7 @@ export const NOVIA_EDITORIAL = {
       },
     },
     {
-      imagen: `${RUTA_BRIDE_27}/LOOK-8-scaled.webp`,
+      imagen: `${RUTA_NOVIAS_PAGE}/FELYCAMPO NOVIAS0033 copia.jpg`,
       titulo: {
         es: 'Hecho a mano, para ella',
         en: 'Handmade, for her',
@@ -69,13 +68,19 @@ export const NOVIA_EDITORIAL = {
     },
   ],
 
+  // Las 11 fotos restantes de novias-page/ (FELYCAMPO NOVIAS0033 va en
+  // el segundo bloque; el hero de page.js sigue con su foto de siempre).
   backstage: [
-    `${RUTA_BRIDE_27}/LOOK-2-scaled.webp`,
-    `${RUTA_BRIDE_27}/LOOK-1.2-scaled.webp`,
-    `${RUTA_BRIDE_27}/LOOK-16-scaled.webp`,
-    `${RUTA_BRIDE_27}/LOOK-10-scaled.webp`,
-    `${RUTA_BRIDE_27}/LOOK-4-scaled.webp`,
-    `${RUTA_BRIDE_27}/LOOK-17-scaled.webp`,
-    `${RUTA_BRIDE_27}/LOOK-13-1-scaled.webp`,
-  ],
+    '_91A1977 copia.jpg',
+    '_91A2190 copia.jpg',
+    '_91A2259 copia.jpg',
+    '_91A2431 copia.jpg',
+    '_91A2517 copia.jpg',
+    '_91A2540 copia.jpg',
+    '_91A2546 copia.jpg',
+    '_91A6725 copia.jpg',
+    'EmptyName 289.jpg',
+    'FelyCampo_32.jpg',
+    'FelyCampo_34.jpg',
+  ].map((archivo) => `${RUTA_NOVIAS_PAGE}/${archivo}`),
 };

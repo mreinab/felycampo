@@ -39,23 +39,23 @@ import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 const SUBMENU_STRUCTURE = {
   atelier: {
     items: [
-      { key: 'salamanca', href: '/atelier-fiesta/salamanca', image: '/img/atelier/atelier-salamanca/felycampo-salamnca-atelier.webp' },
-      { key: 'madrid', href: '/atelier-fiesta/madrid', image: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_pretaporter-3-1024x683.jpg' },
-      { key: 'oviedo', href: '/atelier-fiesta/oviedo', image: '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg' },
+      { key: 'salamanca', href: '/atelier-fiesta/salamanca', image: '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp' },
+      { key: 'madrid', href: '/atelier-fiesta/madrid', image: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg' },
+      { key: 'oviedo', href: '/atelier-fiesta/oviedo', image: '/img/atelier/atelier-oviedo/TIENDA FELY-4 (1).jpg' },
       // "separador": "Vosotras" no es una sede — un hueco de una fila
       // por encima (ver NavbarPanelLateralContent.jsx) la separa
       // visualmente de las 3 ciudades de arriba.
-      { key: 'vosotras', href: '/atelier/vosotras', separador: true, image: '/img/hero-pages/submenu/vosotras-submenu-image.jpg' },
+      { key: 'vosotras', href: '/atelier/vosotras', separador: true, image: '/img/Clientes/CLIENTAS/nuestras-invitadas-felycampo-13-03.jpg' },
     ],
     cardsVariante: 'horizontal',
     cards: [
       // Antes "Atelier Salamanca" (misma foto/href que el item de la
-      // lista) — foto de una novia probándose el vestido dentro del
-      // atelier (Clientes/CLIENTAS/novias, no una sede en concreto) y
+      // lista) — foto general del atelier (felycampo-atelier-madrid.webp,
+      // cambiada a petición; antes ContacPage-Hero-FelyCampo.jpg) y
       // "Nuestro Atelier" en vez del nombre de una ciudad, para que la
       // tarjeta hable del atelier en general, no de Salamanca.
-      { key: 'salamanca', labelKey: 'nuestroAtelier', href: '/atelier-fiesta/salamanca', image: '/img/Clientes/CLIENTAS/novias/nuestras-novias-felycampo-05-01.jpg' },
-      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/hero-pages/submenu/vosotras-submenu-image.jpg' },
+      { key: 'salamanca', labelKey: 'nuestroAtelier', href: '/atelier-fiesta/salamanca', image: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp' },
+      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/Clientes/CLIENTAS/nuestras-invitadas-felycampo-13-03.jpg' },
     ],
   },
   colecciones: {
@@ -63,15 +63,15 @@ const SUBMENU_STRUCTURE = {
     // categorías (tops/faldas/pantalones...) como antes — esas
     // siguen existiendo como páginas propias, solo no se listan aquí.
     items: [
-      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/hero-atelier-fiesta-felycampo.jpg' },
+      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg' },
       { key: 'novias', href: '/atelier/novias', image: '/img/landing/hero-atelier-novia-felycampo.jpg' },
-      { key: 'pretaporter', href: '/pret-a-porter', image: '/img/hero-pages/hero-pages-pretaporter-cover.jpg' },
+      { key: 'pretaporter', href: '/pret-a-porter', image: '/img/FelyCampo_AW2026_KristenWicce_ALTA-177.jpg' },
       { key: 'runway', href: '/colecciones-fely-campo', image: '/img/hero-pages/submenu/runway-submenu-image.jpg' },
     ],
     cardsVariante: 'horizontal',
     cards: [
       { key: 'novias', href: '/atelier/novias', image: '/img/landing/hero-atelier-novia-felycampo.jpg' },
-      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/hero-atelier-fiesta-felycampo.jpg' },
+      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg' },
     ],
   },
   elMundoDeFely: {
@@ -314,12 +314,21 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   // enlace (/atelier/novias bajo /atelier), pero en Sobre Fely no: sus
   // items (/podcast, /colecciones-fely-campo...) no cuelgan de /sobre-fely,
   // así que sin este chequeo extra el enlace no se subrayaba en esas páginas.
+  // Si varios enlaces casan con la ruta, gana el href más largo (el más
+  // específico): /atelier/novias casa con "Atelier" (/atelier, por
+  // prefijo) y con "Colecciones" (/atelier/novias, en su submenú) — solo
+  // debe subrayarse Colecciones.
+  const hrefsDe = (item) => (item.submenu
+    ? [item.href, ...SUBMENU_STRUCTURE[item.submenu].items.map((sub) => sub.href)]
+    : [item.href]);
+  const hrefMasEspecifico = NAV_ITEMS
+    .flatMap(hrefsDe)
+    .filter(esRutaActiva)
+    .reduce((mejor, href) => (href.length > mejor.length ? href : mejor), '');
+
   const esActivo = (item) => {
     if (typeof item === 'string') return esRutaActiva(item);
-    const hrefs = item.submenu
-      ? [item.href, ...SUBMENU_STRUCTURE[item.submenu].items.map((sub) => sub.href)]
-      : [item.href];
-    return hrefs.some(esRutaActiva);
+    return hrefMasEspecifico !== '' && hrefsDe(item).includes(hrefMasEspecifico);
   };
 
   // El fondo se vuelve sólido por scroll, por hover, O por tener un

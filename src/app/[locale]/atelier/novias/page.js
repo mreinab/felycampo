@@ -66,7 +66,7 @@ export default async function Pagina({ params }) {
       ))}
 
       <div className="contenedor">
-        <RunwayBackstage imagenes={NOVIA_EDITORIAL.backstage} alt="Bride 27" />
+        <RunwayBackstage imagenes={NOVIA_EDITORIAL.backstage} alt={t('nav.submenus.atelier.novias')} />
       </div>
 
       {/* Comentado a petición — sin cuadrícula de looks por el momento.

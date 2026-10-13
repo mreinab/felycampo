@@ -66,13 +66,16 @@ export const ATELIERES = {
     // igual que Madrid con showroom-madrid/, ya no hace falta reciclar
     // el fondo de taller-1/ para esta ficha (ver comentario de cabecera).
     heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
-    medioSuperior: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/rbksom_blobid1671730782555.jpg' },
+    medioSuperior: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp' },
+    // Vídeo, foto, vídeo, foto, foto (a petición: alternando vídeo y
+    // foto) — solo 2 vídeos distintos: 20260826-143026_FoYiTknV.mp4 es
+    // idéntico a _DCFGo89w.mp4 (mismo archivo), así que no se usa.
     imagenesTira: [
+      { tipo: 'video', src: '/img/atelier/atelier-salamanca/20260428-125217_Z0JLEAAc.mp4' },
       { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/buscador_tiendas.webp' },
+      { tipo: 'video', src: '/img/atelier/atelier-salamanca/20260826-143026_DCFGo89w.mp4' },
       { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.05.40.jpeg' },
       { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.29.jpeg' },
-      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.07.jpeg' },
-      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.12.jpeg' },
     ],
     descripcion: {
       es: 'En Salamanca, el atelier convive con el corazón creativo de Fely Campo. Un espacio donde oficio, precisión y creación se encuentran, con la esencia de Castilla como parte del universo de la firma.',
@@ -87,7 +90,7 @@ export const ATELIERES = {
     secciones: [
       {
         titulo: { es: 'El Atelier', en: 'The Atelier' },
-        imagen: '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
+        imagen: '/img/atelier/atelier-salamanca/atelier-salamanca-.jpeg',
         texto: {
           es: [
             'Un espacio para descubrir Fely Campo, probar sus colecciones y conocer de cerca el universo de la firma. Diseños atemporales y piezas que permanecen más allá de cada temporada.',
@@ -119,19 +122,21 @@ export const ATELIERES = {
     heroMedio: {
       tipo: 'video',
       src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid.mp4',
-      poster: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
+      poster: '/img/atelier/showroom-madrid/felycampo-atelier-madrid-showroom.jpg',
     },
-    // pretaporter-3-1024x683: la única de las 6 explícitamente
-    // horizontal (1024x683 en el propio nombre de archivo) — encaja
-    // mejor que las demás (de retrato) en la caja apaisada de .video.
-    medioSuperior: { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_pretaporter-3-1024x683.jpg' },
+    // felycampo-atelier-madrid-showroom (a petición; antes
+    // KristenWicce-3, que pasa a la sección "Novias").
+    // ajustarAlto: foto vertical — se ve entera a 90vh de alto con su
+    // ancho natural, en vez de recortada en la caja 16/9 (ver
+    // .videoAjusteAlto en page.module.css).
+    medioSuperior: { tipo: 'imagen', src: '/img/atelier/showroom-madrid/felycampo-atelier-madrid-showroom.jpg', ajustarAlto: true },
     // "unnamed (1).webp" quitada a petición (borrada de la carpeta) — el
     // resto de fotos de showroom-madrid/ ya está en uso en otro punto de
     // esta misma ficha (hero/medioSuperior/secciones), así que se queda
     // en 4 en vez de repetir alguna solo para completar 5.
     imagenesTira: [
       { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_medida-2.jpg' },
-      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg' },
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp' },
       { tipo: 'imagen', src: '/img/atelier/showroom-madrid/atelier_medida_madrid_fiesta_novia_felycampo.webp' },
       { tipo: 'imagen', src: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.jpg' },
     ],
@@ -145,7 +150,7 @@ export const ATELIERES = {
         // de cabecera) — ahora es una sección más, misma imagen de la
         // sala de pruebas/diseño a medida que ya tenía.
         titulo: { es: 'A medida', en: 'Made-to-measure' },
-        imagen: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp',
+        imagen: '/img/atelier/showroom-madrid/fely-tomando medidas-felycampo.JPG',
         texto: {
           es: [
             'Con la complicidad como objetivo, la diseñadora realiza el diseño a medida de piezas únicas e irrepetibles pensadas especialmente para cada mujer.',
@@ -157,7 +162,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Showroom', en: 'Showroom' },
-        imagen: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_showroom-3.jpg',
+        imagen: '/img/atelier/showroom-madrid/felycmapo-atelier-madrid-2.jpg',
         texto: {
           es: ['El Showroom es el lugar dentro de su Atelier en Madrid donde la diseñadora expone muchas de las prendas más icónicas de la firma. Te sumergirás en un universo de piezas que reflejan el alma y la esencia de su creadora durante sus más de 50 años de trayectoria en el mundo de la moda.'],
           en: ["The Showroom is the space within her Madrid Atelier where the designer displays many of the label's most iconic pieces. You'll immerse yourself in a universe of garments that reflect the soul and essence of their creator across her more than 50-year career in the world of fashion."],
@@ -165,7 +170,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Novias', en: 'Bridal' },
-        imagen: '/img/novias-sección-FelyCampo4.jpg',
+        imagen: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
         texto: {
           es: [
             'En su Atelier de Madrid, la diseñadora ofrece un espacio de encuentro donde cada novia puede imaginar, construir y dar forma a su vestido soñado, hecho a medida y pensado exclusivamente para ella. Su personalidad, su forma de vivir la belleza, sus sensaciones y los tejidos que la emocionan marcan el punto de partida de cada diseño.',
@@ -187,7 +192,7 @@ export const ATELIERES = {
   },
   oviedo: {
     id: 'oviedo',
-    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg' },
+    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/TIENDA FELY-4 (1).jpg' },
     medioSuperior: { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.12.mp4' },
     // Reportaje propio (ver public/img/atelier/atelier-oviedo/) — igual
     // que Salamanca/Madrid, ya cubre toda la ficha (medioSuperior,
@@ -237,7 +242,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'El espacio', en: 'The Space' },
-        imagen: '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp',
+        imagen: '/img/atelier/atelier-oviedo/Tienda oviedo (2) - copia.jpg',
         texto: {
           es: [
             'Un lugar para descubrir Fely Campo de cerca.',
