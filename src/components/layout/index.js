@@ -32,3 +32,4 @@ export { default as TarjetaEnlaceExterno } from './TarjetaEnlaceExterno';
 export { default as BlogArticulo } from './BlogArticulo';
 export { default as BlogPodcast } from './BlogPodcast';
 export { default as BlogCampana } from './BlogCampana';
+export { default as CierreCita } from './CierreCita';

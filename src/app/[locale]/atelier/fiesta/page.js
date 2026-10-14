@@ -27,7 +27,7 @@
    se enseña en esta página. */
 
 import { getTranslations } from 'next-intl/server';
-import { CuadriculaProductos, HeroPagina, RunwayDescripcion /* , BloqueSeccion, RunwayBackstage */ } from '@/components/layout';
+import { CuadriculaProductos, HeroPagina, RunwayDescripcion, BloqueSeccion, RunwayBackstage } from '@/components/layout';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { FIESTA_EDITORIAL } from './fiestaEditorial';
 import styles from './page.module.css';
@@ -38,7 +38,7 @@ import styles from './page.module.css';
 // CuadriculaProductos.jsx (filtra la cuadrícula de verdad). Sin
 // "Prêt-à-porter" (ver comentario de arriba).
 const COLECCIONES_FIESTA = [
-  '27_Eclat',
+  // '27_Eclat', // comentada a petición (ver fiestaProductos.js)
   '26_Opaline',
   "25_L'Allure",
   'En Madrid',
@@ -72,8 +72,9 @@ export default async function Pagina({ params, searchParams }) {
         <RunwayDescripcion texto={FIESTA_EDITORIAL.descripcion[locale]} />
       </div>
 
-      {/* Comentado a petición — sin imágenes entre la descripción y la
-          cuadrícula (título, filtros y looks van justo después del texto).
+      {/* Introducción editorial recuperada a petición: bloques de imagen +
+          texto en zigzag y backstage, entre la descripción y la cuadrícula
+          (que sigue sin cabecera ni filtros). */}
       {FIESTA_EDITORIAL.bloques.map((bloque, indice) => (
         <BloqueSeccion
           key={bloque.imagen}
@@ -87,7 +88,6 @@ export default async function Pagina({ params, searchParams }) {
       <div className="contenedor">
         <RunwayBackstage imagenes={FIESTA_EDITORIAL.backstage} alt={t('nav.submenus.atelier.fiesta')} />
       </div>
-      */}
 
       <CuadriculaProductos
         productos={PRODUCTOS_FIESTA}

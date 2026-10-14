@@ -23,7 +23,7 @@ export default async function Pagina({ params }) {
           variante="landing"
           items={[
             {
-              src: '/img/landing/hero-portada-felycampo-landing-3-mobile-2.jpg',
+              src: '/img/splitimage-novias-felycampo.jpg',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item1.titulo',
               ctaKey: 'splitMedia.item1.cta',

@@ -48,7 +48,14 @@ function NavbarPanelLateralCards({ submenuKey, submenu, itemHover }) {
         className={styles.submenuImagen}
         aria-label={t(`submenus.${submenuKey}.${activo.labelKey || activo.key}`)}
       >
-        <img key={activo.image} src={activo.image} alt="" />
+        {/* imagePosition (opcional, por item): encuadre del recorte —
+            p.ej. Madrid enseña la parte de arriba de la foto. */}
+        <img
+          key={activo.image}
+          src={activo.image}
+          alt=""
+          style={activo.imagePosition ? { objectPosition: activo.imagePosition } : undefined}
+        />
       </a>
     </div>
   );

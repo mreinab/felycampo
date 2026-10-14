@@ -27,6 +27,7 @@
 
 import { getTranslations } from 'next-intl/server';
 import { /* BloqueSeccion, */ CarruselInfinito, CuadriculaProductos, HeroPagina, RunwayDescripcion } from '@/components/layout';
+import { CabeceraSeccion } from '@/components/ui';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { PRET_A_PORTER_EDITORIAL } from './pretAPorterEditorial';
 import styles from './page.module.css';
@@ -92,15 +93,25 @@ export default async function Pagina({ params }) {
 
   return (
     <section className="seccion">
-      {/* Mismo hero que el resto: texto en blanco, degradado oscuro
-          arriba (Navbar) y abajo (título) sobre el carrusel. */}
+      {/* Solo en esta página (a petición): hero sin velo ni texto encima
+          (solo el carrusel), Navbar transparente en oscuro (ver
+          "esPretAPorter" en [locale]/layout.js). El título va debajo,
+          centrado, con la misma cabecera que las páginas de categoría
+          de Atelier (CabeceraSeccion enCuadricula + alinear="start",
+          la que pinta CuadriculaProductos allí). */}
       <HeroPagina
-        titulo={[t('catalogo.subtituloFelyCampo'), t('catalogo.tituloTienda')]}
-        subtitulo={t('heroPagina.pretAPorter')}
+        tono="oscuro"
         className={styles.heroCarrusel}
       >
         <CarruselInfinito imagenes={IMAGENES_HERO} alt={t('catalogo.tituloTienda')} />
       </HeroPagina>
+
+      <CabeceraSeccion
+        titleKey="catalogo.tituloTienda"
+        alinear="start"
+        enCuadricula
+        className={styles.cabecera}
+      />
 
       <div className={styles.textoDescripcion}>
         <RunwayDescripcion texto={PRET_A_PORTER_EDITORIAL.descripcion[locale]} />

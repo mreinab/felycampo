@@ -43,8 +43,8 @@ const FOTOS_POR_CIUDAD = {
     '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_showroom-3.jpg',
   ],
   Oviedo: [
-    '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg',
-    '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_5-2048x1365.webp',
+    '/img/atelier/atelier-oviedo/TIENDA FELY-4 (1).jpg',
+    '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp',
   ],
 };
 

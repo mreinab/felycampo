@@ -67,15 +67,14 @@ export const ATELIERES = {
     // el fondo de taller-1/ para esta ficha (ver comentario de cabecera).
     heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
     medioSuperior: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp' },
-    // Vídeo, foto, vídeo, foto, foto (a petición: alternando vídeo y
+    // Vídeo, foto, vídeo, foto (a petición: alternando vídeo y
     // foto) — solo 2 vídeos distintos: 20260826-143026_FoYiTknV.mp4 es
     // idéntico a _DCFGo89w.mp4 (mismo archivo), así que no se usa.
     imagenesTira: [
       { tipo: 'video', src: '/img/atelier/atelier-salamanca/20260428-125217_Z0JLEAAc.mp4' },
-      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/buscador_tiendas.webp' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.12.jpeg' },
       { tipo: 'video', src: '/img/atelier/atelier-salamanca/20260826-143026_DCFGo89w.mp4' },
       { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.05.40.jpeg' },
-      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.29.jpeg' },
     ],
     descripcion: {
       es: 'En Salamanca, el atelier convive con el corazón creativo de Fely Campo. Un espacio donde oficio, precisión y creación se encuentran, con la esencia de Castilla como parte del universo de la firma.',
@@ -182,7 +181,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Prêt-à-porter', en: 'Prêt-à-porter' },
-        imagen: '/img/atelier/showroom-madrid/atelier_madrid_fiesta_novia_medida_2.webp',
+        imagen: '/img/atelier/felycampo-punto-venta-internacional-copia - copia.jpg',
         texto: {
           es: ['El Atelier de Madrid de Fely Campo cuenta con un espacio dedicado por completo a las colecciones de prêt-à-porter de lujo con las que la diseñadora ha trasladado su sello de diseño al día a día.'],
           en: ["Fely Campo's Madrid Atelier has a space entirely dedicated to the luxury prêt-à-porter collections through which the designer has brought her design signature into everyday life."],
@@ -202,9 +201,9 @@ export const ATELIERES = {
     // vídeo 10.18.07 quitado a petición (antes entre las dos fotos); su
     // hueco lo cubre espacio_1 entre los dos vídeos (sin repetir dentro del
     // carrusel, aunque es también la foto de la sección "El proceso").
+    // espacio_3 (antes la 2ª) quitada también a petición — quedan 4.
     imagenesTira: [
       { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/5-copia-2048x1365.jpg' },
-      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_3-scaled.webp' },
       { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.15.mp4' },
       { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp' },
       { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.10.mp4' },

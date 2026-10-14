@@ -90,12 +90,13 @@
   gap: var(--spacing-3);
 }
 
-/* Sin mayúsculas, 2px más grande que --text-body-lg. */
+/* En mayúsculas, 2px más grande que --text-body-lg. */
 .tituloLanding {
   font-size: calc(var(--text-body-lg) + 2px);
   font-weight: 400;
   color: var(--color-fondo);
   letter-spacing: normal;
+  text-transform: uppercase;
 }
 
 /* Mismo diseño que Boton .texto/.textoCrema (enlace subrayado, sin

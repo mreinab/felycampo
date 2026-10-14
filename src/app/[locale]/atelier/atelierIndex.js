@@ -63,6 +63,6 @@ export const ATELIER_INDEX = {
     // /img/talleres/, que ya no existen en el repo.
     { id: 'salamanca', ciudad: 'Atelier Salamanca', imagen: '/img/atelier/atelier-salamanca/ateliernovia-lamedida-felycampo-2.webp' },
     { id: 'madrid', ciudad: 'Atelier & Showroom Madrid', imagen: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.jpg' },
-    { id: 'oviedo', ciudad: 'Atelier Oviedo', imagen: '/img/atelier/atelier-oviedo/atelier-fiesta-oviedo-0.jpg' },
+    { id: 'oviedo', ciudad: 'Atelier Oviedo', imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp' },
   ],
 };

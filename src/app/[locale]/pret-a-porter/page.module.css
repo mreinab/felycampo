@@ -24,6 +24,19 @@
 .heroCarrusel {
   box-sizing: border-box;
   padding-top: var(--nav-height-desktop);
+  /* Aire bajo el carrusel (a petición): los looks terminan antes del
+     borde inferior del hero. */
+  padding-bottom: var(--spacing-8);
+}
+
+/* Sin velo (a petición, solo aquí): el título ya no va encima del
+   carrusel (ver CabeceraSeccion en page.js), así que se anulan los dos
+   degradados de HeroPagina.module.css — el superior del Navbar
+   (::before, .fondoPropio) y el inferior (::after). Clase doble para
+   ganar en especificidad sin depender del orden de los CSS. */
+.heroCarrusel.heroCarrusel::before,
+.heroCarrusel.heroCarrusel::after {
+  content: none;
 }
 
 .textoDescripcion {
@@ -74,4 +87,19 @@
   .temporada {
     font-size: var(--text-h2);
   }
+}
+
+/* Cabecera bajo el hero (CabeceraSeccion en page.js) y el texto que
+   la sigue: solo aquí, menos aire entre los dos (a petición) — sin el
+   min-height ni el margin-bottom de .cabeceraInicio, y la mitad de
+   padding superior en RunwayDescripcion (.descripcion, --spacing-8).
+   Clases repetidas para ganar en especificidad a CabeceraSeccion.module.css
+   (.cabeceraProductos.cabeceraInicio) sin depender del orden de los CSS. */
+.cabecera.cabecera.cabecera {
+  min-height: 0;
+  margin-bottom: 0;
+}
+
+.textoDescripcion > :first-child {
+  padding-top: var(--spacing-4);
 }

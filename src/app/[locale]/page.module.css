@@ -85,14 +85,14 @@
 }
 
 /* Mismo tamaño que el resto de títulos de la landing (SplitMedia
-   .tituloLanding y .atelierCitaTitulo): sin mayúsculas, 2px más que
-   --text-body-lg. */
+   .tituloLanding y .atelierCitaTitulo): en mayúsculas como el título
+   del SplitMedia, 2px más que --text-body-lg. */
 .descubreFelyTitulo {
   font-size: calc(var(--text-body-lg) + 2px);
   font-weight: 400;
   line-height: var(--leading-base);
   letter-spacing: normal;
-  text-transform: none;
+  text-transform: uppercase;
   color: var(--color-tinta);
   padding-bottom: var(--spacing-3);
 }
@@ -114,21 +114,35 @@
 /* Mobile/tablet (= visita-fely-campo): apilado, foto arriba a todo el
    ancho y texto debajo, botón a todo el ancho. */
 @media (max-width: 1023px) {
+  /* Sin padding lateral en la sección: la foto llega a los bordes y
+     el margen lateral pasa solo al texto (.descubreFelyFila). */
   .descubreFely {
-    padding-block: var(--spacing-8);
+    padding-block: 0;
+    padding-inline: 0;
   }
+  /* La sección entera ocupa una pantalla (100svh = alto visible en
+     mobile, sin la barra del navegador). */
   .descubreFelyTarjeta {
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    min-height: 100svh;
   }
+  /* Apilada, la foto va en horizontal (3/2) en vez del recorte
+     vertical 2.5/3 de escritorio. */
   .descubreFelyGaleria {
     width: 100%;
+    aspect-ratio: 3 / 2;
+    flex-shrink: 0;
   }
+  /* El texto se estira al alto que deja la foto: título y cita arriba,
+     CTA abajo del todo. */
   .descubreFelyFila {
+    flex: 1;
     width: 100%;
     align-items: flex-start;
-    padding-block: var(--spacing-4);
+    justify-content: space-between;
+    padding-block: var(--spacing-6);
+    padding-inline: var(--spacing-6);
   }
   .descubreFelyInfo {
     max-width: none;
@@ -194,12 +208,24 @@
   border-bottom-color: var(--color-fondo);
 }
 
-/* Mobile: una columna, cada atelier a 50vh. */
+/* Mobile: carrusel horizontal a 80vh. Cada atelier ocupa 80vw para
+   que asome ~1/5 del siguiente e invite a deslizar; scroll-snap encaja
+   cada tarjeta al soltar. Sin barra de scroll visible. */
 @media (max-width: 767px) {
   .ateliersCita {
-    grid-template-columns: 1fr;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .ateliersCita::-webkit-scrollbar {
+    display: none;
   }
   .atelierCita {
-    height: 50vh;
+    flex: 0 0 80vw;
+    height: 80vh;
+    scroll-snap-align: start;
   }
 }

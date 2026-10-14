@@ -74,6 +74,9 @@ function familiaDeHex(hex) {
  * a CabeceraSeccion (el texto pequeño en mayúsculas encima del título) —
  * usado por Tienda, no por Atelier. Sin efecto si "categoriaActiva" ya
  * sustituye el subtítulo por una miga de pan.
+ * "ocultarControles" (opcional, false por defecto): pinta la cabecera
+ * (título, miga de pan, descripción) pero sin el botón de filtros ni el
+ * cambio de columnas — usado por /atelier/fiesta/categoria/[categoria].
  * "hrefBase" (opcional, se le pasa tal cual a TarjetaProducto): primer
  * segmento de la ficha de cada producto ('tienda' por defecto) — Atelier
  * (Novias/Fiesta) pasa 'atelier/novias'/'atelier/fiesta', su propia
@@ -134,7 +137,7 @@ function familiaDeHex(hex) {
  * carga 8 más, con tarjetas-esqueleto (.skeleton) mientras "llega"
  * (simulado con un timeout — aquí no hay backend real todavía).
  */
-function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase, estiloYSilueta = false, esFiesta = false, categoriaActiva = null, coleccionActiva = null, ocultarSubtitulo = false }) {
+function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase, estiloYSilueta = false, esFiesta = false, categoriaActiva = null, coleccionActiva = null, ocultarSubtitulo = false, ocultarControles = false }) {
   const t = useTranslations();
   const locale = useLocale();
 
@@ -344,9 +347,9 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
           descriptionKey={descriptionKey}
           alinear={esGrid ? 'start' : 'end'}
           enCuadricula
-          before={filtrosBoton}
+          before={ocultarControles ? undefined : filtrosBoton}
         >
-          {(verMasHref || esGrid) && accion}
+          {!ocultarControles && (verMasHref || esGrid) && accion}
         </CabeceraSeccion>
       )}
 

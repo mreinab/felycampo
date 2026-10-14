@@ -39,8 +39,8 @@ import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 const SUBMENU_STRUCTURE = {
   atelier: {
     items: [
-      { key: 'salamanca', href: '/atelier-fiesta/salamanca', image: '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp' },
-      { key: 'madrid', href: '/atelier-fiesta/madrid', image: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg' },
+      { key: 'salamanca', href: '/atelier-fiesta/salamanca', image: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
+      { key: 'madrid', href: '/atelier-fiesta/madrid', image: '/img/atelier/showroom-madrid/felycampo-atelier-madrid-showroom.jpg', imagePosition: 'center top' },
       { key: 'oviedo', href: '/atelier-fiesta/oviedo', image: '/img/atelier/atelier-oviedo/TIENDA FELY-4 (1).jpg' },
       // "separador": "Vosotras" no es una sede — un hueco de una fila
       // por encima (ver NavbarPanelLateralContent.jsx) la separa
@@ -151,6 +151,20 @@ function MobileMenuBanner({ locale, onNavegar }) {
       <img src="/img/hero-pages/hero-pages-pretaporter-cover.jpg" alt="" className={styles.mobileMenuBannerImagen} />
       <span className={styles.mobileMenuBannerLabel}>{t('links.tienda')}</span>
     </a>
+  );
+}
+
+// Indicador de paso del menú móvil: dos trazos finos, el del paso
+// actual en tinta y más largo — pista discreta de "hay un nivel más"
+// / "estás un nivel dentro", sin números a la vista (el texto
+// "Paso 1 de 2" queda para lectores de pantalla).
+function IndicadorPaso({ actual, etiqueta }) {
+  return (
+    <span className={styles.mobileMenuPasos} role="img" aria-label={etiqueta}>
+      {[1, 2].map((paso) => (
+        <span key={paso} className={`${styles.mobileMenuPaso} ${paso === actual ? styles.mobileMenuPasoActivo : ''}`} />
+      ))}
+    </span>
   );
 }
 
@@ -297,6 +311,44 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   const cerrarMenuMobile = () => {
     setMobileMenuOpen(false);
     setMobileSubmenu(null);
+  };
+
+  // Paso 1 → paso 2 y vuelta (ver el <nav> del menú móvil). El foco
+  // sigue al paso visible: al botón "← Menú" al entrar, y de vuelta a
+  // la fila de la categoría al salir — después del deslizamiento
+  // (CSS 0.35s), si no el navegador haría scroll al elemento a medio
+  // camino.
+  const volverMenuRef = useRef(null);
+  const filasMenuRef = useRef({});
+  const toqueMenuRef = useRef(null);
+
+  const abrirPasoMenu = (submenu) => {
+    setMobileSubmenu(submenu);
+    setTimeout(() => volverMenuRef.current?.focus({ preventScroll: true }), 350);
+  };
+
+  const volverPasoMenu = () => {
+    const anterior = mobileSubmenu;
+    setMobileSubmenu(null);
+    setTimeout(() => filasMenuRef.current[anterior]?.focus({ preventScroll: true }), 350);
+  };
+
+  // Deslizar a la derecha en el paso 2 = volver (gesto nativo de "atrás"
+  // en móvil). Solo si el gesto es claramente horizontal, para no
+  // confundirlo con el scroll vertical de la lista.
+  const alEmpezarToqueMenu = (evento) => {
+    const toque = evento.touches[0];
+    toqueMenuRef.current = { x: toque.clientX, y: toque.clientY };
+  };
+
+  const alTerminarToqueMenu = (evento) => {
+    const inicio = toqueMenuRef.current;
+    toqueMenuRef.current = null;
+    if (!inicio || !mobileSubmenu) return;
+    const toque = evento.changedTouches[0];
+    const dx = toque.clientX - inicio.x;
+    const dy = toque.clientY - inicio.y;
+    if (dx > 60 && Math.abs(dy) < dx / 2) volverPasoMenu();
   };
 
   // Activo = la ruta actual es ese enlace o vive debajo de él (ej.
@@ -508,22 +560,41 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
         onCerrar={cerrarMenuMobile}
         debajo={<MobileMenuBanner locale={locale} onNavegar={cerrarMenuMobile} />}
       >
-        <nav className={styles.mobileMenu}>
+        {/* Navegación por pasos: paso 1 = las categorías, paso 2 = el
+            submenú de la tocada. Cada pantalla lleva su cabecera (a la
+            izquierda "Menú" o el botón "← Menú" para volver; a la
+            derecha el indicador de paso, dos trazos). La pantalla que no
+            se ve va "inert" (fuera del tabulador y del lector de
+            pantalla), el foco salta al botón de volver al entrar y de
+            vuelta a la categoría al salir, y en el paso 2 deslizar el
+            dedo hacia la derecha también vuelve atrás. */}
+        <nav
+          className={styles.mobileMenu}
+          onTouchStart={alEmpezarToqueMenu}
+          onTouchEnd={alTerminarToqueMenu}
+        >
           <div className={`${styles.mobileMenuTrack} ${mobileSubmenu ? styles.mobileMenuTrackSub : ''}`}>
-            <div className={styles.mobileMenuScreen}>
+            <div className={styles.mobileMenuScreen} inert={mobileSubmenu ? true : undefined}>
+              <div className={styles.mobileMenuCabecera}>
+                <span className={styles.mobileMenuEtiqueta}>{t('movil.menu')}</span>
+                <IndicadorPaso actual={1} etiqueta={t('movil.paso', { actual: 1, total: 2 })} />
+              </div>
+
               <ul className={styles.mobileMenuList}>
-                {NAV_ITEMS.map((item) => (
+                {NAV_ITEMS.map((item, indice) => (
                   <li key={item.key}>
                     {/* "Pedir cita" (sin "submenu"): enlace directo, sin
                         drill-down ni chevron — no hay panel que abrir. */}
                     {item.submenu ? (
                       <button
                         type="button"
+                        ref={(nodo) => { filasMenuRef.current[item.submenu] = nodo; }}
                         className={styles.mobileMenuRow}
-                        onClick={() => setMobileSubmenu(item.submenu)}
+                        onClick={() => abrirPasoMenu(item.submenu)}
                       >
-                        {t(`links.${item.key}`)}
-                        <ChevronRight size={20} strokeWidth={1.5} aria-hidden="true" />
+                        <span className={styles.mobileMenuIndice} aria-hidden="true">{String(indice + 1).padStart(2, '0')}</span>
+                        <span className={styles.mobileMenuRowTexto}>{t(`links.${item.key}`)}</span>
+                        <ChevronRight size={18} strokeWidth={1.25} aria-hidden="true" />
                       </button>
                     ) : (
                       <a
@@ -531,7 +602,8 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
                         className={styles.mobileMenuRow}
                         onClick={cerrarMenuMobile}
                       >
-                        {t(`links.${item.key}`)}
+                        <span className={styles.mobileMenuIndice} aria-hidden="true">{String(indice + 1).padStart(2, '0')}</span>
+                        <span className={styles.mobileMenuRowTexto}>{t(`links.${item.key}`)}</span>
                       </a>
                     )}
                   </li>
@@ -557,29 +629,47 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
               </div>
             </div>
 
-            <div className={styles.mobileMenuScreen}>
+            <div className={styles.mobileMenuScreen} inert={mobileSubmenu ? undefined : true}>
               {mobileSubmenu && (
                 <>
-                  <button
-                    type="button"
-                    className={styles.mobileMenuBack}
-                    onClick={() => setMobileSubmenu(null)}
-                    aria-label={t('aria.volverMenu')}
-                  >
-                    <ChevronLeft size={20} strokeWidth={1.5} aria-hidden="true" />
-                  </button>
+                  <div className={styles.mobileMenuCabecera}>
+                    <button
+                      type="button"
+                      ref={volverMenuRef}
+                      className={styles.mobileMenuBack}
+                      onClick={volverPasoMenu}
+                      aria-label={t('aria.volverMenu')}
+                    >
+                      <ChevronLeft size={16} strokeWidth={1.25} aria-hidden="true" />
+                      <span>{t('movil.menu')}</span>
+                    </button>
+                    <IndicadorPaso actual={2} etiqueta={t('movil.paso', { actual: 2, total: 2 })} />
+                  </div>
 
-                  <a
-                    href={withLocale(NAV_ITEMS.find((item) => item.submenu === mobileSubmenu).href)}
-                    className={styles.mobileMenuTitulo}
-                    onClick={cerrarMenuMobile}
-                  >
-                    {t(`links.${mobileSubmenu}`)}
-                  </a>
+                  {/* Título de la sección + "Ver todo" a su portada (ej.
+                      /atelier) — antes el propio título era el enlace,
+                      sin pista visual de que lo fuera. */}
+                  <div className={styles.mobileMenuTituloFila}>
+                    <p className={styles.mobileMenuTitulo}>{t(`links.${mobileSubmenu}`)}</p>
+                    <a
+                      href={withLocale(NAV_ITEMS.find((item) => item.submenu === mobileSubmenu).href)}
+                      className={styles.mobileMenuVerTodo}
+                      onClick={cerrarMenuMobile}
+                    >
+                      {t('movil.verTodo')}
+                    </a>
+                  </div>
 
-                  <ul className={styles.mobileMenuList}>
-                    {SUBMENU_STRUCTURE[mobileSubmenu].items.map((subItem) => (
-                      <li key={subItem.href} className={subItem.separador ? styles.mobileMenuSubItemSeparador : undefined}>
+                  {/* key={mobileSubmenu}: la lista se vuelve a montar en cada
+                      submenú, así la entrada escalonada de .mobileMenuSubLink
+                      (--i, ver CSS) se repite cada vez. */}
+                  <ul key={mobileSubmenu} className={styles.mobileMenuList}>
+                    {SUBMENU_STRUCTURE[mobileSubmenu].items.map((subItem, indice) => (
+                      <li
+                        key={subItem.href}
+                        className={subItem.separador ? styles.mobileMenuSubItemSeparador : undefined}
+                        style={{ '--i': indice }}
+                      >
                         <a
                           href={withLocale(subItem.href)}
                           className={styles.mobileMenuSubLink}

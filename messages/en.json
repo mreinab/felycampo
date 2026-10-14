@@ -53,6 +53,11 @@
       "cerrarMenu": "Close menu",
       "carrito": "Cart",
       "volverMenu": "Back"
+    },
+    "movil": {
+      "menu": "Menu",
+      "verTodo": "View all",
+      "paso": "Step {actual} of {total}"
     }
   },
   "breadcrumb": {
@@ -390,6 +395,12 @@
   },
   "pedirCitaLanding": {
     "titulo": "Discover the collection at our ateliers",
+    "cta": "Book an appointment",
+    "ctaAtelier": "Discover more"
+  },
+  "cierreCita": {
+    "etiqueta": "Salamanca · Madrid · Oviedo",
+    "texto": "We look forward to welcoming you at the atelier, always by appointment.",
     "cta": "Book an appointment"
   },
   "citaFelyLanding": {

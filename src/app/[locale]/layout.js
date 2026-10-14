@@ -10,7 +10,7 @@ import { headers } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
-import { Navbar, Footer, NewsletterModalGlobal, CookieConsent, BotonWhatsapp } from '@/components/layout';
+import { Navbar, Footer, NewsletterModalGlobal, CookieConsent, BotonWhatsapp, CierreCita } from '@/components/layout';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
@@ -124,6 +124,11 @@ export default async function RootLayout({ children, params }) {
   const esFichaProducto = (matchPretAPorter && !CATEGORIAS_PRET_A_PORTER.includes(matchPretAPorter[1]))
     || /^\/atelier\/(novias|fiesta)\/[^/]+$/.test(rutaSinLocale);
 
+  // /pret-a-porter (solo la página principal, no sus categorías ni
+  // fichas): hero sin velo y con texto en tinta (ver pret-a-porter/
+  // page.js), así que el Navbar transparente también va en oscuro.
+  const esPretAPorter = rutaSinLocale === '/pret-a-porter';
+
   return (
     <html lang={locale}>
       {/* La fuente Inter se carga vía @import en global.css (mismo criterio
@@ -136,9 +141,10 @@ export default async function RootLayout({ children, params }) {
               <Navbar
                 transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier || esHeroBlog || esFichaProducto}
                 crecerLogo={isHome}
-                textoOscuro={esFichaProducto}
+                textoOscuro={esFichaProducto || esPretAPorter}
               />
               <main>{children}</main>
+              <CierreCita />
               <Footer />
               {isHome && <NewsletterModalGlobal />}
               <BotonWhatsapp />

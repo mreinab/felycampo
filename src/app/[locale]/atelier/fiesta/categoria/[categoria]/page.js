@@ -13,7 +13,7 @@
 
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { CuadriculaProductos, ProductHero } from '@/components/layout';
+import { CuadriculaProductos, HeroPagina } from '@/components/layout';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { encontrarCategoria } from '@/components/layout/estiloSiluetaGrupos';
 import { parametrosCategoria, metadataCategoria, breadcrumbJsonLd } from '@/lib/atelierCategoriaSeo';
@@ -25,7 +25,7 @@ const SECCION_HREF = 'atelier/fiesta';
 // Mismas colecciones que ../page.js (COLECCIONES_FIESTA) — ver
 // comentario en atelier/novias/categoria/[categoria]/page.js.
 const COLECCIONES_FIESTA = [
-  '27_Eclat',
+  // '27_Eclat', // comentada a petición (ver fiestaProductos.js)
   '26_Opaline',
   "25_L'Allure",
   'En Madrid',
@@ -59,16 +59,25 @@ export default async function Pagina({ params }) {
   return (
     <section className="seccion">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <ProductHero
-        imagen="/img/invitadas-sección-FelyCampo.jpg"
+      {/* Mismo hero que ../../page.js (HeroPagina: Navbar transparente
+          encima vía data-navbar-hero + velo degradado), sin la
+          introducción editorial. */}
+      <HeroPagina
+        imagen="/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg"
+        alt={t(SECCION_KEY)}
         titulo={[t('nav.links.atelier'), t(SECCION_KEY)]}
+        subtitulo={t('heroPagina.atelierFiesta')}
       />
       <CuadriculaProductos
         productos={PRODUCTOS_FIESTA}
         disposicion="grid"
+        // Cabecera con la categoría de título y miga de pan (Atelier >
+        // Fiesta), pero sin el botón de filtros ni el cambio de columnas
+        // (ocultarControles) — a petición.
         tituloKey="nav.links.atelier"
         coleccionKey={SECCION_KEY}
         descriptionKey="cuadriculaTabs.descripcion"
+        ocultarControles
         ocultarPrecio
         colecciones={COLECCIONES_FIESTA}
         hrefBase={SECCION_HREF}

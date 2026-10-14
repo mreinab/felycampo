@@ -19,10 +19,10 @@ export default async function Pagina({ params }) {
 
   return (
     <>
-    {/* Hero común (HeroPagina): portada de la colección más reciente
-        (La Colección FW27, primera de COLECCIONES). */}
+    {/* Hero común (HeroPagina): hero-pages-pretaporter-faldas.jpg (a
+        petición; antes la portada de COLECCIONES[0]). */}
     <HeroPagina
-      imagen={COLECCIONES[0].medios[0].src}
+      imagen="/img/hero-pages/hero-pages-pretaporter-faldas.jpg"
       alt={t('nav.submenus.colecciones.runway')}
       titulo={t('nav.submenus.colecciones.runway')}
       subtitulo={t('heroPagina.runwayArchivo')}

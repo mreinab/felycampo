@@ -21,7 +21,7 @@ import styles from './page.module.css';
 // y, en otra línea, "& Showroom" (ver JSX).
 const ATELIERES_CITA = [
   { id: 'salamanca' },
-  { id: 'madrid', imagen: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp' },
+  { id: 'madrid', imagen: '/img/atelier/showroom-madrid/felycmapo-atelier-madrid-2.jpg' },
   { id: 'oviedo' },
 ].map(({ id, imagen }) => ({
   id,
@@ -133,7 +133,7 @@ export default async function Home({ params }) {
           variante="landing"
           items={[
             {
-              src: '/img/landing/hero-portada-felycampo-landing-3-mobile-2.jpg',
+              src: '/img/splitimage-novias-felycampo.jpg',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item1.titulo',
               ctaKey: 'splitMedia.item1.cta',
@@ -183,14 +183,14 @@ export default async function Home({ params }) {
           (Salamanca, Madrid, Oviedo), cada una con la foto de su atelier
           y el mismo diseño de texto que el SplitMedia de arriba (velo
           oscuro, título en crema, CTA subrayado), pero en columna:
-          nombre arriba y "Pedir cita" abajo. Toda la pieza es un único
-          <a> al formulario de cita (Boton sin href = <span>). */}
+          nombre arriba y "Conoce más" abajo. Toda la pieza es un único
+          <a> a la ficha de su atelier (Boton sin href = <span>). */}
       <section className={styles.ateliersCita}>
         {ATELIERES_CITA.map(({ id, imagen }) => (
           <EnVista
             key={id}
             as="a"
-            href={`/${locale}/visita-fely-campo/cita`}
+            href={`/${locale}/atelier-fiesta/${id}`}
             className={styles.atelierCita}
           >
             <img src={imagen} alt="" className={styles.atelierCitaImagen} />
@@ -200,7 +200,7 @@ export default async function Home({ params }) {
                 <br />
                 &amp; Showroom
               </p>
-              <Boton variante="texto" className={styles.atelierCitaCta}>{tPedirCita('cta')}</Boton>
+              <Boton variante="texto" className={styles.atelierCitaCta}>{tPedirCita('ctaAtelier')}</Boton>
             </div>
           </EnVista>
         ))}
@@ -246,7 +246,7 @@ export default async function Home({ params }) {
         titulo={tVisitaAtelier('titulo')}
         texto={tVisitaAtelier('texto')}
         enlace={tVisitaAtelier('enlace')}
-        href={`/${locale}/visita-fely-campo/cita`}
+        href={`/${locale}/atelier-fiesta/${id}`}
       />
       <CarruselClientas />
       ---- fin comentado ---- */}

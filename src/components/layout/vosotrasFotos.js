@@ -55,7 +55,7 @@ export const FOTOS_INVITADAS = [
   ['14-01'],
   // Quitados a petición de la cuadrícula: 11, 23, 07, 04 (casillas 4-7),
   // 16-02 (solo la foto interior, 16-01 sigue de portada), 25, 27, 28
-  // (fila 4, columnas 1-3) y 32 (la última). Las fotos siguen en
+  // (fila 4, columnas 1-3), 32 y 31 (las últimas). Las fotos siguen en
   // public/img/Clientes/CLIENTAS/.
   ['13-01', '13-02', '13-03'],
   ['16-01'],
@@ -63,7 +63,6 @@ export const FOTOS_INVITADAS = [
   ['20-05', '20-01', '20-02', '20-03'], // 20-05 de portada, a petición
   ['21-01', '21-02'],
   ['30-01', '30-02', '30-03'],
-  ['31-01'],
 ].map((grupo) => grupo.map((sufijo) => sufijo.startsWith('/') ? sufijo : `${RUTA_INVITADAS}/nuestras-invitadas-felycampo-${sufijo}.${sufijo === '30-01' ? 'png' : 'jpg'}`));
 
 export const FOTOS_NOVIAS = [

@@ -22,7 +22,7 @@
   align-items: center;
   gap: var(--spacing-3);
   max-width: calc(550px + 2 * var(--spacing-7));
-  margin: 0 auto var(--spacing-5);
+  margin: 0 auto var(--spacing-7);
   padding-inline: var(--spacing-7);
 }
 
