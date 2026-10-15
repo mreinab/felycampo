@@ -63,6 +63,10 @@ export const FOTOS_INVITADAS = [
   ['20-05', '20-01', '20-02', '20-03'], // 20-05 de portada, a petición
   ['21-01', '21-02'],
   ['30-01', '30-02', '30-03'],
+  [
+    `${RUTA_INVITADAS}/vosotras-felycampo-fiesta.jpeg`,
+    `${RUTA_INVITADAS}/vosotras-felycampo-fiesta-2.jpeg`,
+  ],
 ].map((grupo) => grupo.map((sufijo) => sufijo.startsWith('/') ? sufijo : `${RUTA_INVITADAS}/nuestras-invitadas-felycampo-${sufijo}.${sufijo === '30-01' ? 'png' : 'jpg'}`));
 
 export const FOTOS_NOVIAS = [

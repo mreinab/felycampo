@@ -10,7 +10,7 @@ import { headers } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
-import { Navbar, Footer, NewsletterModalGlobal, CookieConsent, BotonWhatsapp, CierreCita } from '@/components/layout';
+import { Navbar, Footer, NewsletterModalGlobal, CookieConsent, BotonWhatsapp } from '@/components/layout';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
@@ -144,7 +144,6 @@ export default async function RootLayout({ children, params }) {
                 textoOscuro={esFichaProducto || esPretAPorter}
               />
               <main>{children}</main>
-              <CierreCita />
               <Footer />
               {isHome && <NewsletterModalGlobal />}
               <BotonWhatsapp />
