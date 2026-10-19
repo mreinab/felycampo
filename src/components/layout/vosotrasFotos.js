@@ -40,7 +40,7 @@ const NOVIAS_FINALES = [
 
 // Orden de la cuadrícula (de arriba a abajo/izquierda a derecha):
 // pedido explícito para los primeros grupos (madrina con reseña,
-// madrinas, 14, 11, 23, 07),
+// madrinas; 14 se bajó luego a la 2ª fila),
 // el resto sigue el orden en que se fueron agrupando. Una entrada que
 // empiece por '/' es ya la ruta completa de la foto (no sigue el patrón
 // nuestras-invitadas-felycampo-XX-YY), p. ej. madrinas-felycampo.jpg.
@@ -52,21 +52,28 @@ export const FOTOS_INVITADAS = [
     `${RUTA_INVITADAS}/madrina-felycampo-review-1 (2).jpeg`,
   ],
   [`${RUTA_INVITADAS}/madrinas-felycampo.jpg`],
-  ['14-01'],
   // Quitados a petición de la cuadrícula: 11, 23, 07, 04 (casillas 4-7),
   // 16-02 (solo la foto interior, 16-01 sigue de portada), 25, 27, 28
   // (fila 4, columnas 1-3), 32 y 31 (las últimas). Las fotos siguen en
   // public/img/Clientes/CLIENTAS/.
-  ['13-01', '13-02', '13-03'],
+  ['13-03', '13-01', '13-02'], // 13-03 de portada, a petición
   ['16-01'],
   ['19-01', '19-02'],
   ['20-05', '20-01', '20-02', '20-03'], // 20-05 de portada, a petición
+  ['14-01'], // bajado una fila a petición (antes 3ª casilla)
   ['21-01', '21-02'],
   ['30-01', '30-02', '30-03'],
   [
     `${RUTA_INVITADAS}/vosotras-felycampo-fiesta.jpeg`,
     `${RUTA_INVITADAS}/vosotras-felycampo-fiesta-2.jpeg`,
   ],
+  [`${RUTA_INVITADAS}/vosotras-felycampo-invitadas.jpeg`],
+  [`${RUTA_INVITADAS}/vosotras-felycampo-madrinas.jpeg`],
+  [
+    `${RUTA_INVITADAS}/vosotras-felycampo-madrinas-look.jpeg`,
+    `${RUTA_INVITADAS}/vosotras-felycampo-madrinas-look1.jpeg`,
+  ],
+  [`${RUTA_INVITADAS}/WhatsApp Image 2026-10-16 at 14.53.33.jpeg`],
 ].map((grupo) => grupo.map((sufijo) => sufijo.startsWith('/') ? sufijo : `${RUTA_INVITADAS}/nuestras-invitadas-felycampo-${sufijo}.${sufijo === '30-01' ? 'png' : 'jpg'}`));
 
 export const FOTOS_NOVIAS = [

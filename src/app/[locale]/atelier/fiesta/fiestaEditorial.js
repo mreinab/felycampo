@@ -22,8 +22,14 @@
 
    "backstage": las 4 fotos restantes de las 6, para RunwayBackstage. */
 
-const RUTA_SS26 = '/img/collections/fiesta/primavera-verano-26';
-const RUTA_SS25 = '/img/collections/fiesta/primavera-verano-25';
+/* Medios cambiados a petición por los de
+   public/img/collections/fiesta/introduccion/ (4 fotos + 3 vídeos,
+   todos verticales), alternando foto y vídeo a lo largo de toda la
+   introducción en vez de agruparlos: bloque 1 foto → bloque 2 vídeo →
+   backstage: foto ByN a todo el ancho, fila vídeo + foto, vídeo solo,
+   foto ByN a todo el ancho de cierre. "tipo" en cada bloque y
+   {tipo, src} en backstage (ver BloqueSeccion.jsx / RunwayBackstage.jsx). */
+const RUTA_INTRO = '/img/collections/fiesta/introduccion';
 
 export const FIESTA_EDITORIAL = {
   descripcion: {
@@ -39,7 +45,8 @@ export const FIESTA_EDITORIAL = {
 
   bloques: [
     {
-      imagen: `${RUTA_SS25}/LOOK16_1-scaled.webp`,
+      tipo: 'imagen',
+      imagen: `${RUTA_INTRO}/FelyCampo_03.jpg`,
       titulo: {
         es: 'Un vestido, una noche',
         en: 'One dress, one night',
@@ -50,7 +57,8 @@ export const FIESTA_EDITORIAL = {
       },
     },
     {
-      imagen: `${RUTA_SS26}/FELYCAMPO_KristenWicce_2526_ALTA-14-scaled.jpg`,
+      tipo: 'video',
+      imagen: `${RUTA_INTRO}/felycampo-fiesta-media (1).mp4`,
       titulo: {
         es: 'El detalle que se nota',
         en: 'The detail that shows',
@@ -63,9 +71,10 @@ export const FIESTA_EDITORIAL = {
   ],
 
   backstage: [
-    `${RUTA_SS25}/LOOK27_2-scaled.webp`,
-    `${RUTA_SS26}/FELYCAMPO_KristenWicce_2526_ALTA-50-scaled.jpg`,
-    `${RUTA_SS25}/LOOK13_2-scaled.webp`,
-    `${RUTA_SS25}/LOOK12_1-scaled.webp`,
+    { tipo: 'imagen', src: `${RUTA_INTRO}/FelyCampo_ATELIER_KristenWicce-11.jpg` },
+    { tipo: 'video', src: `${RUTA_INTRO}/felycampo-fiesta-media (2).mp4` },
+    { tipo: 'imagen', src: `${RUTA_INTRO}/FelyCampo_AW2026_KristenWicce_ALTA-162.jpg` },
+    { tipo: 'video', src: `${RUTA_INTRO}/felycampo-fiesta-media (3).mp4` },
+    { tipo: 'imagen', src: `${RUTA_INTRO}/FelyCampo_AW2026_KristenWicce_ALTA-164.jpg` },
   ],
 };

@@ -195,7 +195,7 @@ export const ATELIERES = {
     medioSuperior: { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.12.mp4' },
     // Reportaje propio (ver public/img/atelier/atelier-oviedo/) — igual
     // que Salamanca/Madrid, ya cubre toda la ficha (medioSuperior,
-    // carrusel y las 3 secciones) — ya no queda nada reciclado de
+    // carrusel y las 4 secciones) — ya no queda nada reciclado de
     // taller-1/taller-2. Alterna imagen/vídeo en el carrusel (ver
     // "imagenesTira" en el comentario de cabecera) — 4 piezas: el vídeo
     // vídeo 10.18.07 quitado a petición (antes entre las dos fotos); su
@@ -214,17 +214,30 @@ export const ATELIERES = {
       es: [
         'En el corazón de Asturias, un espacio donde la moda se encuentra con la emoción.',
         'Desde 2015, Fely Campo acompaña a cada mujer en la elección de una pieza especial, cuidando cada silueta, cada tejido y cada detalle.',
-        'Asesoramiento personalizado por nuestro equipo de cuatro personas liderado por Carlos Albuixech.',
-        'Te escuchamos para encontrar la silueta, el color y los detalles que mejor hablan de ti.',
       ],
       en: [
         'In the heart of Asturias, a space where fashion meets emotion.',
         'Since 2015, Fely Campo has accompanied every woman in choosing a special piece, caring for every silhouette, every fabric and every detail.',
-        'Personalised styling from our team of four, led by Carlos Albuixech.',
-        'We listen to you to find the silhouette, the colour and the details that best speak of you.',
       ],
     },
     secciones: [
+      {
+        // A petición: foto de Carlos donde se habla del equipo — las dos
+        // frases del equipo vivían antes al final de "descripcion", se
+        // mueven aquí para no repetirlas.
+        titulo: { es: 'Nuestro equipo', en: 'Our Team' },
+        imagen: '/img/atelier/atelier-oviedo/felycampo-Carlos.jpg',
+        texto: {
+          es: [
+            'Asesoramiento personalizado por nuestro equipo de cuatro personas liderado por Carlos Albuixech.',
+            'Te escuchamos para encontrar la silueta, el color y los detalles que mejor hablan de ti.',
+          ],
+          en: [
+            'Personalised styling from our team of four, led by Carlos Albuixech.',
+            'We listen to you to find the silhouette, the colour and the details that best speak of you.',
+          ],
+        },
+      },
       {
         titulo: { es: 'El proceso', en: 'The Process' },
         imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp',

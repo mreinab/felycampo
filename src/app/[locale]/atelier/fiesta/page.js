@@ -79,6 +79,7 @@ export default async function Pagina({ params, searchParams }) {
         <BloqueSeccion
           key={bloque.imagen}
           imagen={bloque.imagen}
+          tipo={bloque.tipo}
           titulo={bloque.titulo[locale]}
           texto={bloque.texto[locale]}
           invertido={indice % 2 === 1}

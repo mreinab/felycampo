@@ -48,6 +48,13 @@ function PiezaImagen({ src, alt }) {
   return <img ref={ref} src={src} alt={alt} className={`${styles.imagen} al-scroll ${enVista ? 'en-vista' : ''}`} />;
 }
 
+// Vídeo como una pieza más de la cascada (ver /atelier/fiesta, que
+// alterna foto y vídeo): mismo .imagen, misma proporción natural.
+function PiezaVideo({ src }) {
+  const [ref, enVista] = useEnVista();
+  return <video ref={ref} src={src} className={`${styles.imagen} al-scroll ${enVista ? 'en-vista' : ''}`} autoPlay muted loop playsInline />;
+}
+
 function PiezaPoemaImagenes({ srcs, alt }) {
   const [ref, enVista] = useEnVista();
   return (
@@ -74,7 +81,8 @@ function RunwayBackstage({ imagenes = [], poema, alt }) {
   const tienePoema = poema?.texto?.length > 0;
   if (imagenes.length === 0 && !tienePoema) return null;
 
-  const piezas = imagenes.map((src) => ({ tipo: 'imagen', src }));
+  // Cada entrada: un src suelto (foto) o {tipo: 'imagen' | 'video', src}.
+  const piezas = imagenes.map((medio) => (typeof medio === 'string' ? { tipo: 'imagen', src: medio } : medio));
   if (tienePoema) {
     const indice = Math.min(Math.max(poema.indice ?? imagenes.length, 0), imagenes.length);
     piezas.splice(
@@ -91,6 +99,10 @@ function RunwayBackstage({ imagenes = [], poema, alt }) {
         {piezas.map((pieza) => {
           if (pieza.tipo === 'imagen') {
             return <PiezaImagen key={pieza.src} src={pieza.src} alt={alt} />;
+          }
+
+          if (pieza.tipo === 'video') {
+            return <PiezaVideo key={pieza.src} src={pieza.src} />;
           }
 
           if (pieza.tipo === 'poemaImagenes') {
