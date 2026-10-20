@@ -92,6 +92,9 @@ function TileVosotras({ onAbrir, fotos, etiquetaAbrir }) {
 
 function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperiorAmplio }) {
   const t = useTranslations();
+  // Pestañas Invitadas/Novias: mismo fundido+subida de entrada que el
+  // título (CabeceraSeccion) y las casillas (TileVosotras).
+  const [toggleRef, toggleEnVista] = useEnVista();
   const locale = useLocale();
   const pistaRef = useRef(null);
   const cerrarRef = useRef(null);
@@ -202,7 +205,7 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
         descriptionKey={descriptionKey}
         margenSuperiorAmplio={margenSuperiorAmplio}
       >
-        <div className={styles.toggleCategoria}>
+        <div ref={toggleRef} className={`${styles.toggleCategoria} al-scroll ${toggleEnVista ? 'en-vista' : ''}`}>
           <button
             type="button"
             className={`${styles.toggleCategoriaBoton} ${categoria === 'invitadas' ? styles.toggleCategoriaBotonActivo : ''}`}

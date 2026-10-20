@@ -90,7 +90,7 @@ export default async function Pagina({ params }) {
                   <div className={styles.meta}>
                     <p>{taller.tipo[locale]}</p>
                     <p>{taller.distancia[locale]}</p>
-                    <p>{taller.liderazgo[locale]}</p>
+                    {taller.liderazgo && <p>{taller.liderazgo[locale]}</p>}
                     {taller.antiguedad && <p>{taller.antiguedad[locale]}</p>}
                   </div>
 

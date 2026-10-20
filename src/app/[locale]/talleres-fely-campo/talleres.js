@@ -4,13 +4,11 @@
 
    3 talleres: Béjar (taller-1) y Tamames (taller-2), reales, más
    "taller-inhouse" (nuestro taller principal, añadido a petición) —
-   ya con reportaje propio (MEDIOS_TALLER_INHOUSE), pero todavía con
-   texto de relleno (parrafos en lorem ipsum) a la espera del real. Los
+   con texto y reportaje propios (MEDIOS_TALLER_INHOUSE). Los
    párrafos de Béjar/Tamames ya son el texto real (de encargo, recibido
    el 2026-09-14) — antes reutilizaban el de Tamames como relleno
-   temporal, marcado con "(Pendiente)". "antiguedad" (Béjar/Tamames,
-   no en taller-inhouse todavía): años reales pendientes de confirmar,
-   "X" de relleno mientras tanto.
+   temporal, marcado con "(Pendiente)". "antiguedad" (opcional) ya no
+   la lleva ningún taller — quitada a petición.
 
    MEDIOS: sin vídeos ni gif (a petición directa del usuario, no le
    gustaban en el carrusel — se han borrado también los .mp4 que
@@ -61,21 +59,23 @@ const MEDIOS_TALLER_2 = [
 
 export const TALLERES = [
   {
-    // Nuevo, a petición — texto todavía de relleno (lorem ipsum) hasta
-    // que llegue el contenido real, pero ya con reportaje propio (ver
+    // Nuevo, a petición — con texto y reportaje propios (ver
     // MEDIOS_TALLER_INHOUSE arriba). Primero en la lista: es "nuestro
     // taller principal", antes de los dos de la sierra.
     id: 'taller-inhouse',
     medios: MEDIOS_TALLER_INHOUSE,
-    tipo: { es: 'TALLER INHOUSE', en: 'IN-HOUSE WORKSHOP' },
+    tipo: { es: 'TALLER PROPIO', en: 'IN-HOUSE WORKSHOP' },
     distancia: { es: 'Nuestro taller principal', en: 'Our main workshop' },
-    liderazgo: { es: 'Liderado por X', en: 'Led by X' },
+    // Sin "liderazgo" a petición (antes "Liderado por X") — opcional,
+    // ver page.js.
     parrafos: {
       es: [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        'En Salamanca se encuentra el lugar donde todo comienza: nuestro atelier. Es aquí donde nacen las ideas, se prueban los primeros prototipos y ocurre toda la magia de Fely Campo.',
+        'En este espacio trabajamos los diseños, creamos los patrones y seleccionamos los tejidos que darán forma a cada colección. Una vez definidos, las piezas se cortan y se envían a nuestros talleres de apoyo, donde continúa el proceso de confección con el mismo cuidado y dedicación.',
       ],
       en: [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        'In Salamanca lies the place where it all begins: our atelier. This is where ideas are born, the first prototypes are tried on and all the magic of Fely Campo happens.',
+        'In this space we develop the designs, create the patterns and select the fabrics that will shape each collection. Once defined, the pieces are cut and sent to our partner workshops, where the making process continues with the same care and dedication.',
       ],
     },
   },
@@ -86,8 +86,7 @@ export const TALLERES = [
     tipo: { es: 'Taller I', en: 'Workshop I' },
     distancia: { es: '72 km desde nuestro taller en Salamanca', en: '72 km from our workshop in Salamanca' },
     liderazgo: { es: 'Liderado por Blanca', en: 'Led by Blanca' },
-    // (Pendiente) años reales — "X" de relleno hasta que se confirme.
-    antiguedad: { es: 'X años trabajando con nosotros', en: 'X years working with us' },
+    // Sin "antiguedad" a petición (antes "X años trabajando con nosotros").
     parrafos: {
       es: [
         'Su historia con la costura inició cuando ella cumple 12 años, cuando su madre la llevó a aprender con una modista. A los 16, cuando antaño se podía empezar a trabajar, entró en una fábrica y desde entonces coser se convirtió en su manera de estar en el mundo: es lo que ama, lo que conoce y lo que sigue haciendo, cada día, con la misma entrega.',
@@ -108,8 +107,7 @@ export const TALLERES = [
     tipo: { es: 'Taller II', en: 'Workshop II' },
     distancia: { es: '54 km desde nuestro taller en Salamanca', en: '54 km from our workshop in Salamanca' },
     liderazgo: { es: 'Liderado por María José', en: 'Led by María José' },
-    // (Pendiente) años reales — "X" de relleno hasta que se confirme.
-    antiguedad: { es: 'X años trabajando con nosotros', en: 'X years working with us' },
+    // Sin "antiguedad" a petición (antes "X años trabajando con nosotros").
     parrafos: {
       es: [
         'En Tamames, el tiempo se mide con experiencia y sueños cumplidos.',

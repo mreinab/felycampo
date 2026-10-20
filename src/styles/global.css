@@ -166,7 +166,7 @@
 
   /* ---------- INTERLINEADO (line-height) ---------- */
   --leading-tight: 1.15;
-  --leading-base:  1.6;
+  --leading-base:  1.85;  /* párrafos de todo el sitio — antes 1.6, más aire entre líneas a petición */
 
   /* ---------- TRANSICIONES ---------- */
   --ease-marca: cubic-bezier(0.4, 0, 0.2, 1);

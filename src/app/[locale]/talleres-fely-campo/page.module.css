@@ -45,8 +45,13 @@
   display: none; /* Chrome/Safari */
 }
 
+/* flex-grow 1: con 5 medios o menos (ej. "Taller propio": 20+20+20+
+   16+16 = 92%) la tira no llenaba el ancho y quedaba un hueco a la
+   derecha — ahora se reparten ese sobrante y ocupan el 100%. Con más
+   medios la suma ya pasa del 100% y el grow no tiene efecto (sigue
+   asomando el borde de la siguiente, ver .marco:nth-child). */
 .marco {
-  flex: 0 0 20%;
+  flex: 1 0 20%;
   scroll-snap-align: start;
   aspect-ratio: 3 / 4;
   background: var(--color-details);

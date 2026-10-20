@@ -252,6 +252,6 @@
 @media (max-width: 767px) {
   .pagina {
     min-height: calc(100vh - var(--nav-height));
-    padding: var(--spacing-6) var(--spacing-4) var(--spacing-8);
+    padding: var(--spacing-6) var(--spacing-6) var(--spacing-8); /* laterales antes --spacing-4, más aire a petición */
   }
 }

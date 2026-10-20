@@ -74,6 +74,10 @@ export const FOTOS_INVITADAS = [
     `${RUTA_INVITADAS}/vosotras-felycampo-madrinas-look1.jpeg`,
   ],
   [`${RUTA_INVITADAS}/WhatsApp Image 2026-10-16 at 14.53.33.jpeg`],
+  // Carrusel de madrinas (look-1 de portada, a petición). Pedidas de la
+  // 1 a la 14, pero en la carpeta solo están la 1, 12, 13 y 14 — añadir
+  // aquí el número de las que falten (2-11) cuando se suban.
+  [1, 12, 13, 14].map((n) => `${RUTA_INVITADAS}/vosotras-felycampo-madrinas-look-${n}.jpeg`),
 ].map((grupo) => grupo.map((sufijo) => sufijo.startsWith('/') ? sufijo : `${RUTA_INVITADAS}/nuestras-invitadas-felycampo-${sufijo}.${sufijo === '30-01' ? 'png' : 'jpg'}`));
 
 export const FOTOS_NOVIAS = [

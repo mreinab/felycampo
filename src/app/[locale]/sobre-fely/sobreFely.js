@@ -1,233 +1,196 @@
-/* Datos de /sobre-fely — biografía "Trayectoria" (1972 → hoy) +
-   manifiesto poético de marca (presentación de colección en Ibiza).
-   Bilingüe por campo ({es, en}), mismo criterio que "secciones" en
-   ../atelier-fiesta/atelieres.js — texto largo y propio de esta
+/* Datos de /sobre-fely — "Una vida entre telas": la biografía de Fely
+   Campo en primera persona, contada en 6 capítulos (de los 13 años a
+   hoy) + un cierre antes de la tarjeta del documental (las 54 cintas
+   VHS). Bilingüe por campo ({es, en}), mismo criterio que "secciones"
+   en ../atelier-fiesta/atelieres.js — texto largo y propio de esta
    página, no encaja en el formato de clave corta de
-   messages/{locale}.json (ver "sobreFely.eyebrow" en page.js para lo
-   poco que sí vive ahí).
+   messages/{locale}.json (ahí solo viven el título/subtítulo del
+   hero: "sobreFely.tituloHero" y "heroPagina.sobreFely").
 
-   Texto de encargo tal cual (biografía en primera persona de Fely
-   Campo + manifiesto), salvo el manifiesto: venía pegado dos veces
-   (con restos de un chat de WhatsApp intercalados, tipo "[18:11,
-   12/8/2026] Ionela Valencia:" — no es contenido de página, se
-   descarta) — se usa la segunda versión, algo más condensada.
+   Texto de encargo (recibido el 2026-10-20) tal cual, salvo erratas
+   evidentes corregidas: "enferemiza" → "enfermiza", "A los14" → "A los
+   14", "FRIMA" → "FIRMA", "qu el" → "que el", "para mi" → "para mí".
+   La versión inglesa es traducción propia, pendiente de revisar.
+   Sustituye a la maquetación anterior (trayectoria por años +
+   manifiesto de Ibiza + historia de la firma, ver historial).
 
-   Página maquetada copiando el diseño de la ficha de colección de
-   Runway (/colecciones-fely-campo/la-coleccion-aw27, ver
-   [coleccion]/page.js) — mismos componentes de layout/, contenido de
-   biografía en vez de colección: RunwayMediaLateral (hero), .textoRow
-   (nombre/temporada → "Fely Campo"/"La Diseñadora", ver page.js) +
-   RunwayDescripcion (historia de la firma, unida en un único párrafo
-   — ahí es siempre un texto corrido) + RunwayBackstage (cuadrícula
-   editorial con la foto de cada etapa de la trayectoria — con el
-   manifiesto poético intercalado en medio: sus fotos en columna
-   izquierda + el poema en la derecha, misma fila —
-   prop "poema" de RunwayBackstage, ver ese componente) + la
-   biografía completa en
-   texto corrido debajo (.biografia, un bloque por
-   año/etapa — ver ese componente en page.module.css). Sin
-   RunwayGaleria ni RunwayVideoCierre: el lightbox de RunwayGaleria
-   pinta "Look {numero}" (ver messages/{locale}.json
-   "producto.lookNumero", cadena fija, no configurable por prop) — no
-   encaja sobre fotos de una biografía, y no hay vídeo de cierre
-   propio todavía.
+   Fotos: todas en public/img/about-felycampo/sobre-fely-campo/.
 
-   "trayectoria": un bloque por año/etapa, cada uno con su año, imagen
-   (opcional) y uno o más párrafos. 2003 trae dos párrafos (el viaje a
-   París + el arranque de la internacionalización que sigue de ese
-   mismo hecho, sin año propio). Imágenes: todas salen de
-   public/img/about-felycampo/ a petición directa del usuario (nada
-   reciclado de otras páginas, a diferencia del criterio de
-   atelieres.js) — la carpeta trae más fotos de las que hacían falta
-   aquí (de podcast, revista y una entrevista en vídeo, todas con
-   texto/logos superpuestos, ver "enlacesExternos" más abajo) que se
-   descartan para esta cuadrícula editorial, que solo lleva foto
-   limpia. Solo hay 6 fotos limpias para 9 huecos (hero + 6 años + 2
-   del poema) y cada una se usa una única vez en toda la página (a
-   petición directa del usuario, sin repetir ninguna) — así que 1972,
-   1975 y 1995 se quedan sin "imagen" (mismo criterio que ya traía
-   "Hoy" antes de tener foto propia: RunwayBackstage/fotosBackstage
-   filtra las entradas sin imagen, ver page.js, no deja un <img>
-   roto ni un hueco vacío en la cuadrícula).
+   Cada capítulo:
+   - "etiqueta"/"titulo": cabecera ("El comienzo" +
+     "13 años. Un camino inesperado.").
+   - "parrafos": cuerpo de texto. "cita" (opcional): frase final
+     de cierre del capítulo, en tinta (solo el capítulo 1 la trae).
+   - "disposicion": cómo se colocan texto e imágenes (ver page.js y
+     page.module.css):
+       'imagenIzquierda' / 'imagenDerecha' — dos columnas, texto a un
+         lado e "imagenes" al otro (1 foto, o 2 lado a lado —
+         "apiladas": true las pone una encima de otra, grandes y sin recortar).
+       'columna' — texto arriba y las fotos apiladas debajo, todo
+         centrado en el ancho de una columna (capítulo 4).
+       'tira' — texto arriba y las "imagenes" en fila debajo
+         (3 en escritorio; en mobile la 1ª a todo el ancho y las otras
+         dos debajo, lado a lado).
+   - Cada foto es {src, pie} (ver "foto" más abajo); "pie" a nivel de
+     capítulo (opcional) es un pie compartido para todas sus fotos.
+   - "galeria" (opcional): cuadrícula de 2×2 a todo el ancho debajo del
+     capítulo (capítulo 5, fotos "gridimages"). */
 
-   "historia": "texto" — historia de la firma (fundación en 1997,
-   expansión nacional e internacional desde 2003, cifras actuales de
-   equipo/puntos de venta), un párrafo por elemento del array, unido
-   en RunwayDescripcion en un único párrafo corrido igual que el resto
-   de textos de ese componente (ver page.js).
+const RUTA = '/img/about-felycampo/sobre-fely-campo';
 
-   "manifiesto": "texto" (un párrafo por línea/estrofa tal como venía
-   puntuado el original, va como prop "poema.texto" de RunwayBackstage
-   — ver page.js) + "imagenesPoema", las dos fotos reales de Fely Campo
-   que acompañan al poema en su misma fila de la cuadrícula (columna
-   izquierda, apiladas; el poema cae en la derecha — ver
-   RunwayBackstage.jsx/.module.css), no sueltas entre el resto de fotos
-   de trayectoria. El poema ya no va corrido en RunwayDescripcion —
-   así se veía en el primer maquetado de la página, antes de sumar la
-   historia de la firma.
-
-   "enlacesExternos": tarjetas de podcast/prensa al final de la página
-   (ver page.js), incluyendo el resto de fotos de about-felycampo/ que
-   no encajaban en la cuadrícula editorial de trayectoria por llevar
-   texto/logo superpuesto (ver ese comentario más arriba) — aquí ese
-   texto ya no estorba, la tarjeta entera es un enlace de salida a la
-   aparición real (vídeo/pódcast/prensa), no una foto de archivo. */
+// Foto con pie de imagen (opcional) — {src, pie: {es, en}}.
+const foto = (archivo, es, en) => ({ src: `${RUTA}/${archivo}`, pie: es ? { es, en } : null });
 
 export const SOBRE_FELY = {
-  // Hero de RunwayMediaLateral (ver page.js) — mismo campo "medios[0]"
-  // que coleccion.medios en ../colecciones-fely-campo/colecciones.js,
-  // aquí en plano (sin "tipo": RunwayMediaLateral pinta <img> por
-  // defecto, solo <video> si medio.tipo === 'video').
   heroImagen: '/img/about-felycampo/fely-campo-conoce-a-la-disenadora.jpg',
 
-  trayectoria: [
+  capitulos: [
     {
-      anio: { es: '1972', en: '1972' },
-      // Sin "imagen": cada foto limpia de about-felycampo/ se usa una
-      // sola vez en toda la página (a petición directa del usuario) y
-      // las 6 disponibles ya se reparten entre el hero, 1981, 2003,
-      // "Hoy" y las 2 del poema (ver comentario de "trayectoria" más
-      // arriba) — no queda ninguna libre para 1972/1975/1995, así que
-      // se quitan en vez de repetir una imagen (mismo criterio que
-      // "Hoy" ya usaba antes de tener foto propia).
-      texto: {
+      id: 'el-comienzo',
+      etiqueta: { es: 'El comienzo', en: 'The beginning' },
+      titulo: { es: '13 años. Un camino inesperado.', en: '13 years old. An unexpected path.' },
+      parrafos: {
         es: [
-          'Eran las 7:00 de la mañana de un frío día de otoño. Yo tenía 13 años cuando mi madre me llevó a un taller de costura en Salamanca. Ninguna de las dos podía imaginar el impacto que aquello tendría en mi vida. Allí comencé a aprender mi oficio, un aprendizaje que nunca he dejado de cultivar. Pero, más importante aún, fue mi puerta de entrada al mundo de la moda, un universo que me apasionó desde el primer momento, me fascinó y sigue haciéndolo hoy.',
+          'Tenía 13 años cuando mi vida empezó a tomar un rumbo que nunca habría imaginado. Tenía una timidez casi enfermiza y, cuando suspendí los estudios, mi madre decidió mandarme a un pequeño taller, sin saber que aquel lugar acabaría marcando mi futuro. Era una niña tímida, todavía intentando encontrar mi sitio en el mundo, y no podía imaginar que entre telas, agujas e hilos descubriría una forma de expresarme que iba mucho más allá de la ropa.',
         ],
         en: [
-          "It was 7:00 on a cold autumn morning. I was 13 years old when my mother took me to a sewing workshop in Salamanca. Neither of us could have imagined the impact that day would have on my life. That's where I began to learn my craft, a craft I have never stopped cultivating. But, more importantly, it was my gateway into the world of fashion — a universe that captivated me from the very first moment, that fascinated me then and still does today.",
+          'I was 13 when my life began to take a direction I could never have imagined. I was almost painfully shy and, when I failed at school, my mother decided to send me to a small workshop, unaware that the place would end up shaping my future. I was a shy girl, still trying to find my place in the world, and I could not have imagined that among fabrics, needles and threads I would discover a way of expressing myself that went far beyond clothing.',
         ],
       },
+      cita: {
+        es: 'A veces, la vida no te lleva por el camino que habías pensado, sino por aquel que, sin saberlo, estabas destinada a encontrar.',
+        en: 'Sometimes life does not take you down the path you had planned, but down the one you were, without knowing it, destined to find.',
+      },
+      disposicion: 'imagenIzquierda',
+      imagenes: [foto('felycampo-el-comienzo.jpeg')],
     },
     {
-      anio: { es: '1975', en: '1975' },
-      texto: {
+      id: 'el-primer-vestido',
+      etiqueta: { es: 'El primer vestido', en: 'The first dress' },
+      titulo: { es: '14 años. Descubrir una forma de expresarme.', en: '14 years old. Discovering a way to express myself.' },
+      parrafos: {
         es: [
-          'Con 16 años diseñé mi primer vestido de novia para una vecina que también tenía 16 años. Empezaba a descubrir cómo, a través de los tejidos y el diseño, podía expresar quién era y proyectarme al mundo. Sin embargo, aún me quedaba camino por recorrer antes de poder dar plena libertad al impulso creativo que llevaba dentro.',
+          'A los 14 años hice mi primer vestido. Era una niña muy tímida; me costaba hablar, relacionarme y mostrar lo que llevaba dentro. Pero cuando me puse aquel vestido, descubrí algo que no esperaba: podía esconderme detrás de él y, al mismo tiempo, sentirme fuerte. Comprendí, aunque todavía no supiera explicarlo, que la ropa podía cambiar cómo nos sentimos, ayudarnos a encontrar nuestra voz y revelar quiénes somos. No hay ninguna fotografía de ese primer vestido.',
         ],
         en: [
-          'At 16, I designed my first wedding dress for a neighbour who was also 16. I was beginning to discover how, through fabric and design, I could express who I was and project myself into the world. Even so, I still had a long way to go before I could give full freedom to the creative impulse I carried inside me.',
+          'At 14 I made my first dress. I was a very shy girl; I found it hard to speak, to connect with others and to show what I carried inside. But when I put that dress on, I discovered something I did not expect: I could hide behind it and, at the same time, feel strong. I understood, even if I could not yet explain it, that clothes could change how we feel, help us find our voice and reveal who we are. There is no photograph of that first dress.',
         ],
       },
+      disposicion: 'imagenDerecha',
+      imagenes: [foto('felycampo-elprimervestido.jpg', 'Fely Campo en el año 1989 en su atelier de Salamanca', 'Fely Campo in 1989 at her atelier in Salamanca')],
     },
     {
-      anio: { es: '1981', en: '1981' },
-      imagen: '/img/about-felycampo/felycampo-website-about (1).jpg',
-      texto: {
+      id: 'la-primera-novia',
+      etiqueta: { es: 'La primera novia', en: 'The first bride' },
+      titulo: { es: '15 años. El primer traje de novia.', en: '15 years old. The first wedding dress.' },
+      parrafos: {
         es: [
-          'Abrí la Academia de Corte y Confección, que en 1986 se transformó en una Escuela de Diseño. Recuerdo la emoción de llegar el primer día y ver, por primera vez, mi nombre en la puerta. Fue una etapa apasionante, llena de desfiles, profesores inspiradores y, sobre todo, mucha creatividad.',
+          'Con 15 años hice mi primer vestido de novia. Era muy joven, pero aquel encargo me permitió descubrir una dimensión diferente de la moda. Detrás de un vestido había una mujer con la ilusión de vestirse un día que recordaría toda su vida. Sin darme cuenta, estaba descubriendo que quería crear prendas que no solo vistieran a una mujer, sino que la hicieran sentirse ella misma. No tengo imágenes de ese primer vestido, pero siempre perdurará en mi memoria.',
         ],
         en: [
-          'I opened the Academia de Corte y Confección, which in 1986 became a fashion design school. I remember the thrill of arriving on the first day and seeing my name on the door for the very first time. It was an exciting stage, full of runway shows, inspiring teachers and, above all, a great deal of creativity.',
+          'At 15 I made my first wedding dress. I was very young, but that commission let me discover a different dimension of fashion. Behind a dress there was a woman dreaming of how she would look on a day she would remember all her life. Without realising it, I was discovering that I wanted to create garments that would not only dress a woman, but make her feel like herself. I have no pictures of that first dress, but it will always live on in my memory.',
         ],
       },
+      disposicion: 'tira',
+      // Un solo pie para las tres (mismo diseño), debajo de la fila.
+      pie: { es: 'Diseño de novia de Fely Campo de la década de los 80', en: 'A Fely Campo bridal design from the 1980s' },
+      imagenes: [
+        foto('felycampo-vestidonovia (1).jpg'),
+        foto('felycampo-vestidonovia (2).jpg'),
+        foto('felycampo-vestidonovia (3).jpg'),
+      ],
     },
     {
-      anio: { es: '1995', en: '1995' },
-      texto: {
+      id: 'aprender-el-oficio',
+      etiqueta: { es: 'Aprender el oficio', en: 'Learning the craft' },
+      titulo: { es: 'El valor de lo que no siempre se ve.', en: 'The value of what is not always seen.' },
+      parrafos: {
         es: [
-          'Ese recorrido me llevó a abrir mi primera tienda Fely Campo, dedicada a la moda femenina. A través de los tejidos, el diseño y una manera muy personal de vestir, comencé a conectar con mi comunidad. Poco a poco fui creando una clientela que buscaba elegancia, frescura y un estilo diferente al de los demás. Así comenzó el crecimiento de la firma Fely Campo en España.',
+          'El taller fue mi escuela. Aprendí que detrás de cada prenda hay mucho más de lo que se aprecia a primera vista: horas de trabajo, conocimiento, paciencia y una atención casi invisible a cada detalle. Aprendí observando, practicando, equivocándome y volviendo a empezar.',
+          'Con los años entendí que la creatividad necesita del oficio para hacerse realidad y que la verdadera calidad nace de esa unión. Ese aprendizaje sigue presente en mi manera de trabajar: en el respeto por los materiales, en el cuidado de cada patrón y en la convicción de que las cosas bien hechas requieren dedicación.',
         ],
         en: [
-          'That path led me to open my first Fely Campo store, devoted to womenswear. Through fabric, design and a very personal way of dressing, I began to connect with my community. Little by little I built a clientele in search of elegance, freshness and a style different from everyone else\'s. That\'s how the growth of the Fely Campo label in Spain began.',
+          'The workshop was my school. I learned that behind every garment there is much more than meets the eye: hours of work, knowledge, patience and an almost invisible attention to every detail. I learned by watching, practising, making mistakes and starting again.',
+          'Over the years I understood that creativity needs craft to become real, and that true quality is born from that union. That learning is still present in the way I work: in respect for materials, in the care given to every pattern and in the conviction that things done well require dedication.',
         ],
       },
+      // Texto arriba y las fotos debajo, una tras otra (a petición).
+      disposicion: 'columna',
+      apiladas: true,
+      imagenes: [
+        foto('felycampo-aprendereloficio (1).jpeg', 'Fotografía de Fely Campo, 1996', 'Fely Campo, 1996'),
+        foto('felycampo-aprendereloficio (2).jpeg', 'Fotografía de Fely Campo en su atelier en 1996', 'Fely Campo at her atelier in 1996'),
+      ],
     },
     {
-      anio: { es: '2003', en: '2003' },
-      texto: {
+      id: 'nace-la-firma',
+      etiqueta: { es: 'Nace la firma Fely Campo', en: 'The Fely Campo label is born' },
+      titulo: { es: '1997. Una forma propia de entender la moda.', en: '1997. A way of understanding fashion of my own.' },
+      parrafos: {
         es: [
-          'Preparé una colección, la metí en dos maletas y viajé a la feria Who\'s Next de París. Pasara lo que pasara, sabía que sería una experiencia de aprendizaje. El tercer día de mi primera participación, una tienda de Kuwait realizó un pedido. Fue suficiente para regresar. Y volví durante siete colecciones consecutivas.',
-          'Ese fue el inicio de la internacionalización de la marca Fely Campo. Creé un atelier independiente en Salamanca para responder al aumento del trabajo. También empecé a participar en la Barcelona Bridal Fashion Week —feria en la que sigo presente hoy en día—, y mis diseños llamaron la atención tanto de uno de los showrooms italianos más importantes de Milán como de uno de los representantes más reconocidos de la industria de la moda británica.',
+          'En 1997, todo aquel aprendizaje, aquella pasión y tantos años de dedicación tomaron forma en una firma propia: Fely Campo. Lo que había comenzado casi por casualidad se había convertido en una manera de entender la vida y en el deseo de crear con una identidad propia. Empezaba una nueva etapa, llena de retos, decisiones y oportunidades para llevar mi visión más lejos.',
+          'La firma fue creciendo, las colecciones fueron encontrando su lugar y el trabajo comenzó a trascender el pequeño taller donde todo había empezado. Pero, en el fondo, la esencia seguía siendo la misma: crear desde la sensibilidad, cuidar el oficio y diseñar para mujeres que quieren sentirse seguras, elegantes y fieles a sí mismas.',
         ],
         en: [
-          "I put together a collection, packed it into two suitcases and travelled to the Who's Next trade fair in Paris. Whatever happened, I knew it would be a learning experience. On the third day of my first participation, a shop from Kuwait placed an order. That was enough to make me go back. And I did, for seven collections running.",
-          "That was the start of Fely Campo's international expansion. I set up an independent atelier in Salamanca to keep pace with the growing workload. I also began taking part in Barcelona Bridal Fashion Week — a fair where I'm still present today — and my designs caught the attention of one of Milan's leading Italian showrooms, as well as one of the most respected names in the British fashion industry.",
+          'In 1997, all that learning, that passion and so many years of dedication took shape in a label of my own: Fely Campo. What had begun almost by chance had become a way of understanding life and a desire to create with an identity of my own. A new chapter was beginning, full of challenges, decisions and opportunities to take my vision further.',
+          'The label grew, the collections found their place and the work began to reach beyond the small workshop where it had all started. But, deep down, the essence remained the same: to create with sensitivity, to care for the craft and to design for women who want to feel confident, elegant and true to themselves.',
         ],
       },
+      disposicion: 'imagenDerecha',
+      apiladas: true,
+      // Un solo pie para las dos (misma boutique), debajo de ambas.
+      pie: { es: 'Primera boutique de Fely Campo en Salamanca, 1995', en: 'Fely Campo’s first boutique in Salamanca, 1995' },
+      imagenes: [
+        foto('felycampo-primeratelier (1).jpeg'),
+        foto('felycampo-primeratelier (2).jpeg'),
+      ],
+      galeria: [
+        foto('felycampo-gridimages (1).jpg', 'Modelo con diseño Fely Campo en uno de sus desfiles (2014)', 'A model wearing Fely Campo at one of her shows (2014)'),
+        foto('felycampo-gridimages (1).jpeg', 'Fely Campo en el backstage de uno de sus desfiles de Salamanca (década de los 90)', 'Fely Campo backstage at one of her shows in Salamanca (1990s)'),
+        foto('felycampo-gridimages (2).jpeg', 'Fely Campo saliendo a saludar tras uno de sus desfiles de Salamanca (década de los 90)', 'Fely Campo taking her bow after one of her shows in Salamanca (1990s)'),
+        foto('felycampo-gridimages (2).jpg', 'Encuentro con el diseño japonés en el Jardín de Salamanca en 2002', 'An encounter with Japanese design at the Jardín de Salamanca, 2002'),
+      ],
     },
     {
-      anio: { es: 'Hoy', en: 'Today' },
-      imagen: '/img/about-felycampo/felycampo-website-about (3).jpg',
-      texto: {
+      id: 'hoy',
+      etiqueta: { es: 'Hoy', en: 'Today' },
+      titulo: { es: 'Una historia que sigue viva.', en: 'A story that is still alive.' },
+      parrafos: {
         es: [
-          'Fely Campo está presente en toda Europa, con colecciones que se distribuyen en España, Italia, Reino Unido e Irlanda, Francia, Bélgica, Suiza y Alemania. Mantengo la tienda original de Salamanca y otra en Oviedo, además de los ateliers especializados en moda nupcial y de fiesta en Salamanca y Madrid. El trabajo constante, la pasión por los tejidos y el diseño bien elaborado, unidos al espíritu emprendedor propio de una Serrano, me han permitido construir un universo al que he dedicado toda mi vida.',
+          'Hoy, después de más de cinco décadas vinculada a la moda, sigo encontrando algo de aquella niña tímida en cada nueva creación. Continúo emocionándome al descubrir un tejido, imaginar una silueta o ver cómo una mujer se reconoce en una prenda.',
+          'Han cambiado los años, las experiencias y las dimensiones del proyecto, pero hay algo que permanece intacto: la necesidad de crear para que las mujeres, a través de la moda, se vean a ellas mismas. Fely Campo es hoy el resultado de todo ese recorrido, de las manos que trabajan, del conocimiento que se transmite y de una forma de hacer que respeta el tiempo y los detalles.',
+          'Cuando miro atrás, pienso que nunca imaginé hasta dónde me llevaría aquel primer vestido. Y, sin embargo, sigo persiguiendo la misma sensación que tuve entonces: la emoción de crear algo capaz de hacer sentir diferente a una mujer.',
         ],
         en: [
-          'Fely Campo is present throughout Europe, with collections distributed in Spain, Italy, the United Kingdom and Ireland, France, Belgium, Switzerland and Germany. I still keep the original store in Salamanca and another in Oviedo, alongside the ateliers specialising in bridal and eveningwear in Salamanca and Madrid. Constant work, a passion for fabric and well-crafted design, together with the entrepreneurial spirit of a true Serrano, have allowed me to build a universe to which I have devoted my entire life.',
+          'Today, after more than five decades devoted to fashion, I still find something of that shy girl in every new creation. I am still moved when I discover a fabric, imagine a silhouette or see a woman recognise herself in a garment.',
+          'The years, the experiences and the scale of the project have changed, but something remains intact: the need to create so that women, through fashion, can see themselves. Fely Campo today is the result of that whole journey, of the hands that work, of the knowledge that is passed on and of a way of doing things that respects time and detail.',
+          'When I look back, I think I never imagined how far that first dress would take me. And yet I am still chasing the same feeling I had then: the thrill of creating something that can make a woman feel different.',
         ],
       },
+      disposicion: 'imagenIzquierda',
+      imagenes: [foto('elegir-fely-27.jpeg', 'Fely Campo en la actualidad', 'Fely Campo today')],
     },
   ],
 
-  historia: {
-    texto: {
+  // Cierre antes de la tarjeta del documental (ver page.js).
+  cierre: {
+    titulo: { es: 'Una vida entre telas. Una historia que sigue.', en: 'A life among fabrics. A story that goes on.' },
+    parrafos: {
       es: [
-        'Si el tiempo contara su experiencia, la edad su mentalidad y el oficio su constancia, la pasión resumiría a Fely Campo. Una pasión sin límite que la ha llevado a posicionarse como una de las firmas más importantes de nuestro país, traspasando sus fronteras, en constante evolución y aprendizaje de quien se sabe conocedora de un oficio único del que nunca hay que perder la distancia. Más de 200 puntos de venta nos unen.',
+        'Todo empezó con una niña que encontró fuerza en la moda como forma de expresarse al mundo. Hoy, esa misma pasión sigue dando vida a cada creación de Fely Campo.',
+        'A lo largo de estos años he recibido numerosos premios. No es necesario enumerarlos, dado que el mayor premio para mí es el agradecimiento de mis clientas.',
       ],
       en: [
-        "If time could measure her experience, age her mindset and craft her perseverance, passion would sum up Fely Campo. A limitless passion that has led her to establish herself as one of the most important labels in our country, crossing its borders, in constant evolution and learning as someone who knows a unique craft from which one must never lose perspective. More than 200 points of sale bring us together.",
+        'It all began with a girl who found strength in fashion as a way of expressing herself to the world. Today, that same passion still brings every Fely Campo creation to life.',
+        'Over the years I have received many awards. There is no need to list them, since the greatest award for me is the gratitude of my clients.',
       ],
     },
   },
 
-  manifiesto: {
-    // Fotos que acompañan al poema en RunwayBackstage (ver page.js,
-    // prop "poema.imagenes").
-    imagenesPoema: [
-      '/img/about-felycampo/felycampo-website-about (2).jpg',
-      '/img/about-felycampo/elegir-fely-27.jpeg',
-    ],
-    texto: {
-      es: [
-        'La austeridad y la oscuridad de la sierra de Salamanca se doblegan ante la luz que atraviesa la negrura.',
-        'La luz del sol. La luz de la vida.',
-        'Una luz que no se queda atrás, que atraviesa la dureza de la piedra y encuentra siempre el camino.',
-        'Fely Campo es esa luz impertinente.',
-        'Fuerte. Tenaz. Incansable.',
-        'Una mujer que no pide permiso para brillar. Que rompe esquemas sociales y visuales, y proyecta para sí misma y para las mujeres la posibilidad de un mundo diferente.',
-        'Y es así como crea.',
-        'Para la mujer de ahora. Para la que fue ayer. Para la que será mañana.',
-        'Enraizada en Salamanca y trabajando en comunidad, cada prenda nace de un patronaje excepcional, tejidos únicos y las manos de mujeres que confeccionan en los talleres de la sierra, transformando el oficio en una oportunidad para construir un futuro propio.',
-        'La colección que hoy llega a Ibiza habla en blanco y negro.',
-        'Luz y oscuridad. Fuerza y calma. El equilibrio perfecto, atravesado por un dorado vibrante que representa el impulso, la valentía y el hambre por ser y crear.',
-        'Piezas concebidas para durar toda una vida.',
-        'En el armario por su belleza.',
-        'Y en el corazón de quien las lleva por su historia.',
-        'De mujeres.',
-        'Para mujeres.',
-        'Por las mujeres.',
-      ],
-      en: [
-        'The austerity and darkness of the Sierra de Salamanca yield before the light that cuts through the black.',
-        'The light of the sun. The light of life.',
-        'A light that never falls behind, that cuts through the hardness of stone and always finds its way.',
-        'Fely Campo is that defiant light.',
-        'Strong. Tenacious. Tireless.',
-        'A woman who asks no permission to shine. Who breaks social and visual conventions, and opens up — for herself and for women — the possibility of a different world.',
-        'And that is how she creates.',
-        'For the woman she is today. For the one she was yesterday. For the one she will be tomorrow.',
-        'Rooted in Salamanca and working in community, every garment is born of exceptional patternmaking, singular fabrics and the hands of women who sew in the workshops of the sierra, turning a craft into an opportunity to build a future of their own.',
-        'The collection arriving in Ibiza today speaks in black and white.',
-        'Light and darkness. Strength and calm. The perfect balance, cut through by a vibrant gold that stands for drive, courage and the hunger to be and to create.',
-        'Pieces conceived to last a lifetime.',
-        'In the wardrobe, for their beauty.',
-        'And in the heart of the woman who wears them, for their story.',
-        'A story of women.',
-        'For women.',
-        'By women.',
-      ],
-    },
-  },
-
-  // Una única tarjeta grande al final de la página (ver page.js,
-  // TarjetaEnlaceExterno — mismo diseño que BlogTarjetaPodcastDestacado
-  // de /podcast, pero enlazando fuera del sitio) — antes eran 3 (2 en
-  // cuadrícula + prensa destacada debajo, ver historial), sustituidas a
-  // petición por esta sola. Icono "play" por defecto (ver
-  // TarjetaEnlaceExterno.jsx). "titulo" no lleva traducción (nombre
-  // propio, igual que "nombre" de UBICACIONES en
-  // visita-fely-campo/ubicaciones.js).
+  // Tarjeta grande al final de la página (TarjetaEnlaceExterno — mismo
+  // diseño que BlogTarjetaPodcastDestacado de /podcast, pero enlazando
+  // fuera del sitio): el documental de las 54 cintas VHS. "titulo" sin
+  // traducción (nombre propio).
   documental: {
     href: 'https://www.youtube.com/watch?is=8lcOXOn4hPIHgaWe&v=QgepxasStTI&feature=youtu.be',
     titulo: 'Conoce a Fely Campo - Documental',

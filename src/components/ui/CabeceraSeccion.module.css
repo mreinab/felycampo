@@ -123,7 +123,7 @@
   max-width: 550px;
   font-size: var(--text-small);
   color: var(--color-gris-600);
-  line-height: 1.6;
+  line-height: var(--leading-base);
   text-align: center;
   white-space: pre-line;
 }

@@ -42,6 +42,13 @@
   background: var(--color-fondo);
 }
 
+/* Menú móvil abierto: el blanco entra de golpe, a la vez que el panel,
+   sin el fundido de 0.45s — si no, durante la transición se ve el Hero
+   entre header y panel. */
+.header.menuMovilAbierto {
+  transition: none;
+}
+
 /* .light: header transparente y aún sin fondo sólido (home, antes del
    primer scroll/hover) — texto e icono del hamburguesa en --color-fondo
    para leerse sobre el Hero. El logo cambia de imagen en el JSX, no aquí. */
@@ -187,7 +194,7 @@
   transition: color 0.25s var(--ease-marca);
 }
 .navActionsMobile:hover {
-  color: var(--color-rosa);
+  color: var(--color-gris-500); /* nunca rosa al hover/clic */
 }
 
 .cartIcon {
@@ -244,7 +251,7 @@
 .mobileMenuTrack {
   display: flex;
   width: 200%;
-  transition: transform 0.35s var(--ease-marca);
+  transition: transform 0.25s var(--ease-marca);
 }
 
 /* Categoría tocada (ver "mobileSubmenu" en Navbar.jsx): desliza a la
@@ -260,7 +267,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-6);
-  transition: opacity 0.35s var(--ease-marca);
+  transition: opacity 0.2s var(--ease-marca);
 }
 
 /* La pantalla que no se ve (inert, ver Navbar.jsx) se funde además de
@@ -270,14 +277,11 @@
   opacity: 0;
 }
 
-/* ---------- Cabecera de cada paso ----------
-   Izquierda: "Menú" (paso 1) o "← Menú" (paso 2, botón de volver).
-   Derecha: indicador de paso (IndicadorPaso en Navbar.jsx). Mismo alto
-   en los dos pasos para que nada salte al deslizar. */
+/* ---------- Cabecera del paso 2 ----------
+   Solo el botón "← Menú" (sin indicador de paso). */
 .mobileMenuCabecera {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   min-height: 32px;
 }
 
@@ -289,61 +293,32 @@
   color: var(--color-gris-500);
 }
 
-.mobileMenuPasos {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.mobileMenuPaso {
-  display: block;
-  width: 12px;
-  height: 1px;
-  background: var(--color-gris-300);
-  transition: width 0.35s var(--ease-marca), background-color 0.35s var(--ease-marca);
-}
-
-.mobileMenuPasoActivo {
-  width: 28px;
-  background: var(--color-tinta);
-}
 
 .mobileMenuList {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--color-hairline);
 }
 
 /* ---------- Paso 1: categorías ----------
-   Índice pequeño (01, 02…) + nombre en mayúsculas a la escala de los
-   títulos de la landing (--text-body-lg + 2px, peso normal) + chevron
-   fino. Tocar abre el paso 2 (drill-down), no navega directo. */
+   Nombre en mayúsculas a --text-body, peso normal (antes
+   --text-body-lg + 2px, demasiado grande) + chevron fino, sin índice ni
+   líneas separadoras — el aire entre filas hace de separación. Tocar
+   abre el paso 2 (drill-down), no navega directo. */
 .mobileMenuRow {
   display: flex;
   align-items: baseline;
   gap: var(--spacing-4);
   width: 100%;
-  padding-block: var(--spacing-5);
-  border-bottom: 1px solid var(--color-hairline);
+  padding-block: var(--spacing-4);
   font-family: var(--font-base);
-  font-size: calc(var(--text-body-lg) + 2px);
+  font-size: var(--text-body);
   font-weight: 400;
   text-transform: uppercase;
   color: var(--color-tinta);
   background: none;
-  border-inline: none;
-  border-top: none;
+  border: none;
   text-align: left;
   cursor: pointer;
-}
-
-.mobileMenuIndice {
-  flex-shrink: 0;
-  min-width: 2ch;
-  font-size: var(--text-label);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: var(--tracking-label);
-  color: var(--color-gris-500);
 }
 
 .mobileMenuRowTexto {
@@ -354,7 +329,7 @@
 .mobileMenuRow svg {
   flex-shrink: 0;
   align-self: center;
-  opacity: 0.45;
+  opacity: 0.85;
   transition: transform 0.25s var(--ease-marca), opacity 0.25s var(--ease-marca);
 }
 
@@ -383,7 +358,7 @@
   transition: color 0.25s var(--ease-marca);
 }
 .mobileMenuLink:hover {
-  color: var(--color-rosa);
+  color: var(--color-gris-500); /* nunca rosa al hover/clic */
 }
 
 .mobileMenuDivider {
@@ -398,10 +373,15 @@
 .mobileMenuBack {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
   gap: var(--spacing-1);
-  min-height: 32px;
-  margin-inline-start: calc(-1 * var(--spacing-1));
-  padding: 0 var(--spacing-1);
+  /* Solo flecha (26px, ver Navbar.jsx): área de toque de 40px, con
+     margen negativo para que el trazo quede alineado con el texto de
+     debajo (el icono trae su propio aire interior). */
+  min-width: 40px;
+  min-height: 40px;
+  margin-inline-start: calc(-1 * var(--spacing-2));
+  padding: 0;
   font-family: var(--font-base);
   font-size: var(--text-label);
   text-transform: uppercase;
@@ -421,15 +401,6 @@
   transform: translateX(-3px);
 }
 
-/* Título de la sección + "Ver todo" (enlace a su portada) en la misma
-   línea base. */
-.mobileMenuTituloFila {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--spacing-4);
-}
-
 .mobileMenuTitulo {
   font-family: var(--font-base);
   font-size: var(--text-h3);
@@ -439,31 +410,24 @@
   color: var(--color-tinta);
 }
 
-/* Mismo lenguaje que Boton "texto": label en mayúsculas subrayado. */
-.mobileMenuVerTodo {
-  flex-shrink: 0;
-  font-family: var(--font-base);
-  font-size: var(--text-label);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--color-tinta);
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 2px;
-}
-
-/* Entrada escalonada: cada enlace aparece un poco después del
+/* Mayúsculas como las categorías del paso 1, pero un escalón más
+   pequeñas (--text-small frente a --text-body), sin tracking
+   — se leen como hijas de la categoría, no como pares.
+   Entrada escalonada: cada enlace aparece un poco después del
    anterior (--i = su posición, ver Navbar.jsx) al terminar de
    deslizar el paso. */
 .mobileMenuSubLink {
   display: block;
-  padding-block: var(--spacing-4);
-  border-bottom: 1px solid var(--color-hairline);
+  padding-block: var(--spacing-3);
   font-family: var(--font-base);
-  font-size: var(--text-body-lg);
+  font-size: var(--text-small);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: normal;
   color: var(--color-tinta);
   opacity: 0;
-  animation: mobileMenuEntrada 0.45s var(--ease-marca) forwards;
-  animation-delay: calc(0.18s + var(--i, 0) * 0.05s);
+  animation: mobileMenuEntrada 0.25s var(--ease-marca) forwards;
+  animation-delay: calc(0.08s + var(--i, 0) * 0.025s);
 }
 
 @keyframes mobileMenuEntrada {
@@ -486,11 +450,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .mobileMenuTrack,
-  .mobileMenuScreen,
-  .mobileMenuPaso {
+  .mobileMenuScreen {
     transition: none;
   }
-  .mobileMenuSubLink {
+  .mobileMenuSubLink,
+  .mobileMenuBannerImagen {
     opacity: 1;
     animation: none;
   }
@@ -501,11 +465,21 @@
    MediaLink.module.css (submenú de escritorio) — coherencia visual
    entre los dos menús, aunque aquí es una sola foto fija, sin hover
    (pensada para dedo, ver MobileMenuBanner en Navbar.jsx). */
+/* Alto flexible en vez de un aspect-ratio fijo (antes 2.2/1): crece
+   (flex: 1) hasta ocupar TODO el hueco libre que deja la lista dentro
+   del panel, sin tope — así no queda ningún hueco en blanco ni entre
+   la lista y la foto ni debajo de ella (el panel ya no reparte el
+   espacio con space-between, ver .sobreNavbar en
+   PanelLateral.module.css). Nunca pasa por encima de las opciones del
+   menú: si no hay sitio, se queda en el alto de antes (min-height,
+   2.2/1) y el panel hace scroll como siempre. vw porque el panel móvil
+   va a todo el ancho de la pantalla. */
 .mobileMenuBanner {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 2.2 / 1;
+  flex: 1 1 0;
+  min-height: calc(100vw / 2.2);
   overflow: hidden;
 }
 
@@ -515,6 +489,17 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Fundido al cambiar de portada (key={image} en MobileMenuBanner). */
+  animation: mobileMenuBannerFundido 0.25s var(--ease-marca);
+}
+
+@keyframes mobileMenuBannerFundido {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .mobileMenuBanner::after {
@@ -524,21 +509,6 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
-.mobileMenuBannerLabel {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-family: var(--font-base);
-  font-size: var(--text-label);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  font-weight: 500;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.13);
-}
 
 /* ---------- RESPONSIVE ---------- */
 /* Por debajo de 965px (cualquier orientación — antes 768px; subido a

@@ -48,15 +48,23 @@
   transform: translateX(0);
 }
 
-/* Menú móvil: arranca debajo de .navRow (min-height: 76px en
-   Navbar.module.css) — no debe tapar el header, así que en vez del
-   truco de z-index (ocultarse detrás del header, ver "debajoHeader" más
-   abajo) se le baja el top directamente; el z-index por encima del
-   header ya lo trae de serie la base .panel. */
+/* Menú móvil: a pantalla completa desde top:0, pero un peldaño de
+   z-index POR DEBAJO del header (z-index: 50 en Navbar.module.css) —
+   el header (blanco sólido con el menú abierto) tapa su parte de
+   arriba y el contenido arranca bajo él gracias al padding-top de
+   ".sobreNavbar .contenido". Antes arrancaba en top: 76px, justo en el
+   borde inferior del header: cualquier desajuste de subpíxel dejaba
+   asomar el overlay oscuro como una línea gris entre los dos. Así no
+   hay borde que alinear — debajo del header siempre está el propio
+   panel, del mismo blanco. */
 .panel.sobreNavbar {
-  top: 76px;
+  z-index: 49;
   width: 100%;
   max-width: 100%;
+  /* Sin el hueco del space-between de la base: "debajo" (la foto del
+     menú móvil) va pegado a .contenido y ocupa él solo el resto del
+     alto (ver .mobileMenuBanner en Navbar.module.css). */
+  justify-content: flex-start;
 }
 
 /* Único caso que SÍ debe quedar oculto tras el header (z-index: 50 en
@@ -120,10 +128,11 @@
   padding: var(--spacing-7);
 }
 
-/* Ya arranca debajo del header, no necesita el mismo colchón superior
-   que el submenú de escritorio (que sí sigue tapado por él). */
+/* Arranca en top:0 tapado por el header (ver .panel.sobreNavbar): el
+   alto del header más un colchón corto (--spacing-4; antes
+   --spacing-7, demasiado aire bajo el header). */
 .sobreNavbar .contenido {
-  padding-top: var(--spacing-7);
+  padding-top: calc(var(--nav-height) + var(--spacing-4));
 }
 
 /* Submenú de escritorio del Navbar: el panel arranca en top:0 pero por
@@ -167,10 +176,10 @@
   cursor: pointer;
 }
 
-/* Mismo colchón superior que .panel.sobreNavbar: no tapa el header
-   (el botón hamburguesa debe seguir siendo clicable con el menú abierto). */
+/* Pareja de .panel.sobreNavbar: también por debajo del header (el
+   botón hamburguesa debe seguir siendo clicable con el menú abierto). */
 .overlay.sobreNavbar {
-  top: 76px;
+  z-index: 48;
 }
 
 /* Pareja de .panel.debajoHeader — mismo único caso (submenú de

@@ -51,7 +51,9 @@
 
 .newsletter {
   order: -1;
-  padding: 0 var(--spacing-7) var(--spacing-8);
+  /* Sin padding lateral en mobile (antes --spacing-7 a cada lado) y
+     un padding-bottom corto (antes --spacing-8). */
+  padding: 0 0 var(--spacing-4);
   text-align: center;
 }
 @media (min-width: 768px) {
@@ -183,6 +185,12 @@
   font-size: 1rem;
   font-weight: 400;
   text-transform: uppercase;
+}
+
+/* "Newsletter": alineado a la izquierda también en mobile, aunque el
+   bloque .newsletter vaya centrado (text-align: center) ahí. */
+.newsletter .titulo {
+  text-align: left;
 }
 
 .lista { list-style: none; display: flex; flex-direction: column; gap: var(--spacing-2); }

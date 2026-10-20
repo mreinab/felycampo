@@ -33,11 +33,15 @@ function TarjetaEnlaceExterno({ href, titulo, meta, imagen, alt, icono = 'play' 
       <img src={imagen} alt={alt} className={styles.imagen} />
       <div className={styles.degradado} aria-hidden="true" />
       <div className={styles.contenido}>
-        <span className={icono === 'revista' ? styles.botonAlt : styles.boton} aria-hidden="true">
+        {/* "play": solo el triángulo, más pequeño y sin el recuadro de
+            .boton (a petición, documental VHS de /sobre-fely) —
+            .botonSinBorde, para no tocar el .boton que comparte
+            BlogTarjetaPodcastDestacado. */}
+        <span className={icono === 'revista' ? styles.botonAlt : styles.botonSinBorde} aria-hidden="true">
           {icono === 'revista' ? (
             <Newspaper size={22} strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter" />
           ) : (
-            <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
+            <svg width="12" height="14" viewBox="0 0 16 18" fill="none">
               <path d="M0 0L16 9L0 18V0Z" fill="currentColor" />
             </svg>
           )}

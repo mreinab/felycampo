@@ -298,8 +298,8 @@
 }
 
 .shopHere:hover {
-  color: var(--color-rosa);
-  border-color: var(--color-rosa);
+  color: var(--color-gris-500); /* nunca rosa al hover/clic */
+  border-color: var(--color-gris-500);
 }
 
 @media (max-width: 790px) {

@@ -87,6 +87,18 @@
   transform: scale(1.06);
 }
 
+/* Variante sin recuadro (solo TarjetaEnlaceExterno, icono "play" —
+   documental VHS de /sobre-fely): el triángulo suelto, más pequeño. */
+.botonSinBorde {
+  display: inline-flex;
+  color: var(--color-crema);
+  transition: transform 0.25s var(--ease-marca);
+}
+
+.tarjeta:hover .botonSinBorde {
+  transform: scale(1.1);
+}
+
 /* Variante de .boton para TarjetaEnlaceExterno cuando el icono no es el
    triángulo de "play" (ver icono="revista" en ese componente) — mismo
    círculo/borde, sin el padding-left óptico que ese triángulo necesita. */

@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { ShoppingBag, ChevronRight, ChevronLeft } from 'lucide-react';
+import { CalendarDays, ChevronRight, ChevronLeft } from 'lucide-react';
 import styles from './Navbar.module.css';
 import { PanelLateral } from '../../ui';
 import CarritoPanel from '../../ecommerce/CarritoPanel';
@@ -139,32 +139,36 @@ const SCROLL_THRESHOLD_PX = 50;
 // NavbarPanelLateralCards (esa es la fila de dos MediaLink del submenú
 // de escritorio, con hover — esto es una sola imagen fija, pensada
 // para dedo, sin esa lógica).
-function MobileMenuBanner({ locale, onNavegar }) {
+// "submenuKey" (paso 2 del menú móvil): la foto pasa a ser la misma
+// portada que usa el submenú de escritorio para esa sección — la de
+// "cards[0]" (ver NavbarPanelLateralCards), una sola fija, sin el
+// cambio por hover de escritorio. Paso 1 (sin submenú): la portada de
+// Prêt-à-porter de siempre.
+function MobileMenuBanner({ locale, submenuKey, onNavegar }) {
   const t = useTranslations('nav');
+  const card = submenuKey && SUBMENU_STRUCTURE[submenuKey].cards[0];
+  const portada = card
+    ? { href: card.href, image: card.image, imagePosition: card.imagePosition, label: t(`submenus.${submenuKey}.${card.labelKey || card.key}`) }
+    : { href: '/pret-a-porter', image: '/img/hero-pages/hero-pages-pretaporter-cover.jpg', label: t('links.tienda') };
 
   return (
     <a
-      href={`/${locale}/pret-a-porter`}
+      href={`/${locale}${portada.href}`}
       className={styles.mobileMenuBanner}
       onClick={onNavegar}
     >
-      <img src="/img/hero-pages/hero-pages-pretaporter-cover.jpg" alt="" className={styles.mobileMenuBannerImagen} />
-      <span className={styles.mobileMenuBannerLabel}>{t('links.tienda')}</span>
+      {/* Sin texto encima a petición — el nombre queda solo como
+          alt de la imagen (el enlace sigue necesitando un nombre
+          accesible). key={image}: remonta la <img> en cada cambio de
+          portada para que entre con el fundido de .mobileMenuBannerImagen. */}
+      <img
+        key={portada.image}
+        src={portada.image}
+        alt={portada.label}
+        className={styles.mobileMenuBannerImagen}
+        style={portada.imagePosition ? { objectPosition: portada.imagePosition } : undefined}
+      />
     </a>
-  );
-}
-
-// Indicador de paso del menú móvil: dos trazos finos, el del paso
-// actual en tinta y más largo — pista discreta de "hay un nivel más"
-// / "estás un nivel dentro", sin números a la vista (el texto
-// "Paso 1 de 2" queda para lectores de pantalla).
-function IndicadorPaso({ actual, etiqueta }) {
-  return (
-    <span className={styles.mobileMenuPasos} role="img" aria-label={etiqueta}>
-      {[1, 2].map((paso) => (
-        <span key={paso} className={`${styles.mobileMenuPaso} ${paso === actual ? styles.mobileMenuPasoActivo : ''}`} />
-      ))}
-    </span>
   );
 }
 
@@ -392,7 +396,10 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   // más abajo) — al mover el ratón del header hacia el panel, el
   // mouseleave del header dispara igual, y sin "activeSubmenu" aquí el
   // fondo se volvía transparente con el panel (blanco) todavía abierto.
-  const solido = scrolled || headerHovered || !!activeSubmenu;
+  // Menú móvil abierto también: el header se queda en blanco (texto y
+  // logo oscuros) mientras el panel está abierto, sin hueco transparente
+  // entre los dos.
+  const solido = scrolled || headerHovered || !!activeSubmenu || mobileMenuOpen;
   // "textoOscuro" (ficha de producto, ver layout.js "esFichaProducto"):
   // el Hero de esta página es GaleriaProducto, con object-fit:contain
   // (no recorta la foto, ver GaleriaProducto.module.css) — normalmente
@@ -409,7 +416,10 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
     transparent && styles.transparent,
     transparent && solido && styles.opaco,
     isLight && styles.light,
-    footerVisible && styles.ocultoPorFooter,
+    // Con el menú móvil abierto el header no se esconde por el Footer —
+    // si no, se iría y dejaría el panel colgando de un hueco vacío.
+    footerVisible && !mobileMenuOpen && styles.ocultoPorFooter,
+    mobileMenuOpen && styles.menuMovilAbierto,
   ].filter(Boolean).join(' ');
 
   // El logo solo crece en home (crecerLogo) — en las páginas con
@@ -429,7 +439,7 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
         {/* Botón hamburguesa — solo visible en móvil. Es el mismo botón que
             cierra el menú: las dos barras rotan hasta formar una X. Sigue
             siendo clicable con el menú abierto porque el panel móvil
-            arranca debajo de .navRow, no lo tapa (ver .sobreNavbar en
+            queda por debajo del header en z-index, no lo tapa (ver .sobreNavbar en
             PanelLateral.module.css). */}
         <button
           type="button"
@@ -515,9 +525,15 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
           */}
         </div>
 
-        {/* Utilidades — móvil: solo el icono del carrito, el resto vive en el menú hamburguesa */}
+        {/* Utilidades — móvil: solo el icono de "Pedir cita" (antes el
+            del carrito, comentado a petición — para recuperarlo,
+            descomentar y volver a importar ShoppingBag de lucide-react).
+            El resto vive en el menú hamburguesa.
         <a href={withLocale('/carrito')} className={styles.navActionsMobile} aria-label={t('aria.carrito')}>
           <ShoppingBag className={styles.cartIcon} strokeWidth={1.5} />
+        </a> */}
+        <a href={withLocale('/visita-fely-campo/cita')} className={styles.navActionsMobile} aria-label={t('links.pedirCita')}>
+          <CalendarDays className={styles.cartIcon} strokeWidth={1.5} />
         </a>
       </div>
     </header>
@@ -558,12 +574,11 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
         abierto={mobileMenuOpen}
         sobreNavbar
         onCerrar={cerrarMenuMobile}
-        debajo={<MobileMenuBanner locale={locale} onNavegar={cerrarMenuMobile} />}
+        debajo={<MobileMenuBanner locale={locale} submenuKey={mobileSubmenu} onNavegar={cerrarMenuMobile} />}
       >
         {/* Navegación por pasos: paso 1 = las categorías, paso 2 = el
-            submenú de la tocada. Cada pantalla lleva su cabecera (a la
-            izquierda "Menú" o el botón "← Menú" para volver; a la
-            derecha el indicador de paso, dos trazos). La pantalla que no
+            submenú de la tocada. Solo el paso 2 lleva cabecera: el botón
+            "← Menú" para volver (sin indicador de paso). La pantalla que no
             se ve va "inert" (fuera del tabulador y del lector de
             pantalla), el foco salta al botón de volver al entrar y de
             vuelta a la categoría al salir, y en el paso 2 deslizar el
@@ -575,13 +590,8 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
         >
           <div className={`${styles.mobileMenuTrack} ${mobileSubmenu ? styles.mobileMenuTrackSub : ''}`}>
             <div className={styles.mobileMenuScreen} inert={mobileSubmenu ? true : undefined}>
-              <div className={styles.mobileMenuCabecera}>
-                <span className={styles.mobileMenuEtiqueta}>{t('movil.menu')}</span>
-                <IndicadorPaso actual={1} etiqueta={t('movil.paso', { actual: 1, total: 2 })} />
-              </div>
-
               <ul className={styles.mobileMenuList}>
-                {NAV_ITEMS.map((item, indice) => (
+                {NAV_ITEMS.map((item) => (
                   <li key={item.key}>
                     {/* "Pedir cita" (sin "submenu"): enlace directo, sin
                         drill-down ni chevron — no hay panel que abrir. */}
@@ -592,7 +602,6 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
                         className={styles.mobileMenuRow}
                         onClick={() => abrirPasoMenu(item.submenu)}
                       >
-                        <span className={styles.mobileMenuIndice} aria-hidden="true">{String(indice + 1).padStart(2, '0')}</span>
                         <span className={styles.mobileMenuRowTexto}>{t(`links.${item.key}`)}</span>
                         <ChevronRight size={18} strokeWidth={1.25} aria-hidden="true" />
                       </button>
@@ -602,7 +611,6 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
                         className={styles.mobileMenuRow}
                         onClick={cerrarMenuMobile}
                       >
-                        <span className={styles.mobileMenuIndice} aria-hidden="true">{String(indice + 1).padStart(2, '0')}</span>
                         <span className={styles.mobileMenuRowTexto}>{t(`links.${item.key}`)}</span>
                       </a>
                     )}
@@ -610,15 +618,16 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
                 ))}
               </ul>
 
+              {/* Wishlist / Mi cuenta comentados a petición (mismo criterio
+                  que en .navActions de escritorio). Para recuperarlos,
+                  descomentar — "Mi cuenta" es un botón que abre
+                  MiCuentaModal y cierra antes el menú móvil.
               <div className={styles.mobileMenuDivider} />
 
               <div className={styles.mobileMenuUtilities}>
                 <a href={withLocale('/wishlist')} className={styles.mobileMenuLink} onClick={cerrarMenuMobile}>
                   {t('actions.wishlist')}
                 </a>
-                {/* Mismo criterio que en .navActions de escritorio: botón
-                    que abre MiCuentaModal, no un enlace — cierra antes el
-                    propio menú móvil, si no quedarían los dos superpuestos. */}
                 <button
                   type="button"
                   className={styles.mobileMenuLink}
@@ -627,6 +636,7 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
                   {t('actions.miCuenta')}
                 </button>
               </div>
+              */}
             </div>
 
             <div className={styles.mobileMenuScreen} inert={mobileSubmenu ? undefined : true}>
@@ -640,25 +650,14 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
                       onClick={volverPasoMenu}
                       aria-label={t('aria.volverMenu')}
                     >
-                      <ChevronLeft size={16} strokeWidth={1.25} aria-hidden="true" />
-                      <span>{t('movil.menu')}</span>
+                      {/* Solo la flecha, más grande (sin el texto "Menú"
+                          a petición — el nombre accesible lo da aria-label). */}
+                      <ChevronLeft size={26} strokeWidth={1.25} aria-hidden="true" />
                     </button>
-                    <IndicadorPaso actual={2} etiqueta={t('movil.paso', { actual: 2, total: 2 })} />
                   </div>
 
-                  {/* Título de la sección + "Ver todo" a su portada (ej.
-                      /atelier) — antes el propio título era el enlace,
-                      sin pista visual de que lo fuera. */}
-                  <div className={styles.mobileMenuTituloFila}>
-                    <p className={styles.mobileMenuTitulo}>{t(`links.${mobileSubmenu}`)}</p>
-                    <a
-                      href={withLocale(NAV_ITEMS.find((item) => item.submenu === mobileSubmenu).href)}
-                      className={styles.mobileMenuVerTodo}
-                      onClick={cerrarMenuMobile}
-                    >
-                      {t('movil.verTodo')}
-                    </a>
-                  </div>
+                  {/* Título de la sección (sin "Ver todo" a petición). */}
+                  <p className={styles.mobileMenuTitulo}>{t(`links.${mobileSubmenu}`)}</p>
 
                   {/* key={mobileSubmenu}: la lista se vuelve a montar en cada
                       submenú, así la entrada escalonada de .mobileMenuSubLink

@@ -1,84 +1,223 @@
 /* ============================================================
    SOBRE FELY — Fely Campo. Ruta: /sobre-fely
-   .hero/.textoDescripcion/.textoRow/.nombre/.temporada son una copia
-   1:1 de ../colecciones-fely-campo/[coleccion]/page.module.css (mismo
-   diseño, ver page.js). La biografía en texto corrido (un bloque por
-   año/etapa) que vivía aquí se quitó a petición — ver historial si
-   hiciera falta recuperarla.
+   "Una vida entre telas" (ver page.js y sobreFely.js). Mismo diseño
+   sencillo que las secciones de AtelierDetalle
+   (atelier-fiesta/page.module.css: .seccion/.seccionTexto/
+   .seccionTitulo): dos columnas iguales al 80% del ancho, centradas,
+   texto e imagen alternando de lado; título corto en mayúsculas
+   (--text-h4), párrafos en --font-base. Sin números, sin cursiva, sin
+   titulares grandes (a petición). Pies de imagen en minúscula.
    ============================================================ */
 
-.hero {
-  width: 100%;
-  height: 80vh;
+/* Fondo opaco: tapa el hero fijado en mobile (fijarEnMobile, ver
+   HeroPagina.jsx) al subir por encima de él. */
+.contenido {
+  background: var(--color-fondo);
+}
+
+.capitulos {
+  padding-top: var(--spacing-9);
+}
+
+/* ---------- Capítulo ---------- */
+.capitulo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  column-gap: var(--spacing-8);
+  max-width: 80%;
+  margin-inline: auto;
+  margin-bottom: var(--spacing-9);
+}
+
+.imagenIzquierda .mediosBloque {
+  grid-column: 1;
+  grid-row: 1;
+}
+.imagenIzquierda .texto {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.imagenDerecha .texto {
+  grid-column: 1;
+  grid-row: 1;
+}
+.imagenDerecha .mediosBloque {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* Tira: texto en la columna izquierda y las tres fotos en fila
+   debajo, a todo el ancho del capítulo. */
+.tira .texto {
+  grid-column: 1;
+}
+.tira .mediosBloque {
+  grid-column: 1 / -1;
+  margin-top: var(--spacing-7);
+}
+.tira .medios {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-4);
+}
+.tira .marco {
+  aspect-ratio: 2 / 3;
+}
+
+/* Columna (capítulo 4): texto arriba y fotos apiladas debajo, todo en
+   una sola columna centrada del mismo ancho que las del resto de
+   capítulos (50% menos la mitad del hueco central), así queda
+   alineada con el eje central de la página. */
+.columna {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-7);
+}
+.columna .texto,
+.columna .mediosBloque {
+  width: calc(50% - var(--spacing-8) / 2);
 }
 
-.textoDescripcion {
-  width: 100%;
-}
-
-.textoRow {
+/* ---------- Texto (igual que .seccionTexto de AtelierDetalle) ---------- */
+.texto {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-  padding-inline: var(--spacing-6);
-  padding-block: var(--spacing-6);
+  flex-direction: column;
+  gap: var(--spacing-5);
+  padding-inline: var(--spacing-4);
 }
 
-.nombre,
-.temporada {
-  font-size: var(--text-h1);
+.titulo {
+  margin: 0;
+  font-size: 1.375rem; /* 19.25px — un poco mayor que --text-h4, a petición (mismo peso medium: semibold quedaba demasiado pesado) */
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  letter-spacing: normal;
   color: var(--color-tinta);
 }
 
-@media (max-width: 767px) {
-  .hero {
-    height: auto;
-    /* Efecto "pin": la imagen se queda fija arriba mientras el resto
-       del contenido (textoDescripcion y lo que sigue) sube por encima
-       y la tapa al hacer scroll. z-index NEGATIVO a propósito, no solo
-       "bajo" — un sticky sin position/z-index en su hermano siguiente
-       pinta por delante del flujo normal (así lo ordena el spec), así
-       que hace falta z-index:-1 para que .textoDescripcion (estático,
-       sin position propio) quede SIEMPRE por delante sin tener que
-       tocarlo. Necesita fondo opaco en .textoDescripcion para taparla
-       de verdad en vez de dejarla transparentar por debajo. */
-    position: sticky;
-    top: 0;
-    z-index: -1;
-  }
-
-  .textoDescripcion {
-    background: var(--color-fondo);
-  }
-
-  .textoRow {
-    flex-direction: column;
-    gap: var(--spacing-2);
-    padding-inline: var(--spacing-4);
-    padding-block: var(--spacing-4);
-  }
-
-  .nombre,
-  .temporada {
-    font-size: var(--text-h2);
-  }
+/* Subtítulo ("13 años. Un camino inesperado.") pegado al título. */
+.subtitulo {
+  margin: calc(-1 * var(--spacing-4)) 0 0;
+  font-size: var(--text-body);
+  line-height: var(--leading-base);
+  color: var(--color-tinta);
 }
 
-/* ---------- Enlace externo (documental) ----------
-   Debajo de RunwayBackstage (ver page.js) — una única tarjeta grande (TarjetaEnlaceExterno,
-   mismo diseño que BlogTarjetaPodcastDestacado de /podcast — foto a
-   sangre + botón/flecha) que enlaza fuera del sitio, al documental de
-   Fely Campo — antes 3 tarjetas (cuadrícula de 2 + prensa destacada
-   debajo, ver historial), sustituidas a petición por esta sola. Esa
-   tarjeta llena el 100% de su celda (ver BlogTarjetaPodcastDestacado.
-   module.css), así que aquí hace falta darle una altura real —
-   aspect-ratio en vez de un alto fijo, para que escale bien en
-   cualquier ancho. */
+.parrafo,
+.cita {
+  margin: 0;
+  font-size: var(--text-body);
+  line-height: var(--leading-base);
+  color: var(--color-gris-700);
+}
+
+/* Frase de cierre del capítulo 1: mismo tamaño, solo en tinta. */
+.cita {
+  color: var(--color-tinta);
+}
+
+/* ---------- Imágenes ---------- */
+.figura {
+  margin: 0;
+}
+
+.marco {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-details);
+  border-radius: var(--radius-imagenes);
+}
+
+/* Foto suelta: a su proporción natural. */
+.imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Recuadros con proporción fija (tira, pareja, galería): la foto va en
+   absoluto dentro y recorta con cover — así todas miden lo mismo. */
+.tira .imagen,
+.mediosPareja .imagen,
+.galeria .imagen {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pie {
+  margin-top: var(--spacing-2);
+  font-size: var(--text-caption);
+  line-height: 1.5;
+  color: var(--color-gris-600);
+}
+
+/* Dos fotos lado a lado (capítulo 4). */
+.mediosPareja {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-4);
+}
+.mediosPareja .marco {
+  aspect-ratio: 2 / 3;
+}
+
+/* Fotos una encima de otra (capítulos 4 y 5): cada una a todo el ancho
+   de su columna y a su proporción natural, sin recortar. */
+.mediosApilados {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+/* Cuadrícula 2×2 a todo el ancho del capítulo (capítulo 5). */
+.galeria {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-5) var(--spacing-4);
+  margin-top: var(--spacing-7);
+}
+.galeria .marco {
+  aspect-ratio: 3 / 2;
+}
+
+/* ---------- Cierre ---------- */
+.cierre {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+  max-width: var(--max-texto);
+  margin-inline: auto;
+  padding: var(--spacing-8) var(--spacing-4) var(--spacing-9);
+  text-align: center;
+}
+
+.cierreTitulo {
+  margin: 0;
+  text-wrap: balance; /* en mobile parte en dos líneas parejas, no una larga + una corta */
+  font-size: 1.375rem; /* 19.25px — un poco mayor que --text-h4, a petición (mismo peso medium: semibold quedaba demasiado pesado) */
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: normal;
+  color: var(--color-tinta);
+}
+
+.cierreParrafo {
+  margin: 0;
+  font-size: var(--text-body);
+  line-height: var(--leading-base);
+  color: var(--color-gris-700);
+}
+
+/* ---------- Enlace externo (documental VHS) ----------
+   Una única tarjeta grande (TarjetaEnlaceExterno). Esa tarjeta llena
+   el 100% de su celda, así que aquí hace falta darle una altura real —
+   aspect-ratio en vez de un alto fijo, para que escale bien. */
 .enlacesExternos {
   max-width: 70%;
   margin-inline: auto;
@@ -89,9 +228,67 @@
   aspect-ratio: 16 / 9;
 }
 
-@media (max-width: 767px) {
+/* ---------- Mobile / tablet (igual que AtelierDetalle) ---------- */
+@media (max-width: 1023px) {
+  .capitulos {
+    padding: var(--spacing-7) var(--spacing-4) 0;
+  }
+
+  .capitulo {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-4);
+    max-width: 100%;
+    margin-bottom: var(--spacing-7);
+  }
+
+  /* Apilado: imagen siempre arriba (en la tira, el texto va primero). */
+  .imagenIzquierda .mediosBloque,
+  .imagenDerecha .mediosBloque {
+    order: -1;
+  }
+
+  .texto {
+    padding-inline: 0;
+  }
+
+  .columna .texto,
+  .columna .mediosBloque {
+    width: 100%;
+  }
+
+  /* Tira en mobile: la 1ª a todo el ancho, las otras dos debajo. */
+  .tira .mediosBloque {
+    margin-top: 0;
+  }
+  .tira .medios {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-3);
+  }
+  .tira .figura:first-child {
+    grid-column: 1 / -1;
+  }
+  .tira .figura:first-child .marco {
+    aspect-ratio: 4 / 5;
+  }
+
+  .mediosPareja {
+    gap: var(--spacing-3);
+  }
+
+  .galeria {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-4);
+    margin-top: 0;
+  }
+
+  .cierre {
+    padding: var(--spacing-6) var(--spacing-4) var(--spacing-8);
+  }
+
   .enlacesExternos {
     max-width: none;
-    padding-block: 0 var(--spacing-6);
+    padding: 0 var(--spacing-4) var(--spacing-8);
   }
 }
