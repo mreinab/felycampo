@@ -2,20 +2,22 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Boton from '../ui/Boton';
 import styles from './HeroCarousel.module.css';
 
-// Duración de cada slide: el primero se queda más (8s), el resto rota
-// cada 6s. La barra de progreso recibe la misma duración por inline
+// Duración de cada slide de IMAGEN: el primero se queda más (8s), el
+// resto rota cada 6s. Los de VÍDEO no usan temporizador: duran lo que
+// dura el vídeo (avanzan en su evento "ended", ver más abajo). La barra de progreso recibe la misma duración por inline
 // style (ver .progresoRelleno abajo), así que van siempre sincronizadas.
 const SLIDE_DURATION_MS = 6000;
 const PRIMER_SLIDE_DURATION_MS = 8000;
 const duracionSlide = (index) => (index === 0 ? PRIMER_SLIDE_DURATION_MS : SLIDE_DURATION_MS);
 
 /**
- * Hero a pantalla completa de la home: 3 slides (imagen o vídeo) que
- * rotan solos (8s el primero, 6s el resto). La barra de progreso lineal
+ * Hero a pantalla completa de la home: slides (imagen o vídeo) que
+ * rotan solos — las imágenes 8s el primero y 6s el resto, los vídeos lo
+ * que dure el vídeo entero (de principio a fin, sin bucle). La barra de progreso lineal
  * está oculta (comentada al final del JSX).
  * Encima de cada slide, abajo,
  * una fila con la descripción a la izquierda y el CTA a la derecha. El
@@ -29,22 +31,37 @@ const duracionSlide = (index) => (index === 0 ? PRIMER_SLIDE_DURATION_MS : SLIDE
  */
 function HeroCarousel({ slides }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const videosRef = useRef([]);
+  const siguiente = () => setActiveIndex((actual) => (actual + 1) % slides.length);
 
   useEffect(() => {
-    if (slides.length <= 1) return undefined;
-
+    const hayVarios = slides.length > 1;
     // Accesibilidad: si el sistema pide reducir el movimiento, el
     // carrusel no avanza solo (el usuario puede seguir navegando a mano).
-    const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefiereMenosMovimiento) return undefined;
+    const avanzaSolo = hayVarios && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Solo suena el vídeo del slide activo, y siempre desde el principio
+    // (así dura entero); el resto en pausa.
+    videosRef.current.forEach((video, index) => {
+      if (!video) return;
+      if (index === activeIndex) {
+        video.currentTime = 0;
+        video.loop = !avanzaSolo;
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+
+    if (!avanzaSolo) return undefined;
+    // Slide de vídeo: avanza en su "ended" (ver onEnded), sin temporizador.
+    if (slides[activeIndex].tipo === 'video') return undefined;
 
     // setTimeout por slide (no setInterval): cada uno tiene su duración.
-    const temporizador = setTimeout(() => {
-      setActiveIndex((actual) => (actual + 1) % slides.length);
-    }, duracionSlide(activeIndex));
-
+    const temporizador = setTimeout(siguiente, duracionSlide(activeIndex));
     return () => clearTimeout(temporizador);
-  }, [activeIndex, slides.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex, slides]);
 
   return (
     <section className={styles.hero}>
@@ -58,12 +75,13 @@ function HeroCarousel({ slides }) {
           >
             {slide.tipo === 'video' ? (
               <video
+                ref={(nodo) => { videosRef.current[index] = nodo; }}
                 src={slide.src}
                 className={styles.media}
-                autoPlay
+                autoPlay={activo}
                 muted
-                loop
                 playsInline
+                onEnded={activo ? siguiente : undefined}
               />
             ) : slide.srcMobile ? (
               <picture>

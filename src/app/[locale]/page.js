@@ -85,8 +85,10 @@ const slidesHero = [
     ctaHref: '/sobre-fely',
   },
   {
-    // Mismo vídeo en mobile y escritorio — sin recorte propio.
-    src: '/img/landing/FW27-Hero3.mp4',
+    // Mismo vídeo en mobile y escritorio — sin recorte propio. Antes
+    // FW27-Hero3.mp4 (que sigue en Runway/colecciones), cambiado a
+    // petición.
+    src: '/img/hero-main-felycampo.mp4',
     tipo: 'video',
     ctaHref: '/sobre-fely',
   },
