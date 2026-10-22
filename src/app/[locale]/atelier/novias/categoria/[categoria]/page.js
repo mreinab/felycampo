@@ -44,7 +44,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { locale, categoria } = await params;
   const categoriaActiva = encontrarCategoria(categoria, { esFiesta: ES_FIESTA });
-  return metadataCategoria({ locale, categoriaActiva, seccionKey: SECCION_KEY });
+  return metadataCategoria({ locale, categoriaActiva, seccionKey: SECCION_KEY, seccionHref: SECCION_HREF });
 }
 
 export default async function Pagina({ params }) {
@@ -60,7 +60,7 @@ export default async function Pagina({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductHero
         imagen="/img/novias-sección-FelyCampo3.jpg"
-        titulo={[t('nav.links.atelier'), t(SECCION_KEY)]}
+        titulo={[t(SECCION_KEY), t(`filtros.estiloYSilueta.grupos.${categoriaActiva.grupo}.opciones.${categoriaActiva.opcion}`)]}
       />
       <CuadriculaProductos
         productos={PRODUCTOS_BRIDE_27}

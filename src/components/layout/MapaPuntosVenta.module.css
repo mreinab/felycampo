@@ -228,6 +228,19 @@
   text-transform: uppercase;
 }
 
+/* Líneas del texto de debajo (dirección, teléfono, email) más juntas
+   que el leading-base del título, a petición. El margin-top del primer
+   bloque devuelve la media interlínea que se pierde (diferencia entre
+   leading-base y 1.4, dividida entre dos) para que la separación
+   título → texto quede igual que antes. */
+.puntoTexto {
+  line-height: 1.4;
+}
+
+.puntoNombre + .puntoTexto {
+  margin-top: calc((var(--leading-base) - 1.4) / 2 * 1em);
+}
+
 @media (max-width: 767px) {
   .layout {
     flex-direction: column;

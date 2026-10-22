@@ -77,6 +77,13 @@ const CONTENIDO = {
   },
 };
 
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/legal/cookies' });
+}
+
 export default async function Pagina({ params }) {
   const { locale } = await params;
   const contenido = CONTENIDO[locale] ?? CONTENIDO.es;

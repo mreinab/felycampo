@@ -4,6 +4,12 @@
 import { getTranslations } from 'next-intl/server';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/pret-a-porter/vestidos' });
+}
 
 export default async function Pagina() {
   const t = await getTranslations();

@@ -24,6 +24,7 @@ export { default as CarruselClientas } from './CarruselClientas';
 export { default as NewsletterModal } from './NewsletterModal';
 export { default as NewsletterModalGlobal } from './NewsletterModalGlobal';
 export { default as CookieConsent } from './CookieConsent';
+export { default as Analitica } from './Analitica';
 export { default as BotonWhatsapp } from './BotonWhatsapp';
 export { default as MapaPuntosVenta } from './MapaPuntosVenta';
 export { default as BlogTarjeta } from './BlogTarjeta';

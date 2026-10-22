@@ -12,12 +12,19 @@
    ============================================================ */
 
 import { SplitMedia } from '@/components/layout';
+import { metadataPagina, textosSeo } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/atelier' });
+}
 
 export default async function Pagina({ params }) {
   const { locale } = await params;
 
   return (
     <section>
+      <h1 className="sr-only">{textosSeo('/atelier', locale).h1}</h1>
       <div data-navbar-hero>
         <SplitMedia
           variante="landing"

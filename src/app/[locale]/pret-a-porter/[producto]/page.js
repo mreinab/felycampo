@@ -19,6 +19,7 @@ import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
 import { FichaProductoAcciones, GaleriaProducto, LookPasarela } from '@/components/ecommerce';
 import { Acordeon, FilaAcordeon, Boton } from '@/components/ui';
 import { slugify } from '@/lib/slugify';
+import { metadataPagina, recortar } from '@/lib/seo';
 import styles from './page.module.css';
 
 // Páginas de listado reales (Prêt-à-porter + categorías, Atelier + sus
@@ -27,6 +28,22 @@ import styles from './page.module.css';
 // la visita (ver "Sigue explorando" más abajo) a partir del Referer.
 const RUTAS_TIENDA = ['/pret-a-porter', '/pret-a-porter/tops-y-camisetas', '/pret-a-porter/chaquetas-y-abrigos', '/pret-a-porter/faldas', '/pret-a-porter/pantalones', '/pret-a-porter/vestidos'];
 const RUTAS_ATELIER = ['/atelier', '/atelier/novias', '/atelier/fiesta', '/atelier/vosotras'];
+
+export async function generateMetadata({ params }) {
+  const { locale, producto: slug } = await params;
+  const producto = tiendaProductos.find((candidato) => slugify(candidato.nombre) === slug);
+  if (!producto) return {};
+
+  const esEs = locale === 'es';
+  return metadataPagina({
+    locale,
+    ruta: `/pret-a-porter/${slug}`,
+    titulo: `${producto.nombre} | ${esEs ? 'Prêt-à-porter' : 'Ready-to-wear'} Fely Campo`,
+    descripcion: recortar(`${producto.descripcion} ${esEs ? 'Diseñada y confeccionada en Salamanca. Compra online en Fely Campo.' : 'Designed and made in Salamanca. Shop online at Fely Campo.'}`),
+    imagen: producto.imagen,
+    tipo: 'website',
+  });
+}
 
 export default async function FichaProducto({ params }) {
   const { locale, producto: slug } = await params;

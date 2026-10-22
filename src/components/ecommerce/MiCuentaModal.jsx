@@ -124,7 +124,7 @@ function MiCuentaModal() {
         <div className={styles.formPanel}>
           <div className={styles.formContenedor}>
             <div className={styles.cabecera}>
-              <h1 className={styles.titulo}>{esLogin ? t('tituloLogin') : t('tituloRegistro')}</h1>
+              <h2 className={styles.titulo}>{esLogin ? t('tituloLogin') : t('tituloRegistro')}</h2>
               <p className={styles.subtitulo}>{esLogin ? t('subtituloLogin') : t('subtituloRegistro')}</p>
             </div>
 

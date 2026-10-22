@@ -31,6 +31,7 @@ import { CuadriculaProductos, HeroPagina, RunwayDescripcion, BloqueSeccion, Runw
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { FIESTA_EDITORIAL } from './fiestaEditorial';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
 
 // Colecciones de Fiesta, de la más reciente a la más antigua — mismo
 // orden real en que aparecen los looks en la cuadrícula (ver
@@ -50,6 +51,11 @@ const COLECCIONES_FIESTA = [
 ];
 
 const PRODUCTOS_FIESTA = fiestaProductos.filter((producto) => producto.coleccion !== 'Prêt-à-porter');
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/atelier/fiesta' });
+}
 
 export default async function Pagina({ params, searchParams }) {
   const { locale } = await params;

@@ -331,7 +331,20 @@
     "avisoDatos": "Fill in the required fields and accept the privacy policy to continue.",
     "enviar": "Send request",
     "confirmacionTitulo": "Request sent!",
-    "confirmacionTexto": "Thanks for your interest. Our team will get in touch with you as soon as possible to confirm the day and time of your appointment."
+    "confirmacionTexto": "Thanks for your interest. Our team will get in touch with you as soon as possible to confirm the day and time of your appointment.",
+    "atelier": "Atelier",
+    "atelierPlaceholder": "*Choose an atelier",
+    "tipo": "Your appointment is for",
+    "tipoNovia": "Bride",
+    "tipoInvitada": "Guest",
+    "fechaBoda": "*Wedding date",
+    "enviando": "Sending…",
+    "errorEnvio": "We couldn't send your request. Please try again or email us at info@felycampo.com.",
+    "confirmacionNoviaTitulo": "Your bridal appointment has been requested!",
+    "confirmacionNoviaTexto": "Thank you for trusting Fely Campo with your wedding dress. We've emailed you the details of your request and the atelier team will be in touch to confirm the day and time.",
+    "confirmacionInvitadaTitulo": "Your guest appointment has been requested!",
+    "confirmacionInvitadaTexto": "Thank you for your interest in Fely Campo. We've emailed you the details of your request and the atelier team will be in touch to confirm the day and time.",
+    "volverInicio": "Back to home"
   },
   "escribirResena": {
     "titulo": "Write your review",
@@ -468,7 +481,7 @@
     "novias": "Bridal"
   },
   "atelierCategoriaSeo": {
-    "titulo": "{categoria} · {seccion} · Atelier — Fely Campo",
+    "titulo": "{categoria} · {seccion} · Atelier | Fely Campo",
     "descripcion": "{categoria} style dresses in the {seccion} Atelier collection by Fely Campo. Personalized fitting with our designer."
   },
   "catalogo": {

@@ -21,6 +21,7 @@ import { HeroPagina, TarjetaEnlaceExterno } from '@/components/layout';
 import { EnVista } from '@/components/ui';
 import { SOBRE_FELY } from './sobreFely';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
 
 const CLASE_DISPOSICION = {
   imagenIzquierda: styles.imagenIzquierda,
@@ -84,6 +85,11 @@ function Capitulo({ capitulo, locale }) {
       )}
     </article>
   );
+}
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/sobre-fely' });
 }
 
 export default async function Pagina({ params }) {

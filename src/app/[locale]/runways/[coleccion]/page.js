@@ -30,7 +30,25 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { HeroPagina, RunwayBackstage, RunwayDescripcion, RunwayGaleria, RunwayVideoCierre } from '@/components/layout';
 import { COLECCIONES } from '../../colecciones-fely-campo/colecciones';
+import { metadataPagina, recortar } from '@/lib/seo';
 import styles from './page.module.css';
+
+// Canonical = URL pública /runways-{slug} (la del rewrite de
+// next.config.mjs), no la interna /runways/{slug}.
+export async function generateMetadata({ params }) {
+  const { locale, coleccion: slug } = await params;
+  const coleccion = COLECCIONES.find((candidata) => candidata.slug === slug);
+  if (!coleccion) return {};
+
+  const esEs = locale === 'es';
+  return metadataPagina({
+    locale,
+    ruta: `/runways-${slug}`,
+    titulo: `${coleccion.nombre} ${coleccion.temporada} | ${esEs ? 'Colección de pasarela' : 'Runway collection'} Fely Campo`,
+    descripcion: recortar(coleccion.descripcion),
+    imagen: coleccion.medios?.[0]?.src,
+  });
+}
 
 export default async function Coleccion({ params }) {
   const { coleccion: slug } = await params;

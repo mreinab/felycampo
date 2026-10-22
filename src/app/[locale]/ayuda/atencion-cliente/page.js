@@ -6,6 +6,12 @@
 
 import { getTranslations } from 'next-intl/server';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/ayuda/atencion-cliente' });
+}
 
 export default async function Pagina() {
   const t = await getTranslations('atencionCliente');

@@ -57,11 +57,7 @@ export const FOTOS_INVITADAS = [
   // (fila 4, columnas 1-3), 32 y 31 (las últimas). Las fotos siguen en
   // public/img/Clientes/CLIENTAS/.
   ['13-03', '13-01', '13-02'], // 13-03 de portada, a petición
-  ['16-01'],
-  ['19-01', '19-02'],
-  ['20-05', '20-01', '20-02', '20-03'], // 20-05 de portada, a petición
-  ['14-01'], // bajado una fila a petición (antes 3ª casilla)
-  ['21-01', '21-02'],
+  // 16, 19, 20, 14 y 21 (antes casillas 4-8) movidos al final, a petición.
   ['30-01', '30-02', '30-03'],
   [
     `${RUTA_INVITADAS}/vosotras-felycampo-fiesta.jpeg`,
@@ -78,6 +74,12 @@ export const FOTOS_INVITADAS = [
   // 1 a la 14, pero en la carpeta solo están la 1, 12, 13 y 14 — añadir
   // aquí el número de las que falten (2-11) cuando se suban.
   [1, 12, 13, 14].map((n) => `${RUTA_INVITADAS}/vosotras-felycampo-madrinas-look-${n}.jpeg`),
+  // Antes casillas 4-8 — al final de la cuadrícula a petición, mismo orden.
+  ['16-01'],
+  ['19-01', '19-02'],
+  ['20-05', '20-01', '20-02', '20-03'], // 20-05 de portada, a petición
+  ['14-01'],
+  ['21-01', '21-02'],
 ].map((grupo) => grupo.map((sufijo) => sufijo.startsWith('/') ? sufijo : `${RUTA_INVITADAS}/nuestras-invitadas-felycampo-${sufijo}.${sufijo === '30-01' ? 'png' : 'jpg'}`));
 
 export const FOTOS_NOVIAS = [

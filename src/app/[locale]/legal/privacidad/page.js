@@ -1,5 +1,12 @@
 /* Placeholder — pendiente de maquetar. Ruta: /legal/privacidad */
 
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/legal/privacidad' });
+}
+
 export default function Pagina() {
   return (
     <section className="seccion contenedor">

@@ -7,17 +7,26 @@
    completa por encima del Navbar, con una foto al 50% a la izquierda y
    una X para cerrar (calcada de MiCuentaModal); quitadas a petición.
 
-   Un único formulario pequeño: nombre completo, email y teléfono de
-   contacto, fecha del evento (opcional, día/mes/año en selects propios
-   — no <input type="date">, a petición), código postal, ciudad,
-   mensaje libre y la casilla de aceptar privacidad/términos
-   (obligatoria). "Enviar solicitud" pasa a una pantalla de
-   confirmación — PLACEHOLDER a propósito, sin backend real todavía
-   (mismo criterio que ModalSolicitudAtelier.jsx). */
+   Un único formulario pequeño: atelier (Salamanca/Madrid/Oviedo —
+   preseleccionado si se llega con ?ubicacion=<id>, ver
+   ListadoUbicaciones.jsx/AtelierDetalle.jsx), tipo de cita (novia o
+   invitada), nombre completo, email y teléfono de contacto, fecha de la
+   boda (obligatoria, día/mes/año en selects propios — no
+   <input type="date">, a petición), código postal, ciudad, mensaje
+   libre y la casilla de aceptar privacidad/términos (obligatoria).
 
-import { useState } from 'react';
+   "Enviar solicitud" manda los datos a /api/cita (email de confirmación
+   a la clienta + aviso al equipo del atelier, ver src/app/api/cita/
+   route.js) y, si va bien, registra la conversión (src/lib/analitica.js)
+   y lleva a la página de confirmación de su tipo:
+   ./confirmacion-novia o ./confirmacion-invitada. */
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { Boton, Input } from '@/components/ui';
+import { ATELIERES_CITA, TIPOS_CITA, rutaConfirmacionCita } from '@/lib/citaAtelier';
+import { registrarConversionCita } from '@/lib/analitica';
 import styles from './page.module.css';
 
 // Nombres de mes propios (no hay diccionario de meses en messages/
@@ -38,8 +47,11 @@ const ANIOS = Array.from({ length: 4 }, (_, i) => ANIO_ACTUAL + i);
 export default function Pagina() {
   const t = useTranslations('pedirCitaAtelier');
   const locale = useLocale();
+  const router = useRouter();
   const meses = MESES[locale] || MESES.es;
 
+  const [atelier, setAtelier] = useState('');
+  const [tipo, setTipo] = useState('');
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [email, setEmail] = useState('');
   const [telefono, setTelefono] = useState('');
@@ -51,161 +63,234 @@ export default function Pagina() {
   const [mensaje, setMensaje] = useState('');
   const [aceptaLegal, setAceptaLegal] = useState(false);
   const [avisoDatos, setAvisoDatos] = useState(false);
-  const [enviado, setEnviado] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [errorEnvio, setErrorEnvio] = useState(false);
+  // Campo trampa para bots — oculto, una persona nunca lo rellena (ver
+  // api/cita/route.js).
+  const [web, setWeb] = useState('');
+
+  // ?ubicacion=<id> (enlaces "Pedir cita" de cada atelier) preselecciona
+  // el atelier. En un efecto y no con useSearchParams: así la página no
+  // necesita un <Suspense> alrededor para el render estático.
+  useEffect(() => {
+    const ubicacion = new URLSearchParams(window.location.search).get('ubicacion');
+    if (ATELIERES_CITA.some((opcion) => opcion.id === ubicacion)) setAtelier(ubicacion);
+  }, []);
 
   const withLocale = (href) => `/${locale}${href}`;
+  const conLimpieza = (setter) => (evento) => { setter(evento.target.value); setAvisoDatos(false); };
 
-  const alEnviar = (evento) => {
+  const fechaBoda = fechaDia && fechaMes && fechaAnio
+    ? `${fechaAnio}-${String(fechaMes).padStart(2, '0')}-${String(fechaDia).padStart(2, '0')}`
+    : '';
+
+  const alEnviar = async (evento) => {
     evento.preventDefault();
-    if (!nombreCompleto.trim() || !email.trim() || !telefono.trim() || !codigoPostal.trim() || !ciudad.trim() || !aceptaLegal) {
+    if (enviando) return;
+    if (!atelier || !tipo || !fechaBoda || !nombreCompleto.trim() || !email.trim() || !telefono.trim() || !codigoPostal.trim() || !ciudad.trim() || !aceptaLegal) {
       setAvisoDatos(true);
       return;
     }
-    // Placeholder — sin backend real todavía, ver comentario de cabecera.
-    setEnviado(true);
+
+    setEnviando(true);
+    setErrorEnvio(false);
+    try {
+      const respuesta = await fetch('/api/cita', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          locale, atelier, tipo, fechaBoda, nombreCompleto, email, telefono, codigoPostal, ciudad, mensaje, aceptaLegal, web,
+        }),
+      });
+      const resultado = await respuesta.json().catch(() => ({}));
+      if (!respuesta.ok || !resultado.ok) {
+        // 422 = datos no válidos según el servidor (ej. fecha pasada).
+        if (respuesta.status === 422) setAvisoDatos(true);
+        else setErrorEnvio(true);
+        setEnviando(false);
+        return;
+      }
+      registrarConversionCita({ tipo, atelier });
+      router.push(withLocale(rutaConfirmacionCita(tipo)));
+    } catch {
+      setErrorEnvio(true);
+      setEnviando(false);
+    }
   };
 
   return (
     <div className={styles.pagina}>
       <div className={styles.formContenedor}>
-        {enviado ? (
-          <div className={styles.confirmacion}>
-            <h1 className={styles.titulo}>{t('confirmacionTitulo')}</h1>
-            <p className={styles.dondeIntro}>{t('confirmacionTexto')}</p>
+        <form className={styles.form} onSubmit={alEnviar} noValidate>
+          <div className={styles.cabecera}>
+            <h1 className={styles.titulo}>{t('titulo')}</h1>
+            <p className={styles.subtitulo}>{t('subtitulo')}</p>
           </div>
-        ) : (
-          <form className={styles.form} onSubmit={alEnviar}>
-            <div className={styles.cabecera}>
-              <h1 className={styles.titulo}>{t('titulo')}</h1>
-              <p className={styles.subtitulo}>{t('subtitulo')}</p>
-            </div>
 
-            {/* "*" delante del placeholder = campo obligatorio (los mismos
-                que comprueba alEnviar). */}
+          <label className={styles.campo}>
+            <span className={styles.etiquetaOculta}>{t('atelier')}</span>
+            <select
+              className={styles.select}
+              value={atelier}
+              onChange={conLimpieza(setAtelier)}
+              required
+            >
+              <option value="">{t('atelierPlaceholder')}</option>
+              {ATELIERES_CITA.map((opcion) => (
+                <option key={opcion.id} value={opcion.id}>{opcion.nombre}</option>
+              ))}
+            </select>
+          </label>
+
+          <fieldset className={styles.tipoFila}>
+            <legend className={styles.etiqueta}>*{t('tipo')}</legend>
+            {TIPOS_CITA.map((opcion) => (
+              <label key={opcion} className={styles.tipoOpcion}>
+                <input
+                  type="radio"
+                  name="tipo"
+                  value={opcion}
+                  className={styles.legalCheckbox}
+                  checked={tipo === opcion}
+                  onChange={conLimpieza(setTipo)}
+                />
+                <span>{t(opcion === 'novia' ? 'tipoNovia' : 'tipoInvitada')}</span>
+              </label>
+            ))}
+          </fieldset>
+
+          <div className={styles.trampa} aria-hidden="true">
+            <input type="text" name="web" tabIndex={-1} autoComplete="off" value={web} onChange={(evento) => setWeb(evento.target.value)} />
+          </div>
+
+          {/* "*" delante del placeholder = campo obligatorio (los mismos
+              que comprueba alEnviar). */}
+          <Input
+            etiqueta={t('nombreCompleto')}
+            etiquetaOculta
+            nombre="nombreCompleto"
+            placeholder={`*${t('nombreCompleto')}`}
+            valor={nombreCompleto}
+            onChange={(evento) => { setNombreCompleto(evento.target.value); setAvisoDatos(false); }}
+          />
+          <Input
+            etiqueta={t('email')}
+            etiquetaOculta
+            tipo="email"
+            nombre="email"
+            placeholder={`*${t('email')}`}
+            valor={email}
+            onChange={(evento) => { setEmail(evento.target.value); setAvisoDatos(false); }}
+          />
+          <Input
+            etiqueta={t('telefono')}
+            etiquetaOculta
+            tipo="tel"
+            nombre="telefono"
+            placeholder={`*${t('telefono')}`}
+            valor={telefono}
+            onChange={(evento) => { setTelefono(evento.target.value); setAvisoDatos(false); }}
+          />
+
+          <div className={styles.campo}>
+            <span className={styles.etiqueta}>{t('fechaBoda')}</span>
+            <div className={styles.fechaFila}>
+              <select
+                className={styles.select}
+                aria-label={t('dia')}
+                value={fechaDia}
+                onChange={conLimpieza(setFechaDia)}
+              >
+                <option value="">{t('dia')}</option>
+                {DIAS.map((dia) => (
+                  <option key={dia} value={dia}>{dia}</option>
+                ))}
+              </select>
+              <select
+                className={styles.select}
+                aria-label={t('mes')}
+                value={fechaMes}
+                onChange={conLimpieza(setFechaMes)}
+              >
+                <option value="">{t('mes')}</option>
+                {meses.map((nombreMes, indice) => (
+                  <option key={nombreMes} value={indice + 1}>{nombreMes}</option>
+                ))}
+              </select>
+              <select
+                className={styles.select}
+                aria-label={t('anio')}
+                value={fechaAnio}
+                onChange={conLimpieza(setFechaAnio)}
+              >
+                <option value="">{t('anio')}</option>
+                {ANIOS.map((anio) => (
+                  <option key={anio} value={anio}>{anio}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className={styles.fila2Columnas}>
             <Input
-              etiqueta={t('nombreCompleto')}
+              etiqueta={t('codigoPostal')}
               etiquetaOculta
-              nombre="nombreCompleto"
-              placeholder={`*${t('nombreCompleto')}`}
-              valor={nombreCompleto}
-              onChange={(evento) => { setNombreCompleto(evento.target.value); setAvisoDatos(false); }}
+              nombre="codigoPostal"
+              placeholder={`*${t('codigoPostal')}`}
+              valor={codigoPostal}
+              onChange={(evento) => { setCodigoPostal(evento.target.value); setAvisoDatos(false); }}
             />
             <Input
-              etiqueta={t('email')}
+              etiqueta={t('ciudad')}
               etiquetaOculta
-              tipo="email"
-              nombre="email"
-              placeholder={`*${t('email')}`}
-              valor={email}
-              onChange={(evento) => { setEmail(evento.target.value); setAvisoDatos(false); }}
+              nombre="ciudad"
+              placeholder={`*${t('ciudad')}`}
+              valor={ciudad}
+              onChange={(evento) => { setCiudad(evento.target.value); setAvisoDatos(false); }}
             />
-            <Input
-              etiqueta={t('telefono')}
-              etiquetaOculta
-              tipo="tel"
-              nombre="telefono"
-              placeholder={`*${t('telefono')}`}
-              valor={telefono}
-              onChange={(evento) => { setTelefono(evento.target.value); setAvisoDatos(false); }}
+          </div>
+
+          <label className={styles.campo}>
+            <span className={styles.etiquetaOculta}>{t('mensaje')}</span>
+            <textarea
+              className={styles.textarea}
+              placeholder={t('mensaje')}
+              value={mensaje}
+              onChange={(evento) => setMensaje(evento.target.value)}
+              rows={3}
             />
+          </label>
 
-            <div className={styles.campo}>
-              <span className={styles.etiqueta}>{t('fechaEvento')}</span>
-              <div className={styles.fechaFila}>
-                <select
-                  className={styles.select}
-                  aria-label={t('dia')}
-                  value={fechaDia}
-                  onChange={(evento) => setFechaDia(evento.target.value)}
-                >
-                  <option value="">{t('dia')}</option>
-                  {DIAS.map((dia) => (
-                    <option key={dia} value={dia}>{dia}</option>
-                  ))}
-                </select>
-                <select
-                  className={styles.select}
-                  aria-label={t('mes')}
-                  value={fechaMes}
-                  onChange={(evento) => setFechaMes(evento.target.value)}
-                >
-                  <option value="">{t('mes')}</option>
-                  {meses.map((nombreMes, indice) => (
-                    <option key={nombreMes} value={indice + 1}>{nombreMes}</option>
-                  ))}
-                </select>
-                <select
-                  className={styles.select}
-                  aria-label={t('anio')}
-                  value={fechaAnio}
-                  onChange={(evento) => setFechaAnio(evento.target.value)}
-                >
-                  <option value="">{t('anio')}</option>
-                  {ANIOS.map((anio) => (
-                    <option key={anio} value={anio}>{anio}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
+          <label className={styles.legalFila}>
+            <input
+              type="checkbox"
+              className={styles.legalCheckbox}
+              checked={aceptaLegal}
+              onChange={(evento) => { setAceptaLegal(evento.target.checked); setAvisoDatos(false); }}
+            />
+            <span className={styles.legalTexto}>
+              {t.rich('aceptoLegal', {
+                privacidad: (chunks) => (
+                  <a href={withLocale('/legal/privacidad')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
+                    {chunks}
+                  </a>
+                ),
+                terminos: (chunks) => (
+                  <a href={withLocale('/legal/terminos')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
+                    {chunks}
+                  </a>
+                ),
+              })}
+            </span>
+          </label>
 
-            <div className={styles.fila2Columnas}>
-              <Input
-                etiqueta={t('codigoPostal')}
-                etiquetaOculta
-                nombre="codigoPostal"
-                placeholder={`*${t('codigoPostal')}`}
-                valor={codigoPostal}
-                onChange={(evento) => { setCodigoPostal(evento.target.value); setAvisoDatos(false); }}
-              />
-              <Input
-                etiqueta={t('ciudad')}
-                etiquetaOculta
-                nombre="ciudad"
-                placeholder={`*${t('ciudad')}`}
-                valor={ciudad}
-                onChange={(evento) => { setCiudad(evento.target.value); setAvisoDatos(false); }}
-              />
-            </div>
+          {avisoDatos && <p className={styles.aviso} role="alert">{t('avisoDatos')}</p>}
+          {errorEnvio && <p className={styles.aviso} role="alert">{t('errorEnvio')}</p>}
 
-            <label className={styles.campo}>
-              <span className={styles.etiquetaOculta}>{t('mensaje')}</span>
-              <textarea
-                className={styles.textarea}
-                placeholder={t('mensaje')}
-                value={mensaje}
-                onChange={(evento) => setMensaje(evento.target.value)}
-                rows={3}
-              />
-            </label>
-
-            <label className={styles.legalFila}>
-              <input
-                type="checkbox"
-                className={styles.legalCheckbox}
-                checked={aceptaLegal}
-                onChange={(evento) => { setAceptaLegal(evento.target.checked); setAvisoDatos(false); }}
-              />
-              <span className={styles.legalTexto}>
-                {t.rich('aceptoLegal', {
-                  privacidad: (chunks) => (
-                    <a href={withLocale('/legal/privacidad')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
-                      {chunks}
-                    </a>
-                  ),
-                  terminos: (chunks) => (
-                    <a href={withLocale('/legal/terminos')} className={styles.legalEnlace} target="_blank" rel="noopener noreferrer">
-                      {chunks}
-                    </a>
-                  ),
-                })}
-              </span>
-            </label>
-
-            {avisoDatos && <p className={styles.aviso}>{t('avisoDatos')}</p>}
-
-            <Boton variante="solido" tamano="full" type="submit">{t('enviar')}</Boton>
-          </form>
-        )}
+          <Boton variante="solido" tamano="full" type="submit" desactivado={enviando}>
+            {enviando ? t('enviando') : t('enviar')}
+          </Boton>
+        </form>
       </div>
     </div>
   );

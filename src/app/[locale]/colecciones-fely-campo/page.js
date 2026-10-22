@@ -12,6 +12,12 @@ import { getTranslations } from 'next-intl/server';
 import { HeroPagina, RunwayTarjeta } from '@/components/layout';
 import { COLECCIONES } from './colecciones';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/colecciones-fely-campo' });
+}
 
 export default async function Pagina({ params }) {
   const { locale } = await params;

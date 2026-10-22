@@ -14,6 +14,23 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { BlogArticulo, BlogCampana, BlogPodcast } from '@/components/layout';
 import { entradaPorSlug } from '../blog';
+import { metadataPagina, recortar } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale, entrada: slug } = await params;
+  const entrada = entradaPorSlug(slug);
+  if (!entrada) return {};
+
+  const titulo = entrada.titulo?.[locale] || entrada.titulo?.es;
+  return metadataPagina({
+    locale,
+    ruta: `/podcast/${slug}`,
+    titulo: `${titulo} | Blog Fely Campo`,
+    descripcion: recortar(entrada.resumen?.[locale] || entrada.resumen?.es),
+    imagen: entrada.imagenCubierta,
+    tipo: 'article',
+  });
+}
 
 export default async function Entrada({ params }) {
   const { locale, entrada: slug } = await params;

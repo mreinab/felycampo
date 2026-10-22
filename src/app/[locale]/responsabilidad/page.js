@@ -16,6 +16,12 @@ import { getTranslations } from 'next-intl/server';
 import { HeroPagina, RunwayDescripcion } from '@/components/layout';
 import { RESPONSABILIDAD } from './responsabilidad';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/responsabilidad' });
+}
 
 export default async function Pagina({ params }) {
   const { locale } = await params;

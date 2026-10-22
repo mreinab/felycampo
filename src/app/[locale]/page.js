@@ -13,6 +13,7 @@ import { Boton, EnVista } from '@/components/ui';
 import cuadriculaStyles from '@/components/layout/CuadriculaProductos.module.css';
 import { ATELIERES } from './atelier-fiesta/atelieres';
 import styles from './page.module.css';
+import { metadataPagina, textosSeo } from '@/lib/seo';
 
 // Bloque "Pedir cita" de la landing: una columna por atelier, en este
 // orden. Foto = la del hero de su propia ficha (/atelier-fiesta/[id],
@@ -94,6 +95,11 @@ const slidesHero = [
   },
 ];
 
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/' });
+}
+
 export default async function Home({ params }) {
   const { locale } = await params;
   const tHero = await getTranslations('heroCarousel');
@@ -117,6 +123,7 @@ export default async function Home({ params }) {
 
   return (
     <div className={styles.landing}>
+      <h1 className="sr-only">{textosSeo('/', locale).h1}</h1>
       <HeroCarousel slides={slidesConLocale} />
 
       {/* Misma .seccion que usaba CuadriculaProductos (reutilizada tal

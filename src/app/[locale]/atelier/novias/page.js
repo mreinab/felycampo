@@ -35,8 +35,14 @@ import { BloqueSeccion, /* CuadriculaProductos, */ HeroPagina, RunwayBackstage, 
 // import { noviaProductos } from '@/components/layout/noviaProductos';
 import { NOVIA_EDITORIAL } from './noviaEditorial';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
 
 // const PRODUCTOS_BRIDE_27 = noviaProductos.filter((producto) => producto.coleccion === 'Bride 27');
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/atelier/novias' });
+}
 
 export default async function Pagina({ params }) {
   const { locale } = await params;

@@ -16,12 +16,18 @@ import { HeroPagina, RunwayDescripcion } from '@/components/layout';
 import { CarruselImagenes } from '@/components/ui';
 import { TALLERES } from './talleres';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
 
 // El único vídeo del carrusel (taller-inhouse, ver talleres.js) se
 // distingue de las fotos por extensión — "medios" sigue siendo un
 // array de strings (no {tipo, src} como en atelier-fiesta), así que
 // no hace falta tocar el resto de talleres (todo fotos) para esto.
 const esVideo = (src) => /\.(mp4|webm|mov)$/i.test(src);
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/talleres-fely-campo' });
+}
 
 export default async function Pagina({ params }) {
   const { locale } = await params;

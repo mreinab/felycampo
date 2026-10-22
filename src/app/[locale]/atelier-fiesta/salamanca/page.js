@@ -4,6 +4,12 @@
 
 import AtelierDetalle from '../AtelierDetalle';
 import { ATELIERES } from '../atelieres';
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/atelier-fiesta/salamanca' });
+}
 
 export default async function Pagina({ params }) {
   const { locale } = await params;

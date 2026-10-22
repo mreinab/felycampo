@@ -392,3 +392,18 @@ img { display: block; max-width: 100%; height: auto; }
 .texto-legible {
    max-width: var(--max-texto); 
 }
+/* Solo para lectores de pantalla y buscadores — mismo patrón que
+   .etiquetaOculta de Input.module.css. Lo usan los <h1> de las páginas
+   cuyo título visible es una imagen o una cuadrícula (home, Atelier,
+   Vosotras, carrito, wishlist): cada página necesita un H1 propio. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

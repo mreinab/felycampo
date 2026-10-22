@@ -22,7 +22,7 @@ import styles from './SplitMedia.module.css';
  * <div>, no un <a>: la imagen deja de ser clicable por sí sola, solo
  * el CTA (enlace real) navega. Evita anidar <a> dentro de <a>.
  * variante="landing": sin gap entre piezas (ver .grid.landing) y sin
- * etiqueta — fila inferior con el <h1> a la izquierda y el CTA (siempre
+ * etiqueta — fila inferior con el <h2> a la izquierda (no <h1>: hay varias piezas por página y el H1 lo pone cada página) y el CTA (siempre
  * visible) en la esquina derecha, sobre un degradado de abajo arriba.
  * Como "etiqueta": toda la pieza es un único <a> clicable (href en la
  * pieza, no en el CTA — Boton sin href renderiza un <span>, solo
@@ -61,7 +61,7 @@ function Pieza({ item, esImageTitle, esLanding, esClicableComoImagen, t }) {
             />
           ) : esLanding ? (
             <>
-              {item.tituloKey && <h1 className={styles.tituloLanding}>{t(item.tituloKey)}</h1>}
+              {item.tituloKey && <h2 className={styles.tituloLanding}>{t(item.tituloKey)}</h2>}
               {item.ctaKey && (
                 <Boton variante="texto" className={styles.cta}>{t(item.ctaKey)}</Boton>
               )}

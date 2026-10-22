@@ -14,6 +14,12 @@ import { getTranslations } from 'next-intl/server';
 import { BlogTarjetaPodcastDestacado, HeroPagina /* , BlogTarjeta */ } from '@/components/layout';
 import { BLOG_ENTRADAS } from './blog';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/podcast' });
+}
 
 export default async function Pagina({ params }) {
   const { locale } = await params;

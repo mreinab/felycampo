@@ -8,6 +8,12 @@
    carrito). */
 
 import { FichaProductoAtelier } from '@/components/ecommerce';
+import { metadataProductoAtelier } from '@/lib/atelierProductoSeo';
+
+export async function generateMetadata({ params }) {
+  const { locale, producto: slug } = await params;
+  return metadataProductoAtelier({ locale, slug, seccion: 'fiesta' });
+}
 
 export default async function Pagina({ params }) {
   const { locale, producto: slug } = await params;

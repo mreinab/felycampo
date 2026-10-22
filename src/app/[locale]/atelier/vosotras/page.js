@@ -19,10 +19,18 @@
    que la página la monte aparte. */
 
 import { GaleriaVosotras } from '@/components/layout';
+import { metadataPagina, textosSeo } from '@/lib/seo';
 
-export default function Pagina() {
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/atelier/vosotras' });
+}
+
+export default async function Pagina({ params }) {
+  const { locale } = await params;
   return (
     <section className="seccion">
+      <h1 className="sr-only">{textosSeo('/atelier/vosotras', locale).h1}</h1>
       <GaleriaVosotras
         titleKey="nav.submenus.atelier.vosotras"
         descriptionKey="vosotras.descripcion"

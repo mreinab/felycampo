@@ -42,11 +42,10 @@
    SALIDA_SUAVE_MS, el tiempo que tarda esa animación en verse
    completa (respeta prefers-reduced-motion saltándose la espera).
 
-   Este componente NO activa/desactiva ningún script real (no hay
-   analítica/marketing de terceros integrado todavía en el sitio) —
-   solo guarda la preferencia, para cuando lo haya. Mismo criterio de
-   "placeholder a propósito" que el resto del sitio sin backend real
-   (ver suscribirNewsletter en Footer.jsx). */
+   Guarda la preferencia y la aplica al momento vía
+   window.fcAplicarConsentimiento (definida en Analitica.jsx): Consent
+   Mode de GTM para "Analíticas"/"Marketing" y carga del píxel de Meta
+   solo con "Marketing". */
 
 import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -78,6 +77,9 @@ function guardarConsentimiento(preferencias) {
     // localStorage no disponible — la decisión no persiste entre
     // visitas, pero el aviso de esta ya se cierra igual.
   }
+  // Aplica la elección al momento (Consent Mode de GTM + píxel de Meta)
+  // — ver Analitica.jsx. No existe si no hay IDs de tracking configurados.
+  window.fcAplicarConsentimiento?.(preferencias);
 }
 
 function CookieConsent() {

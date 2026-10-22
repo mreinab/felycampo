@@ -10,7 +10,8 @@ import { headers } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
-import { Navbar, Footer, NewsletterModalGlobal, CookieConsent, BotonWhatsapp } from '@/components/layout';
+import { Navbar, Footer, NewsletterModalGlobal, CookieConsent, BotonWhatsapp, Analitica } from '@/components/layout';
+import { SITE_URL, SITIO_INDEXABLE } from '@/lib/seo';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
@@ -49,9 +50,22 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/ayuda/contacto',
 ];
 
+// Valores por defecto de SEO para todo el sitio — cada página pone los
+// suyos (title, description, canonical, hreflang) con metadataPagina()
+// de src/lib/seo.js. Aquí solo: dominio base (para que las URLs
+// relativas de Open Graph salgan absolutas), plantilla de título para
+// las pocas páginas que no lo fijan, y el noindex GLOBAL mientras
+// SITIO_INDEXABLE no sea "true" (entorno de pruebas) — gana a cualquier
+// "index" de una página concreta porque esas nunca lo declaran en
+// positivo, solo el noindex de las privadas.
 export const metadata = {
-  title: 'Fely Campo · Moda de fiesta y novia',
-  description: 'Firma de moda femenina fundada en Salamanca en 1997. Colecciones de fiesta y novia, prêt-à-porter y costura a medida.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Fely Campo | Vestidos de novia y fiesta a medida',
+    template: '%s | Fely Campo',
+  },
+  description: 'Firma de moda femenina nacida en Salamanca. Vestidos de novia y fiesta a medida en Salamanca, Madrid y Oviedo, y prêt-à-porter online.',
+  ...(SITIO_INDEXABLE ? {} : { robots: { index: false, follow: false } }),
   icons: {
     icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23E92174'/%3E%3C/svg%3E",
   },
@@ -135,6 +149,7 @@ export default async function RootLayout({ children, params }) {
           que styleguide.html) — si más adelante se prefiere optimizarla con
           next/font/google, este es el sitio donde se sustituiría. */}
       <body>
+        <Analitica />
         <NextIntlClientProvider messages={messages}>
           <CarritoProvider>
             <MiCuentaProvider>

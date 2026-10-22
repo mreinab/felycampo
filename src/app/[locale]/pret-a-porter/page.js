@@ -31,6 +31,7 @@ import { CabeceraSeccion } from '@/components/ui';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { PRET_A_PORTER_EDITORIAL } from './pretAPorterEditorial';
 import styles from './page.module.css';
+import { metadataPagina, textosSeo } from '@/lib/seo';
 
 // Hero: carrusel infinito de looks FW27 (recortes PNG con fondo
 // transparente) en vez de una sola foto — se mueve solo, sin fin. Orden
@@ -87,6 +88,11 @@ const PRODUCTOS_CON_PASARELA = tiendaProductos
   })
   .sort((a, b) => posicion(a) - posicion(b));
 
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/pret-a-porter' });
+}
+
 export default async function Pagina({ params }) {
   const { locale } = await params;
   const t = await getTranslations();
@@ -99,6 +105,7 @@ export default async function Pagina({ params }) {
           centrado, con la misma cabecera que las páginas de categoría
           de Atelier (CabeceraSeccion enCuadricula + alinear="start",
           la que pinta CuadriculaProductos allí). */}
+      <h1 className="sr-only">{textosSeo('/pret-a-porter', locale).h1}</h1>
       <HeroPagina
         tono="oscuro"
         className={styles.heroCarrusel}

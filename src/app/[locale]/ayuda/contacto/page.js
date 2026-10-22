@@ -20,6 +20,12 @@ import { getTranslations } from 'next-intl/server';
 import { ProductHero } from '@/components/layout';
 import { Boton } from '@/components/ui';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/ayuda/contacto' });
+}
 
 export default async function Pagina({ params }) {
   const { locale } = await params;

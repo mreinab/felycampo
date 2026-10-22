@@ -13,6 +13,12 @@ import { getTranslations } from 'next-intl/server';
 import { MapaPuntosVenta, ProductHero } from '@/components/layout';
 import ListadoUbicaciones from './ListadoUbicaciones';
 import styles from './page.module.css';
+import { metadataPagina } from '@/lib/seo';
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return metadataPagina({ locale, ruta: '/visita-fely-campo' });
+}
 
 export default async function Pagina({ params }) {
   const { locale } = await params;

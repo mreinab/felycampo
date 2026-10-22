@@ -9,12 +9,10 @@
 // page.js (ahí la duplicación es solo la lista de COLECCIONES_*, poca
 // cosa; aquí es lógica de verdad: traducciones + estructura de datos).
 //
-// URLs del JSON-LD: relativas ("/es/atelier/novias"), no absolutas —
-// el sitio todavía no define un dominio/metadataBase (ver
-// src/app/[locale]/layout.js), así que no hay con qué construir una
-// absoluta sin inventárnosla. Anteponer el dominio aquí en cuanto se
-// fije uno (Google prefiere itemListElement.item absoluto).
+// URLs del JSON-LD absolutas, con el dominio de SITE_URL (src/lib/seo.js)
+// — Google prefiere itemListElement.item absoluto.
 import { getTranslations } from 'next-intl/server';
+import { metadataPagina, urlAbsoluta } from './seo';
 import { GRUPOS_ESTILO_SILUETA } from '@/components/layout/estiloSiluetaGrupos';
 
 // generateStaticParams: todas las opciones válidas para la sección —
@@ -30,17 +28,19 @@ export function parametrosCategoria(esFiesta) {
 // {} si "categoriaActiva" es null (slug inválido) — la página hace
 // notFound() aparte, esto solo evita un <title> con {categoria} sin
 // interpolar mientras tanto.
-export async function metadataCategoria({ locale, categoriaActiva, seccionKey }) {
+export async function metadataCategoria({ locale, categoriaActiva, seccionKey, seccionHref }) {
   if (!categoriaActiva) return {};
 
   const t = await getTranslations({ locale });
   const categoria = t(`filtros.estiloYSilueta.grupos.${categoriaActiva.grupo}.opciones.${categoriaActiva.opcion}`);
   const seccion = t(seccionKey);
 
-  return {
-    title: t('atelierCategoriaSeo.titulo', { categoria, seccion }),
-    description: t('atelierCategoriaSeo.descripcion', { categoria, seccion }),
-  };
+  return metadataPagina({
+    locale,
+    ruta: `/${seccionHref}/categoria/${categoriaActiva.opcion}`,
+    titulo: t('atelierCategoriaSeo.titulo', { categoria, seccion }),
+    descripcion: t('atelierCategoriaSeo.descripcion', { categoria, seccion }),
+  });
 }
 
 // BreadcrumbList (schema.org) — mismos tres tramos que la miga de pan
@@ -55,8 +55,8 @@ export async function breadcrumbJsonLd({ locale, seccionKey, seccionHref, catego
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: t('nav.links.atelier'), item: `/${locale}/atelier` },
-      { '@type': 'ListItem', position: 2, name: t(seccionKey), item: `/${locale}/${seccionHref}` },
+      { '@type': 'ListItem', position: 1, name: t('nav.links.atelier'), item: urlAbsoluta(`/${locale}/atelier`) },
+      { '@type': 'ListItem', position: 2, name: t(seccionKey), item: urlAbsoluta(`/${locale}/${seccionHref}`) },
       { '@type': 'ListItem', position: 3, name: categoria },
     ],
   };

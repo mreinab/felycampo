@@ -29,6 +29,7 @@
 
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
+import { textosSeo } from '@/lib/seo';
 import { Heart } from 'lucide-react';
 import { Boton, CabeceraSeccion } from '@/components/ui';
 import { TarjetaWishlist } from '@/components/ecommerce';
@@ -51,6 +52,7 @@ export default function Pagina() {
 
   return (
     <section className="seccion contenedor wishlist">
+      <h1 className="sr-only">{textosSeo('/wishlist', locale).h1}</h1>
       {items.length === 0 ? (
         <div className={styles.vacio}>
           <Heart className={styles.vacioIcono} strokeWidth={1} />

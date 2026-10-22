@@ -45,7 +45,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { locale, categoria } = await params;
   const categoriaActiva = encontrarCategoria(categoria, { esFiesta: ES_FIESTA });
-  return metadataCategoria({ locale, categoriaActiva, seccionKey: SECCION_KEY });
+  return metadataCategoria({ locale, categoriaActiva, seccionKey: SECCION_KEY, seccionHref: SECCION_HREF });
 }
 
 export default async function Pagina({ params }) {
@@ -65,7 +65,7 @@ export default async function Pagina({ params }) {
       <HeroPagina
         imagen="/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg"
         alt={t(SECCION_KEY)}
-        titulo={[t('nav.links.atelier'), t(SECCION_KEY)]}
+        titulo={[t(SECCION_KEY), t(`filtros.estiloYSilueta.grupos.${categoriaActiva.grupo}.opciones.${categoriaActiva.opcion}`)]}
         subtitulo={t('heroPagina.atelierFiesta')}
       />
       <CuadriculaProductos

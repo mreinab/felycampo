@@ -255,3 +255,41 @@
     padding: var(--spacing-6) var(--spacing-6) var(--spacing-8); /* laterales antes --spacing-4, más aire a petición */
   }
 }
+
+/* Tipo de cita (novia/invitada): dos opciones en fila, mismo cuadrado
+   que la casilla de privacidad (.legalCheckbox) — esquinas rectas en
+   todo, también en los radio. */
+.tipoFila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-2) var(--spacing-5);
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.tipoFila legend {
+  float: left;
+  margin-right: var(--spacing-2);
+  padding: 0;
+}
+
+.tipoOpcion {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--text-small);
+  color: var(--color-tinta);
+  cursor: pointer;
+}
+
+/* Campo trampa para bots (ver "web" en page.js) — fuera de la vista y
+   del orden de tabulación, sin display:none (algunos bots lo detectan). */
+.trampa {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

@@ -18,6 +18,7 @@
 
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
+import { textosSeo } from '@/lib/seo';
 import { ShoppingBasket, User } from 'lucide-react';
 import { Boton } from '@/components/ui';
 import { TarjetaCarrito, PanelInfoEnvios } from '@/components/ecommerce';
@@ -39,6 +40,7 @@ export default function Pagina() {
 
   return (
     <section className="seccion contenedor cart">
+      <h1 className="sr-only">{textosSeo('/carrito', locale).h1}</h1>
       {lineas.length === 0 ? (
         <div className={styles.vacio}>
           <ShoppingBasket className={styles.vacioIcono} strokeWidth={1} />
