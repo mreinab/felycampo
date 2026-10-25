@@ -21,7 +21,7 @@
 
 import { useTranslations } from 'next-intl';
 import { CabeceraSeccion, CarruselFotos, EnVista } from '@/components/ui';
-import { UBICACIONES } from './ubicaciones';
+import { UBICACIONES, enlaceMapa } from './ubicaciones';
 import styles from './page.module.css';
 
 // Fotos propias de cada sede (antes reciclaban un fondo común de
@@ -103,8 +103,7 @@ function ListadoUbicaciones({ locale }) {
                       <p className={styles.nombre}>{ubicacion.nombre}</p>
 
                       <address className={styles.direccionWrap}>
-                        {/* href="#" — a la espera del enlace real de Maps por sede, ver .acciones más abajo. */}
-                        <a href="#" target="_blank" rel="noopener noreferrer" className={styles.direccion}>
+                        <a href={enlaceMapa(ubicacion)} target="_blank" rel="noopener noreferrer" className={styles.direccion}>
                           {ubicacion.direccion.join('\n')}
                         </a>
                       </address>

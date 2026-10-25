@@ -24,10 +24,20 @@ export const GRUPOS_ESTILO_SILUETA = [
 // /atelier/{seccion}/categoria/[categoria]/page.js) -> {grupo, opcion}
 // que necesita PanelFiltros para preseleccionar el chip. "esFiesta"
 // también acepta las opciones de "ocasion" (soloFiesta); Novias no.
-export function encontrarCategoria(opcion, { esFiesta = false } = {}) {
+// Slug de URL de una opción: minúsculas con guiones (SEO) — "corteA" →
+// "corte-a", "alfombraRoja" → "alfombra-roja". El id interno (camelCase)
+// sigue siendo la clave de traducción y del filtro; solo la URL cambia.
+export function slugCategoria(opcion) {
+  return opcion.replace(/[A-Z]/g, (letra) => `-${letra.toLowerCase()}`);
+}
+
+// Acepta el slug de la URL ("corte-a"), no el id interno: las URLs
+// antiguas en camelCase redirigen con 301 (ver next.config.mjs).
+export function encontrarCategoria(slug, { esFiesta = false } = {}) {
   for (const grupo of GRUPOS_ESTILO_SILUETA) {
     if (grupo.soloFiesta && !esFiesta) continue;
-    if (grupo.opciones.includes(opcion)) return { grupo: grupo.id, opcion };
+    const opcion = grupo.opciones.find((candidata) => slugCategoria(candidata) === slug);
+    if (opcion) return { grupo: grupo.id, opcion };
   }
   return null;
 }

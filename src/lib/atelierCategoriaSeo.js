@@ -13,14 +13,14 @@
 // — Google prefiere itemListElement.item absoluto.
 import { getTranslations } from 'next-intl/server';
 import { metadataPagina, urlAbsoluta } from './seo';
-import { GRUPOS_ESTILO_SILUETA } from '@/components/layout/estiloSiluetaGrupos';
+import { GRUPOS_ESTILO_SILUETA, slugCategoria } from '@/components/layout/estiloSiluetaGrupos';
 
-// generateStaticParams: todas las opciones válidas para la sección —
-// "ocasion" (soloFiesta) solo entra si esFiesta.
+// generateStaticParams: todas las opciones válidas para la sección, como
+// slug de URL (corte-a…) — "ocasion" (soloFiesta) solo entra si esFiesta.
 export function parametrosCategoria(esFiesta) {
   return GRUPOS_ESTILO_SILUETA
     .filter((grupo) => !grupo.soloFiesta || esFiesta)
-    .flatMap((grupo) => grupo.opciones.map((opcion) => ({ categoria: opcion })));
+    .flatMap((grupo) => grupo.opciones.map((opcion) => ({ categoria: slugCategoria(opcion) })));
 }
 
 // generateMetadata: título/descripción únicos por categoría+sección
@@ -37,7 +37,7 @@ export async function metadataCategoria({ locale, categoriaActiva, seccionKey, s
 
   return metadataPagina({
     locale,
-    ruta: `/${seccionHref}/categoria/${categoriaActiva.opcion}`,
+    ruta: `/${seccionHref}/categoria/${slugCategoria(categoriaActiva.opcion)}`,
     titulo: t('atelierCategoriaSeo.titulo', { categoria, seccion }),
     descripcion: t('atelierCategoriaSeo.descripcion', { categoria, seccion }),
   });

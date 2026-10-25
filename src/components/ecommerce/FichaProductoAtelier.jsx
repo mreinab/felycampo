@@ -70,7 +70,7 @@ import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { noviaProductos } from '@/components/layout/noviaProductos';
 // import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
 import { ProductosRecomendados /* , ResenasClientes */ } from '@/components/layout';
-import { tagACategoria } from '@/components/layout/estiloSiluetaGrupos';
+import { tagACategoria, slugCategoria } from '@/components/layout/estiloSiluetaGrupos';
 import GaleriaProducto from './GaleriaProducto';
 import InfoAtelier from './InfoAtelier';
 import { Boton, Acordeon, FilaAcordeon } from '@/components/ui';
@@ -167,7 +167,7 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
               const esColeccion = esTagReal && !categoria && nombresColeccion.has(tag);
               const etiqueta = esTagReal ? tag : tFiltros(`estiloYSilueta.grupos.${tag.grupo}.opciones.${tag.opcion}`);
               let href = null;
-              if (categoria) href = `/${locale}/atelier/${seccion}/categoria/${categoria.opcion}`;
+              if (categoria) href = `/${locale}/atelier/${seccion}/categoria/${slugCategoria(categoria.opcion)}`;
               else if (esColeccion) href = `/${locale}/atelier/${seccion}?coleccion=${encodeURIComponent(tag)}`;
               return (
                 <span key={esTagReal ? tag : `${tag.grupo}-${tag.opcion}`}>

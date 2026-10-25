@@ -61,7 +61,7 @@
 import { getTranslations } from 'next-intl/server';
 import { HeroPagina, RunwayDescripcion } from '@/components/layout';
 import { CarruselImagenes, Boton, EnVista } from '@/components/ui';
-import { UBICACIONES } from '../visita-fely-campo/ubicaciones';
+import { UBICACIONES, enlaceMapa } from '../visita-fely-campo/ubicaciones';
 import styles from './page.module.css';
 
 async function AtelierDetalle({ datos, locale }) {
@@ -131,7 +131,7 @@ async function AtelierDetalle({ datos, locale }) {
 
         {ubicacion && (
           <EnVista className={styles.cita}>
-            <a href="#" target="_blank" rel="noopener noreferrer" className={styles.direccionCita}>
+            <a href={enlaceMapa(ubicacion)} target="_blank" rel="noopener noreferrer" className={styles.direccionCita}>
               {ubicacion.direccion.join(', ')}
             </a>
             <p className={styles.telefonoCita}>{lineaContacto}</p>

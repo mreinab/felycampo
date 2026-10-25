@@ -51,3 +51,11 @@ export const UBICACIONES = [
     },
   },
 ];
+
+// Enlace a Google Maps de cada sede: búsqueda oficial por dirección
+// (https://developers.google.com/maps/documentation/urls), sin depender
+// de enlaces cortos de "compartir". Lo usan ListadoUbicaciones.jsx y la
+// ficha de cada atelier (atelier-fiesta/AtelierDetalle.jsx).
+export function enlaceMapa(ubicacion) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ubicacion.direccion.join(', '))}`;
+}

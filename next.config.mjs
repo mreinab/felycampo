@@ -32,6 +32,15 @@ const nextConfig = {
         destination: '/:locale/sobre-fely',
         statusCode: 301,
       },
+      // Categorías de Atelier: antes en camelCase (/categoria/corteA), ahora
+      // en minúsculas con guiones (/categoria/corte-a, ver slugCategoria en
+      // estiloSiluetaGrupos.js).
+      ...[['corteA', 'corte-a'], ['dosPiezas', 'dos-piezas'], ['alfombraRoja', 'alfombra-roja'], ['escoteEspalda', 'escote-espalda']]
+        .map(([antes, ahora]) => ({
+          source: `/:locale(es|en)/atelier/:seccion(novias|fiesta)/categoria/${antes}`,
+          destination: `/:locale/atelier/:seccion/categoria/${ahora}`,
+          statusCode: 301,
+        })),
       // Sitemaps de WordPress (los que conoce Google Search Console).
       {
         source: '/:sitemap(wp-sitemap.*\\.xml|sitemap_index\\.xml)',
