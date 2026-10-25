@@ -19,9 +19,9 @@
 export const SEO_TEXTOS = {
   '/': {
     es: {
-      title: 'Fely Campo | Vestidos de novia y fiesta a medida',
-      h1: 'Fely Campo: vestidos de novia y fiesta a medida en Salamanca, Madrid y Oviedo',
-      description: 'Firma de moda nacida en Salamanca: vestidos de novia y de fiesta a medida en nuestros ateliers de Salamanca, Madrid y Oviedo, y prêt-à-porter online.',
+      title: 'Fely Campo | Moda de autor, novia y fiesta',
+      h1: 'Fely Campo: moda de autor, vestidos de novia y fiesta en Salamanca, Madrid y Oviedo',
+      description: 'Moda de autor hecha en España. Vestidos de novia y fiesta a medida en Salamanca, Madrid y Oviedo, y prêt-à-porter de Fely Campo. Descubre la firma.',
     },
     en: {
       title: 'Fely Campo | Made-to-measure bridal and eveningwear',
@@ -33,9 +33,9 @@ export const SEO_TEXTOS = {
   // ---------- Atelier ----------
   '/atelier': {
     es: {
-      title: 'Atelier de novia y fiesta a medida | Fely Campo',
-      h1: 'Atelier de novia y fiesta a medida',
-      description: 'Descubre el atelier de Fely Campo: vestidos de novia y de fiesta diseñados y confeccionados a medida, con asesoramiento personal y cita previa.',
+      title: 'Atelier de vestidos de novia y fiesta a medida | Fely Campo',
+      h1: 'Atelier de vestidos de novia y fiesta a medida',
+      description: 'Descubre los ateliers de Fely Campo para vestidos de novia y fiesta a medida. Asesoramiento personalizado y atención con cita previa en tres ciudades.',
     },
     en: {
       title: 'Made-to-measure bridal and evening atelier | Fely Campo',
@@ -45,8 +45,8 @@ export const SEO_TEXTOS = {
   },
   '/atelier/novias': {
     es: {
-      title: 'Vestidos de novia a medida | Atelier Fely Campo',
-      description: 'Vestidos de novia diseñados y confeccionados a medida en el atelier de Fely Campo. Conoce nuestras colecciones de novia y pide tu cita.',
+      title: 'Vestidos de novia a medida en atelier | Fely Campo',
+      description: 'Descubre los vestidos de novia a medida de Fely Campo. Diseños cuidados, tejidos seleccionados y asesoramiento personal en el atelier. Pide tu cita.',
     },
     en: {
       title: 'Made-to-measure wedding dresses | Fely Campo Atelier',
@@ -55,8 +55,8 @@ export const SEO_TEXTOS = {
   },
   '/atelier/fiesta': {
     es: {
-      title: 'Vestidos de fiesta e invitada a medida | Fely Campo',
-      description: 'Vestidos de fiesta, madrina e invitada de boda hechos a medida en el atelier de Fely Campo. Descubre las colecciones y reserva tu cita.',
+      title: 'Vestidos de fiesta, madrina e invitada a medida | Fely Campo',
+      description: 'Vestidos de fiesta a medida para madrinas e invitadas de boda. Descubre los diseños de Fely Campo y reserva una cita personalizada en el atelier.',
     },
     en: {
       title: 'Made-to-measure evening and guest dresses | Fely Campo',
@@ -65,9 +65,9 @@ export const SEO_TEXTOS = {
   },
   '/atelier/vosotras': {
     es: {
-      title: 'Novias e invitadas Fely Campo | Vosotras',
-      h1: 'Novias e invitadas Fely Campo',
-      description: 'Novias e invitadas que han llevado Fely Campo en el día más especial. Fotos reales de nuestras clientas y sus vestidos hechos a medida.',
+      title: 'Novias e invitadas reales con vestidos Fely Campo',
+      h1: 'Novias e invitadas reales con diseños Fely Campo',
+      description: 'Descubre fotografías reales de novias e invitadas que eligieron Fely Campo para sus ocasiones especiales. Inspírate con sus vestidos y sus historias.',
     },
     en: {
       title: 'Fely Campo brides and guests | Our women',
@@ -77,8 +77,8 @@ export const SEO_TEXTOS = {
   },
   '/atelier-fiesta/salamanca': {
     es: {
-      title: 'Atelier de novia y fiesta a medida en Salamanca | Fely Campo',
-      description: 'Atelier y taller de Fely Campo en Salamanca: vestidos de novia y de fiesta a medida, asesoramiento personal y showroom. Visítanos con cita previa.',
+      title: 'Atelier de novia y fiesta en Salamanca | Fely Campo',
+      description: 'Visita el atelier de Fely Campo en Salamanca para descubrir vestidos de novia y fiesta, colecciones prêt-à-porter y asesoramiento personalizado. Pide cita.',
     },
     en: {
       title: 'Made-to-measure bridal and evening atelier in Salamanca | Fely Campo',
@@ -88,7 +88,7 @@ export const SEO_TEXTOS = {
   '/atelier-fiesta/madrid': {
     es: {
       title: 'Atelier de novia y fiesta a medida en Madrid | Fely Campo',
-      description: 'Atelier y showroom de Fely Campo en Madrid, en la calle Jorge Juan: vestidos de novia y de fiesta a medida. Pide tu cita previa.',
+      description: 'Descubre el atelier y showroom de Fely Campo en Madrid. Vestidos de novia y fiesta a medida, además de prêt-à-porter de lujo. Reserva tu cita.',
     },
     en: {
       title: 'Made-to-measure bridal and evening atelier in Madrid | Fely Campo',
@@ -98,7 +98,7 @@ export const SEO_TEXTOS = {
   '/atelier-fiesta/oviedo': {
     es: {
       title: 'Atelier de novia y fiesta a medida en Oviedo | Fely Campo',
-      description: 'Atelier de Fely Campo en el centro de Oviedo: vestidos de novia, fiesta e invitada a medida y prêt-à-porter. Te atendemos con cita previa.',
+      description: 'Visita el atelier de Fely Campo en Oviedo para descubrir vestidos de fiesta, novia e invitada y recibir asesoramiento personalizado. Pide tu cita.',
     },
     en: {
       title: 'Made-to-measure bridal and evening atelier in Oviedo | Fely Campo',
@@ -109,9 +109,9 @@ export const SEO_TEXTOS = {
   // ---------- Prêt-à-porter ----------
   '/pret-a-porter': {
     es: {
-      title: 'Prêt-à-porter de mujer | Tienda online Fely Campo',
-      h1: 'Prêt-à-porter de mujer Fely Campo',
-      description: 'Compra online el prêt-à-porter de Fely Campo: vestidos, faldas, pantalones, tops y abrigos diseñados y confeccionados en Salamanca.',
+      title: 'Prêt-à-porter de lujo para mujer | Fely Campo',
+      h1: 'Prêt-à-porter de lujo para mujer de Fely Campo',
+      description: 'Descubre el prêt-à-porter de lujo de Fely Campo: vestidos, faldas, pantalones, tops, chaquetas y abrigos de diseño de autor. Compra online.',
     },
     en: {
       title: "Women's ready-to-wear | Fely Campo online shop",
@@ -121,8 +121,8 @@ export const SEO_TEXTOS = {
   },
   '/pret-a-porter/vestidos': {
     es: {
-      title: 'Vestidos de mujer | Prêt-à-porter Fely Campo',
-      description: 'Vestidos de prêt-à-porter de Fely Campo para el día a día y para ocasiones especiales, confeccionados en Salamanca. Compra online.',
+      title: 'Vestidos de mujer de diseño de autor | Fely Campo',
+      description: 'Descubre vestidos de mujer de Fely Campo, con patronaje cuidado y tejidos seleccionados para el día a día y ocasiones especiales. Compra online.',
     },
     en: {
       title: "Women's dresses | Fely Campo ready-to-wear",
@@ -131,8 +131,8 @@ export const SEO_TEXTOS = {
   },
   '/pret-a-porter/faldas': {
     es: {
-      title: 'Faldas de mujer | Prêt-à-porter Fely Campo',
-      description: 'Faldas de Fely Campo en tejidos seleccionados, estampadas y lisas, diseñadas y confeccionadas en Salamanca. Descubre la colección online.',
+      title: 'Faldas de mujer de diseño de autor | Fely Campo',
+      description: 'Explora las faldas de Fely Campo en tejidos seleccionados y siluetas cuidadas. Descubre la colección de prêt-à-porter y compra online.',
     },
     en: {
       title: "Women's skirts | Fely Campo ready-to-wear",
@@ -141,8 +141,8 @@ export const SEO_TEXTOS = {
   },
   '/pret-a-porter/pantalones': {
     es: {
-      title: 'Pantalones de mujer | Prêt-à-porter Fely Campo',
-      description: 'Pantalones de mujer de Fely Campo con patronaje propio y acabados de atelier, confeccionados en Salamanca. Compra online.',
+      title: 'Pantalones de mujer de diseño de autor | Fely Campo',
+      description: 'Descubre pantalones de mujer de Fely Campo, con patronaje propio y acabados cuidados. Encuentra piezas para combinar y compra online.',
     },
     en: {
       title: "Women's trousers | Fely Campo ready-to-wear",
@@ -151,8 +151,8 @@ export const SEO_TEXTOS = {
   },
   '/pret-a-porter/tops-y-camisetas': {
     es: {
-      title: 'Tops y camisetas de mujer | Fely Campo',
-      description: 'Tops, blusas y camisetas de prêt-à-porter de Fely Campo, diseñados en Salamanca para combinar con el resto de la colección. Compra online.',
+      title: 'Tops y camisetas de mujer | Prêt-à-porter Fely Campo',
+      description: 'Descubre tops, blusas y camisetas de Fely Campo, diseñados para combinar con las prendas de la colección de prêt-à-porter. Compra online.',
     },
     en: {
       title: "Women's tops and T-shirts | Fely Campo",
@@ -161,8 +161,8 @@ export const SEO_TEXTOS = {
   },
   '/pret-a-porter/chaquetas-y-abrigos': {
     es: {
-      title: 'Chaquetas y abrigos de mujer | Fely Campo',
-      description: 'Chaquetas y abrigos de mujer de Fely Campo, con tejidos nobles y patronaje de atelier, confeccionados en Salamanca. Compra online.',
+      title: 'Chaquetas y abrigos de mujer | Prêt-à-porter Fely Campo',
+      description: 'Descubre chaquetas y abrigos de mujer de Fely Campo, con tejidos seleccionados, líneas cuidadas y patronaje de atelier. Compra online.',
     },
     en: {
       title: "Women's jackets and coats | Fely Campo",
@@ -173,8 +173,8 @@ export const SEO_TEXTOS = {
   // ---------- Marca ----------
   '/sobre-fely': {
     es: {
-      title: 'Fely Campo, la diseñadora | Historia de la firma',
-      description: 'La historia de Fely Campo: de la niña de la aguja en Salamanca a una firma de novia, fiesta y prêt-à-porter con ateliers en tres ciudades.',
+      title: 'Fely Campo: historia de una diseñadora de moda española',
+      description: 'Descubre la trayectoria de Fely Campo, diseñadora de moda española: una historia nacida en Salamanca entre telas, oficio artesanal y más de cinco décadas de creación.',
     },
     en: {
       title: 'Fely Campo, the designer | Our story',
@@ -183,8 +183,8 @@ export const SEO_TEXTOS = {
   },
   '/colecciones-fely-campo': {
     es: {
-      title: 'Colecciones y desfiles de pasarela | Fely Campo',
-      description: 'Todas las colecciones de pasarela de Fely Campo, de Diafonía a La Colección: looks, backstage y vídeos de cada desfile.',
+      title: 'Colecciones de moda y desfiles de Fely Campo',
+      description: 'Explora las colecciones de moda de autor de Fely Campo y sus desfiles de pasarela. Descubre los tejidos, siluetas, inspiración y vídeos de cada colección.',
     },
     en: {
       title: 'Runway collections and shows | Fely Campo',
@@ -193,8 +193,8 @@ export const SEO_TEXTOS = {
   },
   '/talleres-fely-campo': {
     es: {
-      title: 'Nuestros talleres en Salamanca | Fely Campo',
-      description: 'Conoce los talleres de Fely Campo: el atelier de Salamanca y dos pequeños talleres de la sierra donde manos expertas confeccionan cada pieza.',
+      title: 'Talleres de confección artesanal en Salamanca | Fely Campo',
+      description: 'Conoce cómo se confeccionan las prendas de Fely Campo en Salamanca y en talleres de la sierra de Castilla y León, donde el oficio y las manos expertas dan forma a cada pieza.',
     },
     en: {
       title: 'Our workshops in Salamanca | Fely Campo',
@@ -203,8 +203,8 @@ export const SEO_TEXTOS = {
   },
   '/responsabilidad': {
     es: {
-      title: 'Moda responsable y producción local | Fely Campo',
-      description: 'El compromiso de Fely Campo con una moda responsable: producción local en Salamanca, oficio artesano, tejidos seleccionados y prendas para durar.',
+      title: 'Moda responsable y confección en España | Fely Campo',
+      description: 'Descubre el compromiso de Fely Campo con la confección en España, el oficio artesanal y la elección consciente de tejidos para crear prendas cuidadas y duraderas.',
     },
     en: {
       title: 'Responsible fashion and local production | Fely Campo',
@@ -213,8 +213,8 @@ export const SEO_TEXTOS = {
   },
   '/podcast': {
     es: {
-      title: 'Blog y podcast de moda | Fely Campo',
-      description: 'Artículos y episodios del podcast de Fely Campo sobre vestidos de novia, invitada, madrina y el oficio del atelier.',
+      title: 'Blog y podcast de moda: el universo Fely Campo',
+      description: 'Lee artículos y escucha conversaciones sobre moda de autor, vestidos de novia y fiesta, prêt-à-porter y el oficio artesanal detrás de Fely Campo.',
     },
     en: {
       title: 'Fashion blog and podcast | Fely Campo',
@@ -225,8 +225,8 @@ export const SEO_TEXTOS = {
   // ---------- Visítanos ----------
   '/visita-fely-campo': {
     es: {
-      title: 'Ateliers en Salamanca, Madrid y Oviedo | Fely Campo',
-      description: 'Visita los ateliers y el showroom de Fely Campo en Salamanca, Madrid y Oviedo. Direcciones, horarios y cita previa para novia e invitada.',
+      title: 'Ateliers de moda en Salamanca, Madrid y Oviedo | Fely Campo',
+      description: 'Encuentra los ateliers y el showroom de Fely Campo en Salamanca, Madrid y Oviedo. Consulta las ubicaciones y solicita una cita para novia o fiesta.',
     },
     en: {
       title: 'Ateliers in Salamanca, Madrid and Oviedo | Fely Campo',
@@ -235,13 +235,17 @@ export const SEO_TEXTOS = {
   },
   '/visita-fely-campo/cita': {
     es: {
-      title: 'Pide cita en el atelier | Novia e invitada | Fely Campo',
-      description: 'Reserva tu cita en el atelier de Fely Campo en Salamanca, Madrid u Oviedo para tu vestido de novia o de invitada. Te confirmamos por email.',
+      title: 'Pedir cita en el atelier de Fely Campo | Novia y fiesta',
+      description: 'Solicita tu cita en Fely Campo para encontrar tu vestido de novia o de fiesta. Elige atelier y cuéntanos qué buscas; nuestro equipo contactará contigo.',
     },
     en: {
       title: 'Book an atelier appointment | Bride and guest | Fely Campo',
       description: 'Book your appointment at the Fely Campo atelier in Salamanca, Madrid or Oviedo for your wedding or guest dress. We confirm by email.',
     },
+  },
+  '/visita-fely-campo/cita/confirmacion': {
+    es: { title: 'Cita solicitada | Fely Campo', description: 'Hemos recibido tu solicitud de cita en el atelier de Fely Campo.' },
+    en: { title: 'Appointment requested | Fely Campo', description: 'We have received your appointment request at the Fely Campo atelier.' },
   },
   '/visita-fely-campo/cita/confirmacion-novia': {
     es: { title: 'Cita de novia solicitada | Fely Campo', description: 'Hemos recibido tu solicitud de cita de novia en el atelier de Fely Campo.' },
@@ -253,8 +257,8 @@ export const SEO_TEXTOS = {
   },
   '/puntos-de-venta-fely-campo': {
     es: {
-      title: 'Puntos de venta y boutiques | Fely Campo',
-      description: 'Encuentra Fely Campo en boutiques seleccionadas de España, Europa y Estados Unidos. Mapa de puntos de venta y búsqueda por código postal.',
+      title: 'Dónde comprar Fely Campo | Boutiques y puntos de venta',
+      description: 'Encuentra dónde comprar Fely Campo en boutiques seleccionadas. Consulta los puntos de venta disponibles y localiza el establecimiento más cercano.',
     },
     en: {
       title: 'Stockists and boutiques | Fely Campo',
@@ -265,7 +269,7 @@ export const SEO_TEXTOS = {
   // ---------- Ayuda ----------
   '/ayuda/atencion-cliente': {
     es: {
-      title: 'Atención al cliente | Fely Campo',
+      title: 'Atención al cliente de Fely Campo | Ayuda',
       description: 'Teléfono, email y horario de atención al cliente de Fely Campo, y recogida en tienda (Click & Collect) en Salamanca.',
     },
     en: {
@@ -275,8 +279,8 @@ export const SEO_TEXTOS = {
   },
   '/ayuda/contacto': {
     es: {
-      title: 'Contacto | Fely Campo',
-      description: 'Contacta con Fely Campo: atención prêt-à-porter, atención a tiendas, WhatsApp y chat online. Atelier en C/ Laguna Negra 17-19, Salamanca.',
+      title: 'Contacto Fely Campo | Tienda online y ateliers',
+      description: 'Contacta con Fely Campo para consultas sobre prêt-à-porter, pedidos, boutiques y ateliers. Encuentra las vías de atención y solicita información.',
     },
     en: {
       title: 'Contact | Fely Campo',

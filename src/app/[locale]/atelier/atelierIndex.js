@@ -38,7 +38,7 @@ export const ATELIER_INDEX = {
       en: 'Bridal Atelier',
     },
     texto: {
-      es: 'La complicidad como objetivo, el deseo como molde y la precisión nuestra consecuencia.',
+      es: 'Diseñamos vestidos de novia a medida desde la escucha, la complicidad y el cuidado de cada detalle. El vestido toma forma contigo, a partir de tu historia y de cómo deseas sentirte.',
       en: 'Complicity as our goal, desire as our mould, precision as our consequence.',
     },
   },
@@ -50,7 +50,7 @@ export const ATELIER_INDEX = {
       en: 'Fiesta Atelier',
     },
     texto: {
-      es: 'Te escuchamos, nuestro proceso será el tuyo, un camino conjunto para conseguir ese vestido, esa imagen al detalle de tus ideas.',
+      es: 'Creamos vestidos de fiesta a medida a partir de tus ideas, la ocasión y la forma en que quieres sentirte. Un proceso compartido para cuidar cada detalle.',
       en: 'We listen to you: our process becomes yours, a shared journey to create that dress, that image, down to the last detail of your ideas.',
     },
   },
@@ -61,8 +61,8 @@ export const ATELIER_INDEX = {
     // a propósito para que la tarjeta anticipe la misma imagen de
     // cabecera que verá la visitante al entrar. Sustituyen a las de
     // /img/talleres/, que ya no existen en el repo.
-    { id: 'salamanca', ciudad: 'Atelier Salamanca', imagen: '/img/atelier/atelier-salamanca/ateliernovia-lamedida-felycampo-2.webp' },
-    { id: 'madrid', ciudad: 'Atelier & Showroom Madrid', imagen: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.jpg' },
-    { id: 'oviedo', ciudad: 'Atelier Oviedo', imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp' },
+    { id: 'salamanca', ciudad: 'Atelier Salamanca', imagen: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp' },
+    { id: 'madrid', ciudad: 'Atelier & Showroom Madrid', imagen: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-vestidos-fiesta.webp' },
+    { id: 'oviedo', ciudad: 'Atelier Oviedo', imagen: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-fiesta-espacio-1.webp' },
   ],
 };

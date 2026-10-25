@@ -15,10 +15,11 @@
        medio={{ tipo: 'imagen', src: '/img/...' }}
        alt="..."
        titulo={['Atelier', 'Novias']}
-       subtitulo="Vestidos de novia hechos a medida en nuestro atelier."
+       subtitulo="Vestidos de novia hechos a medida en nuestro atelier"
      />
    "titulo": string o array — va en un <h1>, cada parte en su <span>, en fila
-   (en mayúsculas). "subtitulo" opcional.
+   (en mayúsculas). "subtitulo" opcional, siempre sin punto final (se
+   quita aquí si el texto lo trae, a petición).
    "children" (opcional): sustituye a RunwayMediaLateral cuando el
    fondo no es un único medio (ej. el carrusel de /pret-a-porter). En
    ese caso el degradado superior (el del Navbar, que con un único
@@ -40,6 +41,7 @@ import styles from './HeroPagina.module.css';
 
 function HeroPagina({ medio, imagen, alt = '', titulo, subtitulo, children, extra, tono = 'claro', fijarEnMobile = false, className }) {
   const partes = Array.isArray(titulo) ? titulo : [titulo];
+  const subtituloSinPunto = typeof subtitulo === 'string' ? subtitulo.trim().replace(/\.$/, '') : subtitulo;
   const medioFinal = medio || (imagen ? { tipo: 'imagen', src: imagen } : null);
   const clases = [styles.hero, children && styles.fondoPropio, tono === 'oscuro' && styles.oscuro, fijarEnMobile && styles.fijarEnMobile, className].filter(Boolean).join(' ');
 
@@ -48,7 +50,7 @@ function HeroPagina({ medio, imagen, alt = '', titulo, subtitulo, children, extr
       {children || <RunwayMediaLateral medio={medioFinal} alt={alt} />}
       {extra}
 
-      {(titulo || subtitulo) && (
+      {(titulo || subtituloSinPunto) && (
         <div className={styles.texto}>
           {titulo && (
             <h1 className={styles.titulo}>
@@ -57,7 +59,7 @@ function HeroPagina({ medio, imagen, alt = '', titulo, subtitulo, children, extr
               ))}
             </h1>
           )}
-          {subtitulo && <p className={styles.subtitulo}>{subtitulo}</p>}
+          {subtituloSinPunto && <p className={styles.subtitulo}>{subtituloSinPunto}</p>}
         </div>
       )}
     </div>

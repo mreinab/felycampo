@@ -30,7 +30,7 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://felycampo.
 export const SITIO_INDEXABLE = process.env.SITIO_INDEXABLE === 'true';
 export const NOMBRE_MARCA = 'Fely Campo';
 
-const IMAGEN_OG_POR_DEFECTO = '/img/about-felycampo/fely-campo-conoce-a-la-disenadora.jpg';
+const IMAGEN_OG_POR_DEFECTO = '/img/about-felycampo/fely-campo-sobre-fely-campo-conoce-a-disenadora.jpg';
 
 // "/es" + "/" → "/es" (sin barra final), "/es" + "/atelier" → "/es/atelier".
 export function rutaConLocale(locale, ruta) {

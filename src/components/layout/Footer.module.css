@@ -82,7 +82,7 @@
   display: flex;
   align-items: center;
   height: 40px;
-  border-bottom: 1px solid var(--color-gris-500);
+  border-bottom: 1px solid var(--color-gris-600);
   padding: 0;
   transition: border-color 0.25s var(--ease-marca);
 }
@@ -102,7 +102,7 @@
   outline: none;
 }
 .input::placeholder {
-  color: var(--color-gris-500);
+  color: var(--color-gris-600);
 }
 
 /* Aparece solo cuando hay texto en el input — ver email.trim() en
@@ -176,15 +176,14 @@
   }
 }
 
-/* Mismo tratamiento de "etiqueta" pequeña en mayúsculas que el resto
+/* Mismo tratamiento de "etiqueta" pequeña que el resto
    del sistema (ej. CollectionTitle) en vez del cuerpo de texto medio
    que tenía antes — menos peso visual, más discreto. */
 .titulo {
-  color: var(--color-gris-600);
+  color: var(--color-gris-700);
   margin-bottom: var(--spacing-5);
-  font-size: 1rem;
+  font-size: var(--text-titulo); /* 15px — títulos de columna y "Newsletter" */
   font-weight: 400;
-  text-transform: uppercase;
 }
 
 /* "Newsletter": alineado a la izquierda también en mobile, aunque el
@@ -193,12 +192,22 @@
   text-align: left;
 }
 
-.lista { list-style: none; display: flex; flex-direction: column; gap: var(--spacing-2); }
+.lista { list-style: none; display: flex; flex-direction: column; gap: var(--spacing-3); }
 
 .enlace {
   font-size: var(--text-small);
-  color: var(--color-gris-600);
+  color: var(--color-gris-700);
   font-weight: 400;
   transition: color 0.25s var(--ease-marca);
 }
 .enlace:hover { color: var(--color-tinta); }
+
+/* Nada en mayúsculas en el footer (a petición) — incluye el Boton
+   "Suscribirse" (contorno, en mayúsculas de serie en
+   Boton.module.css). !important por el mismo motivo que .landing en
+   [locale]/page.module.css: misma especificidad y orden de carga de
+   los CSS Modules no garantizado. */
+.footer,
+.footer * {
+  text-transform: none !important;
+}

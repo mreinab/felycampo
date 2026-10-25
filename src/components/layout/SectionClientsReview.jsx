@@ -14,8 +14,8 @@ const SLIDE_DURATION_MS = 6000;
 // Solo 2 fotos para 5 reseñas — se repiten en bucle (índice % length),
 // no hay una foto real por clienta todavía.
 const IMAGENES_CLIENTES = [
-  '/img/Clientes/ClientReview- (1).jpg',
-  '/img/Clientes/ClientReview- (2).jpg',
+  '/img/Clientes/fely-campo-invitadas-reales-clientreview-1.webp',
+  '/img/Clientes/fely-campo-invitadas-reales-clientreview-2.webp',
 ];
 
 /**

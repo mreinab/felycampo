@@ -22,7 +22,7 @@
 }
 
 .submenuLink {
-  font-size: 1.2rem; /* ~17px */
+  font-size: var(--text-titulo);
   color: var(--color-tinta);
   text-decoration: underline;
   text-decoration-color: transparent;
@@ -37,7 +37,7 @@
    frente a las categorías para que se lea como acción, no como una más.
    Mismo criterio de subrayado que .submenuLink (solo al hover). */
 .submenuLinkTodos {
-  font-size: 1.2rem;
+  font-size: var(--text-titulo);
   font-weight: var(--font-weight-medium);
   color: var(--color-tinta);
   text-decoration: underline;

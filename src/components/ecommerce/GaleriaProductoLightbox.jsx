@@ -179,7 +179,7 @@ function GaleriaProductoLightbox({
     <div className={`${styles.lightbox} ${abierta ? styles.abierta : ''}`} aria-hidden={!abierta}>
       <div className={styles.cabecera}>
         <a href={`/${locale}`} className={styles.logoLink} tabIndex={tabIndexInteractivo}>
-          <img src="/img/logo/logo-felycampo.png" alt="Fely Campo" className={styles.logo} />
+          <img src="/img/logo/fely-campo-logo.webp" alt="Fely Campo" className={styles.logo} />
         </a>
         <button
           ref={cerrarRef}

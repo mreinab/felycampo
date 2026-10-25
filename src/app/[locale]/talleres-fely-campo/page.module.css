@@ -34,6 +34,10 @@
 .imagenes {
   display: flex;
   overflow-x: auto;
+  /* Solo el gesto horizontal es del carrusel: sin scroll vertical propio,
+     un deslizamiento vertical en mobile mueve la página. */
+  overflow-y: hidden;
+  touch-action: pan-x pan-y;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   gap: 0;
@@ -120,16 +124,19 @@
   gap: var(--spacing-1);
 }
 
+/* Toda la página en un solo color (tinta) y dos tamaños: 15px para
+   títulos y 13px para el resto, sin mayúsculas (a petición). */
 .meta p,
 .texto p {
   margin: 0;
-  font-size: var(--text-small);
+  font-size: var(--text-texto); /* 13px */
   line-height: var(--leading-base);
   color: var(--color-tinta);
 }
 
+/* Nombre del taller ("Taller propio", "Taller I"…): título, 15px. */
 .meta p:first-child {
-  text-transform: uppercase;
+  font-size: var(--text-titulo);
 }
 
 .texto {
@@ -139,8 +146,16 @@
   gap: var(--spacing-4);
 }
 
-.texto p {
-  color: var(--color-gris-600);
+/* Intro de esta página (IntroSeccion, ver ListadoTalleres.jsx):
+   título a 15px en vez de los 19px de /podcast, y filtros sin las
+   mayúsculas de Boton "texto". Clase + elemento para ganar a las
+   reglas de IntroSeccion.module.css sin depender del orden de carga. */
+.intro h2 {
+  font-size: var(--text-titulo);
+}
+
+.intro button {
+  text-transform: none;
 }
 
 /* Mobile y tablet (hasta 1023px, ver convención de breakpoints en

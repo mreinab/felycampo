@@ -63,7 +63,7 @@ export default async function Pagina({ params }) {
           encima vía data-navbar-hero + velo degradado), sin la
           introducción editorial. */}
       <HeroPagina
-        imagen="/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg"
+        imagen="/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp"
         alt={t(SECCION_KEY)}
         titulo={[t(SECCION_KEY), t(`filtros.estiloYSilueta.grupos.${categoriaActiva.grupo}.opciones.${categoriaActiva.opcion}`)]}
         subtitulo={t('heroPagina.atelierFiesta')}

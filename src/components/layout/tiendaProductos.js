@@ -43,11 +43,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#0F5C43', nombre: 'Esmeralda' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [40, 42],
-    imagen: '/img/ecommerce/faldas/falda-verde-felycampo-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/faldas/falda-verde-felycampo-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-falda-verde-front.webp',
+    imagenHover: '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-falda-verde-back.webp',
     imagenes: [
-      '/img/ecommerce/faldas/falda-verde-felycampo-front-ffff-bg.jpg',
-      '/img/ecommerce/faldas/falda-verde-felycampo-back-ffff-bg.jpg',
+      '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-falda-verde-front.webp',
+      '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-falda-verde-back.webp',
     ],
   },
   {
@@ -59,11 +59,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#8C6A3F', nombre: 'Bronce' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38],
-    imagen: '/img/ecommerce/faldas/falda-cuadros-felycampo-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/faldas/falda-cuadros-felycampo-back-fff-bg.jpg',
+    imagen: '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-falda-cuadros-front.webp',
+    imagenHover: '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-falda-cuadros-back-fff.webp',
     imagenes: [
-      '/img/ecommerce/faldas/falda-cuadros-felycampo-front-ffff-bg.jpg',
-      '/img/ecommerce/faldas/falda-cuadros-felycampo-back-fff-bg.jpg',
+      '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-falda-cuadros-front.webp',
+      '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-falda-cuadros-back-fff.webp',
     ],
   },
   {
@@ -75,11 +75,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#4B3621', nombre: 'Chocolate' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38],
-    imagen: '/img/ecommerce/chaquetas-y-abrigos/MBO3739-chaquetacuadros-felycampo-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/MBO3739-chaquetacuadros-felycampo-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-mbo3739-chaquetacuadros-front.webp',
+    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-mbo3739-chaquetacuadros-back.webp',
     imagenes: [
-      '/img/ecommerce/chaquetas-y-abrigos/MBO3739-chaquetacuadros-felycampo-front-ffff-bg.jpg',
-      '/img/ecommerce/chaquetas-y-abrigos/MBO3739-chaquetacuadros-felycampo-back-ffff-bg.jpg',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-mbo3739-chaquetacuadros-front.webp',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-mbo3739-chaquetacuadros-back.webp',
     ],
   },
   {
@@ -91,11 +91,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#111111', nombre: 'Negro' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38, 44],
-    imagen: '/img/ecommerce/vestidos/MBO2752-vestidolargo-encaje-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/vestidos/MBO2752-vestidolargo-encaje-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/vestidos/fely-campo-pret-a-porter-vestidos-mbo2752-vestidolargo-encaje-front.webp',
+    imagenHover: '/img/ecommerce/vestidos/fely-campo-pret-a-porter-vestidos-mbo2752-vestidolargo-encaje-back.webp',
     imagenes: [
-      '/img/ecommerce/vestidos/MBO2752-vestidolargo-encaje-front-ffff-bg.jpg',
-      '/img/ecommerce/vestidos/MBO2752-vestidolargo-encaje-back-ffff-bg.jpg',
+      '/img/ecommerce/vestidos/fely-campo-pret-a-porter-vestidos-mbo2752-vestidolargo-encaje-front.webp',
+      '/img/ecommerce/vestidos/fely-campo-pret-a-porter-vestidos-mbo2752-vestidolargo-encaje-back.webp',
     ],
   },
   {
@@ -107,11 +107,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#8C6A3F', nombre: 'Bronce' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38],
-    imagen: '/img/ecommerce/faldas/MBO2702-falda-abertura-sucre-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/faldas/MBO2702-falda-abertura-sucre-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-mbo2702-falda-abertura-sucre-front.webp',
+    imagenHover: '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-mbo2702-falda-abertura-sucre-back.webp',
     imagenes: [
-      '/img/ecommerce/faldas/MBO2702-falda-abertura-sucre-front-ffff-bg.jpg',
-      '/img/ecommerce/faldas/MBO2702-falda-abertura-sucre-back-ffff-bg.jpg',
+      '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-mbo2702-falda-abertura-sucre-front.webp',
+      '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-mbo2702-falda-abertura-sucre-back.webp',
     ],
   },
   {
@@ -123,11 +123,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#4A4A48', nombre: 'Antracita' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38, 40, 42],
-    imagen: '/img/ecommerce/pantalones/MBO2724-pantalon-raya-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/pantalones/MBO2724-pantalon-raya-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/pantalones/fely-campo-pret-a-porter-pantalones-mbo2724-pantalon-raya-front.webp',
+    imagenHover: '/img/ecommerce/pantalones/fely-campo-pret-a-porter-pantalones-mbo2724-pantalon-raya-back.webp',
     imagenes: [
-      '/img/ecommerce/pantalones/MBO2724-pantalon-raya-front-ffff-bg.jpg',
-      '/img/ecommerce/pantalones/MBO2724-pantalon-raya-back-ffff-bg.jpg',
+      '/img/ecommerce/pantalones/fely-campo-pret-a-porter-pantalones-mbo2724-pantalon-raya-front.webp',
+      '/img/ecommerce/pantalones/fely-campo-pret-a-porter-pantalones-mbo2724-pantalon-raya-back.webp',
     ],
   },
   {
@@ -138,11 +138,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#8C6A3F', nombre: 'Bronce' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38],
-    imagen: '/img/ecommerce/chaquetas-y-abrigos/chaquetalanamarron-felycampo-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/chaquetalanamarron-felycampo-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-chaquetalanamarron-front.webp',
+    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-chaquetalanamarron-back.webp',
     imagenes: [
-      '/img/ecommerce/chaquetas-y-abrigos/chaquetalanamarron-felycampo-front-ffff-bg.jpg',
-      '/img/ecommerce/chaquetas-y-abrigos/chaquetalanamarron-felycampo-back-ffff-bg.jpg',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-chaquetalanamarron-front.webp',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-chaquetalanamarron-back.webp',
     ],
   },
   {
@@ -153,11 +153,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#3E2A44', nombre: 'Berenjena' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38],
-    imagen: '/img/ecommerce/chaquetas-y-abrigos/abrigo-corto-felycampo-frontffff-bg.jpg',
-    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/abrigo-corto-felycampo-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-abrigo-corto-frontffff.webp',
+    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-abrigo-corto-back.webp',
     imagenes: [
-      '/img/ecommerce/chaquetas-y-abrigos/abrigo-corto-felycampo-frontffff-bg.jpg',
-      '/img/ecommerce/chaquetas-y-abrigos/abrigo-corto-felycampo-back-ffff-bg.jpg',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-abrigo-corto-frontffff.webp',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-abrigo-corto-back.webp',
     ],
   },
   {
@@ -169,11 +169,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#C6A664', nombre: 'Oro / Champán' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38],
-    imagen: '/img/ecommerce/chaquetas-y-abrigos/chaqueta-aranjuez-felycampo-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/chaqueta-aranjuez-felycampo-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-chaqueta-aranjuez-front.webp',
+    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-chaqueta-aranjuez-back.webp',
     imagenes: [
-      '/img/ecommerce/chaquetas-y-abrigos/chaqueta-aranjuez-felycampo-front-ffff-bg.jpg',
-      '/img/ecommerce/chaquetas-y-abrigos/chaqueta-aranjuez-felycampo-back-ffff-bg.jpg',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-chaqueta-aranjuez-front.webp',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-chaqueta-aranjuez-back.webp',
     ],
   },
   {
@@ -191,11 +191,11 @@ export const tiendaProductos = [
     ],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38, 42],
-    imagen: '/img/ecommerce/faldas/jeju-falda-cuadros-felycampo-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/faldas/jeju-falda-cuadros-felycampo-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-jeju-falda-cuadros-front.webp',
+    imagenHover: '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-jeju-falda-cuadros-back.webp',
     imagenes: [
-      '/img/ecommerce/faldas/jeju-falda-cuadros-felycampo-front-ffff-bg.jpg',
-      '/img/ecommerce/faldas/jeju-falda-cuadros-felycampo-back-ffff-bg.jpg',
+      '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-jeju-falda-cuadros-front.webp',
+      '/img/ecommerce/faldas/fely-campo-pret-a-porter-faldas-jeju-falda-cuadros-back.webp',
     ],
   },
   {
@@ -211,9 +211,9 @@ export const tiendaProductos = [
     colores: [{ hex: '#111111', nombre: 'Negro' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [42],
-    imagen: '/img/ecommerce/tops-y-camisas/top-ubud-felycampo-front-ffff-bg.jpg',
+    imagen: '/img/ecommerce/tops-y-camisas/fely-campo-pret-a-porter-tops-y-camisas-top-ubud-front.webp',
     imagenes: [
-      '/img/ecommerce/tops-y-camisas/top-ubud-felycampo-front-ffff-bg.jpg',
+      '/img/ecommerce/tops-y-camisas/fely-campo-pret-a-porter-tops-y-camisas-top-ubud-front.webp',
     ],
   },
   {
@@ -224,15 +224,15 @@ export const tiendaProductos = [
     colores: [{ hex: '#D9B8B2', nombre: 'Rosa palo' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [38],
-    imagen: '/img/ecommerce/chaquetas-y-abrigos/abrigo-lana-felycampo-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/abrigo-lana-felycampo-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-abrigo-lana-front.webp',
+    imagenHover: '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-abrigo-lana-back.webp',
     // Foto con modelo al final, ver comentario de la conversación —
     // front/back primero (mismo criterio que el resto del catálogo),
     // la de modelo cierra la galería en vez de abrirla.
     imagenes: [
-      '/img/ecommerce/chaquetas-y-abrigos/abrigo-lana-felycampo-front-ffff-bg.jpg',
-      '/img/ecommerce/chaquetas-y-abrigos/abrigo-lana-felycampo-back-ffff-bg.jpg',
-      '/img/ecommerce/chaquetas-y-abrigos/abrigo-lana-felycampo-model.jpg',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-abrigo-lana-front.webp',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-abrigo-lana-back.webp',
+      '/img/ecommerce/chaquetas-y-abrigos/fely-campo-pret-a-porter-chaquetas-y-abrigos-abrigo-lana-model.webp',
     ],
   },
   {
@@ -258,11 +258,11 @@ export const tiendaProductos = [
     ],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [42],
-    imagen: '/img/ecommerce/tops-y-camisas/top-encaje-rosa-front-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/tops-y-camisas/top-encaje-rosa-back-ffff-bg.jpg',
+    imagen: '/img/ecommerce/tops-y-camisas/fely-campo-pret-a-porter-tops-y-camisas-top-encaje-rosa-front.webp',
+    imagenHover: '/img/ecommerce/tops-y-camisas/fely-campo-pret-a-porter-tops-y-camisas-top-encaje-rosa-back.webp',
     imagenes: [
-      '/img/ecommerce/tops-y-camisas/top-encaje-rosa-front-ffff-bg.jpg',
-      '/img/ecommerce/tops-y-camisas/top-encaje-rosa-back-ffff-bg.jpg',
+      '/img/ecommerce/tops-y-camisas/fely-campo-pret-a-porter-tops-y-camisas-top-encaje-rosa-front.webp',
+      '/img/ecommerce/tops-y-camisas/fely-campo-pret-a-porter-tops-y-camisas-top-encaje-rosa-back.webp',
     ],
   },
   {
@@ -274,9 +274,9 @@ export const tiendaProductos = [
     colores: [{ hex: '#14342B', nombre: 'Verde botella' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [40],
-    imagen: '/img/ecommerce/tops-y-camisas/vestido-plisado-felycampo-front-ffff-bg.jpg',
+    imagen: '/img/ecommerce/tops-y-camisas/fely-campo-pret-a-porter-tops-y-camisas-vestido-plisado-front.webp',
     imagenes: [
-      '/img/ecommerce/tops-y-camisas/vestido-plisado-felycampo-front-ffff-bg.jpg',
+      '/img/ecommerce/tops-y-camisas/fely-campo-pret-a-porter-tops-y-camisas-vestido-plisado-front.webp',
     ],
   },
   // Los siguientes 3 son las mismas fotos que enseña la home en su
@@ -290,11 +290,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#5A2A4A', nombre: 'Ciruela' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [40],
-    imagen: '/img/ecommerce/vestido-producto-portada-felycampo-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/FW27-Look02.webp',
+    imagen: '/img/ecommerce/fely-campo-pret-a-porter-vestido-producto-portada.webp',
+    imagenHover: '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-02.webp',
     imagenes: [
-      '/img/ecommerce/vestido-producto-portada-felycampo-ffff-bg.jpg',
-      '/img/ecommerce/FW27-Look02.webp',
+      '/img/ecommerce/fely-campo-pret-a-porter-vestido-producto-portada.webp',
+      '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-02.webp',
     ],
   },
   {
@@ -304,11 +304,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#111111', nombre: 'Negro' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [42],
-    imagen: '/img/ecommerce/top-encaje-producto-portada-felycampo-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/FW27-Look01.webp',
+    imagen: '/img/ecommerce/fely-campo-pret-a-porter-top-encaje-producto-portada.webp',
+    imagenHover: '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-01.webp',
     imagenes: [
-      '/img/ecommerce/top-encaje-producto-portada-felycampo-ffff-bg.jpg',
-      '/img/ecommerce/FW27-Look01.webp',
+      '/img/ecommerce/fely-campo-pret-a-porter-top-encaje-producto-portada.webp',
+      '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-01.webp',
     ],
   },
   {
@@ -318,11 +318,11 @@ export const tiendaProductos = [
     colores: [{ hex: '#4A4A48', nombre: 'Antracita' }],
     tallas: TALLAS_DISPONIBLES,
     tallasDisponibles: [40, 42],
-    imagen: '/img/ecommerce/chaqueta-producto-portada-felycampo-ffff-bg.jpg',
-    imagenHover: '/img/ecommerce/FW27-Look03.webp',
+    imagen: '/img/ecommerce/fely-campo-pret-a-porter-chaqueta-producto-portada.webp',
+    imagenHover: '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-03.webp',
     imagenes: [
-      '/img/ecommerce/chaqueta-producto-portada-felycampo-ffff-bg.jpg',
-      '/img/ecommerce/FW27-Look03.webp',
+      '/img/ecommerce/fely-campo-pret-a-porter-chaqueta-producto-portada.webp',
+      '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-03.webp',
     ],
   },
 ];

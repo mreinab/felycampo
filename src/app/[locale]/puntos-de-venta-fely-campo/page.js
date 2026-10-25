@@ -9,17 +9,14 @@
    consumidor (ver comentario en ese componente) y trae su propia
    CabeceraSeccion — sin otra encima aquí, sería redundante.
 
-   Debajo del mapa, a petición: cabecera "Boutiques internacionales"
-   (CabeceraSeccion, mismo componente que el resto del sitio —
-   contextualiza por qué Milán tiene aquí su propia tarjeta, ver
-   "puntosVenta.internacionalTitulo/internacionalIntro" en
-   messages/{locale}.json) + una tarjeta editorial para el Showroom
-   Milán, mismo diseño de .tarjeta que las sedes de
-   visita-fely-campo/ListadoUbicaciones.jsx (foto 50% + info 50%, con
-   EnVista para el fundido al entrar en scroll) — aquí sin foto/
-   dirección/teléfono reales todavía: bloque gris en vez de galería y
-   un párrafo de relleno (lorem ipsum, en rojo a propósito, ver
-   .textoRelleno en page.module.css) hasta que haya contenido real.
+   Debajo del mapa, a petición: cabecera "Fely Campo y Guffanti:
+   presencia internacional" (CabeceraSeccion, solo título — ver
+   "puntosVenta.internacionalTitulo" en messages/{locale}.json) + una
+   tarjeta editorial para el Showroom Milán (nombre y texto en
+   "puntosVenta.showroomNombre/showroomTexto"), mismo diseño de
+   .tarjeta que las sedes de visita-fely-campo/ListadoUbicaciones.jsx
+   (foto 50% + info 50%, con EnVista para el fundido al entrar en
+   scroll).
    margin-bottom en la propia sección (ver .seccionMilan) para separar
    del Footer, que si no quedaba pegado justo debajo. */
 
@@ -41,7 +38,7 @@ export default async function Pagina() {
     <>
       <section className="seccion">
         <ProductHero
-          imagen="/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg"
+          imagen="/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp"
           titulo={t('tituloHero')}
           subtitulo={t('subtituloHero')}
         />
@@ -56,15 +53,14 @@ export default async function Pagina() {
       <section className={`seccion ${styles.seccionMilan}`}>
         <CabeceraSeccion
           titleKey="puntosVenta.internacionalTitulo"
-          descriptionKey="puntosVenta.internacionalIntro"
           alinear="start"
         />
 
         <EnVista as="article" className={styles.tarjeta}>
           <div className={styles.galeria}>
             <img
-              src="/img/atelier/felycampo-punto-venta-internacional.webp"
-              alt="Showroom Milan"
+              src="/img/atelier/fely-campo-atelier-punto-venta-internacional-2.webp"
+              alt={t('showroomNombre')}
               className={styles.foto}
               loading="lazy"
               decoding="async"
@@ -72,10 +68,8 @@ export default async function Pagina() {
           </div>
 
           <div className={styles.fila}>
-            <p className={styles.nombre}>Showroom Milan</p>
-            <p className={styles.textoRelleno}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
+            <p className={styles.nombre}>{t('showroomNombre')}</p>
+            <p className={styles.textoRelleno}>{t('showroomTexto')}</p>
           </div>
         </EnVista>
       </section>

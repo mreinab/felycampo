@@ -39,13 +39,13 @@ import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 const SUBMENU_STRUCTURE = {
   atelier: {
     items: [
-      { key: 'salamanca', href: '/atelier-fiesta/salamanca', image: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
-      { key: 'madrid', href: '/atelier-fiesta/madrid', image: '/img/atelier/showroom-madrid/felycampo-atelier-madrid-showroom.jpg', imagePosition: 'center top' },
-      { key: 'oviedo', href: '/atelier-fiesta/oviedo', image: '/img/atelier/atelier-oviedo/TIENDA FELY-4 (1).jpg' },
+      { key: 'salamanca', href: '/atelier-fiesta/salamanca', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
+      { key: 'madrid', href: '/atelier-fiesta/madrid', image: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-showroom.webp', imagePosition: 'center top' },
+      { key: 'oviedo', href: '/atelier-fiesta/oviedo', image: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-tienda-4-1.webp' },
       // "separador": "Vosotras" no es una sede — un hueco de una fila
       // por encima (ver NavbarPanelLateralContent.jsx) la separa
       // visualmente de las 3 ciudades de arriba.
-      { key: 'vosotras', href: '/atelier/vosotras', separador: true, image: '/img/Clientes/CLIENTAS/finales/IMG_6068.jpg' },
+      { key: 'vosotras', href: '/atelier/vosotras', separador: true, image: '/img/Clientes/CLIENTAS/finales/fely-campo-novias-reales-10.webp' },
     ],
     cardsVariante: 'horizontal',
     cards: [
@@ -54,8 +54,8 @@ const SUBMENU_STRUCTURE = {
       // cambiada a petición; antes ContacPage-Hero-FelyCampo.jpg) y
       // "Nuestro Atelier" en vez del nombre de una ciudad, para que la
       // tarjeta hable del atelier en general, no de Salamanca.
-      { key: 'salamanca', labelKey: 'nuestroAtelier', href: '/atelier-fiesta/salamanca', image: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp' },
-      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/Clientes/CLIENTAS/finales/IMG_6068.jpg' },
+      { key: 'salamanca', labelKey: 'nuestroAtelier', href: '/atelier-fiesta/salamanca', image: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-sala-pruebas.webp' },
+      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/Clientes/CLIENTAS/finales/fely-campo-novias-reales-10.webp' },
     ],
   },
   colecciones: {
@@ -63,40 +63,40 @@ const SUBMENU_STRUCTURE = {
     // categorías (tops/faldas/pantalones...) como antes — esas
     // siguen existiendo como páginas propias, solo no se listan aquí.
     items: [
-      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg' },
-      { key: 'novias', href: '/atelier/novias', image: '/img/landing/hero-atelier-novia-felycampo.jpg' },
-      { key: 'pretaporter', href: '/pret-a-porter', image: '/img/FelyCampo_AW2026_KristenWicce_ALTA-177.jpg' },
-      { key: 'runway', href: '/colecciones-fely-campo', image: '/img/hero-pages/submenu/runway-submenu-image.jpg' },
+      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp' },
+      { key: 'novias', href: '/atelier/novias', image: '/img/landing/fely-campo-portada-hero-atelier-novia.webp' },
+      { key: 'pretaporter', href: '/pret-a-porter', image: '/img/fely-campo-menu-pret-a-porter.webp' },
+      { key: 'runway', href: '/colecciones-fely-campo', image: '/img/hero-pages/submenu/fely-campo-menu-pasarela.webp' },
     ],
     cardsVariante: 'horizontal',
     cards: [
-      { key: 'novias', href: '/atelier/novias', image: '/img/landing/hero-atelier-novia-felycampo.jpg' },
-      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg' },
+      { key: 'novias', href: '/atelier/novias', image: '/img/landing/fely-campo-portada-hero-atelier-novia.webp' },
+      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp' },
     ],
   },
   elMundoDeFely: {
     // "podcast" enlaza a /podcast (antes /blog — ver comentario de
     // cabecera en podcast/page.js para el porqué del cambio de URL).
     items: [
-      { key: 'historia', href: '/sobre-fely', image: '/img/about-felycampo/fely-campo-conoce-a-la-disenadora.jpg' },
-      { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/madrid-moda-de-capital-felycampo-podcast.jpg' },
-      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp' },
+      { key: 'historia', href: '/sobre-fely', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-conoce-a-disenadora.jpg' },
+      { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
+      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp' },
     ],
     cardsVariante: 'horizontal',
     cards: [
-      { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/madrid-moda-de-capital-felycampo-podcast.jpg' },
-      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp' },
+      { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
+      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp' },
     ],
   },
   puntosDeVenta: {
     items: [
-      { key: 'propios', href: '/visita-fely-campo', image: '/img/landing/hero-visitanos-felycampo.jpg' },
-      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
+      { key: 'propios', href: '/visita-fely-campo', image: '/img/landing/fely-campo-menu-visita-ateliers.webp' },
+      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
     ],
     cardsVariante: 'horizontal',
     cards: [
-      { key: 'propios', href: '/visita-fely-campo', image: '/img/landing/hero-visitanos-felycampo.jpg' },
-      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
+      { key: 'propios', href: '/visita-fely-campo', image: '/img/landing/fely-campo-menu-visita-ateliers.webp' },
+      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
     ],
   },
 };
@@ -131,6 +131,9 @@ const IDIOMAS = [
 
 const CLOSE_DELAY_MS = 200;
 const SCROLL_THRESHOLD_PX = 50;
+// Corte del Navbar móvil — debe coincidir con la media query del menú
+// móvil en Navbar.module.css.
+const MEDIA_NAV_MOBILE = '(max-width: 964px), (max-width: 1024px) and (orientation: portrait)';
 
 // Remate del menú móvil (ver "debajo" en el <PanelLateral> de más abajo):
 // misma foto que el ProductHero de /pret-a-porter (horizontal de verdad,
@@ -149,7 +152,7 @@ function MobileMenuBanner({ locale, submenuKey, onNavegar }) {
   const card = submenuKey && SUBMENU_STRUCTURE[submenuKey].cards[0];
   const portada = card
     ? { href: card.href, image: card.image, imagePosition: card.imagePosition, label: t(`submenus.${submenuKey}.${card.labelKey || card.key}`) }
-    : { href: '/pret-a-porter', image: '/img/hero-pages/hero-pages-pretaporter-cover.jpg', label: t('links.tienda') };
+    : { href: '/pret-a-porter', image: '/img/hero-pages/fely-campo-menu-pret-a-porter-portada.webp', label: t('links.tienda') };
 
   return (
     <a
@@ -206,33 +209,56 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   // Solo importa combinado con la prop "transparent" (ver Navbar.module.css):
   // decide si el fondo pasa de transparente a blanco al hacer scroll.
   // Si la página trae un Hero marcado con data-navbar-hero (home,
-  // ProductHero en Tienda/Atelier), se usa un IntersectionObserver
-  // sobre ese bloque en vez del umbral fijo: "scrolled" pasa a true
-  // al 80% de scroll del Hero (threshold 0.2 — cuando solo queda un
-  // 20% de su alto por asomar, sea cual sea ese alto: 105dvh en home,
-  // 50vh en ProductHero), no cuando ya ha desaparecido del todo — así
-  // el fondo blanco no llega "tarde" justo antes de que el Hero se
-  // acabe. Mismo criterio de observer que ya usa el Footer más abajo.
-  // Sin Hero en la página (o sin soporte de IntersectionObserver), cae
-  // al umbral fijo de siempre. Depende de "pathname": el layout no
+  // ProductHero en Tienda/Atelier), "scrolled" pasa a true al 80% de
+  // scroll del Hero (sea cual sea su alto: 105dvh en home, 50vh en
+  // ProductHero), no cuando ya ha desaparecido del todo — así el fondo
+  // blanco no llega "tarde" justo antes de que el Hero se acabe.
+  // Se mide por scroll (scrollY frente a donde acaba ese 80%), no con
+  // un IntersectionObserver sobre el Hero: en mobile varios Heros van
+  // fijados (ProductHero con position:fixed, HeroPagina "fijarEnMobile"
+  // con sticky) y nunca salen de la pantalla, así que un observer no
+  // disparaba nunca y el Navbar se quedaba transparente/claro.
+  // Sin Hero en la página, cae al umbral fijo de siempre. En mobile
+  // (MEDIA_NAV_MOBILE, mismo corte que el menú móvil en
+  // Navbar.module.css) se vuelve sólido en cuanto empieza el scroll,
+  // haya Hero o no — a petición. Depende de "pathname": el layout no
   // desmonta Navbar al navegar entre rutas, así que hay que re-buscar
   // el Hero de la página nueva.
   useEffect(() => {
     const heroMarcador = document.querySelector('[data-navbar-hero]');
+    const mobile = window.matchMedia(MEDIA_NAV_MOBILE);
+    let limite = SCROLL_THRESHOLD_PX;
 
-    if (heroMarcador && typeof IntersectionObserver !== 'undefined') {
-      const observer = new IntersectionObserver(
-        ([entrada]) => setScrolled(entrada.intersectionRatio <= 0.2),
-        { threshold: 0.2 },
-      );
-      observer.observe(heroMarcador);
-      return () => observer.disconnect();
-    }
+    const medir = () => {
+      if (mobile.matches) {
+        limite = 0;
+        return;
+      }
+      if (!heroMarcador) {
+        limite = SCROLL_THRESHOLD_PX;
+        return;
+      }
+      // Inicio del Hero en el documento (0 si va fijado arriba) + 80%
+      // de su alto.
+      const inicio = heroMarcador.getBoundingClientRect().top + window.scrollY;
+      limite = Math.max(0, inicio) + heroMarcador.offsetHeight * 0.8;
+    };
 
-    const handleScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD_PX);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > limite);
+    const alRedimensionar = () => {
+      medir();
+      handleScroll();
+    };
+
+    alRedimensionar();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', alRedimensionar);
+    mobile.addEventListener('change', alRedimensionar);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', alRedimensionar);
+      mobile.removeEventListener('change', alRedimensionar);
+    };
   }, [pathname]);
 
   // El Footer tiene su propio logo (ver Footer.jsx) — cuando entra en
@@ -482,7 +508,7 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
         {/* Logo, siempre visible, centrado */}
         <a href={withLocale('/')} className={styles.navLogoLink}>
           <img
-            src={isLight ? '/img/logo/logo-white-felycampo.png' : '/img/logo/logo-felycampo.png'}
+            src={isLight ? '/img/logo/fely-campo-logo-white.webp' : '/img/logo/fely-campo-logo.webp'}
             alt="Fely Campo"
             className={navLogoClassName}
           />

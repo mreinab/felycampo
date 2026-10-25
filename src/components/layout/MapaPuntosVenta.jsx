@@ -94,46 +94,22 @@ const CAPITALES_PROVINCIA = {
   '51': { lat: 35.8894, lng: -5.3213 }, '52': { lat: 35.2923, lng: -2.9381 },
 };
 
-// Foto real por punto de venta (ver public/img/atelier/puntos-de-venta/,
-// el reportaje que cada distribuidor ha ido mandando) — nuestros 3
-// ateliers propios (Salamanca/Madrid/Oviedo) no están ahí, así que
-// toman una foto de su propia carpeta de reportaje en su lugar (mismas
-// carpetas que usa visita-fely-campo/ListadoUbicaciones.jsx). El resto
-// de distribuidores (todavía sin foto propia) cae en
-// IMAGENES_FALLBACK, ver imagenDe más abajo.
-const IMAGEN_POR_ID = {
-  'fely-campo-atelier-novias-salamanca': '/img/atelier/atelier-salamanca/fely-campo-salamanca.jpg',
-  'fely-campo-madrid-atelier': '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
-  'fely-campo-oviedo': '/img/atelier/atelier-oviedo/oviedo-felycampo-atelier.webp',
-  'teresa-justel': '/img/atelier/puntos-de-venta/teresa-justerl.jpg',
-  'for-you': '/img/atelier/puntos-de-venta/for-you-burgos.jpg',
-  'lm-company': '/img/atelier/puntos-de-venta/lmcompany.jjpg.webp',
-  'pilar-y-carmen': '/img/atelier/puntos-de-venta/pilarycarmen.webp',
-  'paqui-muriel': '/img/atelier/puntos-de-venta/paquimuriel.webp',
-  'angela-serrano': '/img/atelier/puntos-de-venta/angelaserrano.webp',
-  'boutique-tess': '/img/atelier/puntos-de-venta/boutiquetess.webp',
-  marengo: '/img/atelier/puntos-de-venta/marengoboutique.webp',
-  'miguel-angel-jacinto': '/img/atelier/puntos-de-venta/miguelangeljacinto.jfif',
-  'sancresp-21': '/img/atelier/puntos-de-venta/sancrespt21.webp',
-  'atelier-by-penhalta': '/img/atelier/puntos-de-venta/atelierpenthalta.webp',
-  'juan-y-ana-amante': '/img/atelier/puntos-de-venta/juanyanaamante.webp',
-  bolta: '/img/atelier/puntos-de-venta/boltaboutique.webp',
-  'gala-garcia-novias': '/img/atelier/puntos-de-venta/galagarcianovias.webp',
-  'mamen-gonzalez-novias': '/img/atelier/puntos-de-venta/mamengonzaleznovia.webp',
-};
-
-// Sin foto propia todavía (el resto de distribuidores, sobre todo los
-// internacionales) — cicla por posición en el listado, mismo criterio
-// que antes tenía IMAGENES_PLACEHOLDER completo, ahora con fotos de
-// nuestras 3 carpetas de atelier en vez de public/img/talleres/.
-const IMAGENES_FALLBACK = [
-  '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp',
-  '/img/atelier/showroom-madrid/atelier_medida_madrid_fiesta_novia_felycampo.webp',
-  '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_5-2048x1365.webp',
-];
+// Foto de cada punto de venta: miniatura WebP de 240x320 (3:4, el 3x
+// del hueco de 80px de .puntoImagen) en public/img/atelier/puntos-de-venta/,
+// con el id del punto en el nombre — fely-campo-punto-de-venta-{id}.webp
+// (prefijo de marca por SEO). Para añadir
+// o cambiar una foto basta con dejar ahí su miniatura con ese nombre.
+// Los ateliers propios también tienen la suya (sacada de su carpeta de
+// reportaje). Los ids de SIN_FOTO todavía no tienen foto y ciclan por
+// posición entre las 3 miniaturas fely-campo-punto-de-venta-respaldo-*.webp.
+const CARPETA_FOTOS = '/img/atelier/puntos-de-venta';
+const SIN_FOTO = new Set(['vogam', 'le-chapeau', 'novias-di-stefano']);
+const IMAGENES_FALLBACK = ['respaldo-salamanca', 'respaldo-madrid', 'respaldo-oviedo'];
 
 function imagenDe(punto, indice) {
-  return IMAGEN_POR_ID[punto.id] || IMAGENES_FALLBACK[indice % IMAGENES_FALLBACK.length];
+  const nombre = SIN_FOTO.has(punto.id) ? IMAGENES_FALLBACK[indice % IMAGENES_FALLBACK.length] : punto.id;
+  // Los ateliers propios ya llevan la marca en el id (fely-campo-oviedo…): sin repetirla.
+  return `${CARPETA_FOTOS}/fely-campo-punto-de-venta-${nombre.replace(/^fely-campo-/, '')}.webp`;
 }
 
 // Coordenadas aproximadas (capital) de cada país presente en
@@ -396,6 +372,8 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
                         <img
                           src={imagenDe(punto, indice)}
                           alt=""
+                          loading="lazy"
+                          decoding="async"
                           aria-hidden="true"
                           className={styles.puntoImagen}
                         />

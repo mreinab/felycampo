@@ -18,7 +18,7 @@ export default async function ChaquetasYAbrigosPagina() {
   return (
     <section className="seccion">
       <ProductHero
-        imagen="/img/hero-pages/hero-pages-pretaporter-chaquetas-y-abrigos.jpg"
+        imagen="/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-chaquetas-abrigos.webp"
         titulo={[t('catalogo.tituloTienda'), t('nav.submenus.tienda.coats')]}
       />
       <CuadriculaProductos

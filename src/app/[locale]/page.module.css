@@ -13,43 +13,30 @@
   gap: 0;
 }
 
+/* Nada en mayúsculas en la landing (a petición) — incluye componentes
+   compartidos que las traen de serie (Boton "texto"/"texto-crema",
+   .tituloLanding de SplitMedia), sin tocarlos en el resto del sitio.
+   !important porque esas reglas tienen la misma especificidad y el
+   orden de los CSS Modules entre sí no está garantizado. */
+.landing,
+.landing * {
+  text-transform: none !important;
+}
+
 /* ---------- "Descubre a Fely" (último bloque antes del footer) ----------
-   Copia de las tarjetas de /visita-fely-campo (ver .lista/.tarjeta/
-   .galeria/.fila/.info/.nombre/.descripcion/.acciones/.accionBtn en
-   visita-fely-campo/page.module.css) — mismos valores, con prefijo
-   descubreFely para no chocar con el resto de la landing. Texto a la
-   izquierda (título, cita y botón al final), foto a la derecha. */
+   Sección partida texto + imagen sobre el grid de 24 columnas (ver
+   --grid-columnas-24 en global.css): en escritorio foto en las
+   columnas 1–12 y texto (título, cita y botón al final) en las 15–24,
+   dos columnas después de la foto como separación. En mobile/tablet
+   se apila: texto arriba, foto debajo (ver media query al final). */
 .descubreFely {
   width: 100%;
   padding-block: var(--spacing-10);
   padding-inline: var(--spacing-6);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
 }
 
-@media (min-width: 1024px) {
-  .descubreFely {
-    padding-inline: var(--spacing-10);
-  }
-}
-
-/* Grid de dos columnas con ancho tope (texto 22rem, foto el ancho que
-   da 80vh de alto a 2.5/3), centrado en ancho y alto. La fila toma el
-   alto de la foto y .descubreFelyFila se estira a ese alto. */
-.descubreFelyTarjeta {
-  min-height: 80vh;
-  display: grid;
-  grid-template-columns: minmax(0, 22rem) minmax(0, calc(80vh * 2.5 / 3));
-  justify-content: center;
-  align-content: center;
-  column-gap: var(--spacing-10);
-}
-
 .descubreFelyGaleria {
-  grid-column: 2;
-  grid-row: 1;
-  width: 100%;
-  aspect-ratio: 2.5 / 3;
   min-width: 0;
   overflow: hidden;
 }
@@ -59,19 +46,56 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Fely está a la derecha de la foto (horizontal): el recorte vertical
-     2.5/3 la centra a ella en vez de a la pared. */
+  /* En mobile (3/2) Fely está a la derecha y el recorte la centra a ella. */
   object-position: 70% center;
 }
 
+/* Columna de texto: el bloque título + cita + CTA (.descubreFelyBloque)
+   centrado en vertical en el alto de la foto. */
 .descubreFelyFila {
-  grid-column: 1;
-  grid-row: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  gap: var(--spacing-5);
+  justify-content: center;
+}
+
+/* Texto y CTA juntos, --spacing-8 entre ellos. */
+.descubreFelyBloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+/* Escritorio: la sección mide 120vh (más de una pantalla) y la foto
+   llena todo el alto de sus 12 columnas (object-fit: cover recorta el
+   ancho), entre los márgenes laterales del header
+   (--padding-lateral-nav). */
+@media (min-width: 1024px) {
+  .descubreFely {
+    box-sizing: border-box;
+    height: 120vh;
+    /* Margen (no padding) arriba/abajo: la foto mantiene los 120vh y
+       la separación se suma fuera de la sección. */
+    margin-block: var(--spacing-10);
+    padding: 0 var(--padding-lateral-nav);
+  }
+  .descubreFelyTarjeta {
+    display: grid;
+    grid-template-columns: var(--grid-columnas-24);
+    column-gap: var(--grid-gap);
+    align-items: stretch;
+    height: 100%;
+  }
+  .descubreFelyGaleria {
+    grid-column: 1 / 13;
+    grid-row: 1;
+    height: 100%;
+  }
+  .descubreFelyFila {
+    grid-column: 15 / 25;
+    grid-row: 1;
+  }
 }
 
 .descubreFelyInfo {
@@ -84,24 +108,22 @@
   text-transform: none;
 }
 
-/* Mismo tamaño que el resto de títulos de la landing (SplitMedia
-   .tituloLanding y .atelierCitaTitulo): en mayúsculas como el título
-   del SplitMedia, 2px más que --text-body-lg. */
+/* Título y texto de bloque (ver --text-bloque-* en global.css). */
 .descubreFelyTitulo {
-  font-size: calc(var(--text-body-lg) + 2px);
+  font-size: var(--text-bloque-titulo);
   font-weight: 400;
-  line-height: var(--leading-base);
-  letter-spacing: normal;
-  text-transform: uppercase;
+  line-height: var(--leading-bloque);
+  letter-spacing: var(--tracking-bloque);
   color: var(--color-tinta);
   padding-bottom: var(--spacing-3);
 }
 
-/* Texto corrido a --text-body, el cuerpo base del sitio. */
 .descubreFelyCita p {
-  font-size: var(--text-body);
-  line-height: var(--leading-base);
-  letter-spacing: normal;
+  font-size: var(--text-bloque-texto);
+  font-weight: 400;
+  line-height: var(--leading-bloque);
+  letter-spacing: 0;
+  text-wrap: pretty;
   color: var(--color-tinta);
 }
 
@@ -111,36 +133,40 @@
   flex-shrink: 0;
 }
 
-/* Mobile/tablet (= visita-fely-campo): apilado, foto arriba a todo el
-   ancho y texto debajo, botón a todo el ancho. */
+/* Mobile/tablet: apilado, texto arriba y foto debajo a todo el ancho
+   (order:-1 en .descubreFelyFila, sin cambiar el orden del DOM). */
 @media (max-width: 1023px) {
   /* Sin padding lateral en la sección: la foto llega a los bordes y
      el margen lateral pasa solo al texto (.descubreFelyFila). */
   .descubreFely {
+    margin-block: var(--spacing-7);
     padding-block: 0;
     padding-inline: 0;
   }
-  /* La sección entera ocupa una pantalla (100svh = alto visible en
-     mobile, sin la barra del navegador). */
+  /* Mínimo 80svh (alto visible en mobile, sin la barra del
+     navegador); el margin-block va aparte. Con la foto ya a 80vh (abajo)
+     el bloque siempre lo supera: el texto queda a su alto natural. */
   .descubreFelyTarjeta {
     display: flex;
     flex-direction: column;
-    min-height: 100svh;
+    min-height: 80svh;
   }
-  /* Apilada, la foto va en horizontal (3/2) en vez del recorte
-     vertical 2.5/3 de escritorio. */
+  /* Apilada, la foto mide 80vh de alto a todo el ancho (object-fit:
+     cover recorta los lados). */
   .descubreFelyGaleria {
     width: 100%;
-    aspect-ratio: 3 / 2;
+    height: 80vh;
+    aspect-ratio: auto;
     flex-shrink: 0;
   }
-  /* El texto se estira al alto que deja la foto: título y cita arriba,
-     CTA abajo del todo. */
+  /* El texto se estira al alto que deja la foto, con el bloque
+     texto + CTA centrado en vertical en ese alto. */
   .descubreFelyFila {
+    order: -1;
     flex: 1;
     width: 100%;
-    align-items: flex-start;
-    justify-content: space-between;
+    align-items: stretch;
+    justify-content: center;
     padding-block: var(--spacing-6);
     padding-inline: var(--spacing-6);
   }
@@ -149,83 +175,3 @@
   }
 }
 
-/* ---------- Pedir cita (último bloque antes del footer) ----------
-   Tres columnas pegadas (sin gap, como el SplitMedia "landing"), una
-   por atelier. Mismo diseño de texto que SplitMedia.module.css
-   (.tituloLanding / .contenidoLanding .cta), pero en columna: nombre
-   arriba, CTA abajo, alineados a la izquierda. Velo oscuro plano en
-   toda la foto. */
-.ateliersCita {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-}
-
-.atelierCita {
-  position: relative;
-  display: block;
-  height: 60vh;
-  overflow: hidden;
-}
-
-.atelierCita::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  /* Velo plano, igual en toda la foto (a petición, sin degradados). */
-  background: rgb(0 0 0 / 0.2);
-  pointer-events: none;
-}
-
-.atelierCitaImagen {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.atelierCitaContenido {
-  position: absolute;
-  z-index: 1;
-  inset: var(--spacing-5);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  text-align: left;
-}
-
-/* = .tituloLanding de SplitMedia. */
-.atelierCitaTitulo {
-  font-size: calc(var(--text-body-lg) + 2px);
-  font-weight: 400;
-  color: var(--color-fondo);
-  letter-spacing: normal;
-}
-
-/* = .contenidoLanding .cta de SplitMedia: Boton "texto" en crema. */
-.atelierCitaCta {
-  color: var(--color-fondo);
-  border-bottom-color: var(--color-fondo);
-}
-
-/* Mobile: carrusel horizontal a 80vh. Cada atelier ocupa 80vw para
-   que asome ~1/5 del siguiente e invite a deslizar; scroll-snap encaja
-   cada tarjeta al soltar. Sin barra de scroll visible. */
-@media (max-width: 767px) {
-  .ateliersCita {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .ateliersCita::-webkit-scrollbar {
-    display: none;
-  }
-  .atelierCita {
-    flex: 0 0 80vw;
-    height: 80vh;
-    scroll-snap-align: start;
-  }
-}

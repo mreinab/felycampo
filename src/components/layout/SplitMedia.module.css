@@ -72,7 +72,9 @@
 .contenido .cta {
   color: var(--color-fondo);
   border-bottom-color: var(--color-fondo);
-  font-size: var(--text-caption);
+  font-size: var(--text-cta);
+  font-family: var(--font-base);
+  letter-spacing: var(--tracking-label);
 }
 
 /* landing: fila inferior — título a la izquierda, CTA en la esquina
@@ -81,8 +83,9 @@
 .contenidoLanding {
   position: absolute;
   z-index: 1;
-  left: var(--spacing-5);
-  right: var(--spacing-5);
+  /* Mismo margen lateral que el header (ver --padding-lateral-nav). */
+  left: var(--padding-lateral-nav);
+  right: var(--padding-lateral-nav);
   bottom: var(--spacing-5);
   display: flex;
   justify-content: space-between;
@@ -90,13 +93,12 @@
   gap: var(--spacing-3);
 }
 
-/* En mayúsculas, 2px más grande que --text-body-lg. */
+/* Tamaño de título, sin mayúsculas (solo los títulos de hero las llevan). */
 .tituloLanding {
-  font-size: calc(var(--text-body-lg) + 2px);
+  font-size: var(--text-titulo);
   font-weight: 400;
   color: var(--color-fondo);
   letter-spacing: normal;
-  text-transform: uppercase;
 }
 
 /* Mismo diseño que Boton .texto/.textoCrema (enlace subrayado, sin
@@ -143,12 +145,12 @@
 }
 .contenido.enVista .etiqueta,
 .contenidoLanding.enVista .tituloLanding {
-  animation: entradaContenido 0.9s var(--ease-marca) forwards;
+  animation: entradaContenido 0.6s var(--ease-marca) forwards;
 }
 
 .contenido.enVista .cta {
-  animation: entradaCta 0.9s var(--ease-marca) forwards;
-  animation-delay: 0.3s;
+  animation: entradaCta 0.6s var(--ease-marca) forwards;
+  animation-delay: 0.15s;
 }
 
 /* landing: el CTA siempre está visible, así que entra igual y a la vez
@@ -158,7 +160,29 @@
   opacity: 0;
 }
 .contenidoLanding.enVista .cta {
-  animation: entradaContenido 0.9s var(--ease-marca) forwards;
+  animation: entradaContenido 0.6s var(--ease-marca) forwards;
+}
+
+/* landing + centrado (ver SplitMedia.jsx, ej. /atelier): título y CTA
+   en columna, centrados en alto y ancho sobre la foto. El degradado
+   inferior pasa a un velo uniforme al 25%: con el texto en el centro,
+   un oscurecido solo abajo ya no quedaría detrás de él. Selectores de
+   tres clases para ganar a las reglas de .contenidoLanding/.pieza::after
+   (incluidas las de mobile) sin depender del orden. */
+.grid.landing.centrado .pieza::after {
+  background: rgb(0 0 0 / 0.25);
+}
+
+.grid.landing.centrado .contenidoLanding {
+  top: 0;
+  bottom: 0;
+  left: var(--padding-lateral-nav);
+  right: var(--padding-lateral-nav);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-3);
+  text-align: center;
 }
 
 @keyframes entradaContenido {
@@ -223,8 +247,6 @@
     aspect-ratio: 3 / 4;
   }
   .contenidoLanding {
-    left: var(--spacing-4);
-    right: var(--spacing-4);
     bottom: var(--spacing-4);
   }
 }

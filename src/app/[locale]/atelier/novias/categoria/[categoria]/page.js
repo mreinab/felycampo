@@ -59,7 +59,7 @@ export default async function Pagina({ params }) {
     <section className="seccion">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductHero
-        imagen="/img/novias-sección-FelyCampo3.jpg"
+        imagen="/img/fely-campo-web-novias-seccion-3.webp"
         titulo={[t(SECCION_KEY), t(`filtros.estiloYSilueta.grupos.${categoriaActiva.grupo}.opciones.${categoriaActiva.opcion}`)]}
       />
       <CuadriculaProductos

@@ -28,7 +28,7 @@ export default async function Pagina({ params }) {
     {/* Hero común (HeroPagina): hero-pages-pretaporter-faldas.jpg (a
         petición; antes la portada de COLECCIONES[0]). */}
     <HeroPagina
-      imagen="/img/hero-pages/hero-pages-pretaporter-faldas.jpg"
+      imagen="/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-faldas.webp"
       alt={t('nav.submenus.colecciones.runway')}
       titulo={t('nav.submenus.colecciones.runway')}
       subtitulo={t('heroPagina.runwayArchivo')}

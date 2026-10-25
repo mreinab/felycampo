@@ -2,9 +2,9 @@
    SOBRE FELY — Fely Campo. Ruta: /sobre-fely
    "Una vida entre telas": hero (HeroPagina — "Fely Campo" / "Una vida
    entre telas.") → 6 capítulos de biografía (ver "capitulos" en
-   sobreFely.js: título + subtítulo + texto y sus fotos, cada uno con
-   su disposición — mismo diseño sencillo que las secciones de
-   AtelierDetalle, sin números ni tipografías propias) →
+   sobreFely.js: título + subtítulo + texto y sus fotos, sobre el grid
+   de 24 columnas de Descubre a Fely, foto alternando de lado — sin
+   números ni tipografías propias) →
    cierre ("Una vida entre telas. Una historia que sigue.") → tarjeta
    del documental de las 54 cintas VHS (TarjetaEnlaceExterno).
    Sustituye a la maquetación anterior (RunwayDescripcion +
@@ -23,13 +23,6 @@ import { SOBRE_FELY } from './sobreFely';
 import styles from './page.module.css';
 import { metadataPagina } from '@/lib/seo';
 
-const CLASE_DISPOSICION = {
-  imagenIzquierda: styles.imagenIzquierda,
-  imagenDerecha: styles.imagenDerecha,
-  tira: styles.tira,
-  columna: styles.columna,
-};
-
 // Foto + pie de imagen propio (si lo trae, ver "foto" en sobreFely.js).
 // .marco es el recuadro de la foto; el pie va fuera de él, debajo.
 function Figura({ foto, alt, locale }) {
@@ -43,41 +36,63 @@ function Figura({ foto, alt, locale }) {
   );
 }
 
-function Capitulo({ capitulo, locale }) {
+// Capítulo sobre el grid de 24 columnas (mismo esquema que Descubre a
+// Fely en la landing, ver page.module.css): foto principal en una
+// mitad y texto en la otra, dos columnas de separación, alternando de
+// lado por capítulo ("invertido" en los pares). Fotos extra: una sola
+// va debajo del texto, en su misma columna; dos o más, en filas de dos
+// debajo (una por mitad), igual que la galería. Todas a su proporción.
+function Capitulo({ capitulo, indice, locale }) {
   const alt = `Fely Campo — ${capitulo.etiqueta[locale]}`;
-  const clasesMedios = [
-    styles.medios,
-    capitulo.disposicion !== 'tira' && !capitulo.apiladas && capitulo.imagenes.length === 2 && styles.mediosPareja,
-    capitulo.apiladas && styles.mediosApilados,
-  ].filter(Boolean).join(' ');
+  const [principal, ...extras] = capitulo.imagenes;
+  const extraJuntoAlTexto = extras.length === 1 ? extras[0] : null;
+  const extrasEnFila = extras.length >= 2 ? extras : [];
+  // Pie compartido (capitulo.pie): uno solo, debajo de la última de
+  // las "imagenes" (no de la galería), en vez de repetirlo en cada una.
+  const pie = capitulo.pie && <p className={styles.pie}>{capitulo.pie[locale]}</p>;
 
   return (
-    <article id={capitulo.id} className={`${styles.capitulo} ${CLASE_DISPOSICION[capitulo.disposicion]}`}>
-      {/* Mismo tratamiento que las secciones de AtelierDetalle
-          (.seccionTitulo/.seccionTexto en atelier-fiesta/page.module.css):
-          título corto en mayúsculas + subtítulo + párrafos, sin números. */}
-      <EnVista className={styles.texto}>
-        <h2 className={styles.titulo}>{capitulo.etiqueta[locale]}</h2>
-        <p className={styles.subtitulo}>{capitulo.titulo[locale]}</p>
-        {capitulo.parrafos[locale].map((parrafo) => (
-          <p key={parrafo} className={styles.parrafo}>{parrafo}</p>
-        ))}
-        {capitulo.cita && <p className={styles.cita}>{capitulo.cita[locale]}</p>}
-      </EnVista>
-
-      {/* Pie compartido (capitulo.pie): uno solo debajo de todas las
-          fotos, en vez de repetirlo bajo cada una. */}
-      <div className={styles.mediosBloque}>
-        <div className={clasesMedios}>
-          {capitulo.imagenes.map((foto) => (
-            <Figura key={foto.src} foto={foto} alt={alt} locale={locale} />
-          ))}
-        </div>
-        {capitulo.pie && <p className={styles.pie}>{capitulo.pie[locale]}</p>}
+    <article
+      id={capitulo.id}
+      className={`${styles.capitulo} ${indice % 2 === 1 ? styles.invertido : ''}`}
+    >
+      <div className={styles.principal}>
+        <Figura foto={principal} alt={alt} locale={locale} />
+        {extras.length === 0 && pie}
       </div>
 
+      <div className={styles.lado}>
+        {/* Mismo tratamiento que las secciones de AtelierDetalle
+            (.seccionTitulo/.seccionTexto en atelier-fiesta/page.module.css):
+            título corto en mayúsculas + subtítulo + párrafos, sin números. */}
+        <EnVista className={styles.texto}>
+          <h2 className={styles.titulo}>{capitulo.etiqueta[locale]}</h2>
+          <p className={styles.subtitulo}>{capitulo.titulo[locale]}</p>
+          {capitulo.parrafos[locale].map((parrafo) => (
+            <p key={parrafo} className={styles.parrafo}>{parrafo}</p>
+          ))}
+          {capitulo.cita && <p className={styles.cita}>{capitulo.cita[locale]}</p>}
+        </EnVista>
+
+        {extraJuntoAlTexto && (
+          <div className={styles.extraTexto}>
+            <Figura foto={extraJuntoAlTexto} alt={alt} locale={locale} />
+            {pie}
+          </div>
+        )}
+      </div>
+
+      {extrasEnFila.length > 0 && (
+        <div className={styles.pareja}>
+          {extrasEnFila.map((foto) => (
+            <Figura key={foto.src} foto={foto} alt={alt} locale={locale} />
+          ))}
+          {pie && <div className={styles.parejaPie}>{pie}</div>}
+        </div>
+      )}
+
       {capitulo.galeria && (
-        <div className={styles.galeria}>
+        <div className={styles.pareja}>
           {capitulo.galeria.map((foto) => (
             <Figura key={foto.src} foto={foto} alt={alt} locale={locale} />
           ))}
@@ -101,19 +116,22 @@ export default async function Pagina({ params }) {
   return (
     <section>
       {/* fijarEnMobile: efecto "pin" en mobile (ver HeroPagina.jsx) — el
-          .contenido que sigue lleva fondo opaco para taparla. */}
+          .contenido que sigue lleva fondo opaco para taparla.
+          heroEncuadre: en mobile centra el recorte en Fely (ver
+          page.module.css). */}
       <HeroPagina
         imagen={SOBRE_FELY.heroImagen}
         alt="Fely Campo"
         titulo={t('tituloHero')}
         subtitulo={tHero('sobreFely')}
         fijarEnMobile
+        className={styles.heroEncuadre}
       />
 
       <div className={styles.contenido}>
         <div className={`contenedor ${styles.capitulos}`}>
-          {capitulos.map((capitulo) => (
-            <Capitulo key={capitulo.id} capitulo={capitulo} locale={locale} />
+          {capitulos.map((capitulo, indice) => (
+            <Capitulo key={capitulo.id} capitulo={capitulo} indice={indice} locale={locale} />
           ))}
         </div>
 

@@ -1,13 +1,21 @@
 /* ============================================================
    SOBRE FELY — Fely Campo. Ruta: /sobre-fely
-   "Una vida entre telas" (ver page.js y sobreFely.js). Mismo diseño
-   sencillo que las secciones de AtelierDetalle
-   (atelier-fiesta/page.module.css: .seccion/.seccionTexto/
-   .seccionTitulo): dos columnas iguales al 80% del ancho, centradas,
-   texto e imagen alternando de lado; título corto en mayúsculas
-   (--text-h4), párrafos en --font-base. Sin números, sin cursiva, sin
-   titulares grandes (a petición). Pies de imagen en minúscula.
+   "Una vida entre telas" (ver page.js y sobreFely.js). Capítulos sobre
+   el grid de 24 columnas de Descubre a Fely (landing), foto y texto
+   alternando de lado; título corto en mayúsculas, párrafos en
+   --font-base. Sin números, sin cursiva, sin titulares grandes (a
+   petición). Pies de imagen en minúscula.
    ============================================================ */
+
+/* Hero en mobile: la foto es apaisada y Fely está en el tercio
+   derecho — el recorte vertical centrado por defecto enseñaba sobre
+   todo la pared azul y la dejaba cortada en el borde derecho. 80% en
+   horizontal lleva el encuadre a la derecha, centrado en su cara. */
+@media (max-width: 767px) {
+  .heroEncuadre img {
+    object-position: 80% center;
+  }
+}
 
 /* Fondo opaco: tapa el hero fijado en mobile (fijarEnMobile, ver
    HeroPagina.jsx) al subir por encima de él. */
@@ -15,70 +23,85 @@
   background: var(--color-fondo);
 }
 
+/* ---------- Capítulo ----------
+   Grid de 24 columnas (ver --grid-columnas-24 en global.css), mismo
+   esquema que Descubre a Fely en la landing: foto principal en las
+   columnas 1–12 y la columna de texto (.lado) en las 15–24, dos
+   columnas de separación; .invertido (capítulos pares, ver page.js) lo
+   refleja — texto 1–10, foto 13–24. Fotos extra (.pareja, galería
+   incluida) en filas de dos a todo el ancho, una por mitad. */
 .capitulos {
   padding-top: var(--spacing-9);
+  padding-inline: var(--padding-lateral-nav);
 }
 
-/* ---------- Capítulo ---------- */
 .capitulo {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: var(--grid-columnas-24);
+  column-gap: var(--grid-gap);
+  /* Más aire (a petición, más editorial): 120px entre la foto
+     principal y las filas de fotos, 200px entre capítulos. */
+  row-gap: var(--spacing-10);
   align-items: center;
-  column-gap: var(--spacing-8);
-  max-width: 80%;
-  margin-inline: auto;
-  margin-bottom: var(--spacing-9);
+  margin-bottom: var(--spacing-11);
 }
 
-.imagenIzquierda .mediosBloque {
-  grid-column: 1;
-  grid-row: 1;
-}
-.imagenIzquierda .texto {
-  grid-column: 2;
+.principal {
+  grid-column: 1 / 13;
   grid-row: 1;
 }
 
-.imagenDerecha .texto {
-  grid-column: 1;
+/* Texto y, si el capítulo trae una sola foto extra, esa foto debajo
+   (.extraTexto) — juntos, centrados en vertical frente a la principal. */
+.lado {
+  grid-column: 15 / 25;
   grid-row: 1;
-}
-.imagenDerecha .mediosBloque {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-/* Tira: texto en la columna izquierda y las tres fotos en fila
-   debajo, a todo el ancho del capítulo. */
-.tira .texto {
-  grid-column: 1;
-}
-.tira .mediosBloque {
-  grid-column: 1 / -1;
-  margin-top: var(--spacing-7);
-}
-.tira .medios {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--spacing-4);
-}
-.tira .marco {
-  aspect-ratio: 2 / 3;
-}
-
-/* Columna (capítulo 4): texto arriba y fotos apiladas debajo, todo en
-   una sola columna centrada del mismo ancho que las del resto de
-   capítulos (50% menos la mitad del hueco central), así queda
-   alineada con el eje central de la página. */
-.columna {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-7);
+  gap: var(--spacing-8);
 }
-.columna .texto,
-.columna .mediosBloque {
-  width: calc(50% - var(--spacing-8) / 2);
+
+/* Foto extra única, debajo del texto y a su mismo ancho. */
+.extraTexto {
+  min-width: 0;
+}
+
+.invertido .principal {
+  grid-column: 13 / 25;
+}
+
+.invertido .lado {
+  grid-column: 1 / 11;
+}
+
+/* Filas de dos fotos, cada una a su proporción natural y alineadas
+   arriba (pueden quedar de alto distinto). Mismo hueco horizontal que
+   el grid, así cada foto ocupa exactamente una mitad (12 columnas). */
+.pareja {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--spacing-5);
+  align-items: start;
+}
+
+/* Escalonado editorial (solo escritorio): en cada fila de dos, la
+   segunda foto empieza 120px más abajo que la primera. nth-of-type
+   cuenta solo los <figure> — el pie compartido (.parejaPie, un <div>)
+   no altera el par/impar. */
+@media (min-width: 1024px) {
+  .pareja > .figura:nth-of-type(even) {
+    margin-top: var(--spacing-10);
+  }
+}
+
+/* Pie compartido bajo una fila de dos: a todo el ancho de la fila,
+   anulando el row-gap de .pareja para que quede igual de pegado a las
+   fotos que el resto de pies. */
+.parejaPie {
+  grid-column: 1 / -1;
+  margin-top: calc(-1 * var(--spacing-5));
 }
 
 /* ---------- Texto (igual que .seccionTexto de AtelierDetalle) ---------- */
@@ -86,21 +109,21 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-5);
-  padding-inline: var(--spacing-4);
 }
 
 .titulo {
   margin: 0;
-  font-size: 1.375rem; /* 19.25px — un poco mayor que --text-h4, a petición (mismo peso medium: semibold quedaba demasiado pesado) */
+  font-size: var(--text-titulo); /* mismo peso medium: semibold quedaba demasiado pesado */
   font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
   letter-spacing: normal;
   color: var(--color-tinta);
 }
 
-/* Subtítulo ("13 años. Un camino inesperado.") pegado al título. */
+/* Subtítulo ("13 años. Un camino inesperado.") pegado al texto largo,
+   no al título: 12px más de aire con el título (36px en total con el
+   gap de 24px de .texto) y 12px menos con el primer párrafo (12px). */
 .subtitulo {
-  margin: calc(-1 * var(--spacing-4)) 0 0;
+  margin: var(--spacing-3) 0 calc(-1 * var(--spacing-3));
   font-size: var(--text-body);
   line-height: var(--leading-base);
   color: var(--color-tinta);
@@ -111,15 +134,11 @@
   margin: 0;
   font-size: var(--text-body);
   line-height: var(--leading-base);
-  color: var(--color-gris-700);
-}
-
-/* Frase de cierre del capítulo 1: mismo tamaño, solo en tinta. */
-.cita {
   color: var(--color-tinta);
 }
 
-/* ---------- Imágenes ---------- */
+/* ---------- Imágenes ----------
+   Todas a su proporción natural, sin recorte (a petición). */
 .figura {
   margin: 0;
 }
@@ -131,59 +150,17 @@
   border-radius: var(--radius-imagenes);
 }
 
-/* Foto suelta: a su proporción natural. */
 .imagen {
   display: block;
   width: 100%;
   height: auto;
 }
 
-/* Recuadros con proporción fija (tira, pareja, galería): la foto va en
-   absoluto dentro y recorta con cover — así todas miden lo mismo. */
-.tira .imagen,
-.mediosPareja .imagen,
-.galeria .imagen {
-  position: absolute;
-  inset: 0;
-  height: 100%;
-  object-fit: cover;
-}
-
 .pie {
-  margin-top: var(--spacing-2);
+  margin-top: var(--spacing-1);
   font-size: var(--text-caption);
   line-height: 1.5;
-  color: var(--color-gris-600);
-}
-
-/* Dos fotos lado a lado (capítulo 4). */
-.mediosPareja {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--spacing-4);
-}
-.mediosPareja .marco {
-  aspect-ratio: 2 / 3;
-}
-
-/* Fotos una encima de otra (capítulos 4 y 5): cada una a todo el ancho
-   de su columna y a su proporción natural, sin recortar. */
-.mediosApilados {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-}
-
-/* Cuadrícula 2×2 a todo el ancho del capítulo (capítulo 5). */
-.galeria {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--spacing-5) var(--spacing-4);
-  margin-top: var(--spacing-7);
-}
-.galeria .marco {
-  aspect-ratio: 3 / 2;
+  color: var(--color-tinta);
 }
 
 /* ---------- Cierre ---------- */
@@ -200,9 +177,8 @@
 .cierreTitulo {
   margin: 0;
   text-wrap: balance; /* en mobile parte en dos líneas parejas, no una larga + una corta */
-  font-size: 1.375rem; /* 19.25px — un poco mayor que --text-h4, a petición (mismo peso medium: semibold quedaba demasiado pesado) */
+  font-size: var(--text-titulo); /* mismo peso medium: semibold quedaba demasiado pesado */
   font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
   letter-spacing: normal;
   color: var(--color-tinta);
 }
@@ -211,7 +187,7 @@
   margin: 0;
   font-size: var(--text-body);
   line-height: var(--leading-base);
-  color: var(--color-gris-700);
+  color: var(--color-tinta);
 }
 
 /* ---------- Enlace externo (documental VHS) ----------
@@ -228,7 +204,10 @@
   aspect-ratio: 16 / 9;
 }
 
-/* ---------- Mobile / tablet (igual que AtelierDetalle) ---------- */
+/* ---------- Mobile / tablet ----------
+   Apilado: texto arriba, luego la foto principal y las extra, una por
+   fila a todo el ancho. .lado pasa a display:contents para que su
+   texto y su foto extra se ordenen como hijos directos del capítulo. */
 @media (max-width: 1023px) {
   .capitulos {
     padding: var(--spacing-7) var(--spacing-4) 0;
@@ -238,49 +217,31 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--spacing-4);
-    max-width: 100%;
-    margin-bottom: var(--spacing-7);
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-9);
   }
 
-  /* Apilado: imagen siempre arriba (en la tira, el texto va primero). */
-  .imagenIzquierda .mediosBloque,
-  .imagenDerecha .mediosBloque {
-    order: -1;
+  .lado {
+    display: contents;
   }
 
   .texto {
+    order: -2;
     padding-inline: 0;
   }
 
-  .columna .texto,
-  .columna .mediosBloque {
-    width: 100%;
+  .principal {
+    order: -1;
   }
 
-  /* Tira en mobile: la 1ª a todo el ancho, las otras dos debajo. */
-  .tira .mediosBloque {
-    margin-top: 0;
-  }
-  .tira .medios {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--spacing-3);
-  }
-  .tira .figura:first-child {
-    grid-column: 1 / -1;
-  }
-  .tira .figura:first-child .marco {
-    aspect-ratio: 4 / 5;
-  }
-
-  .mediosPareja {
-    gap: var(--spacing-3);
-  }
-
-  .galeria {
+  .pareja {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--spacing-4);
-    margin-top: 0;
+    row-gap: var(--spacing-6);
+  }
+
+  /* Mismo row-gap de .pareja en mobile (--spacing-6), anulado igual. */
+  .parejaPie {
+    margin-top: calc(-1 * var(--spacing-6));
   }
 
   .cierre {

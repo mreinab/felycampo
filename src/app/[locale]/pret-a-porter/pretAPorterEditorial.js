@@ -42,7 +42,7 @@ export const PRET_A_PORTER_EDITORIAL = {
 
   bloques: [
     {
-      imagen: `${RUTA}/FelyCampo_pretaporter_otono_invierno_24_25_LOOK-9-4-2.jpg`,
+      imagen: `${RUTA}/fely-campo-coleccion-fiesta-pret-a-porter-otono-invierno-24-25-look-9-4-2.webp`,
       titulo: {
         es: 'Vestir sin esperar',
         en: 'Dressing without waiting',
@@ -53,7 +53,7 @@ export const PRET_A_PORTER_EDITORIAL = {
       },
     },
     {
-      imagen: `${RUTA_FW27}/FelyCampo_19.webp`,
+      imagen: `${RUTA_FW27}/fely-campo-pasarela-la-coleccion-look-19.webp`,
       titulo: {
         es: 'Color y volumen, todos los días',
         en: 'Color and volume, every day',
@@ -66,11 +66,11 @@ export const PRET_A_PORTER_EDITORIAL = {
   ],
 
   backstage: [
-    `${RUTA}/FelyCampo_pretaporter_otono_invierno_24_25_LOOK-8-3-1.jpg`,
-    `${RUTA_FW27}/FelyCampo_08.webp`,
-    `${RUTA}/FelyCampo_pretaporter_otono_invierno_24_25_LOOK-2-3-1.jpg`,
-    `${RUTA}/FelyCampo_Lookbook_KristenWicce_WEB-28.webp`,
-    `${RUTA}/FelyCampo_pretaporter_otono_invierno_24_25_LOOK-13-1-1.jpg`,
-    `${RUTA}/FelyCampo_pretaporter_otono_invierno_24_25_LOOK-16-1-1.jpg`,
+    `${RUTA}/fely-campo-coleccion-fiesta-pret-a-porter-otono-invierno-24-25-look-8-3-1.webp`,
+    `${RUTA_FW27}/fely-campo-pasarela-la-coleccion-look-08.webp`,
+    `${RUTA}/fely-campo-coleccion-fiesta-pret-a-porter-otono-invierno-24-25-look-2-3-1.webp`,
+    `${RUTA}/fely-campo-coleccion-fiesta-pret-a-porter-foto-28.webp`,
+    `${RUTA}/fely-campo-coleccion-fiesta-pret-a-porter-otono-invierno-24-25-look-13-1-1.webp`,
+    `${RUTA}/fely-campo-coleccion-fiesta-pret-a-porter-otono-invierno-24-25-look-16-1-1.webp`,
   ],
 };

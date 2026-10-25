@@ -6,9 +6,11 @@
    AVISO DE COOKIES — Fely Campo
    Barra fija al pie de LA VENTANA (no del documento: position:fixed,
    no relativa al scroll — ver .banner en CookieConsent.module.css),
-   distinta de un Modal (ui/Modal.jsx): un aviso de cookies no debe
-   bloquear la lectura del resto del sitio, así que no lleva overlay
-   ni atrapa el foco.
+   distinta de un Modal (ui/Modal.jsx). Lleva un velo negro al 40%
+   detrás (.velo) que centra la atención y bloquea clics y scroll de
+   la página hasta elegir, en mobile y escritorio, a petición — sigue
+   siendo válido según la AEPD porque aceptar y rechazar están a la
+   vista con el mismo peso (ver abajo). No atrapa el foco.
 
    "Aceptar todas" y "Rechazar todas" con el mismo peso visual
    (un botón .solido y otro .contorno del mismo tamaño, uno junto al
@@ -23,9 +25,9 @@
    home) — el aviso de cookies debe verse la primera vez que se visita
    cualquier página del sitio, no solo la home.
 
-   Persistencia en localStorage (no sessionStorage, a diferencia de
-   NewsletterModalGlobal.jsx: la decisión debe recordarse entre
-   sesiones, no solo dentro de la visita actual), con el mismo
+   Persistencia en localStorage (no sessionStorage: la decisión debe
+   recordarse entre sesiones, no solo dentro de la visita actual), con
+   el mismo
    try/catch por si el navegador la bloquea (modo privado) que
    CarritoContext.jsx. La lectura vive en un useEffect (no en el
    useState inicial): con "visible" arrancando siempre en false tanto
@@ -96,6 +98,17 @@ function CookieConsent() {
     if (!leerConsentimientoGuardado()) setVisible(true);
   }, []);
 
+  // Mientras el aviso está visible, la página de detrás no hace scroll
+  // (el velo ya bloquea los clics) — mismo criterio que MiCuentaModal.
+  useEffect(() => {
+    if (!visible) return undefined;
+    const overflowPrevio = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = overflowPrevio;
+    };
+  }, [visible]);
+
   if (!visible) return null;
 
   // Guarda la preferencia al instante (no hace falta esperar a la
@@ -124,76 +137,91 @@ function CookieConsent() {
   };
 
   return (
-    <div
-      className={`${styles.banner} ${cerrando ? 'salida-suave' : 'entrada-suave'}`}
-      role="dialog"
-      aria-live="polite"
-      aria-label={t('titulo')}
-    >
-      <div className={styles.contenido}>
-        <div className={styles.texto}>
-          <p className={styles.titulo}>{t('titulo')}</p>
-          <p className={styles.parrafo}>
-            {t('texto')}{' '}
-            <a href={`/${locale}/legal/cookies`} className={styles.enlace}>{t('enlace')}</a>
-          </p>
+    <>
+      {/* Velo negro al 40% detrás del aviso: centra la atención y bloquea
+          la página hasta elegir (clic en él no cierra nada — la decisión
+          tiene que ser explícita). Solo fundido (sin la subida de
+          .entrada-suave, que despegaría el velo del borde). */}
+      <div
+        className={`${styles.velo} ${cerrando ? styles.veloSaliendo : ''}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.banner} ${cerrando ? 'salida-suave' : 'entrada-suave'}`}
+        role="dialog"
+        aria-modal="true"
+        aria-live="polite"
+        aria-label={t('titulo')}
+      >
+        <div className={styles.contenido}>
+          <div className={styles.texto}>
+            <p className={styles.titulo}>{t('titulo')}</p>
+            <p className={styles.parrafo}>
+              {t('texto')}{' '}
+              <a href={`/${locale}/legal/cookies`} className={styles.enlace}>{t('enlace')}</a>
+            </p>
+          </div>
+
+          <div className={styles.acciones}>
+            <Boton variante="texto" className={styles.enlacePersonalizar} onClick={() => setPersonalizando((v) => !v)}>
+              {t('personalizar')}
+            </Boton>
+            {/* Aceptar (contorno) antes y Rechazar (sólido, negro)
+                después: Rechazar queda a la derecha en escritorio y
+                abajo del todo en mobile (acciones en columna). Mismo
+                tamaño los dos — ver criterio AEPD arriba. */}
+            <Boton variante="contorno" tamano="s" onClick={aceptarTodas}>
+              {t('aceptar')}
+            </Boton>
+            <Boton variante="solido" tamano="s" onClick={rechazarTodas}>
+              {t('rechazar')}
+            </Boton>
+          </div>
         </div>
 
-        <div className={styles.acciones}>
-          <Boton variante="texto" className={styles.enlacePersonalizar} onClick={() => setPersonalizando((v) => !v)}>
-            {t('personalizar')}
-          </Boton>
-          <Boton variante="contorno" tamano="s" onClick={rechazarTodas}>
-            {t('rechazar')}
-          </Boton>
-          <Boton variante="solido" tamano="s" onClick={aceptarTodas}>
-            {t('aceptar')}
-          </Boton>
-        </div>
+        {personalizando && (
+          <div className={styles.preferencias}>
+            <label className={styles.categoria}>
+              <input type="checkbox" checked disabled className={styles.checkbox} />
+              <span className={styles.categoriaTextos}>
+                <span className={styles.categoriaNombre}>{t('categorias.necesarias.nombre')}</span>
+                <span className={styles.categoriaTexto}>{t('categorias.necesarias.texto')}</span>
+              </span>
+            </label>
+
+            <label className={styles.categoria}>
+              <input
+                type="checkbox"
+                checked={analiticas}
+                onChange={(evento) => setAnaliticas(evento.target.checked)}
+                className={styles.checkbox}
+              />
+              <span className={styles.categoriaTextos}>
+                <span className={styles.categoriaNombre}>{t('categorias.analiticas.nombre')}</span>
+                <span className={styles.categoriaTexto}>{t('categorias.analiticas.texto')}</span>
+              </span>
+            </label>
+
+            <label className={styles.categoria}>
+              <input
+                type="checkbox"
+                checked={marketing}
+                onChange={(evento) => setMarketing(evento.target.checked)}
+                className={styles.checkbox}
+              />
+              <span className={styles.categoriaTextos}>
+                <span className={styles.categoriaNombre}>{t('categorias.marketing.nombre')}</span>
+                <span className={styles.categoriaTexto}>{t('categorias.marketing.texto')}</span>
+              </span>
+            </label>
+
+            <Boton variante="solido" tamano="s" className={styles.botonGuardar} onClick={guardarPreferencias}>
+              {t('guardar')}
+            </Boton>
+          </div>
+        )}
       </div>
-
-      {personalizando && (
-        <div className={styles.preferencias}>
-          <label className={styles.categoria}>
-            <input type="checkbox" checked disabled className={styles.checkbox} />
-            <span className={styles.categoriaTextos}>
-              <span className={styles.categoriaNombre}>{t('categorias.necesarias.nombre')}</span>
-              <span className={styles.categoriaTexto}>{t('categorias.necesarias.texto')}</span>
-            </span>
-          </label>
-
-          <label className={styles.categoria}>
-            <input
-              type="checkbox"
-              checked={analiticas}
-              onChange={(evento) => setAnaliticas(evento.target.checked)}
-              className={styles.checkbox}
-            />
-            <span className={styles.categoriaTextos}>
-              <span className={styles.categoriaNombre}>{t('categorias.analiticas.nombre')}</span>
-              <span className={styles.categoriaTexto}>{t('categorias.analiticas.texto')}</span>
-            </span>
-          </label>
-
-          <label className={styles.categoria}>
-            <input
-              type="checkbox"
-              checked={marketing}
-              onChange={(evento) => setMarketing(evento.target.checked)}
-              className={styles.checkbox}
-            />
-            <span className={styles.categoriaTextos}>
-              <span className={styles.categoriaNombre}>{t('categorias.marketing.nombre')}</span>
-              <span className={styles.categoriaTexto}>{t('categorias.marketing.texto')}</span>
-            </span>
-          </label>
-
-          <Boton variante="solido" tamano="s" className={styles.botonGuardar} onClick={guardarPreferencias}>
-            {t('guardar')}
-          </Boton>
-        </div>
-      )}
-    </div>
+    </>
   );
 }
 

@@ -18,7 +18,7 @@ export default async function Pagina() {
   return (
     <section className="seccion">
       <ProductHero
-        imagen="/img/hero-pages/hero-pages-pretaporter-vestidos.jpg"
+        imagen="/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-vestidos.webp"
         titulo={[t('catalogo.tituloTienda'), t('nav.submenus.tienda.vestidos')]}
       />
       <CuadriculaProductos

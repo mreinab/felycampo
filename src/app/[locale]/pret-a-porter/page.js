@@ -33,12 +33,12 @@ import { PRET_A_PORTER_EDITORIAL } from './pretAPorterEditorial';
 import styles from './page.module.css';
 import { metadataPagina, textosSeo } from '@/lib/seo';
 
-// Hero: carrusel infinito de looks FW27 (recortes PNG con fondo
+// Hero: carrusel infinito de looks FW27 (recortes WebP con fondo
 // transparente) en vez de una sola foto — se mueve solo, sin fin. Orden
 // = el de los archivos en la carpeta.
-const RUTA_CARRUSEL = '/img/collections/runway/fw27-lacoleccion/carrusel png';
+const RUTA_CARRUSEL = '/img/collections/runway/fw27-lacoleccion/carrusel-png';
 const IMAGENES_HERO = ['02', '04', '05', '08', '13', '15', '16', '17', '20', '22', '27']
-  .map((numero) => `${RUTA_CARRUSEL}/FelyCampo_${numero}.png`);
+  .map((numero) => `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-${numero}-recorte.webp`);
 
 // Foto de pasarela FW27 junto a su producto en la cuadrícula (ver
 // "imagenEditorial" en CuadriculaProductos.jsx): misma ficha al hacer
@@ -49,12 +49,12 @@ const IMAGENES_HERO = ['02', '04', '05', '08', '13', '15', '16', '17', '20', '22
 // con ORDEN_CUADRICULA decide en qué columna cae cada foto, para que no
 // queden siempre en el mismo lado de la fila.
 const FOTOS_PASARELA = {
-  'Chaqueta Samarcanda': { src: `${RUTA_CARRUSEL}/FelyCampo_17.png`, antes: true },
-  'Chaqueta Sucre': { src: `${RUTA_CARRUSEL}/FelyCampo_16.png`, antes: true }, // look con Falda Sucre
-  'Chaqueta Aranjuez': { src: `${RUTA_CARRUSEL}/FelyCampo_24.png`, antes: true },
-  'Top lencero': { src: `${RUTA_CARRUSEL}/FelyCampo_04.png` }, // look con Falda Jeju
-  'Vestido Ciruela': { src: `${RUTA_CARRUSEL}/FelyCampo_03.png`, antes: true },
-  Chaqueta: { src: `${RUTA_CARRUSEL}/FelyCampo_05.png` },
+  'Chaqueta Samarcanda': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-17-recorte.webp`, antes: true },
+  'Chaqueta Sucre': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-16-recorte.webp`, antes: true }, // look con Falda Sucre
+  'Chaqueta Aranjuez': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-24-recorte.webp`, antes: true },
+  'Top lencero': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-04-recorte.webp` }, // look con Falda Jeju
+  'Vestido Ciruela': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-03-recorte.webp`, antes: true },
+  Chaqueta: { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-05-recorte.webp` },
 };
 
 // Orden de la cuadrícula en esta página (solo aquí, tiendaProductos.js

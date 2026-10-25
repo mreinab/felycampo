@@ -12,7 +12,7 @@
    pendiente de conectar con el admin panel — ver la explicación
    completa en docs/design.md, sección "Look de pasarela (placeholder)".
    Uso:
-     <LookPasarela titulo="Runway look" imagen="/img/collections/runway/fw27-lacoleccion/FelyCampo_01.webp" alt="Fely Campo FW27" />
+     <LookPasarela titulo="Runway look" imagen="/img/collections/runway/fw27-lacoleccion/fely-campo-pasarela-la-coleccion-look-01.webp" alt="Fely Campo FW27" />
    ============================================================ */
 
 import styles from './LookPasarela.module.css';

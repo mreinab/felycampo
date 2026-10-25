@@ -124,13 +124,15 @@
     "buscarCpPlaceholder": "Postal code",
     "buscarCpBoton": "Search",
     "buscarCpError": "Enter a valid Spanish postal code (5 digits).",
-    "internacionalTitulo": "International Boutiques",
-    "internacionalIntro": "Milan holds a special place in our international network, thanks to our close relationship with the Italian market."
+    "internacionalTitulo": "Fely Campo and Guffanti: international presence",
+    "showroomNombre": "Milan Showroom",
+    "showroomTexto": "For more than ten years we have worked with Guffanti, one of our most important international representatives. From its showroom in Milan, it distributes Fely Campo collections to other showrooms across Italy, strengthening the label’s presence in the Italian market."
   },
   "talleres": {
     "eyebrow": "Our process",
     "titulo": "Our Workshops",
-    "intro": "Where hands tell stories\n\nEvery Fely Campo piece is born close by. In our atelier and two small workshops in the sierra, skilled hands transform each fabric with time, precision and sensitivity. Behind those hands are women, craft and territory."
+    "intro": "Where hands tell stories\n\nEvery Fely Campo piece is born close by. In our atelier and two small workshops in the sierra, skilled hands transform each fabric with time, precision and sensitivity. Behind those hands are women, craft and territory.",
+    "filtroTodo": "View all"
   },
   "atelierFiesta": {
     "salamanca": {
@@ -163,7 +165,12 @@
     "escucharEpisodio": "Listen to episode",
     "episodio": "Episode",
     "con": "With",
-    "shopHere": "Shop here"
+    "shopHere": "Shop here",
+    "introTitulo": "Podcast & Blog",
+    "introTexto": "A place for unhurried conversation. In the podcast, Fely Campo talks with guests from fashion, art and craft about the stories behind each creation; on the blog we gather reflections, advice for brides and guests, and everyday life in our ateliers. Words, fabric and craft, told first-hand.",
+    "filtroTodo": "View all",
+    "filtroBlog": "Blog",
+    "filtroPodcast": "Podcast"
   },
   "atencionCliente": {
     "titulo": "Customer Service",
@@ -292,7 +299,7 @@
     "avisoDatos": "Please fill in your name and email to continue.",
     "enviar": "Send request",
     "confirmacionTitulo": "Request sent!",
-    "confirmacionTexto": "Thank you for your interest. Our team will get in touch with you as soon as possible.",
+    "confirmacionTexto": "Thank you for your interest in Fely Campo. We've emailed you the details of your request and the atelier team will be in touch to confirm the day and time.",
     "cerrar": "Close"
   },
   "contactoProducto": {
@@ -402,13 +409,13 @@
     "atelierNovias": "Made-to-measure bridal gowns, crafted in our atelier.",
     "atelierFiesta": "Made-to-measure evening and guest dresses.",
     "pretAPorter": "Everyday pieces, made with atelier care.",
-    "sobreFely": "A life among fabrics.",
+    "sobreFely": "A life among fabrics",
     "runway": "Runway collection",
     "atelierCiudad": "Visit us, always by appointment."
   },
   "pedirCitaLanding": {
-    "titulo": "Discover the collection at our ateliers",
-    "cta": "Book an appointment",
+    "titulo": "See you at our ateliers",
+    "cta": "Book your appointment",
     "ctaAtelier": "Discover more"
   },
   "citaFelyLanding": {
@@ -416,7 +423,7 @@
   },
   "descubreFely": {
     "titulo": "Discover Fely",
-    "cta": "About the designer"
+    "cta": "Meet the designer"
   },
   "heroCarousel": {
     "entradilla": "The world of Fely Campo",

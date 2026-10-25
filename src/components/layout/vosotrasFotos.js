@@ -19,23 +19,23 @@ const RUTA_FINALES = '/img/Clientes/CLIENTAS/finales';
 // propia casilla (no se agrupan) y van las primeras de la pestaña
 // Novias, por delante de los grupos antiguos.
 const NOVIAS_FINALES = [
-  '_MG_9830_1.jpg',
-  '_MG_9858_ByN.jpg',
-  '631d2890-aeb6-469c-a502-3ca1b57acf47.jpg',
-  '8b393a07-01c3-48ad-baa6-363f0e5421c9.jpg',
-  '8c8b3cc3-c0a2-4e89-8e4d-f716fb297f41.jpg',
-  'BODA-ESTEFANIA_ADRIAN07166.jpg',
-  'Captura de pantalla 2026-01-31 a las 21.32.36.png',
-  'f7eb2328-1a1d-42a8-b318-84555ae88b05.jpg',
-  'IMG_6067.jpg',
-  'IMG_6068.jpg',
-  'IMG_6071.jpg',
-  'IMG-20260922-WA0007.jpg',
-  'PHOTO-2025-10-16-13-35-59 6.jpg',
-  'PHOTO-2025-10-16-13-55-08 2.jpg',
-  'PHOTO-2025-10-16-13-55-09 2.jpg',
-  'Unknown.jpeg',
-  'WhatsApp Image 2026-08-11 at 17.48.25 (1).jpeg',
+  'fely-campo-novias-reales-01.webp',
+  'fely-campo-novias-reales-02.webp',
+  'fely-campo-novias-reales-03.webp',
+  'fely-campo-novias-reales-04.webp',
+  'fely-campo-novias-reales-05.webp',
+  'fely-campo-novias-reales-06.webp',
+  'fely-campo-novias-reales-07.webp',
+  'fely-campo-novias-reales-08.webp',
+  'fely-campo-novias-reales-09.webp',
+  'fely-campo-novias-reales-10.webp',
+  'fely-campo-novias-reales-11.webp',
+  'fely-campo-novias-reales-12.webp',
+  'fely-campo-novias-reales-13.webp',
+  'fely-campo-novias-reales-14.webp',
+  'fely-campo-novias-reales-15.webp',
+  'fely-campo-novias-reales-16.webp',
+  'fely-campo-novias-reales-17.webp',
 ].map((archivo) => [`${RUTA_FINALES}/${archivo}`]);
 
 // Orden de la cuadrícula (de arriba a abajo/izquierda a derecha):
@@ -43,15 +43,15 @@ const NOVIAS_FINALES = [
 // madrinas; 14 se bajó luego a la 2ª fila),
 // el resto sigue el orden en que se fueron agrupando. Una entrada que
 // empiece por '/' es ya la ruta completa de la foto (no sigue el patrón
-// nuestras-invitadas-felycampo-XX-YY), p. ej. madrinas-felycampo.jpg.
+// fely-campo-invitadas-reales-nuestras-XX-YY.webp), p. ej. la de madrinas.
 export const FOTOS_INVITADAS = [
   [
-    `${RUTA_INVITADAS}/madrina-felycampo-review (1).jpeg`,
-    `${RUTA_INVITADAS}/madrina-felycampo-review (2).jpeg`,
-    `${RUTA_INVITADAS}/madrina-felycampo-review-1 (1).jpeg`,
-    `${RUTA_INVITADAS}/madrina-felycampo-review-1 (2).jpeg`,
+    `${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-1.webp`,
+    `${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-2.webp`,
+    `${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-1-1.webp`,
+    `${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-1-2.webp`,
   ],
-  [`${RUTA_INVITADAS}/madrinas-felycampo.jpg`],
+  [`${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrinas.webp`],
   // Quitados a petición de la cuadrícula: 11, 23, 07, 04 (casillas 4-7),
   // 16-02 (solo la foto interior, 16-01 sigue de portada), 25, 27, 28
   // (fila 4, columnas 1-3), 32 y 31 (las últimas). Las fotos siguen en
@@ -60,27 +60,27 @@ export const FOTOS_INVITADAS = [
   // 16, 19, 20, 14 y 21 (antes casillas 4-8) movidos al final, a petición.
   ['30-01', '30-02', '30-03'],
   [
-    `${RUTA_INVITADAS}/vosotras-felycampo-fiesta.jpeg`,
-    `${RUTA_INVITADAS}/vosotras-felycampo-fiesta-2.jpeg`,
+    `${RUTA_INVITADAS}/fely-campo-invitadas-reales-vosotras-fiesta.webp`,
+    `${RUTA_INVITADAS}/fely-campo-invitadas-reales-vosotras-fiesta-2.webp`,
   ],
-  [`${RUTA_INVITADAS}/vosotras-felycampo-invitadas.jpeg`],
-  [`${RUTA_INVITADAS}/vosotras-felycampo-madrinas.jpeg`],
+  [`${RUTA_INVITADAS}/fely-campo-invitadas-reales-vosotras.webp`],
+  [`${RUTA_INVITADAS}/fely-campo-invitadas-reales-vosotras-madrinas.webp`],
   [
-    `${RUTA_INVITADAS}/vosotras-felycampo-madrinas-look.jpeg`,
-    `${RUTA_INVITADAS}/vosotras-felycampo-madrinas-look1.jpeg`,
+    `${RUTA_INVITADAS}/fely-campo-invitadas-reales-vosotras-madrinas-look.webp`,
+    `${RUTA_INVITADAS}/fely-campo-invitadas-reales-vosotras-madrinas-look-1-2.webp`,
   ],
-  [`${RUTA_INVITADAS}/WhatsApp Image 2026-10-16 at 14.53.33.jpeg`],
+  [`${RUTA_INVITADAS}/fely-campo-invitadas-reales-foto.webp`],
   // Carrusel de madrinas (look-1 de portada, a petición). Pedidas de la
   // 1 a la 14, pero en la carpeta solo están la 1, 12, 13 y 14 — añadir
   // aquí el número de las que falten (2-11) cuando se suban.
-  [1, 12, 13, 14].map((n) => `${RUTA_INVITADAS}/vosotras-felycampo-madrinas-look-${n}.jpeg`),
+  [1, 12, 13, 14].map((n) => `${RUTA_INVITADAS}/fely-campo-invitadas-reales-vosotras-madrinas-look-${n}.webp`),
   // Antes casillas 4-8 — al final de la cuadrícula a petición, mismo orden.
   ['16-01'],
   ['19-01', '19-02'],
   ['20-05', '20-01', '20-02', '20-03'], // 20-05 de portada, a petición
   ['14-01'],
   ['21-01', '21-02'],
-].map((grupo) => grupo.map((sufijo) => sufijo.startsWith('/') ? sufijo : `${RUTA_INVITADAS}/nuestras-invitadas-felycampo-${sufijo}.${sufijo === '30-01' ? 'png' : 'jpg'}`));
+].map((grupo) => grupo.map((sufijo) => sufijo.startsWith('/') ? sufijo : `${RUTA_INVITADAS}/fely-campo-invitadas-reales-nuestras-${sufijo}.webp`));
 
 export const FOTOS_NOVIAS = [
   ...NOVIAS_FINALES,
@@ -92,7 +92,7 @@ export const FOTOS_NOVIAS = [
     ['09-01', '09-02', '09-03', '09-04'],
     ['10-01', '10-02'],
     ['13-01', '13-02', '13-03'],
-  ].map((grupo) => grupo.map((sufijo) => `${RUTA_NOVIAS}/nuestras-novias-felycampo-${sufijo}.jpg`)),
+  ].map((grupo) => grupo.map((sufijo) => `${RUTA_NOVIAS}/fely-campo-novias-reales-nuestras-${sufijo}.webp`)),
 ];
 
 // Reseñas reales de clientas, por la foto de portada de su grupo (la
@@ -100,7 +100,7 @@ export const FOTOS_NOVIAS = [
 // lightbox de GaleriaVosotras.jsx, junto a las fotos. Texto literal de
 // la clienta (no se traduce): mismo texto en es y en.
 export const RESENAS_VOSOTRAS = {
-  [`${RUTA_INVITADAS}/madrina-felycampo-review (1).jpeg`]: {
+  [`${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-1.webp`]: {
     parrafos: [
       'Feliz y orgullosa siendo la madrina de la boda de mi hijo pequeño. Fue uno de los días más felices y entrañables de mi vida.',
       'Estoy muy agradecida a Fely que diseñó mi vestido, me sentí elegante, cómoda y, mal es decirlo, muy guapa. Admiro su trabajo y sobre todo su filosofía de trabajo. Un orgullo para Salamanca.',

@@ -52,21 +52,21 @@
 }
 
 .nombre {
-  font-size: var(--text-small);
-  line-height: var(--leading-base);
+  font-size: var(--text-bloque-titulo);
+  font-weight: 400;
+  line-height: var(--leading-bloque);
+  letter-spacing: var(--tracking-bloque);
   color: var(--color-tinta);
-  text-transform: uppercase;
 }
 
-/* Texto de relleno (lorem ipsum, ver page.js) — en rojo a propósito,
-   mismo criterio que "REVISAR"/"(Pendiente)" en otros puntos del
-   código: marca visualmente que es contenido temporal, a sustituir en
-   cuanto haya texto real del showroom. Quitar este color (y este
-   comentario) junto con el lorem ipsum cuando llegue ese texto. */
+/* Texto del showroom (Guffanti, ver page.js / puntosVenta.showroomTexto). */
 .textoRelleno {
-  font-size: var(--text-small);
-  line-height: var(--leading-base);
-  color: #c00;
+  font-size: var(--text-bloque-texto);
+  font-weight: 400;
+  line-height: var(--leading-bloque);
+  letter-spacing: 0;
+  text-wrap: pretty;
+  color: var(--color-tinta);
 }
 
 @media (max-width: 767px) {

@@ -62,7 +62,6 @@
   font-size: var(--text-h4);
   font-weight: var(--font-weight-medium);
   line-height: var(--leading-tight);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--color-tinta);
 }
@@ -169,12 +168,13 @@
   border: none;
   padding: 0;
   font-family: var(--font-base);
-  font-size: var(--text-caption);
+  font-size: var(--text-label);
   color: var(--color-gris-500);
   text-decoration: underline;
   text-align: center;
   cursor: pointer;
   transition: color 0.25s var(--ease-marca);
+  letter-spacing: var(--tracking-label);
 }
 .noGracias:hover {
   color: var(--color-tinta);

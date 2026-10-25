@@ -52,7 +52,7 @@ export const REDIRECCIONES_301 = {
   "/runways-nagare": "/es/runways-nagare",
   "/runways-tempore": "/es/runways-tempore",
   "/runways-zigurat": "/es/runways-zigurat",
-  "/confirmacion": "/es/visita-fely-campo/cita/confirmacion-invitada",
+  "/confirmacion": "/es/visita-fely-campo/cita/confirmacion",
   "/runways-the-way-here": "/es/runways-the-way-here",
   "/atelier-madrid": "/es/atelier-fiesta/madrid",
   "/runways-lei-zu": "/es/runways-lei-zu",

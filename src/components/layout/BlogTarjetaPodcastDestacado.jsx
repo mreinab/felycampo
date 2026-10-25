@@ -35,8 +35,10 @@ function BlogTarjetaPodcastDestacado({ href, titulo, meta, imagen, alt, textoBot
       <img src={imagen} alt={alt} className={styles.imagen} />
       <div className={styles.degradado} aria-hidden="true" />
       <div className={styles.contenido}>
-        <span className={styles.boton} aria-hidden="true">
-          <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
+        {/* Triángulo de "play" suelto, sin recuadro (mismo que el
+            documental de TarjetaEnlaceExterno). */}
+        <span className={styles.botonSinBorde} aria-hidden="true">
+          <svg width="12" height="14" viewBox="0 0 16 18" fill="none">
             <path d="M0 0L16 9L0 18V0Z" fill="currentColor" />
           </svg>
         </span>

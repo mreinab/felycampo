@@ -34,8 +34,8 @@ const RUTA_INTRO = '/img/collections/fiesta/introduccion';
 export const FIESTA_EDITORIAL = {
   descripcion: {
     es: [
-      'Cada fiesta pide su propio vestido, su propia manera de brillar.',
-      'En el atelier trabajamos esa versión única, pieza a pieza, hasta encontrarla.',
+      'Cada ocasión merece su propio vestido de fiesta: una boda, una celebración o una noche que permanece en la memoria. Diseñamos para que cada mujer encuentre su forma de estar y sentirse.',
+      'En el atelier, cada vestido de fiesta se trabaja pieza a pieza, a partir de la ocasión, tus preferencias y el asesoramiento de nuestro equipo.',
     ],
     en: [
       'Every occasion calls for its own dress, its own way of shining.',
@@ -46,13 +46,13 @@ export const FIESTA_EDITORIAL = {
   bloques: [
     {
       tipo: 'imagen',
-      imagen: `${RUTA_INTRO}/FelyCampo_03.jpg`,
+      imagen: `${RUTA_INTRO}/fely-campo-atelier-fiesta-foto-03.webp`,
       titulo: {
         es: 'Un vestido, una noche',
         en: 'One dress, one night',
       },
       texto: {
-        es: 'Cada pieza de fiesta nace de una ocasión concreta: una boda, una gala, una cena que se recuerda. Escuchamos qué momento va a vivir cada clienta y construimos el vestido a su alrededor.',
+        es: 'Cada vestido de fiesta nace de una ocasión concreta: una boda, una gala o una celebración especial. Escuchamos qué momento vas a vivir y trabajamos el diseño a partir de tus preferencias, cuidando la silueta, los tejidos y los detalles.',
         en: 'Every evening piece is born from a specific occasion: a wedding, a gala, a dinner worth remembering. We listen to the moment each client is about to live and build the dress around it.',
       },
     },
@@ -64,17 +64,18 @@ export const FIESTA_EDITORIAL = {
         en: 'The detail that shows',
       },
       texto: {
-        es: 'Tejidos nobles, siluetas trabajadas a mano y un acabado artesanal en cada costura: la misma manera de trabajar detrás de cada pieza de fiesta.',
+        es: 'Tejidos nobles, siluetas cuidadas y acabados artesanales definen nuestros vestidos de fiesta. Cada costura refleja una manera de trabajar que pone el oficio y la atención al detalle en el centro.',
         en: 'Noble fabrics, hand-worked silhouettes and an artisanal finish in every seam: the same way of working behind every evening piece.',
       },
     },
   ],
 
+  // Sin FelyCampo_ATELIER_KristenWicce-11.jpg, a petición: esa foto
+  // queda solo en el hero de la página.
   backstage: [
-    { tipo: 'imagen', src: `${RUTA_INTRO}/FelyCampo_ATELIER_KristenWicce-11.jpg` },
     { tipo: 'video', src: `${RUTA_INTRO}/felycampo-fiesta-media (2).mp4` },
-    { tipo: 'imagen', src: `${RUTA_INTRO}/FelyCampo_AW2026_KristenWicce_ALTA-162.jpg` },
+    { tipo: 'imagen', src: `${RUTA_INTRO}/fely-campo-atelier-fiesta-aw2026-162.webp` },
     { tipo: 'video', src: `${RUTA_INTRO}/felycampo-fiesta-media (3).mp4` },
-    { tipo: 'imagen', src: `${RUTA_INTRO}/FelyCampo_AW2026_KristenWicce_ALTA-164.jpg` },
+    { tipo: 'imagen', src: `${RUTA_INTRO}/fely-campo-atelier-fiesta-aw2026-164.webp` },
   ],
 };

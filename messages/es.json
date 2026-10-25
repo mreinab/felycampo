@@ -124,13 +124,15 @@
     "buscarCpPlaceholder": "Código postal",
     "buscarCpBoton": "Buscar",
     "buscarCpError": "Introduce un código postal español válido (5 dígitos).",
-    "internacionalTitulo": "Boutiques internacionales",
-    "internacionalIntro": "Milán ocupa un lugar especial en nuestra red internacional, gracias a la estrecha relación que mantenemos con el mercado italiano."
+    "internacionalTitulo": "Fely Campo y Guffanti: presencia internacional",
+    "showroomNombre": "Showroom Milán",
+    "showroomTexto": "Desde hace más de diez años, trabajamos con Guffanti, uno de nuestros representantes internacionales más importantes. Desde su showroom en Milán, distribuye las colecciones de Fely Campo a otros showrooms de Italia, consolidando la presencia de la firma en el mercado italiano."
   },
   "talleres": {
     "eyebrow": "Nuestro proceso",
     "titulo": "Nuestros talleres",
-    "intro": "Donde las manos cuentan historias\n\nCada pieza Fely Campo nace cerca. En nuestro atelier y en dos pequeños talleres de la sierra, manos expertas transforman cada tejido con tiempo, precisión y sensibilidad. Detrás de esas manos hay mujeres, oficio y territorio."
+    "intro": "Donde las manos cuentan historias\n\nCada pieza Fely Campo nace cerca. En nuestro atelier y en dos pequeños talleres de la sierra, manos expertas transforman cada tejido con tiempo, precisión y sensibilidad. Detrás de esas manos hay mujeres, oficio y territorio.",
+    "filtroTodo": "Ver todo"
   },
   "atelierFiesta": {
     "salamanca": {
@@ -163,7 +165,12 @@
     "escucharEpisodio": "Escuchar episodio",
     "episodio": "Episodio",
     "con": "Con",
-    "shopHere": "Comprar aquí"
+    "shopHere": "Comprar aquí",
+    "introTitulo": "Podcast & Blog",
+    "introTexto": "Un espacio para conversar sin prisas. En el podcast, Fely Campo comparte con invitados del mundo de la moda, el arte y la artesanía las historias que hay detrás de cada creación; en el blog reunimos reflexiones, consejos para novias e invitadas y el día a día de nuestros ateliers. Palabras, telas y oficio, contados en primera persona.",
+    "filtroTodo": "Ver todo",
+    "filtroBlog": "Blog",
+    "filtroPodcast": "Podcast"
   },
   "atencionCliente": {
     "titulo": "Atención al cliente",
@@ -292,7 +299,7 @@
     "avisoDatos": "Completa tu nombre y email para continuar.",
     "enviar": "Enviar solicitud",
     "confirmacionTitulo": "¡Solicitud enviada!",
-    "confirmacionTexto": "Gracias por tu interés. Nuestro equipo se pondrá en contacto contigo lo antes posible.",
+    "confirmacionTexto": "Gracias por tu interés en Fely Campo. Te hemos enviado un email con los datos de tu solicitud y el equipo del atelier te escribirá para confirmar el día y la hora.",
     "cerrar": "Cerrar"
   },
   "contactoProducto": {
@@ -402,13 +409,13 @@
     "atelierNovias": "Vestidos de novia hechos a medida en nuestro atelier.",
     "atelierFiesta": "Vestidos de fiesta e invitada, hechos a medida.",
     "pretAPorter": "Prendas para el día a día, con el cuidado del atelier.",
-    "sobreFely": "Una vida entre telas.",
+    "sobreFely": "Una vida entre telas",
     "runway": "Colección de pasarela",
     "atelierCiudad": "Visítanos siempre con cita previa."
   },
   "pedirCitaLanding": {
-    "titulo": "Conoce la colección en nuestros ateliers",
-    "cta": "Pedir cita",
+    "titulo": "Te esperamos en nuestros ateliers",
+    "cta": "Pide tu cita",
     "ctaAtelier": "Conoce más"
   },
   "citaFelyLanding": {
@@ -416,18 +423,18 @@
   },
   "descubreFely": {
     "titulo": "Descubre a Fely",
-    "cta": "Sobre la diseñadora"
+    "cta": "Conoce a la diseñadora"
   },
   "heroCarousel": {
     "entradilla": "El universo de Fely Campo",
-    "descripcion": "Elegancia, sobriedad y un patronaje excelente.",
+    "descripcion": "Elegancia, sobriedad y un patronaje excelente, en una forma de entender la moda de autor hecha en España.",
     "cta": "Descubre más"
   },
   "collectionTitle": {
     "edicionMujer": {
       "label": "Prêt-à-porter FW27",
       "title": "La Colección",
-      "description": "La historia de una mujer que diseña para otras mujeres, una atemporalidad que Fely Campo abre ahora, por primera vez, al Prêt-à-porter."
+      "description": "La historia de una mujer que diseña para otras mujeres. Una colección de prêt-à-porter de lujo donde el patronaje, los tejidos y el saber hacer del atelier se encuentran con una elegancia atemporal."
     }
   },
   "mediaBanner": {
@@ -438,12 +445,12 @@
   "splitMedia": {
     "item1": {
       "label": "Atelier Novia",
-      "titulo": "Atelier Novia",
+      "titulo": "Vestidos de novia a medida",
       "cta": "Ver todo"
     },
     "item2": {
       "label": "Atelier Fiesta",
-      "titulo": "Atelier Fiesta",
+      "titulo": "Vestidos de fiesta a medida",
       "cta": "Ver todo"
     }
   },
@@ -454,7 +461,7 @@
     "pedirCita": "Pide cita",
     "conoceAteliers": "Conoce nuestros ateliers",
     "visitanosTitulo": "Visítanos",
-    "visitanosDescripcion": "Ven a conocer como trabajamos, te atenderemos presencialmente en uno de nuestros atelieres"
+    "visitanosDescripcion": "Conoce cómo trabajamos y visita nuestros ateliers de Salamanca, Madrid u Oviedo. Te atenderemos presencialmente con cita previa."
   },
   "splitMediaCategorias": {
     "item1": {
@@ -471,7 +478,7 @@
   "cuadriculaTabs": {
     "subtitulo": "Atelier",
     "titulo": "Un look para cada ocasión",
-    "descripcion": "Reserva tu cita y vive un día único en el Atelier. Disfruta del asesoramiento personalizado de nuestra diseñadora.",
+    "descripcion": "Descubre nuestros vestidos de novia y de fiesta en el atelier. Reserva tu cita para recibir asesoramiento personalizado y encontrar la silueta, el tejido y los detalles que mejor encajan contigo.",
     "reservarCita": "Reserva tu cita"
   },
   "vosotras": {
@@ -579,7 +586,7 @@
   },
   "visitaAtelier": {
     "titulo": "De mujeres, Para mujeres, Por las mujeres",
-    "texto": "Con 54 años de trayectoria, Fely Campo está profundamente ligada a la tierra charra, de piedra, luz y oficio. Especializada en fiesta, novia y prêt-à-porter, Fely Campo crea piezas desde el patronaje, la elección de tejidos y el conocimiento de unas manos que entienden como un oficio que se transmite y permanece.",
+    "texto": "Con más de cinco décadas de trayectoria, Fely Campo está profundamente ligada a la tierra charra, a su luz y a su oficio. Especializada en vestidos de novia, vestidos de fiesta y prêt-à-porter, la firma crea desde el patronaje, la elección de tejidos y el conocimiento de unas manos expertas: un saber hacer que se transmite y permanece.",
     "enlace": "Descubre más"
   },
   "compromiso": {

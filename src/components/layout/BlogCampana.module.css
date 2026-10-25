@@ -39,7 +39,6 @@
   z-index: 40;
   font-family: var(--font-base);
   font-size: var(--text-label);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: #fff;
   mix-blend-mode: difference;
@@ -82,7 +81,6 @@
 }
 
 .creditosRol {
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   font-size: var(--text-micro);
   opacity: 0.85;
@@ -289,7 +287,6 @@
   font-family: var(--font-base);
   font-size: var(--text-h3);
   font-weight: var(--font-weight-extrabold);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--color-tinta);
   border-bottom: var(--border-thick) solid var(--color-tinta);

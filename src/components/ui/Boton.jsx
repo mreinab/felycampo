@@ -25,7 +25,7 @@ import styles from './Boton.module.css';
  * a relleno sólido, texto/icono en --color-fondo). 'texto' = enlaces.
  * 'texto-crema' = mismo enlace, en --color-crema (fondos oscuros/imágenes,
  * ej. HeroCarousel).
- * 'flecha' = nuevo diseño de CTA en mayúsculas, subrayado
+ * 'flecha' = nuevo diseño de CTA, subrayado
  * (ej. cabecera de CuadriculaProductos) — candidato a sustituir a
  * solido/contorno/rosa en el resto del sistema, todavía sin extender.
  * Esquinas siempre rectas (radio 0).

@@ -1,18 +1,18 @@
 /* ============================================================
-   PODCAST — Fely Campo. Ruta: /podcast (antes /blog — a petición,
-   la URL y la página se quedan solo con el/los episodios de podcast;
-   el resto de contenido de blog.js (artículos/campañas) se deja
-   comentado más abajo, no borrado, por si se recupera).
-   Hero común (HeroPagina) arriba, y debajo BlogTarjetaPodcastDestacado
-   (foto a sangre + botón de play, estilo Spotify) ocupando una de las
-   dos columnas de .gridPodcast (50% del ancho), ver page.module.css. Sigue siendo
-   solo un enlace a /podcast/[slug] (ver [entrada]/page.js): no
-   reproduce nada aquí.
+   PODCAST & BLOG — Fely Campo. Ruta: /podcast (antes /blog).
+   Hero común (HeroPagina) arriba; debajo, ListadoPodcastBlog: una
+   introducción de 80vh ("Podcast & Blog", texto y filtros "Ver todo" /
+   "Blog" / "Podcast") y los episodios (BlogTarjetaPodcastDestacado,
+   foto a sangre + play) y artículos (BlogTarjeta) de blog.js, que los
+   filtros muestran u ocultan en la propia página. Cada tarjeta es solo
+   un enlace a /podcast/[slug] (ver [entrada]/page.js): no reproduce
+   nada aquí.
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';
-import { BlogTarjetaPodcastDestacado, HeroPagina /* , BlogTarjeta */ } from '@/components/layout';
+import { HeroPagina } from '@/components/layout';
 import { BLOG_ENTRADAS } from './blog';
+import ListadoPodcastBlog from './ListadoPodcastBlog';
 import styles from './page.module.css';
 import { metadataPagina } from '@/lib/seo';
 
@@ -27,76 +27,57 @@ export default async function Pagina({ params }) {
   const tNav = await getTranslations('nav');
   const tHero = await getTranslations('heroPagina');
 
-  const entradasPodcast = BLOG_ENTRADAS.filter((entrada) => entrada.tipo === 'podcast');
+  // Entradas ya preparadas para ListadoPodcastBlog (componente cliente):
+  // textos en el idioma, href y meta (duración del episodio o fecha del
+  // artículo). Artículos del más reciente al más antiguo.
+  const formatoFecha = new Intl.DateTimeFormat(locale === 'en' ? 'en-GB' : 'es-ES', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+  const aTarjeta = (entrada) => ({
+    href: `/${locale}/podcast/${entrada.slug}`,
+    titulo: entrada.titulo[locale],
+    extracto: entrada.resumen[locale],
+    imagen: entrada.imagenCubierta,
+    meta: entrada.tipo === 'podcast' ? entrada.duracion : formatoFecha.format(new Date(entrada.fecha)),
+  });
+  const podcasts = BLOG_ENTRADAS.filter((entrada) => entrada.tipo === 'podcast').map(aTarjeta);
+  // Artículos de blog — comentados a petición: todavía no se publican.
+  // Para recuperarlos, descomentar esto y quitar el "[]" de abajo (y
+  // los filtros en ListadoPodcastBlog.jsx).
+  // const articulos = BLOG_ENTRADAS
+  //   .filter((entrada) => entrada.tipo !== 'podcast')
+  //   .sort((a, b) => b.fecha.localeCompare(a.fecha))
+  //   .map(aTarjeta);
+  const articulos = [];
 
   return (
     <>
     {/* Hero común (HeroPagina), con la misma foto que "Podcast" en el
-        submenú del Navbar. */}
+        submenú del Navbar. heroEncuadre: en mobile lleva el recorte a
+        la derecha, sobre Fely (ver page.module.css). */}
     <HeroPagina
-      imagen="/img/about-felycampo/madrid-moda-de-capital-felycampo-podcast.jpg"
+      imagen="/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp"
       alt={tNav('submenus.elMundoDeFely.podcast')}
       titulo={tNav('submenus.elMundoDeFely.podcast')}
       subtitulo={tHero('podcast')}
+      className={styles.heroEncuadre}
     />
-    <section className={`${styles.pagina} contenedor`}>
-      <div className={styles.gridPodcast}>
-        {entradasPodcast.map((entrada) => (
-          <div key={entrada.slug} className={styles.podcastDestacado}>
-            <BlogTarjetaPodcastDestacado
-              href={`/${locale}/podcast/${entrada.slug}`}
-              titulo={entrada.titulo[locale]}
-              meta={entrada.duracion}
-              imagen={entrada.imagenCubierta}
-              alt={entrada.titulo[locale]}
-              textoBoton={t('escucharEpisodio')}
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Comentado a petición — artículos/campañas de blog.js, antes en
-          la misma cuadrícula de 2 columnas que el podcast (ver
-          historial si hiciera falta recuperar esto).
-      <div className={styles.grid}>
-        {BLOG_ENTRADAS.map((entrada) => {
-          const formatoFecha = new Intl.DateTimeFormat(locale === 'en' ? 'en-GB' : 'es-ES', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-          });
-          const meta = entrada.tipo === 'podcast' ? entrada.duracion : formatoFecha.format(new Date(entrada.fecha));
-
-          if (entrada.destacado) {
-            return (
-              <div key={entrada.slug} className={styles.celdaPodcast}>
-                <BlogTarjetaPodcastDestacado
-                  href={`/${locale}/podcast/${entrada.slug}`}
-                  titulo={entrada.titulo[locale]}
-                  meta={meta}
-                  imagen={entrada.imagenCubierta}
-                  alt={entrada.titulo[locale]}
-                  textoBoton={t('escucharEpisodio')}
-                />
-              </div>
-            );
-          }
-
-          return (
-            <BlogTarjeta
-              key={entrada.slug}
-              href={`/${locale}/podcast/${entrada.slug}`}
-              titulo={entrada.titulo[locale]}
-              extracto={entrada.resumen[locale]}
-              meta={meta}
-              imagen={entrada.imagenCubierta}
-              alt={entrada.titulo[locale]}
-            />
-          );
-        })}
-      </div>
-      ---- fin comentado ---- */}
-    </section>
+    {/* Intro ("Podcast & Blog" + texto + filtros) y listado filtrable
+        de episodios y artículos — ver ListadoPodcastBlog.jsx. */}
+    <ListadoPodcastBlog
+      podcasts={podcasts}
+      articulos={articulos}
+      textos={{
+        introTitulo: t('introTitulo'),
+        introTexto: t('introTexto'),
+        filtroTodo: t('filtroTodo'),
+        filtroBlog: t('filtroBlog'),
+        filtroPodcast: t('filtroPodcast'),
+        escucharEpisodio: t('escucharEpisodio'),
+      }}
+    />
     </>
   );
 }

@@ -93,22 +93,43 @@
      sustituto más cercano en el resto de plataformas. */
   --font-editorial: Charter, 'Source Serif 4', Georgia, 'Times New Roman', serif;
 
-  /* ---------- TIPOGRAFÍA — escala en REM ----------
-     El <html> fija font-size:87.5% (1rem = 14px), igual que
-     en styleguide.html. Sin letter-spacing en el propio paso de
-     escala — el tracking va aparte, ver --tracking-label. */
-  --text-nano:       0.625rem;   /* 8.75px · más pequeño que --text-micro */
-  --text-micro:      0.6875rem;  /* 9.6px  · alias: --text-micro */
-  --text-caption:    0.75rem;    /* 10.5px · etiquetas, metadatos */
-  --text-label:      0.8125rem;  /* 11.4px · botones, nav */
-  --text-small:      0.90rem;   /* 12.6px · precios, notas */
-  --text-body:        1rem;       /* 14px  · cuerpo base */
-  --text-body-lg:     1.125rem;   /* 15.75px */
-  --text-h4:          1.25rem;    /* 17.5px */
-  --text-h3:          1.5rem;     /* 21px */
-  --text-h2:          2rem;       /* 28px */
-  --text-h1:          3rem;       /* 42px */
-  --text-display:     4rem;       /* 56px */
+  /* ---------- TIPOGRAFÍA — SIETE TAMAÑOS ----------
+     Todo el sitio usa solo estos siete tamaños, a petición. En px
+     (no rem): son valores fijos de diseño, no una escala relativa.
+     Sin letter-spacing en el propio tamaño — el tracking va aparte,
+     ver --tracking-label. */
+  --text-hero:      28px; /* títulos de HeroPagina — 21px en mobile (ver abajo) */
+  --text-destacado: 19px; /* títulos destacados (banda PedirCita) */
+  --text-titulo:   15px;  /* títulos */
+  --text-texto:    13px;  /* descripciones y textos largos */
+  --text-nav:      14px;  /* enlaces y selector de idioma del Navbar */
+  --text-cta:      13px;  /* CTAs (Boton en todas sus variantes) */
+  --text-boton:    12px;  /* etiquetas, filtros y pestañas */
+  --text-detalle:  11px;  /* footer y detalles pequeños */
+
+  /* Nombres anteriores de la escala — se mantienen como alias de los
+     cuatro tamaños de arriba para no tocar los cientos de usos en los
+     CSS modules. Código nuevo: usar directamente los cuatro de arriba. */
+  --text-nano:       var(--text-detalle);
+  --text-micro:      var(--text-detalle);
+  --text-caption:    var(--text-detalle);
+  --text-label:      var(--text-boton);
+  --text-small:      var(--text-texto);
+  --text-body:       var(--text-texto);
+  --text-body-lg:    var(--text-titulo);
+  --text-h4:         var(--text-titulo);
+  --text-h3:         var(--text-titulo);
+  --text-h2:         var(--text-titulo);
+  --text-h1:         var(--text-titulo);
+  --text-display:    var(--text-titulo);
+
+  /* Bloques foto + título + texto (Descubre a Fely en la landing,
+     tarjetas de /visita-fely-campo y puntos de venta, secciones de
+     /atelier-fiesta): mismo interlineado y tracking en los dos. */
+  --text-bloque-titulo:   var(--text-titulo);
+  --text-bloque-texto:    var(--text-texto);
+  --leading-bloque:       1.35;
+  --tracking-bloque:      0.03em;
 
   /* Pesos */
   --font-weight-light:    300;
@@ -162,7 +183,7 @@
   --max-contenido:   1440px;  /* ancho de contenido */
   --max-sitio:       2100px;  /* ancho máximo del sitio */
   --nav-height:      76px;    /* alto de .navRow (Navbar) en mobile/tablet portrait — min-height + padding-block, box-sizing: border-box */
-  --nav-height-desktop: 82px; /* alto de .navRow en escritorio (min-width:768px) — logo más grande (56px, ver .navLogo en Navbar.module.css), navbar blanca crece con él en la misma proporción */
+  --nav-height-desktop: 72px; /* alto de .navRow en escritorio — logo de 48px (ver .navLogo en Navbar.module.css), 4px menos que --nav-height */
 
   /* ---------- INTERLINEADO (line-height) ---------- */
   --leading-tight: 1.15;
@@ -170,6 +191,37 @@
 
   /* ---------- TRANSICIONES ---------- */
   --ease-marca: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Margen lateral de .navRow (Navbar) — también lo usan los bloques
+     que deben alinearse con el header (Descubre a Fely, SplitMedia
+     landing). Baja a --spacing-4 en el mismo corte que el Navbar. */
+  --padding-lateral-nav: var(--spacing-7);
+
+  /* ---------- GRID DE SECCIONES PARTIDAS (texto + imagen) ----------
+     Escritorio (desde 1024px): 24 columnas entre los márgenes
+     --padding-lateral-nav. La imagen ocupa una mitad (12 columnas) y el
+     texto la otra, empezando dos columnas después de la imagen como
+     separación visual: imagen 1–12 + texto 15–24, o al revés (texto
+     1–10 + imagen 13–24). En mobile/tablet se apila: texto arriba,
+     imagen debajo. Lo usan Descubre a Fely (landing), BloqueSeccion,
+     las secciones de /atelier-fiesta y las tarjetas de
+     /visita-fely-campo. */
+  --grid-columnas-24: repeat(24, minmax(0, 1fr));
+  --grid-gap:         var(--spacing-2);
+}
+
+@media (max-width: 964px), (max-width: 1024px) and (orientation: portrait) {
+  :root {
+    --padding-lateral-nav: var(--spacing-4);
+  }
+}
+
+/* Título de hero más pequeño en mobile (mismo corte de 767px que
+   HeroPagina.module.css). */
+@media (max-width: 767px) {
+  :root {
+    --text-hero: 21px;
+  }
 }
 
 /* ============================================================
@@ -368,7 +420,7 @@ img { display: block; max-width: 100%; height: auto; }
   opacity: 0;
 }
 .al-scroll.en-vista {
-  animation: entradaScroll 0.9s var(--ease-marca) forwards;
+  animation: entradaScroll 0.6s var(--ease-marca) forwards;
 }
 
 @keyframes entradaScroll {

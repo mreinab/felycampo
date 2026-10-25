@@ -60,7 +60,7 @@ const TEXTOS_CLIENTA = {
   es: {
     asunto: (atelier) => `Hemos recibido tu solicitud de cita — Fely Campo ${atelier}`,
     saludo: (nombre) => `Hola ${nombre},`,
-    cuerpo: (tipo, atelier) => `Gracias por pedir tu cita de ${tipo === 'novia' ? 'novia' : 'invitada'} en el atelier de Fely Campo en ${atelier}. El equipo del atelier te escribirá en breve para confirmar el día y la hora.`,
+    cuerpo: (tipo, atelier) => `Gracias por pedir tu cita${tipo ? ` de ${tipo === 'novia' ? 'novia' : 'invitada'}` : ''} en el atelier de Fely Campo en ${atelier}. El equipo del atelier te escribirá en breve para confirmar el día y la hora.`,
     resumen: 'Estos son los datos que nos has enviado:',
     firma: 'Un abrazo,<br>El equipo de Fely Campo',
     etiquetas: { atelier: 'Atelier', tipo: 'Tipo de cita', fecha: 'Fecha de la boda', telefono: 'Teléfono', mensaje: 'Mensaje' },
@@ -69,7 +69,7 @@ const TEXTOS_CLIENTA = {
   en: {
     asunto: (atelier) => `We have received your appointment request — Fely Campo ${atelier}`,
     saludo: (nombre) => `Hello ${nombre},`,
-    cuerpo: (tipo, atelier) => `Thank you for requesting a ${tipo === 'novia' ? 'bridal' : 'guest'} appointment at the Fely Campo atelier in ${atelier}. The atelier team will be in touch shortly to confirm the day and time.`,
+    cuerpo: (tipo, atelier) => `Thank you for requesting ${tipo ? `a ${tipo === 'novia' ? 'bridal' : 'guest'} appointment` : 'an appointment'} at the Fely Campo atelier in ${atelier}. The atelier team will be in touch shortly to confirm the day and time.`,
     resumen: 'These are the details you sent us:',
     firma: 'Warm regards,<br>The Fely Campo team',
     etiquetas: { atelier: 'Atelier', tipo: 'Appointment type', fecha: 'Wedding date', telefono: 'Phone', mensaje: 'Message' },
@@ -113,6 +113,7 @@ export async function POST(request) {
   const locale = datos.locale === 'en' ? 'en' : 'es';
   const solicitud = {
     atelier: ATELIERES_CITA.find((a) => a.id === datos.atelier),
+    // Opcional: el formulario ya no pregunta si es de novia o invitada.
     tipo: TIPOS_CITA.includes(datos.tipo) ? datos.tipo : null,
     fechaBoda: texto(datos.fechaBoda, 10),
     nombre: texto(datos.nombreCompleto, 120),
@@ -123,7 +124,7 @@ export async function POST(request) {
     mensaje: texto(datos.mensaje, 2000),
   };
 
-  const valido = solicitud.atelier && solicitud.tipo && fechaValida(solicitud.fechaBoda)
+  const valido = solicitud.atelier && fechaValida(solicitud.fechaBoda)
     && solicitud.nombre && EMAIL_VALIDO.test(solicitud.email) && solicitud.telefono
     && solicitud.codigoPostal && solicitud.ciudad && datos.aceptaLegal === true;
   if (!valido) return Response.json({ ok: false, error: 'datos' }, { status: 422 });
@@ -131,7 +132,7 @@ export async function POST(request) {
   const t = TEXTOS_CLIENTA[locale];
   const filasResumen = [
     [t.etiquetas.atelier, solicitud.atelier.nombre],
-    [t.etiquetas.tipo, t.tipos[solicitud.tipo]],
+    ...(solicitud.tipo ? [[t.etiquetas.tipo, t.tipos[solicitud.tipo]]] : []),
     [t.etiquetas.fecha, fechaLegible(solicitud.fechaBoda, locale)],
     [t.etiquetas.telefono, solicitud.telefono],
     ...(solicitud.mensaje ? [[t.etiquetas.mensaje, solicitud.mensaje]] : []),
@@ -147,14 +148,14 @@ export async function POST(request) {
 <p>${t.firma}</p></div>`,
   };
 
-  const tipoEs = solicitud.tipo === 'novia' ? 'NOVIA' : 'INVITADA';
+  const tipoEs = solicitud.tipo ? (solicitud.tipo === 'novia' ? 'NOVIA' : 'INVITADA') : '';
   const emailAtelier = {
     to: destinatariosAtelier(solicitud.atelier.id),
     reply_to: solicitud.email,
-    subject: `Nueva cita ${tipoEs} — ${solicitud.atelier.nombre} — ${solicitud.nombre} (boda ${fechaLegible(solicitud.fechaBoda, 'es')})`,
+    subject: `Nueva cita ${tipoEs ? `${tipoEs} ` : ''}— ${solicitud.atelier.nombre} — ${solicitud.nombre} (boda ${fechaLegible(solicitud.fechaBoda, 'es')})`,
     html: `<div style="font-family:Arial,sans-serif;font-size:15px;color:#111;line-height:1.6">
 <p>Nueva solicitud de cita desde felycampo.com. Responde a este email para escribir directamente a la clienta.</p>${tabla([
-      ['Tipo', tipoEs],
+      ...(tipoEs ? [['Tipo', tipoEs]] : []),
       ['Atelier', solicitud.atelier.nombre],
       ['Fecha de la boda', fechaLegible(solicitud.fechaBoda, 'es')],
       ['Nombre', solicitud.nombre],

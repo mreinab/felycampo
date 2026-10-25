@@ -43,7 +43,7 @@ function entrada(ruta, prioridadRuta = prioridad(ruta)) {
 
 export default function sitemap() {
   const fijas = Object.keys(SEO_TEXTOS)
-    .filter((ruta) => !RUTAS_PRIVADAS.includes(ruta) && !ruta.includes('/confirmacion-'));
+    .filter((ruta) => !RUTAS_PRIVADAS.includes(ruta) && !ruta.includes('/cita/confirmacion'));
 
   const dinamicas = [
     ...tiendaProductos.map((p) => [`/pret-a-porter/${slugify(p.nombre)}`, 0.6]),

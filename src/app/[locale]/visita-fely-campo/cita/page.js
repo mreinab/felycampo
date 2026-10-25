@@ -9,8 +9,7 @@
 
    Un único formulario pequeño: atelier (Salamanca/Madrid/Oviedo —
    preseleccionado si se llega con ?ubicacion=<id>, ver
-   ListadoUbicaciones.jsx/AtelierDetalle.jsx), tipo de cita (novia o
-   invitada), nombre completo, email y teléfono de contacto, fecha de la
+   ListadoUbicaciones.jsx/AtelierDetalle.jsx), nombre completo, email y teléfono de contacto, fecha de la
    boda (obligatoria, día/mes/año en selects propios — no
    <input type="date">, a petición), código postal, ciudad, mensaje
    libre y la casilla de aceptar privacidad/términos (obligatoria).
@@ -18,14 +17,14 @@
    "Enviar solicitud" manda los datos a /api/cita (email de confirmación
    a la clienta + aviso al equipo del atelier, ver src/app/api/cita/
    route.js) y, si va bien, registra la conversión (src/lib/analitica.js)
-   y lleva a la página de confirmación de su tipo:
-   ./confirmacion-novia o ./confirmacion-invitada. */
+   y lleva a la página de confirmación (./confirmacion). Ya no se
+   pregunta si la cita es de novia o de invitada (quitado a petición). */
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { Boton, Input } from '@/components/ui';
-import { ATELIERES_CITA, TIPOS_CITA, rutaConfirmacionCita } from '@/lib/citaAtelier';
+import { ATELIERES_CITA, rutaConfirmacionCita } from '@/lib/citaAtelier';
 import { registrarConversionCita } from '@/lib/analitica';
 import styles from './page.module.css';
 
@@ -51,7 +50,6 @@ export default function Pagina() {
   const meses = MESES[locale] || MESES.es;
 
   const [atelier, setAtelier] = useState('');
-  const [tipo, setTipo] = useState('');
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [email, setEmail] = useState('');
   const [telefono, setTelefono] = useState('');
@@ -87,7 +85,7 @@ export default function Pagina() {
   const alEnviar = async (evento) => {
     evento.preventDefault();
     if (enviando) return;
-    if (!atelier || !tipo || !fechaBoda || !nombreCompleto.trim() || !email.trim() || !telefono.trim() || !codigoPostal.trim() || !ciudad.trim() || !aceptaLegal) {
+    if (!atelier || !fechaBoda || !nombreCompleto.trim() || !email.trim() || !telefono.trim() || !codigoPostal.trim() || !ciudad.trim() || !aceptaLegal) {
       setAvisoDatos(true);
       return;
     }
@@ -99,7 +97,7 @@ export default function Pagina() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          locale, atelier, tipo, fechaBoda, nombreCompleto, email, telefono, codigoPostal, ciudad, mensaje, aceptaLegal, web,
+          locale, atelier, fechaBoda, nombreCompleto, email, telefono, codigoPostal, ciudad, mensaje, aceptaLegal, web,
         }),
       });
       const resultado = await respuesta.json().catch(() => ({}));
@@ -110,8 +108,8 @@ export default function Pagina() {
         setEnviando(false);
         return;
       }
-      registrarConversionCita({ tipo, atelier });
-      router.push(withLocale(rutaConfirmacionCita(tipo)));
+      registrarConversionCita({ atelier });
+      router.push(withLocale(rutaConfirmacionCita()));
     } catch {
       setErrorEnvio(true);
       setEnviando(false);
@@ -142,22 +140,6 @@ export default function Pagina() {
             </select>
           </label>
 
-          <fieldset className={styles.tipoFila}>
-            <legend className={styles.etiqueta}>*{t('tipo')}</legend>
-            {TIPOS_CITA.map((opcion) => (
-              <label key={opcion} className={styles.tipoOpcion}>
-                <input
-                  type="radio"
-                  name="tipo"
-                  value={opcion}
-                  className={styles.legalCheckbox}
-                  checked={tipo === opcion}
-                  onChange={conLimpieza(setTipo)}
-                />
-                <span>{t(opcion === 'novia' ? 'tipoNovia' : 'tipoInvitada')}</span>
-              </label>
-            ))}
-          </fieldset>
 
           <div className={styles.trampa} aria-hidden="true">
             <input type="text" name="web" tabIndex={-1} autoComplete="off" value={web} onChange={(evento) => setWeb(evento.target.value)} />

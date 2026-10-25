@@ -65,6 +65,10 @@
   .fila {
     justify-content: flex-start;
     overflow-x: auto;
+    /* Solo el gesto horizontal es del carrusel: sin scroll vertical propio,
+       un deslizamiento vertical en mobile mueve la página. */
+    overflow-y: hidden;
+    touch-action: pan-x pan-y;
     scrollbar-width: none;
     gap: var(--spacing-4);
     margin-top: var(--spacing-6);

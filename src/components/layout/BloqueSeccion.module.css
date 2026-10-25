@@ -1,11 +1,16 @@
 /* ============================================================
    BLOQUE DE SECCIÓN (imagen + texto) — Fely Campo
+   Escritorio (desde 1024px): grid de 24 columnas (ver
+   --grid-columnas-24 en global.css) entre los márgenes del header
+   (--padding-lateral-nav) — imagen en las columnas 1–12 y texto en
+   las 15–24, dos columnas de separación; "invertido" lo refleja
+   (texto 1–10, imagen 13–24). Mobile y tablet: apilado, texto arriba
+   e imagen debajo.
    ============================================================ */
 
 .seccion {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 /* min-height, no height: con texto largo (ej. fiesta.texto sin
@@ -14,10 +19,32 @@
    salía por debajo y quedaba tapado por la siguiente sección al
    pintarse encima (orden natural del DOM). min-height mantiene el
    alto "editorial" cuando el contenido cabe, y crece si no. */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .seccion {
+    display: grid;
+    grid-template-columns: var(--grid-columnas-24);
+    column-gap: var(--grid-gap);
+    align-items: center;
     min-height: 38vh;
-    grid-template-columns: 1fr 1fr;
+    padding-inline: var(--padding-lateral-nav);
+  }
+
+  .marco {
+    grid-column: 1 / 13;
+    grid-row: 1;
+  }
+
+  .contenidoTexto {
+    grid-column: 15 / 25;
+    grid-row: 1;
+  }
+
+  .invertido {
+    grid-column: 13 / 25;
+  }
+
+  .textoInvertido {
+    grid-column: 1 / 11;
   }
 }
 
@@ -30,12 +57,10 @@
    38vh pensado como alto "editorial". aspect-ratio fija el alto de
    .marco desde su propio ancho (columna, no fila), así ya no depende
    de qué tan alta sea la imagen de origen ni de qué altura acabe
-   teniendo la fila — mismo criterio que ya usaba mobile/tablet más
-   abajo, ahora también en desktop. 3/4 (retrato, en vez de 20/21 casi
-   cuadrado) a petición explícita — mucho de lo que ilustra este bloque
-   son fotos verticales (Novias/Fiesta, ver noviaEditorial.js/
-   fiestaEditorial.js), así que .marco pasa a un ratio pensado para eso
-   en vez de uno casi cuadrado. */
+   teniendo la fila. 3/4 (retrato, en vez de 20/21 casi cuadrado) a
+   petición explícita — mucho de lo que ilustra este bloque son fotos
+   verticales (Novias/Fiesta, ver noviaEditorial.js/
+   fiestaEditorial.js). */
 .marco {
   aspect-ratio: 3 / 4;
   background: var(--color-crema);
@@ -49,47 +74,6 @@
   object-fit: cover;
 }
 
-@media (max-width: 767px) {
-  .seccion { height: auto; }
-}
-
-/* Tablet en vertical (portrait, hasta 1023px — mismo criterio que
-   SplitMedia/Navbar): la rejilla a dos columnas de la regla de arriba
-   (a partir de 768px) dejaba imagen y texto demasiado apretados en un
-   tablet en portrait — aquí vuelve a apilarse en una sola columna,
-   igual que mobile (el "order" de ".invertido"/".textoInvertido" se
-   resetea más abajo, después de definirse, para las dos: imagen
-   siempre primero al apilarse). En landscape (tablet apaisado o
-   laptop) sigue la rejilla de dos columnas de siempre. */
-@media (max-width: 1023px) and (orientation: portrait) {
-  .seccion {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    height: auto;
-  }
-}
-
-.invertido { order: 2; }
-@media (min-width: 768px) {
-  .invertido { order: 2; }
-  .textoInvertido { order: 1; }
-}
-
-/* Imagen siempre primero al apilarse en una sola columna (mobile
-   siempre, tablet solo en portrait, ver los dos bloques de arriba) —
-   sin esto, ".invertido" (order:2, justo arriba) dejaba la imagen
-   después del texto también apilada, no solo en la rejilla de dos
-   columnas. Después en el archivo que la regla de arriba a propósito,
-   así gana pese a la misma especificidad. En landscape (tablet
-   apaisado o laptop) no aplica: el zigzag de dos columnas de siempre
-   sigue intacto. */
-@media (max-width: 767px), (max-width: 1023px) and (orientation: portrait) {
-  .invertido,
-  .textoInvertido {
-    order: 0;
-  }
-}
-
 .contenidoTexto {
   display: flex;
   flex-direction: column;
@@ -97,19 +81,19 @@
   padding: var(--spacing-6);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
+  /* Solo vertical — el lateral lo dan las columnas del grid. */
   .contenidoTexto {
-    padding: var(--spacing-10);
+    padding: var(--spacing-10) 0;
   }
 }
 
-/* Mobile y tablet en portrait (mismo corte que el resto del archivo):
-   contenido centrado horizontalmente, no pegado a la izquierda como en
-   desktop — título/texto/CTA quedan centrados bajo la imagen apilada. */
-@media (max-width: 767px), (max-width: 1023px) and (orientation: portrait) {
+/* Mobile y tablet: texto arriba (order, sin cambiar el DOM) y
+   contenido centrado horizontalmente — título/texto/CTA quedan
+   centrados sobre la imagen apilada. */
+@media (max-width: 1023px) {
   .contenidoTexto {
-    padding: var(--spacing-6);
-    display: flex;
+    order: -1;
     align-items: center;
   }
   .texto {
@@ -119,7 +103,6 @@
 
 .titulo {
   font-size: var(--text-h3);
-  text-transform: uppercase;
 }
 
 .texto {
@@ -145,7 +128,7 @@
 .contenidoTexto .enlace {
   display: inline-flex;
   width: fit-content;
-  font-size: var(--text-label);
+  font-size: var(--text-cta);
   background: var(--color-tinta);
   color: var(--color-fondo);
 }

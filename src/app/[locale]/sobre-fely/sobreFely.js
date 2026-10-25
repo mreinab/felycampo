@@ -21,20 +21,15 @@
      "13 años. Un camino inesperado.").
    - "parrafos": cuerpo de texto. "cita" (opcional): frase final
      de cierre del capítulo, en tinta (solo el capítulo 1 la trae).
-   - "disposicion": cómo se colocan texto e imágenes (ver page.js y
-     page.module.css):
-       'imagenIzquierda' / 'imagenDerecha' — dos columnas, texto a un
-         lado e "imagenes" al otro (1 foto, o 2 lado a lado —
-         "apiladas": true las pone una encima de otra, grandes y sin recortar).
-       'columna' — texto arriba y las fotos apiladas debajo, todo
-         centrado en el ancho de una columna (capítulo 4).
-       'tira' — texto arriba y las "imagenes" en fila debajo
-         (3 en escritorio; en mobile la 1ª a todo el ancho y las otras
-         dos debajo, lado a lado).
+   - "imagenes": la 1ª es la foto principal, al lado del texto (grid
+     de 24 columnas, lado alternado por capítulo — ver page.js y
+     page.module.css). Las demás: si es una sola, va debajo del texto,
+     en sus columnas; si son dos o más, en filas de dos debajo del
+     capítulo, una por mitad. Todas a su proporción natural.
    - Cada foto es {src, pie} (ver "foto" más abajo); "pie" a nivel de
      capítulo (opcional) es un pie compartido para todas sus fotos.
-   - "galeria" (opcional): cuadrícula de 2×2 a todo el ancho debajo del
-     capítulo (capítulo 5, fotos "gridimages"). */
+   - "galeria" (opcional): más fotos en filas de dos a todo el ancho
+     debajo del capítulo (capítulo 5, fotos "gridimages"). */
 
 const RUTA = '/img/about-felycampo/sobre-fely-campo';
 
@@ -42,7 +37,7 @@ const RUTA = '/img/about-felycampo/sobre-fely-campo';
 const foto = (archivo, es, en) => ({ src: `${RUTA}/${archivo}`, pie: es ? { es, en } : null });
 
 export const SOBRE_FELY = {
-  heroImagen: '/img/about-felycampo/fely-campo-conoce-a-la-disenadora.jpg',
+  heroImagen: '/img/about-felycampo/fely-campo-sobre-fely-campo-conoce-a-disenadora.jpg',
 
   capitulos: [
     {
@@ -61,8 +56,7 @@ export const SOBRE_FELY = {
         es: 'A veces, la vida no te lleva por el camino que habías pensado, sino por aquel que, sin saberlo, estabas destinada a encontrar.',
         en: 'Sometimes life does not take you down the path you had planned, but down the one you were, without knowing it, destined to find.',
       },
-      disposicion: 'imagenIzquierda',
-      imagenes: [foto('felycampo-el-comienzo.jpeg')],
+      imagenes: [foto('fely-campo-sobre-fely-campo-comienzo.webp')],
     },
     {
       id: 'el-primer-vestido',
@@ -76,8 +70,7 @@ export const SOBRE_FELY = {
           'At 14 I made my first dress. I was a very shy girl; I found it hard to speak, to connect with others and to show what I carried inside. But when I put that dress on, I discovered something I did not expect: I could hide behind it and, at the same time, feel strong. I understood, even if I could not yet explain it, that clothes could change how we feel, help us find our voice and reveal who we are. There is no photograph of that first dress.',
         ],
       },
-      disposicion: 'imagenDerecha',
-      imagenes: [foto('felycampo-elprimervestido.jpg', 'Fely Campo en el año 1989 en su atelier de Salamanca', 'Fely Campo in 1989 at her atelier in Salamanca')],
+      imagenes: [foto('fely-campo-sobre-fely-campo-elprimervestido.webp', 'Fely Campo en el año 1989 en su atelier de Salamanca', 'Fely Campo in 1989 at her atelier in Salamanca')],
     },
     {
       id: 'la-primera-novia',
@@ -91,13 +84,12 @@ export const SOBRE_FELY = {
           'At 15 I made my first wedding dress. I was very young, but that commission let me discover a different dimension of fashion. Behind a dress there was a woman dreaming of how she would look on a day she would remember all her life. Without realising it, I was discovering that I wanted to create garments that would not only dress a woman, but make her feel like herself. I have no pictures of that first dress, but it will always live on in my memory.',
         ],
       },
-      disposicion: 'tira',
       // Un solo pie para las tres (mismo diseño), debajo de la fila.
       pie: { es: 'Diseño de novia de Fely Campo de la década de los 80', en: 'A Fely Campo bridal design from the 1980s' },
       imagenes: [
-        foto('felycampo-vestidonovia (1).jpg'),
-        foto('felycampo-vestidonovia (2).jpg'),
-        foto('felycampo-vestidonovia (3).jpg'),
+        foto('fely-campo-sobre-fely-campo-vestido-novia-1.webp'),
+        foto('fely-campo-sobre-fely-campo-vestido-novia-2.webp'),
+        foto('fely-campo-sobre-fely-campo-vestido-novia-3.webp'),
       ],
     },
     {
@@ -115,11 +107,9 @@ export const SOBRE_FELY = {
         ],
       },
       // Texto arriba y las fotos debajo, una tras otra (a petición).
-      disposicion: 'columna',
-      apiladas: true,
       imagenes: [
-        foto('felycampo-aprendereloficio (1).jpeg', 'Fotografía de Fely Campo, 1996', 'Fely Campo, 1996'),
-        foto('felycampo-aprendereloficio (2).jpeg', 'Fotografía de Fely Campo en su atelier en 1996', 'Fely Campo at her atelier in 1996'),
+        foto('fely-campo-sobre-fely-campo-aprendereloficio-1.webp', 'Fotografía de Fely Campo, 1996', 'Fely Campo, 1996'),
+        foto('fely-campo-sobre-fely-campo-aprendereloficio-2.webp', 'Fotografía de Fely Campo en su atelier en 1996', 'Fely Campo at her atelier in 1996'),
       ],
     },
     {
@@ -136,19 +126,17 @@ export const SOBRE_FELY = {
           'The label grew, the collections found their place and the work began to reach beyond the small workshop where it had all started. But, deep down, the essence remained the same: to create with sensitivity, to care for the craft and to design for women who want to feel confident, elegant and true to themselves.',
         ],
       },
-      disposicion: 'imagenDerecha',
-      apiladas: true,
       // Un solo pie para las dos (misma boutique), debajo de ambas.
       pie: { es: 'Primera boutique de Fely Campo en Salamanca, 1995', en: 'Fely Campo’s first boutique in Salamanca, 1995' },
       imagenes: [
-        foto('felycampo-primeratelier (1).jpeg'),
-        foto('felycampo-primeratelier (2).jpeg'),
+        foto('fely-campo-sobre-fely-campo-primeratelier-1.webp'),
+        foto('fely-campo-sobre-fely-campo-primeratelier-2.webp'),
       ],
       galeria: [
-        foto('felycampo-gridimages (1).jpg', 'Modelo con diseño Fely Campo en uno de sus desfiles (2014)', 'A model wearing Fely Campo at one of her shows (2014)'),
-        foto('felycampo-gridimages (1).jpeg', 'Fely Campo en el backstage de uno de sus desfiles de Salamanca (década de los 90)', 'Fely Campo backstage at one of her shows in Salamanca (1990s)'),
-        foto('felycampo-gridimages (2).jpeg', 'Fely Campo saliendo a saludar tras uno de sus desfiles de Salamanca (década de los 90)', 'Fely Campo taking her bow after one of her shows in Salamanca (1990s)'),
-        foto('felycampo-gridimages (2).jpg', 'Encuentro con el diseño japonés en el Jardín de Salamanca en 2002', 'An encounter with Japanese design at the Jardín de Salamanca, 2002'),
+        foto('fely-campo-sobre-fely-campo-gridimages-1-2.webp', 'Modelo con diseño Fely Campo en uno de sus desfiles (2014)', 'A model wearing Fely Campo at one of her shows (2014)'),
+        foto('fely-campo-sobre-fely-campo-gridimages-1.webp', 'Fely Campo en el backstage de uno de sus desfiles de Salamanca (década de los 90)', 'Fely Campo backstage at one of her shows in Salamanca (1990s)'),
+        foto('fely-campo-sobre-fely-campo-gridimages-2.webp', 'Fely Campo saliendo a saludar tras uno de sus desfiles de Salamanca (década de los 90)', 'Fely Campo taking her bow after one of her shows in Salamanca (1990s)'),
+        foto('fely-campo-sobre-fely-campo-gridimages-2-2.webp', 'Encuentro con el diseño japonés en el Jardín de Salamanca en 2002', 'An encounter with Japanese design at the Jardín de Salamanca, 2002'),
       ],
     },
     {
@@ -167,8 +155,7 @@ export const SOBRE_FELY = {
           'When I look back, I think I never imagined how far that first dress would take me. And yet I am still chasing the same feeling I had then: the thrill of creating something that can make a woman feel different.',
         ],
       },
-      disposicion: 'imagenIzquierda',
-      imagenes: [foto('elegir-fely-27.jpeg', 'Fely Campo en la actualidad', 'Fely Campo today')],
+      imagenes: [foto('fely-campo-sobre-fely-campo-elegir-27.webp', 'Fely Campo en la actualidad', 'Fely Campo today')],
     },
   ],
 
@@ -195,6 +182,6 @@ export const SOBRE_FELY = {
     href: 'https://www.youtube.com/watch?is=8lcOXOn4hPIHgaWe&v=QgepxasStTI&feature=youtu.be',
     titulo: 'Conoce a Fely Campo - Documental',
     meta: { es: '54 cintas de vídeo resumen parte de mi historia', en: '54 video tapes summarise part of my story' },
-    imagen: '/img/about-felycampo/felycampo-documenta-54oldtapes-2.jpg',
+    imagen: '/img/about-felycampo/fely-campo-sobre-fely-campo-documenta-54oldtapes-2.webp',
   },
 };

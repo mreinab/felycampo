@@ -44,7 +44,7 @@
    fondo de ejemplo (ver FOTOS_CARRUSEL_EJEMPLO más abajo).
    Uso:
      <ResenasClientes resenas={[
-       { nombre: 'Marta Ibáñez', texto: 'El vestido...', foto: '/img/Clientes/ClientReview- (1).jpg' },
+       { nombre: 'Marta Ibáñez', texto: 'El vestido...', foto: '/img/Clientes/fely-campo-invitadas-reales-clientreview-1.webp' },
      ]} />
    ============================================================ */
 
@@ -58,9 +58,9 @@ import styles from './ResenasClientes.module.css';
 // "foto" de cada reseña siempre va primera (para que el hover no dé un
 // salto respecto a la foto ya visible en reposo).
 const FOTOS_CARRUSEL_EJEMPLO = [
-  '/img/Clientes/ClientReview- (1).jpg',
-  '/img/Clientes/ClientReview- (2).jpg',
-  '/img/Clientes/vestido-2clienta.JPG',
+  '/img/Clientes/fely-campo-invitadas-reales-clientreview-1.webp',
+  '/img/Clientes/fely-campo-invitadas-reales-clientreview-2.webp',
+  '/img/Clientes/fely-campo-invitadas-reales-vestido-2clienta.webp',
 ];
 
 function TarjetaResena({ resena }) {

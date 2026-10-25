@@ -139,7 +139,7 @@ export default async function FichaProducto({ params }) {
             la derecha, justo encima de ResenasClientes. */}
         <LookPasarela
           titulo={t('runwayLook')}
-          imagen="/img/collections/runway/fw27-lacoleccion/FelyCampo_01.webp"
+          imagen="/img/collections/runway/fw27-lacoleccion/fely-campo-pasarela-la-coleccion-look-01.webp"
           alt={t('runwayLook')}
         />
 

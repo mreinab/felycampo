@@ -67,7 +67,6 @@
 
 .metaHero {
   font-size: var(--text-caption);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--color-tinta);
   white-space: nowrap;

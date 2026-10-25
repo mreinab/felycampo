@@ -38,7 +38,6 @@
 .eyebrowGrande,
 .ciudad {
   font-size: var(--text-h1);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--color-tinta);
 }
@@ -112,50 +111,68 @@
 }
 
 /* Imagen + texto corrido (título + uno o más párrafos, ver "secciones"
-   en atelieres.js) — 80% de ancho centrado (a petición, antes 70%).
-   .seccionInvertida
-   (secciones en índice impar, ver AtelierDetalle.jsx) pasa la imagen a
-   la columna derecha, así se lee en zigzag bajando la página en vez de
-   siempre "imagen a la izquierda". Grid de dos columnas iguales (y no
-   flex con la imagen a su ancho natural): imagen y texto miden lo
-   mismo, así el hueco entre ellos cae en el centro en todas las
-   secciones, vaya la imagen a un lado o al otro. */
+   en atelieres.js) sobre el grid de 24 columnas (ver
+   --grid-columnas-24 en global.css), a todo el ancho entre los
+   márgenes del header (--padding-lateral-nav): imagen en las columnas
+   1–12 y texto en las 15–24, dos columnas de separación.
+   .seccionInvertida (secciones en índice impar, ver AtelierDetalle.jsx)
+   lo refleja — texto 1–10, imagen 13–24 — así se lee en zigzag bajando
+   la página. En mobile/tablet se apila (ver media query más abajo).
+   Mismo esquema y separaciones que los capítulos de /sobre-fely
+   (sobre-fely/page.module.css): 200px entre secciones, foto a su
+   proporción natural y texto centrado en vertical frente a ella. */
 .seccion {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: var(--grid-columnas-24);
   align-items: center;
-  column-gap: var(--spacing-8);
-  min-height: 80vh;
-  max-width: 80%;
-  margin-inline: auto;
-  margin-bottom: var(--spacing-9);
+  column-gap: var(--grid-gap);
+  padding-inline: var(--padding-lateral-nav);
+  margin-bottom: var(--spacing-11);
+}
+
+.seccion .bloqueImagen {
+  grid-column: 1 / 13;
+  grid-row: 1;
+}
+
+.seccion .seccionTexto {
+  grid-column: 15 / 25;
+  grid-row: 1;
 }
 
 .seccionInvertida .bloqueImagen {
-  order: 2;
+  grid-column: 13 / 25;
+}
+
+.seccionInvertida .seccionTexto {
+  grid-column: 1 / 11;
 }
 
 .seccionTexto {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-5);
-  padding-inline: var(--spacing-4);
 }
 
-.seccionTitulo {
+/* Título y párrafos = .titulo/.parrafo de /sobre-fely: 15px medium
+   sin mayúsculas, y 13px con el interlineado de párrafo del sitio, todo
+   en tinta. El título también es un <p>: selector más específico que
+   .seccionTexto p para que el 13px de los párrafos no pise sus 15px. */
+.seccionTexto p.seccionTitulo {
   margin: 0;
-  font-size: 1.375rem; /* 19.25px — un poco mayor que --text-h4, a petición (mismo peso medium: semibold quedaba demasiado pesado) */
+  font-size: var(--text-titulo);
   font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
   letter-spacing: normal;
   color: var(--color-tinta);
 }
 
 .seccionTexto p {
   margin: 0;
-  font-size: var(--text-body);
+  font-size: var(--text-texto);
   line-height: var(--leading-base);
-  color: var(--color-gris-700);
+  letter-spacing: 0;
+  text-wrap: pretty;
+  color: var(--color-tinta);
 }
 
 /* ---------- Cuadrícula de imágenes (último elemento de la página) ----------
@@ -246,7 +263,7 @@
    ProductosRecomendados.module.css): el 70% de ancho de escritorio (ver
    .textoRow/.video/.seccion/.cita arriba) se queda demasiado angosto
    en pantallas pequeñas — todos vuelven a 100%. .seccion apilada
-   (imagen arriba, texto debajo). .imagenes pasa de cuadrícula de 5 a
+   (texto arriba, imagen debajo). .imagenes pasa de cuadrícula de 5 a
    carrusel horizontal, ver más abajo. */
 @media (max-width: 1023px) {
   .textoRow,
@@ -268,19 +285,22 @@
     height: auto;
   }
 
+  /* Igual que /sobre-fely en mobile: 16px de margen lateral (texto y
+     foto), 32px entre texto y foto y 80px entre secciones. */
   .seccion,
   .seccionInvertida {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--spacing-4);
-    min-height: 0;
-    margin-bottom: var(--spacing-7);
+    gap: var(--spacing-6);
+    padding-inline: var(--spacing-4);
+    margin-bottom: var(--spacing-9);
   }
 
-  /* Apilado: imagen siempre arriba, también en las invertidas. */
-  .seccionInvertida .bloqueImagen {
-    order: 0;
+  /* Apilado: texto siempre arriba e imagen debajo, también en las
+     invertidas. */
+  .seccion .seccionTexto {
+    order: -1;
   }
 
 
@@ -291,6 +311,10 @@
   .imagenes {
     display: flex;
     overflow-x: auto;
+    /* Solo el gesto horizontal es del carrusel: sin scroll vertical propio,
+       un deslizamiento vertical en mobile mueve la página. */
+    overflow-y: hidden;
+    touch-action: pan-x pan-y;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;

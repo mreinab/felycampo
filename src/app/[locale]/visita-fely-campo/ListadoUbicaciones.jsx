@@ -33,18 +33,17 @@ import styles from './page.module.css';
 // overflow:hidden va en .marco, no en .galeria — ver el porqué ahí).
 const FOTOS_POR_CIUDAD = {
   Salamanca: [
-    '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg',
-    '/img/atelier/atelier-salamanca/ateliernovia-lamedida-felycampo-2.webp',
-    '/img/atelier/atelier-salamanca/20221222185015_relacionada2.jpg',
+    '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp',
+    '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp',
   ],
   Madrid: [
-    '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
-    '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp',
-    '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_showroom-3.jpg',
+    '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-foto-3.webp',
+    '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-sala-pruebas.webp',
+    '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-showroom-3.webp',
   ],
   Oviedo: [
-    '/img/atelier/atelier-oviedo/TIENDA FELY-4 (1).jpg',
-    '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp',
+    '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-fiesta-espacio-1.webp',
+    '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-tienda-4-1.webp',
   ],
 };
 
@@ -58,7 +57,6 @@ function ListadoUbicaciones({ locale }) {
   return (
     <>
       <CabeceraSeccion
-        subtitleKey="visitenos.eyebrow"
         titleKey="visitenos.titulo"
         descriptionKey="visitenos.intro"
         alinear="start"
@@ -98,51 +96,55 @@ function ListadoUbicaciones({ locale }) {
                 </div>
 
                 <div className={styles.fila}>
-                  <div className={styles.info}>
-                    <p className={styles.nombre}>{ubicacion.nombre}</p>
+                  {/* Datos y botón juntos en un mismo bloque, centrado en vertical
+                      en la columna (ver .bloque en page.module.css). */}
+                  <div className={styles.bloque}>
+                    <div className={styles.info}>
+                      <p className={styles.nombre}>{ubicacion.nombre}</p>
 
-                    <address className={styles.direccionWrap}>
-                      {/* href="#" — a la espera del enlace real de Maps por sede, ver .acciones más abajo. */}
-                      <a href="#" target="_blank" rel="noopener noreferrer" className={styles.direccion}>
-                        {ubicacion.direccion.join('\n')}
+                      <address className={styles.direccionWrap}>
+                        {/* href="#" — a la espera del enlace real de Maps por sede, ver .acciones más abajo. */}
+                        <a href="#" target="_blank" rel="noopener noreferrer" className={styles.direccion}>
+                          {ubicacion.direccion.join('\n')}
+                        </a>
+                      </address>
+
+                      {/* Justo debajo de la dirección (no al final, tras
+                          teléfono/WhatsApp) — a petición, para que el
+                          horario se lea junto a dónde está la sede. */}
+                      <p className={styles.horario}>
+                        {ubicacion.horario ? ubicacion.horario[locale] : t('showroomNota')}
+                      </p>
+
+                      <p className={styles.telefono}>{lineaContacto}</p>
+
+                      <a
+                        href={whatsappHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.whatsapp}
+                      >
+                        {t('whatsapp')}: {ubicacion.whatsapp}
                       </a>
-                    </address>
 
-                    {/* Justo debajo de la dirección (no al final, tras
-                        teléfono/WhatsApp) — a petición, para que el
-                        horario se lea junto a dónde está la sede. */}
-                    <p className={styles.horario}>
-                      {ubicacion.horario ? ubicacion.horario[locale] : t('showroomNota')}
-                    </p>
+                      <p className={styles.descripcion}>
+                        {ubicacion.descripcion[locale]}{' '}
+                        <a href={`/${locale}/atelier-fiesta/${ubicacion.ciudad.toLowerCase()}`} className={styles.conoceMas}>
+                          {t('conoceMas')}
+                        </a>
+                      </p>
+                    </div>
 
-                    <p className={styles.telefono}>{lineaContacto}</p>
-
-                    <a
-                      href={whatsappHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.whatsapp}
-                    >
-                      {t('whatsapp')}: {ubicacion.whatsapp}
-                    </a>
-
-                    <p className={styles.descripcion}>
-                      {ubicacion.descripcion[locale]}{' '}
-                      <a href={`/${locale}/atelier-fiesta/${ubicacion.ciudad.toLowerCase()}`} className={styles.conoceMas}>
-                        {t('conoceMas')}
+                    <div className={styles.acciones}>
+                      <a
+                        href={`/${locale}/visita-fely-campo/cita?ubicacion=${ubicacion.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.accionBtn}
+                      >
+                        {t('pedirCita')}
                       </a>
-                    </p>
-                  </div>
-
-                  <div className={styles.acciones}>
-                    <a
-                      href={`/${locale}/visita-fely-campo/cita?ubicacion=${ubicacion.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.accionBtn}
-                    >
-                      {t('pedirCita')}
-                    </a>
+                    </div>
                   </div>
                 </div>
               </EnVista>

@@ -65,19 +65,19 @@ export const ATELIERES = {
     // Reportaje propio (ver public/img/atelier/atelier-salamanca/) —
     // igual que Madrid con showroom-madrid/, ya no hace falta reciclar
     // el fondo de taller-1/ para esta ficha (ver comentario de cabecera).
-    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/atelier-salamanca-felycampo.jpg' },
-    medioSuperior: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/felycampo-salamanca-atelier.webp' },
+    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
+    medioSuperior: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp' },
     // Vídeo, foto, vídeo, foto (a petición: alternando vídeo y
     // foto) — solo 2 vídeos distintos: 20260826-143026_FoYiTknV.mp4 es
     // idéntico a _DCFGo89w.mp4 (mismo archivo), así que no se usa.
     imagenesTira: [
       { tipo: 'video', src: '/img/atelier/atelier-salamanca/20260428-125217_Z0JLEAAc.mp4' },
-      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.06.12.jpeg' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-2.webp' },
       { tipo: 'video', src: '/img/atelier/atelier-salamanca/20260826-143026_DCFGo89w.mp4' },
-      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/WhatsApp Image 2026-08-25 at 14.05.40.jpeg' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto.webp' },
     ],
     descripcion: {
-      es: 'En Salamanca, el atelier convive con el corazón creativo de Fely Campo. Un espacio donde oficio, precisión y creación se encuentran, con la esencia de Castilla como parte del universo de la firma.',
+      es: 'En Salamanca, el atelier de Fely Campo está unido al corazón creativo de la firma. Aquí se encuentran el diseño, el patronaje y el cuidado de los tejidos, en un espacio donde el oficio y la esencia de Castilla forman parte de cada creación.',
       en: 'In Salamanca, the atelier lives alongside the creative heart of Fely Campo. A space where craft, precision and creation meet, with the essence of Castile as part of the world of the label.',
     },
     // "Nuestro equipo" (bloque intermedio) quitado a petición — quedan
@@ -89,10 +89,10 @@ export const ATELIERES = {
     secciones: [
       {
         titulo: { es: 'El Atelier', en: 'The Atelier' },
-        imagen: '/img/atelier/atelier-salamanca/atelier-salamanca-.jpeg',
+        imagen: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-3.webp',
         texto: {
           es: [
-            'Un espacio para descubrir Fely Campo, probar sus colecciones y conocer de cerca el universo de la firma. Diseños atemporales y piezas que permanecen más allá de cada temporada.',
+            'Visita nuestro atelier en Salamanca para descubrir las colecciones de Fely Campo, probar diseños y conocer de cerca la firma. Prendas de líneas atemporales, pensadas para permanecer más allá de cada temporada.',
           ],
           en: [
             'A space to discover Fely Campo, try on its collections and get to know the world of the label up close. Timeless designs and pieces that endure beyond each season.',
@@ -104,13 +104,25 @@ export const ATELIERES = {
         // Foto del ajuste en directo (antes en "Nuestro equipo", libre
         // tras quitar esa sección) — momento de asesoramiento real, más
         // fiel al título que la foto de percha suelta que llevaba antes.
-        imagen: "/img/atelier/atelier-salamanca/atelier-fiesta-salamanca-felycampo (3).jpg",
+        imagen: "/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-fiesta-3.webp",
         texto: {
           es: [
-            'Cada cita comienza contigo. Nuestro equipo te acompaña para encontrar el diseño, corte, color y tejido que mejor encajen contigo, y valorar las posibles modificaciones de la pieza elegida.',
+            'Cada cita en el atelier comienza escuchándote. Nuestro equipo te asesora para encontrar el diseño, el corte, el color y el tejido que mejor encajan contigo, y valorar las posibles modificaciones de la prenda elegida.',
           ],
           en: [
             'Every appointment begins with you. Our team guides you to find the design, cut, colour and fabric that suit you best, and to consider the possible alterations to the chosen piece.',
+          ],
+        },
+      },
+      {
+        titulo: { es: 'Encuentra tu vestido de novia', en: 'Find your wedding dress' },
+        imagen: '/img/fely-campo-web-novias-seccion-3.webp',
+        texto: {
+          es: [
+            'A través de una atención personalizada, te asesoramos en la elección de la silueta, los tejidos y los detalles para crear tu vestido de novia ideal.',
+          ],
+          en: [
+            'Through personalised attention, we guide you in choosing the silhouette, fabrics and details to create your ideal wedding dress.',
           ],
         },
       },
@@ -121,26 +133,26 @@ export const ATELIERES = {
     heroMedio: {
       tipo: 'video',
       src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid.mp4',
-      poster: '/img/atelier/showroom-madrid/felycampo-atelier-madrid-showroom.jpg',
+      poster: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-showroom.webp',
     },
     // felycampo-atelier-madrid-showroom (a petición; antes
     // KristenWicce-3, que pasa a la sección "Novias").
     // ajustarAlto: foto vertical — se ve entera a 90vh de alto con su
     // ancho natural, en vez de recortada en la caja 16/9 (ver
     // .videoAjusteAlto en page.module.css).
-    medioSuperior: { tipo: 'imagen', src: '/img/atelier/showroom-madrid/felycampo-atelier-madrid-showroom.jpg', ajustarAlto: true },
+    medioSuperior: { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-showroom.webp', ajustarAlto: true },
     // "unnamed (1).webp" quitada a petición (borrada de la carpeta) — el
     // resto de fotos de showroom-madrid/ ya está en uso en otro punto de
     // esta misma ficha (hero/medioSuperior/secciones), así que se queda
     // en 4 en vez de repetir alguna solo para completar 5.
     imagenesTira: [
-      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid_medida-2.jpg' },
-      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.webp' },
-      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/atelier_medida_madrid_fiesta_novia_felycampo.webp' },
-      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/felycampo-atelier-madrid.jpg' },
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-medida-2.webp' },
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-sala-pruebas.webp' },
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-medida-fiesta-novia.webp' },
+      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-vestidos-fiesta.webp' },
     ],
     descripcion: {
-      es: 'Nuestro atelier de Madrid ocupa un emplazamiento muy especial en la calle Jorge Juan. Un espacio íntimo, pensado para descubrir la firma de una forma cercana y personal. Allí, podrás encontrarte con la diseñadora y definir cada detalle, cada proporción y cada tejido para comenzar a dar forma a una pieza única: un espacio donde el tiempo se detiene para vestir a cada mujer desde su propia esencia.',
+      es: 'En la calle Jorge Juan, el atelier y showroom de Fely Campo en Madrid ofrece un espacio íntimo para descubrir la firma. En la cita, la diseñadora escucha tus necesidades y te asesora sobre el diseño, las proporciones y los tejidos para dar forma a una pieza que refleje tu personalidad.',
       en: 'Our Madrid atelier occupies a very special spot on Calle Jorge Juan. An intimate space, designed to discover the label in a close, personal way. There, you can meet the designer and define every detail, every proportion and every fabric to begin shaping a one-of-a-kind piece: a space where time stands still to dress each woman from her own essence.',
     },
     secciones: [
@@ -149,10 +161,10 @@ export const ATELIERES = {
         // de cabecera) — ahora es una sección más, misma imagen de la
         // sala de pruebas/diseño a medida que ya tenía.
         titulo: { es: 'A medida', en: 'Made-to-measure' },
-        imagen: '/img/atelier/showroom-madrid/fely-tomando medidas-felycampo.JPG',
+        imagen: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-tomando-medidas.webp',
         texto: {
           es: [
-            'Con la complicidad como objetivo, la diseñadora realiza el diseño a medida de piezas únicas e irrepetibles pensadas especialmente para cada mujer.',
+            'En el atelier de Madrid, la diseñadora trabaja contigo para crear prendas a medida. El diseño nace de una conversación y se desarrolla cuidando la silueta, las proporciones y cada detalle.',
           ],
           en: [
             'With complicity as her goal, the designer creates made-to-measure, one-of-a-kind pieces designed especially for each woman.',
@@ -161,18 +173,18 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Showroom', en: 'Showroom' },
-        imagen: '/img/atelier/showroom-madrid/felycmapo-atelier-madrid-2.jpg',
+        imagen: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-foto-2.webp',
         texto: {
-          es: ['El Showroom es el lugar dentro de su Atelier en Madrid donde la diseñadora expone muchas de las prendas más icónicas de la firma. Te sumergirás en un universo de piezas que reflejan el alma y la esencia de su creadora durante sus más de 50 años de trayectoria en el mundo de la moda.'],
+          es: ['El showroom del atelier de Madrid reúne prendas representativas de Fely Campo y permite descubrir de cerca la identidad de la firma, construida a lo largo de más de cinco décadas dedicadas a la moda.'],
           en: ["The Showroom is the space within her Madrid Atelier where the designer displays many of the label's most iconic pieces. You'll immerse yourself in a universe of garments that reflect the soul and essence of their creator across her more than 50-year career in the world of fashion."],
         },
       },
       {
         titulo: { es: 'Novias', en: 'Bridal' },
-        imagen: '/img/atelier/showroom-madrid/FelyCampo_ATELIER_KristenWicce-3.jpg',
+        imagen: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-foto-3.webp',
         texto: {
           es: [
-            'En su Atelier de Madrid, la diseñadora ofrece un espacio de encuentro donde cada novia puede imaginar, construir y dar forma a su vestido soñado, hecho a medida y pensado exclusivamente para ella. Su personalidad, su forma de vivir la belleza, sus sensaciones y los tejidos que la emocionan marcan el punto de partida de cada diseño.',
+            'En el atelier de novias de Madrid, cada vestido se construye a medida a partir de la personalidad de la novia, sus preferencias y cómo desea sentirse el día de su boda. La elección de tejidos, las proporciones y los detalles dan forma al diseño.',
           ],
           en: [
             'At her Madrid Atelier, the designer offers a space to meet where every bride can imagine, build and shape her dream dress, made to measure and designed exclusively for her. Her personality, her sense of beauty, her feelings and the fabrics that move her set the starting point for every design.',
@@ -181,9 +193,9 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Prêt-à-porter', en: 'Prêt-à-porter' },
-        imagen: '/img/atelier/felycampo-punto-venta-internacional-copia - copia.jpg',
+        imagen: '/img/atelier/fely-campo-atelier-punto-venta-internacional.webp',
         texto: {
-          es: ['El Atelier de Madrid de Fely Campo cuenta con un espacio dedicado por completo a las colecciones de prêt-à-porter de lujo con las que la diseñadora ha trasladado su sello de diseño al día a día.'],
+          es: ['El atelier de Madrid cuenta con un espacio dedicado al prêt-à-porter de lujo de Fely Campo: colecciones de diseño de autor que trasladan el patronaje, los tejidos y la identidad de la firma a la forma de vestir cotidiana.'],
           en: ["Fely Campo's Madrid Atelier has a space entirely dedicated to the luxury prêt-à-porter collections through which the designer has brought her design signature into everyday life."],
         },
       },
@@ -191,7 +203,7 @@ export const ATELIERES = {
   },
   oviedo: {
     id: 'oviedo',
-    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/TIENDA FELY-4 (1).jpg' },
+    heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-tienda-4-1.webp' },
     medioSuperior: { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.12.mp4' },
     // Reportaje propio (ver public/img/atelier/atelier-oviedo/) — igual
     // que Salamanca/Madrid, ya cubre toda la ficha (medioSuperior,
@@ -203,17 +215,17 @@ export const ATELIERES = {
     // carrusel, aunque es también la foto de la sección "El proceso").
     // espacio_3 (antes la 2ª) quitada también a petición — quedan 4.
     imagenesTira: [
-      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/5-copia-2048x1365.jpg' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-foto-5.webp' },
       { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.15.mp4' },
-      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp' },
+      { tipo: 'imagen', src: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-fiesta-espacio-1.webp' },
       { tipo: 'video', src: '/img/atelier/atelier-oviedo/WhatsApp Video 2026-09-11 at 10.18.10.mp4' },
     ],
     // Texto de encargo: la descripción va frase a frase (array, ver
     // RunwayDescripcion.jsx) y cada sección en dos párrafos cortos.
     descripcion: {
       es: [
-        'En el corazón de Asturias, un espacio donde la moda se encuentra con la emoción.',
-        'Desde 2015, Fely Campo acompaña a cada mujer en la elección de una pieza especial, cuidando cada silueta, cada tejido y cada detalle.',
+        'En el corazón de Asturias, el atelier de Fely Campo en Oviedo es un espacio para descubrir vestidos de fiesta, diseños de novia y colecciones de la firma con asesoramiento personalizado.',
+        'Desde 2015, el atelier de Fely Campo en Oviedo acompaña a cada mujer en la elección de una pieza especial, con atención a la silueta, los tejidos y cada detalle.',
       ],
       en: [
         'In the heart of Asturias, a space where fashion meets emotion.',
@@ -226,11 +238,11 @@ export const ATELIERES = {
         // frases del equipo vivían antes al final de "descripcion", se
         // mueven aquí para no repetirlas.
         titulo: { es: 'Nuestro equipo', en: 'Our Team' },
-        imagen: '/img/atelier/atelier-oviedo/felycampo-Carlos.jpg',
+        imagen: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-carlos.webp',
         texto: {
           es: [
             'Asesoramiento personalizado por nuestro equipo de cuatro personas liderado por Carlos Albuixech.',
-            'Te escuchamos para encontrar la silueta, el color y los detalles que mejor hablan de ti.',
+            'Nuestro equipo te ofrece asesoramiento personalizado para elegir la silueta, el color y los detalles que mejor encajan contigo y con la ocasión.',
           ],
           en: [
             'Personalised styling from our team of four, led by Carlos Albuixech.',
@@ -240,10 +252,10 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'El proceso', en: 'The Process' },
-        imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_espacio_1-scaled.webp',
+        imagen: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-fiesta-espacio-1.webp',
         texto: {
           es: [
-            'Detrás de cada creación hay tiempo, oficio y una mirada precisa.',
+            'Cada vestido de fiesta o diseño de novia requiere tiempo, oficio y una mirada precisa. En el atelier cuidamos el proceso para que cada detalle encuentre su lugar.',
             'Te acompañamos en cada prueba para que el vestido encuentre su forma definitiva: la tuya.',
           ],
           en: [
@@ -254,11 +266,11 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'El espacio', en: 'The Space' },
-        imagen: '/img/atelier/atelier-oviedo/Tienda oviedo (2) - copia.jpg',
+        imagen: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-tienda-2.webp',
         texto: {
           es: [
             'Un lugar para descubrir Fely Campo de cerca.',
-            'Un espacio íntimo donde conocer nuestras colecciones, tocar los tejidos y dejarse llevar por los detalles.',
+            'Visita el atelier de Fely Campo en Oviedo para conocer las colecciones, descubrir los tejidos de cerca y apreciar los detalles de cada diseño.',
           ],
           en: [
             'A place to discover Fely Campo up close.',
@@ -268,7 +280,7 @@ export const ATELIERES = {
       },
       {
         titulo: { es: 'Novia', en: 'Bridal' },
-        imagen: '/img/atelier/atelier-oviedo/atelier_fiesta_oviedo_felycampo_5-2048x1365.webp',
+        imagen: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-fiesta-5.webp',
         texto: {
           es: [
             'Para un día que merece ser único.',

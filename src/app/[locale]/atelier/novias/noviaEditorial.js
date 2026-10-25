@@ -34,8 +34,8 @@ const RUTA_NOVIAS_PAGE = '/img/collections/novia/novias-page';
 export const NOVIA_EDITORIAL = {
   descripcion: {
     es: [
-      'Cada novia llega con una historia distinta, con su propia manera de entender ese día.',
-      'De ahí nace el vestido, nunca al revés: primero la escuchamos a ella, después cortamos la tela.',
+      'Cada novia llega con una historia distinta y una manera propia de imaginar el día de su boda. Escucharla es el primer paso para crear su vestido de novia a medida.',
+      'De esa historia nace el vestido de novia: primero escuchamos a quien lo llevará; después elegimos los tejidos, trabajamos el patrón y damos forma a cada detalle.',
     ],
     en: [
       'Every bride arrives with a different story, with her own way of understanding that day.',
@@ -45,24 +45,24 @@ export const NOVIA_EDITORIAL = {
 
   bloques: [
     {
-      imagen: '/img/Clientes/novias-felycampo-atelier.jpg',
+      imagen: '/img/Clientes/fely-campo-invitadas-reales-novias-atelier.webp',
       titulo: {
         es: 'Una historia, un vestido',
         en: 'One story, one dress',
       },
       texto: {
-        es: 'En el atelier el punto de partida nunca es el patrón: es la novia. Escuchamos quién es, cómo se mueve, qué quiere sentir el día de su boda, y desde ahí construimos cada pieza, a mano y a su medida.',
+        es: 'En nuestro atelier de novias, el punto de partida nunca es el patrón: es la mujer que llevará el vestido. Escuchamos quién es, cómo se mueve y qué quiere sentir el día de su boda. A partir de ahí, trabajamos el diseño, los tejidos y cada detalle para crear un vestido de novia a medida.',
         en: 'In the atelier the starting point is never the pattern: it is the bride. We listen to who she is, how she moves, what she wants to feel on her wedding day, and from there we build every piece, by hand and to her measure.',
       },
     },
     {
-      imagen: `${RUTA_NOVIAS_PAGE}/FELYCAMPO NOVIAS0033 copia.jpg`,
+      imagen: `${RUTA_NOVIAS_PAGE}/fely-campo-atelier-novias-vestido-novia-02.webp`,
       titulo: {
         es: 'Hecho a mano, para ella',
         en: 'Handmade, for her',
       },
       texto: {
-        es: 'Esa misma manera de trabajar da forma a cada colección: siluetas depuradas, tejidos nobles y un cuidado artesanal en cada costura, pensados para acompañar a la novia, no para imponerse sobre ella.',
+        es: 'Esa misma forma de trabajar define nuestras colecciones de novia: siluetas depuradas, tejidos nobles y cuidado artesanal en cada costura. Diseños pensados para acompañar a cada mujer con naturalidad, sin imponerse sobre ella.',
         en: 'That same way of working shapes every collection: pared-back silhouettes, noble fabrics and artisanal care in every seam, made to accompany the bride, never to overshadow her.',
       },
     },
@@ -71,16 +71,16 @@ export const NOVIA_EDITORIAL = {
   // Las 11 fotos restantes de novias-page/ (FELYCAMPO NOVIAS0033 va en
   // el segundo bloque; el hero de page.js sigue con su foto de siempre).
   backstage: [
-    '_91A1977 copia.jpg',
-    '_91A2190 copia.jpg',
-    '_91A2259 copia.jpg',
-    '_91A2431 copia.jpg',
-    '_91A2517 copia.jpg',
-    '_91A2540 copia.jpg',
-    '_91A2546 copia.jpg',
-    '_91A6725 copia.jpg',
-    'EmptyName 289.jpg',
-    'FelyCampo_32.jpg',
-    'FelyCampo_34.jpg',
+    'fely-campo-atelier-novias-vestido-novia-05.webp',
+    'fely-campo-atelier-novias-vestido-novia-06.webp',
+    'fely-campo-atelier-novias-vestido-novia-07.webp',
+    'fely-campo-atelier-novias-vestido-novia-08.webp',
+    'fely-campo-atelier-novias-vestido-novia-09.webp',
+    'fely-campo-atelier-novias-vestido-novia-10.webp',
+    'fely-campo-atelier-novias-vestido-novia-11.webp',
+    'fely-campo-atelier-novias-vestido-novia-12.webp',
+    'fely-campo-atelier-novias-vestido-novia-01.webp',
+    'fely-campo-atelier-novias-vestido-novia-03.webp',
+    'fely-campo-atelier-novias-vestido-novia-04.webp',
   ].map((archivo) => `${RUTA_NOVIAS_PAGE}/${archivo}`),
 };

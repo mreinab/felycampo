@@ -3,6 +3,13 @@
    Esquinas rectas en todo, radio 0 en todas partes (--radius-botones).
    ============================================================ */
 
+/* Hero: foto vertical del atelier de Madrid (arco + percha) en una caja
+   apaisada — encuadre centrado en los vestidos en vez de arriba (ahí
+   solo quedaría la pared sobre el arco). */
+.heroEncuadre img {
+  object-position: center 60%;
+}
+
 /* Mobile: por delante del ProductHero fijo que va justo antes (ver
    ProductHero.module.css) — fondo opaco + posicionada + z-index por
    encima, mismo mecanismo exacto que .seccion.seccionGrid en
@@ -25,11 +32,16 @@
   flex-direction: column !important;
 }
 
+/* Intro bajo "Nuestros Ateliers" en tinta, como el resto de textos de
+   la página (CabeceraSeccion la trae en gris de serie). */
+.cabeceraColumna p {
+  color: var(--color-tinta);
+}
+
 /* "page-padding" del enunciado = mismo gutter horizontal que usa el
    resto del sitio para separar bloques de sección (ver --spacing-7 en
-   Footer.module.css .grid), aquí en vertical entre ubicaciones.
-   Mayúsculas en todo el listado, con el mismo tracking que el resto
-   del sistema usa para bloques en mayúsculas (ver Boton .solido). */
+   Footer.module.css .grid), aquí en vertical entre ubicaciones. Sin
+   tracking en el listado: los textos van sin letter-spacing. */
 .lista {
   display: flex;
   flex-direction: column;
@@ -40,30 +52,28 @@
      sin padding lateral): foto y texto alinean con este mismo borde. */
   padding-inline: var(--spacing-6);
   list-style: none;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
 }
 
-/* Texto (.fila) a la izquierda y foto (.galeria) a la derecha, sin
-   cambiar el orden del DOM (en mobile la foto sigue arriba). Grid y no
-   flex: la fila del grid toma el alto de la foto (aspect-ratio 2.5/3),
-   .fila se estira a ese mismo alto (así su space-evenly reparte datos y
-   botón a lo alto de la foto). Columnas con ancho tope (texto 22rem,
-   foto el ancho que da 80vh de alto a 2.5/3) y justify-content:center:
-   el conjunto queda centrado en horizontal; align-content:center lo
-   centra en vertical en los 80vh de la tarjeta. */
+/* Grid de 24 columnas (ver --grid-columnas-24 en global.css): texto
+   (.fila) en las columnas 1–10 y foto (.galeria) en las 13–24, dos
+   columnas de separación, sin cambiar el orden del DOM (en mobile se
+   apila con el texto arriba, ver media query más abajo). La fila del
+   grid toma el alto de la foto (aspect-ratio 2.5/3) y .fila se estira
+   a ese mismo alto (así su space-evenly reparte datos y botón a lo
+   alto de la foto); align-content:center centra el conjunto en
+   vertical en los 80vh de la tarjeta. */
 .tarjeta {
   min-height: 80vh;
   display: grid;
-  grid-template-columns: minmax(0, 22rem) minmax(0, calc(80vh * 2.5 / 3));
-  justify-content: center;
+  grid-template-columns: var(--grid-columnas-24);
   align-content: center;
-  column-gap: var(--spacing-10);
+  column-gap: var(--grid-gap);
 }
 
+/* Escritorio: mismo margen lateral que el header. */
 @media (min-width: 1024px) {
   .lista {
-    padding-inline: var(--spacing-10);
+    padding-inline: var(--padding-lateral-nav);
   }
 }
 
@@ -75,10 +85,9 @@
    pide de su contenedor (ver "Uso" en CarruselFotos.jsx). Aquí no hace falta
    aspect-ratio aparte en .marco, el aspect-ratio de .galeria (ver
    abajo) ya le da tamaño. */
-/* Ancho = el de su columna (tope en .tarjeta: el que da 80vh de alto
-   a 2.5/3), así la foto nunca pasa de la altura de la tarjeta. */
+/* Ancho = el de sus 12 columnas, alto por aspect-ratio. */
 .galeria {
-  grid-column: 2;
+  grid-column: 13 / 25;
   grid-row: 1;
   width: 100%;
   aspect-ratio: 2.5 / 3;
@@ -113,16 +122,23 @@
   object-fit: cover;
 }
 
-/* Columna: datos de la sede arriba y el botón "Pedir cita" debajo, a
-   todo el ancho, repartidos con el mismo hueco arriba, entre y abajo (space-evenly). */
+/* Columna: el bloque de datos + botón "Pedir cita" (.bloque) centrado
+   en vertical en el alto de la foto. */
 .fila {
-  grid-column: 1;
+  grid-column: 1 / 11;
   grid-row: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  gap: var(--spacing-5);
+  justify-content: center;
+}
+
+/* Datos de la sede y botón juntos, --spacing-8 entre ellos. */
+.bloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  min-width: 0;
 }
 
 .info {
@@ -146,9 +162,20 @@
 .whatsapp,
 .horario,
 .descripcion {
-  font-size: var(--text-small);
-  line-height: var(--leading-base);
+  font-size: var(--text-bloque-texto);
+  font-weight: 400;
+  line-height: var(--leading-bloque);
+  /* Textos de descripción sin tracking — solo el título (.nombre) lo
+     conserva. */
+  letter-spacing: 0;
+  text-wrap: pretty;
   color: var(--color-tinta);
+}
+
+/* Título del bloque (ver --text-bloque-* en global.css). */
+.nombre {
+  font-size: var(--text-bloque-titulo);
+  letter-spacing: var(--tracking-bloque);
 }
 
 /* <address> es itálica por defecto en el navegador — se anula a
@@ -189,10 +216,9 @@
   text-underline-offset: var(--spacing-1);
 }
 
-/* Única línea en mayúsculas del bloque — el resto ya no lo es, ver
-   .info arriba. */
+/* Nombre de la sede (sin mayúsculas, como el resto del bloque — ver
+   .info arriba). */
 .nombre {
-  text-transform: uppercase;
   /* Separa el nombre de la sede de la dirección de debajo. */
   padding-bottom: var(--spacing-3);
 }
@@ -238,10 +264,10 @@
   text-align: center;
   border-radius: var(--radius-botones);
   font-family: var(--font-base);
-  font-size: var(--text-label);
+  font-size: var(--text-cta);
   color: var(--color-tinta);
-  text-transform: uppercase;
-  letter-spacing: 0.02rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: none;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
@@ -284,6 +310,10 @@
     width: 100%;
     height: 100%;
     overflow-x: auto;
+    /* Solo el gesto horizontal es del carrusel: sin scroll vertical propio,
+       un deslizamiento vertical en mobile mueve la página. */
+    overflow-y: hidden;
+    touch-action: pan-x pan-y;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -299,10 +329,13 @@
     scroll-snap-align: start;
   }
 
+  /* Apilado: texto arriba y foto debajo (order, sin cambiar el DOM). */
   .fila {
+    order: -1;
     width: 100%;
     flex-direction: column;
-    align-items: flex-start;
+    /* stretch (no flex-start): .bloque a todo el ancho, botón incluido. */
+    align-items: stretch;
     /* Solo vertical — el lateral lo pone .lista. */
     padding-block: var(--spacing-4);
   }

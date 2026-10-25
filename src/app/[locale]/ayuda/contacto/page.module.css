@@ -31,9 +31,8 @@
    para que quede el mismo --spacing-5 hasta la primera línea. */
 .grupoTitulo {
   margin-bottom: calc(var(--spacing-5) - var(--spacing-2));
-  font-size: 1rem;
+  font-size: var(--text-titulo);
   font-weight: 400;
-  text-transform: uppercase;
   color: var(--color-gris-600);
 }
 

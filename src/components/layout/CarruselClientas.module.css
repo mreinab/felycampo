@@ -14,6 +14,10 @@
   display: flex;
   gap: 0;
   overflow-x: auto;
+  /* Solo el gesto horizontal es del carrusel: sin scroll vertical propio,
+     un deslizamiento vertical en mobile mueve la página. */
+  overflow-y: hidden;
+  touch-action: pan-x pan-y;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -96,7 +100,7 @@
 }
 
 /* Misma altura de fila que .navRow del Navbar real en escritorio
-   (82px, ver --nav-height-desktop en global.css) — en mobile vuelve a
+   (72px, ver --nav-height-desktop en global.css) — en mobile vuelve a
    76px, ver media query al final. */
 .cabecera {
   position: absolute;

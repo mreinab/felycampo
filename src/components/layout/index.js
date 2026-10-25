@@ -7,6 +7,7 @@ export { default as RunwayTarjeta } from './RunwayTarjeta';
 export { default as RunwayGaleria } from './RunwayGaleria';
 export { default as RunwayMediaLateral } from './RunwayMediaLateral';
 export { default as RunwayDescripcion } from './RunwayDescripcion';
+export { default as IntroSeccion } from './IntroSeccion';
 export { default as RunwayBackstage } from './RunwayBackstage';
 export { default as RunwayVideoCierre } from './RunwayVideoCierre';
 export { default as HeroCarousel } from './HeroCarousel';

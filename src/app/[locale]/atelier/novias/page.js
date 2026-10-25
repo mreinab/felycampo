@@ -51,7 +51,7 @@ export default async function Pagina({ params }) {
   return (
     <section className="seccion">
       <HeroPagina
-        imagen="/img/landing/hero-atelier-novia-felycampo.jpg"
+        imagen="/img/landing/fely-campo-portada-hero-atelier-novia.webp"
         alt={t('nav.submenus.atelier.novias')}
         titulo={[t('nav.links.atelier'), t('nav.submenus.atelier.novias')]}
         subtitulo={t('heroPagina.atelierNovias')}

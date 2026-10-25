@@ -28,16 +28,17 @@ export default async function Pagina({ params }) {
       <div data-navbar-hero>
         <SplitMedia
           variante="landing"
+          centrado
           items={[
             {
-              src: '/img/splitimage-novias-felycampo.jpg',
+              src: '/img/fely-campo-web-splitimage-novias.webp',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item1.titulo',
               ctaKey: 'splitMedia.item1.cta',
               href: `/${locale}/atelier/novias`,
             },
             {
-              src: '/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg',
+              src: '/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item2.titulo',
               ctaKey: 'splitMedia.item2.cta',

@@ -93,7 +93,7 @@ function HeroCarousel({ slides }) {
             )}
 
             <div className={styles.pie}>
-              {/* Solo la entradilla, en mayúsculas y centrada con el CTA
+              {/* Solo la entradilla, centrada con el CTA
                   debajo (a petición). La segunda frase (slide.descripcion)
                   sigue en los datos por si se recupera:
                   <span>{slide.descripcion}</span> */}

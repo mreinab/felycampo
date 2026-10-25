@@ -34,7 +34,7 @@ export default async function Pagina({ params }) {
 
   return (
     <section>
-      <ProductHero imagen="/img/ContacPage-Hero-FelyCampo.jpg" titulo={t('titulo')} className="entrada-suave" />
+      <ProductHero imagen="/img/fely-campo-web-contacpage-hero.webp" titulo={t('titulo')} className="entrada-suave" />
 
       <div className={styles.contacto}>
         <div className={styles.grupos}>

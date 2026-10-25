@@ -30,7 +30,7 @@ export default async function Pagina({ params }) {
 
   return (
     <section>
-      <ProductHero imagen="/img/felycampo-lacoleccion-3.webp" titulo={t('titulo')} className="entrada-suave" />
+      <ProductHero imagen="/img/fely-campo-web-lacoleccion-3.webp" titulo={t('titulo')} className="entrada-suave" />
 
       <div className="seccion contenedor">
 

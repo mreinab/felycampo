@@ -24,7 +24,6 @@
   display: inline-block;
   color: var(--color-tinta);
   font-size: var(--text-label);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
 }
 

@@ -90,7 +90,7 @@ export const BLOG_ENTRADAS = [
     slug: 'la-nina-de-la-aguja',
     tipo: 'articulo',
     fecha: '2024-04-21',
-    imagenCubierta: '/img/blog/20-la-nina-de-la-aguja/la-nina-de-la-aguja-cover.jpg',
+    imagenCubierta: '/img/blog/20-la-nina-de-la-aguja/fely-campo-blog-la-nina-de-la-aguja-portada.webp',
     categoria: { es: 'Relato', en: 'Story' },
     autor: { es: 'Bozhana Stoeva', en: 'Bozhana Stoeva' },
     titulo: {
@@ -153,7 +153,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/20-la-nina-de-la-aguja/detalle-atelier-fely.webp',
+        imagen: '/img/blog/20-la-nina-de-la-aguja/fely-campo-blog-la-nina-de-la-aguja-detalle-atelier.webp',
         alt: 'Detalle de una aguja de máquina de coser sobre una etiqueta Fely Campo',
         caption: { es: 'La aguja y el dedal.', en: 'The needle and the thimble.' },
       },
@@ -215,7 +215,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/20-la-nina-de-la-aguja/felycampoblog-blogdemoda-felycampo-1-2048x679.webp',
+        imagen: '/img/blog/20-la-nina-de-la-aguja/fely-campo-blog-la-nina-de-la-aguja-felycampoblog-blogdemoda-1.webp',
         alt: 'Una mano dibuja el boceto de una prenda sobre un cristal',
         caption: { es: 'Diseñaba, dibujaba, hacía a medida.', en: 'She designed, she drew, she made to measure.' },
       },
@@ -249,7 +249,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/20-la-nina-de-la-aguja/atelierfiesta-atelierfiestasalamanca-felycampo-21.webp',
+        imagen: '/img/blog/20-la-nina-de-la-aguja/fely-campo-blog-la-nina-de-la-aguja-atelierfiesta-atelierfiestasalamanca-21.webp',
         alt: 'Fachada del atelier Fely Campo en Salamanca',
         caption: { es: 'El local de Salamanca.', en: 'The shop in Salamanca.' },
       },
@@ -262,7 +262,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/20-la-nina-de-la-aguja/FelyCampo_134-2048x1365.webp',
+        imagen: '/img/blog/20-la-nina-de-la-aguja/fely-campo-blog-la-nina-de-la-aguja-foto-134.webp',
         alt: 'Desfile final de Fely Campo con varias modelos en pasarela',
         caption: { es: 'Alcanzó el reconocimiento en París, Milán y Londres.', en: 'She won recognition in Paris, Milan and London.' },
       },
@@ -310,7 +310,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/20-la-nina-de-la-aguja/retrato_felycampo_atelier_novias_medida-scaled.webp',
+        imagen: '/img/blog/20-la-nina-de-la-aguja/fely-campo-blog-la-nina-de-la-aguja-retrato-atelier-novias-medida.webp',
         alt: 'Retrato de Fely Campo riendo en su atelier',
         caption: { es: 'La Niña de la Aguja, hoy.', en: 'The Needle Girl, today.' },
       },
@@ -387,7 +387,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/20-la-nina-de-la-aguja/93f09ded-ff77-4046-8729-45135f7b0fde.jpg',
+        imagen: '/img/blog/20-la-nina-de-la-aguja/fely-campo-blog-la-nina-de-la-aguja-foto.webp',
         alt: 'Fely Campo en un acto de homenaje, vestida de blanco, junto a una pantalla y un maniquí',
         caption: { es: 'El Foro de Mujeres Extraordinarias.', en: 'The Forum of Extraordinary Women.' },
       },
@@ -455,7 +455,7 @@ export const BLOG_ENTRADAS = [
     // de /sobre-fely a petición del cliente). Evitar esa ruta en
     // cualquier imagen nueva hasta que se renombre el archivo en disco
     // a ASCII.
-    imagenCubierta: '/img/collections/runway/fw27-lacoleccion/backstage/FRAMAE_STUDIO_FELY_CAMPO_036.jpg',
+    imagenCubierta: '/img/collections/runway/fw27-lacoleccion/backstage/fely-campo-pasarela-la-coleccion-backstage-framae-studio-036.webp',
     categoria: { es: 'Podcast', en: 'Podcast' },
     episodio: 1,
     duracion: '34 min',
@@ -497,11 +497,11 @@ export const BLOG_ENTRADAS = [
     // OJO: "Colección-novias-Fely-Campo.webp" venía guardado con la
     // "ó" en Unicode NFD (mismo problema ya documentado más arriba
     // para about-felycampo/) — renombrado a
-    // "coleccion-novias-fely-campo.webp" sin tilde para evitar el 404.
+    // "fely-campo-blog-busqueda-trabje-novia-novias.webp" sin tilde para evitar el 404.
     slug: 'colecciones-de-novia-la-busqueda-del-traje-de-novia',
     tipo: 'articulo',
     fecha: '2022-01-10',
-    imagenCubierta: '/img/blog/04-busqueda-trabje-novia/busqueda-traje-novia-felycampo-cover.jpg',
+    imagenCubierta: '/img/blog/04-busqueda-trabje-novia/fely-campo-blog-busqueda-trabje-novia-traje-portada.webp',
     categoria: { es: 'Novias', en: 'Bridal' },
     autor: { es: 'Fely Campo', en: 'Fely Campo' },
     titulo: {
@@ -575,7 +575,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/04-busqueda-trabje-novia/FelyCampo_059-scaled-1-1366x2048.webp',
+        imagen: '/img/blog/04-busqueda-trabje-novia/fely-campo-blog-busqueda-trabje-novia-059-1.webp',
         alt: 'Desfile Fely Campo en pasarela de novias Barcelona Bridal Fashion Week',
         caption: {
           es: 'Desfile Fely Campo en pasarela de novias Barcelona Bridal Fashion Week.',
@@ -609,7 +609,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/04-busqueda-trabje-novia/colecciones-de-novia-invierno-y-otono.webp',
+        imagen: '/img/blog/04-busqueda-trabje-novia/fely-campo-blog-busqueda-trabje-novia-invierno-otono.webp',
         alt: 'Vestido de novia con abrigo a juego',
         caption: { es: 'Vestido de novia con abrigo a juego.', en: 'A wedding dress with a matching coat.' },
       },
@@ -675,7 +675,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/04-busqueda-trabje-novia/introspeccion46.webp',
+        imagen: '/img/blog/04-busqueda-trabje-novia/fely-campo-blog-busqueda-trabje-novia-introspeccion46.webp',
         alt: 'Detalle traje de novia con sobrefalda y encaje Fely Campo colección Introspección',
         caption: {
           es: 'Detalle traje de novia con sobrefalda y encaje Fely Campo colección Introspección.',
@@ -716,7 +716,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/04-busqueda-trabje-novia/nosotros-fely-campo5.webp',
+        imagen: '/img/blog/04-busqueda-trabje-novia/fely-campo-blog-busqueda-trabje-novia-nosotros-campo5.webp',
         alt: 'Interior del atelier de novias Fely Campo',
         caption: { es: 'Interior del atelier de novias Fely Campo.', en: 'Inside the Fely Campo bridal atelier.' },
       },
@@ -805,7 +805,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/04-busqueda-trabje-novia/coleccion-novias-fely-campo.webp',
+        imagen: '/img/blog/04-busqueda-trabje-novia/fely-campo-blog-busqueda-trabje-novia-novias.webp',
         alt: 'Vestido de novia silueta A colección Introspección Fely Campo',
         caption: { es: 'Vestido de novia silueta A colección Introspección Fely Campo.', en: 'A-line wedding dress, Fely Campo Introspección collection.' },
       },
@@ -822,7 +822,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/04-busqueda-trabje-novia/PV2019-41.webp',
+        imagen: '/img/blog/04-busqueda-trabje-novia/fely-campo-blog-busqueda-trabje-novia-pv2019-41.webp',
         alt: 'Vestido de novia silueta sirena colección Savia Novia Fely Campo',
         caption: { es: 'Vestido de novia silueta sirena colección Savia Novia Fely Campo.', en: 'Mermaid-silhouette wedding dress, Fely Campo Savia Novia collection.' },
       },
@@ -839,7 +839,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/04-busqueda-trabje-novia/vestidos-de-novia-boho-fely-campo.webp',
+        imagen: '/img/blog/04-busqueda-trabje-novia/fely-campo-blog-busqueda-trabje-novia-vestidos-boho.webp',
         alt: 'Vestido de novia con corte imperio',
         caption: { es: 'Vestido de novia con corte imperio.', en: 'Empire-line wedding dress.' },
       },
@@ -895,7 +895,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/04-busqueda-trabje-novia/inside_introspection_2.1.webp',
+        imagen: '/img/blog/04-busqueda-trabje-novia/fely-campo-blog-busqueda-trabje-novia-inside-introspection-2-1.webp',
         alt: 'Vestido de novia Fely Campo cola de una capa y drapeado colección Inside Introspection',
         caption: {
           es: 'Vestido de novia Fely Campo cola de una capa y drapeado colección Inside Introspection.',
@@ -955,7 +955,7 @@ export const BLOG_ENTRADAS = [
     slug: 'vestidos-de-novia-los-suenos-se-hacen-realidad',
     tipo: 'articulo',
     fecha: '2020-06-01',
-    imagenCubierta: '/img/blog/01-vestidos-de-novia/cover-vestidos-novia-felycampo1.jpg',
+    imagenCubierta: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-portada-1.webp',
     categoria: { es: 'Novias', en: 'Bridal' },
     autor: { es: 'Fely Campo', en: 'Fely Campo' },
     titulo: {
@@ -1162,7 +1162,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/01-vestidos-de-novia/vestidos-de-novia-boho-fely-campo.webp',
+        imagen: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-boho.webp',
         alt: 'Vestido de novia estilo boho',
         caption: { es: 'Vestido de novia estilo boho', en: 'Boho-style wedding dress' },
       },
@@ -1201,7 +1201,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/01-vestidos-de-novia/vestidos-de-novia-de-corte-a-fely-campo-1.webp',
+        imagen: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-corte-a-1.webp',
         alt: 'Vestidos de novia corte A. Colección Metaphysics',
         caption: { es: 'Vestidos de novia corte A. Colección Metaphysics.', en: 'A-line wedding dresses. Metaphysics collection.' },
       },
@@ -1218,7 +1218,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/01-vestidos-de-novia/vestidos-de-novia-corte-imperio-fely-campo.webp',
+        imagen: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-corte-imperio.webp',
         alt: 'Vestidos de novia corte imperio de la Colección Celebration de Fely Campo',
         caption: {
           es: 'Vestidos de novia corte imperio de la Colección Celebration de Fely Campo.',
@@ -1238,7 +1238,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/01-vestidos-de-novia/vestidos-de-novia-corte-griego-fely-campo.webp',
+        imagen: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-corte-griego.webp',
         alt: 'Vestido de novia con corte griego. Colección Lines',
         caption: { es: 'Vestido de novia con corte griego. Colección Lines.', en: 'Grecian-cut wedding dress. Lines collection.' },
       },
@@ -1280,7 +1280,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/01-vestidos-de-novia/vestidos-de-novia-palabra-de-honor-fely-campo.webp',
+        imagen: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-palabra-honor.webp',
         alt: 'Vestido de novia con escote palabra de honor. Colección Etéreo',
         caption: { es: 'Vestido de novia con escote palabra de honor. Colección Etéreo.', en: 'Strapless straight-neckline wedding dress. Etéreo collection.' },
       },
@@ -1297,7 +1297,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/01-vestidos-de-novia/vestidos-de-novia-cuello-halter-fely-campo-1.webp',
+        imagen: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-cuello-halter-1.webp',
         alt: 'Vestido de novia cuello halter. Atelier de novias de Fely Campo',
         caption: { es: 'Vestido de novia cuello halter. Atelier de novias de Fely Campo.', en: 'Halter-neck wedding dress. Fely Campo bridal atelier.' },
       },
@@ -1314,7 +1314,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/01-vestidos-de-novia/vestidos-de-novia-escote-corazon-coleccion-introspeccion-fely-campo.webp',
+        imagen: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-escote-corazon-introspeccion.webp',
         alt: 'Vestido de novia con escote corazón. Colección Introspección',
         caption: { es: 'Vestido de novia con escote corazón. Colección Introspección.', en: 'Sweetheart-neckline wedding dress. Introspección collection.' },
       },
@@ -1331,7 +1331,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/01-vestidos-de-novia/vestidos-de-novia-cuello-alto-cuello-tipo-cisne-fely-campo.webp',
+        imagen: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-cuello-alto-cuello-tipo-cisne.webp',
         alt: 'Vestido de novia con cuello alto de la Colección Lines de Fely Campo',
         caption: {
           es: 'Vestido de novia con cuello alto de la Colección Lines de Fely Campo.',
@@ -1383,7 +1383,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/01-vestidos-de-novia/vestidos-de-novia-de-colores-fely-campo.webp',
+        imagen: '/img/blog/01-vestidos-de-novia/fely-campo-blog-vestidos-de-novia-colores.webp',
         alt: 'Vestidos de novias de colores en Valmont Barcelona Bridal Fashion Week',
         caption: {
           es: 'Vestidos de novias de colores en Valmont Barcelona Bridal Fashion Week.',
@@ -1460,7 +1460,7 @@ export const BLOG_ENTRADAS = [
     slug: 'vestidos-de-madrina',
     tipo: 'articulo',
     fecha: '2021-10-15',
-    imagenCubierta: '/img/blog/02-vestidos-de-madrina/cover-vestido-madrina-felycampo-1.jpg',
+    imagenCubierta: '/img/blog/02-vestidos-de-madrina/fely-campo-blog-vestidos-de-madrina-portada-vestido-1.webp',
     categoria: { es: 'Invitadas', en: 'Guests' },
     autor: { es: 'Fely Campo', en: 'Fely Campo' },
     titulo: {
@@ -1542,7 +1542,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/02-vestidos-de-madrina/vestido-de-madrina-2.webp',
+        imagen: '/img/blog/02-vestidos-de-madrina/fely-campo-blog-vestidos-de-madrina-vestido-2.webp',
         alt: 'Vestido de madrina largo en un jardín',
         caption: { es: 'Vestido de madrina de largo completo.', en: 'A full-length madrina dress.' },
       },
@@ -1566,7 +1566,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/02-vestidos-de-madrina/vestido-de-madrina.webp',
+        imagen: '/img/blog/02-vestidos-de-madrina/fely-campo-blog-vestidos-de-madrina-vestido.webp',
         alt: 'Vestido de madrina en un tono azul empolvado con encaje',
         caption: { es: 'Vestido de madrina en un tono empolvado.', en: 'A madrina dress in a powdery tone.' },
       },
@@ -1611,7 +1611,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/02-vestidos-de-madrina/Vestidos-de-madrina-con-mantilla-para-la-boda.webp',
+        imagen: '/img/blog/02-vestidos-de-madrina/fely-campo-blog-vestidos-de-madrina-mantilla-boda.webp',
         alt: 'Look de madrina con tocado de ala ancha',
         caption: { es: 'Un look de madrina con tocado de ala ancha.', en: 'A madrina look with a wide-brim hat.' },
       },
@@ -1635,7 +1635,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/02-vestidos-de-madrina/SAVIA-Look-19.2.webp',
+        imagen: '/img/blog/02-vestidos-de-madrina/fely-campo-blog-vestidos-de-madrina-savia-look-19-2.webp',
         alt: 'Conjunto de madrina en terciopelo azul noche, colección Savia',
         caption: { es: 'Conjunto de madrina en terciopelo, colección Savia.', en: 'A velvet madrina two-piece, Savia collection.' },
       },
@@ -1648,7 +1648,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/02-vestidos-de-madrina/SAVIA-Look-7.2.webp',
+        imagen: '/img/blog/02-vestidos-de-madrina/fely-campo-blog-vestidos-de-madrina-savia-look-7-2.webp',
         alt: 'Abrigo rojo de madrina sobre vestido estampado, colección Savia',
         caption: { es: 'Abrigo de madrina en rojo sobre vestido estampado, colección Savia.', en: 'A red madrina coat over a printed dress, Savia collection.' },
       },
@@ -1679,7 +1679,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/02-vestidos-de-madrina/la-madre-de-la-novia.webp',
+        imagen: '/img/blog/02-vestidos-de-madrina/fely-campo-blog-vestidos-de-madrina-madre-novia.webp',
         alt: 'La madre de la novia junto a la novia el día de la boda',
         caption: { es: 'La madre de la novia, el día de la boda.', en: 'The mother of the bride, on the wedding day.' },
       },
@@ -1703,7 +1703,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/02-vestidos-de-madrina/El-Atelier-de-la-Madrina-y-la-Madre-de-Novia.webp',
+        imagen: '/img/blog/02-vestidos-de-madrina/fely-campo-blog-vestidos-de-madrina-atelier-madre-novia.webp',
         alt: 'Clienta saliendo del Atelier Fely Campo con bolsas de la marca',
         caption: { es: 'En el Atelier de Fely Campo.', en: 'At the Fely Campo Atelier.' },
       },
@@ -1740,7 +1740,7 @@ export const BLOG_ENTRADAS = [
     // después de "vestidos-de-madrina" (2021-10-15) para respetar el
     // orden real de llegada de las entradas.
     // Imágenes: 5 en la carpeta para 4 pies de foto del texto original
-    // — "vestidos-de-damas-de-honor-bodas (1).webp" (dos damas con
+    // — "fely-campo-blog-vestidos-de-damas-honor-bodas-1.webp" (dos damas con
     // abrigo verde/rosa) no tenía pie de foto propio en el original,
     // se coloca igualmente donde ilustra el párrafo "cada una luzca un
     // color diferente" con un caption propio. Los dos archivos
@@ -1751,7 +1751,7 @@ export const BLOG_ENTRADAS = [
     slug: 'vestidos-de-damas-de-honor-2',
     tipo: 'articulo',
     fecha: '2021-11-20',
-    imagenCubierta: '/img/blog/03-vestidos-de-damas-honor/cover-vestidos-damashonor-felycampo.jpg',
+    imagenCubierta: '/img/blog/03-vestidos-de-damas-honor/fely-campo-blog-vestidos-de-damas-honor-portada-damashonor.webp',
     categoria: { es: 'Invitadas', en: 'Guests' },
     autor: { es: 'Fely Campo', en: 'Fely Campo' },
     titulo: {
@@ -1872,7 +1872,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/03-vestidos-de-damas-honor/vestidos-de-damas-de-honor-jaime-s-1.webp',
+        imagen: '/img/blog/03-vestidos-de-damas-honor/fely-campo-blog-vestidos-de-damas-honor-jaime-s-1.webp',
         alt: 'Vestidos de damas de honor. Fotografía de Jaime S.',
         caption: { es: 'Vestidos de damas de honor. Fotografía de Jaime S.', en: 'Bridesmaid dresses. Photograph by Jaime S.' },
       },
@@ -1885,7 +1885,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/03-vestidos-de-damas-honor/vestidos-de-damas-de-honor-bodas (1).webp',
+        imagen: '/img/blog/03-vestidos-de-damas-honor/fely-campo-blog-vestidos-de-damas-honor-bodas-1.webp',
         alt: 'Dos damas de honor con vestidos de distinto color, verde y rosa',
         caption: { es: 'Vestidos de dama de honor en distintos colores.', en: 'Bridesmaid dresses, each a different colour.' },
       },
@@ -1898,13 +1898,13 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/03-vestidos-de-damas-honor/vestidos-de-damas-de-honor-juankar-foto.webp',
+        imagen: '/img/blog/03-vestidos-de-damas-honor/fely-campo-blog-vestidos-de-damas-honor-juankar-foto.webp',
         alt: 'Vestidos de dama de honor estampados',
         caption: { es: 'Vestidos de dama de honor estampados.', en: 'Printed bridesmaid dresses.' },
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/03-vestidos-de-damas-honor/vestidos-para-damas-de-honor-juankar-foto.webp',
+        imagen: '/img/blog/03-vestidos-de-damas-honor/fely-campo-blog-vestidos-de-damas-honor-juankar-foto-2.webp',
         alt: 'Vestidos de dama de honor elegantes, fotografiados por Juankar Foto',
         caption: {
           es: 'Vestidos de dama de honor elegantes, fotografiados por Juankar Foto.',
@@ -1998,7 +1998,7 @@ export const BLOG_ENTRADAS = [
       },
       {
         tipo: 'imagen',
-        imagen: '/img/blog/03-vestidos-de-damas-honor/vestidos-de-damas-de-honor-manuel-laya.webp',
+        imagen: '/img/blog/03-vestidos-de-damas-honor/fely-campo-blog-vestidos-de-damas-honor-manuel-laya.webp',
         alt: 'Vestidos de damas de honor 2020. Fotografía de Manuel Laya',
         caption: { es: 'Vestidos de damas de honor 2020. Fotografía de Manuel Laya.', en: 'Bridesmaid dresses 2020. Photograph by Manuel Laya.' },
       },

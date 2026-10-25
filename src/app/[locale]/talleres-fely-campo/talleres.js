@@ -28,33 +28,33 @@
 // "esVideo" en page.js, que lo distingue de las fotos por extensión).
 const MEDIOS_TALLER_INHOUSE = [
   '/img/talleres/inhouse/artesany-2.mp4',
-  '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp',
-  '/img/talleres/inhouse/WhatsApp Image 2026-08-25 at 14.06.07.jpeg',
-  '/img/talleres/inhouse/WhatsApp Image 2026-08-25 at 14.06.12.jpeg',
-  '/img/talleres/inhouse/WhatsApp Image 2026-08-25 at 14.06.29.jpeg',
+  '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp',
+  '/img/talleres/inhouse/fely-campo-taller-salamanca-foto.webp',
+  '/img/talleres/inhouse/fely-campo-taller-salamanca-foto-2.webp',
+  '/img/talleres/inhouse/fely-campo-taller-salamanca-foto-3.webp',
 ];
 
 // Taller 1 (Béjar): 6 fotos reales, en public/img/talleres/bejar/.
 const MEDIOS_TALLER_1 = [
-  '/img/talleres/bejar/bejar-taller-felycampo-01.webp',
-  '/img/talleres/bejar/bejar-taller-felycampo-02.webp',
-  '/img/talleres/bejar/bejar-taller-felycampo-03.webp',
-  '/img/talleres/bejar/bejar-taller-felycampo-04.webp',
-  '/img/talleres/bejar/bejar-taller-felycampo-05.webp',
-  '/img/talleres/bejar/bejar-taller-felycampo-06.webp',
+  '/img/talleres/bejar/fely-campo-taller-bejar-foto-01.webp',
+  '/img/talleres/bejar/fely-campo-taller-bejar-foto-02.webp',
+  '/img/talleres/bejar/fely-campo-taller-bejar-foto-03.webp',
+  '/img/talleres/bejar/fely-campo-taller-bejar-foto-04.webp',
+  '/img/talleres/bejar/fely-campo-taller-bejar-foto-05.webp',
+  '/img/talleres/bejar/fely-campo-taller-bejar-foto-06.webp',
 ];
 
 // Taller 2 (Tamames): 8 fotos reales, en public/img/talleres/tamares/
 // (nombre de carpeta tal cual lo subió el usuario, con esa grafía).
 const MEDIOS_TALLER_2 = [
-  '/img/talleres/tamares/00-taller.webp',
-  '/img/talleres/tamares/01-taller.webp',
-  '/img/talleres/tamares/02-taller.webp',
-  '/img/talleres/tamares/03-taller.webp',
-  '/img/talleres/tamares/04-taller.webp',
-  '/img/talleres/tamares/05-taller.webp',
-  '/img/talleres/tamares/06-taller.webp',
-  '/img/talleres/tamares/07-taller.webp',
+  '/img/talleres/tamares/fely-campo-taller-tamares-foto-00.webp',
+  '/img/talleres/tamares/fely-campo-taller-tamares-foto-01.webp',
+  '/img/talleres/tamares/fely-campo-taller-tamares-foto-02.webp',
+  '/img/talleres/tamares/fely-campo-taller-tamares-foto-03.webp',
+  '/img/talleres/tamares/fely-campo-taller-tamares-foto-04.webp',
+  '/img/talleres/tamares/fely-campo-taller-tamares-foto-05.webp',
+  '/img/talleres/tamares/fely-campo-taller-tamares-foto-06.webp',
+  '/img/talleres/tamares/fely-campo-taller-tamares-foto-07.webp',
 ];
 
 export const TALLERES = [
@@ -64,7 +64,7 @@ export const TALLERES = [
     // taller principal", antes de los dos de la sierra.
     id: 'taller-inhouse',
     medios: MEDIOS_TALLER_INHOUSE,
-    tipo: { es: 'TALLER PROPIO', en: 'IN-HOUSE WORKSHOP' },
+    tipo: { es: 'Taller propio', en: 'In-house workshop' },
     distancia: { es: 'Nuestro taller principal', en: 'Our main workshop' },
     // Sin "liderazgo" a petición (antes "Liderado por X") — opcional,
     // ver page.js.
@@ -81,7 +81,7 @@ export const TALLERES = [
   },
   {
     id: 'taller-1',
-    imagen: '/img/talleres/bejar/bejar-taller-felycampo-01.webp',
+    imagen: '/img/talleres/bejar/fely-campo-taller-bejar-foto-01.webp',
     medios: MEDIOS_TALLER_1,
     tipo: { es: 'Taller I', en: 'Workshop I' },
     distancia: { es: '72 km desde nuestro taller en Salamanca', en: '72 km from our workshop in Salamanca' },
@@ -102,7 +102,7 @@ export const TALLERES = [
   },
   {
     id: 'taller-2',
-    imagen: '/img/talleres/tamares/00-taller.webp',
+    imagen: '/img/talleres/tamares/fely-campo-taller-tamares-foto-00.webp',
     medios: MEDIOS_TALLER_2,
     tipo: { es: 'Taller II', en: 'Workshop II' },
     distancia: { es: '54 km desde nuestro taller en Salamanca', en: '54 km from our workshop in Salamanca' },

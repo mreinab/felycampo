@@ -20,7 +20,6 @@
 
 .eyebrow {
   font-size: var(--text-caption);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--color-gris-500);
 }

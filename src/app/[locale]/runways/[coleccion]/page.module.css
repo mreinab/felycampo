@@ -30,7 +30,6 @@
 .nombre,
 .temporada {
   font-size: var(--text-h1);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--color-tinta);
 }

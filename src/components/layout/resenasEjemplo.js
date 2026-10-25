@@ -11,11 +11,11 @@ export const RESENAS_EJEMPLO = [
   {
     nombre: 'Marta Ibáñez',
     texto: 'El vestido Aurora es una pasada, la tela y el corte son espectaculares.',
-    foto: '/img/Clientes/ClientReview- (1).jpg',
+    foto: '/img/Clientes/fely-campo-invitadas-reales-clientreview-1.webp',
   },
   {
     nombre: 'Laura Gómez',
     texto: 'Atención impecable en el atelier, el vestido de novia superó mis expectativas.',
-    foto: '/img/Clientes/vestido-2clienta.JPG',
+    foto: '/img/Clientes/fely-campo-invitadas-reales-vestido-2clienta.webp',
   },
 ];

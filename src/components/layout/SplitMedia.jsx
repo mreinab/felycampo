@@ -28,6 +28,9 @@ import styles from './SplitMedia.module.css';
  * pieza, no en el CTA — Boton sin href renderiza un <span>, solo
  * visual). tituloKey y ctaKey son opcionales: un item sin ninguno de
  * los dos queda como imagen pura, sin overlay de texto ni link.
+ * centrado (solo con "landing", ej. /atelier): título y CTA en columna,
+ * centrados en alto y ancho sobre la foto, con un velo uniforme en vez
+ * del degradado inferior.
  */
 /**
  * Una pieza del grid, como componente aparte: cada una necesita su
@@ -78,14 +81,14 @@ function Pieza({ item, esImageTitle, esLanding, esClicableComoImagen, t }) {
   );
 }
 
-function SplitMedia({ items, variante = 'etiqueta' }) {
+function SplitMedia({ items, variante = 'etiqueta', centrado = false }) {
   const t = useTranslations();
   const esImageTitle = variante === 'imageTitle';
   const esLanding = variante === 'landing';
   const esClicableComoImagen = !esImageTitle;
 
   return (
-    <div className={`${styles.grid} ${esLanding ? styles.landing : ''}`}>
+    <div className={`${styles.grid} ${esLanding ? styles.landing : ''} ${esLanding && centrado ? styles.centrado : ''}`}>
       {items.map((item, index) => (
         <Pieza
           key={index}

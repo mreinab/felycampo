@@ -183,7 +183,6 @@
   border: none;
   padding: 0;
   text-align: left;
-  text-transform: uppercase;
   font-family: var(--font-base);
   font-size: var(--text-caption);
   color: var(--color-gris-500);

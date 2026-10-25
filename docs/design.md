@@ -170,7 +170,7 @@ bloque solo debería aparecer cuando el producto tiene un look de pasarela
 conectado desde el admin panel — si no hay conexión, no hay bloque. Como esa
 conexión todavía no existe (ni el campo en el modelo de producto, ni la
 pantalla de admin para crearla), se renderiza siempre con una imagen de
-ejemplo (`/img/collections/runway/fw27-lacoleccion/FelyCampo_01.webp`) para
+ejemplo (`/img/collections/runway/fw27-lacoleccion/fely-campo-pasarela-la-coleccion-look-01.webp`) para
 que el diseño del bloque pueda revisarse ya, en vez de quedar invisible hasta
 que exista el backend real.
 

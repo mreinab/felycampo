@@ -10,6 +10,13 @@
    "Look X" + productos de RunwayGaleria.
    ============================================================ */
 
+/* Título de la cabecera ("Vosotras") sin mayúsculas, solo en esta
+   página (CollectionTitle .titulo las trae para Novias/Fiesta). Clase
+   + elemento para ganarle sin depender del orden de carga. */
+.cabeceraSeccion h2 {
+  text-transform: none;
+}
+
 /* Toggle "Invitadas"/"Novias" — children de CabeceraSeccion, mismo
    lenguaje visual que .toggleBoton/.toggleBotonActivo de
    CuadriculaProductos.module.css (opacidad baja + subrayado solo en el
@@ -26,13 +33,13 @@
   border-bottom: 1px solid transparent;
   /* Subrayado pegado al texto (2px) y sin tracking, a petición. */
   padding: 0 0 2px;
-  font-size: var(--text-caption);
-  text-transform: uppercase;
-  letter-spacing: normal;
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
   color: var(--color-tinta);
   opacity: 0.5;
   cursor: pointer;
   transition: opacity 0.25s var(--ease-marca), border-color 0.25s var(--ease-marca);
+  font-family: var(--font-base);
 }
 
 .toggleCategoriaBoton:hover,
@@ -118,7 +125,7 @@
 }
 
 /* Misma altura de fila que .navRow del Navbar real en escritorio
-   (82px, ver --nav-height-desktop en global.css) — en mobile vuelve a
+   (72px, ver --nav-height-desktop en global.css) — en mobile vuelve a
    76px, ver media query al final. */
 .cabecera {
   position: absolute;
@@ -168,6 +175,10 @@
   inset: 0;
   display: flex;
   overflow-x: auto;
+  /* Solo el gesto horizontal es del carrusel: sin scroll vertical propio,
+     un deslizamiento vertical en mobile mueve la página. */
+  overflow-y: hidden;
+  touch-action: pan-x pan-y;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }

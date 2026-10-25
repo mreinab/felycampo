@@ -73,7 +73,7 @@ function Footer() {
       {/* Logo a la mitad de escala que antes (era 100% del ancho del
           footer) — firma de marca discreta, primero en el footer en
           vez de la pieza a pantalla completa que era. */}
-      <img src="/img/logo/logo-felycampo.png" alt="Fely Campo" className={styles.footerLogo} />
+      <img src="/img/logo/fely-campo-logo.webp" alt="Fely Campo" className={styles.footerLogo} />
 
       <div className={styles.contenido}>
         <div className={styles.grid}>

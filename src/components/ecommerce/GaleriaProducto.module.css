@@ -21,6 +21,10 @@
 .pista {
   display: flex;
   overflow-x: auto;
+  /* Solo el gesto horizontal es del carrusel: sin scroll vertical propio,
+     un deslizamiento vertical en mobile mueve la página. */
+  overflow-y: hidden;
+  touch-action: pan-x pan-y;
   scrollbar-width: none;
   height: 100%;
 }

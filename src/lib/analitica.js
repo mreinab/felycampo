@@ -6,18 +6,19 @@
 // bien en el servidor, para no contar conversiones fallidas.
 //
 // En GTM: crear un activador "Evento personalizado" = cita_enviada y usar
-// las variables de capa de datos tipo_cita (novia|invitada) y atelier
-// (salamanca|madrid|oviedo) para separar las conversiones. Alternativa
-// equivalente: activador por URL de página de confirmación
-// (/visita-fely-campo/cita/confirmacion-novia | -invitada).
+// la variable de capa de datos atelier (salamanca|madrid|oviedo) para
+// separar las conversiones. Alternativa equivalente: activador por URL
+// de la página de confirmación (/visita-fely-campo/cita/confirmacion).
+// El formulario ya no pregunta si la cita es de novia o de invitada, así
+// que ya no se envía tipo_cita.
 
-export function registrarConversionCita({ tipo, atelier }) {
+export function registrarConversionCita({ atelier }) {
   if (typeof window === 'undefined') return;
 
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: 'cita_enviada', tipo_cita: tipo, atelier });
+  window.dataLayer.push({ event: 'cita_enviada', atelier });
 
   if (typeof window.fbq === 'function') {
-    window.fbq('track', 'Schedule', { content_category: tipo, content_name: atelier });
+    window.fbq('track', 'Schedule', { content_name: atelier });
   }
 }

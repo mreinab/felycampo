@@ -28,10 +28,10 @@ export default async function Pagina({ params }) {
     <>
       <section className="seccion">
         <ProductHero
-          imagen="/img/landing/hero-visitanos-felycampo.jpg"
+          imagen="/img/atelier/showroom-madrid/fely-campo-atelier-madrid-vestidos-fiesta.webp"
           titulo={t('visitenos.titulo')}
           subtitulo={t('heroPagina.atelierCiudad')}
-          className="hero-arriba"
+          className={styles.heroEncuadre}
         />
       </section>
 

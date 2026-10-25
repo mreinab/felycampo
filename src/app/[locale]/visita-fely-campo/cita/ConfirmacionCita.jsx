@@ -11,16 +11,24 @@ import { getTranslations } from 'next-intl/server';
 import { Boton } from '@/components/ui';
 import styles from './page.module.css';
 
+// Sin "tipo" (./confirmacion, la que usa hoy el formulario): textos
+// genéricos. Las de novia/invitada se mantienen para enlaces antiguos.
+const CLAVES = {
+  novia: ['confirmacionNoviaTitulo', 'confirmacionNoviaTexto'],
+  invitada: ['confirmacionInvitadaTitulo', 'confirmacionInvitadaTexto'],
+  general: ['confirmacionTitulo', 'confirmacionTexto'],
+};
+
 async function ConfirmacionCita({ locale, tipo }) {
   const t = await getTranslations({ locale, namespace: 'pedirCitaAtelier' });
-  const esNovia = tipo === 'novia';
+  const [claveTitulo, claveTexto] = CLAVES[tipo] || CLAVES.general;
 
   return (
     <div className={styles.pagina}>
       <div className={styles.formContenedor}>
         <div className={styles.confirmacion}>
-          <h1 className={styles.titulo}>{t(esNovia ? 'confirmacionNoviaTitulo' : 'confirmacionInvitadaTitulo')}</h1>
-          <p className={styles.dondeIntro}>{t(esNovia ? 'confirmacionNoviaTexto' : 'confirmacionInvitadaTexto')}</p>
+          <h1 className={styles.titulo}>{t(claveTitulo)}</h1>
+          <p className={styles.dondeIntro}>{t(claveTexto)}</p>
           <Boton variante="contorno" href={`/${locale}`}>{t('volverInicio')}</Boton>
         </div>
       </div>

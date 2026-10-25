@@ -11,6 +11,10 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import '@/styles/global.css';
 import { Navbar, Footer, NewsletterModalGlobal, CookieConsent, BotonWhatsapp, Analitica } from '@/components/layout';
+// Server Components (usan next-intl/server): importados directamente, no
+// desde el barrel de layout, que también cargan Client Components.
+import AteliersCita from '@/components/layout/AteliersCita';
+import PedirCita from '@/components/layout/PedirCita';
 import { SITE_URL, SITIO_INDEXABLE } from '@/lib/seo';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
@@ -50,6 +54,28 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/ayuda/contacto',
 ];
 
+// Columnas de ateliers (AteliersCita, justo encima de la banda
+// PedirCita) solo donde hay intención de visitar un atelier — a
+// petición, también por SEO (enlaces internos a las fichas locales
+// donde aportan, no repetidos en todo el sitio):
+//   - home;
+//   - hecho a medida (/atelier, /atelier/novias y /atelier/fiesta con
+//     sus categorías y fichas): se prueba y se ajusta en el atelier.
+// No en las fichas de cada atelier (/atelier-fiesta/[ciudad]), a
+// petición, ni en /visita-fely-campo: ya es el directorio de los tres
+// ateliers (mismos enlaces repetidos). Ni en páginas de contenido o
+// tienda online (podcast, talleres, prêt-à-porter, runways…).
+// PedirCita va en todas las páginas salvo el propio formulario de cita
+// y sus confirmaciones (/visita-fely-campo/cita...).
+function conAteliersCitaEn(ruta) {
+  return (
+    ruta === '/' ||
+    ruta === '/atelier' ||
+    ruta.startsWith('/atelier/novias') ||
+    ruta.startsWith('/atelier/fiesta')
+  );
+}
+
 // Valores por defecto de SEO para todo el sitio — cada página pone los
 // suyos (title, description, canonical, hreflang) con metadataPagina()
 // de src/lib/seo.js. Aquí solo: dominio base (para que las URLs
@@ -66,8 +92,15 @@ export const metadata = {
   },
   description: 'Firma de moda femenina nacida en Salamanca. Vestidos de novia y fiesta a medida en Salamanca, Madrid y Oviedo, y prêt-à-porter online.',
   ...(SITIO_INDEXABLE ? {} : { robots: { index: false, follow: false } }),
+  // Favicon: F negra sobre blanco por defecto; en modo oscuro del
+  // navegador/sistema, la versión invertida (F blanca sobre negro). PNG,
+  // no WebP: Safari no admite favicons WebP.
   icons: {
-    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23E92174'/%3E%3C/svg%3E",
+    icon: [
+      { url: '/img/logo/FelyCampo-logo-favicon-blanco.png', type: 'image/png', sizes: '512x512' },
+      { url: '/img/logo/FelyCampo-logo-favicon.png', type: 'image/png', sizes: '512x512', media: '(prefers-color-scheme: dark)' },
+    ],
+    apple: '/img/logo/FelyCampo-logo-favicon-blanco.png',
   },
 };
 
@@ -143,6 +176,9 @@ export default async function RootLayout({ children, params }) {
   // page.js), así que el Navbar transparente también va en oscuro.
   const esPretAPorter = rutaSinLocale === '/pret-a-porter';
 
+  const conAteliersCita = conAteliersCitaEn(rutaSinLocale);
+  const conPedirCita = !rutaSinLocale.startsWith('/visita-fely-campo/cita');
+
   return (
     <html lang={locale}>
       {/* La fuente Inter se carga vía @import en global.css (mismo criterio
@@ -159,6 +195,12 @@ export default async function RootLayout({ children, params }) {
                 textoOscuro={esFichaProducto || esPretAPorter}
               />
               <main>{children}</main>
+              {/* AteliersCita encima de PedirCita: la banda de cita va siempre
+                  justo antes del footer. */}
+              {conAteliersCita && (
+                <AteliersCita separado={rutaSinLocale === '/atelier'} />
+              )}
+              {conPedirCita && <PedirCita separado={rutaSinLocale.startsWith('/atelier-fiesta/')} />}
               <Footer />
               {isHome && <NewsletterModalGlobal />}
               <BotonWhatsapp />

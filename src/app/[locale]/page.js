@@ -11,23 +11,8 @@ import { HeroCarousel, SplitMedia /* , CuadriculaProductos, CarruselClientas, Bl
 // import { CabeceraSeccion } from '@/components/ui'; // sin cabecera por ahora, ver comentario más abajo
 import { Boton, EnVista } from '@/components/ui';
 import cuadriculaStyles from '@/components/layout/CuadriculaProductos.module.css';
-import { ATELIERES } from './atelier-fiesta/atelieres';
 import styles from './page.module.css';
 import { metadataPagina, textosSeo } from '@/lib/seo';
-
-// Bloque "Pedir cita" de la landing: una columna por atelier, en este
-// orden. Foto = la del hero de su propia ficha (/atelier-fiesta/[id],
-// ver atelieres.js) salvo que la entrada traiga la suya (Madrid, a
-// petición: su hero es vídeo). Rótulo de los tres: "Atelier {ciudad}"
-// y, en otra línea, "& Showroom" (ver JSX).
-const ATELIERES_CITA = [
-  { id: 'salamanca' },
-  { id: 'madrid', imagen: '/img/atelier/showroom-madrid/felycmapo-atelier-madrid-2.jpg' },
-  { id: 'oviedo' },
-].map(({ id, imagen }) => ({
-  id,
-  imagen: imagen ?? ATELIERES[id].heroMedio.src,
-}));
 
 // ---- Datos de las secciones comentadas más abajo — se quedan aquí
 // tal cual por si se reactivan (ver bloque comentado en el return). ----
@@ -42,16 +27,16 @@ const ATELIERES_CITA = [
 // catálogo real detrás (las últimas 4 repiten foto de las de arriba
 // bajo un nombre distinto) — a sustituir en cuanto haya fotos reales.
 // const productosDestacados = [
-//   { imagen: '/img/ecommerce/vestido-producto-portada-felycampo.jpg', imagenHover: '/img/ecommerce/FW27-Look02.webp', nombre: 'Vestido Ciruela', precio: '700 €', colores: [{ hex: '#5A2A4A', nombre: 'Ciruela' }] },
-//   { imagen: '/img/ecommerce/top-encaje-producto-portada-felycampo.jpg', imagenHover: '/img/ecommerce/FW27-Look01.webp', nombre: 'Top lencero', precio: '350 €', colores: [{ hex: '#111111', nombre: 'Negro' }] },
+//   { imagen: '/img/ecommerce/vestido-producto-portada-felycampo.jpg', imagenHover: '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-02.webp', nombre: 'Vestido Ciruela', precio: '700 €', colores: [{ hex: '#5A2A4A', nombre: 'Ciruela' }] },
+//   { imagen: '/img/ecommerce/top-encaje-producto-portada-felycampo.jpg', imagenHover: '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-01.webp', nombre: 'Top lencero', precio: '350 €', colores: [{ hex: '#111111', nombre: 'Negro' }] },
 //   { imagen: '/img/ecommerce/falda-lana-producto-portada-felycampo.jpg', imagenHover: '/img/ecommerce/falda-lana-producto-portada-felycampo-video.mp4', tipoHover: 'video', nombre: 'Falda Sucre', precio: '450 €', colores: [{ hex: '#8C6A3F', nombre: 'Bronce' }] },
-//   { imagen: '/img/ecommerce/chaqueta-producto-portada-felycampo.jpg', imagenHover: '/img/ecommerce/FW27-Look03.webp', nombre: 'Chaqueta', precio: '400 €', colores: [{ hex: '#4A4A48', nombre: 'Antracita' }] },
+//   { imagen: '/img/ecommerce/chaqueta-producto-portada-felycampo.jpg', imagenHover: '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-03.webp', nombre: 'Chaqueta', precio: '400 €', colores: [{ hex: '#4A4A48', nombre: 'Antracita' }] },
 //   { imagen: '/img/ecommerce/LOOK1_2-scaled.webp', nombre: 'Vestido Alba', precio: '620 €', colores: [{ hex: '#EFD9D0', nombre: 'Nude' }, { hex: '#F5F1EE', nombre: 'Crema' }] },
 //   { imagen: '/img/ecommerce/LOOK9_1-scaled.webp', nombre: 'Vestido Iris', precio: '580 €', colores: [{ hex: '#6B7A8F', nombre: 'Azul piedra' }, { hex: '#202020', nombre: 'Tinta' }] },
 //   { imagen: '/img/ecommerce/LOOK12_2-scaled.webp', nombre: 'Vestido Coral', precio: '650 €', colores: [{ hex: '#D96C5F', nombre: 'Coral' }, { hex: '#F7F7F7', nombre: 'Blanco' }] },
 //   { imagen: '/img/ecommerce/LOOK18_1-scaled.webp', nombre: 'Vestido Bruma', precio: '590 €', colores: [{ hex: '#B8C4C2', nombre: 'Gris verdoso' }, { hex: '#3A3A3A', nombre: 'Grafito' }] },
 //   { imagen: '/img/ecommerce/FC-0_NEW.webp', nombre: 'Falda Estrella', precio: '440 €', colores: [{ hex: '#C19A6B', nombre: 'Camel' }, { hex: '#202020', nombre: 'Tinta' }] },
-//   { imagen: '/img/ecommerce/FW27-Dress-Look02.jpg', imagenHover: '/img/ecommerce/FW27-Look02.webp', nombre: 'Vestido Nube', precio: '910 €', colores: [{ hex: '#F7F7F7', nombre: 'Blanco' }, { hex: '#EED3E8', nombre: 'Rosa suave' }] },
+//   { imagen: '/img/ecommerce/FW27-Dress-Look02.jpg', imagenHover: '/img/ecommerce/fely-campo-pret-a-porter-fw27-look-02.webp', nombre: 'Vestido Nube', precio: '910 €', colores: [{ hex: '#F7F7F7', nombre: 'Blanco' }, { hex: '#EED3E8', nombre: 'Rosa suave' }] },
 //   { imagen: '/img/ecommerce/LOOK1_2-scaled.webp', nombre: 'Vestido Eco', precio: '630 €', colores: [{ hex: '#F5F1EE', nombre: 'Crema' }, { hex: '#EFD9D0', nombre: 'Nude' }] },
 //   { imagen: '/img/ecommerce/FC-1_NEW.webp', nombre: 'Falda Lumen', precio: '500 €', colores: [{ hex: '#F5F1EE', nombre: 'Crema' }, { hex: '#202020', nombre: 'Tinta' }] },
 //   // FC-0..FC-3 (sin _NEW): añadidas como placeholder extra, sin
@@ -72,16 +57,16 @@ const ATELIERES_CITA = [
 // fija (antes tenía tabs para rotar entre ocasiones, quitados por no
 // ser necesarios).
 // const productosOcasion = [
-//   { imagen: '/img/collections/novia/bride-27/LOOK-2-scaled.webp', nombre: 'Look 2 - Bride 27' },
-//   { imagen: '/img/collections/novia/bride-27/LOOK-8-scaled.webp', nombre: 'Look 8 - Bride 27' },
+//   { imagen: '/img/collections/novia/bride-27/fely-campo-coleccion-novia-bride-27-look-2.webp', nombre: 'Look 2 - Bride 27' },
+//   { imagen: '/img/collections/novia/bride-27/fely-campo-coleccion-novia-bride-27-look-8.webp', nombre: 'Look 8 - Bride 27' },
 //   { imagen: '/img/collections/fiesta/ss27-coleccion/27052-461_02.jpg', nombre: 'Look 23 SS27' },
 //   { imagen: '/img/collections/fiesta/ss27-coleccion/27069_01.jpg', nombre: 'Look 30 SS27' },
 // ];
 
 const slidesHero = [
   {
-    src: '/img/landing/hero-portada-felycampo-landing.jpg',
-    srcMobile: '/img/landing/hero-portada-felycampo-landing-mobile.jpg',
+    src: '/img/landing/fely-campo-portada-hero-landing.webp',
+    srcMobile: '/img/landing/fely-campo-portada-hero-landing-mobile.webp',
     tipo: 'imagen',
     ctaHref: '/sobre-fely',
   },
@@ -105,8 +90,6 @@ export default async function Home({ params }) {
   const tHero = await getTranslations('heroCarousel');
   const tCitaFely = await getTranslations('citaFelyLanding');
   const tDescubreFely = await getTranslations('descubreFely');
-  const tPedirCita = await getTranslations('pedirCitaLanding');
-  const tAtelierFiesta = await getTranslations('atelierFiesta');
   // const tVisitaAtelier = await getTranslations('visitaAtelier'); // BloqueSeccion comentado más abajo
 
   // Igual que en el Navbar (ver withLocale en Navbar.jsx): los hrefs
@@ -142,14 +125,14 @@ export default async function Home({ params }) {
           variante="landing"
           items={[
             {
-              src: '/img/splitimage-novias-felycampo.jpg',
+              src: '/img/fely-campo-web-splitimage-novias.webp',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item1.titulo',
               ctaKey: 'splitMedia.item1.cta',
               href: `/${locale}/atelier/novias`,
             },
             {
-              src: '/img/landing/hero-portada-felycampo-landing-3-mobile-atelier-3.jpg',
+              src: '/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp',
               tipo: 'imagen',
               tituloKey: 'splitMedia.item2.titulo',
               ctaKey: 'splitMedia.item2.cta',
@@ -164,55 +147,32 @@ export default async function Home({ params }) {
           de su page.module.css, ver ListadoUbicaciones.jsx): a la
           izquierda el título y debajo la cita de Fely, con el botón a
           /sobre-fely como último elemento; a la derecha la foto de Fely
-          (elegir-fely-27.jpeg). Aparece con scroll (<EnVista>). */}
+          (fely-campo-sobre-fely-campo-elegir-27.webp). Aparece con scroll (<EnVista>). */}
       <section className={styles.descubreFely}>
         <EnVista as="article" className={styles.descubreFelyTarjeta}>
           <div className={styles.descubreFelyGaleria}>
-            <img src="/img/about-felycampo/elegir-fely-27.jpeg" alt="Fely Campo" className={styles.descubreFelyImagen} />
+            <img src="/img/about-felycampo/fely-campo-sobre-fely-campo-elegir-27.webp" alt="Fely Campo" className={styles.descubreFelyImagen} />
           </div>
 
           <div className={styles.descubreFelyFila}>
-            <div className={styles.descubreFelyInfo}>
-              <p className={styles.descubreFelyTitulo}>{tDescubreFely('titulo')}</p>
-              <blockquote className={styles.descubreFelyCita}>
-                <p>{tCitaFely.rich('texto', { em: (chunks) => <em>{chunks}</em> })}</p>
-              </blockquote>
-            </div>
+            {/* Texto y botón juntos en un mismo bloque, centrado en vertical
+                en la columna (ver .descubreFelyBloque). */}
+            <div className={styles.descubreFelyBloque}>
+              <div className={styles.descubreFelyInfo}>
+                <p className={styles.descubreFelyTitulo}>{tDescubreFely('titulo')}</p>
+                <blockquote className={styles.descubreFelyCita}>
+                  <p>{tCitaFely.rich('texto', { em: (chunks) => <em>{chunks}</em> })}</p>
+                </blockquote>
+              </div>
 
-            <div className={styles.descubreFelyAcciones}>
-              {/* Enlace subrayado (Boton "texto"), no el botón con borde
-                  de visita-fely-campo — a petición. */}
-              <Boton variante="texto" href={`/${locale}/sobre-fely`}>{tDescubreFely('cta')}</Boton>
+              <div className={styles.descubreFelyAcciones}>
+                {/* Enlace subrayado (Boton "texto"), no el botón con borde
+                    de visita-fely-campo — a petición. */}
+                <Boton variante="texto" href={`/${locale}/sobre-fely`}>{tDescubreFely('cta')}</Boton>
+              </div>
             </div>
           </div>
         </EnVista>
-      </section>
-
-      {/* Pedir cita — último bloque antes del footer: tres columnas
-          (Salamanca, Madrid, Oviedo), cada una con la foto de su atelier
-          y el mismo diseño de texto que el SplitMedia de arriba (velo
-          oscuro, título en crema, CTA subrayado), pero en columna:
-          nombre arriba y "Conoce más" abajo. Toda la pieza es un único
-          <a> a la ficha de su atelier (Boton sin href = <span>). */}
-      <section className={styles.ateliersCita}>
-        {ATELIERES_CITA.map(({ id, imagen }) => (
-          <EnVista
-            key={id}
-            as="a"
-            href={`/${locale}/atelier-fiesta/${id}`}
-            className={styles.atelierCita}
-          >
-            <img src={imagen} alt="" className={styles.atelierCitaImagen} />
-            <div className={styles.atelierCitaContenido}>
-              <p className={styles.atelierCitaTitulo}>
-                Atelier {tAtelierFiesta(`${id}.titulo`)}
-                <br />
-                &amp; Showroom
-              </p>
-              <Boton variante="texto" className={styles.atelierCitaCta}>{tPedirCita('ctaAtelier')}</Boton>
-            </div>
-          </EnVista>
-        ))}
       </section>
 
       {/* ---- Comentado a petición (rediseño de landing en curso) ----

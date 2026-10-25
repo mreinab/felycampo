@@ -14,8 +14,9 @@ export const ATELIERES_CITA = [
 
 export const TIPOS_CITA = ['novia', 'invitada'];
 
-// Página de confirmación de cada tipo (una por tipo, para poder medir
-// las conversiones de novia e invitada por separado también por URL).
+// Página de confirmación tras enviar el formulario. Sin tipo (el
+// formulario ya no lo pregunta), la genérica; con tipo, las antiguas de
+// novia/invitada, que se mantienen para enlaces ya existentes.
 export function rutaConfirmacionCita(tipo) {
-  return `/visita-fely-campo/cita/confirmacion-${tipo}`;
+  return tipo ? `/visita-fely-campo/cita/confirmacion-${tipo}` : '/visita-fely-campo/cita/confirmacion';
 }

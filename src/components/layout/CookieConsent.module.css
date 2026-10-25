@@ -11,6 +11,40 @@
    aviso, no al revés.
    ============================================================ */
 
+/* Velo negro al 40% a pantalla completa detrás del aviso (z-index 59,
+   justo por debajo de .banner): centra la atención en él y, al cubrir
+   toda la página, bloquea los clics hasta elegir (CookieConsent.jsx
+   bloquea además el scroll). Fundido propio, sin la subida de
+   .entrada-suave/.salida-suave de global.css. */
+.velo {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  background: rgb(0 0 0 / 0.4);
+  animation: veloEntrada 0.5s var(--ease-marca) both;
+}
+
+.veloSaliendo {
+  animation: veloSalida 0.35s var(--ease-marca) both;
+}
+
+@keyframes veloEntrada {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes veloSalida {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .velo,
+  .veloSaliendo {
+    animation: none;
+  }
+}
+
 /* max-height + overflow-y:auto — con "Personalizar" abierto (3
    categorías + descripciones + botón) en un móvil bajo, el aviso
    podría llegar a ocupar más alto que la propia ventana; así, en vez
@@ -50,7 +84,6 @@
 .titulo {
   font-size: var(--text-small);
   font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--color-tinta);
 }
@@ -118,7 +151,6 @@
 
 .categoriaNombre {
   font-size: var(--text-small);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--color-tinta);
 }

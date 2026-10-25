@@ -8,7 +8,7 @@
    un "texto", ver white-space:pre-line en RunwayDescripcion.module.css). */
 
 export const RESPONSABILIDAD = {
-  heroImagen: '/img/atelier/ateliernovia-lamedida-felycampo-2.webp',
+  heroImagen: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp',
   texto: {
     es: [
       'En Fely Campo el diseño es la manera en la que nos comunicamos con el mundo, por lo que tenemos el compromiso de aportar un impacto positivo a las personas y al planeta.',

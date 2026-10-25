@@ -28,7 +28,7 @@ import styles from './NewsletterModal.module.css';
 // endpoint de newsletter cuando exista backend.
 const suscribirNewsletter = (correo) => new Promise((resolve) => setTimeout(resolve, 500));
 
-function NewsletterModal({ abierto, onCerrar, imagen = '/img/27fw-banner.jpg' }) {
+function NewsletterModal({ abierto, onCerrar, imagen = '/img/fely-campo-newsletter-coleccion-fw27.webp' }) {
   const t = useTranslations('newsletterPopup');
   const tFooter = useTranslations('footer');
 
