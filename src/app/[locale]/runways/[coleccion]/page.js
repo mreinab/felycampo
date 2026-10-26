@@ -51,7 +51,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Coleccion({ params }) {
-  const { coleccion: slug } = await params;
+  const { locale, coleccion: slug } = await params;
   const coleccion = COLECCIONES.find((candidata) => candidata.slug === slug);
   if (!coleccion) notFound();
 
@@ -79,7 +79,10 @@ export default async function Coleccion({ params }) {
         <RunwayGaleria looks={coleccion.looks} alt={coleccion.nombre} />
       </div>
 
-      <RunwayVideoCierre src={coleccion.video} />
+      <RunwayVideoCierre
+        src={coleccion.video}
+        enlace={coleccion.videoEnlace && { ...coleccion.videoEnlace, meta: coleccion.videoEnlace.meta[locale] }}
+      />
     </section>
   );
 }

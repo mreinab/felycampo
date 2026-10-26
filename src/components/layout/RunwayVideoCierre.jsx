@@ -15,14 +15,21 @@
    reproducir/pausar, con iconos de lucide en vez de flechas.
    Uso:
      <RunwayVideoCierre src={coleccion.video} />
+     <RunwayVideoCierre enlace={coleccion.videoEnlace} />
+   "enlace" ({href, imagen, titulo, meta}): en vez del vídeo, solo una
+   captura a pantalla completa que abre el vídeo fuera (YouTube) —
+   mismo marco a 100vh que el vídeo, con la tarjeta del documental VHS
+   de /sobre-fely dentro (TarjetaEnlaceExterno: degradado, triángulo de
+   play, título y meta abajo a la izquierda).
    ============================================================ */
 
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Pause, Play, Volume2, VolumeX } from 'lucide-react';
+import TarjetaEnlaceExterno from './TarjetaEnlaceExterno';
 import styles from './RunwayVideoCierre.module.css';
 
-function RunwayVideoCierre({ src }) {
+function RunwayVideoCierre({ src, enlace }) {
   const t = useTranslations('producto');
   const videoRef = useRef(null);
   const [conSonido, setConSonido] = useState(false);
@@ -65,6 +72,20 @@ function RunwayVideoCierre({ src }) {
       setEnReproduccion(false);
     }
   };
+
+  if (enlace) {
+    return (
+      <div className={styles.envoltorio}>
+        <TarjetaEnlaceExterno
+          href={enlace.href}
+          titulo={enlace.titulo}
+          meta={enlace.meta}
+          imagen={enlace.imagen}
+          alt={enlace.titulo}
+        />
+      </div>
+    );
+  }
 
   if (!src) return null;
 
