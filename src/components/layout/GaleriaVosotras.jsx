@@ -52,7 +52,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Plus, X } from 'lucide-react';
 import { CabeceraSeccion, CarruselFotos } from '../ui';
 import useEnVista from '@/hooks/useEnVista';
-import { FOTOS_INVITADAS, FOTOS_NOVIAS, RESENAS_VOSOTRAS } from './vosotrasFotos';
+import { FOTOS_INVITADAS, FOTOS_NOVIAS, RESENAS_INTERCALADAS, RESENAS_VOSOTRAS } from './vosotrasFotos';
 import styles from './GaleriaVosotras.module.css';
 
 // Cada look: su propia mini-galería (grupo real de fotos, portada
@@ -90,6 +90,47 @@ function TileVosotras({ onAbrir, fotos, etiquetaAbrir }) {
   );
 }
 
+// Casilla de reseña intercalada (RESENAS_INTERCALADAS): mismo tamaño
+// que una foto, extracto + "(...)" y firma. Con "onAbrir" (reseña con
+// look) es un botón que abre la galería de esa clienta.
+function TileResena({ resena, onAbrir }) {
+  const [ref, enVista] = useEnVista();
+  const locale = useLocale();
+  const Etiqueta = onAbrir ? 'button' : 'div';
+
+  return (
+    <Etiqueta
+      ref={ref}
+      {...(onAbrir ? { type: 'button', onClick: onAbrir } : {})}
+      className={`${styles.item} ${styles.resenaTile} al-scroll ${enVista ? 'en-vista' : ''}`}
+    >
+      <blockquote className={styles.resenaTileCita}>
+        <p className={styles.resenaTileTexto}>&ldquo;{resena.extracto} (...)&rdquo;</p>
+        {resena.firma && <footer className={styles.resenaTileFirma}>{resena.firma[locale] ?? resena.firma.es}</footer>}
+      </blockquote>
+    </Etiqueta>
+  );
+}
+
+// Una reseña cada dos filas de 4 (cada 8 casillas), en la segunda fila
+// del bloque, alternando columna 2 y columna 4 para que no caigan
+// todas en la misma vertical. En mobile (2 columnas) quedan una cada
+// cuatro filas, alternando lado.
+function intercalarResenas(looks, resenas) {
+  const celdas = [];
+  let siguiente = 0;
+  looks.forEach((look, indice) => {
+    const bloque = Math.floor(celdas.length / 8);
+    const posicion = bloque * 8 + (bloque % 2 === 0 ? 5 : 7);
+    if (siguiente < resenas.length && celdas.length === posicion) {
+      celdas.push({ tipo: 'resena', resena: resenas[siguiente] });
+      siguiente += 1;
+    }
+    celdas.push({ tipo: 'look', look, indice });
+  });
+  return celdas;
+}
+
 function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperiorAmplio }) {
   const t = useTranslations();
   // Pestañas Invitadas/Novias: mismo fundido+subida de entrada que el
@@ -110,6 +151,12 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
     [categoria]
   );
   const lookActivo = looksVisibles[indiceLook];
+
+  // Reseñas intercaladas solo en Invitadas (son todas de invitadas).
+  const celdas = useMemo(
+    () => intercalarResenas(looksVisibles, categoria === 'invitadas' ? RESENAS_INTERCALADAS : []),
+    [looksVisibles, categoria]
+  );
 
   const abrir = (indice) => {
     setIndiceLook(indice);
@@ -227,14 +274,26 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
       </CabeceraSeccion>
 
       <div className={styles.grid}>
-        {looksVisibles.map((look, indice) => (
-          <TileVosotras
-            key={indice}
-            fotos={look.fotos}
-            onAbrir={() => abrir(indice)}
-            etiquetaAbrir={t('vosotras.verGaleria')}
-          />
-        ))}
+        {celdas.map((celda) => {
+          if (celda.tipo === 'resena') {
+            const indiceLookResena = looksVisibles.findIndex((look) => look.fotos[0] === celda.resena.portada);
+            return (
+              <TileResena
+                key={`resena-${celda.resena.extracto}`}
+                resena={celda.resena}
+                onAbrir={indiceLookResena >= 0 ? () => abrir(indiceLookResena) : undefined}
+              />
+            );
+          }
+          return (
+            <TileVosotras
+              key={celda.indice}
+              fotos={celda.look.fotos}
+              onAbrir={() => abrir(celda.indice)}
+              etiquetaAbrir={t('vosotras.verGaleria')}
+            />
+          );
+        })}
       </div>
 
       <div className={`${styles.lightbox} ${abierta ? styles.abierta : ''} ${lookActivo.resena ? styles.conResena : ''}`} aria-hidden={!abierta}>

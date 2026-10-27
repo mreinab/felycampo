@@ -45,6 +45,12 @@ const NOVIAS_FINALES = [
 // empiece por '/' es ya la ruta completa de la foto (no sigue el patrón
 // fely-campo-invitadas-reales-nuestras-XX-YY.webp), p. ej. la de madrinas.
 export const FOTOS_INVITADAS = [
+  // Tres grupos nuevos (2026-10-26), los primeros a petición: madrina
+  // de azul, invitada de verde e invitada de turquesa (madrina-azul-03 y
+  // turquesa-01 de portada, a petición).
+  ['madrina-azul-03', 'madrina-azul-01', 'madrina-azul-02'],
+  ['invitada-verde-01', 'invitada-verde-02', 'invitada-verde-03'],
+  ['invitada-turquesa-01', 'invitada-turquesa-02'],
   [
     `${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-1.webp`,
     `${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-2.webp`,
@@ -80,7 +86,13 @@ export const FOTOS_INVITADAS = [
   ['20-05', '20-01', '20-02', '20-03'], // 20-05 de portada, a petición
   ['14-01'],
   ['21-01', '21-02'],
-].map((grupo) => grupo.map((sufijo) => sufijo.startsWith('/') ? sufijo : `${RUTA_INVITADAS}/fely-campo-invitadas-reales-nuestras-${sufijo}.webp`));
+].map((grupo) => grupo.map((sufijo) => {
+  if (sufijo.startsWith('/')) return sufijo;
+  // "13-01" → ...-nuestras-13-01.webp; "madrina-azul-01" → ...-madrina-azul-01.webp
+  return /^\d/.test(sufijo)
+    ? `${RUTA_INVITADAS}/fely-campo-invitadas-reales-nuestras-${sufijo}.webp`
+    : `${RUTA_INVITADAS}/fely-campo-invitadas-reales-${sufijo}.webp`;
+}));
 
 export const FOTOS_NOVIAS = [
   ...NOVIAS_FINALES,
@@ -99,8 +111,12 @@ export const FOTOS_NOVIAS = [
 // primera del array en FOTOS_INVITADAS/FOTOS_NOVIAS). Se muestran en el
 // lightbox de GaleriaVosotras.jsx, junto a las fotos. Texto literal de
 // la clienta (no se traduce): mismo texto en es y en.
+// "firma" (opcional, {es, en}): quién la escribe, bajo el extracto de
+// la casilla de reseña intercalada en la cuadrícula (ver
+// RESENAS_INTERCALADAS más abajo).
 export const RESENAS_VOSOTRAS = {
   [`${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-1.webp`]: {
+    firma: { es: 'Madrina de boda', en: 'Mother of the groom' },
     parrafos: [
       'Feliz y orgullosa siendo la madrina de la boda de mi hijo pequeño. Fue uno de los días más felices y entrañables de mi vida.',
       'Estoy muy agradecida a Fely que diseñó mi vestido, me sentí elegante, cómoda y, mal es decirlo, muy guapa. Admiro su trabajo y sobre todo su filosofía de trabajo. Un orgullo para Salamanca.',
@@ -108,3 +124,22 @@ export const RESENAS_VOSOTRAS = {
     ],
   },
 };
+
+// Reseñas intercaladas como una casilla más en la cuadrícula de
+// Invitadas (GaleriaVosotras.jsx), una cada dos filas, en este orden.
+// Solo un extracto, terminado en "(...)": "portada" enlaza la casilla
+// con su look (al pulsarla abre su galería, donde se lee entera, ver
+// RESENAS_VOSOTRAS); sin "portada" la casilla es solo texto.
+// Mari Carmen: mensaje recibido el 2026-10-26, con la puntuación
+// ordenada y sin emojis.
+export const RESENAS_INTERCALADAS = [
+  {
+    portada: `${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-1.webp`,
+    extracto: 'Feliz y orgullosa siendo la madrina de la boda de mi hijo pequeño. Fue uno de los días más felices y entrañables de mi vida. Estoy muy agradecida a Fely que diseñó mi vestido, me sentí elegante, cómoda y, mal es decirlo, muy guapa',
+    firma: RESENAS_VOSOTRAS[`${RUTA_INVITADAS}/fely-campo-invitadas-reales-madrina-review-1.webp`].firma,
+  },
+  {
+    extracto: 'La boda de Rubén salió fenomenal, nos acompañó un día de sol espectacular y yo me encontré estupenda con el traje y los complementos. Agradeceros todo el proceso y la paciencia que conmigo habéis tenido',
+    firma: { es: 'Mari Carmen, Gijón', en: 'Mari Carmen, Gijón' },
+  },
+];

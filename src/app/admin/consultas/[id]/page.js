@@ -1,30 +1,40 @@
 'use client';
 
+/* ============================================================
+   CITA — detalle. Todos los datos que la clienta envió desde el
+   formulario de cita del front, con acceso directo a responder por
+   email o llamar, historial de estado y notas internas del equipo.
+   Datos de EJEMPLO (citasMock): cambiar estado y guardar notas solo
+   muestran el aviso "(demo)" hasta que haya base de datos.
+   ============================================================ */
+
 import { use, useState } from 'react';
 import { notFound } from 'next/navigation';
 import { PageHeader, BotonVolver, useToast } from '@/components/admin';
 import { Boton } from '@/components/ui';
-import { consultasMock, productosMock } from '@/components/admin/mockData';
+import { citasMock, ESTADOS_CITA } from '@/components/admin/mockData';
+import { fechaCorta, fechaHora, nombreAtelier } from '../citasFormato';
 import styles from './page.module.css';
 
-export default function DetalleConsultaPage({ params }) {
+export default function DetalleCitaPage({ params }) {
   const { id } = use(params);
-  const consultaOriginal = consultasMock.find((c) => c.id === id);
+  const cita = citasMock.find((c) => c.id === id);
 
   const { mostrarToast } = useToast();
-  const [estado, setEstado] = useState(consultaOriginal?.estado || 'Pendiente');
+  const [estado, setEstado] = useState(cita?.estado || 'Pendiente');
   const [notas, setNotas] = useState('');
   const [historial, setHistorial] = useState(
-    consultaOriginal ? [{ estado: 'Pendiente', fecha: consultaOriginal.fecha }] : []
+    cita ? [{ estado: 'Pendiente', fecha: fechaHora(cita.recibida) }] : []
   );
 
-  if (!consultaOriginal) notFound();
-
-  const productoRelacionado = productosMock.find((p) => p.nombre === consultaOriginal.productoRelacionado);
+  if (!cita) notFound();
 
   function cambiarEstado(nuevo) {
+    if (nuevo === estado) return;
     setEstado(nuevo);
-    setHistorial([...historial, { estado: nuevo, fecha: new Date().toISOString().slice(0, 10) }]);
+    const ahora = new Date();
+    const fecha = `${ahora.toISOString().slice(0, 10)}T${ahora.toTimeString().slice(0, 5)}`;
+    setHistorial([...historial, { estado: nuevo, fecha: fechaHora(fecha) }]);
     mostrarToast(`Estado actualizado a "${nuevo}" (demo)`);
   }
 
@@ -32,34 +42,61 @@ export default function DetalleConsultaPage({ params }) {
     mostrarToast('Notas internas guardadas (demo)');
   }
 
+  const asuntoRespuesta = encodeURIComponent(`Tu cita en Fely Campo ${nombreAtelier(cita.atelier)}`);
+
   return (
     <div>
       <BotonVolver href="/admin/consultas" />
-      <PageHeader titulo={consultaOriginal.asunto} subtitulo={`${consultaOriginal.tipo} — ${consultaOriginal.cliente.nombre}`} />
+      <PageHeader
+        titulo={cita.nombre}
+        subtitulo={`Cita en ${nombreAtelier(cita.atelier)} · recibida el ${fechaHora(cita.recibida)}`}
+      />
 
       <div className={styles.resumen}>
         <div>
-          <p className={styles.resumenLabel}>Cliente</p>
-          <p className={styles.resumenValor}>{consultaOriginal.cliente.nombre}</p>
-          <p className={styles.resumenValor}>{consultaOriginal.cliente.email}</p>
+          <p className={styles.resumenLabel}>Contacto</p>
+          <p className={styles.resumenValor}><a href={`mailto:${cita.email}`}>{cita.email}</a></p>
+          <p className={styles.resumenValor}><a href={`tel:${cita.telefono.replace(/\s/g, '')}`}>{cita.telefono}</a></p>
         </div>
         <div>
-          <p className={styles.resumenLabel}>Fecha solicitada</p>
-          <p className={styles.resumenValor}>{consultaOriginal.fecha}</p>
+          <p className={styles.resumenLabel}>Atelier</p>
+          <p className={styles.resumenValor}>{nombreAtelier(cita.atelier)}</p>
         </div>
         <div>
-          <p className={styles.resumenLabel}>Producto relacionado</p>
-          <p className={styles.resumenValor}>
-            {productoRelacionado ? (
-              <Boton variante="texto" href={`/admin/productos/${productoRelacionado.id}`}>{productoRelacionado.nombre}</Boton>
-            ) : 'Ninguno'}
-          </p>
+          <p className={styles.resumenLabel}>Fecha de la boda</p>
+          <p className={styles.resumenValor}>{fechaCorta(cita.fechaBoda)}</p>
+        </div>
+        <div>
+          <p className={styles.resumenLabel}>Dónde vive</p>
+          <p className={styles.resumenValor}>{cita.ciudad} ({cita.codigoPostal})</p>
+        </div>
+        <div>
+          <p className={styles.resumenLabel}>Idioma</p>
+          <p className={styles.resumenValor}>{cita.locale === 'en' ? 'Inglés' : 'Español'}</p>
+        </div>
+        <div>
+          <p className={styles.resumenLabel}>Estado</p>
+          <p className={styles.resumenValor}>{estado}</p>
         </div>
       </div>
 
       <div className={styles.bloque}>
-        <p className={styles.bloqueTitulo}>Mensaje original</p>
-        <p className={styles.mensaje}>{consultaOriginal.mensaje}</p>
+        <p className={styles.bloqueTitulo}>Mensaje</p>
+        <p className={styles.mensaje}>{cita.mensaje || 'Sin mensaje.'}</p>
+      </div>
+
+      <div className={styles.bloque}>
+        <p className={styles.bloqueTitulo}>Acciones</p>
+        <div className={styles.accionesFila}>
+          <label>
+            <span className={styles.etiquetaCampo}>Cambiar estado</span>
+            <select className={styles.selectInput} value={estado} onChange={(e) => cambiarEstado(e.target.value)}>
+              {ESTADOS_CITA.map((opcion) => <option key={opcion} value={opcion}>{opcion}</option>)}
+            </select>
+          </label>
+          <Boton variante="contorno" href={`mailto:${cita.email}?subject=${asuntoRespuesta}`}>Responder por email</Boton>
+          <Boton variante="contorno" href={`tel:${cita.telefono.replace(/\s/g, '')}`}>Llamar</Boton>
+        </div>
       </div>
 
       <div className={styles.bloque}>
@@ -76,24 +113,9 @@ export default function DetalleConsultaPage({ params }) {
 
       <div className={styles.bloque}>
         <p className={styles.bloqueTitulo}>Notas internas</p>
-        <textarea className={styles.notas} value={notas} onChange={(e) => setNotas(e.target.value)} />
+        <textarea className={styles.notas} value={notas} onChange={(e) => setNotas(e.target.value)} placeholder="Solo las ve el equipo" />
         <div>
           <Boton variante="contorno" tamano="s" onClick={guardarNotas}>Guardar notas</Boton>
-        </div>
-      </div>
-
-      <div className={styles.bloque}>
-        <p className={styles.bloqueTitulo}>Acciones</p>
-        <div className={styles.accionesFila}>
-          <label>
-            <span className={styles.etiquetaCampo}>Cambiar estado</span>
-            <select className={styles.selectInput} value={estado} onChange={(e) => cambiarEstado(e.target.value)}>
-              <option value="Pendiente">Pendiente</option>
-              <option value="Contactado">Contactado</option>
-              <option value="Cerrado">Cerrado</option>
-            </select>
-          </label>
-          <Boton variante="contorno" onClick={() => cambiarEstado('Cerrado')}>Marcar como cerrada</Boton>
         </div>
       </div>
     </div>

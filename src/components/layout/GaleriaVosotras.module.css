@@ -68,6 +68,60 @@
   }
 }
 
+/* Casilla de reseña intercalada (TileResena en GaleriaVosotras.jsx):
+   mismo 3/4 y fondo crema que una foto, texto centrado en vertical.
+   Extracto a --text-titulo (15px), firma a
+   --text-texto (13px), mismo color tinta. */
+.resenaTile {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: none;
+  padding: var(--spacing-7);
+  text-align: left;
+  font: inherit;
+  color: var(--color-tinta);
+}
+
+div.resenaTile {
+  cursor: default;
+}
+
+.resenaTileCita {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin: 0;
+}
+
+.resenaTileTexto {
+  font-size: var(--text-titulo); /* 15px */
+  line-height: var(--leading-base);
+  font-style: italic;
+  color: var(--color-tinta);
+  transition: opacity 0.25s var(--ease-marca);
+}
+
+.resenaTileFirma {
+  font-size: var(--text-texto); /* 13px */
+  color: var(--color-tinta);
+  text-align: center;
+}
+
+button.resenaTile:hover .resenaTileTexto {
+  opacity: 0.7;
+}
+
+@media (max-width: 767px) {
+  .resenaTile {
+    padding: var(--spacing-4);
+  }
+
+  .resenaTileTexto {
+    font-size: var(--text-texto); /* 13px */
+  }
+}
+
 /* Botón "+" — esquina inferior derecha de cada foto, solo visible al
    hover (mismo criterio que .wishlist de TarjetaProducto.module.css:
    oculto en reposo, opacity+pointer-events en vez de display, y

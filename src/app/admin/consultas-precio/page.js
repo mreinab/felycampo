@@ -91,7 +91,7 @@ export default function ConsultasPrecioPage() {
 
   return (
     <div>
-      <PageHeader titulo="Consultas de precio" subtitulo={`${filtradas.length} registros`}>
+      <PageHeader titulo="Solicitudes de atelier" subtitulo={`${filtradas.length} registros · «Contacta con nosotros» de las fichas de Novias y Fiesta`}>
         <div className={styles.vistaToggle} role="group" aria-label="Cambiar vista">
           <button
             type="button"

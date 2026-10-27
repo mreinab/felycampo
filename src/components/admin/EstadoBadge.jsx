@@ -14,11 +14,14 @@ const VARIANTE_POR_ESTADO = {
   Entregado: 'tinta',
   Cerrado: 'tinta',
   Publicada: 'tinta',
+  Cerrada: 'tinta',
+  'Cita confirmada': 'tinta',
 
   Borrador: 'rosa',
   Pendiente: 'rosa',
   Procesando: 'rosa',
   Contactado: 'rosa',
+  Contactada: 'velo',
 
   Archivado: 'velo',
   Enviado: 'velo',

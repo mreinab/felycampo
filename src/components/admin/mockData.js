@@ -702,6 +702,102 @@ export const consultasMock = [
   },
 ];
 
+// ---------- CITAS (formulario real de /visita-fely-campo/cita) ----------
+// Mismos campos que envía ese formulario a /api/cita (ver route.js):
+// atelier (id de ATELIERES_CITA), fecha de la boda, nombre, email,
+// teléfono, código postal, ciudad, mensaje e idioma. "recibida" es cuándo
+// llegó; "estado" y "notas" son solo del admin. De EJEMPLO: hoy la API
+// solo envía emails, no guarda nada — cuando haya base de datos, estas
+// filas saldrán de ahí.
+export const ESTADOS_CITA = ['Pendiente', 'Contactada', 'Cita confirmada', 'Cerrada'];
+
+export const citasMock = [
+  {
+    id: 'cita-6',
+    recibida: '2026-10-26T18:42',
+    atelier: 'salamanca',
+    nombre: 'Lucía Hernández Prieto',
+    email: 'lucia.hernandez@example.com',
+    telefono: '+34 600 112 233',
+    codigoPostal: '37008',
+    ciudad: 'Salamanca',
+    fechaBoda: '2027-06-12',
+    mensaje: 'Me caso en junio y me gustaría ver vestidos de novia de corte sencillo, con algo de espalda.',
+    locale: 'es',
+    estado: 'Pendiente',
+  },
+  {
+    id: 'cita-5',
+    recibida: '2026-10-25T11:05',
+    atelier: 'madrid',
+    nombre: 'Carmen Ortega',
+    email: 'carmen.ortega@example.com',
+    telefono: '+34 611 445 566',
+    codigoPostal: '28010',
+    ciudad: 'Madrid',
+    fechaBoda: '2027-05-08',
+    mensaje: 'Soy la madrina de la boda de mi hijo y busco un vestido largo en tonos azules.',
+    locale: 'es',
+    estado: 'Pendiente',
+  },
+  {
+    id: 'cita-4',
+    recibida: '2026-10-23T20:17',
+    atelier: 'oviedo',
+    nombre: 'Marta Álvarez',
+    email: 'marta.alvarez@example.com',
+    telefono: '+34 622 778 899',
+    codigoPostal: '33003',
+    ciudad: 'Oviedo',
+    fechaBoda: '2027-09-18',
+    mensaje: '',
+    locale: 'es',
+    estado: 'Contactada',
+  },
+  {
+    id: 'cita-3',
+    recibida: '2026-10-20T09:30',
+    atelier: 'madrid',
+    nombre: 'Emma Wilson',
+    email: 'emma.wilson@example.com',
+    telefono: '+44 7700 900123',
+    codigoPostal: 'SW1A 1AA',
+    ciudad: 'London',
+    fechaBoda: '2027-07-03',
+    mensaje: 'I will be in Madrid in November and would love to try on bridal dresses.',
+    locale: 'en',
+    estado: 'Cita confirmada',
+  },
+  {
+    id: 'cita-2',
+    recibida: '2026-10-14T16:48',
+    atelier: 'salamanca',
+    nombre: 'Rocío Sánchez',
+    email: 'rocio.sanchez@example.com',
+    telefono: '+34 633 990 011',
+    codigoPostal: '37700',
+    ciudad: 'Béjar',
+    fechaBoda: '2027-04-24',
+    mensaje: 'Quería información sobre vestidos de invitada para una boda de día.',
+    locale: 'es',
+    estado: 'Cerrada',
+  },
+  {
+    id: 'cita-1',
+    recibida: '2026-10-09T12:02',
+    atelier: 'oviedo',
+    nombre: 'Paula Fernández',
+    email: 'paula.fernandez@example.com',
+    telefono: '+34 644 223 344',
+    codigoPostal: '33201',
+    ciudad: 'Gijón',
+    fechaBoda: '2027-08-28',
+    mensaje: 'Busco vestido de novia a medida, con mangas.',
+    locale: 'es',
+    estado: 'Cita confirmada',
+  },
+];
+
 // ---------- CONSULTAS DE PRECIO (Atelier — "Precio a consultar") ----------
 // Atelier no lleva precio visible en la ficha pública: en su lugar hay un
 // botón "Precio a consultar" que deja estos datos de contacto. `clienteId`

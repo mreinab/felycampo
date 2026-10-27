@@ -72,7 +72,9 @@ export const FIESTA_EDITORIAL = {
 
   // Sin FelyCampo_ATELIER_KristenWicce-11.jpg, a petición: esa foto
   // queda solo en el hero de la página.
+  // El vídeo del vestido rojo de espaldas, el primero a petición.
   backstage: [
+    { tipo: 'video', src: `${RUTA_INTRO}/fely-campo-atelier-fiesta-video-vestido-rojo-espalda.mp4` },
     { tipo: 'video', src: `${RUTA_INTRO}/felycampo-fiesta-media (2).mp4` },
     { tipo: 'imagen', src: `${RUTA_INTRO}/fely-campo-atelier-fiesta-aw2026-162.webp` },
     { tipo: 'video', src: `${RUTA_INTRO}/felycampo-fiesta-media (3).mp4` },

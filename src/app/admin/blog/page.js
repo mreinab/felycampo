@@ -17,7 +17,7 @@ export default function BlogPage() {
 
   return (
     <div>
-      <PageHeader titulo="Blog" subtitulo={`${entradas.length} entradas`}>
+      <PageHeader titulo="Podcast" subtitulo={`${entradas.length} entradas`}>
         <Boton variante="solido" href="/admin/blog/nueva"><Plus size={14} /> Nueva entrada</Boton>
       </PageHeader>
 
