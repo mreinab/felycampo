@@ -150,26 +150,6 @@ export default async function RootLayout({ children, params }) {
   const matchBlog = rutaSinLocale.match(/^\/podcast\/([^/]+)$/);
   const tipoBlog = matchBlog && entradaPorSlug(matchBlog[1])?.tipo;
   const esHeroBlog = tipoBlog === 'articulo' || tipoBlog === 'podcast';
-  // Ficha de producto (/pret-a-porter/[producto], /atelier/{novias,fiesta}/
-  // [producto], rutas dinámicas — mismo motivo que esFichaRunway: no
-  // pueden vivir en RUTAS_CON_PRODUCT_HERO, que solo hace match exacto):
-  // mismo Navbar transparente que las páginas de listado, con
-  // GaleriaProducto haciendo de Hero (data-navbar-hero en su
-  // .galeria, ver GaleriaProducto.jsx/.module.css) en vez de
-  // ProductHero, pero con el logo/texto OSCURO (textoOscuro más abajo)
-  // en vez de blanco — la galería no es una foto a sangre tan oscura
-  // como el resto de Heroes. El slug de un producto real ocupa el
-  // mismo hueco de URL que una categoría (/pret-a-porter/<slug>), así
-  // que hace falta descartar a mano las categorías conocidas
-  // (CATEGORIAS_PRET_A_PORTER, derivado de RUTAS_CON_PRODUCT_HERO) —
-  // si no, esas páginas de listado también entrarían aquí y su Navbar
-  // se quedaría con el logo oscuro en vez de blanco.
-  const CATEGORIAS_PRET_A_PORTER = RUTAS_CON_PRODUCT_HERO
-    .filter((ruta) => ruta.startsWith('/pret-a-porter/'))
-    .map((ruta) => ruta.split('/').pop());
-  const matchPretAPorter = rutaSinLocale.match(/^\/pret-a-porter\/([^/]+)$/);
-  const esFichaProducto = (matchPretAPorter && !CATEGORIAS_PRET_A_PORTER.includes(matchPretAPorter[1]))
-    || /^\/atelier\/(novias|fiesta)\/[^/]+$/.test(rutaSinLocale);
 
   // /pret-a-porter (solo la página principal, no sus categorías ni
   // fichas): hero sin velo y con texto en tinta (ver pret-a-porter/
@@ -190,9 +170,9 @@ export default async function RootLayout({ children, params }) {
           <CarritoProvider>
             <MiCuentaProvider>
               <Navbar
-                transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier || esHeroBlog || esFichaProducto}
+                transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier || esHeroBlog}
                 crecerLogo={isHome}
-                textoOscuro={esFichaProducto || esPretAPorter}
+                textoOscuro={esPretAPorter}
               />
               <main>{children}</main>
               {/* AteliersCita encima de PedirCita: la banda de cita va siempre

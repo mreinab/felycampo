@@ -10,7 +10,7 @@
      - "Así trabajamos": las imágenes editoriales con texto (BloqueSeccion
        en zigzag) + el backstage.
      - "Colección fiesta": la cuadrícula de looks.
-   Se entra en "Colección fiesta" (a petición). page.js (servidor) le pasa
+   Se entra en "Así trabajamos" (a petición). page.js (servidor) le pasa
    las dos partes ya pintadas ("editorial" y "colecciones"), así este
    componente solo decide cuál se ve.
    ============================================================ */
@@ -25,7 +25,7 @@ export const VISTA_ATELIER = 'atelier';
 export const VISTA_COLECCIONES = 'colecciones';
 
 function FiestaIntro({ titulo, texto, etiquetas, editorial, colecciones }) {
-  const [vista, setVista] = useState(VISTA_COLECCIONES);
+  const [vista, setVista] = useState(VISTA_ATELIER);
 
   return (
     <>

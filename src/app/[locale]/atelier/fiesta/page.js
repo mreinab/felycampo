@@ -16,8 +16,8 @@
    Bajo el hero, intro con filtros (FiestaIntro.jsx → IntroSeccion,
    mismo esquema que /podcast): título "Atelier Fiesta", el texto de
    descripción y dos filtros — "Así trabajamos" (dos BloqueSeccion en
-   zigzag + RunwayBackstage, contenido en fiestaEditorial.js) y
-   "Colección fiesta" (la cuadrícula, la que se ve al entrar). Antes iban
+   zigzag + RunwayBackstage, contenido en fiestaEditorial.js, la que se
+   ve al entrar) y "Colección fiesta" (la cuadrícula). Antes iban
    todos seguidos, con RunwayDescripcion dentro de .textoDescripcion.
 
    Cuadrícula de looks (CuadriculaProductos) al final, visible — a

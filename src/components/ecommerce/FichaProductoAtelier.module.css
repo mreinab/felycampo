@@ -77,6 +77,9 @@
     position: relative;
     z-index: 1;
     background: var(--color-fondo);
+    /* Aire con .info encima: sin esto asomaba por debajo de su borde
+       inferior (a petición). */
+    margin-top: var(--spacing-10);
   }
 }
 

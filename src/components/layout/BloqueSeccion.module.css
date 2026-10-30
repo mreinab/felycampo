@@ -4,8 +4,8 @@
    --grid-columnas-24 en global.css) entre los márgenes del header
    (--padding-lateral-nav) — imagen en las columnas 1–12 y texto en
    las 15–24, dos columnas de separación; "invertido" lo refleja
-   (texto 1–10, imagen 13–24). Mobile y tablet: apilado, texto arriba
-   e imagen debajo.
+   (texto 1–10, imagen 13–24). Mobile y tablet: apilado, imagen arriba
+   y texto debajo, alineado a la izquierda.
    ============================================================ */
 
 .seccion {
@@ -88,16 +88,23 @@
   }
 }
 
-/* Mobile y tablet: texto arriba (order, sin cambiar el DOM) y
-   contenido centrado horizontalmente — título/texto/CTA quedan
-   centrados sobre la imagen apilada. */
+/* Mobile y tablet: imagen arriba y texto debajo (orden del DOM, a
+   petición — antes el texto iba arriba con order:-1), alineado a la
+   izquierda (antes centrado). */
 @media (max-width: 1023px) {
+  /* Mismos márgenes laterales que el header (--padding-lateral-nav)
+     para imagen y texto; .contenidoTexto solo separa el texto de la
+     imagen (padding-top), el lateral ya lo pone .seccion. */
+  .seccion {
+    padding-block: var(--spacing-6);
+    padding-inline: var(--padding-lateral-nav);
+  }
   .contenidoTexto {
-    order: -1;
-    align-items: center;
+    align-items: flex-start;
+    padding: var(--spacing-6) 0 0;
   }
   .texto {
-    text-align: center;
+    text-align: left;
   }
 }
 

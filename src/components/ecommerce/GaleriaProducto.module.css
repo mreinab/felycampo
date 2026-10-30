@@ -2,10 +2,8 @@
    GALERÍA DE PRODUCTO — Fely Campo
    ============================================================ */
 
-/* 110vh sin descontar --nav-height: el Navbar de esta página es
-   transparent+fixed (ver layout.js "esFichaProducto"), no reserva
-   hueco propio en el flujo — mismo criterio que .hero de
-   ProductHero.module.css, que tampoco descuenta nada. */
+/* El Navbar de la ficha es el sólido de siempre (sticky, reserva su
+   propio hueco en el flujo): la galería empieza debajo de él. */
 .galeria {
   position: relative;
   height: 110vh;
@@ -113,9 +111,9 @@
 }
 
 @media (max-width: 767px) {
-  /* La imagen se queda pegada arriba (position:sticky) mientras .info
-     se desliza por encima — el Navbar transparent+fixed flota encima
-     desde el primer píxel. Sticky y no fixed: fixed la sacaba del
+  /* La imagen se queda pegada justo debajo del Navbar (sticky,
+     top:--nav-height) mientras .info se desliza por encima. Sticky y
+     no fixed: fixed la sacaba del
      flujo para TODA la página, así que asomaba detrás de cualquier
      cosa sin fondo propio (huecos de .contenedor, AteliersCita,
      PedirCita...). Sticky la limita a .ficha (display:block en mobile,
@@ -131,7 +129,7 @@
      absolutas dentro de .galeria (top:50% de la base). */
   .galeria {
     position: sticky;
-    top: 0;
+    top: var(--nav-height);
     aspect-ratio: 2 / 3;
     height: auto;
   }
@@ -161,7 +159,6 @@
 @media (min-width: 768px) {
   .galeria {
     height: calc(100vh - var(--nav-height-desktop));
-    margin-top: var(--nav-height-desktop);
   }
 
   .pista {
