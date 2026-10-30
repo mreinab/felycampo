@@ -7,9 +7,8 @@
    completa por encima del Navbar, con una foto al 50% a la izquierda y
    una X para cerrar (calcada de MiCuentaModal); quitadas a petición.
 
-   Un único formulario pequeño: atelier (Salamanca/Madrid/Oviedo —
-   preseleccionado si se llega con ?ubicacion=<id>, ver
-   ListadoUbicaciones.jsx/AtelierDetalle.jsx), nombre completo, email y teléfono de contacto, fecha de la
+   Un único formulario pequeño: nombre completo, email y teléfono de
+   contacto, fecha de la
    boda (obligatoria, día/mes/año en selects propios — no
    <input type="date">, a petición), código postal, ciudad, mensaje
    libre y la casilla de aceptar privacidad/términos (obligatoria).
@@ -18,13 +17,16 @@
    a la clienta + aviso al equipo del atelier, ver src/app/api/cita/
    route.js) y, si va bien, registra la conversión (src/lib/analitica.js)
    y lleva a la página de confirmación (./confirmacion). Ya no se
-   pregunta si la cita es de novia o de invitada (quitado a petición). */
+   pregunta si la cita es de novia o de invitada, ni el atelier (lo
+   decide el equipo al contactar; los enlaces "Pedir cita" de cada
+   atelier aún llevan ?ubicacion=<id>, que ya no se usa) — quitados a
+   petición. */
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { Boton, Input } from '@/components/ui';
-import { ATELIERES_CITA, rutaConfirmacionCita } from '@/lib/citaAtelier';
+import { rutaConfirmacionCita } from '@/lib/citaAtelier';
 import { registrarConversionCita } from '@/lib/analitica';
 import styles from './page.module.css';
 
@@ -49,7 +51,6 @@ export default function Pagina() {
   const router = useRouter();
   const meses = MESES[locale] || MESES.es;
 
-  const [atelier, setAtelier] = useState('');
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [email, setEmail] = useState('');
   const [telefono, setTelefono] = useState('');
@@ -67,14 +68,6 @@ export default function Pagina() {
   // api/cita/route.js).
   const [web, setWeb] = useState('');
 
-  // ?ubicacion=<id> (enlaces "Pedir cita" de cada atelier) preselecciona
-  // el atelier. En un efecto y no con useSearchParams: así la página no
-  // necesita un <Suspense> alrededor para el render estático.
-  useEffect(() => {
-    const ubicacion = new URLSearchParams(window.location.search).get('ubicacion');
-    if (ATELIERES_CITA.some((opcion) => opcion.id === ubicacion)) setAtelier(ubicacion);
-  }, []);
-
   const withLocale = (href) => `/${locale}${href}`;
   const conLimpieza = (setter) => (evento) => { setter(evento.target.value); setAvisoDatos(false); };
 
@@ -85,7 +78,7 @@ export default function Pagina() {
   const alEnviar = async (evento) => {
     evento.preventDefault();
     if (enviando) return;
-    if (!atelier || !fechaBoda || !nombreCompleto.trim() || !email.trim() || !telefono.trim() || !codigoPostal.trim() || !ciudad.trim() || !aceptaLegal) {
+    if (!fechaBoda || !nombreCompleto.trim() || !email.trim() || !telefono.trim() || !codigoPostal.trim() || !ciudad.trim() || !aceptaLegal) {
       setAvisoDatos(true);
       return;
     }
@@ -97,7 +90,7 @@ export default function Pagina() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          locale, atelier, fechaBoda, nombreCompleto, email, telefono, codigoPostal, ciudad, mensaje, aceptaLegal, web,
+          locale, fechaBoda, nombreCompleto, email, telefono, codigoPostal, ciudad, mensaje, aceptaLegal, web,
         }),
       });
       const resultado = await respuesta.json().catch(() => ({}));
@@ -108,7 +101,7 @@ export default function Pagina() {
         setEnviando(false);
         return;
       }
-      registrarConversionCita({ atelier });
+      registrarConversionCita();
       router.push(withLocale(rutaConfirmacionCita()));
     } catch {
       setErrorEnvio(true);
@@ -124,22 +117,6 @@ export default function Pagina() {
             <h1 className={styles.titulo}>{t('titulo')}</h1>
             <p className={styles.subtitulo}>{t('subtitulo')}</p>
           </div>
-
-          <label className={styles.campo}>
-            <span className={styles.etiquetaOculta}>{t('atelier')}</span>
-            <select
-              className={styles.select}
-              value={atelier}
-              onChange={conLimpieza(setAtelier)}
-              required
-            >
-              <option value="">{t('atelierPlaceholder')}</option>
-              {ATELIERES_CITA.map((opcion) => (
-                <option key={opcion.id} value={opcion.id}>{opcion.nombre}</option>
-              ))}
-            </select>
-          </label>
-
 
           <div className={styles.trampa} aria-hidden="true">
             <input type="text" name="web" tabIndex={-1} autoComplete="off" value={web} onChange={(evento) => setWeb(evento.target.value)} />

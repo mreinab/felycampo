@@ -5,7 +5,7 @@
    Solo lectura: resumen + accesos rápidos a listas ya filtradas.
    No hay edición posible desde aquí (spec sección 1).
    Adaptado a lo que usa el front (2026-10-27): citas del formulario
-   de /visita-fely-campo/cita, solicitudes de atelier ("Contacta con
+   de /visita-fely-campo/cita, consultas de vestidos ("Contacta con
    nosotros" en las fichas de Novias/Fiesta), suscriptoras de la
    newsletter y fotos/reseñas de /atelier/vosotras. El resumen de la
    tienda (pedidos, productos, stock) queda oculto con ella — ver
@@ -22,7 +22,8 @@ import { PageHeader, TablaAdmin, EstadoBadge } from '@/components/admin';
 import { Boton } from '@/components/ui';
 import { citasMock, consultasPrecioMock, newsletterMock } from '@/components/admin/mockData';
 import { FOTOS_INVITADAS, FOTOS_NOVIAS, RESENAS_INTERCALADAS } from '@/components/layout/vosotrasFotos';
-import { fechaCorta, fechaHora, nombreAtelier } from './consultas/citasFormato';
+import { fechaCorta, fechaHora } from './consultas/citasFormato';
+import BanderaIdioma from './consultas/BanderaIdioma';
 import styles from './page.module.css';
 
 export default function AdminDashboard() {
@@ -43,7 +44,7 @@ export default function AdminDashboard() {
         </div>
         <div className={styles.widget}>
           <p className={styles.widgetValor}>{consultasPrecioMock.length}</p>
-          <p className={styles.widgetLabel}>Solicitudes de atelier</p>
+          <p className={styles.widgetLabel}>Consultas de vestidos</p>
         </div>
         <div className={styles.widget}>
           <p className={styles.widgetValor}>{newsletterMock.length}</p>
@@ -64,7 +65,7 @@ export default function AdminDashboard() {
           </Link>
           <Link href="/admin/consultas-precio" className={styles.acceso}>
             <p className={styles.accesoValor}>{solicitudesPendientes}</p>
-            <p className={styles.accesoLabel}>Solicitudes de atelier pendientes</p>
+            <p className={styles.accesoLabel}>Consultas de vestidos pendientes</p>
           </Link>
           <Link href="/admin/vosotras" className={styles.acceso}>
             <p className={styles.accesoValor}>{RESENAS_INTERCALADAS.length}</p>
@@ -79,8 +80,8 @@ export default function AdminDashboard() {
           columnas={[
             { clave: 'recibida', etiqueta: 'Recibida', render: (c) => fechaHora(c.recibida) },
             { clave: 'nombre', etiqueta: 'Clienta' },
-            { clave: 'atelier', etiqueta: 'Atelier', render: (c) => nombreAtelier(c.atelier) },
-            { clave: 'fechaBoda', etiqueta: 'Fecha de la boda', render: (c) => fechaCorta(c.fechaBoda) },
+            { clave: 'locale', etiqueta: 'Idioma', render: (c) => <BanderaIdioma locale={c.locale} /> },
+            { clave: 'fechaBoda', etiqueta: 'Fecha del evento', render: (c) => fechaCorta(c.fechaBoda) },
             { clave: 'estado', etiqueta: 'Estado', render: (c) => <EstadoBadge estado={c.estado} /> },
           ]}
           filas={ultimasCitas}

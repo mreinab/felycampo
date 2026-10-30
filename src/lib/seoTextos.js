@@ -236,7 +236,7 @@ export const SEO_TEXTOS = {
   '/visita-fely-campo/cita': {
     es: {
       title: 'Pedir cita en el atelier de Fely Campo | Novia y fiesta',
-      description: 'Solicita tu cita en Fely Campo para encontrar tu vestido de novia o de fiesta. Elige atelier y cuéntanos qué buscas; nuestro equipo contactará contigo.',
+      description: 'Solicita tu cita en Fely Campo para encontrar tu vestido de novia o de fiesta. Cuéntanos qué buscas y nuestro equipo contactará contigo.',
     },
     en: {
       title: 'Book an atelier appointment | Bride and guest | Fely Campo',

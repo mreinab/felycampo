@@ -113,45 +113,30 @@
 }
 
 @media (max-width: 767px) {
-  /* La imagen se queda fija (position:fixed, no desaparece con el
-     scroll) en vez de desplazarse con la página — el Navbar
-     transparent+fixed flota encima desde el primer píxel (mismo
-     criterio que .hero de ProductHero.module.css en mobile). Alto por
-     aspect-ratio (2:3, misma proporción recomendada para las fotos de
-     producto — ver docs/design.md) en vez de 100vh: a pantalla
-     completa, un aspect-ratio de pantalla más estrecho que el de la
-     foto (habitual en móvil) obligaba a object-fit:cover a recortar
-     los lados para cubrir el hueco. Con la caja ya en la proporción
-     real de la foto no hace falta recortar nada.
-     .galeria (arriba) reserva el mismo aspect-ratio en el flujo normal
-     — mismo ancho que .pista (100%), así el hueco reservado coincide
-     exactamente con la imagen fija que tapa. El resto del contenido de
-     la ficha (.info y todo lo que viene después — reseñas,
-     recomendados, "sigue explorando", ver page.module.css/
-     FichaProductoAtelier.module.css) la va tapando según se hace
-     scroll (position:relative + z-index por encima). Las flechas
-     pasan también a fijas: su "top" no puede ser un simple 50% (fixed
-     se centra respecto al viewport, no a la imagen) — 75vw es la mitad
-     exacta del alto real (100vw de ancho × 1.5 del aspect-ratio 2:3),
-     hay que ajustarlo a mano si el aspect-ratio cambia. */
+  /* La imagen se queda pegada arriba (position:sticky) mientras .info
+     se desliza por encima — el Navbar transparent+fixed flota encima
+     desde el primer píxel. Sticky y no fixed: fixed la sacaba del
+     flujo para TODA la página, así que asomaba detrás de cualquier
+     cosa sin fondo propio (huecos de .contenedor, AteliersCita,
+     PedirCita...). Sticky la limita a .ficha (display:block en mobile,
+     ver page.module.css/FichaProductoAtelier.module.css — en un grid
+     el límite sería su propia celda y no se pegaría nunca): al acabar
+     .info, la foto sale con el scroll. Sin z-index: .info (z-index:10,
+     después en el DOM) ya le gana, y así .galeria no crea contexto de
+     apilamiento propio. Alto por aspect-ratio (2:3, misma proporción
+     recomendada para las fotos de producto — ver docs/design.md) en
+     vez de 100vh: a pantalla completa, un aspect-ratio de pantalla más
+     estrecho que el de la foto (habitual en móvil) obligaba a
+     object-fit:cover a recortar los lados. Las flechas siguen
+     absolutas dentro de .galeria (top:50% de la base). */
   .galeria {
-    aspect-ratio: 2 / 3;
-    height: auto;
-  }
-
-  .pista {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    width: 100%;
     aspect-ratio: 2 / 3;
     height: auto;
-    z-index: 0;
   }
 
   .flecha {
-    position: fixed;
-    top: 75vw;
     width: 32px;
     height: 32px;
   }

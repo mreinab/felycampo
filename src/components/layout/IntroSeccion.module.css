@@ -54,8 +54,9 @@
    "saltar" el texto al cambiar de filtro. Doble clase para ganar a
    .texto de Boton.module.css sin depender del orden de carga. */
 .filtros .filtro {
-  /* Filtros, no CTAs: se quedan en 12px aunque Boton "texto" vaya a 13. */
-  font-size: var(--text-boton);
+  /* 13px (--text-cta, como el resto de CTAs subrayados), a petición:
+     a 12px se veían demasiado pequeños y 15px era demasiado. */
+  font-size: var(--text-cta);
   border-bottom-color: transparent;
   transition:
     border-bottom-color 0.25s var(--ease-marca),

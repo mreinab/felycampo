@@ -28,3 +28,37 @@
   background: var(--color-fondo);
   border-left: var(--border-thin) solid var(--color-gris-200);
 }
+
+/* Impresión (ej. "Imprimir" en la ficha de una cita): solo el contenido
+   de la página, sin la barra superior ni el menú lateral, y sin el
+   scroll interno del panel para que salgan todas las hojas. */
+@media print {
+  .topRow,
+  .body > :not(.contenido) {
+    display: none !important;
+  }
+
+  .shell {
+    display: block;
+    height: auto;
+  }
+
+  .body {
+    display: block;
+  }
+
+  .contenido {
+    padding: 0;
+    max-width: none;
+    overflow: visible;
+    border-left: none;
+  }
+}
+
+/* Sin letter-spacing en todo el panel (a petición), también en los
+   componentes compartidos con la web (Boton usa --tracking-label) y en
+   lo que se pinta fuera de .shell (modales, avisos). */
+.admin,
+.admin * {
+  letter-spacing: 0 !important;
+}

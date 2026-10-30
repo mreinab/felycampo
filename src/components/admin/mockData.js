@@ -704,8 +704,9 @@ export const consultasMock = [
 
 // ---------- CITAS (formulario real de /visita-fely-campo/cita) ----------
 // Mismos campos que envía ese formulario a /api/cita (ver route.js):
-// atelier (id de ATELIERES_CITA), fecha de la boda, nombre, email,
-// teléfono, código postal, ciudad, mensaje e idioma. "recibida" es cuándo
+// fecha de la boda, nombre, email,
+// teléfono, código postal, ciudad, mensaje, idioma y la casilla de
+// privacidad/términos (aceptaLegal, obligatoria). "recibida" es cuándo
 // llegó; "estado" y "notas" son solo del admin. De EJEMPLO: hoy la API
 // solo envía emails, no guarda nada — cuando haya base de datos, estas
 // filas saldrán de ahí.
@@ -713,9 +714,8 @@ export const ESTADOS_CITA = ['Pendiente', 'Contactada', 'Cita confirmada', 'Cerr
 
 export const citasMock = [
   {
-    id: 'cita-6',
+    id: 'cita-2',
     recibida: '2026-10-26T18:42',
-    atelier: 'salamanca',
     nombre: 'Lucía Hernández Prieto',
     email: 'lucia.hernandez@example.com',
     telefono: '+34 600 112 233',
@@ -724,40 +724,12 @@ export const citasMock = [
     fechaBoda: '2027-06-12',
     mensaje: 'Me caso en junio y me gustaría ver vestidos de novia de corte sencillo, con algo de espalda.',
     locale: 'es',
+    aceptaLegal: true,
     estado: 'Pendiente',
   },
   {
-    id: 'cita-5',
-    recibida: '2026-10-25T11:05',
-    atelier: 'madrid',
-    nombre: 'Carmen Ortega',
-    email: 'carmen.ortega@example.com',
-    telefono: '+34 611 445 566',
-    codigoPostal: '28010',
-    ciudad: 'Madrid',
-    fechaBoda: '2027-05-08',
-    mensaje: 'Soy la madrina de la boda de mi hijo y busco un vestido largo en tonos azules.',
-    locale: 'es',
-    estado: 'Pendiente',
-  },
-  {
-    id: 'cita-4',
-    recibida: '2026-10-23T20:17',
-    atelier: 'oviedo',
-    nombre: 'Marta Álvarez',
-    email: 'marta.alvarez@example.com',
-    telefono: '+34 622 778 899',
-    codigoPostal: '33003',
-    ciudad: 'Oviedo',
-    fechaBoda: '2027-09-18',
-    mensaje: '',
-    locale: 'es',
-    estado: 'Contactada',
-  },
-  {
-    id: 'cita-3',
+    id: 'cita-1',
     recibida: '2026-10-20T09:30',
-    atelier: 'madrid',
     nombre: 'Emma Wilson',
     email: 'emma.wilson@example.com',
     telefono: '+44 7700 900123',
@@ -766,132 +738,57 @@ export const citasMock = [
     fechaBoda: '2027-07-03',
     mensaje: 'I will be in Madrid in November and would love to try on bridal dresses.',
     locale: 'en',
-    estado: 'Cita confirmada',
-  },
-  {
-    id: 'cita-2',
-    recibida: '2026-10-14T16:48',
-    atelier: 'salamanca',
-    nombre: 'Rocío Sánchez',
-    email: 'rocio.sanchez@example.com',
-    telefono: '+34 633 990 011',
-    codigoPostal: '37700',
-    ciudad: 'Béjar',
-    fechaBoda: '2027-04-24',
-    mensaje: 'Quería información sobre vestidos de invitada para una boda de día.',
-    locale: 'es',
-    estado: 'Cerrada',
-  },
-  {
-    id: 'cita-1',
-    recibida: '2026-10-09T12:02',
-    atelier: 'oviedo',
-    nombre: 'Paula Fernández',
-    email: 'paula.fernandez@example.com',
-    telefono: '+34 644 223 344',
-    codigoPostal: '33201',
-    ciudad: 'Gijón',
-    fechaBoda: '2027-08-28',
-    mensaje: 'Busco vestido de novia a medida, con mangas.',
-    locale: 'es',
-    estado: 'Cita confirmada',
+    aceptaLegal: true,
+    estado: 'Contactada',
   },
 ];
 
-// ---------- CONSULTAS DE PRECIO (Atelier — "Precio a consultar") ----------
-// Atelier no lleva precio visible en la ficha pública: en su lugar hay un
-// botón "Precio a consultar" que deja estos datos de contacto. `clienteId`
-// solo se rellena cuando quien pregunta ya es cliente registrado — así la
-// misma consulta aparece también en su ficha (/admin/clientes/[id]). Las
-// demás son visitantes sin cuenta que igualmente dejaron sus datos.
+// ---------- CONSULTAS DE VESTIDOS ("Contacta con nosotros" → modal "Solicita información") ----------
+// Mismos campos que envía ModalSolicitudAtelier.jsx a /api/consulta-vestido:
+// tipo (novias|fiesta, sacado de la URL de la ficha), vestido (producto),
+// su foto (imagen), color elegido (+ colorHex), ruta de la ficha, nombre,
+// email, teléfono (opcional), comentario (mensaje, opcional), idioma
+// (locale) y la casilla de privacidad (aceptaLegal). "recibida" es cuándo
+// llegó; "estado" (los mismos que Citas, ESTADOS_CITA) y las notas son
+// solo del admin. De EJEMPLO: hoy la API solo envía emails, no guarda
+// nada — cuando haya base de datos, estas filas saldrán de ahí.
+// Antes "Consultas de precio" (botón "Precio a consultar" + clienteId de
+// clientes registrados, que el front no tiene) — sustituido a petición.
 
 export const consultasPrecioMock = [
   {
-    id: 'cp1',
-    producto: 'Vestido Elena',
-    color: 'Marfil',
-    fecha: '2026-08-05',
-    nombre: 'Marta Ibáñez',
-    email: 'marta.ibanez@example.com',
-    telefono: '+34 611 222 333',
-    clienteId: 'cl1',
+    id: 'cv-2',
+    recibida: '2026-10-26T12:15',
+    tipo: 'fiesta',
+    producto: 'Look 6 26_Opaline',
+    imagen: '/img/collections/fiesta/primavera-verano-26/fely-campo-coleccion-fiesta-primavera-verano-26-2526-45.webp',
+    color: 'Verde agua',
+    colorHex: '#9FC9C1',
+    ruta: '/es/atelier/fiesta/look-6-26-opaline',
+    nombre: 'Carmen Ortega',
+    email: 'carmen.ortega@example.com',
+    telefono: '+34 611 445 566',
+    mensaje: 'Soy madrina en mayo y me encanta este vestido. ¿Se puede hacer en un tono más oscuro?',
+    locale: 'es',
+    aceptaLegal: true,
     estado: 'Pendiente',
-    mensaje: 'Me gustaría saber el precio para talla M en color crema.',
   },
   {
-    id: 'cp2',
-    producto: 'Vestido Celeste',
-    color: 'Azul marino',
-    fecha: '2026-08-06',
-    nombre: 'Alicia Ferrer',
-    email: 'alicia.ferrer@example.com',
-    telefono: '+34 622 333 444',
-    clienteId: null,
-    estado: 'Pendiente',
-    mensaje: '¿Podríais confirmarme disponibilidad y precio para septiembre?',
-    notasInternas: 'Enviado presupuesto por email, pendiente de respuesta.',
-  },
-  {
-    id: 'cp3',
-    producto: 'Vestido Alba',
-    color: 'Rosa empolvado',
-    fecha: '2026-08-02',
-    nombre: 'Beatriz Soler',
-    email: 'beatriz.soler@example.com',
-    telefono: '+34 633 444 555',
-    clienteId: 'cl6',
-    estado: 'Contactado',
-    mensaje: '',
-  },
-  {
-    id: 'cp4',
-    producto: 'Vestido Perla',
-    color: null,
-    fecha: '2026-07-28',
-    nombre: 'Noelia Ruiz',
-    email: 'noelia.ruiz@example.com',
-    telefono: '+34 644 555 666',
-    clienteId: null,
-    estado: 'Contactado',
-    mensaje: 'Interesada en la colección de novias 2026.',
-  },
-  {
-    id: 'cp5',
-    producto: 'Vestido Luna',
-    color: 'Burdeos',
-    fecha: '2026-08-09',
-    nombre: 'Carmen Vidal',
-    email: 'carmen.vidal@example.com',
-    telefono: '+34 655 666 777',
-    clienteId: 'cl7',
-    estado: 'Pendiente',
-    mensaje: '',
-  },
-  {
-    id: 'cp6',
-    producto: 'Vestido Nube',
-    color: null,
-    fecha: '2026-08-11',
-    nombre: 'Cristina Ferrer',
-    email: 'cristina.ferrer@example.com',
-    telefono: '+34 666 777 888',
-    clienteId: null,
-    estado: 'Pendiente',
-    mensaje: '¿Este modelo se puede confeccionar en manga larga?',
-    nuevo: true, // placeholder de diseño — ver AdminSidebar "nuevos: 2"; sin lógica real de "visto" detrás
-  },
-  {
-    id: 'cp7',
-    producto: 'Vestido Alba',
-    color: null,
-    fecha: '2026-08-12',
-    nombre: 'Irene Vázquez',
-    email: 'irene.vazquez@example.com',
-    telefono: '+34 677 888 999',
-    clienteId: null,
-    estado: 'Pendiente',
-    mensaje: '¿Podríais decirme el precio y los plazos de entrega para este vestido?',
-    nuevo: true,
+    id: 'cv-1',
+    recibida: '2026-10-21T19:40',
+    tipo: 'novias',
+    producto: 'Look 2 - Bride 27',
+    imagen: '/img/collections/novia/bride-27/fely-campo-coleccion-novia-bride-27-look-2.webp',
+    color: '',
+    colorHex: '',
+    ruta: '/en/atelier/novias/look-2-bride-27',
+    nombre: 'Sophie Clarke',
+    email: 'sophie.clarke@example.com',
+    telefono: '',
+    mensaje: 'I am getting married in Spain next September. Could you tell me more about this dress and the fitting process?',
+    locale: 'en',
+    aceptaLegal: true,
+    estado: 'Contactada',
   },
 ];
 

@@ -26,7 +26,7 @@ export const metadata = {
 export default function AdminLayout({ children }) {
   return (
     <html lang="es">
-      <body>
+      <body className={styles.admin}>
         <CategoriasProvider>
           <ToastProvider>
             <div className={styles.shell}>

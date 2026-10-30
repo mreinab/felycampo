@@ -9,7 +9,8 @@
    borde, subrayados, pestañas…): misma familia, tamaño y tracking.
    Ni los tamaños (.s/.m/.l/.full) ni las variantes la cambian — solo
    cambian el padding/ancho. .texto y .flecha no llevan .boton, por eso
-   repiten estas tres líneas. */
+   repiten familia y tamaño — pero sin el tracking: los botones
+   subrayados van sin letter-spacing (a petición). */
 .boton {
   display: inline-block;
   text-align: center;
@@ -127,7 +128,7 @@
   color: var(--color-tinta);
   font-family: var(--font-base);
   font-size: var(--text-cta);
-  letter-spacing: var(--tracking-label);
+  /* Sin letter-spacing en los botones subrayados (a petición). */
   cursor: pointer;
   border-bottom: var(--border-regular) solid var(--color-tinta);
   padding-bottom: 2px;
@@ -162,7 +163,7 @@
   padding: var(--spacing-2) 0 0 0;
   font-family: var(--font-base);
   font-size: var(--text-cta);
-  letter-spacing: var(--tracking-label);
+  /* Sin letter-spacing, igual que .texto (a petición). */
   color: var(--color-tinta);
   border: none;
   border-bottom: 1px solid var(--color-tinta);

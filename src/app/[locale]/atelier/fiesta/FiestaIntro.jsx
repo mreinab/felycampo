@@ -1,0 +1,48 @@
+// FiestaIntro.jsx
+
+'use client';
+
+/* ============================================================
+   INTRO + CONTENIDO DE /atelier/fiesta — Fely Campo
+   Mismo esquema que /podcast y /talleres-fely-campo (IntroSeccion:
+   título, texto y filtros) con dos filtros que cambian lo que se ve
+   debajo sin salir de la página:
+     - "Así trabajamos": las imágenes editoriales con texto (BloqueSeccion
+       en zigzag) + el backstage.
+     - "Colección fiesta": la cuadrícula de looks.
+   Se entra en "Colección fiesta" (a petición). page.js (servidor) le pasa
+   las dos partes ya pintadas ("editorial" y "colecciones"), así este
+   componente solo decide cuál se ve.
+   ============================================================ */
+
+import { useState } from 'react';
+// Import directo (no desde el índice de @/components/layout): el índice
+// también exporta componentes de servidor que no pueden entrar en un
+// componente cliente.
+import IntroSeccion from '@/components/layout/IntroSeccion';
+
+export const VISTA_ATELIER = 'atelier';
+export const VISTA_COLECCIONES = 'colecciones';
+
+function FiestaIntro({ titulo, texto, etiquetas, editorial, colecciones }) {
+  const [vista, setVista] = useState(VISTA_COLECCIONES);
+
+  return (
+    <>
+      <IntroSeccion
+        titulo={titulo}
+        texto={texto}
+        filtros={[
+          { id: VISTA_ATELIER, etiqueta: etiquetas.atelier },
+          { id: VISTA_COLECCIONES, etiqueta: etiquetas.colecciones },
+        ]}
+        activo={vista}
+        onCambiar={setVista}
+      />
+
+      {vista === VISTA_ATELIER ? editorial : colecciones}
+    </>
+  );
+}
+
+export default FiestaIntro;

@@ -30,7 +30,10 @@
 
 @media (max-width: 767px) {
   .ficha {
-    grid-template-columns: 1fr;
+    /* block y no grid de una columna: GaleriaProducto .galeria va
+       sticky en mobile, y dentro de un grid su límite sería su propia
+       celda (no se pegaría nunca) — en block el límite es .ficha. */
+    display: block;
     /* Sin gap: el "peek" de .info sobre la galería (más abajo) lo
        controla su propio margin-top negativo — un gap aquí competiría
        con él. padding-bottom para compensar ESE MISMO margin-top

@@ -15,7 +15,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useCategorias } from './Categorias';
-import { codigoTemporada, citasMock } from '@/components/admin/mockData';
+import { codigoTemporada, citasMock, consultasPrecioMock } from '@/components/admin/mockData';
 import {
   Home,
   Newspaper,
@@ -57,7 +57,7 @@ const grupos = [
         href: '/admin/consultas', label: 'Citas', icono: CalendarDays, nuevos: citasMock.filter((c) => c.estado === 'Pendiente').length,
       },
       {
-        href: '/admin/consultas-precio', label: 'Solicitudes de atelier', icono: MessageCircleQuestionMark, nuevos: 2,
+        href: '/admin/consultas-precio', label: 'Consultas de vestidos', icono: MessageCircleQuestionMark, nuevos: consultasPrecioMock.filter((c) => c.estado === 'Pendiente').length,
       },
       { href: '/admin/newsletter', label: 'Newsletter', icono: Mail },
     ],

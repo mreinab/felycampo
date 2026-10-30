@@ -27,7 +27,10 @@
 
 @media (max-width: 767px) {
   .ficha {
-    grid-template-columns: 1fr;
+    /* block y no grid de una columna: GaleriaProducto .galeria va
+       sticky en mobile, y dentro de un grid su límite sería su propia
+       celda (no se pegaría nunca) — en block el límite es .ficha. */
+    display: block;
     margin-bottom: 0; /* mobile se queda como estaba */
     /* padding-bottom compensa el margin-top:-60px de .info (ver más
        abajo): un margin negativo resta de lo que el item aporta al
