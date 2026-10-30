@@ -305,7 +305,9 @@
   width: 100%;
   padding-block: var(--spacing-4);
   font-family: var(--font-base);
-  font-size: var(--text-body);
+  /* 15px (--text-titulo), no --text-body (13px): a 13px costaba leer
+     las filas del menú en mobile (a petición). */
+  font-size: var(--text-titulo);
   font-weight: 400;
   color: var(--color-tinta);
   background: none;
