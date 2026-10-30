@@ -444,14 +444,12 @@
     "item1": {
       "label": "Bridal Atelier",
       "titulo": "Bridal Atelier",
-      "cta": "View all",
-      "ctaAtelier": "Bridal Gowns"
+      "cta": "View all"
     },
     "item2": {
       "label": "Evening Wear Atelier",
       "titulo": "Evening Wear Atelier",
-      "cta": "View all",
-      "ctaAtelier": "Evening Dresses"
+      "cta": "View all"
     }
   },
   "atelierIndex": {
