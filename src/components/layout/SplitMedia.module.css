@@ -185,6 +185,12 @@
   text-align: center;
 }
 
+/* /atelier: sin título, solo el CTA ("Vestidos de Novia/Fiesta"), a
+   15px (--text-titulo) en vez del --text-cta de Boton (a petición). */
+.grid.landing.centrado .contenidoLanding .cta {
+  font-size: var(--text-titulo);
+}
+
 @keyframes entradaContenido {
   from {
     opacity: 0;

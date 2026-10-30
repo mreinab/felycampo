@@ -444,12 +444,14 @@
     "item1": {
       "label": "Atelier Novia",
       "titulo": "Vestidos de novia a medida",
-      "cta": "Ver todo"
+      "cta": "Ver todo",
+      "ctaAtelier": "Vestidos de Novia"
     },
     "item2": {
       "label": "Atelier Fiesta",
       "titulo": "Vestidos de fiesta a medida",
-      "cta": "Ver todo"
+      "cta": "Ver todo",
+      "ctaAtelier": "Vestidos de Fiesta"
     }
   },
   "atelierIndex": {

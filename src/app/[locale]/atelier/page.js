@@ -33,15 +33,13 @@ export default async function Pagina({ params }) {
             {
               src: '/img/fely-campo-web-splitimage-novias.webp',
               tipo: 'imagen',
-              tituloKey: 'splitMedia.item1.titulo',
-              ctaKey: 'splitMedia.item1.cta',
+              ctaKey: 'splitMedia.item1.ctaAtelier',
               href: `/${locale}/atelier/novias`,
             },
             {
               src: '/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp',
               tipo: 'imagen',
-              tituloKey: 'splitMedia.item2.titulo',
-              ctaKey: 'splitMedia.item2.cta',
+              ctaKey: 'splitMedia.item2.ctaAtelier',
               href: `/${locale}/atelier/fiesta`,
             },
           ]}
