@@ -4,7 +4,7 @@
 
 /* ============================================================
    INTRO + LISTADO DE /talleres-fely-campo — Fely Campo
-   Misma estructura que /podcast (ver podcast/ListadoPodcastBlog.jsx):
+   Misma estructura que /blog (ver blog/ListadoPodcastBlog.jsx):
    IntroSeccion (título, texto y filtros) y, debajo, la lista de
    talleres. Componente cliente por los filtros: "Ver todo" y uno por
    taller ("Taller propio", "Taller I", "Taller II"), que muestran solo

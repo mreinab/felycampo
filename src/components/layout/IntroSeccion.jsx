@@ -2,7 +2,7 @@
 
 /* ============================================================
    INTRO DE SECCIÓN — Fely Campo
-   Bloque de introducción bajo el hero de una página (/podcast,
+   Bloque de introducción bajo el hero de una página (/blog,
    /talleres-fely-campo): mínimo 60vh, centrado en vertical y alineado
    a la izquierda — título (19px), texto (13px, 60vw en escritorio) y,
    opcionalmente, una fila de filtros debajo.

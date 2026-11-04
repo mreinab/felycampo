@@ -3,7 +3,7 @@
    (antes /sobre-fely/talleres — renombrada, ver Navbar.jsx).
    Server Component: hero común (HeroPagina — "Nuestros talleres" + la
    primera línea de talleres.intro como subtítulo) + ListadoTalleres
-   (cliente): intro (IntroSeccion, mismo esquema que /podcast — el lema
+   (cliente): intro (IntroSeccion, mismo esquema que /blog — el lema
    de título, el resto de talleres.intro de texto y los filtros "Ver
    todo" + uno por taller) y la lista de talleres (ver talleres.js),
    filtrable en la propia página. El scroll del carrusel de imágenes

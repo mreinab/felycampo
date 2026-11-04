@@ -147,7 +147,7 @@
 }
 
 /* Intro de esta página (IntroSeccion, ver ListadoTalleres.jsx):
-   título a 15px en vez de los 19px de /podcast, y filtros sin las
+   título a 15px en vez de los 19px de /blog, y filtros sin las
    mayúsculas de Boton "texto". Clase + elemento para ganar a las
    reglas de IntroSeccion.module.css sin depender del orden de carga. */
 .intro h2 {

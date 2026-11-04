@@ -14,7 +14,7 @@
    de la cuadrícula (tituloKey/coleccionKey más abajo).
 
    Bajo el hero, intro con filtros (FiestaIntro.jsx → IntroSeccion,
-   mismo esquema que /podcast): título "Atelier Fiesta", el texto de
+   mismo esquema que /blog): título "Atelier Fiesta", el texto de
    descripción y dos filtros — "Así trabajamos" (dos BloqueSeccion en
    zigzag + RunwayBackstage, contenido en fiestaEditorial.js, la que se
    ve al entrar) y "Colección fiesta" (la cuadrícula). Antes iban

@@ -178,7 +178,7 @@ export const SOBRE_FELY = {
   },
 
   // Tarjeta grande al final de la página (TarjetaEnlaceExterno — mismo
-  // diseño que BlogTarjetaPodcastDestacado de /podcast, pero enlazando
+  // diseño que BlogTarjetaPodcastDestacado de /blog, pero enlazando
   // fuera del sitio): el documental de las 54 cintas VHS. "titulo" sin
   // traducción (nombre propio).
   documental: {

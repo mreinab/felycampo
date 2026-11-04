@@ -61,7 +61,8 @@
 import { Fragment } from 'react';
 import { getTranslations } from 'next-intl/server';
 import { HeroPagina, RunwayDescripcion } from '@/components/layout';
-import { CarruselImagenes, Boton, EnVista } from '@/components/ui';
+import { CarruselImagenes, Boton, EnVista, JsonLd } from '@/components/ui';
+import { tiendaAtelier, migas } from '@/lib/datosEstructurados';
 import { UBICACIONES, enlaceMapa } from '../visita-fely-campo/ubicaciones';
 import styles from './page.module.css';
 
@@ -87,8 +88,26 @@ async function AtelierDetalle({ datos, locale }) {
   ));
   const whatsappHref = ubicacion && `https://wa.me/${ubicacion.whatsapp.replace(/\D/g, '')}`;
 
+  // ClothingStore + BreadcrumbList (auditoría SEO M2): dirección y
+  // teléfono de ubicaciones.js, los mismos que se pintan más abajo.
+  const urlFicha = `/${locale}/atelier-fiesta/${datos.id}`;
+  const jsonLd = ubicacion && [
+    tiendaAtelier({
+      ubicacion,
+      nombre: `Fely Campo ${ubicacion.nombre}`,
+      url: urlFicha,
+      imagen: datos.heroMedio.tipo === 'imagen' ? datos.heroMedio.src : datos.heroMedio.poster,
+    }),
+    migas([
+      { nombre: 'Fely Campo', ruta: `/${locale}` },
+      { nombre: 'Atelier', ruta: `/${locale}/atelier` },
+      { nombre: nombreCiudad },
+    ]),
+  ];
+
   return (
     <section>
+      <JsonLd datos={jsonLd} />
       <HeroPagina
         medio={datos.heroMedio}
         alt={nombreCiudad}
