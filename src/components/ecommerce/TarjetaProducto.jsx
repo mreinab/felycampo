@@ -24,7 +24,7 @@
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
 import styles from './TarjetaProducto.module.css';
-import { Etiqueta, BotonGuardar, Boton } from '../ui';
+import { Etiqueta, /* BotonGuardar, */ Boton } from '../ui';
 import { slugify } from '@/lib/slugify';
 import useEnVista from '@/hooks/useEnVista';
 
@@ -153,9 +153,12 @@ function TarjetaProducto({
             </span>
           )}
 
+          {/* Wishlist (BotonGuardar) oculto a petición (2026-11-04): ya no
+              hace nada. Para recuperarlo, descomentar.
           <span className={styles.wishlist} onClick={(evento) => evento.stopPropagation()}>
             <BotonGuardar />
           </span>
+          */}
 
           <div className={styles.recorte}>
             {imagenActual && (
