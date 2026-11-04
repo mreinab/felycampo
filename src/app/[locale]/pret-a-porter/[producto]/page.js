@@ -40,7 +40,9 @@ export async function generateMetadata({ params }) {
   const color = producto.colores?.[0]?.nombre;
   const base = producto.descripcion || (esEs
     ? `${producto.nombre}${color ? ` en color ${color.toLowerCase()}` : ''}, de la colección de prêt-à-porter de Fely Campo.`
-    : `${producto.nombre}${color ? ` in ${color.toLowerCase()}` : ''}, from the Fely Campo ready-to-wear collection.`);
+    // En inglés sin color: los nombres de color del catálogo solo
+    // existen en español ("negro", "ciruela"...).
+    : `${producto.nombre}, from the Fely Campo ready-to-wear collection.`);
   return metadataPagina({
     locale,
     ruta: `/pret-a-porter/${slug}`,
