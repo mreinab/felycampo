@@ -24,7 +24,9 @@ const nextConfig = {
       {
         source: '/:locale(es|en)/blog',
         destination: '/:locale/podcast',
-        permanent: false,
+        // 301 (antes temporal, 307): el blog vive en /podcast para
+        // siempre (auditoría SEO M13).
+        statusCode: 301,
       },
       // /about era un placeholder vacío que duplicaba /sobre-fely.
       {

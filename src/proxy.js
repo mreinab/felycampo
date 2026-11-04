@@ -15,6 +15,12 @@ const REGLAS_PREFIJO = [
   [/^\/(category|tag|author)\//, '/es/podcast'],
   [/^\/(feed|comments\/feed)$/, '/es/podcast'],
   [/^\/(tienda|shop|carrito|cart|mi-cuenta|my-account|finalizar-compra|checkout)$/, '/es/pret-a-porter'],
+  // URLs antiguas fuera del sitemap que daban cadenas de redirección
+  // (308 → 307 → 308) hasta la home (auditoría SEO M13): ahora un solo
+  // 301 a su equivalente. Las de cuenta, al mismo destino que /mi-cuenta.
+  [/^\/terminos-y-condiciones$/, '/es/legal/terminos'],
+  [/^\/contacto$/, '/es/visita-fely-campo'],
+  [/^\/(lista-de-deseos|lost-password|mi-cuenta\/lost-password)$/, '/es/pret-a-porter'],
 ];
 
 // Páginas de esta web que se han quitado → su sustituta, en cualquier
