@@ -58,6 +58,7 @@
    para poder usarlo desde este Server Component sin convertirlo
    entero a cliente). */
 
+import { Fragment } from 'react';
 import { getTranslations } from 'next-intl/server';
 import { HeroPagina, RunwayDescripcion } from '@/components/layout';
 import { CarruselImagenes, Boton, EnVista } from '@/components/ui';
@@ -74,9 +75,16 @@ async function AtelierDetalle({ datos, locale }) {
   // Mismo criterio que ListadoUbicaciones.jsx: un solo teléfono → "Telf";
   // dos → "Telf" (fijo) y "Móvil", cada uno en su propia línea.
   const etiquetasTelefono = [tVisitenos('telf'), tVisitenos('movil')];
-  const lineaContacto = ubicacion?.telefonos
-    .map((telefono, indiceTelefono) => `${etiquetasTelefono[indiceTelefono] || tVisitenos('telf')}: ${telefono}`)
-    .join('\n');
+  // Cada teléfono es un enlace tel: en formato internacional (auditoría
+  // SEO M10), con el mismo aspecto de texto plano (ver .tel en el CSS).
+  // "\n" entre ellos: .telefonoCita lleva white-space: pre-line.
+  const lineaContacto = ubicacion?.telefonos.map((telefono, indiceTelefono) => (
+    <Fragment key={telefono}>
+      {indiceTelefono > 0 && '\n'}
+      {`${etiquetasTelefono[indiceTelefono] || tVisitenos('telf')}: `}
+      <a href={`tel:${telefono.replace(/[^+\d]/g, '')}`} className={styles.tel}>{telefono}</a>
+    </Fragment>
+  ));
   const whatsappHref = ubicacion && `https://wa.me/${ubicacion.whatsapp.replace(/\D/g, '')}`;
 
   return (

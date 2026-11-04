@@ -19,6 +19,7 @@
    @/components/ui) — no se llama useEnVista a mano aquí porque el hook
    no puede invocarse dentro del .map de abajo. */
 
+import { Fragment } from 'react';
 import { useTranslations } from 'next-intl';
 import { CabeceraSeccion, CarruselFotos, EnVista } from '@/components/ui';
 import { UBICACIONES, enlaceMapa } from './ubicaciones';
@@ -71,9 +72,16 @@ function ListadoUbicaciones({ locale }) {
           // .whatsapp más abajo): es un enlace real a wa.me, no texto
           // plano como los teléfonos.
           const etiquetasTelefono = [t('telf'), t('movil')];
-          const lineaContacto = ubicacion.telefonos
-            .map((telefono, indiceTelefono) => `${etiquetasTelefono[indiceTelefono] || t('telf')}: ${telefono}`)
-            .join('\n');
+          // Cada teléfono es un enlace tel: en formato internacional
+          // (auditoría SEO M10), con aspecto de texto plano (.tel en el
+          // CSS). "\n" entre ellos: .telefono lleva white-space: pre-line.
+          const lineaContacto = ubicacion.telefonos.map((telefono, indiceTelefono) => (
+            <Fragment key={telefono}>
+              {indiceTelefono > 0 && '\n'}
+              {`${etiquetasTelefono[indiceTelefono] || t('telf')}: `}
+              <a href={`tel:${telefono.replace(/[^+\d]/g, '')}`} className={styles.tel}>{telefono}</a>
+            </Fragment>
+          ));
           const whatsappHref = `https://wa.me/${ubicacion.whatsapp.replace(/\D/g, '')}`;
 
           return (
