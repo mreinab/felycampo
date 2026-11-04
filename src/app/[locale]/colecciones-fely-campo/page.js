@@ -30,7 +30,7 @@ export default async function Pagina({ params }) {
     <HeroPagina
       imagen="/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-faldas.webp"
       alt={t('nav.submenus.colecciones.runway')}
-      titulo={t('nav.submenus.colecciones.runway')}
+      titulo={/* H1 propio (auditoría SEO M11); el menú sigue con "Runway" */ t('catalogo.tituloColecciones')}
       subtitulo={t('heroPagina.runwayArchivo')}
     />
     <section className={`${styles.pagina} contenedor`}>

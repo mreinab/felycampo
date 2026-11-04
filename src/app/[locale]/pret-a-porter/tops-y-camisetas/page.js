@@ -19,7 +19,7 @@ export default async function Pagina() {
     <section className="seccion">
       <ProductHero
         imagen="/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-tops-camisas.webp"
-        titulo={[t('catalogo.tituloTienda'), t('nav.submenus.tienda.tops')]}
+        titulo={/* H1 con "camisetas" como la URL y el title (auditoría SEO M11); el menú sigue con "Tops y Camisas" */ [t('catalogo.tituloTienda'), t('catalogo.tituloTops')]}
       />
       <CuadriculaProductos
         productos={productos}
