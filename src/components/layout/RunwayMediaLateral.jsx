@@ -19,7 +19,15 @@ function RunwayMediaLateral({ medio, alt }) {
 
   return (
     <div className={styles.medio}>
-      {medio.tipo === 'video' ? (
+      {medio.tipo === 'video' && medio.srcMovil ? (
+        // "srcMovil" (opcional): otro vídeo en mobile (<768px, mismo corte
+        // que el CSS), p. ej. vertical en vez de horizontal. El navegador
+        // elige el <source> al cargar y solo descarga ese.
+        <video poster={medio.poster} className={styles.media} autoPlay muted loop playsInline>
+          <source src={medio.srcMovil} type="video/mp4" media="(max-width: 767px)" />
+          <source src={medio.src} type="video/mp4" />
+        </video>
+      ) : medio.tipo === 'video' ? (
         <video src={medio.src} poster={medio.poster} className={styles.media} autoPlay muted loop playsInline />
       ) : (
         <img src={medio.src} alt={alt} className={styles.media} />

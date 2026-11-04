@@ -10,7 +10,7 @@
    campaña se recorre a pantalla completa — cabeceras y datos propios
    de cada uno. */
 
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { BlogArticulo, BlogCampana, BlogPodcast } from '@/components/layout';
 import { entradaPorSlug } from '../blog';
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }) {
 export default async function Entrada({ params }) {
   const { locale, entrada: slug } = await params;
   const entrada = entradaPorSlug(slug);
-  if (!entrada) notFound();
+  if (!entrada) permanentRedirect(`/${locale}/podcast`); // slug inexistente: al listado (ninguna URL en 404)
 
   const t = await getTranslations('blog');
   const volverHref = `/${locale}/podcast`;

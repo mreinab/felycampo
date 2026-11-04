@@ -49,7 +49,7 @@ export default async function Pagina() {
             rel="noopener noreferrer"
             className="enlace-texto"
           >
-            C/ Laguna Negra 17-19, Salamanca
+            C/ Laguna Negra 17, Salamanca
           </a>
         </div>
       </div>

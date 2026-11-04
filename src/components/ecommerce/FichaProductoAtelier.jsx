@@ -62,7 +62,7 @@
      <FichaProductoAtelier slug="vestido-aurora" seccion="novias" />
    ============================================================ */
 
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { productosEjemplo } from '@/components/layout/productosEjemplo';
@@ -99,7 +99,7 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   const catalogo = CATALOGOS_REALES[seccion] || productosEjemplo;
 
   const producto = catalogo.find((candidato) => slugify(candidato.nombre) === slug);
-  if (!producto) notFound();
+  if (!producto) permanentRedirect(`/${locale}/atelier/${seccion}`); // slug inexistente: al listado (ninguna URL en 404)
 
   const indiceProducto = catalogo.indexOf(producto);
   // Con "tags" reales (Novias, ver noviaProductos.js) se enseñan tal

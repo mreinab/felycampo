@@ -17,6 +17,25 @@ const REGLAS_PREFIJO = [
   [/^\/(tienda|shop|carrito|cart|mi-cuenta|my-account|finalizar-compra|checkout)$/, '/es/pret-a-porter'],
 ];
 
+// Páginas de esta web que se han quitado → su sustituta, en cualquier
+// idioma (la web es de atelier: sin "Contacto" ni "Devoluciones" de
+// tienda online, eliminadas el 2026-11-04). Ruta sin locale.
+const RUTAS_ELIMINADAS = {
+  '/ayuda/contacto': '/visita-fely-campo',
+  // No es una página quitada: la URL que alguien teclearía buscando
+  // contacto ("Contacto" del footer ya apunta a los ateliers).
+  '/contacto': '/visita-fely-campo',
+  '/contact': '/visita-fely-campo',
+  '/ayuda/devoluciones': '/ayuda/atencion-cliente',
+};
+
+function destinoEliminada(pathname) {
+  const [, locale, ...resto] = (pathname.replace(/\/+$/, '') || '/').toLowerCase().split('/');
+  if (!locales.includes(locale)) return null;
+  const destino = RUTAS_ELIMINADAS[`/${resto.join('/')}`];
+  return destino ? `/${locale}${destino}` : null;
+}
+
 // 301 de la web anterior: null si "pathname" no es una URL antigua. Las
 // rutas nuevas siempre empiezan por un locale (/es, /en), así que nunca
 // chocan con las antiguas, que no lo llevaban.
@@ -46,7 +65,8 @@ export default function middleware(request) {
   //    antes por la redirección de idioma de next-intl ni por la de barra
   //    final). Los parámetros de WordPress (?p=, ?add-to-cart=...) no
   //    significan nada aquí, así que no se arrastran.
-  const destino = destinoAntiguo(pathname);
+  //    Lo mismo para las páginas quitadas de esta web (RUTAS_ELIMINADAS).
+  const destino = destinoAntiguo(pathname) || destinoEliminada(pathname);
   if (destino) {
     return NextResponse.redirect(new URL(destino, request.url), 301);
   }

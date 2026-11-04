@@ -58,7 +58,7 @@ function Footer() {
   // "Instagram"/"YouTube" — siguen siendo placeholders "#", ver el <a>
   // más abajo) — por etiqueta en vez del nombre técnico de cada ruta.
   const RUTAS_COLUMNAS = {
-    'Contacto': '/ayuda/contacto',
+    'Contacto': '/visita-fely-campo', // los ateliers con sus teléfonos (/ayuda/contacto eliminada)
     'Historia': '/sobre-fely',
     'Pedir cita': '/visita-fely-campo/cita',
     'Puntos de venta': '/puntos-de-venta-fely-campo',

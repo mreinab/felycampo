@@ -21,9 +21,10 @@
   height: auto;
 }
 
-/* "hero-arriba" (clase global, ver ProductHero.jsx): encuadre anclado
+/* "hero-arriba" (clase global, ver ProductHero.jsx y AtelierDetalle.jsx): encuadre anclado
    arriba en vez de centrado. */
-.hero:global(.hero-arriba) img {
+.hero:global(.hero-arriba) img,
+.hero:global(.hero-arriba) video {
   object-position: top;
 }
 

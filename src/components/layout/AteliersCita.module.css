@@ -91,7 +91,9 @@
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    gap: 0;
+    /* Hueco blanco entre ateliers (a petición): marca dónde acaba cada
+       uno e invita a deslizar en horizontal. */
+    gap: var(--spacing-2);
     min-height: 0;
     margin-block: 0;
     padding-block: var(--spacing-6);

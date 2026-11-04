@@ -11,7 +11,7 @@
    las 11 completas, catálogo real que también alimenta
    /admin/colecciones/fiesta), aquí solo se filtra lo que se enseña. */
 
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { CuadriculaProductos, HeroPagina } from '@/components/layout';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }) {
 export default async function Pagina({ params }) {
   const { locale, categoria } = await params;
   const categoriaActiva = encontrarCategoria(categoria, { esFiesta: ES_FIESTA });
-  if (!categoriaActiva) notFound();
+  if (!categoriaActiva) permanentRedirect(`/${locale}/atelier/fiesta`); // slug inexistente: al listado (ninguna URL en 404)
 
   const t = await getTranslations();
   const jsonLd = await breadcrumbJsonLd({ locale, seccionKey: SECCION_KEY, seccionHref: SECCION_HREF, categoriaActiva });

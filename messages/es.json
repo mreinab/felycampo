@@ -179,8 +179,8 @@
     "horarioLabel": "Horario",
     "horario": "Lun - Vie: 8:00 - 16:00",
     "clickCollectLabel": "Click & Collect",
-    "clickCollect": "Recogida en tienda disponible.",
-    "direccionLabel": "Tienda"
+    "clickCollect": "Recogida en nuestro atelier de Salamanca.",
+    "direccionLabel": "Atelier"
   },
   "envios": {
     "titulo": "Envíos",
@@ -193,36 +193,9 @@
     "seguimiento": "Recibirás un email con el número de seguimiento en cuanto tu pedido salga del atelier.",
     "dudasTexto": "¿Tienes alguna duda sobre tu envío? Escríbenos a <email>info@felycampo.com</email> o consulta <atencion>Atención al cliente</atencion>."
   },
-  "devoluciones": {
-    "titulo": "Devoluciones",
-    "texto": "Puedes ponerte en contacto con nosotros en <email>info@felycampo.com</email> o en el <telefono>+34 683 703 644</telefono> dentro de los 14 días naturales siguientes a la recepción del pedido para gestionar una devolución o cambio. Te indicaremos los pasos a seguir.",
-    "gastosLabel": "Gastos de devolución",
-    "gastos": "A cargo de la clienta, salvo prenda defectuosa o error en el pedido.",
-    "masInfoTexto": "Visita nuestra página de <atencion>Atención al cliente</atencion> para más información."
-  },
   "whatsappFlotante": {
     "label": "Escríbenos por WhatsApp",
     "mensaje": "Hola, me gustaría recibir información sobre Fely Campo."
-  },
-  "contacto": {
-    "titulo": "Contacto",
-    "tiendasTitulo": "Atención a tiendas",
-    "horario": "Lun - Vie: 8:00 - 16:00",
-    "emailTitulo": "E-mail",
-    "pretaporterTitulo": "Atención Prêt-à-porter",
-    "chatOnline": "Chat online",
-    "whatsapp": "WhatsApp",
-    "clickCollectTitulo": "Click & Collect",
-    "direccion": "C/ Laguna Negra 17-19, Salamanca",
-    "parrafos": [
-      "En felycampo.com queremos ayudarte a elegir los mejores vestidos de novia y vestidos de fiesta, looks especiales de prêt-à-porter de lujo ideales para cualquier ocasión.",
-      "En nuestro nuevo Atelier de Madrid encontrarás lo último de nuestras colecciones de pasarela y además podrás vivir la experiencia única de crear un vestido a medida, ya sea de fiesta, novia o para cualquier evento.",
-      "Si estás buscando tu vestido de novia, ponemos a tu disposición nuestro Atelier Novia Salamanca, donde vivirás una experiencia única.",
-      "En las tiendas Fely Campo Fiesta Salamanca y Oviedo, si eres la madrina, invitada o dama de honor de cualquier evento, nuestras estilistas te asesorarán personalmente para que encuentres el vestido perfecto.",
-      "Además, tienes a tu disposición una gran red de puntos de venta a nivel nacional e internacional, donde encontrar nuestra firma.",
-      "Fely Campo lleva la elegancia de su diseño al día a día con la línea prêt-à-porter, que podrás encontrar en nuestra tienda de Salamanca.",
-      "Ven a conocer en directo la magia de Fely Campo."
-    ]
   },
   "carrito": {
     "titulo": "Carrito",

@@ -15,9 +15,9 @@ export const UBICACIONES = [
     id: 'salamanca',
     ciudad: 'Salamanca',
     nombre: 'Atelier Salamanca',
-    direccion: ['C/ Laguna Negra 17-19', '37008 Salamanca'],
-    telefonos: ['+34 923 000 000', '+34 616 356 217'],
-    whatsapp: '+34 616 356 217',
+    direccion: ['C/ Laguna Negra 17', '37008 Salamanca'],
+    telefonos: ['+34 923 19 00 53', '+34 659 00 62 57'],
+    whatsapp: '+34 659 00 62 57',
     horario: { es: 'Lun - Vie: 09:30 - 17:30', en: 'Mon - Fri: 9:30am - 5:30pm' },
     descripcion: {
       es: 'Espacio dedicado a la novia y a nuestras colecciones de fiesta, además de contar con una sección de nuestra línea pret-a-porter.',
@@ -28,8 +28,8 @@ export const UBICACIONES = [
     id: 'madrid',
     ciudad: 'Madrid',
     nombre: 'Showroom Madrid',
-    direccion: ['C/ Jorge Juan 12', '28001 Madrid'],
-    telefonos: ['+34 910 000 000'],
+    direccion: ['C/ Jorge Juan 29, 1º Derecha', '28001 Madrid'],
+    telefonos: ['+34 659 00 62 57'], // solo móvil, no hay fijo
     whatsapp: '+34 659 00 62 57',
     horario: null,
     descripcion: {
@@ -41,8 +41,8 @@ export const UBICACIONES = [
     id: 'oviedo',
     ciudad: 'Oviedo',
     nombre: 'Atelier Oviedo',
-    direccion: ['C/ Uría 12', '33003 Oviedo'],
-    telefonos: ['+34 985 000 000'],
+    direccion: ['C/ Gil de Jaz 15', '33004 Oviedo'],
+    telefonos: ['+34 985 73 83 46', '+34 661 58 54 04'],
     whatsapp: '+34 661 58 54 04',
     horario: { es: 'Lun - Sáb: 10:30 - 14:00 y 17:00 - 20:30', en: 'Mon - Sat: 10:30am - 2pm & 5pm - 8:30pm' },
     descripcion: {

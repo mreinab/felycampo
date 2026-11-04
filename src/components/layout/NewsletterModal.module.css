@@ -198,4 +198,17 @@
   .columnaTexto {
     padding: var(--spacing-5);
   }
+
+  /* X de cerrar (botón .cerrar de ui/Modal.jsx, primer hijo del panel):
+     en mobile, encima de la foto no se veía — a petición, fuera del
+     panel, justo encima de su esquina derecha, en claro sobre el velo
+     oscuro. Cabe en el padding superior de .contenedor (32px en mobile,
+     ver Modal.module.css). */
+  .panel > button:first-child {
+    top: auto;
+    bottom: 100%;
+    right: 0;
+    height: var(--spacing-6);
+    color: var(--color-crema); /* mismo claro que el texto sobre el hero */
+  }
 }

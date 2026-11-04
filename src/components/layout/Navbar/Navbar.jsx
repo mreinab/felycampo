@@ -162,16 +162,35 @@ function MobileMenuBanner({ locale, submenuKey, onNavegar }) {
     >
       {/* Sin texto encima a petición — el nombre queda solo como
           alt de la imagen (el enlace sigue necesitando un nombre
-          accesible). key={image}: remonta la <img> en cada cambio de
-          portada para que entre con el fundido de .mobileMenuBannerImagen. */}
-      <img
-        key={portada.image}
-        src={portada.image}
-        alt={portada.label}
-        className={styles.mobileMenuBannerImagen}
-        style={portada.imagePosition ? { objectPosition: portada.imagePosition } : undefined}
-      />
+          accesible). key={image}: remonta la imagen (y su estado de
+          carga) en cada cambio de portada. */}
+      <ImagenBanner key={portada.image} src={portada.image} alt={portada.label} posicion={portada.imagePosition} />
     </a>
+  );
+}
+
+// Foto de MobileMenuBanner: invisible hasta que termina de cargar y
+// entonces entra con fundido + leve zoom de salida (ver
+// .mobileMenuBannerImagenCargada), en vez de un fundido que arranca al
+// montar y, si la foto aún no ha llegado, la deja aparecer de golpe.
+// img.complete cubre la que ya estaba en caché (onLoad puede no llegar a
+// dispararse si cargó antes de hidratar).
+function ImagenBanner({ src, alt, posicion }) {
+  const [cargada, setCargada] = useState(false);
+  const imgRef = useRef(null);
+  useEffect(() => {
+    if (imgRef.current?.complete) setCargada(true);
+  }, []);
+
+  return (
+    <img
+      ref={imgRef}
+      src={src}
+      alt={alt}
+      onLoad={() => setCargada(true)}
+      className={`${styles.mobileMenuBannerImagen} ${cargada ? styles.mobileMenuBannerImagenCargada : ''}`}
+      style={posicion ? { objectPosition: posicion } : undefined}
+    />
   );
 }
 

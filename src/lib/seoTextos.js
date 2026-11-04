@@ -277,16 +277,6 @@ export const SEO_TEXTOS = {
       description: 'Fely Campo customer service phone, email and opening hours, plus Click & Collect at our Salamanca store.',
     },
   },
-  '/ayuda/contacto': {
-    es: {
-      title: 'Contacto Fely Campo | Tienda online y ateliers',
-      description: 'Contacta con Fely Campo para consultas sobre prêt-à-porter, pedidos, boutiques y ateliers. Encuentra las vías de atención y solicita información.',
-    },
-    en: {
-      title: 'Contact | Fely Campo',
-      description: 'Contact Fely Campo: ready-to-wear support, stockist enquiries, WhatsApp and online chat. Atelier at C/ Laguna Negra 17-19, Salamanca.',
-    },
-  },
   '/ayuda/envios': {
     es: {
       title: 'Envíos a España y la UE | Fely Campo',
@@ -295,16 +285,6 @@ export const SEO_TEXTOS = {
     en: {
       title: 'Shipping to Spain and the EU | Fely Campo',
       description: 'Fely Campo delivery times, shipping zones and tracking. Each order is hand-packed in Salamanca and shipped to Spain and the European Union.',
-    },
-  },
-  '/ayuda/devoluciones': {
-    es: {
-      title: 'Devoluciones y cambios | Fely Campo',
-      description: 'Cómo devolver o cambiar un pedido de Fely Campo: 14 días naturales desde la recepción, gastos de devolución y pasos a seguir.',
-    },
-    en: {
-      title: 'Returns and exchanges | Fely Campo',
-      description: 'How to return or exchange a Fely Campo order: 14 days from delivery, return costs and the steps to follow.',
     },
   },
 

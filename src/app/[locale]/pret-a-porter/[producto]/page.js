@@ -10,7 +10,7 @@
    pasan ya a GaleriaProducto/FichaProductoAcciones — ver el detalle
    completo en FichaProductoAcciones.jsx. */
 
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 import { ProductosRecomendados, ResenasClientes } from '@/components/layout';
@@ -50,7 +50,7 @@ export default async function FichaProducto({ params }) {
   const t = await getTranslations('producto');
 
   const producto = tiendaProductos.find((candidato) => slugify(candidato.nombre) === slug);
-  if (!producto) notFound();
+  if (!producto) permanentRedirect(`/${locale}/pret-a-porter`); // slug inexistente: al listado (ninguna URL en 404)
 
   // Mismo catálogo real, excluyendo el producto actual — hasta 10, la
   // misma cantidad que espera ProductosRecomendados en su carrusel.

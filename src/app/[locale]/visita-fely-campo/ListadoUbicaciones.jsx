@@ -136,7 +136,7 @@ function ListadoUbicaciones({ locale }) {
 
                     <div className={styles.acciones}>
                       <a
-                        href={`/${locale}/visita-fely-campo/cita?ubicacion=${ubicacion.id}`}
+                        href={`/${locale}/visita-fely-campo/cita`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.accionBtn}

@@ -10,6 +10,9 @@
    Texto de encargo (recibido el 2026-10-20) tal cual, salvo erratas
    evidentes corregidas: "enferemiza" → "enfermiza", "A los14" → "A los
    14", "FRIMA" → "FIRMA", "qu el" → "que el", "para mi" → "para mí".
+   Revisado el 2026-11-04 con la nueva versión del texto (tal cual,
+   salvo "las mujeres y que a través de la moda" → "las mujeres, a
+   través de la moda,").
    La versión inglesa es traducción propia, pendiente de revisar.
    Sustituye a la maquetación anterior (trayectoria por años +
    manifiesto de Ibiza + historia de la firma, ver historial).
@@ -46,10 +49,10 @@ export const SOBRE_FELY = {
       titulo: { es: '13 años. Un camino inesperado.', en: '13 years old. An unexpected path.' },
       parrafos: {
         es: [
-          'Tenía 13 años cuando mi vida empezó a tomar un rumbo que nunca habría imaginado. Tenía una timidez casi enfermiza y, cuando suspendí los estudios, mi madre decidió mandarme a un pequeño taller, sin saber que aquel lugar acabaría marcando mi futuro. Era una niña tímida, todavía intentando encontrar mi sitio en el mundo, y no podía imaginar que entre telas, agujas e hilos descubriría una forma de expresarme que iba mucho más allá de la ropa.',
+          'Tenía 13 años cuando mi vida empezó a tomar un rumbo que nunca habría imaginado. Con una timidez casi enfermiza y en el momento en que suspendí los estudios, mi madre decidió mandarme a un pequeño taller, sin saber que aquel lugar acabaría marcando mi futuro. Era una niña muy introvertida, incapaz de encontrar mi sitio en el mundo, y no podía imaginar que entre telas, agujas e hilos descubriría una forma de expresarme que iba mucho más allá de la ropa.',
         ],
         en: [
-          'I was 13 when my life began to take a direction I could never have imagined. I was almost painfully shy and, when I failed at school, my mother decided to send me to a small workshop, unaware that the place would end up shaping my future. I was a shy girl, still trying to find my place in the world, and I could not have imagined that among fabrics, needles and threads I would discover a way of expressing myself that went far beyond clothing.',
+          'I was 13 when my life began to take a direction I could never have imagined. Almost painfully shy, and just as I failed at school, my mother decided to send me to a small workshop, unaware that the place would end up shaping my future. I was a deeply introverted girl, unable to find my place in the world, and I could not have imagined that among fabrics, needles and threads I would discover a way of expressing myself that went far beyond clothing.',
         ],
       },
       cita: {
@@ -64,10 +67,10 @@ export const SOBRE_FELY = {
       titulo: { es: '14 años. Descubrir una forma de expresarme.', en: '14 years old. Discovering a way to express myself.' },
       parrafos: {
         es: [
-          'A los 14 años hice mi primer vestido. Era una niña muy tímida; me costaba hablar, relacionarme y mostrar lo que llevaba dentro. Pero cuando me puse aquel vestido, descubrí algo que no esperaba: podía esconderme detrás de él y, al mismo tiempo, sentirme fuerte. Comprendí, aunque todavía no supiera explicarlo, que la ropa podía cambiar cómo nos sentimos, ayudarnos a encontrar nuestra voz y revelar quiénes somos. No hay ninguna fotografía de ese primer vestido.',
+          'A los 14 años hice mi primer vestido. Tenía una inseguridad asombrosa; me costaba hablar, relacionarme y mostrar lo que llevaba dentro, pero cuando me puse aquel vestido, descubrí algo que no esperaba; podía esconderme detrás de él y, al mismo tiempo, sentirme fuerte. Comprendí, aunque todavía no supiera explicarlo, que la ropa podía cambiar nuestra manera de sentirnos, ayudarnos a encontrar nuestra voz y revelar quiénes somos. No hay ninguna fotografía de ese primer vestido, pero su imagen sigue presente en mi memoria.',
         ],
         en: [
-          'At 14 I made my first dress. I was a very shy girl; I found it hard to speak, to connect with others and to show what I carried inside. But when I put that dress on, I discovered something I did not expect: I could hide behind it and, at the same time, feel strong. I understood, even if I could not yet explain it, that clothes could change how we feel, help us find our voice and reveal who we are. There is no photograph of that first dress.',
+          'At 14 I made my first dress. I was astonishingly insecure; I found it hard to speak, to connect with others and to show what I carried inside, but when I put that dress on, I discovered something I did not expect: I could hide behind it and, at the same time, feel strong. I understood, even if I could not yet explain it, that clothes could change the way we feel, help us find our voice and reveal who we are. There is no photograph of that first dress, but its image is still alive in my memory.',
         ],
       },
       imagenes: [foto('fely-campo-sobre-fely-campo-elprimervestido.webp', 'Fely Campo en el año 1989 en su atelier de Salamanca', 'Fely Campo in 1989 at her atelier in Salamanca')],
@@ -78,10 +81,10 @@ export const SOBRE_FELY = {
       titulo: { es: '15 años. El primer traje de novia.', en: '15 years old. The first wedding dress.' },
       parrafos: {
         es: [
-          'Con 15 años hice mi primer vestido de novia. Era muy joven, pero aquel encargo me permitió descubrir una dimensión diferente de la moda. Detrás de un vestido había una mujer con la ilusión de vestirse un día que recordaría toda su vida. Sin darme cuenta, estaba descubriendo que quería crear prendas que no solo vistieran a una mujer, sino que la hicieran sentirse ella misma. No tengo imágenes de ese primer vestido, pero siempre perdurará en mi memoria.',
+          'Con 15 años hice mi primer vestido de novia. Era muy joven, pero aquel encargo me permitió descubrir una dimensión diferente de la moda. Detrás de un vestido había una mujer ilusionada con ese día que recordaría toda su vida. Sin darme cuenta, estaba descubriendo que quería crear prendas que no solo vistieran a una mujer, sino que la hicieran sentirse ella misma. Otro vestido que siempre permanecerá archivado en mi memoria.',
         ],
         en: [
-          'At 15 I made my first wedding dress. I was very young, but that commission let me discover a different dimension of fashion. Behind a dress there was a woman dreaming of how she would look on a day she would remember all her life. Without realising it, I was discovering that I wanted to create garments that would not only dress a woman, but make her feel like herself. I have no pictures of that first dress, but it will always live on in my memory.',
+          'At 15 I made my first wedding dress. I was very young, but that commission let me discover a different dimension of fashion. Behind a dress there was a woman excited about a day she would remember all her life. Without realising it, I was discovering that I wanted to create garments that would not only dress a woman, but make her feel like herself. Another dress that will always remain archived in my memory.',
         ],
       },
       // Un solo pie para las tres (mismo diseño), debajo de la fila.
@@ -98,11 +101,11 @@ export const SOBRE_FELY = {
       titulo: { es: 'El valor de lo que no siempre se ve.', en: 'The value of what is not always seen.' },
       parrafos: {
         es: [
-          'El taller fue mi escuela. Aprendí que detrás de cada prenda hay mucho más de lo que se aprecia a primera vista: horas de trabajo, conocimiento, paciencia y una atención casi invisible a cada detalle. Aprendí observando, practicando, equivocándome y volviendo a empezar.',
-          'Con los años entendí que la creatividad necesita del oficio para hacerse realidad y que la verdadera calidad nace de esa unión. Ese aprendizaje sigue presente en mi manera de trabajar: en el respeto por los materiales, en el cuidado de cada patrón y en la convicción de que las cosas bien hechas requieren dedicación.',
+          'El taller fue mi escuela. Descubrí que detrás de cada prenda hay mucho más de lo que se aprecia a primera vista; horas de trabajo, conocimiento, paciencia y una atención casi invisible a cada detalle. Aprendí observando, practicando, equivocándome y volviendo a empezar.',
+          'Con los años entendí que la creatividad necesita del oficio para hacerse realidad y que la verdadera calidad nace de esa unión. Ese aprendizaje sigue presente en mi manera de trabajar, en el respeto por los materiales, en el cuidado de cada patrón y en la convicción de que las cosas bien hechas requieren dedicación.',
         ],
         en: [
-          'The workshop was my school. I learned that behind every garment there is much more than meets the eye: hours of work, knowledge, patience and an almost invisible attention to every detail. I learned by watching, practising, making mistakes and starting again.',
+          'The workshop was my school. I discovered that behind every garment there is much more than meets the eye: hours of work, knowledge, patience and an almost invisible attention to every detail. I learned by watching, practising, making mistakes and starting again.',
           'Over the years I understood that creativity needs craft to become real, and that true quality is born from that union. That learning is still present in the way I work: in respect for materials, in the care given to every pattern and in the conviction that things done well require dedication.',
         ],
       },
@@ -118,11 +121,11 @@ export const SOBRE_FELY = {
       titulo: { es: '1997. Una forma propia de entender la moda.', en: '1997. A way of understanding fashion of my own.' },
       parrafos: {
         es: [
-          'En 1997, todo aquel aprendizaje, aquella pasión y tantos años de dedicación tomaron forma en una firma propia: Fely Campo. Lo que había comenzado casi por casualidad se había convertido en una manera de entender la vida y en el deseo de crear con una identidad propia. Empezaba una nueva etapa, llena de retos, decisiones y oportunidades para llevar mi visión más lejos.',
-          'La firma fue creciendo, las colecciones fueron encontrando su lugar y el trabajo comenzó a trascender el pequeño taller donde todo había empezado. Pero, en el fondo, la esencia seguía siendo la misma: crear desde la sensibilidad, cuidar el oficio y diseñar para mujeres que quieren sentirse seguras, elegantes y fieles a sí mismas.',
+          'En 1997, todo aquel aprendizaje, aquella pasión y tantos años de dedicación tomaron forma en una firma propia: Fely Campo. Lo que había comenzado casi por casualidad se había convertido en una manera de entender la vida y en el deseo de crear con una identidad. Empezaba una nueva etapa, llena de retos, decisiones y oportunidades para llevar mi visión más lejos.',
+          'La firma fue creciendo, las colecciones fueron encontrando su lugar y el trabajo comenzó a trascender el pequeño taller donde todo había empezado. Pero, en el fondo, la esencia seguía siendo la misma; crear desde la sensibilidad, cuidar el oficio y diseñar para mujeres que quieren sentirse seguras, elegantes y fieles a sí mismas.',
         ],
         en: [
-          'In 1997, all that learning, that passion and so many years of dedication took shape in a label of my own: Fely Campo. What had begun almost by chance had become a way of understanding life and a desire to create with an identity of my own. A new chapter was beginning, full of challenges, decisions and opportunities to take my vision further.',
+          'In 1997, all that learning, that passion and so many years of dedication took shape in a label of my own: Fely Campo. What had begun almost by chance had become a way of understanding life and a desire to create with a distinct identity. A new chapter was beginning, full of challenges, decisions and opportunities to take my vision further.',
           'The label grew, the collections found their place and the work began to reach beyond the small workshop where it had all started. But, deep down, the essence remained the same: to create with sensitivity, to care for the craft and to design for women who want to feel confident, elegant and true to themselves.',
         ],
       },
@@ -146,8 +149,8 @@ export const SOBRE_FELY = {
       parrafos: {
         es: [
           'Hoy, después de más de cinco décadas vinculada a la moda, sigo encontrando algo de aquella niña tímida en cada nueva creación. Continúo emocionándome al descubrir un tejido, imaginar una silueta o ver cómo una mujer se reconoce en una prenda.',
-          'Han cambiado los años, las experiencias y las dimensiones del proyecto, pero hay algo que permanece intacto: la necesidad de crear para que las mujeres, a través de la moda, se vean a ellas mismas. Fely Campo es hoy el resultado de todo ese recorrido, de las manos que trabajan, del conocimiento que se transmite y de una forma de hacer que respeta el tiempo y los detalles.',
-          'Cuando miro atrás, pienso que nunca imaginé hasta dónde me llevaría aquel primer vestido. Y, sin embargo, sigo persiguiendo la misma sensación que tuve entonces: la emoción de crear algo capaz de hacer sentir diferente a una mujer.',
+          'Han cambiado los años, las experiencias y las dimensiones del proyecto, pero hay algo que permanece intacto; la necesidad de crear para que las mujeres, a través de la moda, se vean a ellas mismas. Fely Campo es hoy el resultado de todo ese recorrido, de las manos que trabajan, del conocimiento que se transmite y de una forma de hacer que respeta el tiempo y los detalles.',
+          'Cuando miro atrás, pienso que nunca imaginé hasta dónde me llevaría aquel primer vestido. Y, sin embargo, sigo persiguiendo la misma sensación que tuve entonces, la emoción de crear algo capaz de hacer sentir diferente a una mujer.',
         ],
         en: [
           'Today, after more than five decades devoted to fashion, I still find something of that shy girl in every new creation. I am still moved when I discover a fabric, imagine a silhouette or see a woman recognise herself in a garment.',

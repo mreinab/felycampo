@@ -86,6 +86,7 @@ async function AtelierDetalle({ datos, locale }) {
         alt={nombreCiudad}
         titulo={[t(`${datos.id}.eyebrow`), nombreCiudad]}
         subtitulo={tHero('atelierCiudad')}
+        className={datos.heroMedio.encuadre === 'arriba' ? 'hero-arriba' : undefined}
       />
 
       <div className={styles.textoDescripcion}>
@@ -139,7 +140,7 @@ async function AtelierDetalle({ datos, locale }) {
               {tVisitenos('whatsapp')}: {ubicacion.whatsapp}
             </a>
             <Boton
-              href={`/${locale}/visita-fely-campo/cita?ubicacion=${datos.id}`}
+              href={`/${locale}/visita-fely-campo/cita`}
               variante="solido"
               tamano="m"
               className={styles.botonCita}

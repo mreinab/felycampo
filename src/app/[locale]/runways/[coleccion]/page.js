@@ -26,7 +26,7 @@
    la colección, si existe — arranca solo al llegar a su punto en la
    página, sonido opcional). */
 
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { HeroPagina, RunwayBackstage, RunwayDescripcion, RunwayGaleria, RunwayVideoCierre } from '@/components/layout';
 import { COLECCIONES } from '../../colecciones-fely-campo/colecciones';
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }) {
 export default async function Coleccion({ params }) {
   const { locale, coleccion: slug } = await params;
   const coleccion = COLECCIONES.find((candidata) => candidata.slug === slug);
-  if (!coleccion) notFound();
+  if (!coleccion) permanentRedirect(`/${locale}/colecciones-fely-campo`); // slug inexistente: al listado (ninguna URL en 404)
 
   const medioHero = coleccion.medios[0];
   const t = await getTranslations('heroPagina');

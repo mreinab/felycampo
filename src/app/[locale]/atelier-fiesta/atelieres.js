@@ -132,8 +132,18 @@ export const ATELIERES = {
     id: 'madrid',
     heroMedio: {
       tipo: 'video',
-      src: '/img/atelier/showroom-madrid/fely_campo_atelier_madrid.mp4',
-      poster: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-showroom.webp',
+      // Escritorio: el vídeo horizontal original; mobile: el vertical
+      // original (srcMovil, ver RunwayMediaLateral.jsx). Los dos SIN
+      // RECOMPRIMIR (a petición: comprimidos perdían demasiada calidad):
+      // solo se les quitó la pista de audio copiando el vídeo tal cual
+      // (ffmpeg -c:v copy -an) desde public/video/. Póster = primer
+      // fotograma del horizontal.
+      src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-hero-horizontal.mp4',
+      srcMovil: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-vertical.mp4',
+      poster: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-hero-horizontal-poster.webp',
+      // Encuadre anclado arriba en vez de centrado (a petición) — ver
+      // .hero-arriba en HeroPagina.module.css.
+      encuadre: 'arriba',
     },
     // felycampo-atelier-madrid-showroom (a petición; antes
     // KristenWicce-3, que pasa a la sección "Novias").
@@ -145,8 +155,12 @@ export const ATELIERES = {
     // resto de fotos de showroom-madrid/ ya está en uso en otro punto de
     // esta misma ficha (hero/medioSuperior/secciones), así que se queda
     // en 4 en vez de repetir alguna solo para completar 5.
+    // 1º: vídeo vertical en vez de la foto medida-2 (a petición). Aquí SÍ
+    // la versión comprimida (720×1280, sin audio, 5,7 MB, a partir de
+    // public/video/fely_campo_atelier_madrid.mp4) — a petición, en el
+    // carrusel no importa; la portada usa los originales (ver heroMedio).
     imagenesTira: [
-      { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-medida-2.webp' },
+      { tipo: 'video', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-carrusel.mp4' },
       { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-sala-pruebas.webp' },
       { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-medida-fiesta-novia.webp' },
       { tipo: 'imagen', src: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-vestidos-fiesta.webp' },

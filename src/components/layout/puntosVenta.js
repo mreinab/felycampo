@@ -10,11 +10,11 @@
    los facilita. */
 
 export const PUNTOS_VENTA = [
-  { id: 'fely-campo-atelier-novias-salamanca', nombre: 'Fely Campo Atelier Novias y fiesta Salamanca', direccion: ['C/ Laguna Negra, 17-19', 'Polígono El Montalvo II', 'Salamanca 37008'], pais: 'España', telefono: '923 19 00 53', email: 'info@felycampo.com', lat: 40.9705, lng: -5.6631 },
-  { id: 'fely-campo-madrid-atelier', nombre: 'Fely Campo Madrid Atelier', direccion: ['C/ Jorge Juan 29, 1º Derecha', 'Madrid 28001'], pais: 'España', telefono: '683 70 36 44', email: 'info@felycampo.com', lat: 40.4257, lng: -3.6836 },
+  { id: 'fely-campo-atelier-novias-salamanca', nombre: 'Fely Campo Atelier Novias y fiesta Salamanca', direccion: ['C/ Laguna Negra 17', 'Salamanca 37008'], pais: 'España', telefono: '923 19 00 53', email: 'info@felycampo.com', lat: 40.9705, lng: -5.6631 },
+  { id: 'fely-campo-madrid-atelier', nombre: 'Fely Campo Madrid Atelier', direccion: ['C/ Jorge Juan 29, 1º Derecha', 'Madrid 28001'], pais: 'España', telefono: '659 00 62 57', email: 'info@felycampo.com', lat: 40.4257, lng: -3.6836 },
   { id: 'teresa-justel', nombre: 'Teresa Justel', direccion: ['Travesía de Colombia 6', 'Toledo 45004'], pais: 'España', telefono: '925 57 88 71', email: 'compras@teresajustel.com', lat: 39.8628, lng: -4.0273 },
   { id: 'for-you', nombre: 'For You', direccion: ['C/ Federico García Lorca 1', 'Burgos 09007'], pais: 'España', telefono: '947 47 09 18', email: 'tienda@ropaforyouburgos.com', lat: 42.3439, lng: -3.6969 },
-  { id: 'fely-campo-oviedo', nombre: 'Fely Campo Oviedo', direccion: ['Gil de Jaz, 5 - Bajo', 'Oviedo, Asturias 33004'], pais: 'España', telefono: '985 73 83 46', email: null, lat: 43.3603, lng: -5.8448 },
+  { id: 'fely-campo-oviedo', nombre: 'Fely Campo Oviedo', direccion: ['C/ Gil de Jaz 15', 'Oviedo, Asturias 33004'], pais: 'España', telefono: '985 73 83 46', email: null, lat: 43.3603, lng: -5.8448 },
   { id: 'lm-company', nombre: 'L.M & Company', direccion: ['C/ Doctores Castroviejo 18', 'Logroño 26003'], pais: 'España', telefono: '941 24 48 50', email: null, lat: 42.4627, lng: -2.4449 },
   { id: 'pilar-y-carmen', nombre: 'Pilar y Carmen', direccion: ['C/ Feijoo 11 - Bajo', 'A Coruña 15003'], pais: 'España', telefono: '981 11 56 10', email: 'administracion@pilarycarmen.com', lat: 43.3623, lng: -8.4115 },
   { id: 'paqui-muriel', nombre: 'Paqui Muriel', direccion: ['C/ Antón de Jaén 15', 'Linares, Jaén 23700'], pais: 'España', telefono: '953 69 22 29', email: 'murielpastor@hotmail.com', lat: 38.0946, lng: -3.6355 },

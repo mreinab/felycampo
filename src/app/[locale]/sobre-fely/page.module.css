@@ -113,7 +113,7 @@
 
 .titulo {
   margin: 0;
-  font-size: var(--text-titulo); /* mismo peso medium: semibold quedaba demasiado pesado */
+  font-size: var(--text-destacado); /* 19px, a petición. Peso medium: semibold quedaba demasiado pesado */
   font-weight: var(--font-weight-medium);
   letter-spacing: normal;
   color: var(--color-tinta);
@@ -177,7 +177,7 @@
 .cierreTitulo {
   margin: 0;
   text-wrap: balance; /* en mobile parte en dos líneas parejas, no una larga + una corta */
-  font-size: var(--text-titulo); /* mismo peso medium: semibold quedaba demasiado pesado */
+  font-size: var(--text-destacado); /* 19px, a petición. Peso medium: semibold quedaba demasiado pesado */
   font-weight: var(--font-weight-medium);
   letter-spacing: normal;
   color: var(--color-tinta);

@@ -50,8 +50,6 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/podcast',
   '/talleres-fely-campo',
   '/ayuda/envios',
-  '/ayuda/devoluciones',
-  '/ayuda/contacto',
 ];
 
 // Columnas de ateliers (AteliersCita, justo encima de la banda
