@@ -144,9 +144,8 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
               <p>{tProducto('composicionTexto')}</p>
               <div>
                 <p>{tProducto('origenDisenado')}</p>
-                <p>{tProducto('origenFabricado')}</p>
-                <p>{tProducto('origenTintura')}</p>
-                <p>{tProducto('origenTejido')}</p>
+                {/* "nuestros talleres" enlaza a /talleres-fely-campo (a petición). */}
+                <p>{tProducto.rich('origenFabricado', { talleres: (chunks) => <a href={`/${locale}/talleres-fely-campo`} className="enlace-texto">{chunks}</a> })}</p>
               </div>
             </FilaAcordeon>
             <FilaAcordeon titulo={tProducto('porEncargoTitulo')}>

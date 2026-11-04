@@ -46,6 +46,18 @@
   overflow: hidden;
 }
 
+/* Velo oscuro muy suave, siempre (a petición): separa la foto (fondo
+   blanco) del fondo blanco de la página. Encima de las dos imágenes
+   (base y hover) y sin capturar clics. Mismo valor en la galería de la
+   ficha (GaleriaProducto.module.css, .imagenBoton::after). */
+.recorte::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.04);
+  pointer-events: none;
+}
+
 .imagen {
   position: absolute;
   inset: 0;

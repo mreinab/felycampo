@@ -48,6 +48,7 @@
    cada foto. El "peek" de la siguiente ya no es una fracción fija: es
    lo que sobre del ancho de la pista tras la imagen actual. */
 .imagenBoton {
+  position: relative; /* para el velo de ::after, ver más abajo */
   flex: 0 0 fit-content;
   width: fit-content;
   height: 100%;
@@ -60,6 +61,19 @@
      URI, así que son sus valores actuales (#202020/#FFFFFF) copiados a
      mano. */
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Crect width='38' height='38' fill='%23FFFFFF'/%3E%3Cpath d='M19 9.5v19M9.5 19h19' stroke='%23202020' stroke-width='1.5'/%3E%3C/svg%3E") 19 19, zoom-in;
+}
+
+/* Velo oscuro muy suave sobre cada foto, siempre (a petición) — mismo
+   valor que .recorte::after de TarjetaProducto.module.css: separa la
+   foto (fondo blanco) del fondo de la página. Ocupa justo el botón,
+   que mide lo mismo que la imagen (width: fit-content). */
+.imagenBoton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-imagenes);
+  background: rgba(0, 0, 0, 0.04);
+  pointer-events: none;
 }
 
 .imagen {

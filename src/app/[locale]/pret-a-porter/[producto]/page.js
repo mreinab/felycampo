@@ -103,27 +103,12 @@ export default async function FichaProducto({ params }) {
                 <p>{t('composicionTexto')}</p>
                 <div>
                   <p>{t('origenDisenado')}</p>
-                  <p>{t('origenFabricado')}</p>
-                  <p>{t('origenTintura')}</p>
-                  <p>{t('origenTejido')}</p>
+                  {/* "nuestros talleres" enlaza a /talleres-fely-campo (a petición). */}
+                  <p>{t.rich('origenFabricado', { talleres: (chunks) => <a href={`/${locale}/talleres-fely-campo`} className="enlace-texto">{chunks}</a> })}</p>
                 </div>
               </FilaAcordeon>
-              <FilaAcordeon titulo={t('envios')}>
-                <div>
-                  <p>{t('enviosSubtitulo')}</p>
-                  <p>{t('entregaEstimada')}</p>
-                </div>
-                <div>
-                  <p>{t('devolucionesSubtitulo')}</p>
-                  <p>
-                    {t.rich('devolucionesTexto', {
-                      email: (chunks) => <a href="mailto:info@felycampo.com" className="enlace-texto">{chunks}</a>,
-                      telefono: (chunks) => <a href="tel:+34683703644" className="enlace-texto">{chunks}</a>,
-                      atencion: (chunks) => <a href={`/${locale}/ayuda/atencion-cliente`} className="enlace-texto">{chunks}</a>,
-                    })}
-                  </p>
-                </div>
-              </FilaAcordeon>
+              {/* "Envíos y devoluciones" quitado a petición (2026-11-04):
+                  no habrá envíos ni devoluciones. */}
             </Acordeon>
           </div>
         </div>
