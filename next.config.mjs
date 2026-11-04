@@ -41,6 +41,14 @@ const nextConfig = {
       // Fuera del despliegue definitivo (staging, deploy previews, branch
       // deploys): noindex en absolutamente todo, archivos incluidos.
       ...(SITIO_INDEXABLE ? [] : [{ source: '/:path*', headers: NOINDEX }]),
+      // Cualquier respuesta servida desde *.netlify.app (también imágenes
+      // y vídeos, que no pasan por src/proxy.js): noindex, para que solo
+      // se indexe felycampo.com aunque producción responda ahí.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: '(?<subdominio>.*)\\.netlify\\.app' }],
+        headers: NOINDEX,
+      },
     ];
   },
 
