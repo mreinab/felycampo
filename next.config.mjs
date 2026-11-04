@@ -42,6 +42,16 @@ const nextConfig = {
           statusCode: 301,
         })),
       // Sitemaps de WordPress (los que conoce Google Search Console).
+      // Una sola URL por colección (auditoría SEO M12): la carpeta real
+      // es /runways/[coleccion], pero la pública es /runways-{slug} (la de
+      // la web anterior, ver rewrites). Los redirects se evalúan sobre la
+      // URL que pide el navegador, antes de los rewrites, así que esto no
+      // choca con la reescritura de abajo.
+      {
+        source: '/:locale(es|en)/runways/:coleccion',
+        destination: '/:locale/runways-:coleccion',
+        statusCode: 301,
+      },
       {
         source: '/:sitemap(wp-sitemap.*\\.xml|sitemap_index\\.xml)',
         destination: '/sitemap.xml',
