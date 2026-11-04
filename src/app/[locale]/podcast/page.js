@@ -4,9 +4,9 @@
    introducción de 80vh ("Podcast & Blog", texto y filtros "Ver todo" /
    "Blog" / "Podcast") y los episodios (BlogTarjetaPodcastDestacado,
    foto a sangre + play) y artículos (BlogTarjeta) de blog.js, que los
-   filtros muestran u ocultan en la propia página. Cada tarjeta es solo
-   un enlace a /podcast/[slug] (ver [entrada]/page.js): no reproduce
-   nada aquí.
+   filtros muestran u ocultan en la propia página. Los episodios enlazan
+   directamente a su vídeo de YouTube (sin ficha propia); los artículos,
+   a /podcast/[slug] (ver [entrada]/page.js).
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';
@@ -42,7 +42,11 @@ export default async function Pagina({ params }) {
     imagen: entrada.imagenCubierta,
     meta: entrada.tipo === 'podcast' ? entrada.duracion : formatoFecha.format(new Date(entrada.fecha)),
   });
-  const podcasts = BLOG_ENTRADAS.filter((entrada) => entrada.tipo === 'podcast').map(aTarjeta);
+  // Episodios: sin ficha propia, la tarjeta enlaza al vídeo de YouTube.
+  // "#" solo si a un episodio le falta la URL en blog.js.
+  const podcasts = BLOG_ENTRADAS
+    .filter((entrada) => entrada.tipo === 'podcast')
+    .map((entrada) => ({ ...aTarjeta(entrada), href: entrada.youtube || '#' }));
   // Artículos de blog — comentados a petición: todavía no se publican.
   // Para recuperarlos, descomentar esto y quitar el "[]" de abajo (y
   // los filtros en ListadoPodcastBlog.jsx).

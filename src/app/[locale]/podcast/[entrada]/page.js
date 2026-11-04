@@ -12,7 +12,7 @@
 
 import { permanentRedirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { BlogArticulo, BlogCampana, BlogPodcast } from '@/components/layout';
+import { BlogArticulo, BlogCampana } from '@/components/layout';
 import { entradaPorSlug } from '../blog';
 import { metadataPagina, recortar } from '@/lib/seo';
 
@@ -37,21 +37,12 @@ export default async function Entrada({ params }) {
   const entrada = entradaPorSlug(slug);
   if (!entrada) permanentRedirect(`/${locale}/podcast`); // slug inexistente: al listado (ninguna URL en 404)
 
+  // Los episodios de podcast ya no tienen ficha (quitada a petición,
+  // 2026-11-04): la tarjeta del listado enlaza a YouTube.
+  if (entrada.tipo === 'podcast') permanentRedirect(`/${locale}/podcast`);
+
   const t = await getTranslations('blog');
   const volverHref = `/${locale}/podcast`;
-
-  if (entrada.tipo === 'podcast') {
-    return (
-      <BlogPodcast
-        entrada={entrada}
-        locale={locale}
-        volverHref={volverHref}
-        volverTexto={t('volver')}
-        textoEpisodio={t('episodio')}
-        textoCon={t('con')}
-      />
-    );
-  }
 
   if (entrada.tipo === 'campana') {
     return (

@@ -64,7 +64,7 @@ const RUTAS_CON_PRODUCT_HERO = [
 // ateliers (mismos enlaces repetidos). Ni en páginas de contenido o
 // tienda online (podcast, talleres, prêt-à-porter, runways…).
 // PedirCita va en todas las páginas salvo el propio formulario de cita
-// y sus confirmaciones (/visita-fely-campo/cita...).
+// y sus confirmaciones (/visita-fely-campo/cita...) y /podcast.
 function conAteliersCitaEn(ruta) {
   return (
     ruta === '/' ||
@@ -155,7 +155,11 @@ export default async function RootLayout({ children, params }) {
   const esPretAPorter = rutaSinLocale === '/pret-a-porter';
 
   const conAteliersCita = conAteliersCitaEn(rutaSinLocale);
-  const conPedirCita = !rutaSinLocale.startsWith('/visita-fely-campo/cita');
+  // Tampoco en /podcast ni sus entradas (a petición, 2026-11-04).
+  const conPedirCita =
+    !rutaSinLocale.startsWith('/visita-fely-campo/cita') &&
+    rutaSinLocale !== '/podcast' &&
+    !rutaSinLocale.startsWith('/podcast/');
 
   return (
     <html lang={locale}>
