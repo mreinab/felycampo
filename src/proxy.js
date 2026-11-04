@@ -12,8 +12,8 @@ const REGLAS_PREFIJO = [
   [/^\/categoria-producto\/(novias|tendencias-novia|estilos-novia|siluetas-novia)(\/|$)/, '/es/atelier/novias'],
   [/^\/categoria-producto\/(fiesta|tendencias-fiesta|estilos-fiesta|siluetas-fiesta)(\/|$)/, '/es/atelier/fiesta'],
   [/^\/categoria-producto\//, '/es/atelier'],
-  [/^\/(category|tag|author)\//, '/es/podcast'],
-  [/^\/(feed|comments\/feed)$/, '/es/podcast'],
+  [/^\/(category|tag|author)\//, '/es/blog'],
+  [/^\/(feed|comments\/feed)$/, '/es/blog'],
   [/^\/(tienda|shop|carrito|cart|mi-cuenta|my-account|finalizar-compra|checkout)$/, '/es/pret-a-porter'],
   // URLs antiguas fuera del sitemap que daban cadenas de redirección
   // (308 → 307 → 308) hasta la home (auditoría SEO M13): ahora un solo
@@ -38,6 +38,8 @@ const RUTAS_ELIMINADAS = {
 function destinoEliminada(pathname) {
   const [, locale, ...resto] = (pathname.replace(/\/+$/, '') || '/').toLowerCase().split('/');
   if (!locales.includes(locale)) return null;
+  // /podcast y sus entradas pasaron a /blog (2026-11-04): mismo slug.
+  if (resto[0] === 'podcast') return `/${locale}/blog${resto.length > 1 ? `/${resto.slice(1).join('/')}` : ''}`;
   const destino = RUTAS_ELIMINADAS[`/${resto.join('/')}`];
   return destino ? `/${locale}${destino}` : null;
 }

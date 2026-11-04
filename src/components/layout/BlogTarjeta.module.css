@@ -35,7 +35,7 @@
 }
 
 .nombre {
-  font-size: var(--text-h4);
+  font-size: var(--text-titulo);
   line-height: var(--leading-tight);
 }
 
@@ -43,12 +43,12 @@
    ancho propio (el ancho lo da .grid > a en page.module.css, capado a
    550px). */
 .extracto {
-  font-size: var(--text-small);
+  font-size: var(--text-texto);
   line-height: var(--leading-base);
   text-align: left;
 }
 
 .temporada {
-  font-size: var(--text-caption);
+  font-size: var(--text-detalle);
   line-height: var(--leading-base);
 }

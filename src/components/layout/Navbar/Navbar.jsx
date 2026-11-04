@@ -75,16 +75,16 @@ const SUBMENU_STRUCTURE = {
     ],
   },
   elMundoDeFely: {
-    // "podcast" enlaza a /podcast (antes /blog — ver comentario de
+    // "podcast" enlaza a /blog (antes /podcast — ver comentario de
     // cabecera en podcast/page.js para el porqué del cambio de URL).
     items: [
       { key: 'historia', href: '/sobre-fely', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-conoce-a-disenadora.jpg' },
-      { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
+      { key: 'podcast', href: '/blog', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
       { key: 'talleres', href: '/talleres-fely-campo', image: '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp' },
     ],
     cardsVariante: 'horizontal',
     cards: [
-      { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
+      { key: 'podcast', href: '/blog', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
       { key: 'talleres', href: '/talleres-fely-campo', image: '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp' },
     ],
   },
@@ -413,7 +413,7 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
   // es la de cualquiera de sus items — en Atelier/Tienda esto ya salía
   // gratis porque sus hrefs de submenú viven bajo el propio href del
   // enlace (/atelier/novias bajo /atelier), pero en Sobre Fely no: sus
-  // items (/podcast, /colecciones-fely-campo...) no cuelgan de /sobre-fely,
+  // items (/blog, /colecciones-fely-campo...) no cuelgan de /sobre-fely,
   // así que sin este chequeo extra el enlace no se subrayaba en esas páginas.
   // Si varios enlaces casan con la ruta, gana el href más largo (el más
   // específico): /atelier/novias casa con "Atelier" (/atelier, por

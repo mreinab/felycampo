@@ -1,7 +1,7 @@
-/* Ruta DINÁMICA: ficha de una entrada de blog, bajo /podcast (antes
+/* Ruta DINÁMICA: ficha de una entrada de blog, bajo /blog (antes
    /blog — ver page.js del índice para el porqué del cambio de URL).
-   /podcast/manifiesto-coleccion-ibiza, /podcast/podcast-01-crear-sin-pedir-permiso,
-   /podcast/campana-fw27-la-coleccion...
+   /blog/manifiesto-coleccion-ibiza, /blog/podcast-01-crear-sin-pedir-permiso,
+   /blog/campana-fw27-la-coleccion...
    Busca la entrada por slug en ../blog.js (nombre de archivo sin
    cambiar, es solo el módulo de datos) y renderiza BlogArticulo,
    BlogPodcast o BlogCampana según "entrada.tipo" — tres layouts
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
   const titulo = entrada.titulo?.[locale] || entrada.titulo?.es;
   return metadataPagina({
     locale,
-    ruta: `/podcast/${slug}`,
+    ruta: `/blog/${slug}`,
     titulo: `${titulo} | Blog Fely Campo`,
     descripcion: recortar(entrada.resumen?.[locale] || entrada.resumen?.es),
     imagen: entrada.imagenCubierta,
@@ -35,14 +35,14 @@ export async function generateMetadata({ params }) {
 export default async function Entrada({ params }) {
   const { locale, entrada: slug } = await params;
   const entrada = entradaPorSlug(slug);
-  if (!entrada) permanentRedirect(`/${locale}/podcast`); // slug inexistente: al listado (ninguna URL en 404)
+  if (!entrada) permanentRedirect(`/${locale}/blog`); // slug inexistente: al listado (ninguna URL en 404)
 
   // Los episodios de podcast ya no tienen ficha (quitada a petición,
   // 2026-11-04): la tarjeta del listado enlaza a YouTube.
-  if (entrada.tipo === 'podcast') permanentRedirect(`/${locale}/podcast`);
+  if (entrada.tipo === 'podcast') permanentRedirect(`/${locale}/blog`);
 
   const t = await getTranslations('blog');
-  const volverHref = `/${locale}/podcast`;
+  const volverHref = `/${locale}/blog`;
 
   if (entrada.tipo === 'campana') {
     return (

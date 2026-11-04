@@ -211,7 +211,7 @@ export const SEO_TEXTOS = {
       description: "Fely Campo's commitment to responsible fashion: local production in Salamanca, artisan craft, chosen fabrics and garments made to last.",
     },
   },
-  '/podcast': {
+  '/blog': {
     es: {
       title: 'Blog y podcast de moda: el universo Fely Campo',
       description: 'Lee artículos y escucha conversaciones sobre moda de autor, vestidos de novia y fiesta, prêt-à-porter y el oficio artesanal detrás de Fely Campo.',

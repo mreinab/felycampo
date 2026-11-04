@@ -15,7 +15,7 @@ import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { noviaProductos } from '@/components/layout/noviaProductos';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { COLECCIONES } from './[locale]/colecciones-fely-campo/colecciones';
-import { BLOG_ENTRADAS } from './[locale]/podcast/blog';
+import { BLOG_ENTRADAS } from './[locale]/blog/blog';
 
 const RUTAS_PRIVADAS = ['/carrito', '/wishlist', '/mi-cuenta/panel'];
 
@@ -53,7 +53,7 @@ export default function sitemap() {
     ...parametrosCategoria(true).map(({ categoria }) => [`/atelier/fiesta/categoria/${categoria}`, 0.6]),
     ...COLECCIONES.filter((c) => c.slug).map((c) => [`/runways-${c.slug}`, 0.6]),
     // Episodios de podcast: sin ficha propia (enlazan a YouTube).
-    ...BLOG_ENTRADAS.filter((e) => e.tipo !== 'podcast').map((e) => [`/podcast/${e.slug}`, 0.6]),
+    ...BLOG_ENTRADAS.filter((e) => e.tipo !== 'podcast').map((e) => [`/blog/${e.slug}`, 0.6]),
   ];
 
   // Sin duplicados (dos productos con el mismo nombre darían la misma URL).

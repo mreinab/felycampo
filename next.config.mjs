@@ -20,12 +20,6 @@ const nextConfig = {
   // src/proxy.js (son ~800, por eso viven allí y no aquí). Aquí solo las
   // que el proxy no ve: rutas con punto (excluidas de su matcher) y
   // rutas nuevas con locale.
-  //
-  // /blog no existe todavía como página propia: redirige (temporal, 307
-  // — permanent:false para que buscadores/navegadores no lo cacheen
-  // como definitivo) a /podcast, que es donde vive el contenido de
-  // momento (ver src/app/[locale]/podcast/blog.js). Quitar cuando haya
-  // un /blog real.
   async headers() {
     return [
       // Gestión interna: siempre noindex, también en producción. El
@@ -54,13 +48,9 @@ const nextConfig = {
 
   async redirects() {
     return [
-      {
-        source: '/:locale(es|en)/blog',
-        destination: '/:locale/podcast',
-        // 301 (antes temporal, 307): el blog vive en /podcast para
-        // siempre (auditoría SEO M13).
-        statusCode: 301,
-      },
+      // (La antigua redirección /blog → /podcast se quitó el 2026-11-04:
+      // el blog vuelve a vivir en /blog y es /podcast el que redirige,
+      // ver destinoEliminada en src/proxy.js.)
       // /about era un placeholder vacío que duplicaba /sobre-fely.
       {
         source: '/:locale(es|en)/about',

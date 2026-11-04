@@ -1,12 +1,12 @@
 /* ============================================================
-   PODCAST & BLOG — Fely Campo. Ruta: /podcast (antes /blog).
+   PODCAST & BLOG — Fely Campo. Ruta: /blog (antes /podcast, y antes de eso /blog).
    Hero común (HeroPagina) arriba; debajo, ListadoPodcastBlog: una
    introducción de 80vh ("Podcast & Blog", texto y filtros "Ver todo" /
    "Blog" / "Podcast") y los episodios (BlogTarjetaPodcastDestacado,
    foto a sangre + play) y artículos (BlogTarjeta) de blog.js, que los
    filtros muestran u ocultan en la propia página. Los episodios enlazan
    directamente a su vídeo de YouTube (sin ficha propia); los artículos,
-   a /podcast/[slug] (ver [entrada]/page.js).
+   a /blog/[slug] (ver [entrada]/page.js).
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';
@@ -18,7 +18,7 @@ import { metadataPagina } from '@/lib/seo';
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  return metadataPagina({ locale, ruta: '/podcast' });
+  return metadataPagina({ locale, ruta: '/blog' });
 }
 
 export default async function Pagina({ params }) {
@@ -36,7 +36,7 @@ export default async function Pagina({ params }) {
     year: 'numeric',
   });
   const aTarjeta = (entrada) => ({
-    href: `/${locale}/podcast/${entrada.slug}`,
+    href: `/${locale}/blog/${entrada.slug}`,
     titulo: entrada.titulo[locale],
     extracto: entrada.resumen[locale],
     imagen: entrada.imagenCubierta,
@@ -47,14 +47,11 @@ export default async function Pagina({ params }) {
   const podcasts = BLOG_ENTRADAS
     .filter((entrada) => entrada.tipo === 'podcast')
     .map((entrada) => ({ ...aTarjeta(entrada), href: entrada.youtube || '#' }));
-  // Artículos de blog — comentados a petición: todavía no se publican.
-  // Para recuperarlos, descomentar esto y quitar el "[]" de abajo (y
-  // los filtros en ListadoPodcastBlog.jsx).
-  // const articulos = BLOG_ENTRADAS
-  //   .filter((entrada) => entrada.tipo !== 'podcast')
-  //   .sort((a, b) => b.fecha.localeCompare(a.fecha))
-  //   .map(aTarjeta);
-  const articulos = [];
+  // Artículos de blog (publicados de nuevo el 2026-11-04).
+  const articulos = BLOG_ENTRADAS
+    .filter((entrada) => entrada.tipo !== 'podcast')
+    .sort((a, b) => b.fecha.localeCompare(a.fecha))
+    .map(aTarjeta);
 
   return (
     <>

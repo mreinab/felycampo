@@ -4,7 +4,7 @@
 
 /* ============================================================
    INTRO + CONTENIDO DE /atelier/fiesta — Fely Campo
-   Mismo esquema que /podcast y /talleres-fely-campo (IntroSeccion:
+   Mismo esquema que /blog y /talleres-fely-campo (IntroSeccion:
    título, texto y filtros) con dos filtros que cambian lo que se ve
    debajo sin salir de la página:
      - "Así trabajamos": las imágenes editoriales con texto (BloqueSeccion

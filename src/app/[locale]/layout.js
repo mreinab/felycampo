@@ -19,7 +19,7 @@ import { SITE_URL, SITIO_INDEXABLE } from '@/lib/seo';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
-import { entradaPorSlug } from './podcast/blog';
+import { entradaPorSlug } from './blog/blog';
 
 // Páginas con su propio ProductHero (ver
 // src/components/layout/ProductHero.jsx) — nacen con el Navbar
@@ -47,7 +47,7 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/sobre-fely',
   '/responsabilidad',
   '/colecciones-fely-campo',
-  '/podcast',
+  '/blog',
   '/talleres-fely-campo',
   '/ayuda/envios',
 ];
@@ -149,15 +149,15 @@ export default async function RootLayout({ children, params }) {
   // ver ese page.js) llevan el mismo ProductHero que ../page.js, así
   // que necesitan el mismo Navbar transparente.
   const esCategoriaAtelier = /^\/atelier\/(novias|fiesta)\/categoria\//.test(rutaSinLocale);
-  // Ficha de entrada de blog (/podcast/[slug], ruta dinámica — antes
-  // /blog, ver podcast/page.js para el porqué del cambio de URL; igual
+  // Ficha de entrada de blog (/blog/[slug], ruta dinámica — antes /podcast,
+  // ver blog/page.js; igual
   // que esFichaRunway, no puede vivir en RUTAS_CON_PRODUCT_HERO):
   // "articulo" y "podcast" llevan foto a sangre con data-navbar-hero
   // (ver BlogArticulo.jsx/BlogPodcast.jsx) — "campana" no (gestiona su
   // propio Navbar sólido con un offset interno, ver BlogCampana.jsx),
   // así que hace falta mirar el dato real de blog.js, no solo el
   // prefijo de la URL.
-  const matchBlog = rutaSinLocale.match(/^\/podcast\/([^/]+)$/);
+  const matchBlog = rutaSinLocale.match(/^\/blog\/([^/]+)$/);
   const tipoBlog = matchBlog && entradaPorSlug(matchBlog[1])?.tipo;
   const esHeroBlog = tipoBlog === 'articulo' || tipoBlog === 'podcast';
 
@@ -167,11 +167,11 @@ export default async function RootLayout({ children, params }) {
   const esPretAPorter = rutaSinLocale === '/pret-a-porter';
 
   const conAteliersCita = conAteliersCitaEn(rutaSinLocale);
-  // Tampoco en /podcast ni sus entradas (a petición, 2026-11-04).
+  // Tampoco en /blog ni sus entradas (a petición, 2026-11-04).
   const conPedirCita =
     !rutaSinLocale.startsWith('/visita-fely-campo/cita') &&
-    rutaSinLocale !== '/podcast' &&
-    !rutaSinLocale.startsWith('/podcast/');
+    rutaSinLocale !== '/blog' &&
+    !rutaSinLocale.startsWith('/blog/');
 
   return (
     <html lang={locale}>

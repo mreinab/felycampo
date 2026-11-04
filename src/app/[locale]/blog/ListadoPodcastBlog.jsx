@@ -3,7 +3,7 @@
 'use client';
 
 /* ============================================================
-   INTRO + LISTADO DE /podcast — Fely Campo
+   INTRO + LISTADO DE /blog — Fely Campo
    Introducción (IntroSeccion: título "Podcast & Blog", texto y
    filtros) y, debajo, los episodios de podcast y los artículos de
    blog. Componente cliente porque los filtros ("Ver todo" / "Blog" /
@@ -25,21 +25,18 @@ function ListadoPodcastBlog({ podcasts, articulos, textos }) {
   const verPodcast = filtro !== 'blog';
   const verBlog = filtro !== 'podcast';
 
-  // Filtros comentados a petición mientras no haya artículos de blog
-  // publicados (ver "articulos" en page.js) — sin ellos, "Blog"
-  // quedaría vacío. Recuperar junto con los artículos, pasándolos a
-  // IntroSeccion como filtros={filtros}.
-  // const filtros = [
-  //   { id: 'todo', etiqueta: textos.filtroTodo },
-  //   { id: 'blog', etiqueta: textos.filtroBlog },
-  //   { id: 'podcast', etiqueta: textos.filtroPodcast },
-  // ];
+  const filtros = [
+    { id: 'todo', etiqueta: textos.filtroTodo },
+    { id: 'blog', etiqueta: textos.filtroBlog },
+    { id: 'podcast', etiqueta: textos.filtroPodcast },
+  ];
 
   return (
     <>
       <IntroSeccion
         titulo={textos.introTitulo}
         texto={textos.introTexto}
+        filtros={filtros}
         activo={filtro}
         onCambiar={setFiltro}
       />
