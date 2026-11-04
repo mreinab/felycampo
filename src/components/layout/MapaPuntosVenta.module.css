@@ -250,9 +250,20 @@
     min-height: 320px;
   }
 
+  /* En mobile, lista normal que sigue hacia abajo con la página — sin
+     altura fija ni scroll propio (antes max-height:320px con scroll
+     dentro del div, como en escritorio; quitado a petición). */
   .lista {
     min-width: 0;
-    max-height: 320px;
+    max-height: none;
+    min-height: 0;
+    overflow-y: visible;
+  }
+
+  /* El título de cada país deja de ser sticky: sin scroll propio en
+     .lista se pegaría arriba de la pantalla, debajo del Navbar. */
+  .listaGrupoTitulo {
+    position: static;
   }
 }
 

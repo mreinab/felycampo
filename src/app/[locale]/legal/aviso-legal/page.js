@@ -1,20 +1,19 @@
-/* Placeholder — pendiente de maquetar. Ruta: /legal/aviso-legal */
+/* ============================================================
+   Aviso legal — Fely Campo. Ruta: /legal/aviso-legal
+   Texto en español e inglés — ver ../textos/avisoLegal.js.
+   Maquetación común: ../TextoLegal.jsx.
+   ============================================================ */
 
 import { metadataPagina } from '@/lib/seo';
+import TextoLegal from '../TextoLegal';
+import { AVISO_LEGAL } from '../textos/avisoLegal';
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   return metadataPagina({ locale, ruta: '/legal/aviso-legal' });
 }
 
-export default function Pagina() {
-  return (
-    <section className="seccion contenedor">
-      <p className="text-caption uppercase text-gris-500 mb-16">Fely Campo</p>
-      <h1>Aviso legal</h1>
-      <p className="text-gris-500 mt-24 texto-legible">
-        Página pendiente de maquetar. La ruta ya existe y navega.
-      </p>
-    </section>
-  );
+export default async function Pagina({ params }) {
+  const { locale } = await params;
+  return <TextoLegal texto={AVISO_LEGAL} locale={locale} />;
 }

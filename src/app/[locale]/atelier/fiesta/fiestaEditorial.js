@@ -43,6 +43,12 @@ export const FIESTA_EDITORIAL = {
     ],
   },
 
+  // Pestañas de la intro (FiestaIntro.jsx).
+  filtros: {
+    atelier: { es: 'Así trabajamos', en: 'How we work' },
+    colecciones: { es: 'Colección fiesta', en: 'Evening wear collection' },
+  },
+
   bloques: [
     {
       tipo: 'imagen',

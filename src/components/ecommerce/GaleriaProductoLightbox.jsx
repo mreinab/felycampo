@@ -21,8 +21,8 @@
    talla dentro del propio modal, mismo flujo que InfoAtelier.jsx, sin
    compartir estado con esa instancia). Ninguno de los dos casos
    muestra ya BotonGuardar (wishlist). Sin "esAtelier" (Prêt-à-porter, único otro caso): el
-   mismo CTA abre ModalContactoProducto en su lugar (sin talla en
-   ningún sitio, a petición explícita).
+   mismo CTA abre también ModalSolicitudAtelier (antes
+   ModalContactoProducto; mismos datos en todas las fichas, a petición).
    Portal a document.body (igual que Modal.jsx, mismo motivo): vive
    dentro de GaleriaProducto, que cuelga de .debajoNavbar en
    tienda/[producto]/page.js y FichaProductoAtelier.jsx
@@ -45,7 +45,6 @@ import { useLocale, useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
 import { SelectorColor, Boton } from '../ui';
 import ModalSolicitudAtelier from './ModalSolicitudAtelier';
-import ModalContactoProducto from './ModalContactoProducto';
 import styles from './GaleriaProductoLightbox.module.css';
 
 function GaleriaProductoLightbox({
@@ -257,7 +256,7 @@ function GaleriaProductoLightbox({
           tallas={tallas}
         />
       ) : (
-        <ModalContactoProducto
+        <ModalSolicitudAtelier
           abierto={modalContactoAbierto}
           onCerrar={() => setModalContactoAbierto(false)}
           imagen={imagenes[0]}

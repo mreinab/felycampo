@@ -13,7 +13,7 @@ import {
 } from '@/lib/emailFormularios';
 
 const ORIGEN = 'api/consulta-vestido';
-const TIPOS = { novias: 'Novias', fiesta: 'Fiesta' };
+const TIPOS = { novias: 'Novias', fiesta: 'Fiesta', pretaporter: 'Prêt-à-porter' };
 const URL_WEB = 'https://felycampo.com';
 
 const TEXTOS_CLIENTA = {

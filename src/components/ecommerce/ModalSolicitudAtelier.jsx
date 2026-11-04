@@ -5,7 +5,11 @@
 /* ============================================================
    SOLICITUD DE INFORMACIÓN — ATELIER — Fely Campo
    Modal (ver ui/Modal.jsx) que abre InfoAtelier.jsx al pulsar
-   "Contacta con nosotros" — pide nombre, email, teléfono (opcional),
+   "Contacta con nosotros" — y también la ficha de Prêt-à-porter
+   (FichaProductoAcciones.jsx / GaleriaProductoLightbox.jsx), que antes
+   tenía su propio ModalContactoProducto (solo nombre + email, sin
+   enviar nada; unificados a petición, mismos datos en todas las
+   fichas) — pide nombre, email, teléfono (opcional),
    comentario (opcional) y la casilla de privacidad/términos
    (obligatoria, la misma del formulario de cita), con el producto y el
    color ya elegidos como contexto fijo (no editable aquí, ver
@@ -37,8 +41,10 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Modal, Boton, Input } from '../ui';
 import styles from './ModalSolicitudAtelier.module.css';
 
-// "novias" | "fiesta" a partir de la URL de la ficha; null si no encaja.
+// "novias" | "fiesta" | "pretaporter" a partir de la URL de la ficha;
+// null si no encaja.
 function tipoDesdeRuta(ruta) {
+  if (/\/pret-a-porter(\/|$)/.test(ruta)) return 'pretaporter';
   return ruta.match(/\/atelier\/(novias|fiesta)(\/|$)/)?.[1] ?? null;
 }
 

@@ -50,6 +50,11 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/blog',
   '/talleres-fely-campo',
   '/ayuda/envios',
+  // Páginas legales: portada HeroPagina (ver legal/TextoLegal.jsx).
+  '/legal/privacidad',
+  '/legal/cookies',
+  '/legal/aviso-legal',
+  '/legal/terminos',
 ];
 
 // Columnas de ateliers (AteliersCita, justo encima de la banda

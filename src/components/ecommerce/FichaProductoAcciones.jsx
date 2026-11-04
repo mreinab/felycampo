@@ -16,8 +16,8 @@
    explícita) — mismo criterio que Atelier (ver InfoAtelier.jsx), así
    que este panel deja de tener SelectorTalla/GuiaTallas/"Añadir a la
    cesta" y pasa a un único CTA "Contacta con nosotros" que abre
-   ModalContactoProducto (antes ModalAvisoDisponibilidad, ver
-   historial) — sin wishlist (BotonGuardar) tampoco, a diferencia de
+   ModalSolicitudAtelier — el mismo formulario que las fichas de Atelier
+   (antes ModalContactoProducto, solo nombre + email) — sin wishlist (BotonGuardar) tampoco, a diferencia de
    Atelier: aquí el botón ocupa el ancho completo solo.
    Uso:
      <FichaProductoAcciones nombre="Vestido Aurora" imagen="/img/aurora.jpg"
@@ -27,7 +27,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { SelectorColor, Boton } from '../ui';
-import ModalContactoProducto from './ModalContactoProducto';
+import ModalSolicitudAtelier from './ModalSolicitudAtelier';
 import styles from './FichaProductoAcciones.module.css';
 
 function FichaProductoAcciones({ nombre, imagen, colores = [] }) {
@@ -47,7 +47,7 @@ function FichaProductoAcciones({ nombre, imagen, colores = [] }) {
         </Boton>
       </div>
 
-      <ModalContactoProducto
+      <ModalSolicitudAtelier
         abierto={modalAbierto}
         onCerrar={() => setModalAbierto(false)}
         imagen={imagen}

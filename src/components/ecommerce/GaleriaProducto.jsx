@@ -17,7 +17,7 @@
    nombre/colores/tallas solo se usan en el lightbox, para el panel de
    contacto rápido sobre la imagen. "esAtelier" (Atelier Novias/Fiesta,
    ver FichaProductoAtelier.jsx): ese panel abre ModalSolicitudAtelier
-   (con talla) en vez de ModalContactoProducto (sin talla), ver
+   (con talla); Prêt-à-porter usa el mismo modal, ver
    GaleriaProductoLightbox.jsx. Sin precio (a petición explícita, ni
    aquí ni en Prêt-à-porter — ver FichaProductoAcciones.jsx): ningún
    producto del sitio se enseña ya con precio de catálogo.

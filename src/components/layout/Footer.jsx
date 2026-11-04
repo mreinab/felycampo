@@ -51,7 +51,7 @@ function Footer() {
   const columnas = [
     { titulo: 'Fely Campo', enlaces: ['Historia', 'Puntos de venta', 'Contacto', 'Pedir cita'] },
     { titulo: 'Síguenos', enlaces: ['Instagram', 'Facebook', 'YouTube'] },
-    { titulo: 'Información', enlaces: ['Términos y condiciones', 'Política de cookies', 'Política de privacidad'] },
+    { titulo: 'Información', enlaces: ['Aviso legal', 'Términos y condiciones', 'Política de cookies', 'Política de privacidad'] },
   ];
 
   // Redes sociales: URLs externas, en pestaña nueva (ver el <a> más abajo).
@@ -68,6 +68,7 @@ function Footer() {
     'Historia': '/sobre-fely',
     'Pedir cita': '/visita-fely-campo/cita',
     'Puntos de venta': '/puntos-de-venta-fely-campo',
+    'Aviso legal': '/legal/aviso-legal',
     'Términos y condiciones': '/legal/terminos',
     'Política de cookies': '/legal/cookies',
     'Política de privacidad': '/legal/privacidad',

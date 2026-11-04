@@ -459,3 +459,12 @@ img { display: block; max-width: 100%; height: auto; }
   white-space: nowrap;
   border: 0;
 }
+
+/* Texto seleccionado (al arrastrar el ratón para copiar) en toda la web:
+   el mismo rosa que los marcadores del mapa de puntos de venta (ver
+   .marcador en MapaPuntosVenta.module.css), con el texto en blanco para
+   que se siga leyendo. */
+::selection {
+  background: var(--color-rosa);
+  color: var(--color-fondo);
+}
