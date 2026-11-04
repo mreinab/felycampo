@@ -45,7 +45,12 @@ export async function generateMetadata({ params }) {
     locale,
     ruta: `/runways-${slug}`,
     titulo: `${coleccion.nombre} ${coleccion.temporada} | ${esEs ? 'Colección de pasarela' : 'Runway collection'} Fely Campo`,
-    descripcion: recortar(coleccion.descripcion),
+    // colecciones.js solo trae "descripcion" en español (texto de autor):
+    // en inglés, meta generada con nombre + temporada (auditoría SEO B4)
+    // en vez de servir la española, duplicada entre idiomas.
+    descripcion: esEs
+      ? recortar(coleccion.descripcion)
+      : `${coleccion.nombre} (${coleccion.temporada}), a luxury ready-to-wear runway collection by Spanish designer Fely Campo. Explore every look, its fabrics and the show.`,
     imagen: coleccion.medios?.[0]?.src,
   });
 }

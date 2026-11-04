@@ -34,11 +34,20 @@ export async function generateMetadata({ params }) {
   if (!producto) return {};
 
   const esEs = locale === 'es';
+  // Productos sin "descripcion" (tiendaProductos.js): base generada con
+  // nombre + color en vez de concatenar "undefined" (auditoría SEO B3) —
+  // así la meta sigue siendo única por ficha.
+  const color = producto.colores?.[0]?.nombre;
+  const base = producto.descripcion || (esEs
+    ? `${producto.nombre}${color ? ` en color ${color.toLowerCase()}` : ''}, de la colección de prêt-à-porter de Fely Campo.`
+    // En inglés sin color: los nombres de color del catálogo solo
+    // existen en español ("negro", "ciruela"...).
+    : `${producto.nombre}, from the Fely Campo ready-to-wear collection.`);
   return metadataPagina({
     locale,
     ruta: `/pret-a-porter/${slug}`,
     titulo: `${producto.nombre} | ${esEs ? 'Prêt-à-porter' : 'Ready-to-wear'} Fely Campo`,
-    descripcion: recortar(`${producto.descripcion} ${esEs ? 'Diseñada y confeccionada en Salamanca. Compra online en Fely Campo.' : 'Designed and made in Salamanca. Shop online at Fely Campo.'}`),
+    descripcion: recortar(`${base} ${esEs ? 'Diseñada y confeccionada en Salamanca. Compra online en Fely Campo.' : 'Designed and made in Salamanca. Shop online at Fely Campo.'}`),
     imagen: producto.imagen,
     tipo: 'website',
   });

@@ -52,7 +52,8 @@ export default function sitemap() {
     ...parametrosCategoria(false).map(({ categoria }) => [`/atelier/novias/categoria/${categoria}`, 0.6]),
     ...parametrosCategoria(true).map(({ categoria }) => [`/atelier/fiesta/categoria/${categoria}`, 0.6]),
     ...COLECCIONES.filter((c) => c.slug).map((c) => [`/runways-${c.slug}`, 0.6]),
-    ...BLOG_ENTRADAS.map((e) => [`/podcast/${e.slug}`, 0.6]),
+    // Episodios de podcast: sin ficha propia (enlazan a YouTube).
+    ...BLOG_ENTRADAS.filter((e) => e.tipo !== 'podcast').map((e) => [`/podcast/${e.slug}`, 0.6]),
   ];
 
   // Sin duplicados (dos productos con el mismo nombre darían la misma URL).

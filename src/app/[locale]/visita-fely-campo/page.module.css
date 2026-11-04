@@ -357,3 +357,10 @@
     width: 100%;
   }
 }
+
+/* Teléfonos como enlace tel: (auditoría SEO M10): mismo aspecto que el
+   texto plano de antes, sin color ni subrayado de enlace. */
+.tel {
+  color: inherit;
+  text-decoration: none;
+}

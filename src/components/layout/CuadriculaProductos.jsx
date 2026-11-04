@@ -9,7 +9,7 @@ import TarjetaProducto from '../ecommerce/TarjetaProducto';
 import TarjetaMedia from '../ecommerce/TarjetaMedia';
 import { Boton, CabeceraSeccion } from '../ui';
 import PanelFiltros from './PanelFiltros';
-import { familiasColorMock, coloresMock } from '@/components/admin/mockData';
+import { familiasColorMock, coloresMock } from '@/lib/paletaColores'; // no desde admin/mockData: arrastraría los datos de prueba al JS público
 import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
 import { slugify } from '@/lib/slugify';
 import styles from './CuadriculaProductos.module.css';

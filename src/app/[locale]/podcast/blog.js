@@ -438,13 +438,14 @@ export const BLOG_ENTRADAS = [
   {
     slug: 'podcast-01-crear-sin-pedir-permiso',
     tipo: 'podcast',
-    // Episodio destacado de la cuadrícula de /blog (ver page.js,
+    // Episodio destacado de la cuadrícula de /podcast (ver page.js,
     // BlogTarjetaPodcastDestacado) — tarjeta a pantalla completa estilo
-    // Spotify (portada + título + botón), no un reproductor real:
-    // enlaza a la ficha del episodio (BlogPodcast, con su propia
-    // maqueta de reproductor, ver ese componente). Solo un episodio
-    // puede llevar "destacado" — page.js no contempla más de uno.
+    // Spotify (portada + título + botón). Los episodios ya no tienen
+    // ficha propia (quitada a petición, 2026-11-04: /podcast/[slug]
+    // redirige a /podcast): la tarjeta abre directamente el vídeo en
+    // YouTube ("youtube"). Solo un episodio puede llevar "destacado".
     destacado: true,
+    youtube: 'https://www.youtube.com/watch?v=umjhdRoup1w',
     fecha: '2026-04-22',
     // Nota: NO la foto de about-felycampo con "ñ" en el nombre de
     // archivo (elmundodefelycampo-ladiseñadora-felycampo.webp) — ese

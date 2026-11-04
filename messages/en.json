@@ -463,7 +463,9 @@
   "catalogo": {
     "subtituloFelyCampo": "Fely Campo",
     "subtituloTienda": "Prêt-à-porter",
-    "tituloTienda": "Prêt-à-porter"
+    "tituloTienda": "Prêt-à-porter",
+    "tituloColecciones": "Collections and runway shows",
+    "tituloTops": "Tops & T-shirts"
   },
   "cuadriculaProductos": {
     "verMas": "See more",

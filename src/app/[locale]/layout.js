@@ -64,7 +64,7 @@ const RUTAS_CON_PRODUCT_HERO = [
 // ateliers (mismos enlaces repetidos). Ni en páginas de contenido o
 // tienda online (podcast, talleres, prêt-à-porter, runways…).
 // PedirCita va en todas las páginas salvo el propio formulario de cita
-// y sus confirmaciones (/visita-fely-campo/cita...).
+// y sus confirmaciones (/visita-fely-campo/cita...) y /podcast.
 function conAteliersCitaEn(ruta) {
   return (
     ruta === '/' ||
@@ -89,7 +89,19 @@ export const metadata = {
     template: '%s | Fely Campo',
   },
   description: 'Firma de moda femenina nacida en Salamanca. Vestidos de novia y fiesta a medida en Salamanca, Madrid y Oviedo, y prêt-à-porter online.',
-  ...(SITIO_INDEXABLE ? {} : { robots: { index: false, follow: false } }),
+  // Indexable: max-image-preview:large (como la web anterior, auditoría
+  // SEO M3) para que Google pueda usar las fotos grandes en resultados y
+  // Discover. Las páginas privadas (indexar:false en metadataPagina)
+  // declaran su propio "robots" y reemplazan entero este.
+  robots: SITIO_INDEXABLE
+    ? { index: true, follow: true, 'max-image-preview': 'large', googleBot: { index: true, follow: true, 'max-image-preview': 'large' } }
+    : { index: false, follow: false },
+  // Verificación del dominio en Meta Business (la misma que la web
+  // anterior en WordPress): sin ella se pierde la verificación de
+  // felycampo.com para el Pixel y los anuncios.
+  other: {
+    'facebook-domain-verification': '52ua5uh83t9xk46o8js2214qt0aczn',
+  },
   // Favicon: F negra sobre blanco por defecto; en modo oscuro del
   // navegador/sistema, la versión invertida (F blanca sobre negro). PNG,
   // no WebP: Safari no admite favicons WebP.
@@ -155,7 +167,11 @@ export default async function RootLayout({ children, params }) {
   const esPretAPorter = rutaSinLocale === '/pret-a-porter';
 
   const conAteliersCita = conAteliersCitaEn(rutaSinLocale);
-  const conPedirCita = !rutaSinLocale.startsWith('/visita-fely-campo/cita');
+  // Tampoco en /podcast ni sus entradas (a petición, 2026-11-04).
+  const conPedirCita =
+    !rutaSinLocale.startsWith('/visita-fely-campo/cita') &&
+    rutaSinLocale !== '/podcast' &&
+    !rutaSinLocale.startsWith('/podcast/');
 
   return (
     <html lang={locale}>

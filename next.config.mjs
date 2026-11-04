@@ -2,6 +2,13 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n.js');
 
+// Cabecera HTTP X-Robots-Tag (auditoría SEO, "Gestión interna"): a
+// diferencia de Disallow en robots.txt, sí impide indexar, y vale para
+// cualquier respuesta (HTML, JSON de la API, errores 4xx/5xx). Mismo
+// criterio que SITIO_INDEXABLE en src/lib/seo.js.
+const SITIO_INDEXABLE = process.env.SITIO_INDEXABLE === 'true';
+const NOINDEX = [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // La barra final la quita src/proxy.js, no Next: así una URL de la web
@@ -19,12 +26,40 @@ const nextConfig = {
   // como definitivo) a /podcast, que es donde vive el contenido de
   // momento (ver src/app/[locale]/podcast/blog.js). Quitar cuando haya
   // un /blog real.
+  async headers() {
+    return [
+      // Gestión interna: siempre noindex, también en producción. El
+      // panel (/admin) y la API no son contenido público.
+      { source: '/admin', headers: NOINDEX },
+      { source: '/admin/:path*', headers: NOINDEX },
+      { source: '/api/:path*', headers: NOINDEX },
+      // Páginas privadas o transaccionales (ya llevan <meta robots
+      // noindex>, ver metadataPagina): también por cabecera.
+      { source: '/:locale(es|en)/:privada(carrito|wishlist|mi-cuenta)/:path*', headers: NOINDEX },
+      { source: '/:locale(es|en)/:privada(carrito|wishlist|mi-cuenta)', headers: NOINDEX },
+      { source: '/:locale(es|en)/visita-fely-campo/cita/:confirmacion(confirmacion.*)', headers: NOINDEX },
+      // Fuera del despliegue definitivo (staging, deploy previews, branch
+      // deploys): noindex en absolutamente todo, archivos incluidos.
+      ...(SITIO_INDEXABLE ? [] : [{ source: '/:path*', headers: NOINDEX }]),
+      // Cualquier respuesta servida desde *.netlify.app (también imágenes
+      // y vídeos, que no pasan por src/proxy.js): noindex, para que solo
+      // se indexe felycampo.com aunque producción responda ahí.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: '(?<subdominio>.*)\\.netlify\\.app' }],
+        headers: NOINDEX,
+      },
+    ];
+  },
+
   async redirects() {
     return [
       {
         source: '/:locale(es|en)/blog',
         destination: '/:locale/podcast',
-        permanent: false,
+        // 301 (antes temporal, 307): el blog vive en /podcast para
+        // siempre (auditoría SEO M13).
+        statusCode: 301,
       },
       // /about era un placeholder vacío que duplicaba /sobre-fely.
       {
@@ -42,6 +77,16 @@ const nextConfig = {
           statusCode: 301,
         })),
       // Sitemaps de WordPress (los que conoce Google Search Console).
+      // Una sola URL por colección (auditoría SEO M12): la carpeta real
+      // es /runways/[coleccion], pero la pública es /runways-{slug} (la de
+      // la web anterior, ver rewrites). Los redirects se evalúan sobre la
+      // URL que pide el navegador, antes de los rewrites, así que esto no
+      // choca con la reescritura de abajo.
+      {
+        source: '/:locale(es|en)/runways/:coleccion',
+        destination: '/:locale/runways-:coleccion',
+        statusCode: 301,
+      },
       {
         source: '/:sitemap(wp-sitemap.*\\.xml|sitemap_index\\.xml)',
         destination: '/sitemap.xml',

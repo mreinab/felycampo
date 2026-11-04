@@ -7,9 +7,9 @@
    celda, no "imagen arriba + texto debajo" como BlogTarjeta), degradado
    oscuro abajo para legibilidad y, encima, el botón de "play" seguido
    del nombre del podcast + episodio/duración — inspirado en las
-   tarjetas de podcast de Spotify. El botón NO reproduce nada aquí (no
-   hay audio real, ver BlogPodcast.jsx): es un enlace más a la ficha
-   del episodio, igual que el resto de la tarjeta.
+   tarjetas de podcast de Spotify. El botón NO reproduce nada aquí: toda
+   la tarjeta es un enlace al vídeo del episodio en YouTube (pestaña
+   nueva si "href" es externo).
    .titulo es fijo — "Entre telas y palabras: El Podcast", el nombre
    de la serie, no el de este episodio en concreto — igual en todos
    los episodios, no viene de blog.js (mismo criterio que "Fely Campo"
@@ -31,7 +31,13 @@ import styles from './BlogTarjetaPodcastDestacado.module.css';
 
 function BlogTarjetaPodcastDestacado({ href, titulo, meta, imagen, alt, textoBoton }) {
   return (
-    <a href={href} className={styles.tarjeta} aria-label={`${textoBoton}: ${titulo}`}>
+    <a
+      href={href}
+      className={styles.tarjeta}
+      aria-label={`${textoBoton}: ${titulo}`}
+      // Enlace externo (YouTube): en pestaña nueva.
+      {...(/^https?:\/\//.test(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    >
       <img src={imagen} alt={alt} className={styles.imagen} />
       <div className={styles.degradado} aria-hidden="true" />
       <div className={styles.contenido}>
