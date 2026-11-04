@@ -91,6 +91,14 @@ export default function middleware(request) {
 
   const response = intlMiddleware(request);
 
+  // El despliegue de producción también responde en felycampo.netlify.app
+  // (y cada deploy en su propio *.netlify.app): ahí, noindex siempre, para
+  // que solo se indexe felycampo.com (auditoría SEO, "Gestión interna").
+  // Los archivos y /admin, /api ya llevan la cabecera desde next.config.
+  if (/\.netlify\.app$/i.test(request.headers.get('host') || '')) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  }
+
   // Expone el pathname a Server Components (layout.js) vía header, para
   // que puedan decidir cosas como el Navbar transparente en home sin
   // tener que renderizar <Navbar /> por separado en cada página.

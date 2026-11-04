@@ -1,0 +1,16 @@
+# Netlify — solo variables por contexto (la configuración de build sigue
+# en el panel de Netlify y en el runtime de Next.js).
+#
+# SITIO_INDEXABLE (ver src/lib/seo.js y next.config.mjs): "true" SOLO en
+# el contexto Production, que se configura en el panel de Netlify. Aquí se
+# fuerza a "false" en deploy previews y branch deploys para que NUNCA se
+# indexen, aunque alguien la ponga por error en "All contexts":
+# noindex en el HTML, X-Robots-Tag en todas las respuestas y robots.txt con
+# Disallow: /. Las variables de este archivo ganan a las del panel en su
+# contexto.
+
+[context.deploy-preview.environment]
+  SITIO_INDEXABLE = "false"
+
+[context.branch-deploy.environment]
+  SITIO_INDEXABLE = "false"

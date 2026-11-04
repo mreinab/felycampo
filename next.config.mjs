@@ -2,6 +2,13 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n.js');
 
+// Cabecera HTTP X-Robots-Tag (auditoría SEO, "Gestión interna"): a
+// diferencia de Disallow en robots.txt, sí impide indexar, y vale para
+// cualquier respuesta (HTML, JSON de la API, errores 4xx/5xx). Mismo
+// criterio que SITIO_INDEXABLE en src/lib/seo.js.
+const SITIO_INDEXABLE = process.env.SITIO_INDEXABLE === 'true';
+const NOINDEX = [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // La barra final la quita src/proxy.js, no Next: así una URL de la web
@@ -19,6 +26,24 @@ const nextConfig = {
   // como definitivo) a /podcast, que es donde vive el contenido de
   // momento (ver src/app/[locale]/podcast/blog.js). Quitar cuando haya
   // un /blog real.
+  async headers() {
+    return [
+      // Gestión interna: siempre noindex, también en producción. El
+      // panel (/admin) y la API no son contenido público.
+      { source: '/admin', headers: NOINDEX },
+      { source: '/admin/:path*', headers: NOINDEX },
+      { source: '/api/:path*', headers: NOINDEX },
+      // Páginas privadas o transaccionales (ya llevan <meta robots
+      // noindex>, ver metadataPagina): también por cabecera.
+      { source: '/:locale(es|en)/:privada(carrito|wishlist|mi-cuenta)/:path*', headers: NOINDEX },
+      { source: '/:locale(es|en)/:privada(carrito|wishlist|mi-cuenta)', headers: NOINDEX },
+      { source: '/:locale(es|en)/visita-fely-campo/cita/:confirmacion(confirmacion.*)', headers: NOINDEX },
+      // Fuera del despliegue definitivo (staging, deploy previews, branch
+      // deploys): noindex en absolutamente todo, archivos incluidos.
+      ...(SITIO_INDEXABLE ? [] : [{ source: '/:path*', headers: NOINDEX }]),
+    ];
+  },
+
   async redirects() {
     return [
       {
