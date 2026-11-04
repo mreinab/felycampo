@@ -364,6 +364,8 @@ const COLECCIONES = [
   },
 ];
 
+import { sinNumeroColeccion } from '@/lib/nombreColeccion';
+
 export const fiestaProductos = COLECCIONES.flatMap(({ carpeta, nombreColeccion, looks }) => looks.map((look) => {
   const rutas = look.imagenes.map((archivo) => `${RUTA_BASE}/${carpeta}/${archivo}`);
   // En la tarjeta (TarjetaProducto "titulo"/"subtitulo"): "Look N" arriba
@@ -374,12 +376,14 @@ export const fiestaProductos = COLECCIONES.flatMap(({ carpeta, nombreColeccion, 
   return {
     nombre: look.nombre,
     titulo: numeroLook ? numeroLook[0] : undefined,
-    subtitulo: numeroLook ? nombreColeccion : undefined,
+    // Colección sin el número de temporada ("26_Opaline" -> "Opaline",
+    // ver lib/nombreColeccion.js) — solo lo que se ve.
+    subtitulo: numeroLook ? sinNumeroColeccion(nombreColeccion) : undefined,
     sku: look.sku || undefined,
     imagen: rutas[0],
     imagenHover: rutas[1] || rutas[0],
     imagenes: rutas,
-    descripcion: look.descripcion || `Pieza de la colección ${nombreColeccion}, Fiesta${look.sku ? ` (SKU ${look.sku})` : ''}. Colores y tallas disponibles próximamente.`,
+    descripcion: look.descripcion || `Pieza de la colección ${sinNumeroColeccion(nombreColeccion)}, Fiesta${look.sku ? ` (SKU ${look.sku})` : ''}. Colores y tallas disponibles próximamente.`,
     tags: look.tags && look.tags.length > 0 ? look.tags : undefined,
     coleccion: nombreColeccion,
   };

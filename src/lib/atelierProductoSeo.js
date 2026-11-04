@@ -8,6 +8,7 @@
 import { noviaProductos } from '@/components/layout/noviaProductos';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { slugify } from './slugify';
+import { sinNumeroColeccion } from './nombreColeccion';
 import { metadataPagina, recortar } from './seo';
 
 const CATALOGOS = { novias: noviaProductos, fiesta: fiestaProductos };
@@ -27,6 +28,8 @@ export function metadataProductoAtelier({ locale, slug, seccion }) {
   const producto = CATALOGOS[seccion]?.find((candidato) => slugify(candidato.nombre) === slug);
   if (!producto) return {};
 
+  // Sin el número de temporada ("Look 27 26_Opaline" -> "Look 27 Opaline").
+  const nombre = sinNumeroColeccion(producto.nombre);
   const textos = TEXTOS[seccion][locale] || TEXTOS[seccion].es;
   // "descripcion" real solo en algunas colecciones (ver noviaProductos.js)
   // y solo en español: en inglés, o si no hay, queda el texto de cierre.
@@ -35,8 +38,8 @@ export function metadataProductoAtelier({ locale, slug, seccion }) {
   return metadataPagina({
     locale,
     ruta: `/atelier/${seccion}/${slug}`,
-    titulo: `${producto.nombre} | ${textos.tipo} | Fely Campo`,
-    descripcion: recortar(descripcionPropia ? `${descripcionPropia} ${textos.cierre}` : `${producto.nombre}. ${textos.cierre}`),
+    titulo: `${nombre} | ${textos.tipo} | Fely Campo`,
+    descripcion: recortar(descripcionPropia ? `${descripcionPropia} ${textos.cierre}` : `${nombre}. ${textos.cierre}`),
     imagen: producto.imagen,
   });
 }

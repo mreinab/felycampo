@@ -13,12 +13,13 @@
    mismo par que ya usa CuadriculaProductos como subtítulo/título antes
    de la cuadrícula (tituloKey/coleccionKey más abajo).
 
-   Bajo el hero, intro con filtros (FiestaIntro.jsx → IntroSeccion,
-   mismo esquema que /blog): título "Atelier Fiesta", el texto de
-   descripción y dos filtros — "Así trabajamos" (dos BloqueSeccion en
-   zigzag + RunwayBackstage, contenido en fiestaEditorial.js, la que se
-   ve al entrar) y "Colección fiesta" (la cuadrícula). Antes iban
-   todos seguidos, con RunwayDescripcion dentro de .textoDescripcion.
+   Bajo el hero, intro (IntroSeccion, mismo esquema que /blog, sin
+   filtros): título "Atelier Fiesta" y el texto de descripción. Debajo,
+   todo seguido (también en mobile): primero "Así trabajamos" (dos
+   BloqueSeccion en zigzag + RunwayBackstage, contenido en
+   fiestaEditorial.js) y justo después la colección (la cuadrícula).
+   Antes eran dos pestañas/filtros (FiestaIntro.jsx, ya eliminado) que
+   enseñaban una parte u otra — quitadas a petición.
 
    Cuadrícula de looks (CuadriculaProductos) al final, visible — a
    petición explícita (a diferencia de atelier/novias/page.js, aquí NO
@@ -29,10 +30,9 @@
    se enseña en esta página. */
 
 import { getTranslations } from 'next-intl/server';
-import { CuadriculaProductos, HeroPagina, BloqueSeccion, RunwayBackstage } from '@/components/layout';
+import { CuadriculaProductos, HeroPagina, BloqueSeccion, RunwayBackstage, IntroSeccion } from '@/components/layout';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { FIESTA_EDITORIAL } from './fiestaEditorial';
-import FiestaIntro from './FiestaIntro';
 import { metadataPagina } from '@/lib/seo';
 
 // Colecciones de Fiesta, de la más reciente a la más antigua — mismo
@@ -76,46 +76,43 @@ export default async function Pagina({ params, searchParams }) {
         subtitulo={t('heroPagina.atelierFiesta')}
       />
 
-      <FiestaIntro
+      <IntroSeccion
         titulo={`${t('nav.links.atelier')} ${t('nav.submenus.atelier.fiesta')}`}
         texto={FIESTA_EDITORIAL.descripcion[locale].join(' ')}
-        etiquetas={{ atelier: FIESTA_EDITORIAL.filtros.atelier[locale], colecciones: FIESTA_EDITORIAL.filtros.colecciones[locale] }}
-        editorial={(
-          <>
-            {FIESTA_EDITORIAL.bloques.map((bloque, indice) => (
-              <BloqueSeccion
-                key={bloque.imagen}
-                imagen={bloque.imagen}
-                tipo={bloque.tipo}
-                titulo={bloque.titulo[locale]}
-                texto={bloque.texto[locale]}
-                invertido={indice % 2 === 1}
-              />
-            ))}
+      />
 
-            <div className="contenedor">
-              <RunwayBackstage imagenes={FIESTA_EDITORIAL.backstage} alt={t('nav.submenus.atelier.fiesta')} />
-            </div>
-          </>
-        )}
-        colecciones={(
-          <CuadriculaProductos
-            productos={PRODUCTOS_FIESTA}
-            disposicion="grid"
-            // Cabecera (CabeceraSeccion) comentada a petición, igual que en
-            // pret-a-porter/page.js: sin "tituloKey" CuadriculaProductos no la
-            // pinta (ni el botón de filtros ni el cambio de columnas, que van dentro).
-            // tituloKey="nav.links.atelier"
-            // coleccionKey="nav.submenus.atelier.fiesta"
-            // descriptionKey="cuadriculaTabs.descripcion"
-            ocultarPrecio
-            colecciones={COLECCIONES_FIESTA}
-            coleccionActiva={coleccionActiva}
-            hrefBase="atelier/fiesta"
-            estiloYSilueta
-            esFiesta
-          />
-        )}
+      {/* 1. Así trabajamos */}
+      {FIESTA_EDITORIAL.bloques.map((bloque, indice) => (
+        <BloqueSeccion
+          key={bloque.imagen}
+          imagen={bloque.imagen}
+          tipo={bloque.tipo}
+          titulo={bloque.titulo[locale]}
+          texto={bloque.texto[locale]}
+          invertido={indice % 2 === 1}
+        />
+      ))}
+
+      <div className="contenedor">
+        <RunwayBackstage imagenes={FIESTA_EDITORIAL.backstage} alt={t('nav.submenus.atelier.fiesta')} />
+      </div>
+
+      {/* 2. Colección fiesta, justo debajo */}
+      <CuadriculaProductos
+        productos={PRODUCTOS_FIESTA}
+        disposicion="grid"
+        // Cabecera (CabeceraSeccion) comentada a petición, igual que en
+        // pret-a-porter/page.js: sin "tituloKey" CuadriculaProductos no la
+        // pinta (ni el botón de filtros ni el cambio de columnas, que van dentro).
+        // tituloKey="nav.links.atelier"
+        // coleccionKey="nav.submenus.atelier.fiesta"
+        // descriptionKey="cuadriculaTabs.descripcion"
+        ocultarPrecio
+        colecciones={COLECCIONES_FIESTA}
+        coleccionActiva={coleccionActiva}
+        hrefBase="atelier/fiesta"
+        estiloYSilueta
+        esFiesta
       />
     </section>
   );
