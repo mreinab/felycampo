@@ -1,7 +1,7 @@
 /* ============================================================
    BOTÓN FLOTANTE DE WHATSAPP — Fely Campo
    Fijo abajo a la derecha en todas las páginas (ver layout.js). Mismo
-   número que la antigua "Atención Prêt-à-porter" (/ayuda/contacto, ya eliminada).
+   número que el WhatsApp del atelier de Madrid (ver ubicaciones.js).
    Icono de trazo fino dibujado a mano (no el logo verde de WhatsApp)
    para ir con la línea del resto del sitio: cuadrado negro suave, icono en
    blanco, y al hover se aclara (ver BotonWhatsapp.module.css).
@@ -10,7 +10,7 @@
 import { useTranslations } from 'next-intl';
 import styles from './BotonWhatsapp.module.css';
 
-const TELEFONO = '34683703644';
+const TELEFONO = '34659006257';
 
 export default function BotonWhatsapp() {
   const t = useTranslations('whatsappFlotante');

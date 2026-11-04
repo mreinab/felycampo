@@ -167,7 +167,7 @@ async function AtelierDetalle({ datos, locale }) {
               {tVisitenos('whatsapp')}: {ubicacion.whatsapp}
             </a>
             <Boton
-              href={`/${locale}/visita-fely-campo/cita`}
+              href={`/${locale}/visita-fely-campo/cita?ubicacion=${ubicacion.id}`}
               variante="solido"
               tamano="m"
               className={styles.botonCita}

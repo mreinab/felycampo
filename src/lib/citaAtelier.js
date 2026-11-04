@@ -2,11 +2,19 @@
 //
 // Datos compartidos del formulario de cita (/visita-fely-campo/cita) entre
 // la página (cliente) y la API que lo procesa (src/app/api/cita/route.js):
-// tipos de cita y página de confirmación. El formulario ya no pregunta el
-// atelier (lo decide el equipo al contactar), así que ya no hay lista de
-// ateliers aquí. El email que recibe los avisos NO vive aquí (este archivo
-// llega al navegador) — lo lee la API de variables de entorno, ver
+// ateliers que se pueden elegir (obligatorio, vuelve a preguntarse a
+// petición), tipos de cita y página de confirmación. Los ids coinciden con
+// los de UBICACIONES (visita-fely-campo/ubicaciones.js), así que los
+// enlaces "Pedir cita" de cada atelier pueden mandar ?ubicacion=<id> para
+// dejarlo ya elegido. El email que recibe los avisos NO vive aquí (este
+// archivo llega al navegador) — lo lee la API de variables de entorno, ver
 // .env.example.
+
+export const ATELIERES_CITA = [
+  { id: 'salamanca', nombre: 'Salamanca' },
+  { id: 'madrid', nombre: 'Madrid' },
+  { id: 'oviedo', nombre: 'Oviedo' },
+];
 
 export const TIPOS_CITA = ['novia', 'invitada'];
 

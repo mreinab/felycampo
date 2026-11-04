@@ -1063,7 +1063,7 @@ Lista de tiendas multimarca (nombres y ciudades; direcciones y teléfonos omitid
 - `producto.devolucionesSubtitulo`: Devoluciones
 - `producto.devolucionesTexto`:
 
-  > Puedes ponerte en contacto con nosotros en <email>info@felycampo.com</email> o en el <telefono>+34 683 703 644</telefono> dentro de los 14 días naturales siguientes a la recepción del pedido para gestionar una devolución o cambio. Te indicaremos los pasos a seguir. Los gastos de devolución corren a cargo del cliente, salvo en caso de prenda defectuosa o error en el pedido. Visita nuestra página de <atencion>atención al cliente</atencion>.
+  > Puedes ponerte en contacto con nosotros en <email>info@felycampo.com</email> o en el <telefono>+34 659 00 62 57</telefono> dentro de los 14 días naturales siguientes a la recepción del pedido para gestionar una devolución o cambio. Te indicaremos los pasos a seguir. Los gastos de devolución corren a cargo del cliente, salvo en caso de prenda defectuosa o error en el pedido. Visita nuestra página de <atencion>atención al cliente</atencion>.
 
 - `producto.entregaEstimada`: Entrega estimada: 2 semanas
 - `producto.noEncontrado`: No hemos encontrado este producto.
@@ -2217,7 +2217,7 @@ Cada entrada tiene su URL propia. Los relatos de autores invitados son voz de au
 - `devoluciones.titulo`: Devoluciones
 - `devoluciones.texto`:
 
-  > Puedes ponerte en contacto con nosotros en <email>info@felycampo.com</email> o en el <telefono>+34 683 703 644</telefono> dentro de los 14 días naturales siguientes a la recepción del pedido para gestionar una devolución o cambio. Te indicaremos los pasos a seguir.
+  > Puedes ponerte en contacto con nosotros en <email>info@felycampo.com</email> o en el <telefono>+34 659 00 62 57</telefono> dentro de los 14 días naturales siguientes a la recepción del pedido para gestionar una devolución o cambio. Te indicaremos los pasos a seguir.
 
 - `devoluciones.gastosLabel`: Gastos de devolución
 - `devoluciones.gastos`: A cargo de la clienta, salvo prenda defectuosa o error en el pedido.
@@ -2333,7 +2333,7 @@ Textos de interfaz; poco peso SEO (la cesta y la cuenta no se indexan).
 - `miCuenta.nombreCompletoPlaceholder`: María Martín García
 - `miCuenta.fechaNacimiento`: Fecha de nacimiento
 - `miCuenta.emailPlaceholder`: maria@ejemplo.com
-- `miCuenta.telefonoPlaceholder`: +34 683 703 644
+- `miCuenta.telefonoPlaceholder`: +34 659 00 62 57
 - `miCuenta.password`: Contraseña
 - `miCuenta.enviarLogin`: Iniciar sesión
 - `miCuenta.enviarRegistro`: Crear cuenta

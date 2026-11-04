@@ -8,26 +8,31 @@
    una X para cerrar (calcada de MiCuentaModal); quitadas a petición.
 
    Un único formulario pequeño: nombre completo, email y teléfono de
-   contacto, fecha de la
-   boda (obligatoria, día/mes/año en selects propios — no
-   <input type="date">, a petición), código postal, ciudad, mensaje
-   libre y la casilla de aceptar privacidad/términos (obligatoria).
+   contacto, atelier (obligatorio, desplegable con los tres — vuelto a
+   poner a petición), fecha del evento (obligatoria, solo mes/año en un
+   único campo propio, SelectorMesAnio.jsx — no <input type="date">, a petición), mensaje libre
+   y la casilla de aceptar privacidad/términos (obligatoria). Código
+   postal y ciudad ya no se preguntan — quitados a petición.
+
+   El atelier llega ya elegido si se entra desde el "Pedir cita" de un
+   atelier (?ubicacion=<id>, ver ListadoUbicaciones.jsx y
+   AtelierDetalle.jsx); desde el Navbar llega vacío. Se lee de
+   window.location en un efecto (no useSearchParams, que obligaría a
+   envolver la página en <Suspense> para el render estático).
 
    "Enviar solicitud" manda los datos a /api/cita (email de confirmación
    a la clienta + aviso al equipo del atelier, ver src/app/api/cita/
    route.js) y, si va bien, registra la conversión (src/lib/analitica.js)
    y lleva a la página de confirmación (./confirmacion). Ya no se
-   pregunta si la cita es de novia o de invitada, ni el atelier (lo
-   decide el equipo al contactar; los enlaces "Pedir cita" de cada
-   atelier aún llevan ?ubicacion=<id>, que ya no se usa) — quitados a
-   petición. */
+   pregunta si la cita es de novia o de invitada — quitado a petición. */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { Boton, Input } from '@/components/ui';
-import { rutaConfirmacionCita } from '@/lib/citaAtelier';
+import { ATELIERES_CITA, rutaConfirmacionCita } from '@/lib/citaAtelier';
 import { registrarConversionCita } from '@/lib/analitica';
+import SelectorMesAnio from './SelectorMesAnio';
 import styles from './page.module.css';
 
 // Nombres de mes propios (no hay diccionario de meses en messages/
@@ -38,13 +43,6 @@ const MESES = {
   en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 };
 
-const DIAS = Array.from({ length: 31 }, (_, i) => i + 1);
-// El evento es a futuro (es la fecha para la que se pide el vestido,
-// no una fecha pasada) — año actual + 3 basta de sobra para una boda/
-// fiesta ya planeada con antelación.
-const ANIO_ACTUAL = new Date().getFullYear();
-const ANIOS = Array.from({ length: 4 }, (_, i) => ANIO_ACTUAL + i);
-
 export default function Pagina() {
   const t = useTranslations('pedirCitaAtelier');
   const locale = useLocale();
@@ -54,11 +52,9 @@ export default function Pagina() {
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [email, setEmail] = useState('');
   const [telefono, setTelefono] = useState('');
-  const [fechaDia, setFechaDia] = useState('');
-  const [fechaMes, setFechaMes] = useState('');
-  const [fechaAnio, setFechaAnio] = useState('');
-  const [codigoPostal, setCodigoPostal] = useState('');
-  const [ciudad, setCiudad] = useState('');
+  const [ubicacion, setUbicacion] = useState('');
+  // "AAAA-MM" — solo mes y año, a petición (ver SelectorMesAnio.jsx).
+  const [fechaEvento, setFechaEvento] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [aceptaLegal, setAceptaLegal] = useState(false);
   const [avisoDatos, setAvisoDatos] = useState(false);
@@ -71,14 +67,16 @@ export default function Pagina() {
   const withLocale = (href) => `/${locale}${href}`;
   const conLimpieza = (setter) => (evento) => { setter(evento.target.value); setAvisoDatos(false); };
 
-  const fechaBoda = fechaDia && fechaMes && fechaAnio
-    ? `${fechaAnio}-${String(fechaMes).padStart(2, '0')}-${String(fechaDia).padStart(2, '0')}`
-    : '';
+  // Atelier ya elegido si se llega desde el "Pedir cita" de un atelier.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get('ubicacion');
+    if (ATELIERES_CITA.some((atelier) => atelier.id === id)) setUbicacion(id);
+  }, []);
 
   const alEnviar = async (evento) => {
     evento.preventDefault();
     if (enviando) return;
-    if (!fechaBoda || !nombreCompleto.trim() || !email.trim() || !telefono.trim() || !codigoPostal.trim() || !ciudad.trim() || !aceptaLegal) {
+    if (!ubicacion || !fechaEvento || !nombreCompleto.trim() || !email.trim() || !telefono.trim() || !aceptaLegal) {
       setAvisoDatos(true);
       return;
     }
@@ -90,7 +88,7 @@ export default function Pagina() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          locale, fechaBoda, nombreCompleto, email, telefono, codigoPostal, ciudad, mensaje, aceptaLegal, web,
+          locale, ubicacion, fechaEvento, nombreCompleto, email, telefono, mensaje, aceptaLegal, web,
         }),
       });
       const resultado = await respuesta.json().catch(() => ({}));
@@ -151,63 +149,27 @@ export default function Pagina() {
             onChange={(evento) => { setTelefono(evento.target.value); setAvisoDatos(false); }}
           />
 
-          <div className={styles.campo}>
-            <span className={styles.etiqueta}>{t('fechaBoda')}</span>
-            <div className={styles.fechaFila}>
-              <select
-                className={styles.select}
-                aria-label={t('dia')}
-                value={fechaDia}
-                onChange={conLimpieza(setFechaDia)}
-              >
-                <option value="">{t('dia')}</option>
-                {DIAS.map((dia) => (
-                  <option key={dia} value={dia}>{dia}</option>
-                ))}
-              </select>
-              <select
-                className={styles.select}
-                aria-label={t('mes')}
-                value={fechaMes}
-                onChange={conLimpieza(setFechaMes)}
-              >
-                <option value="">{t('mes')}</option>
-                {meses.map((nombreMes, indice) => (
-                  <option key={nombreMes} value={indice + 1}>{nombreMes}</option>
-                ))}
-              </select>
-              <select
-                className={styles.select}
-                aria-label={t('anio')}
-                value={fechaAnio}
-                onChange={conLimpieza(setFechaAnio)}
-              >
-                <option value="">{t('anio')}</option>
-                {ANIOS.map((anio) => (
-                  <option key={anio} value={anio}>{anio}</option>
-                ))}
-              </select>
-            </div>
-          </div>
+          <label className={styles.campo}>
+            <span className={styles.etiquetaOculta}>{t('atelier')}</span>
+            <select
+              className={styles.select}
+              name="ubicacion"
+              value={ubicacion}
+              onChange={conLimpieza(setUbicacion)}
+            >
+              <option value="">{t('atelierElige')}</option>
+              {ATELIERES_CITA.map((atelier) => (
+                <option key={atelier.id} value={atelier.id}>{atelier.nombre}</option>
+              ))}
+            </select>
+          </label>
 
-          <div className={styles.fila2Columnas}>
-            <Input
-              etiqueta={t('codigoPostal')}
-              etiquetaOculta
-              nombre="codigoPostal"
-              placeholder={`*${t('codigoPostal')}`}
-              valor={codigoPostal}
-              onChange={(evento) => { setCodigoPostal(evento.target.value); setAvisoDatos(false); }}
-            />
-            <Input
-              etiqueta={t('ciudad')}
-              etiquetaOculta
-              nombre="ciudad"
-              placeholder={`*${t('ciudad')}`}
-              valor={ciudad}
-              onChange={(evento) => { setCiudad(evento.target.value); setAvisoDatos(false); }}
-            />
-          </div>
+          <SelectorMesAnio
+            valor={fechaEvento}
+            onChange={(valor) => { setFechaEvento(valor); setAvisoDatos(false); }}
+            meses={meses}
+            textos={{ placeholder: t('fechaEvento'), anioAnterior: t('anioAnterior'), anioSiguiente: t('anioSiguiente') }}
+          />
 
           <label className={styles.campo}>
             <span className={styles.etiquetaOculta}>{t('mensaje')}</span>

@@ -144,9 +144,7 @@ function ListadoUbicaciones({ locale }) {
 
                     <div className={styles.acciones}>
                       <a
-                        href={`/${locale}/visita-fely-campo/cita`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={`/${locale}/visita-fely-campo/cita?ubicacion=${ubicacion.id}`}
                         className={styles.accionBtn}
                       >
                         {t('pedirCita')}

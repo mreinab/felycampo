@@ -28,7 +28,7 @@ export default async function Pagina() {
 
         <div className={styles.fila}>
           <span className={styles.etiqueta}>{t('telefonoLabel')}</span>
-          <a href="tel:+34683703644" className="enlace-texto">+34 683 703 644</a>
+          <a href="tel:+34659006257" className="enlace-texto">+34 659 00 62 57</a>
         </div>
 
         <div className={styles.fila}>
@@ -49,7 +49,7 @@ export default async function Pagina() {
             rel="noopener noreferrer"
             className="enlace-texto"
           >
-            C/ Laguna Negra 17, Salamanca
+            C/ Laguna Negra 17-19, Salamanca
           </a>
         </div>
       </div>

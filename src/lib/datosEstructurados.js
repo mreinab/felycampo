@@ -54,7 +54,7 @@ export function sitioWeb({ locale }) {
 }
 
 // ubicacion: entrada de visita-fely-campo/ubicaciones.js —
-// direccion: ['C/ Laguna Negra 17', '37008 Salamanca'], telefonos: [...].
+// direccion: ['C/ Laguna Negra 17-19', '37008 Salamanca'], telefonos: [...].
 export function tiendaAtelier({ ubicacion, nombre, url, imagen }) {
   const [calle, ...resto] = ubicacion.direccion;
   const [, codigoPostal, localidad] = (resto.join(' ').match(/^(\d{5})\s+(.+)$/) || []);

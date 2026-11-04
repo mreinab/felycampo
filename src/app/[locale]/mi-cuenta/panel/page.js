@@ -260,7 +260,7 @@ export default function Pagina() {
               <form className={styles.form} onSubmit={(evento) => evento.preventDefault()}>
                 <Input etiqueta={tCuenta('nombreCompleto')} tipo="text" nombre="nombreCompleto" valor="María Martín García" onChange={() => {}} />
                 <Input etiqueta={tCuenta('email')} tipo="email" nombre="email" valor="maria@ejemplo.com" onChange={() => {}} />
-                <Input etiqueta={tCuenta('telefono')} tipo="tel" nombre="telefono" valor="+34 683 703 644" onChange={() => {}} />
+                <Input etiqueta={tCuenta('telefono')} tipo="tel" nombre="telefono" valor="+34 659 00 62 57" onChange={() => {}} />
                 <Input etiqueta={tCuenta('fechaNacimiento')} tipo="date" nombre="fechaNacimiento" valor="1994-05-12" onChange={() => {}} />
                 <Boton variante="solido" tamano="m" type="submit">{t('guardarCambios')}</Boton>
               </form>

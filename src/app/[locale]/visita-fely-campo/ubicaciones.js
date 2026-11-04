@@ -15,7 +15,7 @@ export const UBICACIONES = [
     id: 'salamanca',
     ciudad: 'Salamanca',
     nombre: 'Atelier Salamanca',
-    direccion: ['C/ Laguna Negra 17', '37008 Salamanca'],
+    direccion: ['C/ Laguna Negra 17-19', '37008 Salamanca'],
     telefonos: ['+34 923 19 00 53', '+34 659 00 62 57'],
     whatsapp: '+34 659 00 62 57',
     horario: { es: 'Lun - Vie: 09:30 - 17:30', en: 'Mon - Fri: 9:30am - 5:30pm' },
