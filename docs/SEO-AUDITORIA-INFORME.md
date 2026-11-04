@@ -24,7 +24,9 @@ Verificado sobre una nueva compilación de producción (`next build` + `next sta
 | M11 H1 | ✅ | `7c07100` | «Colecciones y desfiles» (EN: «Collections and runway shows»), «Boutiques selectas» y «Prêt-à-porter Tops y Camisetas» (EN: «Tops & T-shirts»). Usan claves propias: el menú sigue con «Runway» y «Tops y Camisas» |
 | M12 Una URL por colección | ✅ | `5435325` | `/es/runways/la-coleccion` y `/en/runways/dreaming` → 301 → `/…/runways-{slug}` (200) |
 | M13 Cadenas de redirección | ✅ | `2eef2a4` | `/terminos-y-condiciones(/)` → 301 → `/es/legal/terminos`; `/contacto/` → 301 → `/es/visita-fely-campo`; `/lista-de-deseos/`, `/lost-password/` y `/mi-cuenta/lost-password/` → 301 → `/es/pret-a-porter` (el mismo destino que `/mi-cuenta/`); `/es/blog` y `/en/blog` → **301** → `/…/podcast`. Todos llegan a 200 en un salto |
-| M1 Menú rastreable · M2 JSON-LD | ⏳ otra rama | — | Acordado hacerlo después |
+| M1 Menú rastreable | ✅ | `0c6e88e` (rama `seo/menu-y-datos-estructurados`) | Todos los destinos de los submenús siempre en el HTML (`<nav hidden>`). La home pasa de 14 a 18 enlaces internos únicos, ahora con /pret-a-porter, /blog, Vosotras, Talleres y los 3 ateliers |
+| M2 JSON-LD | ✅ | `3f19953` | Home: Organization (logo y 3 redes) + WebSite. Ateliers: ClothingStore con dirección y teléfono idénticos a los visibles + BreadcrumbList. Fichas de prêt-à-porter y atelier: Product sin `offers` (no se muestran precios) + BreadcrumbList. Colecciones: BreadcrumbList |
+| Blog en /blog | ℹ️ | `81b2882` | Cambio del cliente (04/11): el blog/podcast vuelve a `/blog` y `/podcast` (con sus entradas) redirige con 301 a `/blog`. **Sustituye** a la redirección `/blog` → `/podcast` de M13 |
 
 ---
 
@@ -370,6 +372,7 @@ Implementado en `next.config.mjs` (`headers()`) y `src/proxy.js`, commits `cc8ff
 - ✅ **Staging, deploy previews y branch deploys, noindex siempre.** Compilado sin `SITIO_INDEXABLE`: `X-Robots-Tag: noindex, nofollow` en **todas** las respuestas (páginas, imágenes, `robots.txt`, `sitemap.xml`, admin, API), `<meta name="robots" content="noindex, nofollow">` y `robots.txt` = `Disallow: /`.
 - ✅ **`netlify.toml`** (nuevo) fuerza `SITIO_INDEXABLE="false"` en los contextos `deploy-preview` y `branch-deploy`, aunque alguien la ponga por error en "All contexts". `SITIO_INDEXABLE=true` va **solo** en el contexto Production, desde el panel. *Hay que comprobarlo en el primer deploy preview*: según la documentación de Netlify, las variables de `netlify.toml` ganan a las del panel en su contexto.
 - ✅ **Producción en `*.netlify.app`.** Con la build de producción y la cabecera `Host: felycampo.netlify.app`, todas las respuestas (páginas, imágenes y `robots.txt`) llevan `X-Robots-Tag: noindex, nofollow`. Solo se indexará felycampo.com, y el canonical apunta siempre ahí. Alternativa más estricta, si se prefiere: redirigir `felycampo.netlify.app` a `felycampo.com` desde el panel de Netlify (Domain management) una vez el dominio esté activo.
+- ⚠️ **Imágenes en `felycampo.netlify.app`:** en el despliegue real, Netlify sirve los archivos de `public/` directamente desde su CDN, sin pasar por las cabeceras de Next. Por eso las imágenes servidas desde `*.netlify.app` **no** llevan `X-Robots-Tag` (en local sí). Las páginas, el admin y `robots.txt` sí la llevan. Solución: un bloque `[[headers]]` en Netlify o una regla del dominio (no se ha tocado: la configuración de Netlify la gestiona el cliente). Impacto bajo: el canonical y el noindex de las páginas apuntan a felycampo.com.
 
 ### 7.7 Pendiente de comprobar en producción
 
