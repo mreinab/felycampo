@@ -92,14 +92,15 @@
   background: transparent;
 }
 
-/* Recortes PNG con fondo transparente (figura alta y estrecha): con el
-   "cover" de siempre se cortarían cabeza y pies — aquí se ve la figura
-   entera, centrada, con un poco de aire arriba/abajo. Las fotos de
-   pasarela completas (.webp/.jpg) siguen llenando la celda. */
-.itemEditorial img[src$=".png"] {
+/* Recortes con fondo transparente (figura alta y estrecha): con el
+   "cover" de siempre se cortarían cabeza y pies y la figura se vería
+   ampliada. Aquí la figura llena el ALTO de la celda (no el ancho),
+   entera y centrada. Se reconocen por el nombre ("-recorte."), no por
+   la extensión: antes eran .png y la regla miraba src$=".png", así que
+   al pasarlos a WebP (2026-10-25) dejó de aplicarse. Las fotos de
+   pasarela completas siguen llenando la celda. */
+.itemEditorial img[src*="-recorte."] {
   object-fit: contain;
-  padding-block: var(--spacing-5);
-  box-sizing: border-box;
 }
 
 @media (max-width: 767px) {

@@ -28,7 +28,7 @@ export default async function Pagina({ params }) {
     <>
       <section className="seccion">
         <ProductHero
-          imagen="/img/atelier/showroom-madrid/fely-campo-atelier-madrid-vestidos-fiesta.webp"
+          imagen="/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-fiesta-3.webp"
           titulo={t('visitenos.titulo')}
           subtitulo={t('heroPagina.atelierCiudad')}
           className={styles.heroEncuadre}

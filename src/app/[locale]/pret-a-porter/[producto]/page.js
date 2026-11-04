@@ -13,10 +13,9 @@
 import { permanentRedirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
-import { ProductosRecomendados, ResenasClientes } from '@/components/layout';
+import { ProductosRecomendados } from '@/components/layout';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
-import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
-import { FichaProductoAcciones, GaleriaProducto, LookPasarela } from '@/components/ecommerce';
+import { FichaProductoAcciones, GaleriaProducto } from '@/components/ecommerce';
 import { Acordeon, FilaAcordeon, Boton } from '@/components/ui';
 import { slugify } from '@/lib/slugify';
 import { metadataPagina, recortar } from '@/lib/seo';
@@ -131,20 +130,9 @@ export default async function FichaProducto({ params }) {
       </div>
 
       <div className={styles.debajoFicha}>
-        {/* PLACEHOLDER a propósito, ver LookPasarela.jsx — se
-            renderiza siempre con una imagen fija, sin lógica real de
-            selección todavía (pendiente de admin panel). Detalle
-            completo en docs/design.md, sección "Look de pasarela
-            (placeholder)". Fuera de .info (ver más arriba), alineado a
-            la derecha, justo encima de ResenasClientes. */}
-        <LookPasarela
-          titulo={t('runwayLook')}
-          imagen="/img/collections/runway/fw27-lacoleccion/fely-campo-pasarela-la-coleccion-look-01.webp"
-          alt={t('runwayLook')}
-        />
-
-        <ResenasClientes resenas={RESENAS_EJEMPLO} />
-
+        {/* "Runway look" (LookPasarela) y las reseñas (ResenasClientes)
+            quitados a petición (2026-11-04) — eran placeholders. Los
+            componentes siguen en components/ por si se recuperan. */}
         {relacionados.length > 0 && (
           <>
             <ProductosRecomendados productos={relacionados} ocultarPrecio />

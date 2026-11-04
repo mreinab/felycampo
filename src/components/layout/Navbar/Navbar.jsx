@@ -90,12 +90,12 @@ const SUBMENU_STRUCTURE = {
   },
   puntosDeVenta: {
     items: [
-      { key: 'propios', href: '/visita-fely-campo', image: '/img/landing/fely-campo-menu-visita-ateliers.webp' },
+      { key: 'propios', href: '/visita-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-fiesta-3.webp' },
       { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
     ],
     cardsVariante: 'horizontal',
     cards: [
-      { key: 'propios', href: '/visita-fely-campo', image: '/img/landing/fely-campo-menu-visita-ateliers.webp' },
+      { key: 'propios', href: '/visita-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-fiesta-3.webp' },
       { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
     ],
   },

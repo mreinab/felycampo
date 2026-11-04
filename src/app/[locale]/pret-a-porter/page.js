@@ -50,7 +50,7 @@ const IMAGENES_HERO = ['02', '04', '05', '08', '13', '15', '16', '17', '20', '22
 // queden siempre en el mismo lado de la fila.
 const FOTOS_PASARELA = {
   'Chaqueta Samarcanda': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-17-recorte.webp`, antes: true },
-  'Chaqueta Sucre': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-16-recorte.webp`, antes: true }, // look con Falda Sucre
+  'Chaqueta Sucre': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-16-recorte.webp` }, // look con Falda Sucre — detrás, para no separar Falda Sucre y Chaqueta Sucre
   'Chaqueta Aranjuez': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-24-recorte.webp`, antes: true },
   'Top lencero': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-04-recorte.webp` }, // look con Falda Jeju
   'Vestido Ciruela': { src: `${RUTA_CARRUSEL}/fely-campo-pasarela-la-coleccion-look-03-recorte.webp`, antes: true },
@@ -60,15 +60,15 @@ const FOTOS_PASARELA = {
 // Orden de la cuadrícula en esta página (solo aquí, tiendaProductos.js
 // no cambia). Pensado para 4 columnas en escritorio — con las fotos, cada
 // fila queda así (F = foto de pasarela):
-//   1: F17 · Samarcanda · Basilea · Lhasa
-//   2: Chicago · Falda Sucre · F16 · Chaqueta Sucre
+//   1: F17 · Samarcanda · Lhasa · Basilea
+//   2: Chicago · Falda Sucre · Chaqueta Sucre · F16
 //   3: Goree · F24 · Aranjuez · Abrigo Corto
 //   4: Ubud · Falda Jeju · Top lencero · F04
 //   5: Copenhague · F03 · Ciruela · Top Encaje París
 //   6: Zahara · Chaqueta · F05
 // Un producto nuevo que no esté en la lista va al final.
 const ORDEN_CUADRICULA = [
-  'Chaqueta Samarcanda', 'Falda Basilea', 'Falda Lhasa',
+  'Chaqueta Samarcanda', 'Falda Lhasa', 'Falda Basilea',
   'Vestido Largo Chicago', 'Falda Sucre', 'Chaqueta Sucre',
   'Pantalón Goree', 'Chaqueta Aranjuez', 'Abrigo Corto',
   'Top Ubud', 'Falda Jeju', 'Top lencero',
