@@ -34,7 +34,7 @@ import styles from './page.module.css';
 const FOTOS_POR_CIUDAD = {
   Salamanca: [
     '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp',
-    '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp',
+    '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp',
   ],
   Madrid: [
     '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-foto-3.webp',

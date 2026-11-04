@@ -28,7 +28,7 @@
 // "esVideo" en page.js, que lo distingue de las fotos por extensión).
 const MEDIOS_TALLER_INHOUSE = [
   '/img/talleres/inhouse/artesany-2.mp4',
-  '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp',
+  '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp',
   '/img/talleres/inhouse/fely-campo-taller-salamanca-foto.webp',
   '/img/talleres/inhouse/fely-campo-taller-salamanca-foto-2.webp',
   '/img/talleres/inhouse/fely-campo-taller-salamanca-foto-3.webp',

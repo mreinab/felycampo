@@ -18,6 +18,7 @@
   color: var(--color-fondo);
   padding-block: var(--spacing-9);
   padding-inline: var(--spacing-6);
+  margin-top: 4rem; /* a petición: aire sobre la banda (3rem en mobile, ver abajo) */
 }
 
 /* Un 50% más alta que la sección por arriba y por abajo: margen para
@@ -42,6 +43,7 @@
   /* Banda más baja en mobile/tablet: 30vh en vez de 50vh. */
   .pedirCita {
     min-height: 30vh;
+    margin-top: 3rem;
   }
   .fondo {
     top: 0;

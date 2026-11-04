@@ -339,6 +339,26 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
           </div>
         )}
 
+        {/* Puntos abajo en el centro (a petición): uno por foto del look,
+            el activo marcado — dice cuántas fotos hay y en cuál estás.
+            También navegan, igual que las miniaturas (que en mobile no
+            se ven). */}
+        {lookActivo.fotos.length > 1 && (
+          <div className={styles.puntos}>
+            {lookActivo.fotos.map((foto, indice) => (
+              <button
+                key={foto}
+                type="button"
+                className={`${styles.punto} ${indice === indiceFoto ? styles.puntoActivo : ''}`}
+                onClick={() => irAIndice(indice)}
+                aria-label={`${indice + 1} / ${lookActivo.fotos.length}`}
+                aria-current={indice === indiceFoto}
+                tabIndex={tabIndexInteractivo}
+              />
+            ))}
+          </div>
+        )}
+
         {lookActivo.resena && (
           <blockquote className={styles.resena}>
             {lookActivo.resena.parrafos.map((parrafo) => (

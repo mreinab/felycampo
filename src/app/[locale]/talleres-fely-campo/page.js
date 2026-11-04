@@ -104,8 +104,11 @@ export default async function Pagina({ params }) {
 
   return (
     <section className="seccion">
+      {/* Misma foto en toda la web (2026-11-04): sustituye a
+          atelier-salamanca/…-taller-confeccion.webp, que era esta misma
+          imagen repetida. */}
       <HeroPagina
-        imagen="/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp"
+        imagen="/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp"
         alt={t('titulo')}
         titulo={t('titulo')}
         subtitulo={lema}

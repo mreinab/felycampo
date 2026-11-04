@@ -80,12 +80,12 @@ const SUBMENU_STRUCTURE = {
     items: [
       { key: 'historia', href: '/sobre-fely', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-conoce-a-disenadora.jpg' },
       { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
-      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp' },
+      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp' },
     ],
     cardsVariante: 'horizontal',
     cards: [
       { key: 'podcast', href: '/podcast', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
-      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp' },
+      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp' },
     ],
   },
   puntosDeVenta: {

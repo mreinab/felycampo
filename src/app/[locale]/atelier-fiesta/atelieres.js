@@ -66,7 +66,7 @@ export const ATELIERES = {
     // igual que Madrid con showroom-madrid/, ya no hace falta reciclar
     // el fondo de taller-1/ para esta ficha (ver comentario de cabecera).
     heroMedio: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
-    medioSuperior: { tipo: 'imagen', src: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-taller-confeccion.webp' },
+    medioSuperior: { tipo: 'imagen', src: '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp' },
     // Vídeo, foto, vídeo, foto (a petición: alternando vídeo y
     // foto) — solo 2 vídeos distintos: 20260826-143026_FoYiTknV.mp4 es
     // idéntico a _DCFGo89w.mp4 (mismo archivo), así que no se usa.
