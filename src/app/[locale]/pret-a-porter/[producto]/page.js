@@ -16,7 +16,8 @@ import { getTranslations } from 'next-intl/server';
 import { ProductosRecomendados } from '@/components/layout';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { FichaProductoAcciones, GaleriaProducto } from '@/components/ecommerce';
-import { Acordeon, FilaAcordeon, Boton } from '@/components/ui';
+import { Acordeon, FilaAcordeon, Boton, JsonLd } from '@/components/ui';
+import { producto as productoJsonLd, migas } from '@/lib/datosEstructurados';
 import { slugify } from '@/lib/slugify';
 import { metadataPagina, recortar } from '@/lib/seo';
 import styles from './page.module.css';
@@ -86,6 +87,24 @@ export default async function FichaProducto({ params }) {
 
   return (
     <section className={`seccion contenedor ${styles.debajoNavbar}`}>
+      {/* Product (sin precio: la web no muestra precios) + BreadcrumbList —
+          auditoría SEO M2, ver lib/datosEstructurados.js. */}
+      <JsonLd
+        datos={[
+          productoJsonLd({
+            nombre: producto.nombre,
+            descripcion: producto.descripcion,
+            imagenes: producto.imagenes || [producto.imagen],
+            sku: producto.sku,
+            url: `/${locale}/pret-a-porter/${slug}`,
+          }),
+          migas([
+            { nombre: 'Fely Campo', ruta: `/${locale}` },
+            { nombre: 'Prêt-à-porter', ruta: `/${locale}/pret-a-porter` },
+            { nombre: producto.nombre },
+          ]),
+        ]}
+      />
       <div className={styles.ficha}>
         <GaleriaProducto
           imagenes={producto.imagenes?.length ? producto.imagenes : [producto.imagen]}

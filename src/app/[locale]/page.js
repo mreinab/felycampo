@@ -9,7 +9,8 @@
 import { getTranslations } from 'next-intl/server';
 import { HeroCarousel, SplitMedia /* , CuadriculaProductos, CarruselClientas, BloqueSeccion */ } from '@/components/layout';
 // import { CabeceraSeccion } from '@/components/ui'; // sin cabecera por ahora, ver comentario más abajo
-import { Boton, EnVista } from '@/components/ui';
+import { Boton, EnVista, JsonLd } from '@/components/ui';
+import { organizacion, sitioWeb } from '@/lib/datosEstructurados';
 import cuadriculaStyles from '@/components/layout/CuadriculaProductos.module.css';
 import styles from './page.module.css';
 import { metadataPagina, textosSeo } from '@/lib/seo';
@@ -106,6 +107,8 @@ export default async function Home({ params }) {
 
   return (
     <div className={styles.landing}>
+      {/* Organization + WebSite (auditoría SEO M2), ver lib/datosEstructurados.js. */}
+      <JsonLd datos={[organizacion(), sitioWeb({ locale })]} />
       <h1 className="sr-only">{textosSeo('/', locale).h1}</h1>
       <HeroCarousel slides={slidesConLocale} />
 

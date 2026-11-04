@@ -31,6 +31,8 @@ import { getTranslations } from 'next-intl/server';
 import { HeroPagina, RunwayBackstage, RunwayDescripcion, RunwayGaleria, RunwayVideoCierre } from '@/components/layout';
 import { COLECCIONES } from '../../colecciones-fely-campo/colecciones';
 import { metadataPagina, recortar } from '@/lib/seo';
+import { JsonLd } from '@/components/ui';
+import { migas } from '@/lib/datosEstructurados';
 import styles from './page.module.css';
 
 // Canonical = URL pública /runways-{slug} (la del rewrite de
@@ -65,6 +67,14 @@ export default async function Coleccion({ params }) {
 
   return (
     <section>
+      {/* BreadcrumbList (auditoría SEO M2): Inicio › Colecciones › colección. */}
+      <JsonLd
+        datos={migas([
+          { nombre: 'Fely Campo', ruta: `/${locale}` },
+          { nombre: locale === 'es' ? 'Colecciones' : 'Collections', ruta: `/${locale}/colecciones-fely-campo` },
+          { nombre: `${coleccion.nombre} ${coleccion.temporada}` },
+        ])}
+      />
       <HeroPagina
         medio={medioHero}
         alt={coleccion.nombre}

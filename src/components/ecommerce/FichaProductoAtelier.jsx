@@ -73,7 +73,8 @@ import { ProductosRecomendados /* , ResenasClientes */ } from '@/components/layo
 import { tagACategoria, slugCategoria } from '@/components/layout/estiloSiluetaGrupos';
 import GaleriaProducto from './GaleriaProducto';
 import InfoAtelier from './InfoAtelier';
-import { Boton, Acordeon, FilaAcordeon } from '@/components/ui';
+import { Boton, Acordeon, FilaAcordeon, JsonLd } from '@/components/ui';
+import { producto as productoJsonLd, migas } from '@/lib/datosEstructurados';
 import { slugify } from '@/lib/slugify';
 import styles from './FichaProductoAtelier.module.css';
 
@@ -117,8 +118,28 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   // pret-a-porter/[producto]/page.js).
   const relacionados = catalogo.filter((candidato) => candidato !== producto).slice(0, 10);
 
+  // Product (sin precio) + BreadcrumbList — auditoría SEO M2, ver
+  // lib/datosEstructurados.js.
+  const nombreSeccion = seccion === 'fiesta' ? (locale === 'es' ? 'Atelier Fiesta' : 'Eveningwear atelier') : (locale === 'es' ? 'Atelier Novias' : 'Bridal atelier');
+  const jsonLd = [
+    productoJsonLd({
+      nombre: producto.nombre,
+      descripcion: producto.descripcion,
+      imagenes: producto.imagenes?.length ? producto.imagenes : [producto.imagen],
+      sku: producto.sku,
+      url: `/${locale}/atelier/${seccion}/${slug}`,
+    }),
+    migas([
+      { nombre: 'Fely Campo', ruta: `/${locale}` },
+      { nombre: 'Atelier', ruta: `/${locale}/atelier` },
+      { nombre: nombreSeccion, ruta: `/${locale}/atelier/${seccion}` },
+      { nombre: producto.nombre },
+    ]),
+  ];
+
   return (
     <section className={`seccion contenedor ${styles.debajoNavbar}`}>
+      <JsonLd datos={jsonLd} />
       <div className={styles.ficha}>
         <GaleriaProducto
           imagenes={producto.imagenes?.length ? producto.imagenes : [producto.imagen]}
