@@ -90,6 +90,12 @@ export const metadata = {
   },
   description: 'Firma de moda femenina nacida en Salamanca. Vestidos de novia y fiesta a medida en Salamanca, Madrid y Oviedo, y prêt-à-porter online.',
   ...(SITIO_INDEXABLE ? {} : { robots: { index: false, follow: false } }),
+  // Verificación del dominio en Meta Business (la misma que la web
+  // anterior en WordPress): sin ella se pierde la verificación de
+  // felycampo.com para el Pixel y los anuncios.
+  other: {
+    'facebook-domain-verification': '52ua5uh83t9xk46o8js2214qt0aczn',
+  },
   // Favicon: F negra sobre blanco por defecto; en modo oscuro del
   // navegador/sistema, la versión invertida (F blanca sobre negro). PNG,
   // no WebP: Safari no admite favicons WebP.
