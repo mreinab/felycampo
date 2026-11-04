@@ -23,6 +23,7 @@
   overflow-y: hidden;
   touch-action: pan-x pan-y;
   scrollbar-width: none;
+  margin-top: 4rem; /* a petición: aire sobre el carrusel */
 }
 
 .pista::-webkit-scrollbar {
