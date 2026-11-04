@@ -50,13 +50,19 @@ function Footer() {
   // abajo, tienen ahora su propia columna "Información".
   const columnas = [
     { titulo: 'Fely Campo', enlaces: ['Historia', 'Puntos de venta', 'Contacto', 'Pedir cita'] },
-    { titulo: 'Síguenos', enlaces: ['Instagram', 'YouTube'] },
+    { titulo: 'Síguenos', enlaces: ['Instagram', 'Facebook', 'YouTube'] },
     { titulo: 'Información', enlaces: ['Términos y condiciones', 'Política de cookies', 'Política de privacidad'] },
   ];
 
-  // Enlaces reales de las 3 columnas (el resto — de momento solo
-  // "Instagram"/"YouTube" — siguen siendo placeholders "#", ver el <a>
-  // más abajo) — por etiqueta en vez del nombre técnico de cada ruta.
+  // Redes sociales: URLs externas, en pestaña nueva (ver el <a> más abajo).
+  const REDES = {
+    'Instagram': 'https://www.instagram.com/felycampo/',
+    'Facebook': 'https://www.facebook.com/fely.campo',
+    'YouTube': 'https://www.youtube.com/channel/UCQeHEIrbwpFjAYtoGfzRUaA',
+  };
+
+  // Enlaces internos de las columnas — por etiqueta en vez del nombre
+  // técnico de cada ruta.
   const RUTAS_COLUMNAS = {
     'Contacto': '/visita-fely-campo', // los ateliers con sus teléfonos (/ayuda/contacto eliminada)
     'Historia': '/sobre-fely',
@@ -66,7 +72,8 @@ function Footer() {
     'Política de cookies': '/legal/cookies',
     'Política de privacidad': '/legal/privacidad',
   };
-  const hrefColumna = (enlace) => (RUTAS_COLUMNAS[enlace] ? withLocale(RUTAS_COLUMNAS[enlace]) : '#');
+  const hrefColumna = (enlace) =>
+    REDES[enlace] || (RUTAS_COLUMNAS[enlace] ? withLocale(RUTAS_COLUMNAS[enlace]) : '#');
 
   return (
     <footer className={styles.footer}>
@@ -83,7 +90,15 @@ function Footer() {
                 <h3 className={styles.titulo}>{col.titulo}</h3>
                 <ul className={styles.lista}>
                   {col.enlaces.map((e) => (
-                    <li key={e}><a href={hrefColumna(e)} className={styles.enlace}>{e}</a></li>
+                    <li key={e}>
+                      <a
+                        href={hrefColumna(e)}
+                        className={styles.enlace}
+                        {...(REDES[e] ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      >
+                        {e}
+                      </a>
+                    </li>
                   ))}
                 </ul>
               </div>
