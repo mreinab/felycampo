@@ -119,6 +119,13 @@ const NAV_ITEMS = [
 // escritorio. Solo "Pedir cita" vive en el lateral derecho (donde antes
 // iban Wishlist/Mi cuenta/Carrito, comentados a petición, ver más
 // abajo) — el resto, "Puntos de Venta" incluido, a la izquierda.
+// Todos los destinos de los submenús (lista + tarjetas), sin repetir
+// href — para el <nav hidden> rastreable del header (auditoría SEO M1).
+const ENLACES_SUBMENUS = Object.entries(SUBMENU_STRUCTURE)
+  .flatMap(([submenu, { items = [], cards = [] }]) => [...items, ...cards]
+    .map((enlace) => ({ submenu, key: enlace.labelKey || enlace.key, href: enlace.href })))
+  .filter((enlace, indice, todos) => todos.findIndex((otro) => otro.href === enlace.href) === indice);
+
 const NAV_ITEMS_IZQUIERDA = NAV_ITEMS.filter(({ key }) => key !== 'pedirCita');
 const NAV_ITEMS_DERECHA = NAV_ITEMS.filter(({ key }) => key === 'pedirCita');
 
@@ -496,6 +503,21 @@ function Navbar({ transparent = false, crecerLogo = false, textoOscuro = false }
           <span className={`${styles.navToggleBar} ${mobileMenuOpen ? styles.navToggleBarTopOpen : styles.navToggleBarTop}`} />
           <span className={`${styles.navToggleBar} ${mobileMenuOpen ? styles.navToggleBarBottomOpen : styles.navToggleBarBottom}`} />
         </button>
+
+        {/* Enlaces de TODOS los submenús, siempre en el HTML (auditoría SEO
+            M1): los paneles de escritorio y móvil solo se montan al
+            abrirlos, así que sin esto Google no veía desde ninguna página
+            /pret-a-porter, /blog, los ateliers por ciudad, Vosotras,
+            Talleres... "hidden" (display:none): no se ve ni lo lee el
+            lector de pantalla (que ya tiene el menú real), pero los href
+            siguen en el DOM, igual que un mega-menú desplegable. */}
+        <nav hidden aria-hidden="true">
+          {ENLACES_SUBMENUS.map(({ submenu, key, href }) => (
+            <a key={href} href={withLocale(href)} tabIndex={-1}>
+              {t(`submenus.${submenu}.${key}`)}
+            </a>
+          ))}
+        </nav>
 
         {/* Enlaces — solo visibles en escritorio. Los que tienen submenú lo
             abren al hacer hover. El cierre vive en el mouseleave de todo
