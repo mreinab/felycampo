@@ -6,8 +6,7 @@
 
 import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
 import { noviaProductos } from '@/components/layout/noviaProductos';
-import { COLECCIONES_FIESTA } from '@/datos/atelierFiesta';
-import { categoriasAdminFiesta } from '@/lib/catalogoFiesta';
+import { categoriasAdminFiesta, obtenerColeccionesFiesta } from '@/lib/catalogoFiesta';
 
 // ---------- PRODUCTOS ----------
 // tipo: 'pret-a-porter' | 'atelier' | 'archivo'
@@ -914,7 +913,7 @@ export const categoriasMock = {
   // Colecciones de Fiesta: las reales, de src/datos/atelierFiesta.js (las
   // mismas que enseña /atelier/fiesta). AtelierFiesta.jsx las mantiene al
   // día mientras se editan en /admin/colecciones/fiesta.
-  fiesta: categoriasAdminFiesta(COLECCIONES_FIESTA),
+  fiesta: categoriasAdminFiesta(obtenerColeccionesFiesta()),
 };
 
 // ---------- STOCK ----------

@@ -129,6 +129,7 @@
 .meta p,
 .texto p {
   margin: 0;
+  white-space: pre-wrap; /* respeta los saltos de línea escritos en el admin */
   font-size: var(--text-texto); /* 13px */
   line-height: var(--leading-base);
   color: var(--color-tinta);

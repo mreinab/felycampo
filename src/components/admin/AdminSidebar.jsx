@@ -27,6 +27,9 @@ import {
   MessageCircleQuestionMark,
   CalendarDays,
   Images,
+  LayoutTemplate,
+  BookOpen,
+  Spool,
   // Iconos de las secciones ocultas (GRUPOS_OCULTOS), para cuando vuelvan:
   // Palette, Star, Package, Shirt, Layers, Boxes, Users, BarChart3,
   // Settings, SwatchBook,
@@ -62,28 +65,31 @@ const grupos = [
     ],
   },
   {
-    titulo: 'Vosotras',
+    // Mismo orden y mismos grupos que el menú de la web (Navbar.jsx):
+    // Sobre Fely › Atelier › Colecciones. "subgrupo" es solo un rótulo.
+    titulo: 'Páginas de la web',
     items: [
-      { href: '/admin/vosotras', label: 'Fotos y reseñas', icono: Images },
-    ],
-  },
-  {
-    titulo: 'Contenido',
-    items: [
+      { href: '/admin/landing', label: 'Página de inicio', icono: LayoutTemplate },
+      { subgrupo: 'Sobre Fely' },
+      { href: '/admin/paginas/sobre-fely', label: 'Historia de Fely', icono: BookOpen },
       {
-        href: '/admin/colecciones/runway', label: 'Runway', icono: Archive, tipo: 'archivo',
+        href: '/admin/blog', label: 'Blog & Podcast', icono: Newspaper, porHacer: true,
       },
-      {
-        href: '/admin/colecciones/novia', label: 'Novia', icono: Heart, tipo: 'novia',
-      },
-      {
-        href: '/admin/colecciones/fiesta', label: 'Fiesta', icono: PartyPopper, tipo: 'fiesta',
-      },
+      { href: '/admin/paginas/talleres', label: 'Nuestros talleres', icono: Spool },
+      { subgrupo: 'Atelier' },
+      { href: '/admin/vosotras', label: 'Vosotras', icono: Images },
       {
         href: '/admin/productos/atelier', label: 'Productos de Atelier', icono: Scissors, tipo: 'atelier',
       },
+      { subgrupo: 'Colecciones' },
       {
-        href: '/admin/blog', label: 'Podcast', icono: Newspaper, porHacer: true,
+        href: '/admin/colecciones/fiesta', label: 'Colección Fiesta', icono: PartyPopper, tipo: 'fiesta',
+      },
+      {
+        href: '/admin/colecciones/novia', label: 'Colección Novias', icono: Heart, tipo: 'novia',
+      },
+      {
+        href: '/admin/colecciones/runway', label: 'Runway', icono: Archive, tipo: 'archivo',
       },
     ],
   },
@@ -122,7 +128,7 @@ const GRUPOS_OCULTOS = [
     ],
   },
   {
-    titulo: 'Contenido',
+    titulo: 'Páginas de la web',
     items: [
       { href: '/admin/diseno', label: 'Diseño', icono: Palette, porHacer: true },
     ],
@@ -176,6 +182,13 @@ function AdminSidebar() {
   }, [pathname]);
 
   function renderEnlace(item) {
+    if (item.subgrupo) {
+      return (
+        <li key={`subgrupo-${item.subgrupo}`} className={styles.subgrupo} aria-hidden="true">
+          {item.subgrupo}
+        </li>
+      );
+    }
     if (item.tipo) {
       const Icono = item.icono;
       // Los archivos de colecciones (fija: true) ordenan por `orden`

@@ -15,6 +15,7 @@ export { default as OrigenProductoBadge } from './OrigenProductoBadge';
 export { ToastProvider, useToast } from './Toast';
 export { CategoriasProvider, useCategorias } from './Categorias';
 export { AtelierFiestaProvider, useAtelierFiesta } from './AtelierFiesta';
+export { PaginasProvider, usePagina } from './Paginas';
 export { default as SelectorIdioma } from './SelectorIdioma';
 export { default as PickerDrawer } from './PickerDrawer';
 export { default as ModalOverlay } from './ModalOverlay';

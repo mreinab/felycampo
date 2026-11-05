@@ -18,8 +18,29 @@ import { sinNumeroColeccion } from './nombreColeccion';
 
 export const RUTA_FICHA_FIESTA = '/atelier/fiesta';
 
+// Número de look sacado de su nombre ("Look 60 – A Walk" → 60). null si
+// el nombre no lleva número (los de Prêt-à-porter).
+export function numeroLook(nombre) {
+  const encontrado = String(nombre || '').match(/\blook\s*(\d+)/i);
+  return encontrado ? Number(encontrado[1]) : null;
+}
+
+// Los looks de una colección siempre van por número: Look 1, 2, 3…
+// Los que no tienen número van al final, en el orden en que estaban.
+export function ordenarLooks(looks = []) {
+  return looks
+    .map((look, indice) => ({ look, indice, numero: numeroLook(look.nombre) }))
+    .sort((a, b) => (a.numero ?? Infinity) - (b.numero ?? Infinity) || a.indice - b.indice)
+    .map(({ look }) => look);
+}
+
+const COLECCIONES_ORDENADAS = COLECCIONES_FIESTA.map((coleccion) => ({
+  ...coleccion,
+  looks: ordenarLooks(coleccion.looks),
+}));
+
 export function obtenerColeccionesFiesta() {
-  return COLECCIONES_FIESTA;
+  return COLECCIONES_ORDENADAS;
 }
 
 // "26_Opaline" (con temporada) o "En Madrid" (sin temporada): el nombre

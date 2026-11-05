@@ -129,9 +129,9 @@
   color: var(--color-tinta);
 }
 
-.parrafo,
-.cita {
+.parrafo {
   margin: 0;
+  white-space: pre-wrap; /* respeta los saltos de línea y espacios escritos en el admin */
   font-size: var(--text-body);
   line-height: var(--leading-base);
   color: var(--color-tinta);
@@ -185,6 +185,7 @@
 
 .cierreParrafo {
   margin: 0;
+  white-space: pre-wrap;
   font-size: var(--text-body);
   line-height: var(--leading-base);
   color: var(--color-tinta);

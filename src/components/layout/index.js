@@ -16,6 +16,7 @@ export { default as CuadriculaProductos } from './CuadriculaProductos';
 export { default as PanelFiltros } from './PanelFiltros';
 export { default as MediaBanner } from './MediaBanner';
 export { default as SplitMedia } from './SplitMedia';
+export { default as MediosLanding } from './MediosLanding';
 export { default as SectionClientsReview } from './SectionClientsReview';
 export { default as SectionCompromiso } from './SectionCompromiso';
 export { default as ProductosRecomendados } from './ProductosRecomendados';

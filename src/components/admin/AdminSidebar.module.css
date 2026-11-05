@@ -101,6 +101,14 @@
   margin-bottom: var(--spacing-1);
 }
 
+/* Rótulo de un subgrupo dentro de "Páginas de la web" (Sobre Fely,
+   Atelier, Colecciones): alineado a la izquierda con el título del grupo. */
+.subgrupo {
+  padding: var(--spacing-3) var(--spacing-3) var(--spacing-1);
+  font-size: var(--text-nano);
+  color: var(--admin-texto-tenue);
+}
+
 .grupoLista {
   list-style: none;
   display: flex;

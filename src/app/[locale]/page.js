@@ -6,14 +6,15 @@
    abajo, no borrado — a la espera de nuevo diseño.
    ============================================================ */
 
-import { getTranslations } from 'next-intl/server';
-import { HeroCarousel, SplitMedia /* , CuadriculaProductos, CarruselClientas, BloqueSeccion */ } from '@/components/layout';
+// import { getTranslations } from 'next-intl/server'; // solo para BloqueSeccion, comentado más abajo
+import { MediosLanding /* , HeroCarousel, SplitMedia, CuadriculaProductos, CarruselClientas, BloqueSeccion */ } from '@/components/layout';
 // import { CabeceraSeccion } from '@/components/ui'; // sin cabecera por ahora, ver comentario más abajo
-import { Boton, EnVista, JsonLd } from '@/components/ui';
+import { JsonLd } from '@/components/ui';
 import { organizacion, sitioWeb } from '@/lib/datosEstructurados';
 import cuadriculaStyles from '@/components/layout/CuadriculaProductos.module.css';
 import styles from './page.module.css';
 import { metadataPagina, textosSeo } from '@/lib/seo';
+import { obtenerLanding } from '@/lib/landing';
 
 // ---- Datos de las secciones comentadas más abajo — se quedan aquí
 // tal cual por si se reactivan (ver bloque comentado en el return). ----
@@ -64,22 +65,9 @@ import { metadataPagina, textosSeo } from '@/lib/seo';
 //   { imagen: '/img/collections/fiesta/ss27-coleccion/27069_01.jpg', nombre: 'Look 30 SS27' },
 // ];
 
-const slidesHero = [
-  {
-    src: '/img/landing/fely-campo-portada-hero-landing.webp',
-    srcMobile: '/img/landing/fely-campo-portada-hero-landing-mobile.webp',
-    tipo: 'imagen',
-    ctaHref: '/sobre-fely',
-  },
-  {
-    // Mismo vídeo en mobile y escritorio — sin recorte propio. Antes
-    // FW27-Hero3.mp4 (que sigue en Runway/colecciones), cambiado a
-    // petición.
-    src: '/img/hero-main-felycampo.mp4',
-    tipo: 'video',
-    ctaHref: '/sobre-fely',
-  },
-];
+// Fotos y vídeo del hero y del bloque Atelier: se editan en /admin/landing
+// (ver lib/landing.js y docs/admin-landing.md).
+const landing = obtenerLanding();
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
@@ -88,95 +76,25 @@ export async function generateMetadata({ params }) {
 
 export default async function Home({ params }) {
   const { locale } = await params;
-  const tHero = await getTranslations('heroCarousel');
-  const tCitaFely = await getTranslations('citaFelyLanding');
-  const tDescubreFely = await getTranslations('descubreFely');
   // const tVisitaAtelier = await getTranslations('visitaAtelier'); // BloqueSeccion comentado más abajo
-
-  // Igual que en el Navbar (ver withLocale en Navbar.jsx): los hrefs
-  // internos llevan el locale por delante para no perder el idioma
-  // elegido al navegar. Misma descripción y CTA en los dos slides — no cada
-  // uno con su propio texto.
-  const slidesConLocale = slidesHero.map((slide) => ({
-    ...slide,
-    entradilla: tHero('entradilla'),
-    descripcion: tHero('descripcion'),
-    ctaTexto: tHero('cta'),
-    ctaHref: `/${locale}${slide.ctaHref}`,
-  }));
 
   return (
     <div className={styles.landing}>
       {/* Organization + WebSite (auditoría SEO M2), ver lib/datosEstructurados.js. */}
       <JsonLd datos={[organizacion(), sitioWeb({ locale })]} />
       <h1 className="sr-only">{textosSeo('/', locale).h1}</h1>
-      <HeroCarousel slides={slidesConLocale} />
-
-      {/* Misma .seccion que usaba CuadriculaProductos (reutilizada tal
-          cual, ver CuadriculaProductos.module.css) — aquí solo con el
-          SplitMedia de Atelier (Novia | Fiesta), sin cabecera ni
-          cuadrícula de productos. */}
-      <section className={cuadriculaStyles.seccion}>
-        {/* Comentada a petición — no hace falta la cabecera aquí.
-        <CabeceraSeccion
-          subtitleKey="cuadriculaProductos.coleccion"
-          titleKey="cuadriculaProductos.novedades"
-          descriptionKey="cuadriculaProductos.novedadesDescripcion"
-        />
-        */}
-        <SplitMedia
-          variante="landing"
-          items={[
-            {
-              src: '/img/fely-campo-web-splitimage-novias.webp',
-              tipo: 'imagen',
-              tituloKey: 'splitMedia.item1.titulo',
-              ctaKey: 'splitMedia.item1.cta',
-              href: `/${locale}/atelier/novias`,
-            },
-            {
-              src: '/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp',
-              tipo: 'imagen',
-              tituloKey: 'splitMedia.item2.titulo',
-              ctaKey: 'splitMedia.item2.cta',
-              href: `/${locale}/atelier/fiesta`,
-            },
-          ]}
-        />
-      </section>
-
-      {/* "Descubre a Fely" — misma estructura y estilos que las
-          tarjetas de /visita-fely-campo (.tarjeta/.fila/.info/.acciones
-          de su page.module.css, ver ListadoUbicaciones.jsx): a la
-          izquierda el título y debajo la cita de Fely, con el botón a
-          /sobre-fely como último elemento; a la derecha la foto de Fely
-          (fely-campo-sobre-fely-campo-elegir-27.webp). Aparece con scroll (<EnVista>). */}
-      <section className={styles.descubreFely}>
-        <EnVista as="article" className={styles.descubreFelyTarjeta}>
-          <div className={styles.descubreFelyGaleria}>
-            <img src="/img/about-felycampo/fely-campo-sobre-fely-campo-elegir-27.webp" alt="Fely Campo" className={styles.descubreFelyImagen} />
-          </div>
-
-          <div className={styles.descubreFelyFila}>
-            {/* Texto y botón juntos en un mismo bloque, centrado en vertical
-                en la columna (ver .descubreFelyBloque). */}
-            <div className={styles.descubreFelyBloque}>
-              <div className={styles.descubreFelyInfo}>
-                <p className={styles.descubreFelyTitulo}>{tDescubreFely('titulo')}</p>
-                <blockquote className={styles.descubreFelyCita}>
-                  <p>{tCitaFely.rich('texto', { em: (chunks) => <em>{chunks}</em> })}</p>
-                </blockquote>
-              </div>
-
-              <div className={styles.descubreFelyAcciones}>
-                {/* Enlace subrayado (Boton "texto"), no el botón con borde
-                    de visita-fely-campo — a petición. */}
-                <Boton variante="texto" href={`/${locale}/sobre-fely`}>{tDescubreFely('cta')}</Boton>
-              </div>
-            </div>
-          </div>
-        </EnVista>
-      </section>
+      {/* Carrusel de portada, bloque Atelier (Novias | Fiesta) y "Descubre
+          a Fely": fotos, vídeo, textos y enlaces de /admin/landing (ver
+          lib/landing.js y MediosLanding.jsx, que también pinta la vista
+          previa del admin). El bloque Atelier usa la misma .seccion que
+          CuadriculaProductos; "Descubre a Fely", los estilos de
+          page.module.css. */}
+      <MediosLanding
+        landing={landing}
+        locale={locale}
+        claseSeccion={cuadriculaStyles.seccion}
+        estilosDescubre={styles}
+      />
 
       {/* ---- Comentado a petición (rediseño de landing en curso) ----
       <CuadriculaProductos

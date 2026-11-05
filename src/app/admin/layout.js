@@ -11,7 +11,7 @@
 import { Suspense } from 'react';
 import '@/styles/global.css';
 import {
-  AdminSidebar, AdminMarca, AdminTopbar, AdminContenido, ToastProvider, CategoriasProvider, AtelierFiestaProvider,
+  AdminSidebar, AdminMarca, AdminTopbar, AdminContenido, ToastProvider, CategoriasProvider, AtelierFiestaProvider, PaginasProvider,
 } from '@/components/admin';
 import styles from './layout.module.css';
 
@@ -41,6 +41,7 @@ export default function AdminLayout({ children }) {
           {/* Dentro de CategoriasProvider: mantiene al día el submenú
               "Fiesta" del menú lateral (ver AtelierFiesta.jsx). */}
           <AtelierFiestaProvider>
+          <PaginasProvider>
           <ToastProvider>
             <div className={styles.shell}>
               <div className={styles.topRow}>
@@ -55,6 +56,7 @@ export default function AdminLayout({ children }) {
               </div>
             </div>
           </ToastProvider>
+          </PaginasProvider>
           </AtelierFiestaProvider>
         </CategoriasProvider>
       </body>

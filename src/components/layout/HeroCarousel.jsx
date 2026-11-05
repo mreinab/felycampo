@@ -24,10 +24,9 @@ const duracionSlide = (index) => (index === 0 ? PRIMER_SLIDE_DURATION_MS : SLIDE
  * único elemento clicable es el CTA — la imagen no lleva su propio
  * enlace, para no anidar/duplicar <a> dentro del slide.
  * Los datos vienen por props, nada hardcodeado aquí.
- * "srcMobile" (opcional, solo slides de imagen): recorte propio para
- * mobile vía <picture>/<source> (max-width:768px, mismo corte que el
- * resto del sitio) — sin recorte por vídeo, ese siempre usa "src" tal
- * cual en cualquier ancho.
+ * "srcMobile" (opcional): versión propia para mobile (max-width:768px,
+ * mismo corte que el resto del sitio) — en imágenes vía <picture>, en
+ * vídeos vía <source media> (el navegador solo descarga uno de los dos).
  */
 function HeroCarousel({ slides }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -76,13 +75,16 @@ function HeroCarousel({ slides }) {
             {slide.tipo === 'video' ? (
               <video
                 ref={(nodo) => { videosRef.current[index] = nodo; }}
-                src={slide.src}
+                src={slide.srcMobile ? undefined : slide.src}
                 className={styles.media}
                 autoPlay={activo}
                 muted
                 playsInline
                 onEnded={activo ? siguiente : undefined}
-              />
+              >
+                {slide.srcMobile && <source media="(max-width: 768px)" src={slide.srcMobile} />}
+                {slide.srcMobile && <source src={slide.src} />}
+              </video>
             ) : slide.srcMobile ? (
               <picture>
                 <source media="(max-width: 768px)" srcSet={slide.srcMobile} />

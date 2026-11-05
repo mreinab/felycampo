@@ -18,15 +18,16 @@
 import {
   createContext, useCallback, useContext, useEffect, useState,
 } from 'react';
-import { COLECCIONES_FIESTA } from '@/datos/atelierFiesta';
-import { categoriasAdminFiesta, slugLook } from '@/lib/catalogoFiesta';
+import {
+  categoriasAdminFiesta, obtenerColeccionesFiesta, ordenarLooks, slugLook,
+} from '@/lib/catalogoFiesta';
 import { useCategorias } from './Categorias';
 
 const AtelierFiestaContext = createContext(null);
 
 function AtelierFiestaProvider({ children }) {
   // Copia profunda: el admin nunca muta el array que lee la web.
-  const [colecciones, setColecciones] = useState(() => structuredClone(COLECCIONES_FIESTA));
+  const [colecciones, setColecciones] = useState(() => structuredClone(obtenerColeccionesFiesta()));
   const { reordenarCategorias } = useCategorias();
 
   // El submenú "Fiesta" del menú lateral sigue a las colecciones.
@@ -76,16 +77,12 @@ function AtelierFiestaProvider({ children }) {
         imagenes: datos.imagenes,
         slugsAnteriores: slugsAnteriores.filter((s) => s !== slugLook(datos.nombre)),
       };
+      // El look ocupa su sitio por número (Look 1, 2, 3…), sea nuevo,
+      // renombrado o movido de colección.
       return actual.map((c) => {
         const sinLook = c.looks.filter((l) => l.id !== datos.id);
         if (c.id !== coleccionId) return { ...c, looks: sinLook };
-        // En su sitio si ya estaba en esta colección; si es nuevo o viene
-        // de otra, al final.
-        const posicion = c.looks.findIndex((l) => l.id === datos.id);
-        if (posicion === -1) return { ...c, looks: [...sinLook, look] };
-        const looks = [...c.looks];
-        looks[posicion] = look;
-        return { ...c, looks };
+        return { ...c, looks: ordenarLooks([...sinLook, look]) };
       });
     });
     return id;
@@ -95,13 +92,9 @@ function AtelierFiestaProvider({ children }) {
     setColecciones((actual) => actual.map((c) => ({ ...c, looks: c.looks.filter((l) => l.id !== lookId) })));
   }, []);
 
-  const reordenarLooks = useCallback((coleccionId, looks) => {
-    setColecciones((actual) => actual.map((c) => (c.id === coleccionId ? { ...c, looks } : c)));
-  }, []);
-
   return (
     <AtelierFiestaContext.Provider value={{
-      colecciones, guardarColeccion, reordenarColecciones, guardarLook, eliminarLook, reordenarLooks,
+      colecciones, guardarColeccion, reordenarColecciones, guardarLook, eliminarLook,
     }}
     >
       {children}

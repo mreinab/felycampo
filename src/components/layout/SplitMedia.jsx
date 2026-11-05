@@ -42,6 +42,11 @@ function Pieza({ item, esImageTitle, esLanding, esClicableComoImagen, t }) {
   const Contenedor = esClicableComoImagen ? 'a' : 'div';
   const claseContenido = esLanding ? styles.contenidoLanding : styles.contenido;
 
+  // landing: texto directo (titulo/cta, desde /admin/landing) o, si no
+  // lo hay, la clave de traducción (tituloKey/ctaKey).
+  const tituloLanding = item.titulo ?? (item.tituloKey ? t(item.tituloKey) : '');
+  const ctaLanding = item.cta ?? (item.ctaKey ? t(item.ctaKey) : '');
+
   return (
     <Contenedor {...(esClicableComoImagen ? { href: item.href } : {})} className={styles.pieza}>
       {item.tipo === 'video' ? (
@@ -50,7 +55,7 @@ function Pieza({ item, esImageTitle, esLanding, esClicableComoImagen, t }) {
         <img src={item.src} alt="" className={styles.media} />
       )}
 
-      {esLanding && !item.tituloKey && !item.ctaKey ? null : (
+      {esLanding && !tituloLanding && !ctaLanding ? null : (
         <div
           ref={esImageTitle ? undefined : ref}
           className={`${claseContenido} ${!esImageTitle && enVista ? styles.enVista : ''}`}
@@ -64,9 +69,9 @@ function Pieza({ item, esImageTitle, esLanding, esClicableComoImagen, t }) {
             />
           ) : esLanding ? (
             <>
-              {item.tituloKey && <h2 className={styles.tituloLanding}>{t(item.tituloKey)}</h2>}
-              {item.ctaKey && (
-                <Boton variante="texto" className={styles.cta}>{t(item.ctaKey)}</Boton>
+              {tituloLanding && <h2 className={styles.tituloLanding}>{tituloLanding}</h2>}
+              {ctaLanding && (
+                <Boton variante="texto" className={styles.cta}>{ctaLanding}</Boton>
               )}
             </>
           ) : (

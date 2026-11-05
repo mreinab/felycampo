@@ -22,9 +22,10 @@ Los campos están documentados en la cabecera de `src/datos/atelierFiesta.js`. R
 
 **colecciones_fiesta**: `id`, `temporada` ("26" o vacío), `nombre` ("Opaline"), `visible` (sale en el listado de /atelier/fiesta), `portada` (solo admin), `carpeta`, `posicion` (orden en la web).
 
-**looks_fiesta**: `id`, `coleccion_id`, `posicion`, `nombre` ("Look 6 26_Opaline", tal cual: **da la URL**), `sku` (texto libre, opcional), `publicado` (false = borrador, no sale en ningún sitio), `descripcion_es`, `descripcion_en` (vacías = texto automático), `imagenes` (lista ordenada: 1.ª tarjeta y ficha, 2.ª al pasar el ratón; mínimo una), `slugs_anteriores` (URLs antiguas a redirigir).
+**looks_fiesta**: `id`, `coleccion_id`, `nombre` ("Look 6 26_Opaline", tal cual: **da la URL**), `sku` (texto libre, opcional), `publicado` (false = borrador, no sale en ningún sitio), `descripcion_es`, `descripcion_en` (vacías = texto automático), `imagenes` (lista ordenada: 1.ª tarjeta y ficha, 2.ª al pasar el ratón; mínimo una), `slugs_anteriores` (URLs antiguas a redirigir).
 
 Reglas que ya aplica el código y que conviene repetir en la base de datos:
+- Los **looks van siempre por número** (Look 1, 2, 3…), sacado del nombre (`numeroLook` / `ordenarLooks` en `catalogoFiesta.js`); los que no tienen número (Prêt-à-porter) van al final. No hace falta guardar una posición: basta con ordenar al leer.
 - El **nombre interno** de una colección es `temporada_nombre` ("26_Opaline") o solo `nombre` si no tiene temporada. Lo usan el filtro de colección y los enlaces `?coleccion=`. En la web el número no se ve ("Opaline").
 - La **URL** de un look es `slugify(nombre)`. Única en todo Fiesta, incluidas las `slugs_anteriores` (ver `validarLookFiesta`).
 - Si se **renombra un look publicado**, su URL anterior se añade a `slugs_anteriores` (`guardarLook` en `AtelierFiesta.jsx`) y la ficha la redirige con un 301 (`buscarProductoFiesta`). No hace falta tocar `redirecciones301.js`.
@@ -37,7 +38,7 @@ Reglas que ya aplica el código y que conviene repetir en la base de datos:
 2. **Escritura (admin):** las cuatro acciones de `AtelierFiesta.jsx` (`guardarColeccion`, `reordenarColecciones`, `guardarLook`, `eliminarLook`) deben llamar a la API y, si va bien, actualizar el estado. Validar también en el servidor con `validarColeccionFiesta` / `validarLookFiesta`.
 3. **Fotos:** hoy `FotosOrdenables.jsx` comprime en el navegador (`comprimirImagen`, JPEG máx. 2000 px) y guarda una URL temporal `blob:`. Hay que subir el archivo al almacén, convertir a WebP y guardar la ruta definitiva, con un nombre SEO como el de las fotos actuales (`fely-campo-coleccion-fiesta-<coleccion>-...webp`).
 4. **Publicar al momento:** tras guardar, revalidar `/[locale]/atelier/fiesta`, la ficha del look (y la URL anterior si cambió) y `/sitemap.xml` (`revalidatePath`).
-5. **Migración:** cargar `src/datos/atelierFiesta.js` en la base de datos tal cual (el orden de los arrays es la `posicion`).
+5. **Migración:** cargar `src/datos/atelierFiesta.js` en la base de datos tal cual (el orden de las colecciones es su `posicion`; los looks se ordenan solos por número).
 6. **Acceso:** el panel no tiene inicio de sesión. Es imprescindible antes de que el admin pueda publicar (el botón "Cerrar sesión" de la barra superior ya está, sin lógica).
 
 ## 4. Lo que el admin no pide (a propósito)
