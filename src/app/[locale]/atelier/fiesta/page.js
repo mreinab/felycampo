@@ -32,29 +32,16 @@
 
 import { getTranslations } from 'next-intl/server';
 import { CuadriculaProductos, HeroPagina, BloqueSeccion, RunwayBackstage } from '@/components/layout';
-import { fiestaProductos } from '@/components/layout/fiestaProductos';
+import { coleccionesVisiblesFiesta, productosListadoFiesta } from '@/lib/catalogoFiesta';
 import { FIESTA_EDITORIAL } from './fiestaEditorial';
 import FiestaIntro from './FiestaIntro';
 import { metadataPagina } from '@/lib/seo';
 
-// Colecciones de Fiesta, de la más reciente a la más antigua — mismo
-// orden real en que aparecen los looks en la cuadrícula (ver
-// fiestaProductos.js); ver también comentario de "colecciones" en
-// CuadriculaProductos.jsx (filtra la cuadrícula de verdad). Sin
-// "Prêt-à-porter" (ver comentario de arriba).
-const COLECCIONES_FIESTA = [
-  // '27_Eclat', // comentada a petición (ver fiestaProductos.js)
-  '26_Opaline',
-  "25_L'Allure",
-  'En Madrid',
-  'A Walk',
-  'Bambú',
-  'Savia',
-  'Miscelanea',
-  'Furisode',
-];
-
-const PRODUCTOS_FIESTA = fiestaProductos.filter((producto) => producto.coleccion !== 'Prêt-à-porter');
+// Colecciones visibles (de la más reciente a la más antigua) y sus looks
+// publicados: salen de los datos que edita /admin/colecciones/fiesta
+// (ver src/lib/catalogoFiesta.js). Ocultas hoy: Eclat y Prêt-à-porter.
+const COLECCIONES_FIESTA = coleccionesVisiblesFiesta();
+const PRODUCTOS_FIESTA = productosListadoFiesta();
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;

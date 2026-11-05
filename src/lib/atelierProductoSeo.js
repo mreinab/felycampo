@@ -9,6 +9,7 @@ import { noviaProductos } from '@/components/layout/noviaProductos';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { slugify } from './slugify';
 import { sinNumeroColeccion } from './nombreColeccion';
+import { buscarProductoFiesta } from './catalogoFiesta';
 import { metadataPagina, recortar } from './seo';
 
 const CATALOGOS = { novias: noviaProductos, fiesta: fiestaProductos };
@@ -25,15 +26,22 @@ const TEXTOS = {
 };
 
 export function metadataProductoAtelier({ locale, slug, seccion }) {
-  const producto = CATALOGOS[seccion]?.find((candidato) => slugify(candidato.nombre) === slug);
+  // Fiesta: también encuentra el look por una URL antigua (se renombró
+  // en el admin); la ficha redirige a la nueva.
+  const producto = seccion === 'fiesta'
+    ? buscarProductoFiesta(slug).producto
+    : CATALOGOS[seccion]?.find((candidato) => slugify(candidato.nombre) === slug);
   if (!producto) return {};
 
   // Sin el número de temporada ("Look 27 26_Opaline" -> "Look 27 Opaline").
   const nombre = sinNumeroColeccion(producto.nombre);
   const textos = TEXTOS[seccion][locale] || TEXTOS[seccion].es;
   // "descripcion" real solo en algunas colecciones (ver noviaProductos.js)
-  // y solo en español: en inglés, o si no hay, queda el texto de cierre.
-  const descripcionPropia = locale === 'es' && typeof producto.descripcion === 'string' ? producto.descripcion : null;
+  // y en español; en inglés solo si el look tiene "descripcionEn" (Fiesta,
+  // escrita en el admin). Si no hay, queda el texto de cierre.
+  const descripcionPropia = locale === 'en'
+    ? producto.descripcionEn || null
+    : (typeof producto.descripcion === 'string' ? producto.descripcion : null);
 
   return metadataPagina({
     locale,

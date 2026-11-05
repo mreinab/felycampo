@@ -7,14 +7,13 @@
 
    Sin "Prêt-à-porter" en COLECCIONES_FIESTA (no pertenece a este
    listado de colecciones de Fiesta, a petición explícita) — mismo
-   criterio que ../page.js. fiestaProductos.js NO se toca (sigue con
-   las 11 completas, catálogo real que también alimenta
-   /admin/colecciones/fiesta), aquí solo se filtra lo que se enseña. */
+   criterio que ../page.js: las colecciones visibles y sus looks salen
+   de src/lib/catalogoFiesta.js (datos que edita el admin). */
 
 import { permanentRedirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { CuadriculaProductos, HeroPagina } from '@/components/layout';
-import { fiestaProductos } from '@/components/layout/fiestaProductos';
+import { coleccionesVisiblesFiesta, productosListadoFiesta } from '@/lib/catalogoFiesta';
 import { encontrarCategoria } from '@/components/layout/estiloSiluetaGrupos';
 import { parametrosCategoria, metadataCategoria, breadcrumbJsonLd } from '@/lib/atelierCategoriaSeo';
 
@@ -22,21 +21,11 @@ const ES_FIESTA = true;
 const SECCION_KEY = 'nav.submenus.atelier.fiesta';
 const SECCION_HREF = 'atelier/fiesta';
 
-// Mismas colecciones que ../page.js (COLECCIONES_FIESTA) — ver
-// comentario en atelier/novias/categoria/[categoria]/page.js.
-const COLECCIONES_FIESTA = [
-  // '27_Eclat', // comentada a petición (ver fiestaProductos.js)
-  '26_Opaline',
-  "25_L'Allure",
-  'En Madrid',
-  'A Walk',
-  'Bambú',
-  'Savia',
-  'Miscelanea',
-  'Furisode',
-];
-
-const PRODUCTOS_FIESTA = fiestaProductos.filter((producto) => producto.coleccion !== 'Prêt-à-porter');
+// Colecciones visibles (de la más reciente a la más antigua) y sus looks
+// publicados: salen de los datos que edita /admin/colecciones/fiesta
+// (ver src/lib/catalogoFiesta.js). Ocultas hoy: Eclat y Prêt-à-porter.
+const COLECCIONES_FIESTA = coleccionesVisiblesFiesta();
+const PRODUCTOS_FIESTA = productosListadoFiesta();
 
 export function generateStaticParams() {
   return parametrosCategoria(ES_FIESTA);

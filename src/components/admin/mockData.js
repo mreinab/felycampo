@@ -6,7 +6,8 @@
 
 import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
 import { noviaProductos } from '@/components/layout/noviaProductos';
-import { fiestaProductos } from '@/components/layout/fiestaProductos';
+import { COLECCIONES_FIESTA } from '@/datos/atelierFiesta';
+import { categoriasAdminFiesta } from '@/lib/catalogoFiesta';
 
 // ---------- PRODUCTOS ----------
 // tipo: 'pret-a-porter' | 'atelier' | 'archivo'
@@ -813,46 +814,12 @@ const looksLaColeccion = Array.from({ length: 34 }, (_, i) => ({
   imagenes: [`/img/collections/runway/FW27-lacoleccion/FelyCampo_${String(i + 1).padStart(2, '0')}.webp`],
 }));
 
-// Looks de "Furisode" (cat35, Fiesta) — a diferencia de looksLaColeccion,
-// aquí sí hay datos reales por look (SKU de prendas + tags de estilo, del
-// lote de fotos entregado), no solo imágenes; colores/telas/descripción
-// quedan para más adelante igual que el resto de colecciones de archivo.
-// `tags` no tiene columna propia todavía en la vista de looks
-// (ListaProductos.jsx solo pinta Look/SKU/Imágenes/Descripción) pero se
-// guarda igualmente para no perder el dato de origen.
-// Huecos de imágenes frente al recuento entregado (look 19 ya resuelto,
-// subidas sus 2 fotos): look 14 trae 2 fotos (se esperaban 3), look 28
-// trae 2 fotos (se esperaba 1) y look 29 trae 1 foto (se esperaban 2) —
-// diferencias menores de recuento, sin importancia; se deja constancia
-// aquí en vez de forzar un número que no existe en disco.
-const RUTA_FURISODE = '/img/collections/fiesta/furisode';
-const looksFurisode = [
-  { nombre: 'Furisode Fiesta 1', prendas: [{ nombre: '', sku: '18101 V' }], tags: ['Colección', 'Diferente', 'Fiesta', 'Furisode', 'Mangas', 'Midi', 'Mikado', 'Recto', 'Volumen'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-1-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-1-1.webp`] },
-  { nombre: 'Furisode Fiesta 2', prendas: [{ nombre: '', sku: '18102 F' }, { nombre: '', sku: '18103 T' }], tags: ['Colección', 'Diferente', 'Dos piezas', 'Escote Espalda', 'Fiesta', 'Furisode', 'Largo', 'Sirena'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-2-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-2-1.webp`] },
-  { nombre: 'Furisode Fiesta 3', prendas: [{ nombre: '', sku: '18104 V' }], tags: ['Clásico', 'Colección', 'Escote Espalda', 'Fiesta', 'Furisode', 'Midi', 'Mikado', 'Volumen'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-3-1.webp`] },
-  { nombre: 'Furisode Fiesta 4', prendas: [{ nombre: '', sku: '18105' }], tags: ['Clásico', 'Colección', 'Corto', 'Fiesta', 'Furisode', 'Midi', 'Mikado', 'Recto'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-4-1.webp`] },
-  { nombre: 'Furisode Fiesta 11', prendas: [{ nombre: '', sku: '18114 T' }, { nombre: '', sku: '18115 F' }], tags: ['Colección', 'Diferente', 'Dos piezas', 'Fiesta', 'Furisode', 'Midi', 'Noche', 'Volumen'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-11-2.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-11.webp`] },
-  { nombre: 'Furisode Fiesta 12', prendas: [{ nombre: '', sku: '18116 T' }, { nombre: '', sku: '18117 F' }], tags: ['Alfombra roja', 'Colección', 'Diferente', 'Fiesta', 'Fluido', 'Furisode', 'Largo', 'Noche', 'Sirena'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-12-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-12-1.webp`] },
-  { nombre: 'Furisode Fiesta 14', prendas: [{ nombre: '', sku: '18119 V' }], tags: ['Colección', 'Diferente', 'Fiesta', 'Furisode', 'Midi', 'Volumen'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-14-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-14-1.webp`] },
-  { nombre: 'Furisode Fiesta 15', prendas: [{ nombre: '', sku: '18120 F' }, { nombre: '', sku: '18121 T' }], tags: ['Colección', 'Diferente', 'Dos piezas', 'Fiesta', 'Furisode', 'Midi', 'Volumen'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-15-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-15-1.webp`] },
-  { nombre: 'Furisode Fiesta 16', prendas: [{ nombre: '', sku: '18125 V' }], tags: ['Alfombra roja', 'Colección', 'Fiesta', 'Fluido', 'Furisode', 'Largo', 'Minimal', 'Noche', 'Sirena'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-16-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-16-1.webp`] },
-  { nombre: 'Furisode Fiesta 17', prendas: [{ nombre: '', sku: '18126 V' }], tags: ['Colección', 'Escote Espalda', 'Fiesta', 'Fluido', 'Furisode', 'Largo', 'Lencero', 'Noche', 'Recto'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-17-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-17-1.webp`] },
-  { nombre: 'Furisode Fiesta 24', prendas: [{ nombre: '', sku: '18137 V' }], tags: ['Alfombra roja', 'Clásico', 'Colección', 'Escote Espalda', 'Fiesta', 'Fluido', 'Furisode', 'Largo', 'Noche', 'Sirena'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-24-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-24-1.webp`] },
-  { nombre: 'Furisode Fiesta 25', prendas: [{ nombre: '', sku: '18138 T' }, { nombre: '', sku: '18139 F' }], tags: ['Colección', 'Diferente', 'Dos piezas', 'Fiesta', 'Furisode', 'Largo', 'Mikado', 'Noche', 'Volumen'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-25-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-25-1.webp`] },
-  { nombre: 'Furisode Fiesta 29', prendas: [{ nombre: '', sku: '18146 V' }], tags: ['Clásico', 'Colección', 'Fiesta', 'Furisode', 'Midi', 'Mikado', 'Recto'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-29-1.webp`] },
-  { nombre: 'Furisode Fiesta 30', prendas: [{ nombre: '', sku: '18147 V' }], tags: ['Asimétrico', 'Colección', 'Corte A', 'Diferente', 'Escote Espalda', 'Fiesta', 'Furisode', 'Midi', 'Mikado', 'Minimal', 'Volumen'], imagenes: [`${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-30-2-1.webp`, `${RUTA_FURISODE}/fely-campo-coleccion-fiesta-furisode-look-30-1.webp`] },
-];
 
-// Looks de las 6 colecciones de Novia y de Primavera Verano 2027
-// (Fiesta) — a diferencia de looksLaColeccion/looksFurisode (tecleados a
-// mano aquí mismo), estos reutilizan tal cual noviaProductos.js/
-// fiestaProductos.js, el mismo catálogo real que ya enseña /atelier/
-// novias y /atelier/fiesta en la web pública: filtra su lista plana por
-// "coleccion" y se queda con nombre/sku/imagenes, así el admin nunca
-// puede desincronizarse de lo que la web ya enseña (ninguna de las dos
-// colecciones tenía looks todavía — cuadrícula vacía de "Añadir
-// imágenes" en /admin/colecciones/novia y ninguna portada de SS27 en
-// /admin/colecciones/fiesta).
+// Looks de las 6 colecciones de Novia — a diferencia de looksLaColeccion
+// (tecleados a mano aquí mismo), reutilizan tal cual noviaProductos.js, el
+// mismo catálogo real que ya enseña /atelier/novias: filtra su lista plana
+// por "coleccion" y se queda con nombre/sku/imagenes. (Fiesta ya no pasa
+// por aquí: ver categoriasMock.fiesta más abajo.)
 function looksDeColeccion(productos, nombreColeccion) {
   return productos
     .filter((producto) => producto.coleccion === nombreColeccion)
@@ -865,7 +832,6 @@ const looksBambuNovia = looksDeColeccion(noviaProductos, 'Bambú Novia');
 const looksSaviaNovia = looksDeColeccion(noviaProductos, 'Savia Novia');
 const looksInside = looksDeColeccion(noviaProductos, 'Inside');
 const looksIntrospeccion = looksDeColeccion(noviaProductos, 'Introspección');
-const looksSS27 = looksDeColeccion(fiestaProductos, '27_Eclat');
 
 export const categoriasMock = {
   'pret-a-porter': [
@@ -945,44 +911,10 @@ export const categoriasMock = {
       id: 'cat25', nombre: 'Introspección', visible: true, orden: 6, fija: true, numeroLooks: looksIntrospeccion.length, looks: looksIntrospeccion,
     },
   ],
-  // Archivo de colecciones de Fiesta — mismo criterio que `novia`. cat37
-  // (Primavera Verano 2027/SS27) faltaba entera — es la colección más
-  // reciente en /atelier/fiesta (ver COLECCIONES_FIESTA en esa page.js,
-  // SS27 siempre primera) así que entra en orden:1 y el resto baja un
-  // puesto; sus looks/numeroLooks salen de fiestaProductos.js igual que
-  // `novia` arriba, así que también trae portada real en vez de vacío.
-  fiesta: [
-    {
-      id: 'cat37', nombre: '27_Eclat', visible: true, orden: 1, fija: true, numeroLooks: looksSS27.length, looks: looksSS27,
-    },
-    {
-      id: 'cat26', nombre: '26_Opaline', visible: true, orden: 2, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat27', nombre: "25_L'Allure", visible: true, orden: 3, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat28', nombre: 'Prêt-à-porter', visible: true, orden: 4, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat29', nombre: 'En Madrid', visible: true, orden: 5, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat30', nombre: 'A Walk', visible: true, orden: 6, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat31', nombre: 'Bambú', visible: true, orden: 7, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat32', nombre: 'Savia', visible: true, orden: 8, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat33', nombre: 'Miscelanea', visible: true, orden: 9, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat35', nombre: 'Furisode', visible: true, orden: 11, fija: true, numeroLooks: looksFurisode.length, looks: looksFurisode,
-    },
-  ],
+  // Colecciones de Fiesta: las reales, de src/datos/atelierFiesta.js (las
+  // mismas que enseña /atelier/fiesta). AtelierFiesta.jsx las mantiene al
+  // día mientras se editan en /admin/colecciones/fiesta.
+  fiesta: categoriasAdminFiesta(COLECCIONES_FIESTA),
 };
 
 // ---------- STOCK ----------

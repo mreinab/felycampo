@@ -51,6 +51,7 @@ import InfoAtelier from './InfoAtelier';
 import { Boton, Acordeon, FilaAcordeon, JsonLd } from '@/components/ui';
 import { producto as productoJsonLd, migas } from '@/lib/datosEstructurados';
 import { slugify } from '@/lib/slugify';
+import { buscarProductoFiesta } from '@/lib/catalogoFiesta';
 import { sinNumeroColeccion } from '@/lib/nombreColeccion';
 import styles from './FichaProductoAtelier.module.css';
 
@@ -63,8 +64,22 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   // resto de Atelier sigue con el placeholder genérico.
   const catalogo = CATALOGOS_REALES[seccion] || productosEjemplo;
 
-  const producto = catalogo.find((candidato) => slugify(candidato.nombre) === slug);
+  // Fiesta: búsqueda con redirección — si el look se renombró desde el
+  // admin, su URL antigua redirige (301) a la nueva (ver
+  // buscarProductoFiesta en lib/catalogoFiesta.js).
+  let producto;
+  if (seccion === 'fiesta') {
+    const resultado = buscarProductoFiesta(slug);
+    if (resultado.redirigirA) permanentRedirect(`/${locale}/atelier/fiesta/${resultado.redirigirA}`);
+    producto = resultado.producto;
+  } else {
+    producto = catalogo.find((candidato) => slugify(candidato.nombre) === slug);
+  }
   if (!producto) permanentRedirect(`/${locale}/atelier/${seccion}`); // slug inexistente: al listado (ninguna URL en 404)
+
+  // Descripción en inglés si el look la tiene (se escribe en el admin);
+  // si no, la de siempre en español.
+  const descripcion = locale === 'en' && producto.descripcionEn ? producto.descripcionEn : producto.descripcion;
 
   // Mismo catálogo que "producto", excluyendo el actual — hasta 10, la
   // misma cantidad que espera ProductosRecomendados en su carrusel (ver
@@ -82,7 +97,7 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   const jsonLd = [
     productoJsonLd({
       nombre: nombreVisible,
-      descripcion: producto.descripcion,
+      descripcion,
       imagenes: producto.imagenes?.length ? producto.imagenes : [producto.imagen],
       sku: producto.sku,
       url: `/${locale}/atelier/${seccion}/${slug}`,
@@ -113,7 +128,7 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
             imagen={producto.imagen}
             nombre={nombreVisible}
             sku={producto.sku}
-            descripcion={producto.descripcion}
+            descripcion={descripcion}
             colores={producto.colores}
             tallas={producto.tallas}
           />

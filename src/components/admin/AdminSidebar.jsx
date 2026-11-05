@@ -12,7 +12,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useCategorias } from './Categorias';
 import { codigoTemporada, citasMock, consultasPrecioMock } from '@/components/admin/mockData';
@@ -150,15 +149,9 @@ function itemContieneRuta(item, pathname) {
 
 export function AdminMarca() {
   return (
+    // Sin el icono (logo) a la izquierda — quitado a petición: solo el
+    // texto "Admin Panel" y debajo "Fely Campo".
     <Link href="/admin" className={styles.marca}>
-      <Image
-        src="/img/logo/felycampo-admin-logo.jpg"
-        alt="Fely Campo"
-        width={44}
-        height={44}
-        className={styles.marcaLogo}
-        priority
-      />
       <div className={styles.marcaTexto}>
         <p className={styles.marcaNombre}>Admin Panel</p>
         <p className={styles.marcaSubtitulo}>Fely Campo</p>

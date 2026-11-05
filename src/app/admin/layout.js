@@ -11,7 +11,7 @@
 import { Suspense } from 'react';
 import '@/styles/global.css';
 import {
-  AdminSidebar, AdminMarca, AdminTopbar, AdminContenido, ToastProvider, CategoriasProvider,
+  AdminSidebar, AdminMarca, AdminTopbar, AdminContenido, ToastProvider, CategoriasProvider, AtelierFiestaProvider,
 } from '@/components/admin';
 import styles from './layout.module.css';
 
@@ -23,11 +23,24 @@ export const metadata = {
   },
 };
 
+// Aplica el tema claro del panel (si se eligió con el botón sol/luna de
+// AdminTopbar.jsx) antes de pintar, para que no parpadee en oscuro al
+// cargar. Misma clave que CLAVE_TEMA_ADMIN de AdminTopbar.jsx.
+const SCRIPT_TEMA = `try{if(localStorage.getItem('fc_admin_tema')==='claro')document.documentElement.dataset.adminTema='claro'}catch(e){}`;
+
 export default function AdminLayout({ children }) {
   return (
-    <html lang="es">
+    // suppressHydrationWarning: el script de arriba puede añadir
+    // data-admin-tema a <html> antes de que React hidrate.
+    <html lang="es" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA }} />
+      </head>
       <body className={styles.admin}>
         <CategoriasProvider>
+          {/* Dentro de CategoriasProvider: mantiene al día el submenú
+              "Fiesta" del menú lateral (ver AtelierFiesta.jsx). */}
+          <AtelierFiestaProvider>
           <ToastProvider>
             <div className={styles.shell}>
               <div className={styles.topRow}>
@@ -42,6 +55,7 @@ export default function AdminLayout({ children }) {
               </div>
             </div>
           </ToastProvider>
+          </AtelierFiestaProvider>
         </CategoriasProvider>
       </body>
     </html>

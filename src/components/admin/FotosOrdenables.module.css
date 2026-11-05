@@ -1,0 +1,125 @@
+/* ============================================================
+   FOTOS ORDENABLES — ver FotosOrdenables.jsx
+   Fila de miniaturas (proporción de la tarjeta de la web, 3:4) con su
+   número y su papel debajo, y la caja de "Añadir fotos" al final.
+   ============================================================ */
+
+.fotos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  min-width: 0;
+}
+
+/* La fila de DragList (horizontal) puede ser más ancha que el
+   formulario: scroll lateral dentro, sin desbordar la página. */
+.fotos > :first-child {
+  overflow-x: auto;
+  padding-bottom: var(--spacing-2);
+}
+
+.foto {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  width: 140px;
+  margin: 0;
+}
+
+.imagen {
+  width: 140px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background: var(--color-details);
+  border: var(--border-thin) solid var(--color-gris-200);
+}
+
+.pie {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-1);
+  font-size: var(--text-nano);
+  color: var(--color-gris-500);
+}
+
+.numero {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-tinta);
+}
+
+.papel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.acciones {
+  position: absolute;
+  top: var(--spacing-1);
+  right: var(--spacing-1);
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.foto:hover .acciones,
+.foto:focus-within .acciones {
+  opacity: 1;
+}
+
+.accion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  cursor: pointer;
+}
+
+.accion:disabled {
+  color: var(--color-gris-300);
+  cursor: default;
+}
+
+.subir {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-1);
+  width: 100%;
+  max-width: 420px;
+  padding: var(--spacing-5);
+  border: var(--border-regular) dashed var(--color-gris-300);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-base);
+  font-size: var(--text-caption);
+  color: var(--color-gris-600);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.subir:hover {
+  border-color: var(--color-tinta);
+  color: var(--color-tinta);
+}
+
+.ayuda {
+  font-size: var(--text-nano);
+  color: var(--color-gris-500);
+}
+
+.nota {
+  font-size: var(--text-nano);
+  color: var(--color-gris-500);
+}
+
+.error {
+  font-size: var(--text-caption);
+  color: var(--color-rosa-oscuro);
+}
