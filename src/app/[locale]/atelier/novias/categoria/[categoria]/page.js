@@ -27,7 +27,7 @@
 import { permanentRedirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
-import { noviaProductos } from '@/components/layout/noviaProductos';
+import { productosListadoNovias } from '@/lib/catalogoNovias';
 import { encontrarCategoria } from '@/components/layout/estiloSiluetaGrupos';
 import { parametrosCategoria, metadataCategoria, breadcrumbJsonLd } from '@/lib/atelierCategoriaSeo';
 
@@ -35,7 +35,8 @@ const ES_FIESTA = false;
 const SECCION_KEY = 'nav.submenus.atelier.novias';
 const SECCION_HREF = 'atelier/novias';
 
-const PRODUCTOS_BRIDE_27 = noviaProductos.filter((producto) => producto.coleccion === 'Bride 27');
+// Looks de las colecciones publicadas (hoy solo Bride 27, ver datos/atelierNovias.js).
+const PRODUCTOS_BRIDE_27 = productosListadoNovias();
 
 export function generateStaticParams() {
   return parametrosCategoria(ES_FIESTA);

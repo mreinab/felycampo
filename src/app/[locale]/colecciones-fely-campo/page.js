@@ -1,7 +1,7 @@
 /* ============================================================
    RUNWAY — Fely Campo. Ruta: /colecciones-fely-campo (antes
    /archivo/runway — renombrada). Cuadrícula editorial de las 9
-   colecciones de pasarela (ver colecciones.js, datos compartidos con
+   colecciones de pasarela (ver lib/runway.js y datos/runway.js, compartidos con
    la ficha de cada colección). Cada tarjeta enlaza a la ficha de su
    colección en /runways-[slug] (ver ../runways-[coleccion]/page.js —
    ruta hermana, no anidada bajo esta, a petición directa del usuario;
@@ -10,7 +10,7 @@
 
 import { getTranslations } from 'next-intl/server';
 import { HeroPagina, RunwayTarjeta } from '@/components/layout';
-import { COLECCIONES } from './colecciones';
+import { coleccionParaWeb, coleccionesVisiblesRunway } from '@/lib/runway';
 import styles from './page.module.css';
 import { metadataPagina } from '@/lib/seo';
 
@@ -35,7 +35,7 @@ export default async function Pagina({ params }) {
     />
     <section className={`${styles.pagina} contenedor`}>
       <div className={styles.grid}>
-        {COLECCIONES.map((coleccion) => (
+        {coleccionesVisiblesRunway().map((datos) => coleccionParaWeb(datos, locale)).map((coleccion) => (
           <RunwayTarjeta
             key={coleccion.slug}
             href={`/${locale}/runways-${coleccion.slug}`}

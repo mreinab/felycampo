@@ -15,6 +15,8 @@ export { default as OrigenProductoBadge } from './OrigenProductoBadge';
 export { ToastProvider, useToast } from './Toast';
 export { CategoriasProvider, useCategorias } from './Categorias';
 export { AtelierFiestaProvider, useAtelierFiesta } from './AtelierFiesta';
+export { AtelierNoviasProvider, useAtelierNovias } from './AtelierNovias';
+export { RunwayProvider, useRunway } from './Runway';
 export { PaginasProvider, usePagina } from './Paginas';
 export { BlogProvider, useBlog } from './Blog';
 export { VosotrasProvider, useVosotras } from './Vosotras';

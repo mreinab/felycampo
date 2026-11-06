@@ -24,80 +24,68 @@
    (RunwayGaleria.jsx: rejilla + lightbox con miniaturas y productos
    vinculados al look activo, si hay) → RunwayVideoCierre (el vídeo de
    la colección, si existe — arranca solo al llegar a su punto en la
-   página, sonido opcional). */
+   página, sonido opcional). Todo eso lo pinta RunwayContenido.jsx,
+   que además admite la vista previa del admin (?previa=runway-<slug>).
+   Datos: lib/runway.js (datos/runway.js), los mismos que edita
+   /admin/colecciones/runway. */
 
 import { permanentRedirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { HeroPagina, RunwayBackstage, RunwayDescripcion, RunwayGaleria, RunwayVideoCierre } from '@/components/layout';
-import { COLECCIONES } from '../../colecciones-fely-campo/colecciones';
-import { metadataPagina, recortar } from '@/lib/seo';
 import { JsonLd } from '@/components/ui';
 import { migas } from '@/lib/datosEstructurados';
-import styles from './page.module.css';
+import { PARAMETRO_PREVIA } from '@/lib/previa';
+import { coleccionRunwayPorSlug, idPreviaRunway } from '@/lib/runway';
+import { metadataPagina, recortar } from '@/lib/seo';
+import RunwayContenido from './RunwayContenido';
 
 // Canonical = URL pública /runways-{slug} (la del rewrite de
 // next.config.mjs), no la interna /runways/{slug}.
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params, searchParams }) {
   const { locale, coleccion: slug } = await params;
-  const coleccion = COLECCIONES.find((candidata) => candidata.slug === slug);
+  if ((await searchParams)?.[PARAMETRO_PREVIA] === idPreviaRunway(slug)) {
+    return { robots: { index: false, follow: false } };
+  }
+  const coleccion = coleccionRunwayPorSlug(slug);
   if (!coleccion) return {};
 
   const esEs = locale === 'es';
+  const descripcionEn = (coleccion.descripcion?.en || '').trim();
   return metadataPagina({
     locale,
     ruta: `/runways-${slug}`,
     titulo: `${coleccion.nombre} ${coleccion.temporada} | ${esEs ? 'Colección de pasarela' : 'Runway collection'} Fely Campo`,
-    // colecciones.js solo trae "descripcion" en español (texto de autor):
-    // en inglés, meta generada con nombre + temporada (auditoría SEO B4)
-    // en vez de servir la española, duplicada entre idiomas.
+    // En inglés, si la colección no tiene su texto traducido, una meta
+    // generada con nombre + temporada (auditoría SEO B4) en vez de servir
+    // la española, duplicada entre idiomas.
     descripcion: esEs
-      ? recortar(coleccion.descripcion)
-      : `${coleccion.nombre} (${coleccion.temporada}), a luxury ready-to-wear runway collection by Spanish designer Fely Campo. Explore every look, its fabrics and the show.`,
-    imagen: coleccion.medios?.[0]?.src,
+      ? recortar(coleccion.descripcion.es)
+      : (descripcionEn ? recortar(descripcionEn) : `${coleccion.nombre} (${coleccion.temporada}), a luxury ready-to-wear runway collection by Spanish designer Fely Campo. Explore every look, its fabrics and the show.`),
+    imagen: coleccion.portada,
   });
 }
 
-export default async function Coleccion({ params }) {
+export default async function Coleccion({ params, searchParams }) {
   const { locale, coleccion: slug } = await params;
-  const coleccion = COLECCIONES.find((candidata) => candidata.slug === slug);
-  if (!coleccion) permanentRedirect(`/${locale}/colecciones-fely-campo`); // slug inexistente: al listado (ninguna URL en 404)
+  const coleccion = coleccionRunwayPorSlug(slug);
+  const enPrevia = (await searchParams)?.[PARAMETRO_PREVIA] === idPreviaRunway(slug);
+  const volverHref = `/${locale}/colecciones-fely-campo`;
+  if (!coleccion && !enPrevia) permanentRedirect(volverHref); // slug inexistente: al listado (ninguna URL en 404)
 
-  const medioHero = coleccion.medios[0];
   const t = await getTranslations('heroPagina');
 
   return (
     <section>
       {/* BreadcrumbList (auditoría SEO M2): Inicio › Colecciones › colección. */}
-      <JsonLd
-        datos={migas([
-          { nombre: 'Fely Campo', ruta: `/${locale}` },
-          { nombre: locale === 'es' ? 'Colecciones' : 'Collections', ruta: `/${locale}/colecciones-fely-campo` },
-          { nombre: `${coleccion.nombre} ${coleccion.temporada}` },
-        ])}
-      />
-      <HeroPagina
-        medio={medioHero}
-        alt={coleccion.nombre}
-        titulo={[coleccion.nombre, coleccion.temporada]}
-        subtitulo={t('runway')}
-      />
-
-      <div className={styles.textoDescripcion}>
-        <RunwayDescripcion texto={coleccion.descripcion} />
-      </div>
-
-      <div className="contenedor">
-        <RunwayBackstage imagenes={coleccion.backstage} alt={coleccion.nombre} />
-      </div>
-
-      <div className={`${styles.galeria} contenedor`}>
-        <RunwayGaleria looks={coleccion.looks} alt={coleccion.nombre} />
-      </div>
-
-      <RunwayVideoCierre
-        src={coleccion.video}
-        enlace={coleccion.videoEnlace && { ...coleccion.videoEnlace, meta: coleccion.videoEnlace.meta[locale] }}
-      />
+      {coleccion && (
+        <JsonLd
+          datos={migas([
+            { nombre: 'Fely Campo', ruta: `/${locale}` },
+            { nombre: locale === 'es' ? 'Colecciones' : 'Collections', ruta: volverHref },
+            { nombre: `${coleccion.nombre} ${coleccion.temporada}` },
+          ])}
+        />
+      )}
+      <RunwayContenido publicado={coleccion || null} slug={slug} locale={locale} subtitulo={t('runway')} volverHref={volverHref} />
     </section>
   );
 }

@@ -14,7 +14,7 @@ import { parametrosCategoria } from '@/lib/atelierCategoriaSeo';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { noviaProductos } from '@/components/layout/noviaProductos';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
-import { COLECCIONES } from './[locale]/colecciones-fely-campo/colecciones';
+import { coleccionesVisiblesRunway } from '@/lib/runway';
 import { articulosVisibles } from '@/lib/blog';
 
 const RUTAS_PRIVADAS = ['/carrito', '/wishlist', '/mi-cuenta/panel'];
@@ -54,7 +54,7 @@ export default function sitemap() {
     ...fiestaProductos.map((p) => [`/atelier/fiesta/${slugify(p.nombre)}`, 0.5]),
     ...parametrosCategoria(false).map(({ categoria }) => [`/atelier/novias/categoria/${categoria}`, 0.6]),
     ...parametrosCategoria(true).map(({ categoria }) => [`/atelier/fiesta/categoria/${categoria}`, 0.6]),
-    ...COLECCIONES.filter((c) => c.slug).map((c) => [`/runways-${c.slug}`, 0.6]),
+    ...coleccionesVisiblesRunway().map((c) => [`/runways-${c.slug}`, 0.6]),
     // Episodios de podcast: sin ficha propia (enlazan a YouTube).
     // Artículos del blog publicados (los ocultos no), con su fecha.
     ...articulosVisibles().map((articulo) => [`/blog/${articulo.slug}`, 0.6, articulo.fecha]),

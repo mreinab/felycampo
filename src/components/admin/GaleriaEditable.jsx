@@ -9,6 +9,7 @@
    Valor:
      conPie   → [{ src, pie: { es, en } }]   (fotos de Sobre Fely)
      sin pie  → ['ruta', 'ruta', …]          (carrusel de un taller)
+   "textoPie": cómo se llama el pie («Pie de foto», «Texto del look»…).
    "maximo": cuántas caben como mucho (opcional). Al llegar, la caja de
    "Añadir" desaparece y, si se sueltan más de las que caben, se añaden
    las primeras y se avisa de las que se quedan fuera.
@@ -37,7 +38,7 @@ const esVideoPorDefecto = (src) => /\.(mp4|webm|mov)(\?|#|$)/i.test(src) || /#vi
 
 function GaleriaEditable({
   valor = [], onChange, idioma = 'es', conPie = false, permitirVideo = false, papeles, esVideo = esVideoPorDefecto,
-  textoAnadir, maximo,
+  textoAnadir, maximo, textoPie = 'Pie de foto',
 }) {
   const input = useRef(null);
   const [subiendo, setSubiendo] = useState(false);
@@ -168,8 +169,8 @@ function GaleriaEditable({
                     <input
                       className={`${styles.pie} ${pieFalta ? styles.pieFalta : ''}`}
                       value={item.pie?.[idioma] || ''}
-                      placeholder={item.pie?.[OTRO[idioma]] ? `${idioma === 'en' ? 'ES' : 'EN'}: ${item.pie[OTRO[idioma]]}` : 'Pie de foto (opcional)'}
-                      aria-label={`Pie de la foto ${indice + 1}`}
+                      placeholder={item.pie?.[OTRO[idioma]] ? `${idioma === 'en' ? 'ES' : 'EN'}: ${item.pie[OTRO[idioma]]}` : `${textoPie} (opcional)`}
+                      aria-label={`${textoPie} ${indice + 1}`}
                       title={pieFalta ? 'Falta la traducción de este pie' : undefined}
                       onChange={(evento) => cambiarPie(indice, evento.target.value)}
                     />

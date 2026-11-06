@@ -51,6 +51,7 @@ import { FilaAcordeon, JsonLd } from '@/components/ui';
 import { producto as productoJsonLd, migas } from '@/lib/datosEstructurados';
 import { slugify } from '@/lib/slugify';
 import { buscarProductoFiesta } from '@/lib/catalogoFiesta';
+import { buscarProductoNovia } from '@/lib/catalogoNovias';
 import { sinNumeroColeccion } from '@/lib/nombreColeccion';
 
 const CATALOGOS_REALES = { fiesta: fiestaProductos, novias: noviaProductos };
@@ -91,9 +92,10 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   // admin, su URL antigua redirige (301) a la nueva (ver
   // buscarProductoFiesta en lib/catalogoFiesta.js).
   let producto;
-  if (seccion === 'fiesta') {
-    const resultado = buscarProductoFiesta(slug);
-    if (resultado.redirigirA) permanentRedirect(`/${locale}/atelier/fiesta/${resultado.redirigirA}`);
+  // Novias, igual (lib/catalogoNovias.js).
+  if (seccion === 'fiesta' || seccion === 'novias') {
+    const resultado = (seccion === 'fiesta' ? buscarProductoFiesta : buscarProductoNovia)(slug);
+    if (resultado.redirigirA) permanentRedirect(`/${locale}/atelier/${seccion}/${resultado.redirigirA}`);
     producto = resultado.producto;
   } else {
     producto = catalogo.find((candidato) => slugify(candidato.nombre) === slug);
@@ -107,7 +109,10 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   // Mismo catálogo que "producto", excluyendo el actual — hasta 10, la
   // misma cantidad que espera ProductosRecomendados en su carrusel (ver
   // pret-a-porter/[producto]/page.js).
-  const relacionados = catalogo.filter((candidato) => candidato !== producto).slice(0, 10);
+  // Por nombre, no por objeto: Fiesta y Novias buscan el look con su
+  // propia función, que devuelve otra copia (antes el look salía entre
+  // sus propios relacionados).
+  const relacionados = catalogo.filter((candidato) => candidato.nombre !== producto.nombre).slice(0, 10);
 
   // Product (sin precio) + BreadcrumbList — auditoría SEO M2, ver
   // lib/datosEstructurados.js.
