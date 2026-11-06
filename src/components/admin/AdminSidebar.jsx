@@ -73,7 +73,7 @@ const grupos = [
       { subgrupo: 'Sobre Fely' },
       { href: '/admin/paginas/sobre-fely', label: 'Historia de Fely', icono: BookOpen },
       {
-        href: '/admin/blog', label: 'Blog & Podcast', icono: Newspaper, porHacer: true,
+        href: '/admin/blog', label: 'Blog & Podcast', icono: Newspaper,
       },
       { href: '/admin/paginas/talleres', label: 'Nuestros talleres', icono: Spool },
       { subgrupo: 'Atelier' },

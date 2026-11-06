@@ -28,7 +28,8 @@
    publicar" lo aplica (Paginas.jsx).
    ============================================================ */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { ArrowUpRight, Eye } from 'lucide-react';
 import { Boton } from '@/components/ui';
 import { bloqueIncompleto, textosQueFaltan, validarCampos } from '@/lib/camposPagina';
@@ -96,18 +97,37 @@ function Bloque({
 
 function EditorPagina({
   id, titulo, rutaWeb, bloques, campos, opcionales = [], children,
+  // Para editar algo que no es una página fija (un artículo del blog, un
+  // episodio): lo publicado y cómo guardarlo vienen de fuera, en vez de
+  // usePagina(id). "volver" convierte las migas en un enlace al listado.
+  publicado: publicadoFuera, guardar: guardarFuera, migas = 'Páginas de la web', volver,
+  estadoPublicado = 'Publicada', textoPublicado, enLaWeb = true,
+  // Lo que se guarda para la vista previa. Por defecto, el borrador
+  // completado con lo publicado; un elemento de una lista (un look de
+  // Vosotras) lo mete en la página entera.
+  datosPrevia,
+  // Comprobaciones que no son "falta un campo" (un nombre repetido…):
+  // (borrador) => ['mensaje', …]. Se suman a las de "campos".
+  validarExtra,
+  // false: sin botón de vista previa (lo editado no se ve en una página).
+  conVistaPrevia = true,
 }) {
-  const { publicado, guardar } = usePagina(id);
+  const pagina = usePagina(id);
+  const publicado = publicadoFuera ?? pagina.publicado;
+  const guardar = guardarFuera ?? pagina.guardar;
   const { mostrarToast } = useToast();
   const [borrador, setBorrador] = useState(() => structuredClone(publicado));
   const [idioma, setIdioma] = useState('es');
   const [errores, setErrores] = useState([]);
   const [activo, setActivo] = useState(bloques[0].id);
+  // Tras abrir la vista previa, cada cambio le llega solo (ver más abajo).
+  const previaAbierta = useRef(false);
 
   const hayCambios = JSON.stringify(borrador) !== JSON.stringify(publicado);
   const listaCampos = campos(borrador);
   const listaOpcionales = typeof opcionales === 'function' ? opcionales(publicado) : opcionales;
   const urlWeb = (locale) => `/${locale}${rutaWeb === '/' ? '' : rutaWeb}`;
+  const paraPrevia = (datos) => (datosPrevia ? datosPrevia(datos) : completarCon(datos, publicado, listaOpcionales));
 
   // El índice marca el bloque que se está viendo.
   useEffect(() => {
@@ -123,26 +143,30 @@ function EditorPagina({
   }, [bloques]);
 
   // Cambia un valor del borrador por su ruta: cambiar(['hero', 'video'], src).
+  // "valor" también puede ser una función (valorActual) => valorNuevo: así
+  // un cambio que llega tarde (una foto que termina de subirse) se aplica
+  // sobre lo que hay en ese momento y no pisa lo editado mientras tanto.
   function cambiar(ruta, valor) {
     setBorrador((actual) => {
       const copia = structuredClone(actual);
       let nodo = copia;
       ruta.slice(0, -1).forEach((clave) => { nodo = nodo[clave]; });
-      nodo[ruta[ruta.length - 1]] = valor;
+      const clave = ruta[ruta.length - 1];
+      nodo[clave] = typeof valor === 'function' ? valor(nodo[clave]) : valor;
       return copia;
     });
   }
 
   function publicar(evento) {
     evento.preventDefault();
-    const encontrados = validarCampos(listaCampos);
+    const encontrados = [...validarCampos(listaCampos), ...(validarExtra ? validarExtra(borrador) : [])];
     setErrores(encontrados);
     if (encontrados.length > 0) {
       document.getElementById('errores-editor')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
     guardar(borrador);
-    mostrarToast(`${titulo} publicada${DEMO}`);
+    mostrarToast(`${textoPublicado || `${titulo} publicada`}${DEMO}`);
   }
 
   function descartar() {
@@ -155,13 +179,27 @@ function EditorPagina({
   // pestaña: si ya está abierta, se actualiza en vez de abrir otra.
   function vistaPrevia() {
     try {
-      localStorage.setItem(clavePrevia(id), JSON.stringify(completarCon(borrador, publicado, listaOpcionales)));
+      localStorage.setItem(clavePrevia(id), JSON.stringify(paraPrevia(borrador)));
     } catch {
       mostrarToast('No se ha podido preparar la vista previa en este navegador.');
       return;
     }
+    previaAbierta.current = true;
     window.open(`${urlWeb(idioma)}?${PARAMETRO_PREVIA}=${id}`, `fc-vista-previa-${id}`);
   }
+
+  // Vista previa en vivo: con la pestaña ya abierta, cada cambio del
+  // borrador se guarda y la página lo pinta al momento (evento "storage"
+  // en usePrevia), sin volver a pulsar "Vista previa".
+  useEffect(() => {
+    if (!previaAbierta.current) return;
+    try {
+      localStorage.setItem(clavePrevia(id), JSON.stringify(paraPrevia(borrador)));
+    } catch {
+      // Sin almacenamiento: la vista previa se actualiza al pulsar el botón.
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [borrador]);
 
   function irA(bloqueId) {
     setActivo(bloqueId);
@@ -201,12 +239,15 @@ function EditorPagina({
       {/* ---------- Barra fija ---------- */}
       <header className={styles.barra}>
         <div className={styles.barraTitulo}>
-          <p className={styles.migas}>Páginas de la web</p>
+          {volver
+            // Link (sin recargar): sin base de datos, recargar perdería lo publicado.
+            ? <Link href={volver} className={`${styles.migas} ${styles.migasEnlace}`}>{`← ${migas}`}</Link>
+            : <p className={styles.migas}>{migas}</p>}
           <div className={styles.tituloFila}>
             <h1 className={styles.titulo}>{titulo}</h1>
             <span className={`${styles.estado} ${hayCambios ? styles.estadoPendiente : styles.estadoPublicada}`}>
               <span className={styles.estadoPunto} aria-hidden="true" />
-              {hayCambios ? 'Cambios sin publicar' : 'Publicada'}
+              {hayCambios ? 'Cambios sin publicar' : estadoPublicado}
             </span>
           </div>
         </div>
@@ -238,12 +279,14 @@ function EditorPagina({
           {hayCambios && (
             <button type="button" className={styles.descartar} onClick={descartar}>Descartar</button>
           )}
-          <Boton variante="contorno" onClick={vistaPrevia}>
-            <span className={styles.conIcono}>
-              <Eye size={16} aria-hidden="true" />
-              Vista previa
-            </span>
-          </Boton>
+          {conVistaPrevia && (
+            <Boton variante="contorno" onClick={vistaPrevia}>
+              <span className={styles.conIcono}>
+                <Eye size={16} aria-hidden="true" />
+                Vista previa
+              </span>
+            </Boton>
+          )}
           {/* Sin cambios: «Publicar» en gris claro y sin clic. */}
           <Boton
             variante="solido"
@@ -287,10 +330,12 @@ function EditorPagina({
             })}
           </ol>
           <div className={styles.indicePie}>
-            <a href={urlWeb('es')} target="_blank" rel="noopener noreferrer" className={styles.verPublicada}>
-              Ver la página publicada
-              <ArrowUpRight size={14} aria-hidden="true" />
-            </a>
+            {enLaWeb && (
+              <a href={urlWeb('es')} target="_blank" rel="noopener noreferrer" className={styles.verPublicada}>
+                Ver la página publicada
+                <ArrowUpRight size={14} aria-hidden="true" />
+              </a>
+            )}
             <p className={styles.indiceNota}>
               Nada se publica hasta pulsar «Guardar y publicar».
             </p>

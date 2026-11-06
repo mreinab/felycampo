@@ -4,7 +4,7 @@
 // Talleres). Cada página describe sus campos con una función
 // campos<Pagina>(datos) que devuelve una lista de:
 //
-//   { bloque, nombre, tipo, valor, requerido, minimo }
+//   { bloque, nombre, tipo, valor, requerido, minimo, maximo }
 //
 //   bloque     id del bloque del editor al que pertenece (para marcarlo
 //              como "Incompleto").
@@ -14,6 +14,7 @@
 //              'url'    valor = dirección externa (https://…)
 //              'enlace' valor = ruta interna; "rutas" = las permitidas
 //              'lista'  valor = array; "minimo" = cuántos como mínimo
+//                       y "maximo" = cuántos como máximo (opcional)
 //   requerido  si puede quedar vacío (textos y fotos).
 //
 // Con esa lista, el editor sabe qué falta en cada idioma y qué bloques
@@ -30,7 +31,10 @@ export function campoConProblema(campo) {
   if (tipo === 'medio') return requerido && !valor;
   if (tipo === 'url') return (requerido || !textoVacio(valor)) && !urlValida(valor);
   if (tipo === 'enlace') return !campo.rutas?.includes(valor);
-  if (tipo === 'lista') return (valor?.length || 0) < (campo.minimo || 0);
+  if (tipo === 'lista') {
+    const cuantos = valor?.length || 0;
+    return cuantos < (campo.minimo || 0) || (campo.maximo !== undefined && cuantos > campo.maximo);
+  }
   return false;
 }
 
@@ -55,7 +59,11 @@ export function validarCampos(campos) {
       if (tipo === 'medio') errores.push(`Falta ${nombre}.`);
       if (tipo === 'url') errores.push(`Revisa ${nombre}: tiene que ser una dirección completa (https://…).`);
       if (tipo === 'enlace') errores.push(`Elige a qué página lleva ${nombre}.`);
-      if (tipo === 'lista') errores.push(`Añade al menos ${campo.minimo === 1 ? 'una foto' : `${campo.minimo} fotos`} en ${nombre}.`);
+      if (tipo === 'lista' && campo.maximo !== undefined && (valor?.length || 0) > campo.maximo) {
+        errores.push(`Sobran fotos en ${nombre}: caben ${campo.maximo} como máximo, quita ${valor.length - campo.maximo}.`);
+      } else if (tipo === 'lista') {
+        errores.push(`Añade al menos ${campo.minimo === 1 ? 'una foto' : `${campo.minimo} fotos`} en ${nombre}.`);
+      }
     }
   });
   return errores;

@@ -18,7 +18,7 @@ Cada archivo de `src/datos/` explica campo a campo lo que guarda. Sobre Fely y T
 - **Campos:** `CampoTexto`, que admite textos de varios párrafos (lista por idioma, separados por una línea en blanco); `CampoMedio` (una foto o un vídeo); `GaleriaEditable` (varias fotos o vídeos, reordenables y con pie); `SelectorEnlace` (páginas internas); `CampoUrl` (direcciones externas).
 - **Validación:** `lib/camposPagina.js`, compartida por las tres páginas. Calcula qué falta en cada idioma, qué bloque está incompleto y los errores antes de publicar. Los textos opcionales (pies de foto, «quién lo lleva») solo cuentan como pendientes si están en un idioma y no en el otro.
 - **Estado del admin:** `components/admin/Paginas.jsx`, con `usePagina(id)` que devuelve `{ publicado, guardar }`.
-- **Vista previa:** `lib/previa.js` y `components/layout/usePrevia.js`. El editor guarda el borrador en `localStorage` (`fc_previa_<id>`) y abre la página con `?previa=<id>`. La página lo pinta con la barra negra «Vista previa» (`BarraPrevia.jsx`). Un visitante sin borrador en su navegador ve siempre lo publicado.
+- **Vista previa:** `lib/previa.js` y `components/layout/usePrevia.js`. El editor guarda el borrador en `localStorage` (`fc_previa_<id>`) y abre la página con `?previa=<id>`. La página lo pinta con la barra negra «Vista previa» (`BarraPrevia.jsx`). Un visitante sin borrador en su navegador ve siempre lo publicado. Una vez abierta, la vista previa se actualiza sola con cada cambio del editor.
 
 ## Al conectar la base de datos
 
@@ -32,5 +32,6 @@ Cada archivo de `src/datos/` explica campo a campo lo que guarda. Sobre Fely y T
 ## Lo que no se edita (a propósito)
 
 - **El número de capítulos y de talleres**, que son fijos. Se edita todo su contenido, pero no se pueden añadir ni quitar capítulos o talleres desde el admin. Para eso habría que añadir un id nuevo en el archivo de datos.
+- **Más de 6 fotos por capítulo** en Sobre Fely (la principal y las de las filas de dos), a petición: `MAXIMO_FOTOS_CAPITULO` en `lib/sobreFely.js`. Cada capítulo tiene una sola lista de fotos; la antigua «galería» se unió a ella. El servidor debe validarlo igual (`validarSobreFely`). Si sobra una foto en una fila de dos, la web la centra.
 - **Los textos SEO (title / description)**, que siguen en `lib/seo.js`.
 - **«Ver todo»**, el filtro de Talleres, que sigue en `messages`.

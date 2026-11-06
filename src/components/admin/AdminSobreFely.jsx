@@ -5,15 +5,15 @@
    /admin/paginas/sobre-fely, sobre el editor común (EditorPagina.jsx).
    Bloques, en el orden de la web:
      · Portada: foto, título y subtítulo
-     · Un bloque por capítulo: título, subtítulo, texto, fotos (con
-       su pie, reordenables), pie compartido y galería
+     · Un bloque por capítulo: título, subtítulo, texto, fotos (de 1 a 6,
+       con su pie, reordenables)
      · Cierre: título y texto
      · Documental: foto, título, texto y enlace (YouTube)
    Datos y reglas: lib/sobreFely.js. Ver docs/admin-paginas.md.
    ============================================================ */
 
 import {
-  ID_PAGINA_SOBRE_FELY, camposSobreFely, obtenerSobreFely, opcionalesSobreFely,
+  ID_PAGINA_SOBRE_FELY, MAXIMO_FOTOS_CAPITULO, camposSobreFely, obtenerSobreFely, opcionalesSobreFely,
 } from '@/lib/sobreFely';
 import EditorPagina from './EditorPagina';
 import styles from './EditorPagina.module.css';
@@ -21,8 +21,10 @@ import styles from './EditorPagina.module.css';
 // Qué hace cada foto de un capítulo según su posición (ver
 // SobreFelyContenido.jsx en la web).
 function papelFotoCapitulo(indice, total) {
-  if (indice === 0) return 'Junto al texto';
-  return total === 2 ? 'Debajo del texto' : 'En fila, debajo';
+  if (indice === 0) return 'Principal, junto al texto';
+  if (total === 2) return 'Debajo del texto';
+  // Fotos en filas de dos: si sobra una (número impar), va sola y centrada.
+  return (total - 1) % 2 === 1 && indice === total - 1 ? 'Sola y centrada, debajo' : 'En fila, debajo';
 }
 
 // Los capítulos son fijos (sus id no cambian al editar), así que los
@@ -75,23 +77,11 @@ function Capitulo({ h, indice }) {
       <div className={styles.seccionBloque}>
         <p className={styles.grupoTitulo}>Fotos del capítulo</p>
         <p className={styles.ayudaBloque}>
-          La 1.ª va junto al texto. Si hay una más, va debajo del texto; si hay dos o más, en fila debajo del capítulo.
+          Hasta {MAXIMO_FOTOS_CAPITULO}. La 1.ª es la principal y va junto al texto. Si hay una más, va debajo del texto; si hay más, forman filas de dos debajo del capítulo (si sobra una, va centrada).
         </p>
-        {h.galeria(ruta('imagenes'), { conPie: true, papeles: papelFotoCapitulo })}
-        <div className={styles.columnaTexto}>
-          {h.texto(ruta('pie'), {
-            etiqueta: 'Pie común a todas las fotos', opcional: true, ayuda: 'Un solo pie debajo de las fotos, en vez de uno en cada una.',
-          })}
-        </div>
+        {h.galeria(ruta('imagenes'), { conPie: true, papeles: papelFotoCapitulo, maximo: MAXIMO_FOTOS_CAPITULO })}
       </div>
 
-      <div className={styles.division} />
-
-      <div className={styles.seccionBloque}>
-        <p className={styles.grupoTitulo}>Galería al final del capítulo · opcional</p>
-        <p className={styles.ayudaBloque}>Más fotos, en filas de dos a todo el ancho.</p>
-        {h.galeria(ruta('galeria'), { conPie: true, papeles: () => 'Galería' })}
-      </div>
     </>
   );
 }

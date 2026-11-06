@@ -92,9 +92,20 @@ function AtelierFiestaProvider({ children }) {
     setColecciones((actual) => actual.map((c) => ({ ...c, looks: c.looks.filter((l) => l.id !== lookId) })));
   }, []);
 
+  // Publicar / ocultar desde el listado (el botón del ojo).
+  const alternarLook = useCallback((lookId) => {
+    setColecciones((actual) => actual.map((c) => ({
+      ...c, looks: c.looks.map((l) => (l.id === lookId ? { ...l, publicado: !l.publicado } : l)),
+    })));
+  }, []);
+
+  const alternarColeccion = useCallback((id) => {
+    setColecciones((actual) => actual.map((c) => (c.id === id ? { ...c, visible: !c.visible } : c)));
+  }, []);
+
   return (
     <AtelierFiestaContext.Provider value={{
-      colecciones, guardarColeccion, reordenarColecciones, guardarLook, eliminarLook,
+      colecciones, guardarColeccion, reordenarColecciones, guardarLook, eliminarLook, alternarLook, alternarColeccion,
     }}
     >
       {children}

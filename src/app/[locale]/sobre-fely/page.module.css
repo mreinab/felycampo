@@ -88,20 +88,19 @@
 
 /* Escalonado editorial (solo escritorio): en cada fila de dos, la
    segunda foto empieza 120px más abajo que la primera. nth-of-type
-   cuenta solo los <figure> — el pie compartido (.parejaPie, un <div>)
-   no altera el par/impar. */
+   cuenta solo los <figure>. */
 @media (min-width: 1024px) {
   .pareja > .figura:nth-of-type(even) {
     margin-top: var(--spacing-10);
   }
-}
 
-/* Pie compartido bajo una fila de dos: a todo el ancho de la fila,
-   anulando el row-gap de .pareja para que quede igual de pegado a las
-   fotos que el resto de pies. */
-.parejaPie {
-  grid-column: 1 / -1;
-  margin-top: calc(-1 * var(--spacing-5));
+  /* Si sobra una (número impar de fotos), va sola en su fila, centrada y
+     del mismo ancho que las demás, en vez de dejar un hueco a su lado. */
+  .pareja > .figura:last-of-type:nth-of-type(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - var(--grid-gap)) / 2);
+  }
 }
 
 /* ---------- Texto (igual que .seccionTexto de AtelierDetalle) ---------- */
@@ -238,11 +237,6 @@
   .pareja {
     grid-template-columns: minmax(0, 1fr);
     row-gap: var(--spacing-6);
-  }
-
-  /* Mismo row-gap de .pareja en mobile (--spacing-6), anulado igual. */
-  .parejaPie {
-    margin-top: calc(-1 * var(--spacing-6));
   }
 
   .cierre {

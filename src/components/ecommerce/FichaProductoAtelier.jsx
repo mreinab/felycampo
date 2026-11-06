@@ -45,20 +45,43 @@ import { productosEjemplo } from '@/components/layout/productosEjemplo';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { noviaProductos } from '@/components/layout/noviaProductos';
 // import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
-import { ProductosRecomendados /* , ResenasClientes */ } from '@/components/layout';
-import GaleriaProducto from './GaleriaProducto';
-import InfoAtelier from './InfoAtelier';
-import { Boton, Acordeon, FilaAcordeon, JsonLd } from '@/components/ui';
+// import { ResenasClientes } from '@/components/layout';
+import FichaAtelierCuerpo from './FichaAtelierCuerpo';
+import { FilaAcordeon, JsonLd } from '@/components/ui';
 import { producto as productoJsonLd, migas } from '@/lib/datosEstructurados';
 import { slugify } from '@/lib/slugify';
 import { buscarProductoFiesta } from '@/lib/catalogoFiesta';
 import { sinNumeroColeccion } from '@/lib/nombreColeccion';
-import styles from './FichaProductoAtelier.module.css';
 
 const CATALOGOS_REALES = { fiesta: fiestaProductos, novias: noviaProductos };
 
+// Textos ya traducidos que pinta FichaAtelierCuerpo (también los usa la
+// vista previa del admin, ver atelier/fiesta/[producto]/page.js).
+// Reseñas (ResenasClientes) comentadas a petición hasta que hagan falta.
+export async function textosFichaAtelier(locale) {
+  const tProducto = await getTranslations({ locale, namespace: 'producto' });
+  return {
+    acordeon: (
+      <>
+        <FilaAcordeon titulo={tProducto('composicion')}>
+          <p>{tProducto('composicionTexto')}</p>
+          <div>
+            <p>{tProducto('origenDisenado')}</p>
+            {/* "nuestros talleres" enlaza a /talleres-fely-campo (a petición). */}
+            <p>{tProducto.rich('origenFabricado', { talleres: (chunks) => <a href={`/${locale}/talleres-fely-campo`} className="enlace-texto">{chunks}</a> })}</p>
+          </div>
+        </FilaAcordeon>
+        <FilaAcordeon titulo={tProducto('porEncargoTitulo')}>
+          <p>{tProducto('porEncargoTexto')}</p>
+        </FilaAcordeon>
+      </>
+    ),
+    seguirExplorando: tProducto('seguirExplorandoAtelier'),
+  };
+}
+
 async function FichaProductoAtelier({ slug, seccion, locale }) {
-  const tProducto = await getTranslations('producto');
+  const textos = await textosFichaAtelier(locale);
 
   // Fiesta y Novias ya tienen catálogo real (ver CATALOGOS_REALES) — el
   // resto de Atelier sigue con el placeholder genérico.
@@ -111,66 +134,16 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   ];
 
   return (
-    <section className={`seccion contenedor ${styles.debajoNavbar}`}>
-      <JsonLd datos={jsonLd} />
-      <div className={styles.ficha}>
-        <GaleriaProducto
-          imagenes={producto.imagenes?.length ? producto.imagenes : [producto.imagen]}
-          alt={nombreVisible}
-          nombre={nombreVisible}
-          colores={producto.colores}
-          tallas={producto.tallas}
-          esAtelier
-        />
-
-        <div className={styles.info}>
-          <InfoAtelier
-            imagen={producto.imagen}
-            nombre={nombreVisible}
-            sku={producto.sku}
-            descripcion={descripcion}
-            colores={producto.colores}
-            tallas={producto.tallas}
-          />
-
-          <Acordeon>
-            <FilaAcordeon titulo={tProducto('composicion')}>
-              <p>{tProducto('composicionTexto')}</p>
-              <div>
-                <p>{tProducto('origenDisenado')}</p>
-                {/* "nuestros talleres" enlaza a /talleres-fely-campo (a petición). */}
-                <p>{tProducto.rich('origenFabricado', { talleres: (chunks) => <a href={`/${locale}/talleres-fely-campo`} className="enlace-texto">{chunks}</a> })}</p>
-              </div>
-            </FilaAcordeon>
-            <FilaAcordeon titulo={tProducto('porEncargoTitulo')}>
-              <p>{tProducto('porEncargoTexto')}</p>
-            </FilaAcordeon>
-          </Acordeon>
-
-        </div>
-      </div>
-
-      <div className={styles.debajoFicha}>
-        {/* Reseñas comentadas a petición hasta que hagan falta — para
-            recuperarlas, descomentar esta línea y los dos imports de
-            arriba (RESENAS_EJEMPLO, ResenasClientes).
-        <ResenasClientes resenas={RESENAS_EJEMPLO} /> */}
-
-        {relacionados.length > 0 && (
-          <ProductosRecomendados
-            productos={relacionados}
-            hrefBase={`atelier/${seccion}`}
-            ocultarPrecio
-          />
-        )}
-
-        <div className={styles.seguirExplorando}>
-          <Boton variante="solido" href={`/${locale}/atelier/${seccion}`}>
-            {tProducto('seguirExplorandoAtelier')}
-          </Boton>
-        </div>
-      </div>
-    </section>
+    <FichaAtelierCuerpo
+      producto={producto}
+      nombreVisible={nombreVisible}
+      descripcion={descripcion}
+      relacionados={relacionados}
+      seccion={seccion}
+      locale={locale}
+      textos={textos}
+      antes={<JsonLd datos={jsonLd} />}
+    />
   );
 }
 

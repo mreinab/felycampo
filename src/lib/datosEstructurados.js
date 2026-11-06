@@ -11,6 +11,7 @@
      tallas (decisión del cliente), así que no se declara precio ni
      disponibilidad. Válido como schema; sin offers no opta a resultado
      enriquecido de producto, y no debe inventarse.
+   - articuloBlog(): BlogPosting de cada artículo de /blog.
    - migas(): BreadcrumbList.
    Las URLs son siempre absolutas sobre SITE_URL (felycampo.com). */
 
@@ -87,6 +88,30 @@ export function producto({ nombre, descripcion, imagenes = [], sku, url }) {
     sku: sku || undefined,
     url: absoluta(url),
     brand: { '@type': 'Brand', name: NOMBRE_MARCA },
+  };
+}
+
+// BlogPosting: un artículo del blog (/blog/<slug>), con los mismos datos
+// que se ven en su página (título, resumen, portada y fecha). Sin autor
+// personal (a petición, el blog no lo muestra): firma la marca.
+export function articuloBlog({
+  titulo, resumen, imagen, fecha, url, locale,
+}) {
+  const marca = {
+    '@type': 'Organization', '@id': ID_ORGANIZACION, name: NOMBRE_MARCA, url: SITE_URL, logo: absoluta(LOGO),
+  };
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: titulo,
+    description: resumen || undefined,
+    image: imagen ? [absoluta(imagen)] : undefined,
+    datePublished: fecha || undefined,
+    inLanguage: locale === 'es' ? 'es-ES' : 'en-GB',
+    url: absoluta(url),
+    mainEntityOfPage: { '@type': 'WebPage', '@id': absoluta(url) },
+    author: marca,
+    publisher: marca,
   };
 }
 

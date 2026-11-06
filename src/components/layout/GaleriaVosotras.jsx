@@ -17,7 +17,7 @@
    (40px, esquina inferior derecha, ver .abrirBtn) que — igual que
    clicar la propia foto — abre un lightbox a pantalla completa con esa
    mini-galería. Las fotos son reales (público/img/Clientes/CLIENTAS,
-   ver FOTOS_INVITADAS/FOTOS_NOVIAS más abajo): cada array interior es
+   ver src/datos/vosotras.js): cada "look" es
    UN grupo de fotos que a simple vista parecen de la misma clienta/
    misma boda (mismo vestido, mismo acompañante, mismo lugar) — se
    agruparon a mano revisando las fotos una a una, no hay metadato real
@@ -40,9 +40,8 @@
    — mismo criterio que CuadriculaProductos.jsx con su toggle de
    densidad: el toggle "Invitadas"/"Novias" (.toggleCategoria, mismo
    lenguaje visual que .toggleBoton ahí — subrayado en el activo) sale
-   como "children" de CabeceraSeccion y filtra LOOKS_EJEMPLO por su
-   campo "categoria" (real: viene de qué carpeta sale cada grupo de
-   fotos, FOTOS_INVITADAS o FOTOS_NOVIAS, ver más abajo).
+   como "children" de CabeceraSeccion y enseña los looks de esa
+   pestaña (datos/vosotras.js: "invitadas" o "novias").
    Uso:
      <GaleriaVosotras titleKey="..." />
    ============================================================ */
@@ -52,22 +51,17 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Plus, X } from 'lucide-react';
 import { CabeceraSeccion, CarruselFotos } from '../ui';
 import useEnVista from '@/hooks/useEnVista';
-import { FOTOS_INVITADAS, FOTOS_NOVIAS, RESENAS_INTERCALADAS, RESENAS_VOSOTRAS } from './vosotrasFotos';
+import {
+  EDITOR_VOSOTRAS, ID_PREVIA_VOSOTRAS, looksVisibles as looksDe, obtenerVosotras, resenaDeLook, resenasCuadricula,
+} from '@/lib/vosotras';
+import BarraPrevia from './BarraPrevia';
+import usePrevia from './usePrevia';
 import styles from './GaleriaVosotras.module.css';
 
-// Cada look: su propia mini-galería (grupo real de fotos, portada
-// siempre primera). Sin "Consigue el look". "resena": solo los looks
-// con reseña REAL de la clienta (RESENAS_VOSOTRAS, por su foto de
-// portada) — se pinta en el lightbox junto a las fotos (.resena); el
-// resto se queda solo en fotos.
-function construirLooks(gruposFotos, categoria) {
-  return gruposFotos.map((fotos) => ({ fotos, categoria, resena: RESENAS_VOSOTRAS[fotos[0]] }));
-}
-
-const LOOKS_EJEMPLO = [
-  ...construirLooks(FOTOS_INVITADAS, 'invitadas'),
-  ...construirLooks(FOTOS_NOVIAS, 'novias'),
-];
+// Campos de las reseñas que pueden quedar vacíos a propósito en un
+// borrador del admin (para que la vista previa no los rellene con lo
+// publicado). Rutas por posición en la lista.
+const OPCIONALES_PREVIA = Array.from({ length: 100 }, (_, i) => ['extracto', 'look', 'firma.es', 'firma.en'].map((campo) => `resenas.${i}.${campo}`)).flat();
 
 // Mismo fundido+subida al entrar en el viewport que TarjetaProducto.jsx
 // (useEnVista + .al-scroll/.en-vista de global.css) — aparte porque un
@@ -90,7 +84,7 @@ function TileVosotras({ onAbrir, fotos, etiquetaAbrir }) {
   );
 }
 
-// Casilla de reseña intercalada (RESENAS_INTERCALADAS): mismo tamaño
+// Casilla de reseña intercalada (resenasCuadricula): mismo tamaño
 // que una foto, extracto + "(...)" y firma. Con "onAbrir" (reseña con
 // look) es un botón que abre la galería de esa clienta.
 function TileResena({ resena, onAbrir }) {
@@ -131,8 +125,13 @@ function intercalarResenas(looks, resenas) {
   return celdas;
 }
 
-function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperiorAmplio }) {
+// "publicado": los datos de lib/vosotras.js (los mismos que edita
+// /admin/vosotras). Con ?previa=vosotras, el borrador del admin.
+function GaleriaVosotras({
+  subtitleKey, titleKey, descriptionKey, margenSuperiorAmplio, publicado = obtenerVosotras(),
+}) {
   const t = useTranslations();
+  const { datos, enPrevia } = usePrevia(ID_PREVIA_VOSOTRAS, publicado, OPCIONALES_PREVIA);
   // Pestañas Invitadas/Novias: mismo fundido+subida de entrada que el
   // título (CabeceraSeccion) y las casillas (TileVosotras).
   const [toggleRef, toggleEnVista] = useEnVista();
@@ -146,16 +145,19 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
   const [indiceLook, setIndiceLook] = useState(0);
   const [indiceFoto, setIndiceFoto] = useState(0);
 
+  // Cada look: su propia mini-galería (portada siempre primera). "resena":
+  // la reseña entera de la clienta, si la tiene, que se lee junto a sus
+  // fotos en el lightbox (.resena).
   const looksVisibles = useMemo(
-    () => LOOKS_EJEMPLO.filter((look) => look.categoria === categoria),
-    [categoria]
+    () => looksDe(datos, categoria).map((look) => ({ fotos: look.fotos, categoria, resena: resenaDeLook(datos, look.id) })),
+    [datos, categoria]
   );
-  const lookActivo = looksVisibles[indiceLook];
+  const lookActivo = looksVisibles[indiceLook] || looksVisibles[0] || { fotos: [] };
 
-  // Reseñas intercaladas solo en Invitadas (son todas de invitadas).
+  // Casillas de reseña intercaladas solo en Invitadas.
   const celdas = useMemo(
-    () => intercalarResenas(looksVisibles, categoria === 'invitadas' ? RESENAS_INTERCALADAS : []),
-    [looksVisibles, categoria]
+    () => intercalarResenas(looksVisibles, categoria === 'invitadas' ? resenasCuadricula(datos) : []),
+    [looksVisibles, categoria, datos]
   );
 
   const abrir = (indice) => {
@@ -367,6 +369,7 @@ function GaleriaVosotras({ subtitleKey, titleKey, descriptionKey, margenSuperior
           </blockquote>
         )}
       </div>
+      {enPrevia && <BarraPrevia editor={EDITOR_VOSOTRAS} />}
     </>
   );
 }

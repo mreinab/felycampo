@@ -2,95 +2,47 @@
 
 /* ============================================================
    ARTÍCULO DE BLOG — Fely Campo
-   Ficha de una entrada de tipo "articulo" en /blog/[entrada] (ver ese
-   page.js) — LA plantilla del blog, en dos mitades:
+   Ficha de un artículo en /blog/[entrada] (ver ese page.js), en dos
+   mitades:
    1) Cabecera calcada de la ficha de colección de Runway
-      (/colecciones-fely-campo/la-coleccion-aw27, ver ese page.js/
-      page.module.css): .hero a 80vh a ancho completo
-      (RunwayMediaLateral con "imagenCubierta", data-navbar-hero para
-      que el Navbar transparente/claro del sitio se vuelva sólido al
-      salir de él — ver "esHeroBlog" en ../../app/[locale]/layout.js,
-      que mira "entrada.tipo" en blog.js) + .textoDescripcion
-      (.textoRow con título/fecha, mismo contenedor común a todo el
-      ancho que en Runway). El enlace de "volver" va SOBRE el hero
-      (solo icono, sin texto — mismo patrón que .volver en
-      BlogPodcast.jsx), no dentro de .textoDescripcion: Runway no trae
-      un enlace de vuelta de por sí, así que aquí se resuelve como en
-      el resto de fichas de /blog con hero a sangre. .metaHero, dentro
-      de .textoRow, es solo la fecha — sin categoría ni autor, a
-      propósito (entrada.categoria/entrada.autor siguen viviendo en
-      blog.js para BlogTarjeta/otros usos, no se borran) — el mismo
-      sitio que ocuparía "temporada" en la ficha
-      de colección.
-   2) El cuerpo, pensado para repetirse en cualquier post futuro como
-      una secuencia de SECCIONES, cada una "texto, y debajo imágenes"
-      (bloques "parrafo"/"titulo"/"cita" seguidos de un bloque
-      "galeria" a 2/3/4 columnas, o una "imagen" suelta) — el mismo
-      patrón una y otra vez a lo largo del artículo, con la fotografía
-      editorial de Runway como referencia (aire generoso, texto
-      justificado a columna estrecha —max-texto—, fotos con su propio
-      ancho sin recortar): array "bloques" en cada entrada de blog.js,
-      cada bloque decide su propio ancho (el texto siempre a
-      --max-texto, las imágenes/galerías hasta --max-contenido).
+      (HeroPagina con "imagenCubierta", título y fecha; data-navbar-hero
+      para que el Navbar transparente se vuelva sólido al salir de él —
+      ver "esHeroBlog" en app/[locale]/layout.js). El enlace de
+      "volver" va sobre el hero (solo icono). Sin categoría ni autor, a
+      propósito.
+   2) El cuerpo: una secuencia de bloques en el orden en que se escriben
+      en el admin (/admin/blog). El texto siempre a --max-texto; las
+      fotos, hasta --max-contenido, con su propio ancho sin recortar.
 
-   ---------- Tipos de bloque (JSDoc) ----------
-
-   @typedef {Object} BloqueParrafo
-   @property {'parrafo'} tipo
-   @property {{es: string, en: string}} texto
-
-   @typedef {Object} BloqueTitulo - subtítulo de sección (h2) dentro del artículo
-   @property {'titulo'} tipo
-   @property {{es: string, en: string}} texto
-
-   @typedef {Object} BloqueCita - cita textual destacada (serif, --font-editorial)
-   @property {'cita'} tipo
-   @property {{es: string, en: string}} texto
-   @property {{es: string, en: string}} [autor]
-
-   @typedef {Object} BloqueImagen - foto suelta, ancho propio (hasta --max-contenido), con pie opcional
-   @property {'imagen'} tipo
-   @property {string} imagen
-   @property {string} alt
-   @property {{es: string, en: string}} [caption]
-
-   @typedef {Object} ImagenGaleria
-   @property {string} imagen
-   @property {string} alt
-   @property {{es: string, en: string}} [caption]
-
-   @typedef {Object} BloqueGaleria - LA pieza "imágenes debajo del texto" del patrón repetible — cuadrícula de 2, 3 o 4 columnas
-   @property {'galeria'} tipo
-   @property {2 | 3 | 4} columnas
-   @property {ImagenGaleria[]} imagenes
-
-   @typedef {Object} BloqueVideo - MAQUETA VISUAL, sin vídeo real embebido (ver nota en el componente)
-   @property {'video'} tipo
-   @property {{es: string, en: string}} [caption]
-
-   @typedef {BloqueParrafo | BloqueTitulo | BloqueCita | BloqueImagen | BloqueGaleria | BloqueVideo} Bloque
+   ---------- Bloques ----------
+   La forma exacta de cada uno está en src/datos/blog.js:
+     texto      { tipo, texto: { es: [párrafos], en: [párrafos] } }
+     subtitulo  { tipo, texto: { es, en } }
+     foto       { tipo, src, alt, pie: { es, en } }
+     fotos      { tipo, fotos: [{ src, alt, pie }] }  (2 a 4 columnas)
+     cita       { tipo, texto: { es, en }, autor: { es, en } }
+   Los textos respetan los saltos de línea y los espacios escritos en el
+   admin (white-space: pre-wrap en el CSS).
 
    ---------- Uso ----------
-   Ver la entrada "mbfw-madrid-tempore" en blog.js para un ejemplo
-   completo con los seis tipos de bloque, incluida "galeria" repetida
-   varias veces siguiendo el patrón texto → imágenes:
-     <BlogArticulo entrada={entrada} locale={locale} volverHref="/es/blog" volverTexto="Volver al blog" />
+     <BlogArticulo entrada={articulo} locale={locale} volverHref="/es/blog" volverTexto="Volver al blog" />
    ============================================================ */
 
+import { altFoto } from '@/lib/blog';
+import { parrafosEn, textoEn } from '@/lib/previa';
 import HeroPagina from './HeroPagina';
 import styles from './BlogArticulo.module.css';
 
-// Agrupa cada tramo consecutivo de bloques "titulo"/"parrafo" en un
-// único <div> (.seccion) — un "titulo" y sus "parrafo" siguientes
-// forman una sección de texto, no elementos sueltos en .cuerpo. El
-// resto de tipos ("cita"/"imagen"/"galeria"/"video") no se agrupan:
-// cierran la sección abierta y quedan sueltos, tal cual.
+// Agrupa cada tramo seguido de bloques "subtitulo"/"texto" en un único
+// <div> (.seccion): un subtítulo y sus párrafos forman una sección de
+// texto. El resto ("foto", "fotos", "cita") cierra la sección abierta y
+// queda suelto, tal cual.
 function agruparEnSecciones(bloques) {
   const items = [];
   let seccionActual = null;
 
   bloques.forEach((bloque) => {
-    if (bloque.tipo === 'titulo' || bloque.tipo === 'parrafo') {
+    if (bloque.tipo === 'subtitulo' || bloque.tipo === 'texto') {
       if (!seccionActual) {
         seccionActual = { seccion: true, bloques: [] };
         items.push(seccionActual);
@@ -105,59 +57,62 @@ function agruparEnSecciones(bloques) {
   return items;
 }
 
-function BloqueParrafo({ bloque, locale }) {
-  return <p className={styles.parrafo}>{bloque.texto[locale]}</p>;
+// Un bloque "texto" son uno o varios párrafos.
+function BloqueTexto({ bloque, locale }) {
+  return parrafosEn(bloque.texto, locale).map((parrafo, indice) => (
+    // eslint-disable-next-line react/no-array-index-key
+    <p key={indice} className={styles.parrafo}>{parrafo}</p>
+  ));
 }
 
-function BloqueTitulo({ bloque, locale }) {
-  return <h2 className={styles.tituloSeccion}>{bloque.texto[locale]}</h2>;
+// Un subtítulo o una cita todavía vacíos (vista previa del admin) no se pintan.
+function BloqueSubtitulo({ bloque, locale }) {
+  const texto = textoEn(bloque.texto, locale);
+  return texto ? <h2 className={styles.tituloSeccion}>{texto}</h2> : null;
 }
 
 function BloqueCita({ bloque, locale }) {
+  const autor = textoEn(bloque.autor, locale);
+  if (!textoEn(bloque.texto, locale)) return null;
   return (
     <blockquote className={styles.cita}>
-      <p>{bloque.texto[locale]}</p>
-      {bloque.autor && <cite className={styles.citaAutor}>{bloque.autor[locale]}</cite>}
+      <p>{textoEn(bloque.texto, locale)}</p>
+      {autor && <cite className={styles.citaAutor}>{autor}</cite>}
     </blockquote>
   );
 }
 
-function BloqueImagen({ bloque, locale }) {
+function Pie({ foto, locale }) {
+  const pie = textoEn(foto.pie, locale);
+  return pie ? <figcaption className={styles.imagenCaption}>{pie}</figcaption> : null;
+}
+
+// Una foto sin subir todavía (vista previa del admin) no se pinta.
+function BloqueFoto({ bloque, locale }) {
+  if (!bloque.src) return null;
   return (
     <figure className={styles.imagenBloque}>
-      <img src={bloque.imagen} alt={bloque.alt} />
-      {bloque.caption && <figcaption className={styles.imagenCaption}>{bloque.caption[locale]}</figcaption>}
+      <img src={bloque.src} alt={altFoto(bloque, locale)} />
+      <Pie foto={bloque} locale={locale} />
     </figure>
   );
 }
 
-// La pieza "imágenes debajo del texto" del patrón repetible — 2, 3 o
-// 4 columnas (bloque.columnas), cada imagen con su propio pie opcional.
-function BloqueGaleria({ bloque, locale }) {
-  const claseColumnas = styles[`galeria${bloque.columnas}`] || styles.galeria3;
+// Fotos una al lado de otra: tantas columnas como fotos (2 a 4).
+function BloqueFotos({ bloque, locale }) {
+  const fotos = bloque.fotos.filter((foto) => foto.src);
+  if (fotos.length === 0) return null;
+  const claseColumnas = styles[`galeria${fotos.length}`] || styles.galeria3;
 
   return (
     <div className={`${styles.galeria} ${claseColumnas}`}>
-      {bloque.imagenes.map((item, indice) => (
+      {fotos.map((foto, indice) => (
+        // eslint-disable-next-line react/no-array-index-key
         <figure key={indice} className={styles.galeriaItem}>
-          <img src={item.imagen} alt={item.alt} />
-          {item.caption && <figcaption className={styles.imagenCaption}>{item.caption[locale]}</figcaption>}
+          <img src={foto.src} alt={altFoto(foto, locale)} />
+          <Pie foto={foto} locale={locale} />
         </figure>
       ))}
-    </div>
-  );
-}
-
-// MAQUETA VISUAL, sin vídeo real: no hay archivos de vídeo propios
-// para incrustar en el proyecto — un <iframe> real (ej. YouTube/Vimeo)
-// se sustituiría aquí sin tocar el resto de la plantilla.
-function BloqueVideo({ bloque, locale }) {
-  return (
-    <div className={styles.video} aria-hidden="true">
-      <svg width="20" height="24" viewBox="0 0 20 24" fill="none">
-        <path d="M0 0L20 12L0 24V0Z" fill="currentColor" />
-      </svg>
-      {bloque.caption && <p className={styles.videoCaption}>{bloque.caption[locale]}</p>}
     </div>
   );
 }
@@ -175,8 +130,8 @@ function BlogArticulo({ entrada, locale, volverHref, volverTexto }) {
     <article className={styles.pagina}>
       <HeroPagina
         imagen={imagenCubierta}
-        alt={titulo[locale]}
-        titulo={titulo[locale]}
+        alt={textoEn(titulo, locale)}
+        titulo={textoEn(titulo, locale)}
         subtitulo={fechaLegible}
         extra={(
           <a href={volverHref} className={styles.volver} aria-label={volverTexto}>
@@ -191,11 +146,12 @@ function BlogArticulo({ entrada, locale, volverHref, volverTexto }) {
         {agruparEnSecciones(bloques).map((item, indice) => {
           if (item.seccion) {
             return (
+              // eslint-disable-next-line react/no-array-index-key
               <div key={indice} className={styles.seccion}>
                 {item.bloques.map((bloque, i) => (
-                  bloque.tipo === 'titulo'
-                    ? <BloqueTitulo key={i} bloque={bloque} locale={locale} />
-                    : <BloqueParrafo key={i} bloque={bloque} locale={locale} />
+                  bloque.tipo === 'subtitulo'
+                    ? <BloqueSubtitulo key={bloque.id || i} bloque={bloque} locale={locale} />
+                    : <BloqueTexto key={bloque.id || i} bloque={bloque} locale={locale} />
                 ))}
               </div>
             );
@@ -203,13 +159,11 @@ function BlogArticulo({ entrada, locale, volverHref, volverTexto }) {
 
           switch (item.tipo) {
             case 'cita':
-              return <BloqueCita key={indice} bloque={item} locale={locale} />;
-            case 'imagen':
-              return <BloqueImagen key={indice} bloque={item} locale={locale} />;
-            case 'galeria':
-              return <BloqueGaleria key={indice} bloque={item} locale={locale} />;
-            case 'video':
-              return <BloqueVideo key={indice} bloque={item} locale={locale} />;
+              return <BloqueCita key={item.id || indice} bloque={item} locale={locale} />;
+            case 'foto':
+              return <BloqueFoto key={item.id || indice} bloque={item} locale={locale} />;
+            case 'fotos':
+              return <BloqueFotos key={item.id || indice} bloque={item} locale={locale} />;
             default:
               return null;
           }

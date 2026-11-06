@@ -15,7 +15,7 @@ import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { noviaProductos } from '@/components/layout/noviaProductos';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { COLECCIONES } from './[locale]/colecciones-fely-campo/colecciones';
-import { BLOG_ENTRADAS } from './[locale]/blog/blog';
+import { articulosVisibles } from '@/lib/blog';
 
 const RUTAS_PRIVADAS = ['/carrito', '/wishlist', '/mi-cuenta/panel'];
 
@@ -28,7 +28,9 @@ function prioridad(ruta) {
   return 0.7;
 }
 
-function entrada(ruta, prioridadRuta = prioridad(ruta)) {
+// "fecha" (opcional): última modificación conocida (la de un artículo
+// del blog), para que Google sepa qué volver a rastrear.
+function entrada(ruta, prioridadRuta = prioridad(ruta), fecha = undefined) {
   const languages = Object.fromEntries(locales.map((l) => [l, `${SITE_URL}${rutaConLocale(l, ruta)}`]));
   languages['x-default'] = `${SITE_URL}${rutaConLocale(defaultLocale, ruta)}`;
 
@@ -37,6 +39,7 @@ function entrada(ruta, prioridadRuta = prioridad(ruta)) {
     url: `${SITE_URL}${rutaConLocale(locale, ruta)}`,
     changeFrequency: 'monthly',
     priority: prioridadRuta,
+    ...(fecha ? { lastModified: fecha } : {}),
     alternates: { languages },
   }));
 }
@@ -53,12 +56,13 @@ export default function sitemap() {
     ...parametrosCategoria(true).map(({ categoria }) => [`/atelier/fiesta/categoria/${categoria}`, 0.6]),
     ...COLECCIONES.filter((c) => c.slug).map((c) => [`/runways-${c.slug}`, 0.6]),
     // Episodios de podcast: sin ficha propia (enlazan a YouTube).
-    ...BLOG_ENTRADAS.filter((e) => e.tipo !== 'podcast').map((e) => [`/blog/${e.slug}`, 0.6]),
+    // Artículos del blog publicados (los ocultos no), con su fecha.
+    ...articulosVisibles().map((articulo) => [`/blog/${articulo.slug}`, 0.6, articulo.fecha]),
   ];
 
   // Sin duplicados (dos productos con el mismo nombre darían la misma URL).
   const vistas = new Set();
   return [...fijas.map((ruta) => [ruta]), ...dinamicas]
     .filter(([ruta]) => !vistas.has(ruta) && vistas.add(ruta))
-    .flatMap(([ruta, p]) => entrada(ruta, p));
+    .flatMap(([ruta, p, fecha]) => entrada(ruta, p, fecha));
 }

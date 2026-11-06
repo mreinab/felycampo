@@ -953,12 +953,7 @@ export function filasStock() {
 }
 
 // ---------- BLOG ----------
-
-export const blogMock = [
-  { id: 'b1', titulo: 'Detrás de la colección FW27', fecha: '2026-07-20', estado: 'Publicado', categoria: 'Colecciones', imagen: '/img/FW27-HERO.webp' },
-  { id: 'b2', titulo: 'El proceso de un vestido de novia a medida', fecha: '2026-07-05', estado: 'Publicado', categoria: 'Atelier', imagen: '/img/novias-sección-FelyCampo.jpg' },
-  { id: 'b3', titulo: 'Cuidado de tejidos delicados', fecha: '2026-08-01', estado: 'Borrador', categoria: 'Consejos', imagen: '' },
-];
+// Ya no hay datos de ejemplo: /admin/blog usa los reales (lib/blog.js).
 
 
 // ---------- CLIENTES ----------

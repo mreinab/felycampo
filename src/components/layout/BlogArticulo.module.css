@@ -95,6 +95,7 @@
 
 /* ---------- Bloque "parrafo" ---------- */
 .parrafo {
+  white-space: pre-wrap; /* respeta los saltos de línea y espacios escritos en el admin */
   font-size: var(--text-texto); /* 13px, como el resto de textos largos (RunwayDescripcion, /sobre-fely) */
   line-height: var(--leading-base);
   color: var(--color-tinta);
@@ -120,6 +121,7 @@
 }
 
 .cita p {
+  white-space: pre-wrap;
   font-family: var(--font-editorial);
   font-style: italic;
   font-size: var(--text-titulo);

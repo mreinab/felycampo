@@ -18,6 +18,10 @@ import { sinNumeroColeccion } from './nombreColeccion';
 
 export const RUTA_FICHA_FIESTA = '/atelier/fiesta';
 
+// Vista previa de un look desde el admin: la ficha del look con
+// ?previa=fiesta-look (ver atelier/fiesta/[producto]/PreviaFichaFiesta.jsx).
+export const ID_PREVIA_LOOK_FIESTA = 'fiesta-look';
+
 // Número de look sacado de su nombre ("Look 60 – A Walk" → 60). null si
 // el nombre no lleva número (los de Prêt-à-porter).
 export function numeroLook(nombre) {

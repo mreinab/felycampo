@@ -40,16 +40,13 @@ function Figura({ foto, alt, locale }) {
 // Capítulo sobre el grid de 24 columnas: foto principal en una mitad y
 // texto en la otra, alternando de lado ("invertido" en los pares). Fotos
 // extra: una sola va debajo del texto, en su misma columna; dos o más, en
-// filas de dos debajo (una por mitad), igual que la galería.
+// filas de dos debajo (una por mitad; si sobra una, centrada).
 function Capitulo({ capitulo, indice, locale }) {
   const etiqueta = textoEn(capitulo.etiqueta, locale);
   const alt = `Fely Campo — ${etiqueta}`;
   const [principal, ...extras] = capitulo.imagenes;
   const extraJuntoAlTexto = extras.length === 1 ? extras[0] : null;
   const extrasEnFila = extras.length >= 2 ? extras : [];
-  const textoPie = textoEn(capitulo.pie, locale);
-  // Pie compartido: uno solo, debajo de la última de las "imagenes".
-  const pie = textoPie && <p className={styles.pie}>{textoPie}</p>;
 
   return (
     <article
@@ -58,7 +55,6 @@ function Capitulo({ capitulo, indice, locale }) {
     >
       <div className={styles.principal}>
         {principal && <Figura foto={principal} alt={alt} locale={locale} />}
-        {extras.length === 0 && pie}
       </div>
 
       <div className={styles.lado}>
@@ -73,7 +69,6 @@ function Capitulo({ capitulo, indice, locale }) {
         {extraJuntoAlTexto && (
           <div className={styles.extraTexto}>
             <Figura foto={extraJuntoAlTexto} alt={alt} locale={locale} />
-            {pie}
           </div>
         )}
       </div>
@@ -81,15 +76,6 @@ function Capitulo({ capitulo, indice, locale }) {
       {extrasEnFila.length > 0 && (
         <div className={styles.pareja}>
           {extrasEnFila.map((foto) => (
-            <Figura key={foto.src} foto={foto} alt={alt} locale={locale} />
-          ))}
-          {pie && <div className={styles.parejaPie}>{pie}</div>}
-        </div>
-      )}
-
-      {capitulo.galeria.length > 0 && (
-        <div className={styles.pareja}>
-          {capitulo.galeria.map((foto) => (
             <Figura key={foto.src} foto={foto} alt={alt} locale={locale} />
           ))}
         </div>

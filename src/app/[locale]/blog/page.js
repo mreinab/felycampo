@@ -3,7 +3,7 @@
    Hero común (HeroPagina) arriba; debajo, ListadoPodcastBlog: una
    introducción de 80vh ("Podcast & Blog", texto y filtros "Ver todo" /
    "Blog" / "Podcast") y los episodios (BlogTarjetaPodcastDestacado,
-   foto a sangre + play) y artículos (BlogTarjeta) de blog.js, que los
+   foto a sangre + play) y artículos (BlogTarjeta) de lib/blog.js, que los
    filtros muestran u ocultan en la propia página. Los episodios enlazan
    directamente a su vídeo de YouTube (sin ficha propia); los artículos,
    a /blog/[slug] (ver [entrada]/page.js).
@@ -11,7 +11,7 @@
 
 import { getTranslations } from 'next-intl/server';
 import { HeroPagina } from '@/components/layout';
-import { BLOG_ENTRADAS } from './blog';
+import { articulosVisibles, episodiosVisibles } from '@/lib/blog';
 import ListadoPodcastBlog from './ListadoPodcastBlog';
 import styles from './page.module.css';
 import { metadataPagina } from '@/lib/seo';
@@ -35,23 +35,24 @@ export default async function Pagina({ params }) {
     month: 'short',
     year: 'numeric',
   });
-  const aTarjeta = (entrada) => ({
-    href: `/${locale}/blog/${entrada.slug}`,
-    titulo: entrada.titulo[locale],
-    extracto: entrada.resumen[locale],
-    imagen: entrada.imagenCubierta,
-    meta: entrada.tipo === 'podcast' ? entrada.duracion : formatoFecha.format(new Date(entrada.fecha)),
-  });
-  // Episodios: sin ficha propia, la tarjeta enlaza al vídeo de YouTube.
-  // "#" solo si a un episodio le falta la URL en blog.js.
-  const podcasts = BLOG_ENTRADAS
-    .filter((entrada) => entrada.tipo === 'podcast')
-    .map((entrada) => ({ ...aTarjeta(entrada), href: entrada.youtube || '#' }));
-  // Artículos de blog (publicados de nuevo el 2026-11-04).
-  const articulos = BLOG_ENTRADAS
-    .filter((entrada) => entrada.tipo !== 'podcast')
-    .sort((a, b) => b.fecha.localeCompare(a.fecha))
-    .map(aTarjeta);
+  // Datos de lib/blog.js (los mismos que edita /admin/blog), solo los
+  // publicados. Episodios: sin ficha propia, la tarjeta enlaza al vídeo
+  // ("#" solo si a un episodio le faltara el enlace).
+  const podcasts = episodiosVisibles().map((episodio) => ({
+    slug: episodio.slug,
+    href: episodio.enlace || '#',
+    titulo: episodio.titulo[locale] || episodio.titulo.es,
+    imagen: episodio.imagenCubierta,
+    meta: episodio.duracion,
+  }));
+  // Artículos, del más reciente al más antiguo.
+  const articulos = articulosVisibles().map((articulo) => ({
+    href: `/${locale}/blog/${articulo.slug}`,
+    titulo: articulo.titulo[locale] || articulo.titulo.es,
+    extracto: articulo.resumen[locale] || articulo.resumen.es,
+    imagen: articulo.imagenCubierta,
+    meta: formatoFecha.format(new Date(articulo.fecha)),
+  }));
 
   return (
     <>
@@ -70,6 +71,7 @@ export default async function Pagina({ params }) {
     <ListadoPodcastBlog
       podcasts={podcasts}
       articulos={articulos}
+      locale={locale}
       textos={{
         introTitulo: t('introTitulo'),
         introTexto: t('introTexto'),

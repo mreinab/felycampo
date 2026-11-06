@@ -42,6 +42,15 @@
   color: var(--color-gris-500);
 }
 
+/* Migas que llevan de vuelta al listado (artículos y episodios del blog). */
+.migasEnlace {
+  text-decoration: none;
+}
+
+.migasEnlace:hover {
+  color: var(--color-tinta);
+}
+
 .tituloFila {
   display: flex;
   align-items: center;

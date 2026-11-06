@@ -14,12 +14,11 @@
 //     etiqueta    título corto ("El comienzo").
 //     titulo      subtítulo ("13 años. Un camino inesperado.").
 //     parrafos    cuerpo de texto.
-//     imagenes    [{ src, pie }]: la 1.ª va junto al texto; si hay una
-//                 más, debajo del texto; si hay dos o más, en filas de dos
-//                 debajo del capítulo. Mínimo una.
-//     pie         pie compartido por todas las "imagenes" (opcional).
-//     galeria     [{ src, pie }]: más fotos en filas de dos a todo el
-//                 ancho, debajo del capítulo (opcional).
+//     imagenes    [{ src, pie }], de 1 a 6 (lib/sobreFely.js): la 1.ª es
+//                 la principal, junto al texto; si hay una más, va
+//                 debajo del texto; si hay dos o más, todas las demás
+//                 van en filas de dos debajo del capítulo (si sobra
+//                 una, centrada).
 //   cierre        titulo y parrafos antes de la tarjeta del documental.
 //   documental    titulo, texto, imagen y enlace (dirección externa).
 
@@ -64,12 +63,7 @@ export const SOBRE_FELY = {
             "en": ""
           }
         }
-      ],
-      "pie": {
-        "es": "",
-        "en": ""
-      },
-      "galeria": []
+      ]
     },
     {
       "id": "el-primer-vestido",
@@ -97,12 +91,7 @@ export const SOBRE_FELY = {
             "en": "Fely Campo in 1989 at her atelier in Salamanca"
           }
         }
-      ],
-      "pie": {
-        "es": "",
-        "en": ""
-      },
-      "galeria": []
+      ]
     },
     {
       "id": "la-primera-novia",
@@ -133,8 +122,8 @@ export const SOBRE_FELY = {
         {
           "src": "/img/about-felycampo/sobre-fely-campo/fely-campo-sobre-fely-campo-vestido-novia-2.webp",
           "pie": {
-            "es": "",
-            "en": ""
+            "es": "Diseño de novia de Fely Campo de la década de los 80",
+            "en": "A Fely Campo bridal design from the 1980s"
           }
         },
         {
@@ -144,12 +133,7 @@ export const SOBRE_FELY = {
             "en": ""
           }
         }
-      ],
-      "pie": {
-        "es": "Diseño de novia de Fely Campo de la década de los 80",
-        "en": "A Fely Campo bridal design from the 1980s"
-      },
-      "galeria": []
+      ]
     },
     {
       "id": "aprender-el-oficio",
@@ -186,12 +170,7 @@ export const SOBRE_FELY = {
             "en": "Fely Campo at her atelier in 1996"
           }
         }
-      ],
-      "pie": {
-        "es": "",
-        "en": ""
-      },
-      "galeria": []
+      ]
     },
     {
       "id": "nace-la-firma",
@@ -224,16 +203,10 @@ export const SOBRE_FELY = {
         {
           "src": "/img/about-felycampo/sobre-fely-campo/fely-campo-sobre-fely-campo-primeratelier-2.webp",
           "pie": {
-            "es": "",
-            "en": ""
+            "es": "Primera boutique de Fely Campo en Salamanca, 1995",
+            "en": "Fely Campo’s first boutique in Salamanca, 1995"
           }
-        }
-      ],
-      "pie": {
-        "es": "Primera boutique de Fely Campo en Salamanca, 1995",
-        "en": "Fely Campo’s first boutique in Salamanca, 1995"
-      },
-      "galeria": [
+        },
         {
           "src": "/img/about-felycampo/sobre-fely-campo/fely-campo-sobre-fely-campo-gridimages-1-2.webp",
           "pie": {
@@ -294,12 +267,7 @@ export const SOBRE_FELY = {
             "en": "Fely Campo today"
           }
         }
-      ],
-      "pie": {
-        "es": "",
-        "en": ""
-      },
-      "galeria": []
+      ]
     }
   ],
   "cierre": {

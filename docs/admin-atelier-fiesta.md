@@ -12,9 +12,9 @@ El objetivo es que el equipo pueda cambiar el contenido sin programador. Para es
 |---|---|---|
 | Datos | `src/datos/atelierFiesta.js` | Colecciones y looks. **Sustituto provisional de la base de datos.** Generado a partir del catálogo que tenía la web (199 looks publicados, comprobados uno a uno: cero diferencias). |
 | Lógica común | `src/lib/catalogoFiesta.js` | Funciones que usan la web **y** el admin: nombre interno de colección, URL de un look, texto automático, transformación look → producto, validación… |
-| Web | `components/layout/fiestaProductos.js`, `app/[locale]/atelier/fiesta/page.js`, `.../categoria/[categoria]/page.js`, `components/ecommerce/FichaProductoAtelier.jsx`, `lib/atelierProductoSeo.js`, `app/sitemap.js` | Leen de `catalogoFiesta.js`. |
-| Admin (estado) | `components/admin/AtelierFiesta.jsx` | Estado compartido en todo el panel + acciones `guardarColeccion`, `reordenarColecciones`, `guardarLook`, `eliminarLook`. Mantiene al día el submenú "Fiesta" del menú lateral. |
-| Admin (pantallas) | `components/admin/AdminAtelierFiesta.jsx`, `FormularioColeccionFiesta.jsx`, `FormularioLookFiesta.jsx`, `FotosOrdenables.jsx` | Listado de colecciones (reordenable), looks de una colección, formularios. |
+| Web | `components/layout/fiestaProductos.js`, `app/[locale]/atelier/fiesta/page.js`, `.../categoria/[categoria]/page.js`, `components/ecommerce/FichaProductoAtelier.jsx` (+ `FichaAtelierCuerpo.jsx`, lo que se ve), `lib/atelierProductoSeo.js`, `app/sitemap.js` | Leen de `catalogoFiesta.js`. La ficha con `?previa=fiesta-look` pinta el borrador del admin (`.../[producto]/PreviaFichaFiesta.jsx`, sin indexar). |
+| Admin (estado) | `components/admin/AtelierFiesta.jsx` | Estado compartido en todo el panel + acciones `guardarColeccion`, `reordenarColecciones`, `alternarColeccion`, `guardarLook`, `alternarLook`, `eliminarLook`. Mantiene al día el submenú "Fiesta" del menú lateral. |
+| Admin (pantallas) | `components/admin/AdminAtelierFiesta.jsx` | Igual que Blog & Podcast y Vosotras: listados con `ListadoAdmin.jsx` (colecciones reordenables, looks de una colección) y fichas con el editor común `EditorPagina.jsx` (Español | English, Vista previa del look, «Guardar y publicar»). Publicar / ocultar, desde el ojo del listado. |
 
 ## 2. Modelo de datos
 
@@ -35,8 +35,8 @@ Reglas que ya aplica el código y que conviene repetir en la base de datos:
 ## 3. Qué cambiar al conectar la base de datos
 
 1. **Lectura (web):** `obtenerColeccionesFiesta()` en `src/lib/catalogoFiesta.js` debe leer de la base de datos en vez de importar `datos/atelierFiesta.js`. El resto de funciones son puras y siguen valiendo. Si la lectura pasa a ser asíncrona, las páginas que llaman a `coleccionesVisiblesFiesta()` / `productosListadoFiesta()` / `productosFiesta()` / `buscarProductoFiesta()` son Server Components y pueden hacer `await`. `fiestaProductos.js` (export síncrono) se puede sustituir por llamadas directas.
-2. **Escritura (admin):** las cuatro acciones de `AtelierFiesta.jsx` (`guardarColeccion`, `reordenarColecciones`, `guardarLook`, `eliminarLook`) deben llamar a la API y, si va bien, actualizar el estado. Validar también en el servidor con `validarColeccionFiesta` / `validarLookFiesta`.
-3. **Fotos:** hoy `FotosOrdenables.jsx` comprime en el navegador (`comprimirImagen`, JPEG máx. 2000 px) y guarda una URL temporal `blob:`. Hay que subir el archivo al almacén, convertir a WebP y guardar la ruta definitiva, con un nombre SEO como el de las fotos actuales (`fely-campo-coleccion-fiesta-<coleccion>-...webp`).
+2. **Escritura (admin):** las acciones de `AtelierFiesta.jsx` (`guardarColeccion`, `reordenarColecciones`, `alternarColeccion`, `guardarLook`, `alternarLook`, `eliminarLook`) deben llamar a la API y, si va bien, actualizar el estado. Validar también en el servidor con `validarColeccionFiesta` / `validarLookFiesta`.
+3. **Fotos:** hoy `GaleriaEditable.jsx` comprime en el navegador (`comprimirImagen`, JPEG máx. 2000 px) y guarda una URL temporal `blob:`. Hay que subir el archivo al almacén, convertir a WebP y guardar la ruta definitiva, con un nombre SEO como el de las fotos actuales (`fely-campo-coleccion-fiesta-<coleccion>-...webp`).
 4. **Publicar al momento:** tras guardar, revalidar `/[locale]/atelier/fiesta`, la ficha del look (y la URL anterior si cambió) y `/sitemap.xml` (`revalidatePath`).
 5. **Migración:** cargar `src/datos/atelierFiesta.js` en la base de datos tal cual (el orden de las colecciones es su `posicion`; los looks se ordenan solos por número).
 6. **Acceso:** el panel no tiene inicio de sesión. Es imprescindible antes de que el admin pueda publicar (el botón "Cerrar sesión" de la barra superior ya está, sin lógica).

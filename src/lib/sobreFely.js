@@ -13,18 +13,20 @@ import { validarCampos } from './camposPagina';
 export const ID_PAGINA_SOBRE_FELY = 'sobre-fely';
 export const EDITOR_SOBRE_FELY = '/admin/paginas/sobre-fely';
 
+// Máximo de fotos de un capítulo (la principal y las que van en filas de
+// dos), a petición, para que el capítulo no se alargue sin fin.
+export const MAXIMO_FOTOS_CAPITULO = 6;
+
 export function obtenerSobreFely() {
   return SOBRE_FELY;
 }
 
 // Campos opcionales que pueden quedar vacíos a propósito (para que la
-// vista previa no los rellene con lo publicado): pies de foto.
-export function opcionalesSobreFely(datos = SOBRE_FELY) {
-  const rutas = [];
-  datos.capitulos.forEach((_, indice) => {
-    rutas.push(`capitulos.${indice}.pie.es`, `capitulos.${indice}.pie.en`);
-  });
-  return rutas;
+// vista previa no los rellene con lo publicado). Hoy ninguno: los pies
+// de foto van dentro de las listas de fotos, que la vista previa respeta
+// tal cual. Se mantiene para que las tres páginas se usen igual.
+export function opcionalesSobreFely() {
+  return [];
 }
 
 // Nombre corto de un capítulo para los avisos: «El comienzo».
@@ -58,13 +60,10 @@ export function camposSobreFely(datos) {
         bloque, nombre: `el texto del capítulo ${de}`, tipo: 'texto', valor: capitulo.parrafos, requerido: true,
       },
       {
-        bloque, nombre: `las fotos del capítulo ${de}`, tipo: 'lista', valor: capitulo.imagenes, minimo: 1,
-      },
-      {
-        bloque, nombre: `el pie de fotos del capítulo ${de}`, tipo: 'texto', valor: capitulo.pie, requerido: false,
+        bloque, nombre: `las fotos del capítulo ${de}`, tipo: 'lista', valor: capitulo.imagenes, minimo: 1, maximo: MAXIMO_FOTOS_CAPITULO,
       },
     );
-    [...capitulo.imagenes, ...capitulo.galeria].forEach((foto, posicion) => {
+    capitulo.imagenes.forEach((foto, posicion) => {
       campos.push({
         bloque, nombre: `el pie de la foto ${posicion + 1} del capítulo ${de}`, tipo: 'texto', valor: foto.pie, requerido: false,
       });

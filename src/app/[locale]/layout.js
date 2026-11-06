@@ -19,7 +19,6 @@ import { SITE_URL, SITIO_INDEXABLE } from '@/lib/seo';
 import { CarritoProvider } from '@/context/CarritoContext';
 import { MiCuentaProvider } from '@/context/MiCuentaContext';
 import { locales } from '@/i18n';
-import { entradaPorSlug } from './blog/blog';
 
 // Páginas con su propio ProductHero (ver
 // src/components/layout/ProductHero.jsx) — nacen con el Navbar
@@ -157,14 +156,11 @@ export default async function RootLayout({ children, params }) {
   // Ficha de entrada de blog (/blog/[slug], ruta dinámica — antes /podcast,
   // ver blog/page.js; igual
   // que esFichaRunway, no puede vivir en RUTAS_CON_PRODUCT_HERO):
-  // "articulo" y "podcast" llevan foto a sangre con data-navbar-hero
-  // (ver BlogArticulo.jsx/BlogPodcast.jsx) — "campana" no (gestiona su
-  // propio Navbar sólido con un offset interno, ver BlogCampana.jsx),
-  // así que hace falta mirar el dato real de blog.js, no solo el
-  // prefijo de la URL.
-  const matchBlog = rutaSinLocale.match(/^\/blog\/([^/]+)$/);
-  const tipoBlog = matchBlog && entradaPorSlug(matchBlog[1])?.tipo;
-  const esHeroBlog = tipoBlog === 'articulo' || tipoBlog === 'podcast';
+  // /blog/<slug> es siempre un artículo (BlogArticulo, foto a sangre con
+  // data-navbar-hero): lo que no lo es (episodios, slugs que no existen,
+  // artículos ocultos) redirige al listado. También vale para la vista
+  // previa de un artículo nuevo, que todavía no está en los datos.
+  const esHeroBlog = /^\/blog\/[^/]+$/.test(rutaSinLocale);
 
   // /pret-a-porter (solo la página principal, no sus categorías ni
   // fichas): hero sin velo y con texto en tinta (ver pret-a-porter/

@@ -24,6 +24,10 @@
   color: var(--color-gris-500);
 }
 
+.recuentoDeMas {
+  color: var(--color-rosa-oscuro);
+}
+
 .anadirTexto {
   display: inline-flex;
   align-items: center;
@@ -40,12 +44,30 @@
   cursor: pointer;
 }
 
+.anadirTexto:disabled {
+  color: var(--color-gris-400);
+  text-decoration: none;
+  cursor: default;
+}
+
 .fila {
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-3);
   overflow-x: auto;
   padding-bottom: var(--spacing-2);
+}
+
+/* Con máximo de fotos: varias filas en vez de desplazarse, para que la
+   caja de «Añadir» se vea siempre. La lista de DragList se "disuelve" y
+   sus fotos pasan a ser hijas directas de la fila. */
+.filaEnVarias {
+  flex-wrap: wrap;
+  overflow-x: visible;
+}
+
+.filaEnVarias > div {
+  display: contents;
 }
 
 .foto {

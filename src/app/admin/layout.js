@@ -12,6 +12,7 @@ import { Suspense } from 'react';
 import '@/styles/global.css';
 import {
   AdminSidebar, AdminMarca, AdminTopbar, AdminContenido, ToastProvider, CategoriasProvider, AtelierFiestaProvider, PaginasProvider,
+  BlogProvider, VosotrasProvider,
 } from '@/components/admin';
 import styles from './layout.module.css';
 
@@ -42,6 +43,8 @@ export default function AdminLayout({ children }) {
               "Fiesta" del menú lateral (ver AtelierFiesta.jsx). */}
           <AtelierFiestaProvider>
           <PaginasProvider>
+          <BlogProvider>
+          <VosotrasProvider>
           <ToastProvider>
             <div className={styles.shell}>
               <div className={styles.topRow}>
@@ -56,6 +59,8 @@ export default function AdminLayout({ children }) {
               </div>
             </div>
           </ToastProvider>
+          </VosotrasProvider>
+          </BlogProvider>
           </PaginasProvider>
           </AtelierFiestaProvider>
         </CategoriasProvider>
