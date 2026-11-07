@@ -53,14 +53,22 @@
   min-height: 0;
 }
 
+/* El área de trabajo ocupa siempre todo el ancho que deja el menú (sin
+   franja vacía a la derecha en pantallas grandes). Lo de dentro crece con
+   ella hasta un tope de 2400px, para que en monitores ultrapanorámicos
+   (3440px) las filas y los campos no queden absurdamente largos. */
 .contenido {
   flex: 1;
   padding: var(--spacing-6);
-  max-width: 1800px;
   width: 100%;
+  min-width: 0;
   overflow-y: auto;
   background: var(--color-fondo);
   border-left: var(--border-thin) solid var(--admin-borde);
+}
+
+.contenido > * {
+  max-width: 2400px;
 }
 
 /* Impresión (ej. "Imprimir" en la ficha de una cita): solo el contenido

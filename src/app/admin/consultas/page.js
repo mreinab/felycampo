@@ -18,7 +18,8 @@
 import { Suspense, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { PageHeader, TablaAdmin, EstadoBadge, FiltroBar, FiltroSelector } from '@/components/admin';
-import { Boton, Input } from '@/components/ui';
+import { BotonFila } from '@/components/admin/ListadoAdmin';
+import { Input } from '@/components/ui';
 import { citasMock, ESTADOS_CITA } from '@/components/admin/mockData';
 import { fechaCorta, IDIOMAS_CITA } from './citasFormato';
 import BanderaIdioma from './BanderaIdioma';
@@ -95,7 +96,7 @@ function CitasContenido() {
         ]}
         filas={filtradas}
         hrefFila={(c) => `/admin/consultas/${c.id}`}
-        renderAcciones={(c) => <Boton variante="texto" href={`/admin/consultas/${c.id}`}>Ver</Boton>}
+        renderAcciones={(c) => <BotonFila href={`/admin/consultas/${c.id}`}>Ver</BotonFila>}
       />
     </div>
   );

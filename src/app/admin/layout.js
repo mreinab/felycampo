@@ -12,7 +12,7 @@ import { Suspense } from 'react';
 import '@/styles/global.css';
 import {
   AdminSidebar, AdminMarca, AdminTopbar, AdminContenido, ToastProvider, CategoriasProvider, AtelierFiestaProvider, PaginasProvider,
-  BlogProvider, VosotrasProvider, AtelierNoviasProvider, RunwayProvider,
+  BlogProvider, VosotrasProvider, AtelierNoviasProvider, RunwayProvider, PretAPorterProvider, PuntosVentaProvider,
 } from '@/components/admin';
 import styles from './layout.module.css';
 
@@ -44,9 +44,11 @@ export default function AdminLayout({ children }) {
           <AtelierFiestaProvider>
           <AtelierNoviasProvider>
           <RunwayProvider>
+          <PretAPorterProvider>
           <PaginasProvider>
           <BlogProvider>
           <VosotrasProvider>
+          <PuntosVentaProvider>
           <ToastProvider>
             <div className={styles.shell}>
               <div className={styles.topRow}>
@@ -61,9 +63,11 @@ export default function AdminLayout({ children }) {
               </div>
             </div>
           </ToastProvider>
+          </PuntosVentaProvider>
           </VosotrasProvider>
           </BlogProvider>
           </PaginasProvider>
+          </PretAPorterProvider>
           </RunwayProvider>
           </AtelierNoviasProvider>
           </AtelierFiestaProvider>

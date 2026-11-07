@@ -3,7 +3,7 @@
 /* ============================================================
    PÁGINAS EDITABLES — estado del admin — Fely Campo
    El contenido publicado de las páginas que se editan con EditorPagina
-   (inicio, Sobre Fely, Talleres) mientras se trabaja en el admin. Parte
+   (inicio, Sobre Fely, Talleres, los ateliers…) mientras se trabaja en el admin. Parte
    de los mismos datos que la web (lib/landing.js, lib/sobreFely.js,
    lib/talleres.js) y vive en el layout del panel, así que lo publicado
    se mantiene al moverse por el admin. Sin base de datos todavía: se
@@ -18,6 +18,10 @@ import {
 import { obtenerLanding, PARAMETRO_PREVIA_LANDING } from '@/lib/landing';
 import { ID_PAGINA_SOBRE_FELY, obtenerSobreFely } from '@/lib/sobreFely';
 import { ID_PAGINA_TALLERES, obtenerTalleres } from '@/lib/talleres';
+import {
+  ID_PAGINA_FIESTA, ID_PAGINA_NOVIAS, ID_PAGINA_PRET_A_PORTER, obtenerEditorialFiesta, obtenerEditorialNovias, obtenerEditorialPretAPorter,
+} from '@/lib/atelierEditorial';
+import { idPaginaSede, obtenerSedes } from '@/lib/ateliers';
 
 const PaginasContext = createContext(null);
 
@@ -27,6 +31,11 @@ function PaginasProvider({ children }) {
     [PARAMETRO_PREVIA_LANDING]: obtenerLanding(),
     [ID_PAGINA_SOBRE_FELY]: obtenerSobreFely(),
     [ID_PAGINA_TALLERES]: obtenerTalleres(),
+    [ID_PAGINA_NOVIAS]: obtenerEditorialNovias(),
+    [ID_PAGINA_FIESTA]: obtenerEditorialFiesta(),
+    [ID_PAGINA_PRET_A_PORTER]: obtenerEditorialPretAPorter(),
+    // Los 3 ateliers (sede-salamanca, sede-madrid, sede-oviedo).
+    ...Object.fromEntries(obtenerSedes().map((sede) => [idPaginaSede(sede.id), sede])),
   }));
 
   const guardar = useCallback((id, datos) => {

@@ -82,7 +82,7 @@ function Listado({ pestana }) {
           ? `${lista.length} reseñas · ${visibles} en la web · salen entre las fotos de Invitadas, una cada dos filas, en este orden · arrastra para cambiarlo`
           : `${lista.length} looks · ${visibles} en la web · arrastra para cambiar el orden en que salen`}
       >
-        <Boton variante="contorno" href={WEB}>
+        <Boton variante="contorno" nuevaPestana href={WEB}>
           <ExternalLink size={14} aria-hidden="true" /> Ver en la web
         </Boton>
         <Boton variante="solido" href={esResenas ? `${BASE}?resena=${NUEVO}` : `${BASE}?look=${NUEVO}&pestana=${pestana}`}>

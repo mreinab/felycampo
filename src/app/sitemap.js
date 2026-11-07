@@ -15,6 +15,7 @@ import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { noviaProductos } from '@/components/layout/noviaProductos';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { coleccionesVisiblesRunway } from '@/lib/runway';
+import { productosListadoNovias } from '@/lib/catalogoNovias';
 import { articulosVisibles } from '@/lib/blog';
 
 const RUTAS_PRIVADAS = ['/carrito', '/wishlist', '/mi-cuenta/panel'];
@@ -52,7 +53,11 @@ export default function sitemap() {
     ...tiendaProductos.map((p) => [`/pret-a-porter/${slugify(p.nombre)}`, 0.6]),
     ...noviaProductos.map((p) => [`/atelier/novias/${slugify(p.nombre)}`, 0.5]),
     ...fiestaProductos.map((p) => [`/atelier/fiesta/${slugify(p.nombre)}`, 0.5]),
-    ...parametrosCategoria(false).map(({ categoria }) => [`/atelier/novias/categoria/${categoria}`, 0.6]),
+    // Categorías de Novias: solo si hay alguna colección de Novias publicada
+    // (hoy ninguna, a petición; ver datos/atelierNovias.js).
+    ...(productosListadoNovias().length > 0
+      ? parametrosCategoria(false).map(({ categoria }) => [`/atelier/novias/categoria/${categoria}`, 0.6])
+      : []),
     ...parametrosCategoria(true).map(({ categoria }) => [`/atelier/fiesta/categoria/${categoria}`, 0.6]),
     ...coleccionesVisiblesRunway().map((c) => [`/runways-${c.slug}`, 0.6]),
     // Episodios de podcast: sin ficha propia (enlazan a YouTube).

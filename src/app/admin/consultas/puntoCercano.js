@@ -9,7 +9,9 @@
 // pide como máximo 1 petición por segundo: aquí hay una por ficha abierta
 // (y se guarda en memoria para no repetirla al volver a la misma ficha).
 
-import { PUNTOS_VENTA } from '@/components/layout/puntosVenta';
+import { obtenerPuntosVenta } from '@/lib/puntosVenta';
+
+const PUNTOS_VENTA = obtenerPuntosVenta();
 
 const NOMINATIM = 'https://nominatim.openstreetmap.org/search';
 const cache = new Map();

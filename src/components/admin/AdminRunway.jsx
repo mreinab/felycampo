@@ -57,7 +57,7 @@ function Listado() {
         titulo="Runway"
         subtitulo={`${colecciones.length} colecciones de pasarela · ${publicadas} en la web · arrastra para cambiar el orden en que salen`}
       >
-        <Boton variante="contorno" href="/es/colecciones-fely-campo">
+        <Boton variante="contorno" nuevaPestana href="/es/colecciones-fely-campo">
           <ExternalLink size={14} aria-hidden="true" /> Ver en la web
         </Boton>
         <Boton variante="solido" href={`${BASE}?categoria=${SLUG_NUEVA_RUNWAY}`}>
@@ -126,7 +126,7 @@ const BLOQUES = [
     id: 'looks', nombre: 'Looks', resumen: 'Una foto por look', descripcion: 'Una foto por look, en el orden del desfile («Look 1, 2…»). Al pulsar una, se abre en grande con su texto, si lo tiene.', datos: (d) => d.looks,
   },
   {
-    id: 'video', nombre: 'Vídeo del desfile', resumen: 'Al final', descripcion: 'Al final de la página: un vídeo propio o, si no hay, una foto que lleva al desfile en YouTube.', datos: (d) => [d.video, d.videoEnlace],
+    id: 'video', nombre: 'Vídeo del desfile', resumen: 'Al final', descripcion: 'Al final de la página: una foto que lleva al desfile en YouTube. Mejor enlazar el vídeo que subirlo.', datos: (d) => [d.video, d.videoEnlace],
   },
 ];
 
@@ -188,7 +188,7 @@ function EditarColeccion({ id }) {
           );
         }
         if (bloque.id === 'portada') {
-          return <div className={styles.portadaColeccion}>{h.medio(['portada'], { etiqueta: 'Portada', detalle: 'Vertical', proporcion: '3 / 4' })}</div>;
+          return <div className={styles.portadaHorizontal}>{h.medio(['portada'], { etiqueta: 'Portada', detalle: 'Horizontal', proporcion: '16 / 9' })}</div>;
         }
         if (bloque.id === 'descripcion') {
           return (
@@ -203,42 +203,53 @@ function EditarColeccion({ id }) {
             </div>
           );
         }
-        if (bloque.id === 'backstage') return h.galeria(['backstage'], { textoAnadir: 'Añadir fotos' });
+        if (bloque.id === 'backstage') return h.galeria(['backstage'], { textoAnadir: 'Añadir fotos', columnas: 4 });
         if (bloque.id === 'looks') {
           return h.galeria(['looks'], {
-            conPie: true, papeles: (indice) => `Look ${indice + 1}`, textoPie: 'Texto del look', textoAnadir: 'Añadir looks',
+            conPie: true, papeles: (indice) => `Look ${indice + 1}`, textoPie: 'Texto del look', textoAnadir: 'Añadir looks', columnas: 4,
           });
         }
-        // Vídeo del desfile
+        // Vídeo del desfile: primero el enlace a YouTube (lo recomendado);
+        // el vídeo propio queda debajo como segunda opción, más discreta
+        // (pesa mucho y ralentiza la web).
         return (
           <div className={editorStyles.columnaTexto}>
-            <div className={styles.portadaColeccion}>
-              {h.medio(['video'], {
-                etiqueta: 'Vídeo propio', tipo: 'video', proporcion: '16 / 9', opcional: true,
-              })}
-            </div>
-            {h.borrador.video ? (
-              <p className={styles.ayuda}>Con vídeo propio, el enlace a YouTube no se usa. Para usar el enlace, quita el vídeo.</p>
-            ) : (
-              <>
-                {h.url(['videoEnlace', 'href'], { etiqueta: 'Enlace al desfile', ayuda: 'La dirección del vídeo en YouTube, empezando por https://' })}
-                <div className={editorStyles.medioYCampos}>
-                  {h.medio(['videoEnlace', 'imagen'], {
-                    etiqueta: 'Foto del enlace', detalle: 'Horizontal', proporcion: '16 / 9', opcional: true,
-                  })}
-                  <div className={editorStyles.fichaCampos}>
-                    <CampoLinea
-                      etiqueta="Título"
-                      opcional
-                      valor={h.borrador.videoEnlace.titulo}
-                      placeholder="Dreaming SS26 - Desfile"
-                      onChange={(titulo) => h.cambiar(['videoEnlace', 'titulo'], titulo)}
-                    />
-                    {h.texto(['videoEnlace', 'meta'], { etiqueta: 'Texto bajo el título', opcional: true, largoRecomendado: 50 })}
-                  </div>
-                </div>
-              </>
+            {h.borrador.video && (
+              <p className={styles.aviso}>
+                Esta colección tiene un vídeo propio (abajo): mientras esté, se enseña ese vídeo y no el enlace.
+                Para usar el enlace a YouTube, quita el vídeo.
+              </p>
             )}
+            {h.url(['videoEnlace', 'href'], { etiqueta: 'Enlace al desfile en YouTube', ayuda: 'La dirección del vídeo, empezando por https://', opcional: true })}
+            <div className={editorStyles.medioYCampos}>
+              {h.medio(['videoEnlace', 'imagen'], {
+                etiqueta: 'Foto del enlace', detalle: 'Horizontal', proporcion: '16 / 9', opcional: true,
+              })}
+              <div className={editorStyles.fichaCampos}>
+                <CampoLinea
+                  etiqueta="Título"
+                  opcional
+                  valor={h.borrador.videoEnlace.titulo}
+                  placeholder="Dreaming SS26 - Desfile"
+                  onChange={(titulo) => h.cambiar(['videoEnlace', 'titulo'], titulo)}
+                />
+                {h.texto(['videoEnlace', 'meta'], { etiqueta: 'Texto bajo el título', opcional: true, largoRecomendado: 50 })}
+              </div>
+            </div>
+
+            <div className={editorStyles.division} />
+
+            <div className={styles.videoPropio}>
+              <p className={styles.videoPropioTitulo}>Otra opción: subir el vídeo (no recomendado)</p>
+              <p className={styles.ayuda}>
+                Un vídeo subido pesa mucho y hace que la página tarde en cargar. Mejor súbelo a YouTube y pon aquí arriba el enlace.
+              </p>
+              <div className={styles.portadaColeccion}>
+                {h.medio(['video'], {
+                  etiqueta: 'Vídeo propio', tipo: 'video', proporcion: '16 / 9', opcional: true,
+                })}
+              </div>
+            </div>
           </div>
         );
       }}

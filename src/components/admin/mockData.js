@@ -5,8 +5,10 @@
 // panel se vea coherente con la web, no con placeholders genéricos.
 
 import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
-import { noviaProductos } from '@/components/layout/noviaProductos';
 import { categoriasAdminFiesta, obtenerColeccionesFiesta } from '@/lib/catalogoFiesta';
+import { categoriasAdminNovias, obtenerColeccionesNovias } from '@/lib/catalogoNovias';
+import { categoriasAdminPretAPorter } from '@/lib/pretAPorter';
+import { categoriasAdminRunway } from '@/lib/runway';
 
 // ---------- PRODUCTOS ----------
 // tipo: 'pret-a-porter' | 'atelier' | 'archivo'
@@ -803,113 +805,20 @@ export function codigoTemporada(temporada) {
   return `${estacion === 'Otoño-Invierno' ? 'AW' : 'SS'}${anioFinal}`;
 }
 
-// Looks de "La Colección" (cat11, FW27) — únicamente imágenes, el resto
-// de datos de cada look (nombre real, descripción, colores, telas) los
-// completa el admin a mano desde FormularioLook. 34 fotos en
-// public/img/collections/runway/FW27-lacoleccion (FelyCampo_01..34.webp),
-// una por look, en orden.
-const looksLaColeccion = Array.from({ length: 34 }, (_, i) => ({
-  nombre: `Look ${i + 1}`,
-  imagenes: [`/img/collections/runway/FW27-lacoleccion/FelyCampo_${String(i + 1).padStart(2, '0')}.webp`],
-}));
-
-
-// Looks de las 6 colecciones de Novia — a diferencia de looksLaColeccion
-// (tecleados a mano aquí mismo), reutilizan tal cual noviaProductos.js, el
-// mismo catálogo real que ya enseña /atelier/novias: filtra su lista plana
-// por "coleccion" y se queda con nombre/sku/imagenes. (Fiesta ya no pasa
-// por aquí: ver categoriasMock.fiesta más abajo.)
-function looksDeColeccion(productos, nombreColeccion) {
-  return productos
-    .filter((producto) => producto.coleccion === nombreColeccion)
-    .map(({ nombre, sku, imagenes }) => ({ nombre, sku, imagenes }));
-}
-
-const looksBride27 = looksDeColeccion(noviaProductos, 'Bride 27');
-const looksME = looksDeColeccion(noviaProductos, 'ME');
-const looksBambuNovia = looksDeColeccion(noviaProductos, 'Bambú Novia');
-const looksSaviaNovia = looksDeColeccion(noviaProductos, 'Savia Novia');
-const looksInside = looksDeColeccion(noviaProductos, 'Inside');
-const looksIntrospeccion = looksDeColeccion(noviaProductos, 'Introspección');
+// (Los looks de ejemplo de Runway y Novias que había aquí ya no hacen
+// falta: el menú sale de los datos reales, ver categoriasMock.)
 
 export const categoriasMock = {
-  'pret-a-porter': [
-    { id: 'cat7', nombre: 'Tops y Camisas', visible: true, orden: 1 },
-    { id: 'cat8', nombre: 'Chaquetas y Abrigos', visible: true, orden: 2 },
-    { id: 'cat2', nombre: 'Faldas', visible: true, orden: 3 },
-    { id: 'cat36', nombre: 'Pantalones', visible: true, orden: 4 },
-    { id: 'cat1', nombre: 'Vestidos', visible: true, orden: 5 },
-  ],
+  // Las 5 categorías reales (lib/pretAPorter.js), igual que PretAPorter.jsx.
+  'pret-a-porter': categoriasAdminPretAPorter(),
   atelier: [
     { id: 'cat3', nombre: 'Novias', visible: true, orden: 1 },
     { id: 'cat4', nombre: 'Fiesta', visible: true, orden: 2 },
   ],
-  // Cada colección de pasarela es una "categoría" fija de Runway (no
-  // añadible/reordenable desde /admin/categorias, igual que antes) —
-  // sustituye al antiguo par genérico Runway/Colecciones. `temporada` es
-  // solo para mostrar (p.ej. tarjeta/subtítulo), no participa en filtros.
-  // `nombre` en mayúscula-minúscula (no todo mayúsculas) — mismo criterio
-  // de capitalización que el resto de nombres del mock. `numeroLooks: 12`
-  // en las 25 colecciones de archivo (Runway/Novia/Fiesta) para que todas
-  // tengan la misma estructura de rejilla de looks que una creada a mano
-  // desde el modal — sin `looks` (ninguna tiene fotos/nombres/descripción
-  // guardados todavía, todos los huecos empiezan vacíos "Añadir imágenes").
-  archivo: [
-    {
-      id: 'cat11', nombre: 'La Colección', temporada: 'Otoño-Invierno 26/27', visible: true, orden: 1, fija: true, numeroLooks: 34, looks: looksLaColeccion,
-    },
-    {
-      id: 'cat12', nombre: 'Dreaming', temporada: 'Primavera-Verano 26', visible: true, orden: 2, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat13', nombre: 'Self World', temporada: 'Otoño-Invierno 25/26', visible: true, orden: 3, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat14', nombre: 'Lei Zu', temporada: 'Primavera-Verano 25', visible: true, orden: 4, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat15', nombre: 'The Way Here', temporada: 'Otoño-Invierno 24/25', visible: true, orden: 5, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat16', nombre: 'Zigurat', temporada: 'Primavera-Verano 24', visible: true, orden: 6, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat17', nombre: 'Tempore', temporada: 'Otoño-Invierno 23/24', visible: true, orden: 7, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat18', nombre: 'Nagare', temporada: 'Primavera-Verano 23', visible: true, orden: 8, fija: true, numeroLooks: 12,
-    },
-    {
-      id: 'cat19', nombre: 'Diafonía', temporada: 'Otoño-Invierno 22/23', visible: true, orden: 9, fija: true, numeroLooks: 12,
-    },
-  ],
-  // Archivo de colecciones de Novia — mismo criterio que `archivo` (fija,
-  // sin reordenar/añadir desde la UI), pero sin `temporada`: estos
-  // nombres no siguen el patrón limpio "Estación Año" de Runway, así que
-  // no llevan badge AW/SS. `numeroLooks`/`looks` ya no es el 12 fijo de
-  // antes (cuadrícula vacía de "Añadir imágenes") — usa el recuento y las
-  // fotos reales de noviaProductos.js (ver looksDeColeccion arriba), así
-  // coincide con lo que ya enseña /atelier/novias.
-  novia: [
-    {
-      id: 'cat20', nombre: 'Bride 27', visible: true, orden: 1, fija: true, numeroLooks: looksBride27.length, looks: looksBride27,
-    },
-    {
-      id: 'cat21', nombre: 'ME', visible: true, orden: 2, fija: true, numeroLooks: looksME.length, looks: looksME,
-    },
-    {
-      id: 'cat22', nombre: 'Bambú Novia', visible: true, orden: 3, fija: true, numeroLooks: looksBambuNovia.length, looks: looksBambuNovia,
-    },
-    {
-      id: 'cat23', nombre: 'Savia Novia', visible: true, orden: 4, fija: true, numeroLooks: looksSaviaNovia.length, looks: looksSaviaNovia,
-    },
-    {
-      id: 'cat24', nombre: 'Inside', visible: true, orden: 5, fija: true, numeroLooks: looksInside.length, looks: looksInside,
-    },
-    {
-      id: 'cat25', nombre: 'Introspección', visible: true, orden: 6, fija: true, numeroLooks: looksIntrospeccion.length, looks: looksIntrospeccion,
-    },
-  ],
+  // Colecciones de pasarela reales (lib/runway.js), igual que Runway.jsx.
+  archivo: categoriasAdminRunway(),
+  // Colecciones de Novias reales (lib/catalogoNovias.js), igual que AtelierNovias.jsx.
+  novia: categoriasAdminNovias(obtenerColeccionesNovias()),
   // Colecciones de Fiesta: las reales, de src/datos/atelierFiesta.js (las
   // mismas que enseña /atelier/fiesta). AtelierFiesta.jsx las mantiene al
   // día mientras se editan en /admin/colecciones/fiesta.

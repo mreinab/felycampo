@@ -1,12 +1,12 @@
 /* Datos estructurados (JSON-LD, schema.org) — auditoría SEO M2.
    Un generador por tipo; las páginas los pintan con <JsonLd datos={...} />
    (components/ui/JsonLd.jsx). Todo sale de los mismos datos que se ven en
-   la página (ubicaciones.js, catálogos, seoTextos), para que el JSON-LD
+   la página (lib/ateliers.js, catálogos, seoTextos), para que el JSON-LD
    nunca contradiga lo visible — Google penaliza esa discrepancia.
    - organizacion(): Organization (home) — logo y redes del footer.
    - sitioWeb(): WebSite (home).
    - tiendaAtelier(): ClothingStore por atelier — dirección y teléfono de
-     ubicaciones.js, idénticos a los de la ficha y /visita-fely-campo.
+     lib/ateliers.js, idénticos a los de la ficha y /visita-fely-campo.
    - producto(): Product SIN "offers": la web no muestra precios ni
      tallas (decisión del cliente), así que no se declara precio ni
      disponibilidad. Válido como schema; sin offers no opta a resultado
@@ -54,7 +54,7 @@ export function sitioWeb({ locale }) {
   };
 }
 
-// ubicacion: entrada de visita-fely-campo/ubicaciones.js —
+// ubicacion: ubicacionDe(sede) de lib/ateliers.js —
 // direccion: ['C/ Laguna Negra 17-19', '37008 Salamanca'], telefonos: [...].
 export function tiendaAtelier({ ubicacion, nombre, url, imagen }) {
   const [calle, ...resto] = ubicacion.direccion;

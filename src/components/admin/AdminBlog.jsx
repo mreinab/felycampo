@@ -68,7 +68,7 @@ function Listado({ tipo }) {
           ? `${total} episodios · ${visibles} en la web · arrastra para cambiar el orden en que salen`
           : `${total} artículos · ${visibles} en la web · del más reciente al más antiguo, como en la web`}
       >
-        <Boton variante="contorno" href="/es/blog">
+        <Boton variante="contorno" nuevaPestana href="/es/blog">
           <ExternalLink size={14} aria-hidden="true" /> Ver el blog
         </Boton>
         <Boton variante="solido" href={esPodcast ? `${BASE}?episodio=${SLUG_NUEVO}` : `${BASE}?articulo=${SLUG_NUEVO}`}>

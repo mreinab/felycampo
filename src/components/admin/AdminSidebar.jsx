@@ -19,7 +19,6 @@ import {
   Home,
   Newspaper,
   ChevronDown,
-  Scissors,
   Archive,
   Heart,
   PartyPopper,
@@ -30,8 +29,11 @@ import {
   LayoutTemplate,
   BookOpen,
   Spool,
+  Shirt,
+  Store,
+  MapPin,
   // Iconos de las secciones ocultas (GRUPOS_OCULTOS), para cuando vuelvan:
-  // Palette, Star, Package, Shirt, Layers, Boxes, Users, BarChart3,
+  // Palette, Star, Package, Layers, Boxes, Users, BarChart3,
   // Settings, SwatchBook,
 } from 'lucide-react';
 import styles from './AdminSidebar.module.css';
@@ -40,9 +42,9 @@ import styles from './AdminSidebar.module.css';
 // formularios reales (cita, solicitud de atelier, newsletter), las
 // fotos/reseñas de /atelier/vosotras y el contenido que se ve en la web
 // (colecciones de pasarela, Novia, Fiesta, productos de Atelier y
-// Podcast). Lo de la tienda (Pedidos, Stock, Prêt-à-porter,
-// Materiales, Métricas, Clientes, Reseñas de producto) y Diseño/Settings
-// quedan ocultos de momento: ver GRUPOS_OCULTOS más abajo, comentado —
+// Podcast) y los productos de Prêt-à-porter. Lo de la tienda online
+// (Pedidos, Stock, Materiales, Métricas, Clientes, Reseñas de producto) y
+// Diseño/Settings quedan ocultos de momento (no se usan, a petición): ver GRUPOS_OCULTOS más abajo, comentado —
 // para recuperar uno, mover su item de vuelta aquí. Las páginas siguen
 // existiendo en /admin/..., solo no salen en el menú.
 const grupos = [
@@ -66,7 +68,8 @@ const grupos = [
   },
   {
     // Mismo orden y mismos grupos que el menú de la web (Navbar.jsx):
-    // Sobre Fely › Atelier › Colecciones. "subgrupo" es solo un rótulo.
+    // Sobre Fely › Atelier › Colecciones › Dónde encontrarnos. "subgrupo"
+    // es solo un rótulo.
     titulo: 'Páginas de la web',
     items: [
       { href: '/admin/landing', label: 'Página de inicio', icono: LayoutTemplate },
@@ -78,9 +81,6 @@ const grupos = [
       { href: '/admin/paginas/talleres', label: 'Nuestros talleres', icono: Spool },
       { subgrupo: 'Atelier' },
       { href: '/admin/vosotras', label: 'Vosotras', icono: Images },
-      {
-        href: '/admin/productos/atelier', label: 'Productos de Atelier', icono: Scissors, tipo: 'atelier',
-      },
       { subgrupo: 'Colecciones' },
       {
         href: '/admin/colecciones/fiesta', label: 'Colección Fiesta', icono: PartyPopper, tipo: 'fiesta',
@@ -88,9 +88,21 @@ const grupos = [
       {
         href: '/admin/colecciones/novia', label: 'Colección Novias', icono: Heart, tipo: 'novia',
       },
+      // Prêt-à-porter: los productos de la tienda (sin venta online), en el
+      // mismo sitio que en la navegación de la web.
+      {
+        href: '/admin/productos/pret-a-porter', label: 'Prêt-à-porter', icono: Shirt, tipo: 'pret-a-porter',
+      },
       {
         href: '/admin/colecciones/runway', label: 'Runway', icono: Archive, tipo: 'archivo',
       },
+      // Como «Dónde encontrar Fely Campo» en el menú de la web: los ateliers
+      // propios (su página y su contacto) y el mapa de puntos de venta.
+      { subgrupo: 'Dónde encontrarnos' },
+      { href: '/admin/ateliers/salamanca', label: 'Atelier Salamanca', icono: Store },
+      { href: '/admin/ateliers/madrid', label: 'Showroom Madrid', icono: Store },
+      { href: '/admin/ateliers/oviedo', label: 'Atelier Oviedo', icono: Store },
+      { href: '/admin/puntos-de-venta', label: 'Puntos de venta', icono: MapPin },
     ],
   },
 ];
@@ -107,7 +119,7 @@ const GRUPOS_OCULTOS = [
   {
     titulo: 'Productos',
     items: [
-      { href: '/admin/productos/pret-a-porter', label: 'Prêt-à-porter', icono: Shirt, tipo: 'pret-a-porter' },
+      // Prêt-à-porter ya sale arriba, en «Páginas de la web › Colecciones».
       { href: '/admin/stock', label: 'Stock', icono: Boxes },
       {
         href: '/admin/materiales/colores',

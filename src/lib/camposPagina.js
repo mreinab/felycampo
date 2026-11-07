@@ -11,6 +11,7 @@
 //   nombre     cómo se nombra en los avisos: "el título del capítulo 1".
 //   tipo       'texto'  valor { es, en } (o listas de párrafos)
 //              'medio'  valor = ruta de foto o vídeo
+//              'linea'  valor = texto sin traducir (un teléfono, una calle)
 //              'url'    valor = dirección externa (https://…)
 //              'enlace' valor = ruta interna; "rutas" = las permitidas
 //              'lista'  valor = array; "minimo" = cuántos como mínimo
@@ -29,6 +30,7 @@ export function campoConProblema(campo) {
   const { tipo, valor, requerido } = campo;
   if (tipo === 'texto') return Object.keys(IDIOMAS).some((idioma) => faltaTexto(valor, idioma, requerido));
   if (tipo === 'medio') return requerido && !valor;
+  if (tipo === 'linea') return requerido && textoVacio(valor);
   if (tipo === 'url') return (requerido || !textoVacio(valor)) && !urlValida(valor);
   if (tipo === 'enlace') return !campo.rutas?.includes(valor);
   if (tipo === 'lista') {
@@ -56,13 +58,14 @@ export function validarCampos(campos) {
         if (faltaTexto(valor, idioma, campo.requerido)) errores.push(`Falta ${nombre} en ${lengua}.`);
       });
     } else if (campoConProblema(campo)) {
-      if (tipo === 'medio') errores.push(`Falta ${nombre}.`);
+      if (tipo === 'medio' || tipo === 'linea') errores.push(`Falta ${nombre}.`);
       if (tipo === 'url') errores.push(`Revisa ${nombre}: tiene que ser una dirección completa (https://…).`);
       if (tipo === 'enlace') errores.push(`Elige a qué página lleva ${nombre}.`);
       if (tipo === 'lista' && campo.maximo !== undefined && (valor?.length || 0) > campo.maximo) {
         errores.push(`Sobran fotos en ${nombre}: caben ${campo.maximo} como máximo, quita ${valor.length - campo.maximo}.`);
       } else if (tipo === 'lista') {
-        errores.push(`Añade al menos ${campo.minimo === 1 ? 'una foto' : `${campo.minimo} fotos`} en ${nombre}.`);
+        // "mensaje": el aviso propio de esa lista (p. ej. «Elige al menos un color.»).
+        errores.push(campo.mensaje || `Añade al menos ${campo.minimo === 1 ? 'una foto' : `${campo.minimo} fotos`} en ${nombre}.`);
       }
     }
   });

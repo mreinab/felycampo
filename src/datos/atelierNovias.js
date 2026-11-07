@@ -14,9 +14,11 @@
 //
 // COLECCIÓN
 //   id, nombre   "Bride 27"…
-//   visible      si sus looks salen en las cuadrículas (páginas de
-//                categoría de Novias). Hoy solo Bride 27. Las ocultas
-//                siguen teniendo fichas de sus looks publicados.
+//   visible      si sus looks se ven en la web: su ficha, las páginas de
+//                categoría de Novias y el sitemap. Oculta = no se ven en
+//                ningún sitio (la ficha lleva a /atelier/novias con una
+//                redirección temporal). Desde el 2026-11-07 todas ocultas
+//                (a petición): /atelier/novias es solo editorial.
 //   portada      foto de la colección (solo se usa en el admin).
 //   carpeta      carpeta de sus fotos en public/img/collections/novia.
 //   looks        en el orden en que salen (por su número).
@@ -37,7 +39,7 @@ export const COLECCIONES_NOVIAS = [
   {
     "id": "bride-27",
     "nombre": "Bride 27",
-    "visible": true,
+    "visible": false,
     "portada": "/img/collections/novia/Bride27-cover.webp",
     "carpeta": "bride-27",
     "looks": [

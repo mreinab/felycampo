@@ -9,7 +9,9 @@
    (EditorPagina.jsx: Español | English, Vista previa y «Guardar y
    publicar»). Vistas, según la URL (así el botón "atrás" del navegador
    y el menú lateral funcionan):
-     (sin parámetros)              listado de colecciones (reordenable)
+     (sin parámetros)              con página editorial: la página (fotos y
+                                   textos); sin ella, el listado de colecciones
+     ?vista=colecciones            listado de colecciones (reordenable)
      ?categoria=<id>               looks de una colección
      ?categoria=<id>&look=<id>     editar un look  (look=nuevo: crear)
      ?categoria=<id>&editar=1      editar la colección
@@ -23,6 +25,10 @@
      nombreSugeridoLook(c, numero), descripcionAutomatica(look, c),
      validarLook(look, colecciones), validarColeccion(c, colecciones),
      ayudaVisible,                    qué significa «Publicado» en una colección
+     pagina: { id, rutaWeb, titulo },  la parte editorial de su página (pestaña
+                                      «Página de la web», AdminEditorialAtelier.jsx)
+     aviso,                           (opcional) recuadro de explicación sobre el listado,
+                                      o (colecciones) => recuadro según su estado
    }
    ============================================================ */
 
@@ -38,7 +44,8 @@ import CampoLinea from './CampoLinea';
 import ConfirmarBorrado from './ConfirmarBorrado';
 import DragList from './DragList';
 import EditorPagina from './EditorPagina';
-import { FilaListado } from './ListadoAdmin';
+import AdminEditorialAtelier from './AdminEditorialAtelier';
+import { FilaListado, PestanasListado } from './ListadoAdmin';
 import PageHeader from './PageHeader';
 import { useToast } from './Toast';
 import campos from './CamposEditor.module.css';
@@ -54,9 +61,34 @@ const fotos = (n) => `${n} ${n === 1 ? 'foto' : 'fotos'}`;
 
 // ---------- Listados ----------
 
+// Con página editorial (config.pagina), lo primero que se ve al entrar es
+// la página (fotos y textos) y las colecciones están en ?vista=colecciones.
+// Sin ella, el listado de colecciones es la portada de la sección.
+export const urlListado = (config) => (config.pagina ? `${config.base}?vista=colecciones` : config.base);
+
+// Pestañas de arriba: la parte editorial de la página y las colecciones.
+function PestanasDeSeccion({ config, activa, cuenta }) {
+  if (!config.pagina) return null;
+  return (
+    <PestanasListado
+      etiqueta={config.titulo}
+      // Primero la página (fotos y textos), después las colecciones (a petición).
+      pestanas={[
+        {
+          href: config.base, nombre: 'Página de la web (fotos y textos)', activa: activa === 'pagina',
+        },
+        {
+          href: urlListado(config), nombre: 'Colecciones', cuenta, activa: activa === 'colecciones',
+        },
+      ]}
+    />
+  );
+}
+
+
 function ListadoColecciones({ config }) {
   const {
-    base: BASE, titulo, rutaFicha, nombreColeccion: nombreVisible, urlColeccion, ayudaVisible,
+    base: BASE, titulo, rutaFicha, nombreColeccion: nombreVisible, urlColeccion, ayudaVisible, aviso,
   } = config;
   const { mostrarToast } = useToast();
   const { colecciones, reordenarColecciones, alternarColeccion } = config.usarCatalogo();
@@ -68,13 +100,18 @@ function ListadoColecciones({ config }) {
         titulo={titulo}
         subtitulo={`${colecciones.length} colecciones · ${visibles} publicadas · arrastra para cambiar el orden · ${ayudaVisible}`}
       >
-        <Boton variante="contorno" href={`/es${rutaFicha}`}>
+        <Boton variante="contorno" nuevaPestana href={`/es${rutaFicha}`}>
           <ExternalLink size={14} aria-hidden="true" /> Ver en la web
         </Boton>
         <Boton variante="solido" href={`${BASE}?nueva=1`}>
           <Plus size={14} aria-hidden="true" /> Nueva colección
         </Boton>
       </PageHeader>
+
+      <PestanasDeSeccion config={config} activa="colecciones" cuenta={colecciones.length} />
+
+      {/* Aviso propio de cada catálogo (p. ej. Novias: qué se ve hoy en la web). */}
+      {aviso && <div className={styles.avisoListado}>{typeof aviso === 'function' ? aviso(colecciones) : aviso}</div>}
 
       <DragList
         items={colecciones}
@@ -123,13 +160,13 @@ function LooksColeccion({ coleccion, config }) {
 
   return (
     <>
-      <BotonVolver href={BASE}>{titulo}</BotonVolver>
+      <BotonVolver href={urlListado(config)}>{titulo}</BotonVolver>
       <PageHeader
         titulo={nombreVisible(coleccion)}
         subtitulo={`${coleccion.temporada ? `Temporada ${coleccion.temporada} · ` : ''}${coleccion.looks.length} looks · ${publicados} en la web · ordenados por su número${coleccion.visible ? '' : ' · colección oculta'}`}
       >
         {coleccion.visible && urlColeccion && (
-          <Boton variante="contorno" href={urlColeccion(coleccion)}>
+          <Boton variante="contorno" nuevaPestana href={urlColeccion(coleccion)}>
             <ExternalLink size={14} aria-hidden="true" /> Ver en la web
           </Boton>
         )}
@@ -428,7 +465,7 @@ function EditarColeccion({ coleccion, config }) {
         router.replace(`${BASE}?categoria=${id}${esNueva ? '' : '&editar=1'}`);
       }}
       migas={titulo}
-      volver={esNueva ? BASE : `${BASE}?categoria=${coleccion.id}`}
+      volver={esNueva ? urlListado(config) : `${BASE}?categoria=${coleccion.id}`}
       estadoPublicado={esNueva ? 'Sin publicar' : (coleccion.visible ? 'Publicada' : 'Oculta en la web')}
       textoPublicado={esNueva ? 'Colección creada' : 'Cambios publicados'}
       enLaWeb={!esNueva && coleccion.visible}
@@ -483,7 +520,22 @@ function AdminColeccionesAtelier({ config }) {
   const lookParam = params.get('look');
 
   if (params.get('nueva')) return <EditarColeccion config={config} />;
-  if (!coleccion) return <ListadoColecciones config={config} />;
+  if (!coleccion) {
+    // Sin colección elegida: con página editorial, se abre la página
+    // (salvo en la pestaña Colecciones, ?vista=colecciones).
+    if (config.pagina && params.get('vista') !== 'colecciones') {
+      return (
+        <AdminEditorialAtelier
+          id={config.pagina.id}
+          titulo={config.pagina.titulo}
+          rutaWeb={config.pagina.rutaWeb}
+          migas={config.titulo}
+          pestanas={<PestanasDeSeccion config={config} activa="pagina" cuenta={colecciones.length} />}
+        />
+      );
+    }
+    return <ListadoColecciones config={config} />;
+  }
   if (params.get('editar')) return <EditarColeccion coleccion={coleccion} config={config} />;
   if (lookParam) return <EditarLook coleccion={coleccion} lookId={lookParam} config={config} />;
   return <LooksColeccion coleccion={coleccion} config={config} />;

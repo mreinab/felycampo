@@ -122,8 +122,12 @@
    que un icono. */
 .accion {
   flex-shrink: 0;
+  display: inline-block;
   padding: 7px 14px;
   border: var(--border-thin) solid var(--color-gris-300);
+  background: var(--color-fondo);
+  font-family: var(--font-base);
+  cursor: pointer;
   font-size: var(--text-caption);
   color: var(--color-tinta);
   text-decoration: none;

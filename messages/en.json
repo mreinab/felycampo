@@ -132,20 +132,6 @@
     "intro": "Where hands tell stories\n\nEvery Fely Campo piece is born close by. In our atelier and two small workshops in the sierra, skilled hands transform each fabric with time, precision and sensitivity. Behind those hands are women, craft and territory.",
     "filtroTodo": "View all"
   },
-  "atelierFiesta": {
-    "salamanca": {
-      "eyebrow": "Atelier",
-      "titulo": "Salamanca"
-    },
-    "madrid": {
-      "eyebrow": "Atelier & Showroom",
-      "titulo": "Madrid"
-    },
-    "oviedo": {
-      "eyebrow": "Atelier",
-      "titulo": "Oviedo"
-    }
-  },
   "sobreFely": {
     "eyebrow": "The Designer",
     "tituloHero": "Fely Campo",

@@ -24,7 +24,7 @@
    falta el desplegable "Colección" de PanelFiltros (una sola opción no
    aporta nada), así que tampoco se pasa "colecciones". */
 
-import { permanentRedirect } from 'next/navigation';
+import { permanentRedirect, redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { CuadriculaProductos, ProductHero } from '@/components/layout';
 import { productosListadoNovias } from '@/lib/catalogoNovias';
@@ -52,6 +52,10 @@ export default async function Pagina({ params }) {
   const { locale, categoria } = await params;
   const categoriaActiva = encontrarCategoria(categoria, { esFiesta: ES_FIESTA });
   if (!categoriaActiva) permanentRedirect(`/${locale}/atelier/novias`); // slug inexistente: al listado (ninguna URL en 404)
+  // Sin ninguna colección de Novias publicada (hoy, a petición), las páginas
+  // de categoría no se enseñan: al listado, con redirección TEMPORAL (volverán
+  // cuando se publique alguna colección en el admin).
+  if (PRODUCTOS_BRIDE_27.length === 0) redirect(`/${locale}/atelier/novias`);
 
   const t = await getTranslations();
   const jsonLd = await breadcrumbJsonLd({ locale, seccionKey: SECCION_KEY, seccionHref: SECCION_HREF, categoriaActiva });

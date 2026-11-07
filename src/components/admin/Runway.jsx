@@ -13,23 +13,12 @@
 import {
   createContext, useCallback, useContext, useEffect, useState,
 } from 'react';
-import { obtenerColeccionesRunway, slugRunway, SLUG_NUEVA_RUNWAY } from '@/lib/runway';
+import {
+  categoriasAdminRunway, obtenerColeccionesRunway, slugRunway, SLUG_NUEVA_RUNWAY,
+} from '@/lib/runway';
 import { useCategorias } from './Categorias';
 
 const RunwayContext = createContext(null);
-
-// La forma que espera el submenú del menú lateral (Categorias.jsx).
-function categoriasMenu(colecciones) {
-  return colecciones.map((coleccion, indice) => ({
-    id: coleccion.id,
-    nombre: `${coleccion.nombre}${coleccion.temporada ? ` (${coleccion.temporada})` : ''}`,
-    visible: coleccion.publicado,
-    orden: indice + 1,
-    fija: true,
-    numeroLooks: coleccion.looks.length,
-    looks: coleccion.looks.map((look, posicion) => ({ nombre: `Look ${posicion + 1}`, imagenes: [look.src] })),
-  }));
-}
 
 function RunwayProvider({ children }) {
   // Copia profunda: el admin nunca muta los objetos que lee la web.
@@ -37,7 +26,7 @@ function RunwayProvider({ children }) {
   const { reordenarCategorias } = useCategorias();
 
   useEffect(() => {
-    reordenarCategorias('archivo', categoriasMenu(colecciones));
+    reordenarCategorias('archivo', categoriasAdminRunway(colecciones));
   }, [colecciones, reordenarCategorias]);
 
   // Guarda una colección y devuelve su id. Una nueva recibe su dirección

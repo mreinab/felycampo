@@ -20,7 +20,8 @@ import { List, LayoutGrid } from 'lucide-react';
 import {
   PageHeader, TablaAdmin, GridConsultasPrecio, EstadoBadge, OrigenProductoBadge, FiltroBar, FiltroSelector, TabsFiltro,
 } from '@/components/admin';
-import { Boton, Input } from '@/components/ui';
+import { BotonFila } from '@/components/admin/ListadoAdmin';
+import { Input } from '@/components/ui';
 import { consultasPrecioMock, ESTADOS_CITA } from '@/components/admin/mockData';
 import { CONFIG_ORIGEN_PRODUCTO } from '@/components/admin/OrigenProductoBadge';
 import { fechaCorta, IDIOMAS_CITA } from '../consultas/citasFormato';
@@ -189,7 +190,7 @@ export default function ConsultasVestidosPage() {
           filas={filtradas}
           resaltarFila={esUrgente}
           hrefFila={(c) => `/admin/consultas-precio/${c.id}`}
-          renderAcciones={(c) => <Boton variante="texto" href={`/admin/consultas-precio/${c.id}`}>Ver</Boton>}
+          renderAcciones={(c) => <BotonFila href={`/admin/consultas-precio/${c.id}`}>Ver</BotonFila>}
         />
       ) : (
         <GridConsultasPrecio

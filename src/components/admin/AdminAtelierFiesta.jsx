@@ -13,6 +13,7 @@ import {
   validarColeccionFiesta, validarLookFiesta,
 } from '@/lib/catalogoFiesta';
 import { sinNumeroColeccion } from '@/lib/nombreColeccion';
+import { ID_PAGINA_FIESTA } from '@/lib/atelierEditorial';
 import AdminColeccionesAtelier from './AdminColeccionesAtelier';
 import { useAtelierFiesta } from './AtelierFiesta';
 
@@ -26,6 +27,7 @@ const CONFIG_FIESTA = {
   // En la web, sin el número de temporada ("Opaline").
   nombreColeccion: (coleccion) => sinNumeroColeccion(nombreInternoColeccion(coleccion)),
   urlColeccion: (coleccion) => `/es${RUTA_FICHA_FIESTA}?coleccion=${encodeURIComponent(nombreInternoColeccion(coleccion))}`,
+  pagina: { id: ID_PAGINA_FIESTA, rutaWeb: RUTA_FICHA_FIESTA, titulo: 'Página de Fiesta' },
   nombreSugeridoLook,
   descripcionAutomatica,
   validarLook: validarLookFiesta,

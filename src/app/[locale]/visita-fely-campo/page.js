@@ -6,7 +6,7 @@
    RUTAS_CON_PRODUCT_HERO en layout.js, así el Navbar nace
    transparente/claro igual que ahí) + ListadoUbicaciones.jsx (Client
    Component — cabecera + chips de ciudad + listado filtrado, ver ese
-   archivo y ubicaciones.js) + MapaPuntosVenta al final.
+   archivo y src/datos/ateliers.js) + MapaPuntosVenta al final.
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';

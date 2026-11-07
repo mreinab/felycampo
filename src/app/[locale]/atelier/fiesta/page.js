@@ -28,13 +28,18 @@
    pertenece a este listado de colecciones de Fiesta) — fiestaProductos.js
    NO se toca (sigue con las 11 completas: catálogo real que también
    alimenta /admin/colecciones/fiesta), aquí solo se excluye de lo que
-   se enseña en esta página. */
+   se enseña en esta página.
+
+   La parte editorial (portada, introducción, pestañas, bloques y galería)
+   sale de lib/atelierEditorial.js, editable en el admin (Colección Fiesta ›
+   Página de la web), y la pinta FiestaContenido.jsx, que admite la vista
+   previa del admin; la cuadrícula se le pasa ya hecha. */
 
 import { getTranslations } from 'next-intl/server';
-import { CuadriculaProductos, HeroPagina, BloqueSeccion, RunwayBackstage } from '@/components/layout';
+import { CuadriculaProductos } from '@/components/layout';
+import { obtenerEditorialFiesta } from '@/lib/atelierEditorial';
 import { coleccionesVisiblesFiesta, productosListadoFiesta } from '@/lib/catalogoFiesta';
-import { FIESTA_EDITORIAL } from './fiestaEditorial';
-import FiestaIntro from './FiestaIntro';
+import FiestaContenido from './FiestaContenido';
 import { metadataPagina } from '@/lib/seo';
 
 // Colecciones visibles (de la más reciente a la más antigua) y sus looks
@@ -58,36 +63,12 @@ export default async function Pagina({ params, searchParams }) {
 
   return (
     <section className="seccion">
-      <HeroPagina
-        imagen="/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp"
-        alt={t('nav.submenus.atelier.fiesta')}
+      <FiestaContenido
+        publicado={obtenerEditorialFiesta()}
+        locale={locale}
         titulo={[t('nav.links.atelier'), t('nav.submenus.atelier.fiesta')]}
-        subtitulo={t('heroPagina.atelierFiesta')}
-      />
-
-      <FiestaIntro
-        titulo={`${t('nav.links.atelier')} ${t('nav.submenus.atelier.fiesta')}`}
-        texto={FIESTA_EDITORIAL.descripcion[locale].join(' ')}
-        etiquetas={{ atelier: FIESTA_EDITORIAL.filtros.atelier[locale], colecciones: FIESTA_EDITORIAL.filtros.colecciones[locale] }}
-        editorial={(
-          <>
-            {/* 1. Así trabajamos */}
-            {FIESTA_EDITORIAL.bloques.map((bloque, indice) => (
-              <BloqueSeccion
-                key={bloque.imagen}
-                imagen={bloque.imagen}
-                tipo={bloque.tipo}
-                titulo={bloque.titulo[locale]}
-                texto={bloque.texto[locale]}
-                invertido={indice % 2 === 1}
-              />
-            ))}
-
-            <div className="contenedor">
-              <RunwayBackstage imagenes={FIESTA_EDITORIAL.backstage} alt={t('nav.submenus.atelier.fiesta')} />
-            </div>
-          </>
-        )}
+        tituloIntro={`${t('nav.links.atelier')} ${t('nav.submenus.atelier.fiesta')}`}
+        alt={t('nav.submenus.atelier.fiesta')}
         colecciones={(
           // 2. Colección fiesta, justo debajo
           <CuadriculaProductos

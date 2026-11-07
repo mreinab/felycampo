@@ -11,7 +11,8 @@ import { StickyNote, List, LayoutGrid } from 'lucide-react';
 import {
   PageHeader, TablaAdmin, GridPedidos, EstadoBadge, EstadoPedidoBadge, FiltroBar, FiltroSelector, TabsFiltro,
 } from '@/components/admin';
-import { Boton, Input } from '@/components/ui';
+import { BotonFila } from '@/components/admin/ListadoAdmin';
+import { Input } from '@/components/ui';
 import { pedidosMock, productosMock } from '@/components/admin/mockData';
 import { CONFIG_ESTADO_PEDIDO } from '@/components/admin/EstadoPedidoBadge';
 import styles from './page.module.css';
@@ -188,7 +189,7 @@ function PedidosContenido() {
           resaltarFilaVerde={(p) => p.estadoEnvio === 'Entregado'}
           porPagina={15}
           hrefFila={(p) => `/admin/pedidos/${p.id}`}
-          renderAcciones={(p) => <Boton variante="texto" href={`/admin/pedidos/${p.id}`}>Ver</Boton>}
+          renderAcciones={(p) => <BotonFila href={`/admin/pedidos/${p.id}`}>Ver</BotonFila>}
         />
       ) : (
         <GridPedidos

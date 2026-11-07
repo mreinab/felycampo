@@ -15,9 +15,10 @@ Se comprobó, comparando el HTML de fichas, páginas de categoría, `/atelier/no
 
 - **Sin temporada:** el nombre de la colección se ve tal cual («Bride 27», «ME»).
 - **Colección publicada / oculta:**
-  - los looks de las colecciones publicadas salen en las cuadrículas (las páginas de categoría de Novias); hoy, solo Bride 27;
-  - los looks publicados de las colecciones ocultas siguen teniendo su ficha y están en el sitemap;
-  - no hay página propia de cada colección.
+  - **Publicada:** sus looks publicados se ven en la web: tienen ficha, salen en las páginas de categoría de Novias y están en el sitemap.
+  - **Oculta:** no se ven en ningún sitio. La ficha lleva a `/atelier/novias` con una redirección **temporal** (307, puede volver); se ocupa `buscarProductoNovia` → `{ oculto: true }` en `FichaProductoAtelier.jsx`. Sin ninguna colección publicada, las páginas de categoría también redirigen (temporal) y salen del sitemap.
+  - **Desde el 2026-11-07, las 6 están ocultas** (a petición): `/atelier/novias` es solo editorial (portada y bloques de `noviaEditorial.js`) y no enlaza a ningún look. Para volver a enseñar los looks, se publica la colección en el admin.
+  - No hay página propia de cada colección.
 - **El nombre propuesto** para un look nuevo sigue el patrón de su colección: «Look 15 - ME Bridal».
 - **Etiquetas de estilo y silueta (`tags`):** se conservan para los filtros, pero no se editan en el admin.
 

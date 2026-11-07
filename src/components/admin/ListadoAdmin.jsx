@@ -37,6 +37,23 @@ export function PestanasListado({ pestanas, etiqueta = 'Secciones' }) {
   );
 }
 
+// Botón de texto de una fila («Ver», «Editar», «Ocultar»…), con borde:
+// más fácil de ver y de pulsar que un enlace subrayado. Con "href" es un
+// enlace; si no, un botón con "onClick". Lo usan también las tablas
+// (TablaAdmin) de citas, consultas, pedidos, clientes y reseñas.
+export function BotonFila({ href, onClick, children }) {
+  if (href) return <Link href={href} className={styles.accion} onClick={(evento) => evento.stopPropagation()}>{children}</Link>;
+  return (
+    <button
+      type="button"
+      className={styles.accion}
+      onClick={(evento) => { evento.stopPropagation(); onClick?.(evento); }}
+    >
+      {children}
+    </button>
+  );
+}
+
 export function EstadoPublicacion({ publicado }) {
   return (
     <span className={`${styles.estado} ${publicado ? styles.estadoSi : styles.estadoNo}`}>

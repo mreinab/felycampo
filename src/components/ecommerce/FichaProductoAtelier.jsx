@@ -39,7 +39,7 @@
      <FichaProductoAtelier slug="vestido-aurora" seccion="novias" />
    ============================================================ */
 
-import { permanentRedirect } from 'next/navigation';
+import { permanentRedirect, redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { productosEjemplo } from '@/components/layout/productosEjemplo';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
@@ -95,6 +95,9 @@ async function FichaProductoAtelier({ slug, seccion, locale }) {
   // Novias, igual (lib/catalogoNovias.js).
   if (seccion === 'fiesta' || seccion === 'novias') {
     const resultado = (seccion === 'fiesta' ? buscarProductoFiesta : buscarProductoNovia)(slug);
+    // Look de una colección oculta (hoy, todas las de Novias): al listado,
+    // con redirección TEMPORAL — puede volver a enseñarse.
+    if (resultado.oculto) redirect(`/${locale}/atelier/${seccion}`);
     if (resultado.redirigirA) permanentRedirect(`/${locale}/atelier/${seccion}/${resultado.redirigirA}`);
     producto = resultado.producto;
   } else {

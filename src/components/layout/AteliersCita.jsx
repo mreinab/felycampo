@@ -9,11 +9,12 @@
 
 import { getLocale, getTranslations } from 'next-intl/server';
 import { Boton, EnVista } from '../ui';
-import { ATELIERES } from '@/app/[locale]/atelier-fiesta/atelieres';
+import { obtenerSede } from '@/lib/ateliers';
+import { textoEn } from '@/lib/previa';
 import styles from './AteliersCita.module.css';
 
 // Foto = la del hero de su propia ficha (/atelier-fiesta/[id], ver
-// atelieres.js) salvo que la entrada traiga la suya (Madrid, a
+// src/datos/ateliers.js) salvo que la entrada traiga la suya (Madrid, a
 // petición: su hero es vídeo).
 const ATELIERES_CITA = [
   { id: 'salamanca' },
@@ -21,7 +22,7 @@ const ATELIERES_CITA = [
   { id: 'oviedo' },
 ].map(({ id, imagen }) => ({
   id,
-  imagen: imagen ?? ATELIERES[id].heroMedio.src,
+  imagen: imagen ?? obtenerSede(id).heroMedio.src,
 }));
 
 // "separado" (opcional): más aire en blanco encima (ver .separado en el
@@ -29,7 +30,6 @@ const ATELIERES_CITA = [
 export default async function AteliersCita({ separado = false }) {
   const locale = await getLocale();
   const tPedirCita = await getTranslations('pedirCitaLanding');
-  const tAtelierFiesta = await getTranslations('atelierFiesta');
 
   return (
     <section className={`${styles.ateliersCita} ${separado ? styles.separado : ''}`}>
@@ -43,7 +43,7 @@ export default async function AteliersCita({ separado = false }) {
           <img src={imagen} alt="" className={styles.atelierCitaImagen} />
           <div className={styles.atelierCitaContenido}>
             <p className={styles.atelierCitaTitulo}>
-              Atelier {tAtelierFiesta(`${id}.titulo`)}
+              Atelier {textoEn(obtenerSede(id).nombreCiudad, locale)}
               {/* Salto solo en mobile — en escritorio el título va en una línea (ver .saltoMovil). */}
               {' '}<br className={styles.saltoMovil} />
               &amp; Showroom

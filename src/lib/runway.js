@@ -113,3 +113,19 @@ export function validarExtraRunway(datos) {
     ? ['La temporada se escribe con AW o SS y dos cifras, por ejemplo AW27 o SS26.']
     : [];
 }
+
+// ---------- Admin: submenú "Runway" del menú lateral ----------
+// La forma que espera Categorias.jsx. La usan Runway.jsx (estado) y
+// mockData.js (estado inicial del menú, para que coincidan desde el
+// principio y no haya saltos al cargar).
+export function categoriasAdminRunway(colecciones = obtenerColeccionesRunway()) {
+  return colecciones.map((coleccion, indice) => ({
+    id: coleccion.id,
+    nombre: `${coleccion.nombre}${coleccion.temporada ? ` (${coleccion.temporada})` : ''}`,
+    visible: coleccion.publicado,
+    orden: indice + 1,
+    fija: true,
+    numeroLooks: coleccion.looks.length,
+    looks: coleccion.looks.map((look, posicion) => ({ nombre: `Look ${posicion + 1}`, imagenes: [look.src] })),
+  }));
+}

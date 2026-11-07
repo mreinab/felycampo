@@ -42,13 +42,12 @@
   color: var(--color-gris-500);
 }
 
-/* Migas que llevan de vuelta al listado (artículos y episodios del blog). */
-.migasEnlace {
-  text-decoration: none;
-}
-
-.migasEnlace:hover {
-  color: var(--color-tinta);
+/* Botón «Volver a …» + migas y título, en fila. */
+.barraIzquierda {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-5);
+  min-width: 0;
 }
 
 .tituloFila {
@@ -197,7 +196,7 @@
   gap: var(--spacing-6);
   align-items: start;
   padding: var(--spacing-6);
-  max-width: 1400px;
+  /* Llena todo el ancho (el tope general de 2400px está en el layout del admin). */
 }
 
 .indice {
@@ -486,11 +485,17 @@
 
 /* ---------- Rejillas comunes de los bloques ---------- */
 /* Foto (o vídeo) a la izquierda y sus campos a la derecha. */
+/* Foto a la izquierda y campos a la derecha: la foto no pasa de 340px y
+   los campos se llevan el resto, sin pasar de un ancho cómodo de leer. */
 .medioYCampos {
   display: grid;
-  grid-template-columns: minmax(220px, 400px) minmax(0, 1fr);
+  grid-template-columns: minmax(200px, 340px) minmax(0, 1fr);
   gap: var(--spacing-6);
   align-items: start;
+}
+
+.medioYCampos > .fichaCampos {
+  max-width: 760px;
 }
 
 /* Campos cortos a la izquierda y el texto largo a la derecha. */
@@ -573,4 +578,10 @@
   .tresColumnas {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* Pestañas (u otro encabezado) encima de la barra, a todo su ancho. */
+.barraEncabezado {
+  flex-basis: 100%;
+  margin-bottom: calc(-1 * var(--spacing-2));
 }

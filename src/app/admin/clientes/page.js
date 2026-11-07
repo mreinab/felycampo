@@ -7,7 +7,8 @@
 
 import { useMemo, useState } from 'react';
 import { PageHeader, TablaAdmin, EstadoPedidoBadge, FiltroBar, FiltroSelector } from '@/components/admin';
-import { Boton, Input } from '@/components/ui';
+import { BotonFila } from '@/components/admin/ListadoAdmin';
+import { Input } from '@/components/ui';
 import { clientesMock, pedidosMock } from '@/components/admin/mockData';
 import { CONFIG_ESTADO_PEDIDO } from '@/components/admin/EstadoPedidoBadge';
 
@@ -113,7 +114,7 @@ export default function ClientesPage() {
         ]}
         filas={filtrados}
         hrefFila={(c) => `/admin/clientes/${c.id}`}
-        renderAcciones={(c) => <Boton variante="texto" href={`/admin/clientes/${c.id}`}>Ver</Boton>}
+        renderAcciones={(c) => <BotonFila href={`/admin/clientes/${c.id}`}>Ver</BotonFila>}
       />
     </div>
   );

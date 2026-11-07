@@ -70,6 +70,29 @@
   display: contents;
 }
 
+/* Rejilla de N columnas ("columnas"): todas las fotos a la vista; la caja
+   de «Añadir» es una casilla más. Las fotos llenan su columna. */
+.filaRejilla {
+  display: grid;
+  grid-template-columns: repeat(var(--columnas, 4), minmax(0, 1fr));
+  gap: var(--spacing-4);
+  overflow-x: visible;
+}
+
+.filaRejilla > div {
+  display: contents;
+}
+
+/* Cada casilla de DragList (y su contenido) llena su columna. */
+.filaRejilla > div > div,
+.filaRejilla > div > div > div,
+.filaRejilla .foto,
+.filaRejilla .marco,
+.filaRejilla .anadir {
+  width: 100%;
+  min-width: 0;
+}
+
 .foto {
   display: flex;
   flex-direction: column;

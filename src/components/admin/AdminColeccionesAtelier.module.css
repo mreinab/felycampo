@@ -29,3 +29,88 @@
 .portadaColeccion {
   max-width: 260px;
 }
+
+/* Portada horizontal (colecciones de Runway). */
+.portadaHorizontal {
+  max-width: 640px;
+}
+
+/* Runway · vídeo propio: segunda opción, más discreta que el enlace. */
+.videoPropio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.videoPropioTitulo {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gris-600);
+}
+
+/* Recuadro de explicación sobre el listado (config.aviso). */
+.avisoListado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  max-width: 900px;
+  margin-bottom: var(--spacing-5);
+  padding: var(--spacing-4) var(--spacing-5);
+  border-left: 3px solid var(--color-tinta);
+  background: var(--color-gris-100);
+  font-size: var(--text-small);
+  line-height: 1.5;
+  color: var(--color-tinta);
+}
+
+/* Bloque de foto (o vídeo) vertical + textos (Página de Novias / Fiesta):
+   la columna de la foto mide lo que necesita y la de los textos se lleva
+   el resto, sin pasar de un ancho cómodo de leer. */
+.bloqueEditorial {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: var(--spacing-6);
+  align-items: start;
+}
+
+.columnaTextos {
+  max-width: 760px;
+}
+
+@media (max-width: 900px) {
+  .bloqueEditorial {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Página de un atelier (AdminAtelierSede.jsx): la fila de «Atelier» +
+   ciudad, y los botones de cada sección (subir, bajar, añadir, quitar). */
+.filaCiudad {
+  margin-bottom: var(--spacing-6);
+}
+
+.controlesSeccion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-6);
+  padding-top: var(--spacing-5);
+  border-top: var(--border-thin) solid var(--color-gris-200);
+}
+
+.quitarSeccion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-left: auto;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 0;
+  background: none;
+  color: var(--color-rosa-oscuro);
+  font: inherit;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}

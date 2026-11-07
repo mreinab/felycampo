@@ -60,7 +60,7 @@ import useEnVista from '@/hooks/useEnVista';
  * en vez de una clave de traducción — para contenido largo/propio de
  * cada página que vive en un archivo de datos JS, no en
  * messages/{locale}.json (ej. el primer párrafo de cada ficha en
- * atelier-fiesta/atelieres.js). Tiene prioridad sobre "descriptionKey"
+ * src/datos/ateliers.js). Tiene prioridad sobre "descriptionKey"
  * si se pasan los dos (no debería darse en la práctica).
  *
  * Uso:

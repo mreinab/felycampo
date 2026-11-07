@@ -1,7 +1,7 @@
 /* Contenido de /atelier (índice: Novias + Fiesta) — ver page.js.
    Bilingüe por campo ({es, en}), mismo criterio que "descripcion" en
-   visita-fely-campo/ubicaciones.js y "secciones" en
-   atelier-fiesta/atelieres.js: texto largo y propio de esta página, no
+   src/datos/ateliers.js y "secciones" en
+   src/datos/ateliers.js: texto largo y propio de esta página, no
    encaja en el formato de clave corta de messages/{locale}.json.
 
    "descripcion": texto de RunwayDescripcion, frase corta a propósito
@@ -19,7 +19,7 @@
    (/atelier-fiesta/[sede], ver AtelierDetalle.jsx). "ciudad" es en
    realidad el nombre completo de la sede ("Atelier Salamanca", no solo
    "Salamanca" — Madrid es showroom además de atelier, de ahí "Atelier
-   & Showroom Madrid"), sin traducir (UBICACIONES en ubicaciones.js
+   & Showroom Madrid"), sin traducir (contacto en src/datos/ateliers.js
    tampoco traduce sus nombres). */
 
 export const ATELIER_INDEX = {
@@ -57,7 +57,7 @@ export const ATELIER_INDEX = {
 
   ateliers: [
     // Misma foto que el heroMedio (o su poster, si es vídeo) de la ficha
-    // real de cada sede en atelier-fiesta/atelieres.js — reciclada aquí
+    // real de cada sede en src/datos/ateliers.js — reciclada aquí
     // a propósito para que la tarjeta anticipe la misma imagen de
     // cabecera que verá la visitante al entrar. Sustituyen a las de
     // /img/talleres/, que ya no existen en el repo.

@@ -19,8 +19,9 @@
    - Marcadores como L.circleMarker (SVG, sin iconos de imagen): evita
      el problema clásico de los iconos por defecto de Leaflet con
      bundlers, y mantiene el peso al mínimo con ~70 puntos.
-   - Todos los marcadores se crean y se añaden al mapa una sola vez, al
-     montar — sin filtro que los esconda/muestre después.
+   - El mapa se crea una vez, al montar; los marcadores van en una capa
+     aparte que se vuelve a pintar si cambian los puntos (la vista previa
+     del admin: ?previa=puntos-venta, ver usePrevia.js).
    - El mapa lleva aria-hidden: el listado de abajo (botones reales,
      focusables) es el camino accesible por teclado a cada punto —
      clicarlo mueve el mapa (flyTo) y abre su popup.
@@ -35,7 +36,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { CabeceraSeccion, Input, Boton } from '@/components/ui';
-import { PUNTOS_VENTA } from './puntosVenta';
+import { ID_PREVIA_PUNTOS, EDITOR_PUNTOS, obtenerPuntosVenta, puntosPublicados } from '@/lib/puntosVenta';
+import BarraPrevia from './BarraPrevia';
+import usePrevia from './usePrevia';
 import styles from './MapaPuntosVenta.module.css';
 import 'leaflet/dist/leaflet.css';
 
@@ -94,23 +97,26 @@ const CAPITALES_PROVINCIA = {
   '51': { lat: 35.8894, lng: -5.3213 }, '52': { lat: 35.2923, lng: -2.9381 },
 };
 
-// Foto de cada punto de venta: miniatura WebP de 240x320 (3:4, el 3x
-// del hueco de 80px de .puntoImagen) en public/img/atelier/puntos-de-venta/,
-// con el id del punto en el nombre — fely-campo-punto-de-venta-{id}.webp
-// (prefijo de marca por SEO). Para añadir
-// o cambiar una foto basta con dejar ahí su miniatura con ese nombre.
-// Los ateliers propios también tienen la suya (sacada de su carpeta de
-// reportaje). Los ids de SIN_FOTO todavía no tienen foto y ciclan por
-// posición entre las 3 miniaturas fely-campo-punto-de-venta-respaldo-*.webp.
+// Foto de cada punto de venta ("foto" en src/datos/puntosVenta.js):
+// miniatura 3:4 en public/img/atelier/puntos-de-venta/ (o la que se suba
+// en el admin). Sin foto, cicla por posición entre las 3 miniaturas de
+// respaldo.
 const CARPETA_FOTOS = '/img/atelier/puntos-de-venta';
-const SIN_FOTO = new Set(['vogam', 'le-chapeau', 'novias-di-stefano']);
 const IMAGENES_FALLBACK = ['respaldo-salamanca', 'respaldo-madrid', 'respaldo-oviedo'];
 
 function imagenDe(punto, indice) {
-  const nombre = SIN_FOTO.has(punto.id) ? IMAGENES_FALLBACK[indice % IMAGENES_FALLBACK.length] : punto.id;
-  // Los ateliers propios ya llevan la marca en el id (fely-campo-oviedo…): sin repetirla.
-  return `${CARPETA_FOTOS}/fely-campo-punto-de-venta-${nombre.replace(/^fely-campo-/, '')}.webp`;
+  if (punto.foto) return punto.foto;
+  return `${CARPETA_FOTOS}/fely-campo-punto-de-venta-${IMAGENES_FALLBACK[indice % IMAGENES_FALLBACK.length]}.webp`;
 }
+
+// Los textos del popup van como HTML: se escapan (los escribe el admin).
+const escapar = (texto) => String(texto).replace(/[&<>"']/g, (c) => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+}[c]));
+
+// Lo publicado y, en la vista previa, el punto que se está editando
+// ("enfocar"), para abrirlo en el mapa.
+const PUBLICADO = { puntos: obtenerPuntosVenta(), enfocar: '' };
 
 // Coordenadas aproximadas (capital) de cada país presente en
 // puntosVenta.js — usadas SOLO para ordenar los países por cercanía a
@@ -156,11 +162,16 @@ const CODIGO_PAIS = {
   'Estados Unidos': 'us',
 };
 
-function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
+function MapaPuntosVenta({ className }) {
   const t = useTranslations('puntosVenta');
+  const { datos, enPrevia } = usePrevia(ID_PREVIA_PUNTOS, PUBLICADO);
+  const puntos = useMemo(() => puntosPublicados(datos.puntos), [datos.puntos]);
   const contenedorRef = useRef(null);
   const mapaRef = useRef(null);
+  const leafletRef = useRef(null);
+  const capaRef = useRef(null);
   const marcadoresRef = useRef(new Map());
+  const [mapaListo, setMapaListo] = useState(false);
 
   // Orden de países — no alfabético: España primero, luego el resto de
   // más cerca a más lejos (distancia real, haversine, entre el
@@ -227,40 +238,10 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
         maxZoom: 19,
       }).addTo(mapa);
 
-      // Marcador cuadrado: Leaflet no tiene un "squareMarker" (circleMarker
-      // solo dibuja círculos), así que es un L.marker con un divIcon —
-      // un <span> cuadrado por CSS (ver .marcador en
-      // MapaPuntosVenta.module.css), sin imagen de icono de por medio.
-      const icono = L.divIcon({
-        className: styles.marcador,
-        iconSize: [9, 9],
-        iconAnchor: [4.5, 4.5],
-        popupAnchor: [0, -4],
-      });
-
-      puntos.forEach((punto) => {
-        const marcador = L.marker([punto.lat, punto.lng], { icon: icono });
-
-        const lineasDireccion = punto.direccion.join('<br>');
-        const contacto = [
-          punto.telefono && `<a href="tel:${punto.telefono.replace(/[^+\d]/g, '')}">${punto.telefono}</a>`,
-          punto.email && `<a href="mailto:${punto.email}">${punto.email}</a>`,
-        ].filter(Boolean).join('<br>');
-        const enlaceDirecciones = `https://www.google.com/maps/dir/?api=1&destination=${punto.lat},${punto.lng}`;
-
-        marcador.bindPopup(
-          `<p class="${styles.popupNombre}">${punto.nombre}</p>` +
-          `<p class="${styles.popupTexto}">${lineasDireccion}</p>` +
-          (contacto ? `<p class="${styles.popupTexto}">${contacto}</p>` : '') +
-          `<a class="${styles.popupEnlace}" href="${enlaceDirecciones}" target="_blank" rel="noopener noreferrer">${t('direcciones')}</a>`,
-          { closeButton: true },
-        );
-
-        marcadoresRef.current.set(punto.id, marcador);
-        marcador.addTo(mapa);
-      });
-
+      leafletRef.current = L;
+      capaRef.current = L.layerGroup().addTo(mapa);
       mapaRef.current = mapa;
+      setMapaListo(true);
     }
 
     montar();
@@ -272,9 +253,61 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
         mapaRef.current = null;
       }
       marcadoresRef.current.clear();
+      setMapaListo(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Los marcadores: se pintan al estar el mapa y otra vez si cambian los
+  // puntos (vista previa).
+  useEffect(() => {
+    if (!mapaListo) return;
+    const L = leafletRef.current;
+    const mapa = capaRef.current;
+    mapa.clearLayers();
+    marcadoresRef.current.clear();
+
+    // Marcador cuadrado: Leaflet no tiene un "squareMarker" (circleMarker
+    // solo dibuja círculos), así que es un L.marker con un divIcon —
+    // un <span> cuadrado por CSS (ver .marcador en
+    // MapaPuntosVenta.module.css), sin imagen de icono de por medio.
+    const icono = L.divIcon({
+      className: styles.marcador,
+      iconSize: [9, 9],
+      iconAnchor: [4.5, 4.5],
+      popupAnchor: [0, -4],
+    });
+
+    puntos.forEach((punto) => {
+      const marcador = L.marker([punto.lat, punto.lng], { icon: icono });
+
+      const lineasDireccion = punto.direccion.map(escapar).join('<br>');
+      const contacto = [
+        punto.telefono && `<a href="tel:${punto.telefono.replace(/[^+\d]/g, '')}">${escapar(punto.telefono)}</a>`,
+        punto.email && `<a href="mailto:${escapar(punto.email)}">${escapar(punto.email)}</a>`,
+      ].filter(Boolean).join('<br>');
+      const enlaceDirecciones = `https://www.google.com/maps/dir/?api=1&destination=${punto.lat},${punto.lng}`;
+
+      marcador.bindPopup(
+        `<p class="${styles.popupNombre}">${escapar(punto.nombre)}</p>` +
+        `<p class="${styles.popupTexto}">${lineasDireccion}</p>` +
+        (contacto ? `<p class="${styles.popupTexto}">${contacto}</p>` : '') +
+        `<a class="${styles.popupEnlace}" href="${enlaceDirecciones}" target="_blank" rel="noopener noreferrer">${t('direcciones')}</a>`,
+        { closeButton: true },
+      );
+
+      marcadoresRef.current.set(punto.id, marcador);
+      marcador.addTo(mapa);
+    });
+
+    // Vista previa: abre el punto que se está editando.
+    const enfocado = datos.enfocar && marcadoresRef.current.get(datos.enfocar);
+    if (enfocado) {
+      mapaRef.current.setView(enfocado.getLatLng(), 13);
+      enfocado.openPopup();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapaListo, puntos, datos.enfocar]);
 
   function irAPunto(punto) {
     const marcador = marcadoresRef.current.get(punto.id);
@@ -395,6 +428,8 @@ function MapaPuntosVenta({ puntos = PUNTOS_VENTA, className }) {
           ))}
         </div>
       </div>
+
+      {enPrevia && <BarraPrevia editor={datos.enfocar ? `${EDITOR_PUNTOS}?punto=${datos.enfocar}` : EDITOR_PUNTOS} />}
     </div>
   );
 }

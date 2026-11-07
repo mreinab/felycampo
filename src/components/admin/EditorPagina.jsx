@@ -16,6 +16,7 @@
        titulo="Sobre Fely"
        rutaWeb="/sobre-fely"
        bloques={[{ id, nombre, resumen, descripcion, datos: (d) => d.hero }]}
+                                          ← o (borrador) => [...]
        campos={camposSobreFely}           ← lib/camposPagina.js
        opcionales={opcionalesSobreFely}   ← lo que puede quedar vacío
      >
@@ -29,11 +30,11 @@
    ============================================================ */
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { ArrowUpRight, Eye } from 'lucide-react';
 import { Boton } from '@/components/ui';
 import { bloqueIncompleto, textosQueFaltan, validarCampos } from '@/lib/camposPagina';
 import { clavePrevia, completarCon, PARAMETRO_PREVIA } from '@/lib/previa';
+import BotonVolver from './BotonVolver';
 import CampoMedio from './CampoMedio';
 import CampoTexto from './CampoTexto';
 import CampoUrl from './CampoUrl';
@@ -111,6 +112,9 @@ function EditorPagina({
   validarExtra,
   // false: sin botón de vista previa (lo editado no se ve en una página).
   conVistaPrevia = true,
+  // Algo que va encima de todo en la barra (p. ej. las pestañas Página |
+  // Colecciones de Colección Novias / Fiesta).
+  encabezado,
 }) {
   const pagina = usePagina(id);
   const publicado = publicadoFuera ?? pagina.publicado;
@@ -119,9 +123,23 @@ function EditorPagina({
   const [borrador, setBorrador] = useState(() => structuredClone(publicado));
   const [idioma, setIdioma] = useState('es');
   const [errores, setErrores] = useState([]);
-  const [activo, setActivo] = useState(bloques[0].id);
+  // "bloques" también puede ser una función del borrador: así una página
+  // con secciones que se añaden o se quitan (un atelier) las ve al momento.
+  const listaBloques = typeof bloques === 'function' ? bloques(borrador) : bloques;
+  const idsBloques = listaBloques.map((bloque) => bloque.id).join(',');
+  const [activo, setActivo] = useState(listaBloques[0].id);
   // Tras abrir la vista previa, cada cambio le llega solo (ver más abajo).
   const previaAbierta = useRef(false);
+  // Tras publicar, el borrador se pone al día con lo que quedó publicado
+  // (que puede llevar algún retoque: espacios quitados, la URL antigua de
+  // algo renombrado…), para que no siga diciendo «Cambios sin publicar».
+  const recienPublicado = useRef(false);
+  useEffect(() => {
+    if (!recienPublicado.current) return;
+    recienPublicado.current = false;
+    setBorrador(structuredClone(publicado));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [publicado]);
 
   const hayCambios = JSON.stringify(borrador) !== JSON.stringify(publicado);
   const listaCampos = campos(borrador);
@@ -135,12 +153,12 @@ function EditorPagina({
       const visible = entradas.find((entrada) => entrada.isIntersecting);
       if (visible) setActivo(visible.target.id.replace('bloque-', ''));
     }, { rootMargin: '-140px 0px -60% 0px' });
-    bloques.forEach((bloque) => {
-      const elemento = document.getElementById(`bloque-${bloque.id}`);
+    idsBloques.split(',').forEach((idBloque) => {
+      const elemento = document.getElementById(`bloque-${idBloque}`);
       if (elemento) observador.observe(elemento);
     });
     return () => observador.disconnect();
-  }, [bloques]);
+  }, [idsBloques]);
 
   // Cambia un valor del borrador por su ruta: cambiar(['hero', 'video'], src).
   // "valor" también puede ser una función (valorActual) => valorNuevo: así
@@ -165,6 +183,7 @@ function EditorPagina({
       document.getElementById('errores-editor')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
+    recienPublicado.current = true;
     guardar(borrador);
     mostrarToast(`${textoPublicado || `${titulo} publicada`}${DEMO}`);
   }
@@ -238,17 +257,26 @@ function EditorPagina({
     <form className={styles.editor} onSubmit={publicar} noValidate>
       {/* ---------- Barra fija ---------- */}
       <header className={styles.barra}>
-        <div className={styles.barraTitulo}>
-          {volver
-            // Link (sin recargar): sin base de datos, recargar perdería lo publicado.
-            ? <Link href={volver} className={`${styles.migas} ${styles.migasEnlace}`}>{`← ${migas}`}</Link>
-            : <p className={styles.migas}>{migas}</p>}
-          <div className={styles.tituloFila}>
-            <h1 className={styles.titulo}>{titulo}</h1>
-            <span className={`${styles.estado} ${hayCambios ? styles.estadoPendiente : styles.estadoPublicada}`}>
-              <span className={styles.estadoPunto} aria-hidden="true" />
-              {hayCambios ? 'Cambios sin publicar' : estadoPublicado}
-            </span>
+        {encabezado && <div className={styles.barraEncabezado}>{encabezado}</div>}
+        <div className={styles.barraIzquierda}>
+          {/* Volver al listado: un botón con borde, bien visible (el mismo
+              BotonVolver del resto del panel), que dice adónde vuelve.
+              Es un Link (sin recargar): sin base de datos, recargar
+              perdería lo publicado. */}
+          {volver && (
+            <BotonVolver href={volver} enBarra>
+              {`Volver a ${migas.split(' · ').pop()}`}
+            </BotonVolver>
+          )}
+          <div className={styles.barraTitulo}>
+            <p className={styles.migas}>{migas}</p>
+            <div className={styles.tituloFila}>
+              <h1 className={styles.titulo}>{titulo}</h1>
+              <span className={`${styles.estado} ${hayCambios ? styles.estadoPendiente : styles.estadoPublicada}`}>
+                <span className={styles.estadoPunto} aria-hidden="true" />
+                {hayCambios ? 'Cambios sin publicar' : estadoPublicado}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -304,7 +332,7 @@ function EditorPagina({
         <nav className={styles.indice} aria-label="Bloques de la página">
           <p className={styles.indiceTitulo}>Bloques</p>
           <ol className={styles.indiceLista}>
-            {bloques.map((bloque, indice) => {
+            {listaBloques.map((bloque, indice) => {
               const { editado, incompleto } = estado(bloque);
               return (
                 <li key={bloque.id}>
@@ -351,7 +379,7 @@ function EditorPagina({
             </div>
           )}
 
-          {bloques.map((bloque) => (
+          {listaBloques.map((bloque) => (
             <Bloque key={bloque.id} bloque={bloque} {...estado(bloque)}>
               {children(bloque, h)}
             </Bloque>

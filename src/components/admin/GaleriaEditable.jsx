@@ -10,6 +10,7 @@
      conPie   → [{ src, pie: { es, en } }]   (fotos de Sobre Fely)
      sin pie  → ['ruta', 'ruta', …]          (carrusel de un taller)
    "textoPie": cómo se llama el pie («Pie de foto», «Texto del look»…).
+   "columnas": en rejilla de N columnas en vez de una fila que se desplaza.
    "maximo": cuántas caben como mucho (opcional). Al llegar, la caja de
    "Añadir" desaparece y, si se sueltan más de las que caben, se añaden
    las primeras y se avisa de las que se quedan fuera.
@@ -39,6 +40,9 @@ const esVideoPorDefecto = (src) => /\.(mp4|webm|mov)(\?|#|$)/i.test(src) || /#vi
 function GaleriaEditable({
   valor = [], onChange, idioma = 'es', conPie = false, permitirVideo = false, papeles, esVideo = esVideoPorDefecto,
   textoAnadir, maximo, textoPie = 'Pie de foto',
+  // "columnas": rejilla de N columnas (todas las fotos a la vista, sin
+  // desplazarse en horizontal), p. ej. los looks de una colección de Runway.
+  columnas,
 }) {
   const input = useRef(null);
   const [subiendo, setSubiendo] = useState(false);
@@ -134,7 +138,10 @@ function GaleriaEditable({
         )}
       </div>
 
-      <div className={`${styles.fila} ${conLimite ? styles.filaEnVarias : ''}`}>
+      <div
+        className={`${styles.fila} ${conLimite ? styles.filaEnVarias : ''} ${columnas ? styles.filaRejilla : ''}`}
+        style={columnas ? { '--columnas': columnas } : undefined}
+      >
         {items.length > 0 && (
           <DragList
             items={items}

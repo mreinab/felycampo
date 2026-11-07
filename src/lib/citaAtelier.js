@@ -4,7 +4,7 @@
 // la página (cliente) y la API que lo procesa (src/app/api/cita/route.js):
 // ateliers que se pueden elegir (obligatorio, vuelve a preguntarse a
 // petición), tipos de cita y página de confirmación. Los ids coinciden con
-// los de UBICACIONES (visita-fely-campo/ubicaciones.js), así que los
+// los de obtenerUbicaciones() (lib/ateliers.js), así que los
 // enlaces "Pedir cita" de cada atelier pueden mandar ?ubicacion=<id> para
 // dejarlo ya elegido. El email que recibe los avisos NO vive aquí (este
 // archivo llega al navegador) — lo lee la API de variables de entorno, ver

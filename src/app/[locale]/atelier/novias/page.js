@@ -28,16 +28,20 @@
    se usa por el momento, la página se queda en la parte editorial de
    arriba (hero + storytelling + RunwayBackstage). noviaProductos.js
    sigue intacto (ver comentario del principio), solo se deja de
-   pintar aquí. */
+   pintar aquí.
+
+   Fotos y textos (portada, introducción, bloques y galería): de
+   lib/atelierEditorial.js, editables en el admin (Colección Novias ›
+   Página de la web). Los pinta NoviasContenido.jsx, que admite la vista
+   previa del admin. */
 
 import { getTranslations } from 'next-intl/server';
-import { BloqueSeccion, /* CuadriculaProductos, */ HeroPagina, RunwayBackstage, RunwayDescripcion } from '@/components/layout';
-// import { noviaProductos } from '@/components/layout/noviaProductos';
-import { NOVIA_EDITORIAL } from './noviaEditorial';
-import styles from './page.module.css';
 import { metadataPagina } from '@/lib/seo';
-
-// const PRODUCTOS_BRIDE_27 = noviaProductos.filter((producto) => producto.coleccion === 'Bride 27');
+import { obtenerEditorialNovias } from '@/lib/atelierEditorial';
+import NoviasContenido from './NoviasContenido';
+// Cuadrícula de looks comentada a petición (ver arriba):
+// import { CuadriculaProductos } from '@/components/layout';
+// import { noviaProductos } from '@/components/layout/noviaProductos';
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
@@ -50,34 +54,16 @@ export default async function Pagina({ params }) {
 
   return (
     <section className="seccion">
-      <HeroPagina
-        imagen="/img/landing/fely-campo-portada-hero-atelier-novia.webp"
-        alt={t('nav.submenus.atelier.novias')}
+      <NoviasContenido
+        publicado={obtenerEditorialNovias()}
+        locale={locale}
         titulo={[t('nav.links.atelier'), t('nav.submenus.atelier.novias')]}
-        subtitulo={t('heroPagina.atelierNovias')}
+        alt={t('nav.submenus.atelier.novias')}
       />
-
-      <div className={styles.textoDescripcion}>
-        <RunwayDescripcion texto={NOVIA_EDITORIAL.descripcion[locale]} />
-      </div>
-
-      {NOVIA_EDITORIAL.bloques.map((bloque, indice) => (
-        <BloqueSeccion
-          key={bloque.imagen}
-          imagen={bloque.imagen}
-          titulo={bloque.titulo[locale]}
-          texto={bloque.texto[locale]}
-          invertido={indice % 2 === 1}
-        />
-      ))}
-
-      <div className="contenedor">
-        <RunwayBackstage imagenes={NOVIA_EDITORIAL.backstage} alt={t('nav.submenus.atelier.novias')} />
-      </div>
 
       {/* Comentado a petición — sin cuadrícula de looks por el momento.
       <CuadriculaProductos
-        productos={PRODUCTOS_BRIDE_27}
+        productos={noviaProductos}
         disposicion="grid"
         tituloKey="nav.links.atelier"
         coleccionKey="nav.submenus.atelier.novias"

@@ -1,7 +1,7 @@
 /* ============================================================
    BOTÓN FLOTANTE DE WHATSAPP — Fely Campo
    Fijo abajo a la derecha en todas las páginas (ver layout.js). Mismo
-   número que el WhatsApp del atelier de Madrid (ver ubicaciones.js).
+   número que el WhatsApp del atelier de Madrid (ver src/datos/ateliers.js).
    Icono de trazo fino dibujado a mano (no el logo verde de WhatsApp)
    para ir con la línea del resto del sitio: cuadrado negro suave, icono en
    blanco, y al hover se aclara (ver BotonWhatsapp.module.css).

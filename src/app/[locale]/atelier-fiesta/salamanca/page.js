@@ -1,9 +1,8 @@
 /* Ficha de atelier. Ruta: /atelier-fiesta/salamanca — ver
    AtelierDetalle.jsx (plantilla compartida con /madrid y /oviedo) y
-   atelieres.js (contenido de esta ficha). */
+   src/datos/ateliers.js (contenido de esta ficha, editable en el admin). */
 
 import AtelierDetalle from '../AtelierDetalle';
-import { ATELIERES } from '../atelieres';
 import { metadataPagina } from '@/lib/seo';
 
 export async function generateMetadata({ params }) {
@@ -14,5 +13,5 @@ export async function generateMetadata({ params }) {
 export default async function Pagina({ params }) {
   const { locale } = await params;
 
-  return <AtelierDetalle datos={ATELIERES.salamanca} locale={locale} />;
+  return <AtelierDetalle id="salamanca" locale={locale} />;
 }

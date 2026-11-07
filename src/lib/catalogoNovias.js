@@ -74,10 +74,16 @@ export function productosListadoNovias(colecciones = obtenerColeccionesNovias())
   return productosNovias(colecciones.filter((coleccion) => coleccion.visible));
 }
 
-// Busca un look publicado por la URL; si es una URL antigua (se renombró),
-// devuelve también "redirigirA".
+// Busca un look que se vea en la web (publicado y de una colección
+// publicada) por la URL; si es una URL antigua (se renombró), devuelve
+// también "redirigirA". Si el look existe pero su colección está oculta,
+// devuelve { oculto: true } (la ficha redirige de forma temporal: puede
+// volver a enseñarse).
 export function buscarProductoNovia(slug, colecciones = obtenerColeccionesNovias()) {
-  const productos = productosNovias(colecciones);
+  const ocultoPorColeccion = !productosListadoNovias(colecciones).some((p) => slugLook(p.nombre) === slug || p.slugsAnteriores.includes(slug))
+    && productosNovias(colecciones).some((p) => slugLook(p.nombre) === slug || p.slugsAnteriores.includes(slug));
+  if (ocultoPorColeccion) return { oculto: true };
+  const productos = productosListadoNovias(colecciones);
   const producto = productos.find((candidato) => slugLook(candidato.nombre) === slug);
   if (producto) return { producto };
   const renombrado = productos.find((candidato) => candidato.slugsAnteriores.includes(slug));

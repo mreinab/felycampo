@@ -6,7 +6,7 @@
    LISTADO DE UBICACIONES — VISÍTENOS — Fely Campo
    Client Component aparte de page.js (Server Component) solo porque
    necesitaba estado para el filtro de ciudad — ya sin él (solo 3
-   ubicaciones, una por ciudad, ver ubicaciones.js), sigue siendo
+   ubicaciones, una por ciudad, ver src/datos/ateliers.js), sigue siendo
    Client Component por si vuelve a necesitarlo, pero de momento es
    un listado sin más.
    CabeceraSeccion vive aquí (no en page.js) por si en el futuro vuelve
@@ -22,35 +22,12 @@
 import { Fragment } from 'react';
 import { useTranslations } from 'next-intl';
 import { CabeceraSeccion, CarruselFotos, EnVista } from '@/components/ui';
-import { UBICACIONES, enlaceMapa } from './ubicaciones';
+import { enlaceMapa, obtenerUbicaciones } from '@/lib/ateliers';
 import styles from './page.module.css';
 
-// Fotos propias de cada sede (antes reciclaban un fondo común de
-// public/img/talleres/, ver ubicaciones.js) — 2-3 por ciudad, mismo
-// reportaje que ya usan sus fichas de /atelier-fiesta/[ciudad]. Ciclan
-// con cross-fade al hover vía CarruselFotos (ui/, compartido con
-// ResenasClientes/GaleriaVosotras) en vez de una sola foto fija — ver
-// .galeria/.marco en page.module.css (position:relative +
-// overflow:hidden va en .marco, no en .galeria — ver el porqué ahí).
-const FOTOS_POR_CIUDAD = {
-  Salamanca: [
-    '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp',
-    '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp',
-  ],
-  Madrid: [
-    '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-foto-3.webp',
-    '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-sala-pruebas.webp',
-    '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-showroom-3.webp',
-  ],
-  Oviedo: [
-    '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-fiesta-espacio-1.webp',
-    '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-tienda-4-1.webp',
-  ],
-};
-
-function fotosDe(ciudad) {
-  return FOTOS_POR_CIUDAD[ciudad];
-}
+// Fotos de cada sede: "fotos" de su contacto (src/datos/ateliers.js,
+// editables en el admin). Ciclan con cross-fade al hover vía
+// CarruselFotos (ui/) — ver .galeria/.marco en page.module.css.
 
 function ListadoUbicaciones({ locale }) {
   const t = useTranslations('visitenos');
@@ -66,7 +43,7 @@ function ListadoUbicaciones({ locale }) {
       />
 
       <ul className={styles.lista}>
-        {UBICACIONES.map((ubicacion) => {
+        {obtenerUbicaciones().map((ubicacion) => {
           // Un solo teléfono → "Telf"; dos → "Telf" (fijo) y "Móvil" —
           // cada uno en su propia línea. WhatsApp va aparte (ver
           // .whatsapp más abajo): es un enlace real a wa.me, no texto
@@ -89,7 +66,7 @@ function ListadoUbicaciones({ locale }) {
               <EnVista as="article" className={styles.tarjeta}>
                 <div className={styles.galeria}>
                   <div className={styles.marco}>
-                    <CarruselFotos fotos={fotosDe(ubicacion.ciudad)} />
+                    <CarruselFotos fotos={ubicacion.fotos} />
                   </div>
 
                   {/* Mobile/tablet (ver media query en page.module.css):
@@ -97,7 +74,7 @@ function ListadoUbicaciones({ locale }) {
                       hover de arriba, que no tiene mucho sentido en
                       táctil puro. */}
                   <div className={styles.galeriaMovil}>
-                    {fotosDe(ubicacion.ciudad).map((foto) => (
+                    {ubicacion.fotos.map((foto) => (
                       <img key={foto} src={foto} alt="" className={styles.fotoMovil} />
                     ))}
                   </div>
