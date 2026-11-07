@@ -25,6 +25,10 @@ Se comprobó, comparando el HTML de `/atelier/novias` y `/atelier/fiesta` en esp
 2. `guardar(id, datos)` de `Paginas.jsx` llama a la API. En el servidor, validar con `validarCampos(camposEditorial(datos))`.
 3. Subir fotos y vídeos (llegan como `blob:`) con nombre SEO y revalidar `/[locale]/atelier/novias` y `/[locale]/atelier/fiesta`.
 
+## Bloques de foto + texto: añadir, mover y quitar
+
+Bajo cada bloque están Subir, Bajar, «Añadir un bloque debajo» y «Quitar este bloque» (`ControlesLista.jsx`, con confirmación). Pueden quedar cero: entonces sale un bloque con «Añadir un bloque». En la web alternan de lado solos por su posición. Un bloque nuevo recibe un id fijo (`bloque-…`, `nuevoBloqueEditorial` en `lib/atelierEditorial.js`).
+
 ## Prêt-à-porter
 
 Lo mismo para `/pret-a-porter`, pero más corto: el **carrusel de la portada** (fotos de pasarela recortadas que pasan solas; mínimo una) y la **descripción** bajo el título. Se edita en la pestaña **«Página de la web (fotos y textos)»** de Prêt-à-porter (`/admin/productos/pret-a-porter`, la que se abre al entrar); los productos están en la segunda (`?vista=productos`).

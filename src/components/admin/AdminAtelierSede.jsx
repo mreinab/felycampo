@@ -20,22 +20,18 @@
    Datos y reglas: lib/ateliers.js. Ver docs/admin-ateliers.md.
    ============================================================ */
 
-import { useState } from 'react';
-import {
-  ArrowDown, ArrowUp, Plus, Trash2,
-} from 'lucide-react';
-import { Boton } from '@/components/ui';
 import {
   MAXIMO_FOTOS_FINAL, MAXIMO_FOTOS_TARJETA, OPCIONALES_SEDE, camposSede, esVideoSede, idPaginaSede, nuevaSeccion, rutaWebSede,
 } from '@/lib/ateliers';
 import CampoLinea from './CampoLinea';
-import ConfirmarBorrado from './ConfirmarBorrado';
+import ControlesLista, { BotonAnadir } from './ControlesLista';
 import EditorPagina from './EditorPagina';
 import { usePagina } from './Paginas';
 import editorStyles from './EditorPagina.module.css';
 import segmentos from './AdminVosotras.module.css';
 import campos from './CamposEditor.module.css';
 import styles from './AdminColeccionesAtelier.module.css';
+import controles from './ControlesLista.module.css';
 
 // Los bloques salen del borrador: al añadir o quitar una sección, el
 // índice de la izquierda cambia al momento.
@@ -185,61 +181,7 @@ function MedioGrande({ h }) {
   );
 }
 
-// Mueve, quita o añade secciones en el borrador.
-function moverSeccion(h, indice, paso) {
-  h.cambiar(['secciones'], (lista) => {
-    const copia = [...lista];
-    const [seccion] = copia.splice(indice, 1);
-    copia.splice(indice + paso, 0, seccion);
-    return copia;
-  });
-}
-
-function anadirSeccion(h, posicion) {
-  const nueva = nuevaSeccion();
-  h.cambiar(['secciones'], (lista) => [...lista.slice(0, posicion), nueva, ...lista.slice(posicion)]);
-  // Que se vea la sección nueva.
-  setTimeout(() => document.getElementById(`bloque-${nueva.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
-}
-
-function BotonAnadirSeccion({ h, posicion, children = 'Añadir una sección debajo' }) {
-  return (
-    <Boton variante="contorno" type="button" onClick={() => anadirSeccion(h, posicion)}>
-      <Plus size={14} aria-hidden="true" /> {children}
-    </Boton>
-  );
-}
-
-function ControlesSeccion({ h, indice }) {
-  const [porQuitar, setPorQuitar] = useState(false);
-  const total = h.borrador.secciones.length;
-  const nombre = h.borrador.secciones[indice].titulo.es || `la sección ${indice + 1}`;
-  return (
-    <div className={styles.controlesSeccion}>
-      <Boton variante="contorno" type="button" desactivado={indice === 0} onClick={() => moverSeccion(h, indice, -1)}>
-        <ArrowUp size={14} aria-hidden="true" /> Subir
-      </Boton>
-      <Boton variante="contorno" type="button" desactivado={indice === total - 1} onClick={() => moverSeccion(h, indice, 1)}>
-        <ArrowDown size={14} aria-hidden="true" /> Bajar
-      </Boton>
-      <BotonAnadirSeccion h={h} posicion={indice + 1} />
-      <button type="button" className={styles.quitarSeccion} onClick={() => setPorQuitar(true)}>
-        <Trash2 size={14} aria-hidden="true" /> Quitar esta sección
-      </button>
-      <ConfirmarBorrado
-        abierto={porQuitar}
-        titulo={`¿Quitar «${nombre}»?`}
-        mensaje="Deja de salir en la página cuando publiques. Hasta entonces, «Descartar» la recupera."
-        textoConfirmar="Quitar"
-        onConfirmar={() => {
-          setPorQuitar(false);
-          h.cambiar(['secciones'], (lista) => lista.filter((_, posicion) => posicion !== indice));
-        }}
-        onCancelar={() => setPorQuitar(false)}
-      />
-    </div>
-  );
-}
+const SECCION = { uno: 'una sección', este: 'esta sección' };
 
 function Seccion({ h, id }) {
   const indice = h.borrador.secciones.findIndex((otra) => otra.id === id);
@@ -256,7 +198,14 @@ function Seccion({ h, id }) {
         {h.texto(ruta('texto'), { etiqueta: 'Texto', parrafos: true, filas: 8 })}
       </div>
     </div>
-    <ControlesSeccion h={h} indice={indice} />
+    <ControlesLista
+      h={h}
+      ruta={['secciones']}
+      indice={indice}
+      crear={nuevaSeccion}
+      elemento={SECCION}
+      nombre={h.borrador.secciones[indice].titulo.es || `la sección ${indice + 1}`}
+    />
     </>
   );
 }
@@ -334,8 +283,8 @@ function AdminAtelierSede({ id }) {
             <>
               <MedioGrande h={h} />
               {h.borrador.secciones.length > 0 && (
-                <div className={styles.controlesSeccion}>
-                  <BotonAnadirSeccion h={h} posicion={0}>Añadir una sección justo debajo</BotonAnadirSeccion>
+                <div className={controles.controles}>
+                  <BotonAnadir h={h} ruta={['secciones']} crear={nuevaSeccion} posicion={0}>Añadir una sección justo debajo</BotonAnadir>
                 </div>
               )}
             </>
@@ -348,7 +297,7 @@ function AdminAtelierSede({ id }) {
         }
         if (bloque.id === 'contacto') return <Contacto h={h} />;
         if (bloque.id === 'sin-secciones') {
-          return <BotonAnadirSeccion h={h} posicion={0}>Añadir una sección</BotonAnadirSeccion>;
+          return <BotonAnadir h={h} ruta={['secciones']} crear={nuevaSeccion} posicion={0}>Añadir una sección</BotonAnadir>;
         }
         return <Seccion h={h} id={bloque.id} />;
       }}

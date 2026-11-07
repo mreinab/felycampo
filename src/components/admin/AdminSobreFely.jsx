@@ -13,8 +13,9 @@
    ============================================================ */
 
 import {
-  ID_PAGINA_SOBRE_FELY, MAXIMO_FOTOS_CAPITULO, camposSobreFely, obtenerSobreFely, opcionalesSobreFely,
+  ID_PAGINA_SOBRE_FELY, MAXIMO_FOTOS_CAPITULO, camposSobreFely, nuevoCapitulo, opcionalesSobreFely,
 } from '@/lib/sobreFely';
+import ControlesLista from './ControlesLista';
 import EditorPagina from './EditorPagina';
 import styles from './EditorPagina.module.css';
 
@@ -27,17 +28,19 @@ function papelFotoCapitulo(indice, total) {
   return (total - 1) % 2 === 1 && indice === total - 1 ? 'Sola y centrada, debajo' : 'En fila, debajo';
 }
 
-// Los capítulos son fijos (sus id no cambian al editar), así que los
-// bloques se sacan una vez de lo publicado.
-const BLOQUES = [
+// Los bloques salen del borrador: al añadir, mover o quitar un capítulo,
+// el índice de la izquierda cambia al momento.
+const CAPITULO = { uno: 'un capítulo', este: 'este capítulo' };
+
+const bloquesSobreFely = (datos) => [
   {
     id: 'portada', nombre: 'Portada', resumen: 'Foto, título y subtítulo', descripcion: 'La foto a pantalla completa con la que se abre la página.', datos: (d) => d.hero,
   },
-  ...obtenerSobreFely().capitulos.map((capitulo, indice) => ({
+  ...datos.capitulos.map((capitulo, indice) => ({
     id: capitulo.id,
-    nombre: capitulo.etiqueta.es,
+    nombre: capitulo.etiqueta.es || 'Capítulo nuevo',
     resumen: `Capítulo ${indice + 1}`,
-    descripcion: `Capítulo ${indice + 1} de la historia. La foto principal va ${indice % 2 === 0 ? 'a la izquierda' : 'a la derecha'} del texto.`,
+    descripcion: `Capítulo ${indice + 1} de la historia. La foto principal va ${indice % 2 === 0 ? 'a la izquierda' : 'a la derecha'} del texto (alternan solas: si mueves un capítulo, cambia de lado).`,
     datos: (d) => d.capitulos.find((otro) => otro.id === capitulo.id),
   })),
   {
@@ -82,6 +85,16 @@ function Capitulo({ h, indice }) {
         {h.galeria(ruta('imagenes'), { conPie: true, papeles: papelFotoCapitulo, maximo: MAXIMO_FOTOS_CAPITULO })}
       </div>
 
+      <ControlesLista
+        h={h}
+        ruta={['capitulos']}
+        indice={indice}
+        crear={nuevoCapitulo}
+        elemento={CAPITULO}
+        nombre={h.borrador.capitulos[indice].etiqueta.es || `el capítulo ${indice + 1}`}
+        minimo={1}
+      />
+
     </>
   );
 }
@@ -114,7 +127,7 @@ function AdminSobreFely() {
       id={ID_PAGINA_SOBRE_FELY}
       titulo="Historia de Fely"
       rutaWeb="/sobre-fely"
-      bloques={BLOQUES}
+      bloques={bloquesSobreFely}
       campos={camposSobreFely}
       opcionales={opcionalesSobreFely}
     >
@@ -123,6 +136,7 @@ function AdminSobreFely() {
         if (bloque.id === 'cierre') return <Cierre h={h} />;
         if (bloque.id === 'documental') return <Documental h={h} />;
         const indice = h.borrador.capitulos.findIndex((capitulo) => capitulo.id === bloque.id);
+        if (indice < 0) return null;
         return <Capitulo h={h} indice={indice} />;
       }}
     </EditorPagina>

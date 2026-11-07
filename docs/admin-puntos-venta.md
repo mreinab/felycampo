@@ -4,7 +4,7 @@
 
 ## Cómo funciona
 
-- **Listado** con pestañas por país (España primero, luego de más a menos puntos). Cada fila: ver en la web, ocultar / mostrar en el mapa (el ojo), editar y borrar. Los **3 ateliers propios** no se pueden borrar (el reparto de citas, `admin/consultas/puntoCercano.js`, cuenta con ellos); sí ocultar y editar.
+- **Listado** con buscador (nombre, ciudad, calle, teléfono o email; sin importar tildes) y filtro «País» (España primero, luego de más a menos puntos), como en Citas o Consultas. En «Todos los países» sale agrupado por país. Cada fila: ver en la web, ocultar / mostrar en el mapa (el ojo), editar y borrar. Los **3 ateliers propios** no se pueden borrar (el reparto de citas, `admin/consultas/puntoCercano.js`, cuenta con ellos); sí ocultar y editar.
 - **Nuevo punto de venta** / **editar**: el editor común (`EditorPagina.jsx`) con tres bloques:
   - **Datos**: nombre, país (los que ya hay o «Otro país…»), dirección en dos líneas, teléfono y email (opcionales).
   - **Dónde está**: un mapa pequeño (`SelectorUbicacion.jsx`). «Buscar la dirección en el mapa» coloca el punto solo; si no acierta, se pincha en el mapa o se arrastra el marcador. No hace falta saber coordenadas.

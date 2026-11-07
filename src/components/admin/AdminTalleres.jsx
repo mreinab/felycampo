@@ -11,18 +11,23 @@
    ============================================================ */
 
 import {
-  ID_PAGINA_TALLERES, camposTalleres, esVideoTaller, obtenerTalleres, opcionalesTalleres,
+  ID_PAGINA_TALLERES, camposTalleres, esVideoTaller, nuevoTaller, opcionalesTalleres,
 } from '@/lib/talleres';
+import ControlesLista from './ControlesLista';
 import EditorPagina from './EditorPagina';
 import styles from './EditorPagina.module.css';
 
-const BLOQUES = [
+// Los bloques salen del borrador: al añadir, mover o quitar un taller,
+// el índice de la izquierda cambia al momento.
+const TALLER = { uno: 'un taller', este: 'este taller' };
+
+const bloquesTalleres = (datos) => [
   {
     id: 'portada', nombre: 'Portada', resumen: 'Foto, título e introducción', descripcion: 'La foto de cabecera y el texto de presentación de los talleres.', datos: (d) => d.hero,
   },
-  ...obtenerTalleres().talleres.map((taller) => ({
+  ...datos.talleres.map((taller) => ({
     id: taller.id,
-    nombre: taller.nombre.es,
+    nombre: taller.nombre.es || 'Taller nuevo',
     resumen: taller.ubicacion.es,
     descripcion: 'Su carrusel de fotos y vídeos y su texto. El nombre es también el botón de filtro de la página.',
     datos: (d) => d.talleres.find((otro) => otro.id === taller.id),
@@ -65,6 +70,16 @@ function Taller({ h, indice }) {
       <div className={styles.columnaTexto} style={{ marginTop: 'var(--spacing-5)' }}>
         {h.texto(ruta('parrafos'), { etiqueta: 'Texto', parrafos: true, filas: 12 })}
       </div>
+
+      <ControlesLista
+        h={h}
+        ruta={['talleres']}
+        indice={indice}
+        crear={nuevoTaller}
+        elemento={TALLER}
+        nombre={h.borrador.talleres[indice].nombre.es || `el taller ${indice + 1}`}
+        minimo={1}
+      />
     </>
   );
 }
@@ -75,13 +90,14 @@ function AdminTalleres() {
       id={ID_PAGINA_TALLERES}
       titulo="Nuestros talleres"
       rutaWeb="/talleres-fely-campo"
-      bloques={BLOQUES}
+      bloques={bloquesTalleres}
       campos={camposTalleres}
       opcionales={opcionalesTalleres}
     >
       {(bloque, h) => {
         if (bloque.id === 'portada') return <Portada h={h} />;
         const indice = h.borrador.talleres.findIndex((taller) => taller.id === bloque.id);
+        if (indice < 0) return null;
         return <Taller h={h} indice={indice} />;
       }}
     </EditorPagina>

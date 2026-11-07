@@ -13,6 +13,13 @@ import { validarCampos } from './camposPagina';
 export const ID_PAGINA_TALLERES = 'talleres';
 export const EDITOR_TALLERES = '/admin/paginas/talleres';
 
+// Un taller nuevo, vacío (su nombre es también su botón de filtro en la web).
+export function nuevoTaller() {
+  return {
+    id: `taller-${Date.now().toString(36)}`, nombre: { es: '', en: '' }, ubicacion: { es: '', en: '' }, responsable: { es: '', en: '' }, parrafos: { es: [], en: [] }, medios: [],
+  };
+}
+
 export function obtenerTalleres() {
   return TALLERES;
 }

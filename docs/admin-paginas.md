@@ -29,9 +29,12 @@ Cada archivo de `src/datos/` explica campo a campo lo que guarda. Sobre Fely y T
 5. **Vista previa entre dispositivos:** hoy solo funciona en el navegador donde está abierto el editor. Con base de datos, conviene guardar el borrador en el servidor y que la vista previa exija sesión de admin.
 6. **Acceso:** el panel no tiene inicio de sesión. Es imprescindible antes de que se pueda publicar.
 
+## Capítulos y talleres: añadir, mover y quitar
+
+Bajo cada capítulo (Historia de Fely) y cada taller (Nuestros talleres) están los botones comunes de `ControlesLista.jsx`: Subir, Bajar, «Añadir … debajo» y «Quitar …» (con confirmación; tiene que quedar al menos uno). Los cambios van al borrador: nada sale hasta «Guardar y publicar» y «Descartar» los deshace. En la web se colocan solos (los capítulos alternan de lado por su posición; cada taller nuevo tiene su botón de filtro). Un capítulo o taller nuevo recibe un id fijo (`capitulo-…`, `taller-…`) que no cambia al moverlo. `EditorPagina` recibe `bloques` como función del borrador, así el índice de la izquierda cambia al momento. Lo mismo en las secciones de los ateliers y en los bloques de foto + texto de Novias y Fiesta.
+
 ## Lo que no se edita (a propósito)
 
-- **El número de capítulos y de talleres**, que son fijos. Se edita todo su contenido, pero no se pueden añadir ni quitar capítulos o talleres desde el admin. Para eso habría que añadir un id nuevo en el archivo de datos.
 - **Más de 6 fotos por capítulo** en Sobre Fely (la principal y las de las filas de dos), a petición: `MAXIMO_FOTOS_CAPITULO` en `lib/sobreFely.js`. Cada capítulo tiene una sola lista de fotos; la antigua «galería» se unió a ella. El servidor debe validarlo igual (`validarSobreFely`). Si sobra una foto en una fila de dos, la web la centra.
 - **Los textos SEO (title / description)**, que siguen en `lib/seo.js`.
 - **«Ver todo»**, el filtro de Talleres, que sigue en `messages`.

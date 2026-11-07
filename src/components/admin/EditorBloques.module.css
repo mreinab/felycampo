@@ -2,7 +2,7 @@
    EDITOR DE BLOQUES — ver EditorBloques.jsx
    Una columna de tarjetas finas (una por bloque) con su cabecera gris
    (asa, número, tipo y acciones), el «+» para insertar entre dos
-   bloques y los botones de "Añadir al final".
+   bloques y los botones de "¿Qué más añadimos?" (al final).
    ============================================================ */
 
 .editor {

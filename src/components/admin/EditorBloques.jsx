@@ -297,7 +297,7 @@ function EditorBloques({ bloques, onChange, idioma }) {
       })}
 
       <div className={styles.final}>
-        <p className={styles.finalTitulo}>Añadir al final</p>
+        <p className={styles.finalTitulo}>¿Qué más añadimos?</p>
         <BotonesTipo onElegir={(tipo) => insertar(bloques.length, tipo)} />
       </div>
 

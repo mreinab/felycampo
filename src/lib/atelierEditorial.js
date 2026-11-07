@@ -41,6 +41,13 @@ export function camposEditorialPretAPorter(datos) {
   ];
 }
 
+// Un bloque de foto + texto nuevo, vacío (el id no cambia al moverlo).
+export function nuevoBloqueEditorial() {
+  return {
+    id: `bloque-${Date.now().toString(36)}`, tipo: 'imagen', src: '', titulo: { es: '', en: '' }, texto: { es: '', en: '' },
+  };
+}
+
 export const esVideoEditorial = (src) => /\.(mp4|webm|mov)(\?|#|$)/i.test(src || '') || /#video$/.test(src || '');
 
 // Galería final → lo que espera RunwayBackstage: una foto es su ruta y un

@@ -13,14 +13,18 @@
    Datos y reglas: lib/atelierEditorial.js. Ver docs/admin-atelier-editorial.md.
    ============================================================ */
 
-import { camposEditorial, esVideoEditorial } from '@/lib/atelierEditorial';
+import { camposEditorial, esVideoEditorial, nuevoBloqueEditorial } from '@/lib/atelierEditorial';
+import ControlesLista, { BotonAnadir } from './ControlesLista';
 import EditorPagina from './EditorPagina';
-import { usePagina } from './Paginas';
 import editorStyles from './EditorPagina.module.css';
 import segmentos from './AdminVosotras.module.css';
 import styles from './AdminColeccionesAtelier.module.css';
 import campos from './CamposEditor.module.css';
 
+const BLOQUE = { uno: 'un bloque', este: 'este bloque' };
+
+// Los bloques salen del borrador: al añadir, mover o quitar un bloque de
+// foto + texto, el índice de la izquierda cambia al momento.
 function bloquesEditor(datos) {
   return [
     {
@@ -35,10 +39,14 @@ function bloquesEditor(datos) {
     ...datos.bloques.map((bloque, indice) => ({
       id: bloque.id,
       nombre: `Bloque ${indice + 1}`,
-      resumen: bloque.titulo.es,
-      descripcion: `Foto (o vídeo) con su título y su texto. Va ${indice % 2 === 0 ? 'a la izquierda' : 'a la derecha'} del texto.`,
+      resumen: bloque.titulo.es || 'Nuevo',
+      descripcion: `Foto (o vídeo) con su título y su texto. Va ${indice % 2 === 0 ? 'a la izquierda' : 'a la derecha'} del texto (alternan solas: si mueves un bloque, cambia de lado).`,
       datos: (d) => d.bloques.find((otro) => otro.id === bloque.id),
     })),
+    // Sin bloques: uno para poder añadir el primero.
+    ...(datos.bloques.length === 0 ? [{
+      id: 'sin-bloques', nombre: 'Bloques de foto y texto', resumen: 'Ninguno', descripcion: 'Fotos (o vídeos) con su título y su texto, en zigzag, bajo la introducción.', datos: (d) => d.bloques,
+    }] : []),
     {
       id: 'galeria', nombre: 'Galería', resumen: 'Fotos y vídeos del final', descripcion: 'Las fotos (y vídeos) que cierran la parte editorial, en este orden. Arrastra para cambiarlo.', datos: (d) => d.backstage,
     },
@@ -70,15 +78,12 @@ function ElegirTipo({ valor, onChange }) {
 function AdminEditorialAtelier({
   id, titulo, rutaWeb, migas, pestanas,
 }) {
-  const { publicado } = usePagina(id);
-  const bloques = bloquesEditor(publicado);
-
   return (
     <EditorPagina
       id={id}
       titulo={titulo}
       rutaWeb={rutaWeb}
-      bloques={bloques}
+      bloques={bloquesEditor}
       campos={camposEditorial}
       migas={migas}
       encabezado={pestanas}
@@ -114,11 +119,16 @@ function AdminEditorialAtelier({
             permitirVideo: true, esVideo: esVideoEditorial, columnas: 4, textoAnadir: 'Añadir fotos o vídeos',
           });
         }
+        if (bloque.id === 'sin-bloques') {
+          return <BotonAnadir h={h} ruta={['bloques']} crear={nuevoBloqueEditorial} posicion={0}>Añadir un bloque</BotonAnadir>;
+        }
         // Un bloque de foto (o vídeo) + texto
         const indice = h.borrador.bloques.findIndex((otro) => otro.id === bloque.id);
+        if (indice < 0) return null;
         const ruta = (...resto) => ['bloques', indice, ...resto];
         const actual = h.borrador.bloques[indice];
         return (
+          <>
           <div className={styles.bloqueEditorial}>
             <div className={editorStyles.fichaCampos}>
               <div>
@@ -143,6 +153,15 @@ function AdminEditorialAtelier({
               {h.texto(ruta('texto'), { etiqueta: 'Texto', multilinea: true, filas: 6 })}
             </div>
           </div>
+          <ControlesLista
+            h={h}
+            ruta={['bloques']}
+            indice={indice}
+            crear={nuevoBloqueEditorial}
+            elemento={BLOQUE}
+            nombre={actual.titulo.es || `el bloque ${indice + 1}`}
+          />
+          </>
         );
       }}
     </EditorPagina>

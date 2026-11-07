@@ -17,6 +17,14 @@ export const EDITOR_SOBRE_FELY = '/admin/paginas/sobre-fely';
 // dos), a petición, para que el capítulo no se alargue sin fin.
 export const MAXIMO_FOTOS_CAPITULO = 6;
 
+// Un capítulo nuevo, vacío (el id no cambia al moverlo; es también el
+// ancla de la web: /sobre-fely#<id>).
+export function nuevoCapitulo() {
+  return {
+    id: `capitulo-${Date.now().toString(36)}`, etiqueta: { es: '', en: '' }, titulo: { es: '', en: '' }, parrafos: { es: [], en: [] }, imagenes: [],
+  };
+}
+
 export function obtenerSobreFely() {
   return SOBRE_FELY;
 }
