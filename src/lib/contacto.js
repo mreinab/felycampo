@@ -1,8 +1,8 @@
 // contacto.js
 //
 // Los datos de contacto generales y las redes sociales: los leen el botón
-// de WhatsApp, el pie de página, Atención al cliente, los avisos de los
-// formularios y los datos para Google; los edita «Contacto y redes» en el
+// de WhatsApp, el pie de página, los avisos de los formularios y los
+// datos para Google; los edita «Contacto y redes» en el
 // admin (/admin/contacto).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
@@ -33,9 +33,6 @@ export function redesConEnlace(contacto = CONTACTO) {
     .map(({ clave, nombre }) => ({ clave, nombre, url: contacto.redes[clave].trim() }));
 }
 
-// «+34 659 00 62 57» → «tel:+34659006257».
-export const enlaceTelefono = (telefono) => `tel:${String(telefono).replace(/[^+\d]/g, '')}`;
-
 // El botón de WhatsApp: el número sin + ni espacios, con el mensaje.
 export function enlaceWhatsapp(numero, mensaje) {
   const texto = mensaje ? `?text=${encodeURIComponent(mensaje)}` : '';
@@ -52,12 +49,6 @@ export function camposContacto(datos) {
       bloque: 'contacto', nombre: 'el email', tipo: 'linea', valor: datos.email, requerido: true,
     },
     {
-      bloque: 'contacto', nombre: 'el teléfono', tipo: 'linea', valor: datos.telefono, requerido: true,
-    },
-    {
-      bloque: 'contacto', nombre: 'el horario', tipo: 'texto', valor: datos.horario, requerido: true,
-    },
-    {
       bloque: 'whatsapp', nombre: 'el número de WhatsApp', tipo: 'linea', valor: datos.whatsapp, requerido: true,
     },
     {
@@ -69,13 +60,12 @@ export function camposContacto(datos) {
   ];
 }
 
-// Lo que no es «falta un campo»: que el email y los teléfonos estén bien
+// Lo que no es «falta un campo»: que el email y el WhatsApp estén bien
 // escritos (un número mal puesto deja el botón de WhatsApp sin funcionar).
 // Los enlaces de las redes ya los revisa camposPagina (tipo 'url').
 export function validarExtraContacto(datos) {
   const errores = [];
   if (datos.email && !emailValido(datos.email)) errores.push('Revisa el email: tiene que ser como nombre@felycampo.com.');
-  if (datos.telefono && !telefonoValido(datos.telefono)) errores.push('Revisa el teléfono: empieza por el prefijo del país, por ejemplo +34 659 00 62 57.');
   if (datos.whatsapp && !telefonoValido(datos.whatsapp)) errores.push('Revisa el número de WhatsApp: empieza por el prefijo del país, por ejemplo +34 659 00 62 57.');
   return errores;
 }

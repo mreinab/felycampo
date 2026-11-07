@@ -77,10 +77,10 @@
     "composicionTexto": "100% materiales de temporada, seleccionados por nuestro equipo de diseño.",
     "origenDisenado": "Diseñado en: Salamanca, España",
     "origenFabricado": "Fabricado en: <talleres>nuestros talleres</talleres> de Salamanca, España",
+    "etiquetaDisenado": "Diseñado en",
+    "etiquetaFabricado": "Fabricado en",
     "sku": "Ref.",
     "categorias": "Categorías",
-    "porEncargoTitulo": "Producto por Encargo (PRE-ORDER)",
-    "porEncargoTexto": "Esta prenda se realiza por encargo específicamente para cada pedido y cliente, por lo que no se admite realizar devolución una vez confirmado el pedido. Por ello puedes contactar con nosotros para más información y para hacer el pedido a través de nuestro botón de más información.",
     "envios": "Envíos y devoluciones",
     "enviosSubtitulo": "Envíos",
     "devolucionesSubtitulo": "Devoluciones",
@@ -124,17 +124,6 @@
     "intro": "Donde las manos cuentan historias\n\nCada pieza Fely Campo nace cerca. En nuestro atelier y en dos pequeños talleres de la sierra, manos expertas transforman cada tejido con tiempo, precisión y sensibilidad. Detrás de esas manos hay mujeres, oficio y territorio.",
     "filtroTodo": "Ver todo"
   },
-  "sobreFely": {
-    "eyebrow": "La Diseñadora",
-    "tituloHero": "Fely Campo",
-    "titulo": "Conoce a Fely Campo",
-    "trayectoria": "Trayectoria",
-    "manifiestoEyebrow": "Manifiesto — Colección Ibiza"
-  },
-  "responsabilidad": {
-    "eyebrow": "Manifiesto sostenible",
-    "titulo": "El compromiso de Fely Campo con la moda"
-  },
   "blog": {
     "volver": "Volver al blog",
     "leerArticulo": "Leer artículo",
@@ -145,26 +134,6 @@
     "filtroTodo": "Ver todo",
     "filtroBlog": "Blog",
     "filtroPodcast": "Podcast"
-  },
-  "atencionCliente": {
-    "titulo": "Atención al cliente",
-    "emailLabel": "Email",
-    "telefonoLabel": "Teléfono",
-    "horarioLabel": "Horario",
-    "clickCollectLabel": "Click & Collect",
-    "clickCollect": "Recogida en nuestro atelier de Salamanca.",
-    "direccionLabel": "Atelier"
-  },
-  "envios": {
-    "titulo": "Envíos",
-    "texto": "Preparamos cada pedido a mano en nuestro atelier de Salamanca y lo enviamos a toda España y a la Unión Europea.",
-    "entregaLabel": "Entrega estimada",
-    "entrega": "2 semanas",
-    "zonaLabel": "Zona de envío",
-    "zona": "España y Unión Europea",
-    "seguimientoLabel": "Seguimiento",
-    "seguimiento": "Recibirás un email con el número de seguimiento en cuanto tu pedido salga del atelier.",
-    "dudasTexto": "¿Tienes alguna duda sobre tu envío? Escríbenos a <email>{correo}</email> o consulta <atencion>Atención al cliente</atencion>."
   },
   "whatsappFlotante": {
     "label": "Escríbenos por WhatsApp"
@@ -254,19 +223,6 @@
     "enviar": "Enviar solicitud",
     "confirmacionTitulo": "¡Solicitud enviada!",
     "confirmacionTexto": "Gracias por tu interés en Fely Campo. Te hemos enviado un email con los datos de tu consulta y nuestro equipo te escribirá en breve con toda la información.",
-    "cerrar": "Cerrar"
-  },
-  "contactoProducto": {
-    "titulo": "Contacta con nosotros",
-    "subtitulo": "Cuéntanos qué necesitas y te contestamos lo antes posible.",
-    "nombre": "Nombre",
-    "nombrePlaceholder": "María Martín",
-    "email": "Email",
-    "emailPlaceholder": "maria@ejemplo.com",
-    "avisoDatos": "Completa tu nombre y email para continuar.",
-    "enviar": "Enviar",
-    "confirmacionTitulo": "¡Listo!",
-    "confirmacionTexto": "Hemos recibido tu mensaje. Nuestro equipo se pondrá en contacto contigo enseguida.",
     "cerrar": "Cerrar"
   },
   "pedirCitaAtelier": {
@@ -366,18 +322,6 @@
     "runway": "Colección de pasarela",
     "atelierCiudad": "Visítanos siempre con cita previa."
   },
-  "citaFelyLanding": {
-    "texto": "Lo que quiero transmitir con mis vestidos es <em>un sentimiento y una pasión</em> por lo que es mi oficio y mi profesión, <em>la moda</em>."
-  },
-  "descubreFely": {
-    "titulo": "Descubre a Fely",
-    "cta": "Conoce a la diseñadora"
-  },
-  "heroCarousel": {
-    "entradilla": "El universo de Fely Campo",
-    "descripcion": "Elegancia, sobriedad y un patronaje excelente, en una forma de entender la moda de autor hecha en España.",
-    "cta": "Descubre más"
-  },
   "collectionTitle": {
     "edicionMujer": {
       "label": "Prêt-à-porter FW27",
@@ -402,15 +346,6 @@
       "cta": "Ver todo"
     }
   },
-  "atelierIndex": {
-    "subtitulo": "Fely Campo",
-    "titulo": "Atelier",
-    "conoceColeccion": "Conoce la colección",
-    "pedirCita": "Pide cita",
-    "conoceAteliers": "Conoce nuestros ateliers",
-    "visitanosTitulo": "Visítanos",
-    "visitanosDescripcion": "Conoce cómo trabajamos y visita nuestros ateliers de Salamanca, Madrid u Oviedo. Te atenderemos presencialmente con cita previa."
-  },
   "splitMediaCategorias": {
     "item1": {
       "label": "Vestidos",
@@ -433,10 +368,6 @@
     "verGaleria": "Ver galería",
     "invitadas": "Invitadas",
     "novias": "Novias"
-  },
-  "atelierCategoriaSeo": {
-    "titulo": "{categoria} · {seccion} · Atelier | Fely Campo",
-    "descripcion": "Vestidos de estilo {categoria} en la colección {seccion} del Atelier de Fely Campo. Cita personalizada con nuestra diseñadora."
   },
   "catalogo": {
     "subtituloFelyCampo": "Fely Campo",
@@ -537,10 +468,6 @@
     "texto": "Con más de cinco décadas de trayectoria, Fely Campo está profundamente ligada a la tierra charra, a su luz y a su oficio. Especializada en vestidos de novia, vestidos de fiesta y prêt-à-porter, la firma crea desde el patronaje, la elección de tejidos y el conocimiento de unas manos expertas: un saber hacer que se transmite y permanece.",
     "enlace": "Descubre más"
   },
-  "compromiso": {
-    "texto": "Diseñado & Confeccionado en Salamanca desde 1997",
-    "subtitulo": "Artesanía, Feminidad & Cercanía"
-  },
   "footer": {
     "newsletter": {
       "texto": "Suscríbete y sé la primera en conocer ofertas, colecciones limitadas y novedades.",
@@ -585,30 +512,5 @@
     "eyebrow": "Error 404",
     "texto": "Esta página no existe o se ha movido de sitio.",
     "boton": "Volver al inicio"
-  },
-  "clientsReview": {
-    "titulo": "Ellas te lo cuentan",
-    "resenas": [
-      {
-        "texto": "Muchísimas gracias Fely....me hiciste disfrutar del día más importante...y me hiciste la mujer más feliz....cuando tenga fotos de la fotógrafa profesional te mando por si las quieres publicar...te pondré la reseña que te mereces....Muchísimas gracias por todo y una suerte haberte conocido 🥰🥰",
-        "nombre": "Marta G."
-      },
-      {
-        "texto": "La costura a medida marca la diferencia. Se nota en cada puntada.",
-        "nombre": "Elena R."
-      },
-      {
-        "texto": "Un asesoramiento cercano y honesto, nunca me habían escuchado tanto en una tienda.",
-        "nombre": "Carmen L."
-      },
-      {
-        "texto": "Calidad excepcional y un servicio que te hace sentir única.",
-        "nombre": "Beatriz S."
-      },
-      {
-        "texto": "Volvería sin dudarlo. Fely Campo entiende lo que una mujer necesita.",
-        "nombre": "Lucía M."
-      }
-    ]
   }
 }

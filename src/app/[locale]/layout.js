@@ -30,11 +30,6 @@ import { locales } from '@/i18n';
 // Navbar.jsx si cambian las categorías de Prêt-à-porter.
 const RUTAS_CON_PRODUCT_HERO = [
   '/pret-a-porter',
-  '/pret-a-porter/tops-y-camisetas',
-  '/pret-a-porter/chaquetas-y-abrigos',
-  '/pret-a-porter/faldas',
-  '/pret-a-porter/pantalones',
-  '/pret-a-porter/vestidos',
   '/atelier',
   '/atelier/novias',
   '/atelier/fiesta',
@@ -44,11 +39,9 @@ const RUTAS_CON_PRODUCT_HERO = [
   '/atelier-fiesta/madrid',
   '/atelier-fiesta/oviedo',
   '/sobre-fely',
-  '/responsabilidad',
   '/colecciones-fely-campo',
   '/blog',
   '/talleres-fely-campo',
-  '/ayuda/envios',
   // Páginas legales: portada HeroPagina (ver legal/TextoLegal.jsx).
   '/legal/privacidad',
   '/legal/cookies',
@@ -148,11 +141,6 @@ export default async function RootLayout({ children, params }) {
   // propio hero marcado data-navbar-hero (ver runways-[coleccion]/
   // page.js).
   const esFichaRunway = rutaSinLocale.startsWith('/runways-');
-  // Igual que "esFichaRunway": páginas de categoría de Atelier
-  // (/atelier/{novias,fiesta}/categoria/[categoria], ruta dinámica —
-  // ver ese page.js) llevan el mismo ProductHero que ../page.js, así
-  // que necesitan el mismo Navbar transparente.
-  const esCategoriaAtelier = /^\/atelier\/(novias|fiesta)\/categoria\//.test(rutaSinLocale);
   // Ficha de entrada de blog (/blog/[slug], ruta dinámica — antes /podcast,
   // ver blog/page.js; igual
   // que esFichaRunway, no puede vivir en RUTAS_CON_PRODUCT_HERO):
@@ -185,7 +173,7 @@ export default async function RootLayout({ children, params }) {
           <CarritoProvider>
             <MiCuentaProvider>
               <Navbar
-                transparent={isHome || tieneProductHero || esFichaRunway || esCategoriaAtelier || esHeroBlog}
+                transparent={isHome || tieneProductHero || esFichaRunway || esHeroBlog}
                 crecerLogo={isHome}
                 textoOscuro={esPretAPorter}
               />

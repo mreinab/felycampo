@@ -14,16 +14,10 @@
    TarjetaProducto enlaza aquí vía su prop "hrefBase"
    ('atelier/novias'/'atelier/fiesta' en vez de 'pret-a-porter', ver
    CuadriculaProductos.jsx) — mismo slug que /lib/slugify.js.
-   Acordeon: "Composición" (mismos textos que
-   pret-a-porter/[producto]/page.js) + "Producto por Encargo
-   (PRE-ORDER)" — aquí no tiene sentido "Envíos y devoluciones" (piezas
-   por encargo, no venta online), así que esa fila se sustituye por la
-   de PRE-ORDER, explicando que no se admite devolución una vez
-   confirmado el pedido.
-   "ResenasClientes" (COMENTADO por ahora, a petición — ver JSX):
-   mismo PLACEHOLDER y mismo orden que pret-a-porter/[producto]/page.js
-   — RESENAS_EJEMPLO compartido entre las dos (ver resenasEjemplo.js),
-   no una copia propia de Atelier.
+   Acordeon: "Composición" (mismos textos generales que
+   pret-a-porter/[producto]/page.js). Sin "Envíos y devoluciones" ni
+   "Producto por Encargo (PRE-ORDER)" (quitado el 2026-11-07): la web es
+   de atelier, sin compra online, encargos ni devoluciones.
    "relacionados" (ProductosRecomendados, debajo de la ficha): mismo
    PLACEHOLDER que pret-a-porter/[producto]/page.js — catálogo de
    ejemplo compartido (productosEjemplo.js), sin backend real todavía
@@ -44,8 +38,6 @@ import { getTranslations } from 'next-intl/server';
 import { productosEjemplo } from '@/components/layout/productosEjemplo';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { noviaProductos } from '@/components/layout/noviaProductos';
-// import { RESENAS_EJEMPLO } from '@/components/layout/resenasEjemplo';
-// import { ResenasClientes } from '@/components/layout';
 import FichaAtelierCuerpo from './FichaAtelierCuerpo';
 import { FilaAcordeon, JsonLd } from '@/components/ui';
 import { producto as productoJsonLd, migas } from '@/lib/datosEstructurados';
@@ -58,7 +50,6 @@ const CATALOGOS_REALES = { fiesta: fiestaProductos, novias: noviaProductos };
 
 // Textos ya traducidos que pinta FichaAtelierCuerpo (también los usa la
 // vista previa del admin, ver atelier/fiesta/[producto]/page.js).
-// Reseñas (ResenasClientes) comentadas a petición hasta que hagan falta.
 export async function textosFichaAtelier(locale) {
   const tProducto = await getTranslations({ locale, namespace: 'producto' });
   return {
@@ -71,9 +62,6 @@ export async function textosFichaAtelier(locale) {
             {/* "nuestros talleres" enlaza a /talleres-fely-campo (a petición). */}
             <p>{tProducto.rich('origenFabricado', { talleres: (chunks) => <a href={`/${locale}/talleres-fely-campo`} className="enlace-texto">{chunks}</a> })}</p>
           </div>
-        </FilaAcordeon>
-        <FilaAcordeon titulo={tProducto('porEncargoTitulo')}>
-          <p>{tProducto('porEncargoTexto')}</p>
         </FilaAcordeon>
       </>
     ),

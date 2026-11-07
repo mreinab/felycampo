@@ -5,13 +5,12 @@
 /* ============================================================
    CARRUSEL DE FOTOS (hover) — Fely Campo
    Pieza reutilizable: dado un array de fotos, las cicla con cross-fade
-   + una barra de progreso segmentada superpuesta arriba (mismo
-   lenguaje visual que SectionClientsReview.jsx) al pasar el ratón por
-   encima. En dispositivos sin ratón real (móvil/táctil, "hover: hover"
+   + una barra de progreso segmentada superpuesta arriba al pasar el
+   ratón por encima. En dispositivos sin ratón real (móvil/táctil, "hover: hover"
    no coincide) arranca sola al montar y sigue en bucle sin parar — ahí
    no hay "hover" al que esperar.
-   Usada por ResenasClientes.jsx (TarjetaResena) y GaleriaVosotras.jsx
-   — cada una le da su propio tamaño/aspect-ratio/radio/overflow al
+   Usada por GaleriaVosotras.jsx, CarruselClientas.jsx y
+   ListadoUbicaciones.jsx — cada una le da su propio tamaño/aspect-ratio/radio/overflow al
    contenedor que la envuelve (ver "Uso" abajo): este componente ocupa
    el 100% de ese contenedor (position:absolute, inset:0), no decide
    su propio tamaño.
@@ -27,8 +26,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './CarruselFotos.module.css';
 
 // Debe coincidir con la duración de @keyframes avanceProgresoFoto en
-// CarruselFotos.module.css (2s) — mismo criterio/comentario que
-// SLIDE_DURATION_MS en SectionClientsReview.jsx.
+// CarruselFotos.module.css (2s).
 const INTERVALO_MS = 2000;
 
 function CarruselFotos({ fotos = [] }) {

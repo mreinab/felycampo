@@ -8,10 +8,9 @@
    Datos y reglas: lib/atelierEditorial.js. Ver docs/admin-atelier-editorial.md.
    ============================================================ */
 
-import { CATEGORIAS_PRET_A_PORTER_PAGINA, ID_PAGINA_PRET_A_PORTER, camposEditorialPretAPorter } from '@/lib/atelierEditorial';
+import { ID_PAGINA_PRET_A_PORTER, camposEditorialPretAPorter } from '@/lib/atelierEditorial';
 import EditorPagina from './EditorPagina';
 import editorStyles from './EditorPagina.module.css';
-import styles from './AdminColeccionesAtelier.module.css';
 
 const BLOQUES = [
   {
@@ -27,13 +26,6 @@ const BLOQUES = [
     resumen: 'Bajo el título',
     descripcion: 'El texto que presenta las prendas, bajo el título «Prêt-à-porter» y antes de los productos.',
     datos: (d) => d.descripcion,
-  },
-  {
-    id: 'categorias',
-    nombre: 'Páginas de categoría',
-    resumen: 'Una foto por categoría',
-    descripcion: 'Lo que sale arriba en cada categoría (/pret-a-porter/vestidos…): su foto a todo el ancho, y el texto encima de las prendas, el mismo para todas.',
-    datos: (d) => d.categorias,
   },
 ];
 
@@ -51,22 +43,6 @@ function AdminPaginaPretAPorter({ pestanas }) {
     >
       {(bloque, h) => {
         if (bloque.id === 'portada') return h.galeria(['portada'], { columnas: 6, textoAnadir: 'Añadir fotos' });
-        if (bloque.id === 'categorias') {
-          return (
-            <>
-              <div className={styles.fotosCategorias}>
-                {CATEGORIAS_PRET_A_PORTER_PAGINA.map(({ id, nombre }) => (
-                  <div key={id}>
-                    {h.medio(['categorias', 'imagenes', id], { etiqueta: nombre, detalle: 'Horizontal', proporcion: '16 / 9' })}
-                  </div>
-                ))}
-              </div>
-              <div className={editorStyles.columnaTexto} style={{ marginTop: 'var(--spacing-6)' }}>
-                {h.texto(['categorias', 'texto'], { etiqueta: 'Texto encima de las prendas', multilinea: true, filas: 4 })}
-              </div>
-            </>
-          );
-        }
         return (
           <div className={editorStyles.columnaTexto}>
             {h.texto(['descripcion'], { etiqueta: 'Texto', parrafos: true, filas: 5 })}

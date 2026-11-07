@@ -27,10 +27,8 @@ const nextConfig = {
       { source: '/admin', headers: NOINDEX },
       { source: '/admin/:path*', headers: NOINDEX },
       { source: '/api/:path*', headers: NOINDEX },
-      // Páginas privadas o transaccionales (ya llevan <meta robots
-      // noindex>, ver metadataPagina): también por cabecera.
-      { source: '/:locale(es|en)/:privada(carrito|wishlist|mi-cuenta)/:path*', headers: NOINDEX },
-      { source: '/:locale(es|en)/:privada(carrito|wishlist|mi-cuenta)', headers: NOINDEX },
+      // Confirmaciones de cita (ya llevan <meta robots noindex>, ver
+      // metadataPagina): también por cabecera.
       { source: '/:locale(es|en)/visita-fely-campo/cita/:confirmacion(confirmacion.*)', headers: NOINDEX },
       // Fuera del despliegue definitivo (staging, deploy previews, branch
       // deploys): noindex en absolutamente todo, archivos incluidos.
@@ -57,13 +55,13 @@ const nextConfig = {
         destination: '/:locale/sobre-fely',
         statusCode: 301,
       },
-      // Categorías de Atelier: antes en camelCase (/categoria/corteA), ahora
-      // en minúsculas con guiones (/categoria/corte-a, ver slugCategoria en
-      // estiloSiluetaGrupos.js).
+      // Categorías de Atelier en camelCase (/categoria/corteA), de antes de
+      // pasar a minúsculas con guiones. Las páginas de categoría se quitaron
+      // el 2026-11-07: van directas a su sección (ver src/proxy.js).
       ...[['corteA', 'corte-a'], ['dosPiezas', 'dos-piezas'], ['alfombraRoja', 'alfombra-roja'], ['escoteEspalda', 'escote-espalda']]
         .map(([antes, ahora]) => ({
           source: `/:locale(es|en)/atelier/:seccion(novias|fiesta)/categoria/${antes}`,
-          destination: `/:locale/atelier/:seccion/categoria/${ahora}`,
+          destination: '/:locale/atelier/:seccion',
           statusCode: 301,
         })),
       // Sitemaps de WordPress (los que conoce Google Search Console).

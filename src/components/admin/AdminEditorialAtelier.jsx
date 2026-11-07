@@ -47,13 +47,6 @@ function bloquesEditor(datos) {
     ...(datos.bloques.length === 0 ? [{
       id: 'sin-bloques', nombre: 'Bloques de foto y texto', resumen: 'Ninguno', descripcion: 'Fotos (o vídeos) con su título y su texto, en zigzag, bajo la introducción.', datos: (d) => d.bloques,
     }] : []),
-    ...(datos.categorias ? [{
-      id: 'categorias',
-      nombre: 'Páginas de categoría',
-      resumen: 'Foto y texto de arriba',
-      descripcion: 'Lo que sale arriba en cada página de categoría (por ejemplo «Alfombra roja»): la foto a todo el ancho y el texto encima de los looks. Es el mismo para todas las categorías.',
-      datos: (d) => d.categorias,
-    }] : []),
     {
       id: 'galeria', nombre: 'Galería', resumen: 'Fotos y vídeos del final', descripcion: 'Las fotos (y vídeos) que cierran la parte editorial, en este orden. Arrastra para cambiarlo.', datos: (d) => d.backstage,
     },
@@ -118,17 +111,6 @@ function AdminEditorialAtelier({
             <div className={editorStyles.dosColumnas}>
               {h.texto(['pestanas', 'atelier'], { etiqueta: '1.ª pestaña (la parte editorial)', largoRecomendado: 25 })}
               {h.texto(['pestanas', 'colecciones'], { etiqueta: '2.ª pestaña (la colección)', largoRecomendado: 25 })}
-            </div>
-          );
-        }
-        if (bloque.id === 'categorias') {
-          return (
-            <div className={editorStyles.medioYCampos}>
-              {h.medio(['categorias', 'imagen'], { etiqueta: 'Foto', detalle: 'Horizontal', proporcion: '16 / 9' })}
-              <div className={editorStyles.fichaCampos}>
-                {h.borrador.categorias.subtitulo && h.texto(['categorias', 'subtitulo'], { etiqueta: 'Frase sobre la foto', largoRecomendado: 60 })}
-                {h.texto(['categorias', 'texto'], { etiqueta: 'Texto encima de los looks', multilinea: true, filas: 5 })}
-              </div>
             </div>
           );
         }

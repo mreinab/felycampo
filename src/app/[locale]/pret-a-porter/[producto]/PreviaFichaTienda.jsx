@@ -52,6 +52,7 @@ function PreviaFichaTienda({
     <FichaTiendaCuerpo
       producto={producto}
       descripcion={descripcion}
+      locale={locale}
       relacionados={relacionados}
       textos={textos}
       hrefSeguirExplorando={hrefSeguirExplorando}

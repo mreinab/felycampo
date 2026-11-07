@@ -18,8 +18,7 @@
    .al-scroll/.en-vista en global.css), no de golpe al cargar.
 
    "texto" también admite un array de frases cortas (en vez de un
-   único string) — ver ATELIER_INDEX.descripcion en atelierIndex.js:
-   cada frase se pinta en su propia línea (no un párrafo justificado
+   único string): cada frase se pinta en su propia línea (no un párrafo justificado
    normal) y entra por separado, una detrás de otra (animation-delay
    escalonado sobre la misma animación de .al-scroll/.en-vista), no
    todas de golpe como el párrafo único de siempre. Un solo

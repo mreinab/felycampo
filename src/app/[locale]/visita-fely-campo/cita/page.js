@@ -37,8 +37,7 @@ import SelectorMesAnio from './SelectorMesAnio';
 import styles from './page.module.css';
 
 // Nombres de mes propios (no hay diccionario de meses en messages/
-// {locale}.json todavía) — mismo criterio bilingüe por campo que
-// atelierIndex.js, aquí como array fijo en vez de {es, en} por entrada.
+// {locale}.json todavía): un array fijo por idioma.
 const MESES = {
   es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
   en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],

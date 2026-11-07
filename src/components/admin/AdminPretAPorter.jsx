@@ -85,7 +85,7 @@ function Listado({ categoria }) {
         titulo="Prêt-à-porter"
         subtitulo={`${lista.length} productos${categoria ? ` en ${nombreCategoria(categoria).toLowerCase()}` : ''} · ${publicados} en la web · arrastra para cambiar el orden en que salen en la web`}
       >
-        <Boton variante="contorno" nuevaPestana href={categoria ? `/es/pret-a-porter/${categoria}` : '/es/pret-a-porter'}>
+        <Boton variante="contorno" nuevaPestana href="/es/pret-a-porter">
           <ExternalLink size={14} aria-hidden="true" /> Ver en la web
         </Boton>
         <Boton variante="solido" href={`${BASE}?producto=${NUEVO}${categoria ? `&categoria=${categoria}` : ''}`}>
@@ -161,6 +161,13 @@ const BLOQUES = [
   },
   {
     id: 'descripcion', nombre: 'Descripción', resumen: 'Opcional', descripcion: 'El texto bajo el nombre, en la ficha.', datos: (d) => d.descripcion,
+  },
+  {
+    id: 'composicion',
+    nombre: 'Composición y origen',
+    resumen: 'Opcional',
+    descripcion: 'El desplegable «Composición» de la ficha. Lo que dejes vacío sale con el texto general, el mismo para todas las prendas.',
+    datos: (d) => [d.composicion, d.disenadoEn, d.fabricadoEn],
   },
   {
     id: 'colores', nombre: 'Colores', resumen: 'Al menos uno', descripcion: 'Los colores en que está el producto: salen en la tarjeta y en la ficha.', datos: (d) => d.colores,
@@ -265,6 +272,28 @@ function EditarProducto({ id, categoriaInicial }) {
                 opcional: true,
                 ayuda: h.idioma === 'en' ? 'Si se deja vacía, en inglés se enseña la descripción en español.' : undefined,
               })}
+            </div>
+          );
+        }
+        if (bloque.id === 'composicion') {
+          const siVacio = (texto) => (h.idioma === 'en' ? 'Si se deja vacío, en inglés sale el texto en español.' : `Si lo dejas vacío: «${texto}».`);
+          return (
+            <div className={editorStyles.columnaTexto}>
+              {h.texto(['composicion'], {
+                etiqueta: 'Composición',
+                multilinea: true,
+                filas: 3,
+                opcional: true,
+                ayuda: `Por ejemplo: 100% seda. ${siVacio('100% materiales de temporada, seleccionados por nuestro equipo de diseño.')}`,
+              })}
+              <div className={editorStyles.dosColumnas}>
+                {h.texto(['disenadoEn'], { etiqueta: 'Diseñado en', opcional: true, ayuda: siVacio('Salamanca, España') })}
+                {h.texto(['fabricadoEn'], {
+                  etiqueta: 'Fabricado en',
+                  opcional: true,
+                  ayuda: siVacio('nuestros talleres de Salamanca, España'),
+                })}
+              </div>
             </div>
           );
         }

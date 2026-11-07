@@ -31,7 +31,7 @@ import {
 } from 'lucide-react';
 import { Boton, Input, CollectionTitle } from '../ui';
 import {
-  HeroCarousel, MediaBanner, SplitMedia, CuadriculaProductos, BloqueSeccion, SectionClientsReview,
+  HeroCarousel, MediaBanner, SplitMedia, CuadriculaProductos, BloqueSeccion,
 } from '../layout';
 import {
   PageHeader, PickerDrawer, SelectorIdioma, FormSeccion, ModalOverlay, useToast,
@@ -154,8 +154,8 @@ function vistaPreviaDe(bloque, idioma) {
       return (
         <BloqueSeccion imagen={bloque.imagen} titulo={bloque.titulo} texto={bloque.texto} enlace={bloque.enlaceTexto} href="#" />
       );
-    case 'reviews':
-      return <SectionClientsReview />;
+    // 'reviews': las reseñas de ejemplo (SectionClientsReview) se borraron
+    // el 2026-11-07; el bloque ya no pinta nada.
     default:
       return null;
   }

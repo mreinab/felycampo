@@ -30,7 +30,7 @@ export const SEO_TEXTOS = {
     },
     description: {
       es: 'Moda de autor hecha en España. Vestidos de novia y fiesta a medida en Salamanca, Madrid y Oviedo, y prêt-à-porter de Fely Campo. Descubre la firma.',
-      en: 'Spanish fashion house born in Salamanca: made-to-measure bridal and evening gowns at our ateliers in Salamanca, Madrid and Oviedo, plus ready-to-wear online.',
+      en: 'Spanish fashion house born in Salamanca: made-to-measure bridal and evening gowns at our ateliers in Salamanca, Madrid and Oviedo, plus ready-to-wear.',
     },
   },
 
@@ -118,65 +118,15 @@ export const SEO_TEXTOS = {
   '/pret-a-porter': {
     title: {
       es: 'Prêt-à-porter de lujo para mujer | Fely Campo',
-      en: "Women's ready-to-wear | Fely Campo online shop",
+      en: "Women's designer ready-to-wear | Fely Campo",
     },
     h1: {
       es: 'Prêt-à-porter de lujo para mujer de Fely Campo',
       en: "Fely Campo women's ready-to-wear",
     },
     description: {
-      es: 'Descubre el prêt-à-porter de lujo de Fely Campo: vestidos, faldas, pantalones, tops, chaquetas y abrigos de diseño de autor. Compra online.',
-      en: 'Shop Fely Campo ready-to-wear online: dresses, skirts, trousers, tops and coats designed and made in Salamanca, Spain.',
-    },
-  },
-  '/pret-a-porter/vestidos': {
-    title: {
-      es: 'Vestidos de mujer de diseño de autor | Fely Campo',
-      en: "Women's dresses | Fely Campo ready-to-wear",
-    },
-    description: {
-      es: 'Descubre vestidos de mujer de Fely Campo, con patronaje cuidado y tejidos seleccionados para el día a día y ocasiones especiales. Compra online.',
-      en: 'Fely Campo ready-to-wear dresses for everyday and special occasions, made in Salamanca. Shop online.',
-    },
-  },
-  '/pret-a-porter/faldas': {
-    title: {
-      es: 'Faldas de mujer de diseño de autor | Fely Campo',
-      en: "Women's skirts | Fely Campo ready-to-wear",
-    },
-    description: {
-      es: 'Explora las faldas de Fely Campo en tejidos seleccionados y siluetas cuidadas. Descubre la colección de prêt-à-porter y compra online.',
-      en: 'Fely Campo skirts in carefully chosen fabrics, printed and plain, designed and made in Salamanca. Explore the collection online.',
-    },
-  },
-  '/pret-a-porter/pantalones': {
-    title: {
-      es: 'Pantalones de mujer de diseño de autor | Fely Campo',
-      en: "Women's trousers | Fely Campo ready-to-wear",
-    },
-    description: {
-      es: 'Descubre pantalones de mujer de Fely Campo, con patronaje propio y acabados cuidados. Encuentra piezas para combinar y compra online.',
-      en: "Fely Campo women's trousers with in-house pattern cutting and atelier finishes, made in Salamanca. Shop online.",
-    },
-  },
-  '/pret-a-porter/tops-y-camisetas': {
-    title: {
-      es: 'Tops y camisetas de mujer | Prêt-à-porter Fely Campo',
-      en: "Women's tops and T-shirts | Fely Campo",
-    },
-    description: {
-      es: 'Descubre tops, blusas y camisetas de Fely Campo, diseñados para combinar con las prendas de la colección de prêt-à-porter. Compra online.',
-      en: 'Fely Campo ready-to-wear tops, blouses and T-shirts, designed in Salamanca to pair with the rest of the collection. Shop online.',
-    },
-  },
-  '/pret-a-porter/chaquetas-y-abrigos': {
-    title: {
-      es: 'Chaquetas y abrigos de mujer | Prêt-à-porter Fely Campo',
-      en: "Women's jackets and coats | Fely Campo",
-    },
-    description: {
-      es: 'Descubre chaquetas y abrigos de mujer de Fely Campo, con tejidos seleccionados, líneas cuidadas y patronaje de atelier. Compra online.',
-      en: "Fely Campo women's jackets and coats in fine fabrics with atelier pattern cutting, made in Salamanca. Shop online.",
+      es: 'Descubre el prêt-à-porter de lujo de Fely Campo: vestidos, faldas, pantalones, tops, chaquetas y abrigos de diseño de autor. Consúltanos.',
+      en: 'Discover Fely Campo ready-to-wear: dresses, skirts, trousers, tops and coats designed and made in Salamanca, Spain.',
     },
   },
 
@@ -209,16 +159,6 @@ export const SEO_TEXTOS = {
     description: {
       es: 'Conoce cómo se confeccionan las prendas de Fely Campo en Salamanca y en talleres de la sierra de Castilla y León, donde el oficio y las manos expertas dan forma a cada pieza.',
       en: "Meet Fely Campo's workshops: the Salamanca atelier and two small workshops in the sierra where skilled hands make every piece.",
-    },
-  },
-  '/responsabilidad': {
-    title: {
-      es: 'Moda responsable y confección en España | Fely Campo',
-      en: 'Responsible fashion and local production | Fely Campo',
-    },
-    description: {
-      es: 'Descubre el compromiso de Fely Campo con la confección en España, el oficio artesanal y la elección consciente de tejidos para crear prendas cuidadas y duraderas.',
-      en: "Fely Campo's commitment to responsible fashion: local production in Salamanca, artisan craft, chosen fabrics and garments made to last.",
     },
   },
   '/blog': {
@@ -294,28 +234,6 @@ export const SEO_TEXTOS = {
     },
   },
 
-  // ---------- Ayuda ----------
-  '/ayuda/atencion-cliente': {
-    title: {
-      es: 'Atención al cliente de Fely Campo | Ayuda',
-      en: 'Customer service | Fely Campo',
-    },
-    description: {
-      es: 'Teléfono, email y horario de atención al cliente de Fely Campo, y recogida en tienda (Click & Collect) en Salamanca.',
-      en: 'Fely Campo customer service phone, email and opening hours, plus Click & Collect at our Salamanca store.',
-    },
-  },
-  '/ayuda/envios': {
-    title: {
-      es: 'Envíos a España y la UE | Fely Campo',
-      en: 'Shipping to Spain and the EU | Fely Campo',
-    },
-    description: {
-      es: 'Plazos, zonas y seguimiento de los envíos de Fely Campo. Preparamos cada pedido a mano en Salamanca y enviamos a España y a la Unión Europea.',
-      en: 'Fely Campo delivery times, shipping zones and tracking. Each order is hand-packed in Salamanca and shipped to Spain and the European Union.',
-    },
-  },
-
   // ---------- Legal ----------
   '/legal/aviso-legal': {
     title: {
@@ -349,52 +267,12 @@ export const SEO_TEXTOS = {
   },
   '/legal/terminos': {
     title: {
-      es: 'Términos y condiciones de compra | Fely Campo',
-      en: 'Terms and conditions of sale | Fely Campo',
+      es: 'Términos y condiciones | Fely Campo',
+      en: 'Terms and conditions | Fely Campo',
     },
     description: {
-      es: 'Condiciones generales de compra en la tienda online de Fely Campo: pedidos, pagos, envíos y devoluciones.',
-      en: 'General terms of sale for the Fely Campo online shop: orders, payment, shipping and returns.',
-    },
-  },
-
-  // ---------- Privadas (noindex; no salen en el admin) ----------
-  '/carrito': {
-    title: {
-      es: 'Tu carrito | Fely Campo',
-      en: 'Your bag | Fely Campo',
-    },
-    h1: {
-      es: 'Tu carrito',
-      en: 'Your bag',
-    },
-    description: {
-      es: 'Revisa los productos de tu carrito en la tienda online de Fely Campo.',
-      en: 'Review the items in your Fely Campo shopping bag.',
-    },
-  },
-  '/wishlist': {
-    title: {
-      es: 'Tu wishlist | Fely Campo',
-      en: 'Your wishlist | Fely Campo',
-    },
-    h1: {
-      es: 'Tu wishlist',
-      en: 'Your wishlist',
-    },
-    description: {
-      es: 'Las prendas de Fely Campo que has guardado en tu lista de deseos.',
-      en: 'The Fely Campo pieces you have saved to your wishlist.',
-    },
-  },
-  '/mi-cuenta/panel': {
-    title: {
-      es: 'Mi cuenta | Fely Campo',
-      en: 'My account | Fely Campo',
-    },
-    description: {
-      es: 'Tus pedidos, reseñas y datos de cliente de Fely Campo.',
-      en: 'Your Fely Campo orders, reviews and account details.',
+      es: 'Condiciones de uso de la web de Fely Campo: solicitud de cita, información sobre una pieza, encargos en el atelier, compras en boutiques y garantía.',
+      en: 'Terms of use of the Fely Campo website: appointment requests, information about a piece, orders at the atelier, boutique purchases and guarantee.',
     },
   },
 };

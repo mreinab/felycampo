@@ -14,7 +14,7 @@
    Cada tarjeta abre con una mini-galería de 2-3 fotos propias de la
    sede (ver .galeria en page.module.css y FOTOS_POR_CIUDAD/fotosDe más
    abajo) que ciclan con cross-fade al hover — CarruselFotos, ui/,
-   mismo componente que ResenasClientes/GaleriaVosotras — en vez de una
+   mismo componente que GaleriaVosotras — en vez de una
    sola foto fija. Cada tarjeta aparece con scroll (<EnVista>,
    @/components/ui) — no se llama useEnVista a mano aquí porque el hook
    no puede invocarse dentro del .map de abajo. */

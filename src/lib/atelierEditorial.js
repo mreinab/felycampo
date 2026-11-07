@@ -38,23 +38,8 @@ export function camposEditorialPretAPorter(datos) {
     {
       bloque: 'descripcion', nombre: 'la descripción', tipo: 'texto', valor: datos.descripcion, requerido: true,
     },
-    ...CATEGORIAS_PRET_A_PORTER_PAGINA.map(({ id, nombre }) => ({
-      bloque: 'categorias', nombre: `la foto de «${nombre}»`, tipo: 'medio', valor: datos.categorias.imagenes[id], requerido: true,
-    })),
-    {
-      bloque: 'categorias', nombre: 'el texto de las categorías', tipo: 'texto', valor: datos.categorias.texto, requerido: true,
-    },
   ];
 }
-
-// Las 5 categorías de /pret-a-porter, con su foto de cabecera.
-export const CATEGORIAS_PRET_A_PORTER_PAGINA = [
-  { id: 'vestidos', nombre: 'Vestidos' },
-  { id: 'faldas', nombre: 'Faldas' },
-  { id: 'pantalones', nombre: 'Pantalones' },
-  { id: 'tops-y-camisetas', nombre: 'Tops y camisetas' },
-  { id: 'chaquetas-y-abrigos', nombre: 'Chaquetas y abrigos' },
-];
 
 // Un bloque de foto + texto nuevo, vacío (el id no cambia al moverlo).
 export function nuevoBloqueEditorial() {
@@ -94,21 +79,6 @@ export function camposEditorial(datos) {
         bloque: 'pestanas', nombre: 'el nombre de la 2.ª pestaña', tipo: 'texto', valor: datos.pestanas.colecciones, requerido: true,
       },
     );
-  }
-  if (datos.categorias) {
-    campos.push(
-      {
-        bloque: 'categorias', nombre: 'la foto de las páginas de categoría', tipo: 'medio', valor: datos.categorias.imagen, requerido: true,
-      },
-      {
-        bloque: 'categorias', nombre: 'el texto de las páginas de categoría', tipo: 'texto', valor: datos.categorias.texto, requerido: true,
-      },
-    );
-    if (datos.categorias.subtitulo) {
-      campos.push({
-        bloque: 'categorias', nombre: 'la frase de las páginas de categoría', tipo: 'texto', valor: datos.categorias.subtitulo, requerido: true,
-      });
-    }
   }
   datos.bloques.forEach((bloque, indice) => {
     const de = `del bloque ${indice + 1}`;

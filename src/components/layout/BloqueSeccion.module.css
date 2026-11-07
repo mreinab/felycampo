@@ -13,9 +13,8 @@
   flex-direction: column;
 }
 
-/* min-height, no height: con texto largo (ej. fiesta.texto sin
-   resumir, ver atelierIndex.js) + el padding de .contenidoTexto, una
-   altura fija desbordaba la caja sin overflow:hidden — el texto se
+/* min-height, no height: con texto largo + el padding de
+   .contenidoTexto, una altura fija desbordaba la caja sin overflow:hidden — el texto se
    salía por debajo y quedaba tapado por la siguiente sección al
    pintarse encima (orden natural del DOM). min-height mantiene el
    alto "editorial" cuando el contenido cabe, y crece si no. */

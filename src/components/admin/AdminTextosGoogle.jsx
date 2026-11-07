@@ -25,7 +25,7 @@ const DESCRIPCIONES = {
   atelier: 'La entrada a Atelier, los tres ateliers, Vosotras y las páginas de las colecciones. Cada vestido, cada categoría y cada colección de Runway generan los suyos solos.',
   pretaporter: 'La tienda y sus categorías. Cada prenda genera los suyos sola con su nombre y su descripción.',
   donde: 'Visítanos, el formulario de cita y el mapa de puntos de venta.',
-  ayuda: 'Atención al cliente, envíos y las páginas legales.',
+  legal: 'Aviso legal, privacidad, cookies y términos.',
 };
 
 const BLOQUES = GRUPOS_SEO.map(({ id, nombre, paginas }) => ({

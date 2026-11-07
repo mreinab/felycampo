@@ -13,7 +13,7 @@
 
    Cada tile de la cuadrícula es un "look": su propia mini-galería de
    fotos (CarruselFotos.jsx, ui/ — cross-fade + barra de progreso al
-   hover, mismo componente que ResenasClientes.jsx) más un botón "+"
+   hover) más un botón "+"
    (40px, esquina inferior derecha, ver .abrirBtn) que — igual que
    clicar la propia foto — abre un lightbox a pantalla completa con esa
    mini-galería. Las fotos son reales (público/img/Clientes/CLIENTAS,

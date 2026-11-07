@@ -77,10 +77,10 @@
     "composicionTexto": "100% seasonal materials, selected by our design team.",
     "origenDisenado": "Designed in: Salamanca, Spain",
     "origenFabricado": "Made in: <talleres>our workshops</talleres> in Salamanca, Spain",
+    "etiquetaDisenado": "Designed in",
+    "etiquetaFabricado": "Made in",
     "sku": "Ref.",
     "categorias": "Categories",
-    "porEncargoTitulo": "Made-to-Order Product (PRE-ORDER)",
-    "porEncargoTexto": "This garment is made to order specifically for each order and customer, so returns are not accepted once the order has been confirmed. For this reason, you can contact us for more information and to place your order through our information button.",
     "envios": "Shipping and returns",
     "enviosSubtitulo": "Shipping",
     "devolucionesSubtitulo": "Returns",
@@ -124,17 +124,6 @@
     "intro": "Where hands tell stories\n\nEvery Fely Campo piece is born close by. In our atelier and two small workshops in the sierra, skilled hands transform each fabric with time, precision and sensitivity. Behind those hands are women, craft and territory.",
     "filtroTodo": "View all"
   },
-  "sobreFely": {
-    "eyebrow": "The Designer",
-    "tituloHero": "Fely Campo",
-    "titulo": "Meet Fely Campo",
-    "trayectoria": "Our Story",
-    "manifiestoEyebrow": "Manifesto — Ibiza Collection"
-  },
-  "responsabilidad": {
-    "eyebrow": "Sustainable manifesto",
-    "titulo": "Fely Campo's commitment to fashion"
-  },
   "blog": {
     "volver": "Back to blog",
     "leerArticulo": "Read article",
@@ -145,26 +134,6 @@
     "filtroTodo": "View all",
     "filtroBlog": "Blog",
     "filtroPodcast": "Podcast"
-  },
-  "atencionCliente": {
-    "titulo": "Customer Service",
-    "emailLabel": "Email",
-    "telefonoLabel": "Phone",
-    "horarioLabel": "Hours",
-    "clickCollectLabel": "Click & Collect",
-    "clickCollect": "Pick-up at our Salamanca atelier.",
-    "direccionLabel": "Atelier"
-  },
-  "envios": {
-    "titulo": "Shipping",
-    "texto": "We prepare every order by hand at our atelier in Salamanca and ship it across Spain and the European Union.",
-    "entregaLabel": "Estimated delivery",
-    "entrega": "2 weeks",
-    "zonaLabel": "Shipping area",
-    "zona": "Spain and the European Union",
-    "seguimientoLabel": "Tracking",
-    "seguimiento": "You'll receive an email with your tracking number as soon as your order leaves the atelier.",
-    "dudasTexto": "Any questions about your shipment? Write to us at <email>{correo}</email> or check <atencion>Customer Service</atencion>."
   },
   "whatsappFlotante": {
     "label": "Message us on WhatsApp"
@@ -254,19 +223,6 @@
     "enviar": "Send request",
     "confirmacionTitulo": "Request sent!",
     "confirmacionTexto": "Thank you for your interest in Fely Campo. We've emailed you the details of your enquiry and our team will be in touch shortly with all the details.",
-    "cerrar": "Close"
-  },
-  "contactoProducto": {
-    "titulo": "Contact us",
-    "subtitulo": "Tell us what you're looking for and we'll get back to you as soon as possible.",
-    "nombre": "Name",
-    "nombrePlaceholder": "Jane Smith",
-    "email": "Email",
-    "emailPlaceholder": "jane@example.com",
-    "avisoDatos": "Please fill in your name and email to continue.",
-    "enviar": "Send",
-    "confirmacionTitulo": "All set!",
-    "confirmacionTexto": "We've received your message. Our team will get in touch with you shortly.",
     "cerrar": "Close"
   },
   "pedirCitaAtelier": {
@@ -366,18 +322,6 @@
     "runway": "Runway collection",
     "atelierCiudad": "Visit us, always by appointment."
   },
-  "citaFelyLanding": {
-    "texto": "What I want to convey through my dresses is <em>a feeling, a passion</em> for my craft and my profession, <em>fashion</em>."
-  },
-  "descubreFely": {
-    "titulo": "Discover Fely",
-    "cta": "Meet the designer"
-  },
-  "heroCarousel": {
-    "entradilla": "The world of Fely Campo",
-    "descripcion": "Elegance, restraint and exceptional pattern-making.",
-    "cta": "Discover more"
-  },
   "collectionTitle": {
     "edicionMujer": {
       "label": "FW27 Collection",
@@ -402,15 +346,6 @@
       "cta": "View all"
     }
   },
-  "atelierIndex": {
-    "subtitulo": "Fely Campo",
-    "titulo": "Atelier",
-    "conoceColeccion": "Discover the collection",
-    "pedirCita": "Book an appointment",
-    "conoceAteliers": "Discover our ateliers",
-    "visitanosTitulo": "Visit us",
-    "visitanosDescripcion": "Come and see how we work — we'll welcome you in person at one of our ateliers"
-  },
   "splitMediaCategorias": {
     "item1": {
       "label": "Dresses",
@@ -433,10 +368,6 @@
     "verGaleria": "View gallery",
     "invitadas": "Guests",
     "novias": "Bridal"
-  },
-  "atelierCategoriaSeo": {
-    "titulo": "{categoria} · {seccion} · Atelier | Fely Campo",
-    "descripcion": "{categoria} style dresses in the {seccion} Atelier collection by Fely Campo. Personalized fitting with our designer."
   },
   "catalogo": {
     "subtituloFelyCampo": "Fely Campo",
@@ -537,10 +468,6 @@
     "texto": "Fely Campo was born in Salamanca as a women's fashion house in 1997. Specialised in party and bridal collections, the house has become a benchmark in the industry, both at home and abroad, thanks to its commitment to quality and timeless design.",
     "enlace": "Book an appointment"
   },
-  "compromiso": {
-    "texto": "Designed and made in Salamanca since 1997",
-    "subtitulo": "Craftsmanship, Femininity and Warmth"
-  },
   "footer": {
     "newsletter": {
       "texto": "Sign up for first access to offers, limited collections and new arrivals.",
@@ -585,30 +512,5 @@
     "eyebrow": "Error 404",
     "texto": "This page doesn't exist or has moved.",
     "boton": "Back to home"
-  },
-  "clientsReview": {
-    "titulo": "In their own words",
-    "resenas": [
-      {
-        "texto": "I found the perfect dress for my sister's wedding. The service was exquisite from start to finish.",
-        "nombre": "Marta G."
-      },
-      {
-        "texto": "Made-to-measure tailoring makes all the difference. You can feel it in every stitch.",
-        "nombre": "Elena R."
-      },
-      {
-        "texto": "Warm, honest advice — I've never felt so listened to in a store.",
-        "nombre": "Carmen L."
-      },
-      {
-        "texto": "Exceptional quality and a service that makes you feel unique.",
-        "nombre": "Beatriz S."
-      },
-      {
-        "texto": "I'd come back without hesitation. Fely Campo understands what a woman needs.",
-        "nombre": "Lucía M."
-      }
-    ]
   }
 }

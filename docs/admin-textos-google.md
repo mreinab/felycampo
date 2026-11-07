@@ -4,7 +4,7 @@
 
 ## Qué se edita
 
-28 páginas en 5 bloques (Inicio y Sobre Fely · Atelier y colecciones · Prêt-à-porter · Dónde encontrarnos · Ayuda y textos legales). Por cada página, en español e inglés:
+20 páginas en 5 bloques (Inicio y Sobre Fely · Atelier y colecciones · Prêt-à-porter · Dónde encontrarnos · Textos legales). Por cada página, en español e inglés:
 
 | Campo | Dónde sale | Largo recomendado |
 |---|---|---|
@@ -14,9 +14,9 @@
 
 Al lado de cada página, «Así se vería en Google»: una imitación aproximada del resultado (Google corta por ancho, no por letras). Pasarse del largo recomendado avisa, pero deja publicar. **No deja publicar** si falta un texto o si dos páginas tienen el mismo título o la misma descripción en el mismo idioma (`validarExtraSeo`).
 
-**Fijos a propósito (no salen en el admin):** las páginas privadas (carrito, wishlist, mi cuenta) y las confirmaciones de cita. No salen en Google (noindex), pero siguen en `src/datos/seoTextos.js`.
+**Fijos a propósito (no salen en el admin):** las confirmaciones de cita. No salen en Google (noindex), pero siguen en `src/datos/seoTextos.js`. (Atención al cliente, Envíos, Responsabilidad, carrito, wishlist, Mi cuenta y las categorías de Prêt-à-porter se quitaron de la web el 2026-11-07.)
 
-**Se generan solos** a partir de sus propios datos, así que no están aquí: las fichas de producto (`lib/atelierProductoSeo.js` y `[producto]/page.js`), las categorías de Fiesta y Novias (`lib/atelierCategoriaSeo.js`), las colecciones de Runway y los artículos del blog.
+**Se generan solos** a partir de sus propios datos, así que no están aquí: las fichas de producto (`lib/atelierProductoSeo.js` y `[producto]/page.js`), las colecciones de Runway y los artículos del blog.
 
 ## Piezas
 

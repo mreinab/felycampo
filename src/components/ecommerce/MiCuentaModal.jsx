@@ -30,8 +30,8 @@
    (ni value/onChange); los dos "submit" (formulario + Google) llevan
    preventDefault y navegan directamente a /mi-cuenta/panel como
    demostración de "inicio de sesión con éxito" — no comprueban
-   credenciales de verdad, ver PANEL DE CLIENTE en
-   app/[locale]/mi-cuenta/panel/page.js.
+   credenciales de verdad (la página del panel se quitó el 2026-11-07:
+   sin tienda online; /mi-cuenta/panel redirige a Prêt-à-porter).
    Registro: nombre completo + fecha de nacimiento + email, nada más (a
    petición) — sin contraseña aquí; login: email + contraseña.
    Uso:

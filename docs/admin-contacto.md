@@ -6,13 +6,15 @@
 
 | Bloque | Campos | Dónde sale |
 |---|---|---|
-| Email, teléfono y horario | email, teléfono, horario (es/en) | `/ayuda/atencion-cliente`, `/ayuda/envios`, el aviso de error de los formularios de cita y de solicitud de atelier (`errorEnvio` con `{email}` en `messages/*.json`) |
+| Email de contacto | email | El aviso de error de los formularios de cita y de solicitud de atelier (`errorEnvio` con `{email}` en `messages/*.json`) |
 | Botón de WhatsApp | número, mensaje ya escrito (es/en) | El botón flotante de todas las páginas (`BotonWhatsapp.jsx`). En el admin, «Probar el botón» abre WhatsApp con lo escrito. |
 | Redes sociales | Instagram, Facebook, YouTube, TikTok, Pinterest, LinkedIn (vacía = no sale) | La columna «Síguenos» del pie (`Footer.jsx`) y `sameAs` de la organización para Google (`lib/datosEstructurados.js`) |
 
-No se puede publicar con un email mal escrito, un teléfono o WhatsApp sin prefijo (+34…) o un enlace que no empiece por https://.
+No se puede publicar con un email mal escrito, un WhatsApp sin prefijo (+34…) o un enlace que no empiece por https://.
 
-**Los ateliers** (dirección, teléfonos, WhatsApp, horario) tienen su propia página (ver `docs/admin-ateliers.md`). Sus puntos en el mapa toman de ahí la dirección y el teléfono (`sede` en `src/datos/puntosVenta.js`, `conDatosDeSede` en `lib/puntosVenta.js`): ya no hay dos copias. La dirección de `/ayuda/atencion-cliente` es la del atelier de Salamanca.
+**Teléfono y horario generales: quitados el 2026-11-07**, junto con `/ayuda/atencion-cliente` y `/ayuda/envios` (hablaban de la tienda online, que no existe; ahora redirigen con 301 a Visítanos, ver `RUTAS_ELIMINADAS` en `src/proxy.js`). Eran el único sitio donde salían; cada atelier tiene sus teléfonos y su horario.
+
+**Los ateliers** (dirección, teléfonos, WhatsApp, horario) tienen su propia página (ver `docs/admin-ateliers.md`). Sus puntos en el mapa toman de ahí la dirección y el teléfono (`sede` en `src/datos/puntosVenta.js`, `conDatosDeSede` en `lib/puntosVenta.js`): ya no hay dos copias.
 
 ## Piezas
 

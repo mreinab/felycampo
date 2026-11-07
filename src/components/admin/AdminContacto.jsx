@@ -2,8 +2,8 @@
 
 /* ============================================================
    ADMIN · CONTACTO Y REDES — Fely Campo
-   /admin/contacto: el email, el teléfono y el horario de contacto, el
-   botón flotante de WhatsApp y las redes sociales del pie. Un único sitio
+   /admin/contacto: el email de contacto, el botón flotante de WhatsApp
+   y las redes sociales del pie. Un único sitio
    para toda la web, con el editor común (EditorPagina.jsx). Sin vista
    previa: son datos que salen en muchas páginas a la vez (el pie, el botón
    de WhatsApp…); «Ver la página publicada» abre la de inicio.
@@ -25,10 +25,10 @@ import campos from './CamposEditor.module.css';
 const BLOQUES = [
   {
     id: 'contacto',
-    nombre: 'Email, teléfono y horario',
-    resumen: 'Atención al cliente',
-    descripcion: 'El contacto general de Fely Campo: sale en Atención al cliente, en la página de Envíos y en los avisos de los formularios («si no se envía, escríbenos a…»).',
-    datos: (d) => [d.email, d.telefono, d.horario],
+    nombre: 'Email de contacto',
+    resumen: 'Avisos de los formularios',
+    descripcion: 'El email general de Fely Campo: sale en los avisos de los formularios de cita y de consulta de un vestido («si no se envía, escríbenos a…»).',
+    datos: (d) => [d.email],
   },
   {
     id: 'whatsapp',
@@ -66,13 +66,7 @@ function AdminContacto() {
           return (
             <div className={editorStyles.columnaTexto}>
               <div className={editorStyles.fichaCampos}>
-                <div className={editorStyles.dosColumnas}>
-                  {linea(['email'], { etiqueta: 'Email', tipo: 'email', placeholder: 'info@felycampo.com' })}
-                  {linea(['telefono'], {
-                    etiqueta: 'Teléfono', placeholder: '+34 659 00 62 57', ayuda: 'Con el prefijo +34, para poder llamar desde el móvil.',
-                  })}
-                </div>
-                {h.texto(['horario'], { etiqueta: 'Horario de atención', largoRecomendado: 50 })}
+                {linea(['email'], { etiqueta: 'Email', tipo: 'email', placeholder: 'info@felycampo.com' })}
                 <p className={campos.ayuda}>
                   Los datos de cada atelier (dirección, teléfonos, horario) se cambian en su página:{' '}
                   {IDS_SEDES.map((id, indice) => (

@@ -1,7 +1,7 @@
 // sitemap.xml — generado por Next.js (/sitemap.xml).
 // Todas las páginas públicas indexables, en los dos idiomas, cada una con
-// sus alternates hreflang (es/en/x-default). Fuera: privadas (carrito,
-// wishlist, mi cuenta), confirmaciones de cita y /admin.
+// sus alternates hreflang (es/en/x-default). Fuera: confirmaciones de
+// cita y /admin.
 // Las rutas fijas salen de seoTextos.js (la misma lista que define sus
 // títulos), así que una página nueva con title/description propios entra
 // sola; las dinámicas, de sus propios archivos de datos.
@@ -10,15 +10,11 @@ import { locales, defaultLocale } from '@/i18n';
 import { SITE_URL, rutaConLocale } from '@/lib/seo';
 import { obtenerSeoTextos } from '@/lib/seoTextos';
 import { slugify } from '@/lib/slugify';
-import { parametrosCategoria } from '@/lib/atelierCategoriaSeo';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
 import { noviaProductos } from '@/components/layout/noviaProductos';
 import { fiestaProductos } from '@/components/layout/fiestaProductos';
 import { coleccionesVisiblesRunway } from '@/lib/runway';
-import { productosListadoNovias } from '@/lib/catalogoNovias';
 import { articulosVisibles } from '@/lib/blog';
-
-const RUTAS_PRIVADAS = ['/carrito', '/wishlist', '/mi-cuenta/panel'];
 
 // Prioridad orientativa: home y páginas de conversión (ateliers, cita)
 // arriba; legales abajo.
@@ -47,18 +43,12 @@ function entrada(ruta, prioridadRuta = prioridad(ruta), fecha = undefined) {
 
 export default function sitemap() {
   const fijas = Object.keys(obtenerSeoTextos())
-    .filter((ruta) => !RUTAS_PRIVADAS.includes(ruta) && !ruta.includes('/cita/confirmacion'));
+    .filter((ruta) => !ruta.includes('/cita/confirmacion'));
 
   const dinamicas = [
     ...tiendaProductos.map((p) => [`/pret-a-porter/${slugify(p.nombre)}`, 0.6]),
     ...noviaProductos.map((p) => [`/atelier/novias/${slugify(p.nombre)}`, 0.5]),
     ...fiestaProductos.map((p) => [`/atelier/fiesta/${slugify(p.nombre)}`, 0.5]),
-    // Categorías de Novias: solo si hay alguna colección de Novias publicada
-    // (hoy ninguna, a petición; ver datos/atelierNovias.js).
-    ...(productosListadoNovias().length > 0
-      ? parametrosCategoria(false).map(({ categoria }) => [`/atelier/novias/categoria/${categoria}`, 0.6])
-      : []),
-    ...parametrosCategoria(true).map(({ categoria }) => [`/atelier/fiesta/categoria/${categoria}`, 0.6]),
     ...coleccionesVisiblesRunway().map((c) => [`/runways-${c.slug}`, 0.6]),
     // Episodios de podcast: sin ficha propia (enlazan a YouTube).
     // Artículos del blog publicados (los ocultos no), con su fecha.

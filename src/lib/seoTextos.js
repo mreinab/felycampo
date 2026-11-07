@@ -32,7 +32,6 @@ export const GRUPOS_SEO = [
       ['/sobre-fely', 'Historia de Fely'],
       ['/blog', 'Blog & Podcast'],
       ['/talleres-fely-campo', 'Nuestros talleres'],
-      ['/responsabilidad', 'Responsabilidad'],
     ],
   },
   {
@@ -54,11 +53,6 @@ export const GRUPOS_SEO = [
     nombre: 'Prêt-à-porter',
     paginas: [
       ['/pret-a-porter', 'Prêt-à-porter'],
-      ['/pret-a-porter/vestidos', 'Vestidos'],
-      ['/pret-a-porter/faldas', 'Faldas'],
-      ['/pret-a-porter/pantalones', 'Pantalones'],
-      ['/pret-a-porter/tops-y-camisetas', 'Tops y camisetas'],
-      ['/pret-a-porter/chaquetas-y-abrigos', 'Chaquetas y abrigos'],
     ],
   },
   {
@@ -71,11 +65,9 @@ export const GRUPOS_SEO = [
     ],
   },
   {
-    id: 'ayuda',
-    nombre: 'Ayuda y textos legales',
+    id: 'legal',
+    nombre: 'Textos legales',
     paginas: [
-      ['/ayuda/atencion-cliente', 'Atención al cliente'],
-      ['/ayuda/envios', 'Envíos'],
       ['/legal/aviso-legal', 'Aviso legal'],
       ['/legal/privacidad', 'Política de privacidad'],
       ['/legal/cookies', 'Política de cookies'],

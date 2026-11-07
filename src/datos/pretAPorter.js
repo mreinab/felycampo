@@ -18,6 +18,12 @@
 //   sku              referencia (no se ve; va a los datos para Google). Opcional.
 //   descripcion      { es, en }. En inglés vacía = la española.
 //   colores          [{ hex, nombre }] de la biblioteca de colores del admin.
+//   composicion, disenadoEn, fabricadoEn
+//                    { es, en }, opcionales: el desplegable «Composición» de
+//                    la ficha. Vacío (o sin el campo) = el texto general de
+//                    messages/*.json (producto.composicionTexto,
+//                    origenDisenado, origenFabricado). En inglés vacío = el
+//                    español, como la descripción.
 //   imagenes         en orden: la 1.ª en la tarjeta y la ficha, la 2.ª al
 //                    pasar el ratón por la tarjeta.
 //   fotoPasarela     { src, antes } foto de pasarela que sale junto al

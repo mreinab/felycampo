@@ -69,8 +69,8 @@ export function textosSeo(ruta, locale) {
  * - ruta: ruta SIN locale ("/", "/atelier/novias"...).
  * - titulo/descripcion: opcionales, ganan a seoTextos.js.
  * - imagen: opcional, para Open Graph (ruta pública o URL absoluta).
- * - indexar: false para páginas privadas/transaccionales (carrito,
- *   wishlist, mi cuenta, confirmaciones de cita) — noindex siempre,
+ * - indexar: false para páginas privadas/transaccionales
+ *   (confirmaciones de cita) — noindex siempre,
  *   también en el despliegue definitivo, y fuera del sitemap.
  */
 export function metadataPagina({ locale, ruta, titulo, descripcion, imagen, indexar = true, tipo = 'website' }) {

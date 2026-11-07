@@ -25,14 +25,30 @@ const REGLAS_PREFIJO = [
 
 // Páginas de esta web que se han quitado → su sustituta, en cualquier
 // idioma (la web es de atelier: sin "Contacto" ni "Devoluciones" de
-// tienda online, eliminadas el 2026-11-04). Ruta sin locale.
+// tienda online, eliminadas el 2026-11-04; sin "Envíos" ni "Atención al
+// cliente", que hablaban de la tienda online, ni el manifiesto
+// "Responsabilidad", que no enlazaba nadie, ni carrito, wishlist y Mi
+// cuenta, de la tienda online que no existe, eliminadas el 2026-11-07).
+// Ruta sin locale.
 const RUTAS_ELIMINADAS = {
   '/ayuda/contacto': '/visita-fely-campo',
   // No es una página quitada: la URL que alguien teclearía buscando
   // contacto ("Contacto" del footer ya apunta a los ateliers).
   '/contacto': '/visita-fely-campo',
   '/contact': '/visita-fely-campo',
-  '/ayuda/devoluciones': '/ayuda/atencion-cliente',
+  '/ayuda/devoluciones': '/visita-fely-campo',
+  '/ayuda/envios': '/visita-fely-campo',
+  '/ayuda/atencion-cliente': '/visita-fely-campo',
+  '/responsabilidad': '/sobre-fely',
+  '/carrito': '/pret-a-porter',
+  '/wishlist': '/pret-a-porter',
+  '/mi-cuenta': '/pret-a-porter',
+  '/mi-cuenta/panel': '/pret-a-porter',
+  '/pret-a-porter/vestidos': '/pret-a-porter',
+  '/pret-a-porter/faldas': '/pret-a-porter',
+  '/pret-a-porter/pantalones': '/pret-a-porter',
+  '/pret-a-porter/tops-y-camisetas': '/pret-a-porter',
+  '/pret-a-porter/chaquetas-y-abrigos': '/pret-a-porter',
 };
 
 function destinoEliminada(pathname) {
@@ -40,6 +56,9 @@ function destinoEliminada(pathname) {
   if (!locales.includes(locale)) return null;
   // /podcast y sus entradas pasaron a /blog (2026-11-04): mismo slug.
   if (resto[0] === 'podcast') return `/${locale}/blog${resto.length > 1 ? `/${resto.slice(1).join('/')}` : ''}`;
+  // Páginas de categoría de Atelier (quitadas el 2026-11-07, ver
+  // docs/categorias-guardadas.md): a su sección.
+  if (resto[0] === 'atelier' && ['fiesta', 'novias'].includes(resto[1]) && resto[2] === 'categoria') return `/${locale}/atelier/${resto[1]}`;
   const destino = RUTAS_ELIMINADAS[`/${resto.join('/')}`];
   return destino ? `/${locale}${destino}` : null;
 }

@@ -8,8 +8,7 @@
    BloqueSeccion ("De mujeres, Para mujeres, Por las mujeres") — sin
    título propio, solo la tira de fotos.
    Cada tile es CarruselFotos (ui/, cross-fade + barra de progreso al
-   pasar el ratón, mismo componente que ResenasClientes.jsx/
-   GaleriaVosotras.jsx) + el botón "+" (40px, esquina inferior derecha,
+   pasar el ratón, mismo componente que GaleriaVosotras.jsx) + el botón "+" (40px, esquina inferior derecha,
    visible solo al hover, ver .abrirBtn) que — igual que clicar la
    propia foto — abre el lightbox de abajo: MISMO mecanismo 1:1 que
    GaleriaVosotras.jsx (.lightbox/.abierta, cabecera con logo + cerrar,

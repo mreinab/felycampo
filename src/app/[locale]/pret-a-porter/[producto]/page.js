@@ -20,7 +20,7 @@ import { permanentRedirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
-import { FilaAcordeon, JsonLd } from '@/components/ui';
+import { JsonLd } from '@/components/ui';
 import { producto as productoJsonLd, migas } from '@/lib/datosEstructurados';
 import { ID_PREVIA_PRODUCTO, buscarProductoPretAPorter } from '@/lib/pretAPorter';
 import { PARAMETRO_PREVIA } from '@/lib/previa';
@@ -34,7 +34,7 @@ const PreviaFichaTienda = dynamic(() => import('./PreviaFichaTienda'));
 // 3 secciones) — mismo criterio que RUTAS_CON_PRODUCT_HERO en
 // src/app/[locale]/layout.js, para reconocer desde qué categoría llegó
 // la visita (ver "Sigue explorando" más abajo) a partir del Referer.
-const RUTAS_TIENDA = ['/pret-a-porter', '/pret-a-porter/tops-y-camisetas', '/pret-a-porter/chaquetas-y-abrigos', '/pret-a-porter/faldas', '/pret-a-porter/pantalones', '/pret-a-porter/vestidos'];
+const RUTAS_TIENDA = ['/pret-a-porter'];
 const RUTAS_ATELIER = ['/atelier', '/atelier/novias', '/atelier/fiesta', '/atelier/vosotras'];
 
 const enPrevia = async (searchParams) => (await searchParams)?.[PARAMETRO_PREVIA] === ID_PREVIA_PRODUCTO;
@@ -60,7 +60,7 @@ export async function generateMetadata({ params, searchParams }) {
     locale,
     ruta: `/pret-a-porter/${slug}`,
     titulo: `${producto.nombre} | ${esEs ? 'Prêt-à-porter' : 'Ready-to-wear'} Fely Campo`,
-    descripcion: recortar(`${base} ${esEs ? 'Diseñada y confeccionada en Salamanca. Compra online en Fely Campo.' : 'Designed and made in Salamanca. Shop online at Fely Campo.'}`),
+    descripcion: recortar(`${base} ${esEs ? 'Diseñada y confeccionada en Salamanca. Pide información en Fely Campo.' : 'Designed and made in Salamanca. Ask Fely Campo about it.'}`),
     imagen: producto.imagen,
     tipo: 'website',
   });
@@ -89,19 +89,20 @@ export default async function FichaProducto({ params, searchParams }) {
   const hrefSeguirExplorando = esOrigenAtelier || esOrigenTienda ? `/${locale}${rutaOrigen}` : `/${locale}/pret-a-porter`;
   const keySeguirExplorando = esOrigenAtelier ? 'seguirExplorandoAtelier' : 'seguirExplorandoTienda';
 
+  // Textos generales del desplegable «Composición»: los usa la ficha
+  // cuando el producto no trae los suyos (FichaTiendaCuerpo.jsx).
+  // ("Envíos y devoluciones" quitado a petición, 2026-11-04: no habrá
+  // envíos ni devoluciones.)
   const textos = {
-    acordeon: (
-      <FilaAcordeon titulo={t('composicion')}>
-        <p>{t('composicionTexto')}</p>
-        <div>
-          <p>{t('origenDisenado')}</p>
-          {/* "nuestros talleres" enlaza a /talleres-fely-campo (a petición). */}
-          <p>{t.rich('origenFabricado', { talleres: (chunks) => <a href={`/${locale}/talleres-fely-campo`} className="enlace-texto">{chunks}</a> })}</p>
-        </div>
-      </FilaAcordeon>
-      // "Envíos y devoluciones" quitado a petición (2026-11-04): no habrá
-      // envíos ni devoluciones.
-    ),
+    composicion: {
+      titulo: t('composicion'),
+      texto: t('composicionTexto'),
+      disenado: t('origenDisenado'),
+      // "nuestros talleres" enlaza a /talleres-fely-campo (a petición).
+      fabricado: t.rich('origenFabricado', { talleres: (chunks) => <a href={`/${locale}/talleres-fely-campo`} className="enlace-texto">{chunks}</a> }),
+      etiquetaDisenado: t('etiquetaDisenado'),
+      etiquetaFabricado: t('etiquetaFabricado'),
+    },
     seguirExplorando: t(keySeguirExplorando),
   };
 
@@ -122,6 +123,7 @@ export default async function FichaProducto({ params, searchParams }) {
     <FichaTiendaCuerpo
       producto={producto}
       descripcion={descripcion}
+      locale={locale}
       relacionados={relacionados}
       textos={textos}
       hrefSeguirExplorando={hrefSeguirExplorando}
