@@ -7,6 +7,7 @@
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import Boton from '@/components/ui/Boton';
+import { redesConEnlace } from '@/lib/contacto';
 import styles from './Footer.module.css';
 
 // Simulación — sustituir por la llamada real al endpoint de newsletter
@@ -50,16 +51,13 @@ function Footer() {
   // abajo, tienen ahora su propia columna "Información".
   const columnas = [
     { titulo: 'Fely Campo', enlaces: ['Historia', 'Puntos de venta', 'Contacto', 'Pedir cita'] },
-    { titulo: 'Síguenos', enlaces: ['Instagram', 'Facebook', 'YouTube'] },
+    // Las redes que tengan enlace (lib/contacto.js, editables en el admin).
+    { titulo: 'Síguenos', enlaces: redesConEnlace().map(({ nombre }) => nombre) },
     { titulo: 'Información', enlaces: ['Aviso legal', 'Términos y condiciones', 'Política de cookies', 'Política de privacidad'] },
   ];
 
   // Redes sociales: URLs externas, en pestaña nueva (ver el <a> más abajo).
-  const REDES = {
-    'Instagram': 'https://www.instagram.com/felycampo/',
-    'Facebook': 'https://www.facebook.com/fely.campo',
-    'YouTube': 'https://www.youtube.com/channel/UCQeHEIrbwpFjAYtoGfzRUaA',
-  };
+  const REDES = Object.fromEntries(redesConEnlace().map(({ nombre, url }) => [nombre, url]));
 
   // Enlaces internos de las columnas — por etiqueta en vez del nombre
   // técnico de cada ruta.

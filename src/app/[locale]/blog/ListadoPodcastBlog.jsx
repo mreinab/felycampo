@@ -25,6 +25,7 @@ import BlogTarjeta from '@/components/layout/BlogTarjeta';
 import BlogTarjetaPodcastDestacado from '@/components/layout/BlogTarjetaPodcastDestacado';
 import IntroSeccion from '@/components/layout/IntroSeccion';
 import styles from './page.module.css';
+import { useTextoCabecera } from '@/components/layout/CabeceraPagina';
 
 const PREFIJO_PREVIA = 'podcast-';
 
@@ -54,6 +55,8 @@ function useEpisodioEnPrevia() {
 function ListadoPodcastBlog({
   podcasts: publicados, articulos, textos, locale = 'es',
 }) {
+  // Título y texto de entrada: lib/cabeceras.js (con vista previa).
+  const textoCabecera = useTextoCabecera('blog');
   const previa = useEpisodioEnPrevia();
   let podcasts = publicados;
   if (previa) {
@@ -83,8 +86,8 @@ function ListadoPodcastBlog({
   return (
     <>
       <IntroSeccion
-        titulo={textos.introTitulo}
-        texto={textos.introTexto}
+        titulo={textoCabecera('introTitulo')}
+        texto={textoCabecera('introTexto')}
         filtros={filtros}
         activo={filtro}
         onCambiar={setFiltro}

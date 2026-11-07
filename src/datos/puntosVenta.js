@@ -10,13 +10,17 @@
 //   telefono / email   null si la tienda no los da.
 //   foto          la miniatura del listado ('' = una foto de respaldo).
 //   publicado     false = no sale en la web.
+//   sede          (solo los 3 ateliers propios) su dirección y su teléfono
+//                 salen de su página de atelier (src/datos/ateliers.js), así
+//                 no hay dos copias que puedan no coincidir; los de aquí
+//                 quedan como respaldo.
 
 export const PUNTOS_VENTA = [
-  {id: "fely-campo-atelier-novias-salamanca", nombre: "Fely Campo Atelier Novias y fiesta Salamanca", direccion: ["C/ Laguna Negra 17-19","Salamanca 37008"], pais: "España", telefono: "+34 923 19 00 53", email: "info@felycampo.com", lat: 40.9705, lng: -5.6631, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-atelier-novias-salamanca.webp", publicado: true},
-  {id: "fely-campo-madrid-atelier", nombre: "Fely Campo Madrid Atelier", direccion: ["C/ Jorge Juan 29, 1º Derecha","Madrid 28001"], pais: "España", telefono: "+34 659 00 62 57", email: "info@felycampo.com", lat: 40.4257, lng: -3.6836, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-madrid-atelier.webp", publicado: true},
+  {id: "fely-campo-atelier-novias-salamanca", sede: "salamanca", nombre: "Fely Campo Atelier Novias y fiesta Salamanca", direccion: ["C/ Laguna Negra 17-19","Salamanca 37008"], pais: "España", telefono: "+34 923 19 00 53", email: "info@felycampo.com", lat: 40.9705, lng: -5.6631, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-atelier-novias-salamanca.webp", publicado: true},
+  {id: "fely-campo-madrid-atelier", sede: "madrid", nombre: "Fely Campo Madrid Atelier", direccion: ["C/ Jorge Juan 29, 1º Derecha","Madrid 28001"], pais: "España", telefono: "+34 659 00 62 57", email: "info@felycampo.com", lat: 40.4257, lng: -3.6836, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-madrid-atelier.webp", publicado: true},
   {id: "teresa-justel", nombre: "Teresa Justel", direccion: ["Travesía de Colombia 6","Toledo 45004"], pais: "España", telefono: "+34 925 57 88 71", email: "compras@teresajustel.com", lat: 39.8628, lng: -4.0273, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-teresa-justel.webp", publicado: true},
   {id: "for-you", nombre: "For You", direccion: ["C/ Federico García Lorca 1","Burgos 09007"], pais: "España", telefono: "+34 947 47 09 18", email: "tienda@ropaforyouburgos.com", lat: 42.3439, lng: -3.6969, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-for-you.webp", publicado: true},
-  {id: "fely-campo-oviedo", nombre: "Fely Campo Oviedo", direccion: ["C/ Gil de Jaz 15","Oviedo, Asturias 33004"], pais: "España", telefono: "+34 985 73 83 46", email: null, lat: 43.3603, lng: -5.8448, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-oviedo.webp", publicado: true},
+  {id: "fely-campo-oviedo", sede: "oviedo", nombre: "Fely Campo Oviedo", direccion: ["C/ Gil de Jaz 15","Oviedo, Asturias 33004"], pais: "España", telefono: "+34 985 73 83 46", email: null, lat: 43.3603, lng: -5.8448, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-oviedo.webp", publicado: true},
   {id: "lm-company", nombre: "L.M & Company", direccion: ["C/ Doctores Castroviejo 18","Logroño 26003"], pais: "España", telefono: "+34 941 24 48 50", email: null, lat: 42.4627, lng: -2.4449, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-lm-company.webp", publicado: true},
   {id: "pilar-y-carmen", nombre: "Pilar y Carmen", direccion: ["C/ Feijoo 11 - Bajo","A Coruña 15003"], pais: "España", telefono: "+34 981 11 56 10", email: "administracion@pilarycarmen.com", lat: 43.3623, lng: -8.4115, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-pilar-y-carmen.webp", publicado: true},
   {id: "paqui-muriel", nombre: "Paqui Muriel", direccion: ["C/ Antón de Jaén 15","Linares, Jaén 23700"], pais: "España", telefono: "+34 953 69 22 29", email: "murielpastor@hotmail.com", lat: 38.0946, lng: -3.6355, foto: "/img/atelier/puntos-de-venta/fely-campo-punto-de-venta-paqui-muriel.webp", publicado: true},

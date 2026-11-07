@@ -78,7 +78,7 @@
     "origenDisenado": "Designed in: Salamanca, Spain",
     "origenFabricado": "Made in: <talleres>our workshops</talleres> in Salamanca, Spain",
     "sku": "Ref.",
-  "categorias": "Categories",
+    "categorias": "Categories",
     "porEncargoTitulo": "Made-to-Order Product (PRE-ORDER)",
     "porEncargoTexto": "This garment is made to order specifically for each order and customer, so returns are not accepted once the order has been confirmed. For this reason, you can contact us for more information and to place your order through our information button.",
     "envios": "Shipping and returns",
@@ -104,7 +104,6 @@
   "visitenos": {
     "eyebrow": "Visit",
     "titulo": "Our Ateliers",
-    "intro": "Our ateliers and showroom — always by appointment, so we can give you our full attention — in Salamanca, Madrid and Oviedo.",
     "pedirCita": "Book an appointment",
     "conoceMas": "Learn more.",
     "whatsapp": "WhatsApp",
@@ -113,18 +112,11 @@
     "showroomNota": "By-appointment showroom"
   },
   "puntosVenta": {
-    "tituloHero": "Selected Boutiques",
-    "subtituloHero": "Find your Fely Campo at our points of sale.",
     "eyebrow": "Where to find us",
-    "titulo": "Points of sale",
-    "intro": "Our ateliers and the network of boutiques that carry Fely Campo, in Spain and around the world. We have more than 200 points of sale. Find your nearest store",
     "direcciones": "Directions",
     "buscarCpPlaceholder": "Postal code",
     "buscarCpBoton": "Search",
-    "buscarCpError": "Enter a valid Spanish postal code (5 digits).",
-    "internacionalTitulo": "Fely Campo and Guffanti: international presence",
-    "showroomNombre": "Milan Showroom",
-    "showroomTexto": "For more than ten years we have worked with Guffanti, one of our most important international representatives. From its showroom in Milan, it distributes Fely Campo collections to other showrooms across Italy, strengthening the label’s presence in the Italian market."
+    "buscarCpError": "Enter a valid Spanish postal code (5 digits)."
   },
   "talleres": {
     "eyebrow": "Our process",
@@ -150,8 +142,6 @@
     "episodio": "Episode",
     "con": "With",
     "shopHere": "Shop here",
-    "introTitulo": "Podcast & Blog",
-    "introTexto": "A place for unhurried conversation. In the podcast, Fely Campo talks with guests from fashion, art and craft about the stories behind each creation; on the blog we gather reflections, advice for brides and guests, and everyday life in our ateliers. Words, fabric and craft, told first-hand.",
     "filtroTodo": "View all",
     "filtroBlog": "Blog",
     "filtroPodcast": "Podcast"
@@ -161,7 +151,6 @@
     "emailLabel": "Email",
     "telefonoLabel": "Phone",
     "horarioLabel": "Hours",
-    "horario": "Mon - Fri: 8:00 AM - 4:00 PM",
     "clickCollectLabel": "Click & Collect",
     "clickCollect": "Pick-up at our Salamanca atelier.",
     "direccionLabel": "Atelier"
@@ -175,11 +164,10 @@
     "zona": "Spain and the European Union",
     "seguimientoLabel": "Tracking",
     "seguimiento": "You'll receive an email with your tracking number as soon as your order leaves the atelier.",
-    "dudasTexto": "Any questions about your shipment? Write to us at <email>info@felycampo.com</email> or check <atencion>Customer Service</atencion>."
+    "dudasTexto": "Any questions about your shipment? Write to us at <email>{correo}</email> or check <atencion>Customer Service</atencion>."
   },
   "whatsappFlotante": {
-    "label": "Message us on WhatsApp",
-    "mensaje": "Hello, I would like some information about Fely Campo."
+    "label": "Message us on WhatsApp"
   },
   "carrito": {
     "titulo": "Cart",
@@ -235,9 +223,18 @@
     "disclaimer": "Measurements are for reference only and may vary slightly depending on material or manufacturing. Use them as a guide when choosing your size.",
     "comoMedir": "How to measure",
     "medidas": {
-      "pecho": { "etiqueta": "Bust", "texto": "Measure around the fullest part of the bust." },
-      "cintura": { "etiqueta": "Waist", "texto": "Measure around the narrowest part of the waist." },
-      "cadera": { "etiqueta": "Hip", "texto": "Measure around the widest part of the hip." }
+      "pecho": {
+        "etiqueta": "Bust",
+        "texto": "Measure around the fullest part of the bust."
+      },
+      "cintura": {
+        "etiqueta": "Waist",
+        "texto": "Measure around the narrowest part of the waist."
+      },
+      "cadera": {
+        "etiqueta": "Hip",
+        "texto": "Measure around the widest part of the hip."
+      }
     }
   },
   "solicitudAtelier": {
@@ -253,7 +250,7 @@
     "comentarioPlaceholder": "Tell us any additional details…",
     "avisoDatos": "Please fill in your name and email and accept the privacy policy to continue.",
     "enviando": "Sending…",
-    "errorEnvio": "We couldn't send your enquiry. Please try again or email us at info@felycampo.com.",
+    "errorEnvio": "We couldn't send your enquiry. Please try again or email us at {email}.",
     "enviar": "Send request",
     "confirmacionTitulo": "Request sent!",
     "confirmacionTexto": "Thank you for your interest in Fely Campo. We've emailed you the details of your enquiry and our team will be in touch shortly with all the details.",
@@ -304,7 +301,7 @@
     "tipoNovia": "Bride",
     "tipoInvitada": "Guest",
     "enviando": "Sending…",
-    "errorEnvio": "We couldn't send your request. Please try again or email us at info@felycampo.com.",
+    "errorEnvio": "We couldn't send your request. Please try again or email us at {email}.",
     "confirmacionNoviaTitulo": "Your bridal appointment has been requested!",
     "confirmacionNoviaTexto": "Thank you for trusting Fely Campo with your wedding dress. We've emailed you the details of your request and the atelier team will be in touch to confirm the day and time.",
     "confirmacionInvitadaTitulo": "Your guest appointment has been requested!",
@@ -362,19 +359,12 @@
     "cerrar": "Close"
   },
   "heroPagina": {
-    "podcast": "Between fabrics and words.",
-    "runwayArchivo": "All our runway collections.",
     "atelierNovias": "Made-to-measure bridal gowns, crafted in our atelier.",
     "atelierFiesta": "Made-to-measure evening and guest dresses.",
     "pretAPorter": "Everyday pieces, made with atelier care.",
     "sobreFely": "A life among fabrics",
     "runway": "Runway collection",
     "atelierCiudad": "Visit us, always by appointment."
-  },
-  "pedirCitaLanding": {
-    "titulo": "See you at our ateliers",
-    "cta": "Book your appointment",
-    "ctaAtelier": "Discover more"
   },
   "citaFelyLanding": {
     "texto": "What I want to convey through my dresses is <em>a feeling, a passion</em> for my craft and my profession, <em>fashion</em>."
@@ -440,7 +430,6 @@
     "reservarCita": "Book your appointment"
   },
   "vosotras": {
-    "descripcion": "And what can we say about you? If words aren't enough, let the photos speak.",
     "verGaleria": "View gallery",
     "invitadas": "Guests",
     "novias": "Bridal"
@@ -453,7 +442,6 @@
     "subtituloFelyCampo": "Fely Campo",
     "subtituloTienda": "Prêt-à-porter",
     "tituloTienda": "Prêt-à-porter",
-    "tituloColecciones": "Collections and runway shows",
     "tituloTops": "Tops & T-shirts"
   },
   "cuadriculaProductos": {
@@ -566,8 +554,6 @@
     }
   },
   "newsletterPopup": {
-    "titulo": "Join Fely Campo",
-    "subtitulo": "Sign up to our newsletter for first access to special offers, limited collections, new arrivals and to stay connected with our community.",
     "consentimiento": "You agree to receive marketing emails.",
     "noGracias": "No, thanks",
     "cerrar": "Close"
@@ -603,11 +589,26 @@
   "clientsReview": {
     "titulo": "In their own words",
     "resenas": [
-      { "texto": "I found the perfect dress for my sister's wedding. The service was exquisite from start to finish.", "nombre": "Marta G." },
-      { "texto": "Made-to-measure tailoring makes all the difference. You can feel it in every stitch.", "nombre": "Elena R." },
-      { "texto": "Warm, honest advice — I've never felt so listened to in a store.", "nombre": "Carmen L." },
-      { "texto": "Exceptional quality and a service that makes you feel unique.", "nombre": "Beatriz S." },
-      { "texto": "I'd come back without hesitation. Fely Campo understands what a woman needs.", "nombre": "Lucía M." }
+      {
+        "texto": "I found the perfect dress for my sister's wedding. The service was exquisite from start to finish.",
+        "nombre": "Marta G."
+      },
+      {
+        "texto": "Made-to-measure tailoring makes all the difference. You can feel it in every stitch.",
+        "nombre": "Elena R."
+      },
+      {
+        "texto": "Warm, honest advice — I've never felt so listened to in a store.",
+        "nombre": "Carmen L."
+      },
+      {
+        "texto": "Exceptional quality and a service that makes you feel unique.",
+        "nombre": "Beatriz S."
+      },
+      {
+        "texto": "I'd come back without hesitation. Fely Campo understands what a woman needs.",
+        "nombre": "Lucía M."
+      }
     ]
   }
 }

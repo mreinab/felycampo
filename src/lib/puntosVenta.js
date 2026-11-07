@@ -8,15 +8,32 @@
 // obtenerPuntosVenta(). Ver docs/admin-puntos-venta.md.
 
 import { PUNTOS_VENTA } from '@/datos/puntosVenta';
+import { obtenerSede, ubicacionDe } from './ateliers';
 import { slugify } from './slugify';
 
 export const ID_PREVIA_PUNTOS = 'puntos-venta';
 export const RUTA_WEB_PUNTOS = '/puntos-de-venta-fely-campo';
 export const EDITOR_PUNTOS = '/admin/puntos-de-venta';
 
-// Todos, también los ocultos (el admin y el reparto de citas).
-export function obtenerPuntosVenta() {
+// Un atelier propio («sede») toma la dirección y el teléfono de su página
+// de atelier. "sedes": (id) => la sede (por defecto, lo publicado; el admin
+// pasa lo que tiene publicado en memoria).
+export function conDatosDeSede(punto, sedes = obtenerSede) {
+  const sede = punto.sede && sedes(punto.sede);
+  if (!sede) return punto;
+  const ubicacion = ubicacionDe(sede);
+  return { ...punto, direccion: ubicacion.direccion, telefono: ubicacion.telefonos[0] || null };
+}
+
+// Tal como se guardan (el admin los edita así).
+export function puntosGuardados() {
   return PUNTOS_VENTA;
+}
+
+// Todos, también los ocultos, con los datos de los ateliers al día (la web
+// y el reparto de citas).
+export function obtenerPuntosVenta() {
+  return PUNTOS_VENTA.map((punto) => conDatosDeSede(punto));
 }
 
 // Los que salen en el mapa de la web (y con su sitio marcado: uno a
@@ -28,8 +45,9 @@ export function puntosPublicados(puntos = PUNTOS_VENTA) {
 }
 
 // Los ateliers propios también están en el mapa, pero no se pueden
-// borrar desde aquí (el reparto de citas cuenta con ellos).
-export const esAtelierPropio = (punto) => punto.id.startsWith('fely-campo');
+// borrar desde aquí (el reparto de citas cuenta con ellos), y su dirección
+// y su teléfono se cambian en su página de atelier.
+export const esAtelierPropio = (punto) => Boolean(punto.sede) || punto.id.startsWith('fely-campo');
 
 // España primero y luego el resto, de más a menos puntos.
 export function paisesDe(puntos) {

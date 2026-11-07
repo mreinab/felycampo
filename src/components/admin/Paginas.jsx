@@ -22,6 +22,10 @@ import {
   ID_PAGINA_FIESTA, ID_PAGINA_NOVIAS, ID_PAGINA_PRET_A_PORTER, obtenerEditorialFiesta, obtenerEditorialNovias, obtenerEditorialPretAPorter,
 } from '@/lib/atelierEditorial';
 import { idPaginaSede, obtenerSedes } from '@/lib/ateliers';
+import { ID_PAGINA_CONTACTO, obtenerContacto } from '@/lib/contacto';
+import { idPaginaCabecera, obtenerCabeceras } from '@/lib/cabeceras';
+import { ID_PAGINA_PIEZAS, obtenerPiezasComunes } from '@/lib/piezasComunes';
+import { ID_PAGINA_SEO, obtenerSeoTextos } from '@/lib/seoTextos';
 
 const PaginasContext = createContext(null);
 
@@ -35,6 +39,13 @@ function PaginasProvider({ children }) {
     [ID_PAGINA_FIESTA]: obtenerEditorialFiesta(),
     [ID_PAGINA_PRET_A_PORTER]: obtenerEditorialPretAPorter(),
     // Los 3 ateliers (sede-salamanca, sede-madrid, sede-oviedo).
+    [ID_PAGINA_CONTACTO]: obtenerContacto(),
+    // Fotos del menú, banda «Pedir cita», tarjetas de los ateliers y newsletter.
+    [ID_PAGINA_PIEZAS]: obtenerPiezasComunes(),
+    // Título y descripción de las páginas fijas en Google.
+    [ID_PAGINA_SEO]: obtenerSeoTextos(),
+    // Cabeceras de Blog, Vosotras, Runway, Visítanos y Puntos de venta.
+    ...Object.fromEntries(Object.entries(obtenerCabeceras()).map(([id, datos]) => [idPaginaCabecera(id), datos])),
     ...Object.fromEntries(obtenerSedes().map((sede) => [idPaginaSede(sede.id), sede])),
   }));
 

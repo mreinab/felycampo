@@ -8,7 +8,7 @@
 
 import { locales, defaultLocale } from '@/i18n';
 import { SITE_URL, rutaConLocale } from '@/lib/seo';
-import { SEO_TEXTOS } from '@/lib/seoTextos';
+import { obtenerSeoTextos } from '@/lib/seoTextos';
 import { slugify } from '@/lib/slugify';
 import { parametrosCategoria } from '@/lib/atelierCategoriaSeo';
 import { tiendaProductos } from '@/components/layout/tiendaProductos';
@@ -46,7 +46,7 @@ function entrada(ruta, prioridadRuta = prioridad(ruta), fecha = undefined) {
 }
 
 export default function sitemap() {
-  const fijas = Object.keys(SEO_TEXTOS)
+  const fijas = Object.keys(obtenerSeoTextos())
     .filter((ruta) => !RUTAS_PRIVADAS.includes(ruta) && !ruta.includes('/cita/confirmacion'));
 
   const dinamicas = [

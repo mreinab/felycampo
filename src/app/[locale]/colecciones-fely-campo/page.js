@@ -9,7 +9,9 @@
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';
-import { HeroPagina, RunwayTarjeta } from '@/components/layout';
+import { RunwayTarjeta } from '@/components/layout';
+import { CabeceraPagina, HeroCabecera } from '@/components/layout/CabeceraPagina';
+import { obtenerCabecera } from '@/lib/cabeceras';
 import { coleccionParaWeb, coleccionesVisiblesRunway } from '@/lib/runway';
 import styles from './page.module.css';
 import { metadataPagina } from '@/lib/seo';
@@ -25,14 +27,11 @@ export default async function Pagina({ params }) {
 
   return (
     <>
-    {/* Hero común (HeroPagina): hero-pages-pretaporter-faldas.jpg (a
-        petición; antes la portada de COLECCIONES[0]). */}
-    <HeroPagina
-      imagen="/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-faldas.webp"
-      alt={t('nav.submenus.colecciones.runway')}
-      titulo={/* H1 propio (auditoría SEO M11); el menú sigue con "Runway" */ t('catalogo.tituloColecciones')}
-      subtitulo={t('heroPagina.runwayArchivo')}
-    />
+    {/* Cabecera: lib/cabeceras.js (editable en el admin, Runway › Página
+        de la web, con vista previa). El título es el H1 de la página
+        (auditoría SEO M11); el menú sigue diciendo "Runway". */}
+    <CabeceraPagina id="runway" publicado={obtenerCabecera('runway')}>
+    <HeroCabecera alt={t('nav.submenus.colecciones.runway')} />
     <section className={`${styles.pagina} contenedor`}>
       <div className={styles.grid}>
         {coleccionesVisiblesRunway().map((datos) => coleccionParaWeb(datos, locale)).map((coleccion) => (
@@ -46,6 +45,7 @@ export default async function Pagina({ params }) {
         ))}
       </div>
     </section>
+    </CabeceraPagina>
     </>
   );
 }

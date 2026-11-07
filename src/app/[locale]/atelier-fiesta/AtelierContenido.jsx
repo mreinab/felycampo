@@ -37,7 +37,6 @@ import styles from './page.module.css';
 function AtelierContenido({ publicado, locale }) {
   const { datos, enPrevia } = usePrevia(idPaginaSede(publicado.id), publicado, OPCIONALES_SEDE);
   const tVisitenos = useTranslations('visitenos');
-  const tHero = useTranslations('heroPagina');
   const nombreCiudad = textoEn(datos.nombreCiudad, locale);
   const ubicacion = ubicacionDe(datos);
   const heroMedio = medioParaWeb(datos.heroMedio);
@@ -63,7 +62,7 @@ function AtelierContenido({ publicado, locale }) {
         medio={heroMedio}
         alt={nombreCiudad}
         titulo={[textoEn(datos.etiqueta, locale), nombreCiudad]}
-        subtitulo={tHero('atelierCiudad')}
+        subtitulo={textoEn(datos.subtitulo, locale)}
         className={heroMedio.encuadre === 'arriba' ? 'hero-arriba' : undefined}
       />
 

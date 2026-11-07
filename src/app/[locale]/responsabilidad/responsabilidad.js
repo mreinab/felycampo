@@ -1,5 +1,5 @@
 /* Contenido de /responsabilidad (manifiesto sostenible) — ver page.js.
-   Bilingüe ({es, en}), mismo criterio que atelierIndex.js/sobreFely.js:
+   Bilingüe ({es, en}), mismo criterio que sobreFely.js:
    texto largo y propio de esta página, no encaja en el formato de
    clave corta de messages/{locale}.json (ahí solo viven "eyebrow" y
    "titulo", ver namespace "responsabilidad").

@@ -1,20 +1,23 @@
 /* ============================================================
    BOTÓN FLOTANTE DE WHATSAPP — Fely Campo
-   Fijo abajo a la derecha en todas las páginas (ver layout.js). Mismo
-   número que el WhatsApp del atelier de Madrid (ver src/datos/ateliers.js).
+   Fijo abajo a la derecha en todas las páginas (ver layout.js). El número
+   y el mensaje con el que se abre la conversación salen de lib/contacto.js
+   (editables en el admin: Contacto y redes).
    Icono de trazo fino dibujado a mano (no el logo verde de WhatsApp)
    para ir con la línea del resto del sitio: cuadrado negro suave, icono en
    blanco, y al hover se aclara (ver BotonWhatsapp.module.css).
    ============================================================ */
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { enlaceWhatsapp, obtenerContacto } from '@/lib/contacto';
+import { textoEn } from '@/lib/previa';
 import styles from './BotonWhatsapp.module.css';
-
-const TELEFONO = '34659006257';
 
 export default function BotonWhatsapp() {
   const t = useTranslations('whatsappFlotante');
-  const href = `https://wa.me/${TELEFONO}?text=${encodeURIComponent(t('mensaje'))}`;
+  const locale = useLocale();
+  const contacto = obtenerContacto();
+  const href = enlaceWhatsapp(contacto.whatsapp, textoEn(contacto.mensajeWhatsapp, locale));
 
   return (
     <a

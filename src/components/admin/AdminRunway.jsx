@@ -33,8 +33,13 @@ import { useToast } from './Toast';
 import editorStyles from './EditorPagina.module.css';
 import listado from './ListadoAdmin.module.css';
 import styles from './AdminColeccionesAtelier.module.css';
+import AdminCabecera from './AdminCabecera';
+import { PestanasPagina } from './ListadoAdmin';
 
 const BASE = EDITOR_RUNWAY;
+// Al entrar se abre la página (cabecera del listado de la web); las
+// colecciones están en la segunda pestaña.
+const LISTADO = `${BASE}?vista=colecciones`;
 const DEMO = ' (demo: se guardará de verdad al conectar la base de datos)';
 const urlWeb = (coleccion) => `/es/runways-${coleccion.slug}`;
 
@@ -64,6 +69,8 @@ function Listado() {
           <Plus size={14} aria-hidden="true" /> Nueva colección
         </Boton>
       </PageHeader>
+
+      <PestanasRunway activa="listado" />
 
       <DragList
         items={colecciones}
@@ -138,7 +145,7 @@ function EditarColeccion({ id }) {
   const coleccion = esNueva ? vacia : colecciones.find((c) => c.id === id);
 
   if (!coleccion) {
-    return <p className={listado.vacio}>Esta colección no existe. <Link href={BASE}>Volver a Runway</Link></p>;
+    return <p className={listado.vacio}>Esta colección no existe. <Link href={LISTADO}>Volver a Runway</Link></p>;
   }
   const slug = esNueva ? SLUG_NUEVA_RUNWAY : coleccion.slug;
 
@@ -158,7 +165,7 @@ function EditarColeccion({ id }) {
         if (esNueva) router.replace(`${BASE}?categoria=${nuevoId}`);
       }}
       migas="Runway"
-      volver={BASE}
+      volver={LISTADO}
       estadoPublicado={esNueva ? 'Sin publicar' : (coleccion.publicado ? 'Publicada' : 'Oculta en la web')}
       textoPublicado={esNueva ? 'Colección publicada' : 'Cambios publicados'}
       enLaWeb={!esNueva && coleccion.publicado}
@@ -257,10 +264,17 @@ function EditarColeccion({ id }) {
   );
 }
 
+function PestanasRunway({ activa }) {
+  const { colecciones } = useRunway();
+  return <PestanasPagina etiqueta="Runway" pagina={BASE} listado={{ href: LISTADO, nombre: 'Colecciones', cuenta: colecciones.length }} activa={activa} />;
+}
+
 function AdminRunway() {
   const params = useSearchParams();
   const id = params.get('categoria');
-  return id ? <EditarColeccion id={id} /> : <Listado />;
+  if (id) return <EditarColeccion id={id} />;
+  if (params.get('vista') === 'colecciones') return <Listado />;
+  return <AdminCabecera id="runway" migas="Runway" pestanas={<PestanasRunway activa="pagina" />} />;
 }
 
 export default AdminRunway;

@@ -76,7 +76,15 @@ export const EDITORIAL_NOVIAS = {
     "/img/collections/novia/novias-page/fely-campo-atelier-novias-vestido-novia-01.webp",
     "/img/collections/novia/novias-page/fely-campo-atelier-novias-vestido-novia-03.webp",
     "/img/collections/novia/novias-page/fely-campo-atelier-novias-vestido-novia-04.webp"
-  ]
+  ],
+  // Cabecera de las páginas de categoría (/atelier/novias/categoria/…): foto y texto encima de los looks. Migrado de su page.js y de messages (cuadriculaTabs.descripcion).
+  "categorias": {
+    "imagen": "/img/fely-campo-web-novias-seccion-3.webp",
+    "texto": {
+      "es": "Descubre nuestros vestidos de novia y de fiesta en el atelier. Reserva tu cita para recibir asesoramiento personalizado y encontrar la silueta, el tejido y los detalles que mejor encajan contigo.",
+      "en": "Book your appointment and enjoy a unique day at the Atelier. Experience personalized guidance from our designer."
+    }
+  }
 };
 
 export const EDITORIAL_FIESTA = {
@@ -141,7 +149,19 @@ export const EDITORIAL_FIESTA = {
     "/img/collections/fiesta/introduccion/fely-campo-atelier-fiesta-aw2026-162.webp",
     "/img/collections/fiesta/introduccion/felycampo-fiesta-media (3).mp4",
     "/img/collections/fiesta/introduccion/fely-campo-atelier-fiesta-aw2026-164.webp"
-  ]
+  ],
+  // Cabecera de las páginas de categoría (/atelier/fiesta/categoria/…): foto, frase y texto encima de los looks. Migrado de su page.js y de messages (heroPagina.atelierFiesta, cuadriculaTabs.descripcion).
+  "categorias": {
+    "imagen": "/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp",
+    "subtitulo": {
+      "es": "Vestidos de fiesta e invitada, hechos a medida.",
+      "en": "Made-to-measure evening and guest dresses."
+    },
+    "texto": {
+      "es": "Descubre nuestros vestidos de novia y de fiesta en el atelier. Reserva tu cita para recibir asesoramiento personalizado y encontrar la silueta, el tejido y los detalles que mejor encajan contigo.",
+      "en": "Book your appointment and enjoy a unique day at the Atelier. Experience personalized guidance from our designer."
+    }
+  }
 };
 
 // /pret-a-porter: el carrusel de la portada (fotos de pasarela recortadas,
@@ -172,5 +192,19 @@ export const EDITORIAL_PRET_A_PORTER = {
       "The same house, for everyday life.",
       "The same care, now ready to wear."
     ]
+  },
+  // Cabecera de cada categoría (/pret-a-porter/vestidos…): una foto por categoría y el texto encima de las prendas. Migrado de los page.js y de messages (cuadriculaProductos.novedadesDescripcion).
+  "categorias": {
+    "imagenes": {
+      "vestidos": "/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-vestidos.webp",
+      "faldas": "/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-faldas.webp",
+      "pantalones": "/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-pantalones.webp",
+      "tops-y-camisetas": "/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-tops-camisas.webp",
+      "chaquetas-y-abrigos": "/img/hero-pages/fely-campo-cabecera-hero-pages-pretaporter-chaquetas-abrigos.webp"
+    },
+    "texto": {
+      "es": "Piezas nuevas de temporada, pensadas para acompañar cada ocasión con la misma artesanía de siempre.",
+      "en": "New pieces for the season, crafted with the same care for every occasion."
+    }
   }
 };

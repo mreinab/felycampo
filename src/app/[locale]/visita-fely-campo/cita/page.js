@@ -32,6 +32,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Boton, Input } from '@/components/ui';
 import { ATELIERES_CITA, rutaConfirmacionCita } from '@/lib/citaAtelier';
 import { registrarConversionCita } from '@/lib/analitica';
+import { obtenerContacto } from '@/lib/contacto';
 import SelectorMesAnio from './SelectorMesAnio';
 import styles from './page.module.css';
 
@@ -206,7 +207,7 @@ export default function Pagina() {
           </label>
 
           {avisoDatos && <p className={styles.aviso} role="alert">{t('avisoDatos')}</p>}
-          {errorEnvio && <p className={styles.aviso} role="alert">{t('errorEnvio')}</p>}
+          {errorEnvio && <p className={styles.aviso} role="alert">{t('errorEnvio', { email: obtenerContacto().email })}</p>}
 
           <Boton variante="solido" tamano="full" type="submit" desactivado={enviando}>
             {enviando ? t('enviando') : t('enviar')}

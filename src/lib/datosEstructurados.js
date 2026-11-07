@@ -16,17 +16,14 @@
    Las URLs son siempre absolutas sobre SITE_URL (felycampo.com). */
 
 import { SITE_URL, NOMBRE_MARCA, urlAbsoluta } from '@/lib/seo';
+import { redesConEnlace } from '@/lib/contacto';
 
 const ID_ORGANIZACION = `${SITE_URL}/#organizacion`;
 const ID_SITIO = `${SITE_URL}/#sitio`;
 const LOGO = '/img/logo/fely-campo-logo.webp';
 
-// Mismas redes que el footer (Footer.jsx, RUTAS_COLUMNAS).
-const REDES = [
-  'https://www.instagram.com/felycampo/',
-  'https://www.facebook.com/fely.campo',
-  'https://www.youtube.com/channel/UCQeHEIrbwpFjAYtoGfzRUaA',
-];
+// Mismas redes que el pie (lib/contacto.js, editables en el admin).
+const REDES = () => redesConEnlace().map(({ url }) => url);
 
 const absoluta = (ruta) => (!ruta ? undefined : /^https?:\/\//.test(ruta) ? ruta : urlAbsoluta(ruta));
 
@@ -38,7 +35,7 @@ export function organizacion() {
     name: NOMBRE_MARCA,
     url: SITE_URL,
     logo: absoluta(LOGO),
-    sameAs: REDES,
+    sameAs: REDES(),
   };
 }
 

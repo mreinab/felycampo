@@ -11,6 +11,8 @@
 //   nombreCiudad    el nombre grande de la portada («Salamanca»); también en
 //                   las tarjetas «Atelier … & Showroom» del pie de algunas páginas.
 //   etiqueta        lo que va antes, en la portada («Atelier», «Atelier & Showroom»).
+//   subtitulo       la frase bajo la ciudad («Visítanos siempre con cita previa.»),
+//                   migrada de messages/*.json (heroPagina.atelierCiudad).
 //                   Los dos, migrados de messages/*.json (atelierFiesta.<id>).
 //   heroMedio       la portada: foto o vídeo. En vídeo, "srcMovil" es otro
 //                   vídeo para móvil, "poster" la imagen mientras carga y
@@ -37,6 +39,10 @@ export const SEDES = {
     "etiqueta": {
       "es": "Atelier",
       "en": "Atelier"
+    },
+    "subtitulo": {
+      "es": "Visítanos siempre con cita previa.",
+      "en": "Visit us, always by appointment."
     },
     "heroMedio": {
       "tipo": "imagen",
@@ -149,6 +155,10 @@ export const SEDES = {
     "etiqueta": {
       "es": "Atelier & Showroom",
       "en": "Atelier & Showroom"
+    },
+    "subtitulo": {
+      "es": "Visítanos siempre con cita previa.",
+      "en": "Visit us, always by appointment."
     },
     "heroMedio": {
       "tipo": "video",
@@ -277,6 +287,10 @@ export const SEDES = {
     "etiqueta": {
       "es": "Atelier",
       "en": "Atelier"
+    },
+    "subtitulo": {
+      "es": "Visítanos siempre con cita previa.",
+      "en": "Visit us, always by appointment."
     },
     "heroMedio": {
       "tipo": "imagen",

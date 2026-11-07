@@ -20,7 +20,9 @@
    ============================================================ */
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { obtenerPiezasComunes } from '@/lib/piezasComunes';
+import { textoEn } from '@/lib/previa';
 import { Modal, Boton } from '../ui';
 import styles from './NewsletterModal.module.css';
 
@@ -28,8 +30,10 @@ import styles from './NewsletterModal.module.css';
 // endpoint de newsletter cuando exista backend.
 const suscribirNewsletter = (correo) => new Promise((resolve) => setTimeout(resolve, 500));
 
-function NewsletterModal({ abierto, onCerrar, imagen = '/img/fely-campo-newsletter-coleccion-fw27.webp' }) {
+// Foto, título y texto: lib/piezasComunes.js (editables en el admin).
+function NewsletterModal({ abierto, onCerrar, imagen = obtenerPiezasComunes().newsletter.imagen }) {
   const t = useTranslations('newsletterPopup');
+  const locale = useLocale();
   const tFooter = useTranslations('footer');
 
   const [email, setEmail] = useState('');
@@ -58,8 +62,8 @@ function NewsletterModal({ abierto, onCerrar, imagen = '/img/fely-campo-newslett
           <img src={imagen} alt="" className={styles.imagen} />
         </div>
         <div className={styles.columnaTexto}>
-          <h2 className={styles.titulo}>{t('titulo')}</h2>
-          <p className={styles.subtitulo}>{t('subtitulo')}</p>
+          <h2 className={styles.titulo}>{textoEn(obtenerPiezasComunes().newsletter.titulo, locale)}</h2>
+          <p className={styles.subtitulo}>{textoEn(obtenerPiezasComunes().newsletter.subtitulo, locale)}</p>
           <div className={styles.filaNewsletterWrap}>
             <div className={styles.filaNewsletter}>
               <form className={styles.formNewsletter} onSubmit={handleSubmitNewsletter}>

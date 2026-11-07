@@ -6,7 +6,9 @@
 // pinta [locale]/layout.js en todas las páginas salvo el propio
 // formulario de cita y sus confirmaciones.
 
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
+import { obtenerPiezasComunes } from '@/lib/piezasComunes';
+import { textoEn } from '@/lib/previa';
 import { Boton, EnVista } from '../ui';
 import PedirCitaFondo from './PedirCitaFondo';
 import styles from './PedirCita.module.css';
@@ -16,8 +18,9 @@ import styles from './PedirCita.module.css';
 // del final de la página.
 export default async function PedirCita({ separado = false }) {
   const locale = await getLocale();
-  const t = await getTranslations('pedirCitaLanding');
-  const titulo = t('titulo');
+  // Foto, título y botón: lib/piezasComunes.js (editables en el admin).
+  const { pedirCita } = obtenerPiezasComunes();
+  const titulo = textoEn(pedirCita.titulo, locale);
   // Corte de las dos filas: tras el primer punto (o coma, si la
   // traducción no lleva punto).
   const punto = titulo.indexOf('.');
@@ -26,7 +29,7 @@ export default async function PedirCita({ separado = false }) {
   return (
     <section className={`${styles.pedirCita} ${separado ? styles.separado : ''}`}>
       {/* Foto de fondo con parallax en escritorio (ver PedirCitaFondo.jsx). */}
-      <PedirCitaFondo />
+      <PedirCitaFondo imagen={pedirCita.imagen} />
       <EnVista className={styles.pedirCitaContenido}>
         {/* Si lleva punto (o coma), el título se parte en dos filas tras él (la
             segunda parte va en un span con display:block). */}
@@ -36,7 +39,7 @@ export default async function PedirCita({ separado = false }) {
           <span className={styles.pedirCitaTituloLinea}>{titulo.slice(corte + 1).trim()}</span>
         </p>
         <Boton variante="texto" href={`/${locale}/visita-fely-campo/cita`} className={styles.pedirCitaCta}>
-          {t('cta')}
+          {textoEn(pedirCita.boton, locale)}
         </Boton>
       </EnVista>
     </section>

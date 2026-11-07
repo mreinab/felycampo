@@ -36,10 +36,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { CabeceraSeccion, Input, Boton } from '@/components/ui';
-import { ID_PREVIA_PUNTOS, EDITOR_PUNTOS, obtenerPuntosVenta, puntosPublicados } from '@/lib/puntosVenta';
+import {
+  ID_PREVIA_PUNTOS, EDITOR_PUNTOS, conDatosDeSede, obtenerPuntosVenta, puntosPublicados,
+} from '@/lib/puntosVenta';
 import BarraPrevia from './BarraPrevia';
 import usePrevia from './usePrevia';
 import styles from './MapaPuntosVenta.module.css';
+import { useTextoCabecera } from './CabeceraPagina';
 import 'leaflet/dist/leaflet.css';
 
 const CENTRO_EUROPA = [47, 8];
@@ -164,8 +167,12 @@ const CODIGO_PAIS = {
 
 function MapaPuntosVenta({ className }) {
   const t = useTranslations('puntosVenta');
+  // Título y texto de encima: lib/cabeceras.js (Puntos de venta), con
+  // vista previa en su página.
+  const textoCabecera = useTextoCabecera('puntos-de-venta');
   const { datos, enPrevia } = usePrevia(ID_PREVIA_PUNTOS, PUBLICADO);
-  const puntos = useMemo(() => puntosPublicados(datos.puntos), [datos.puntos]);
+  // Los ateliers propios, con la dirección y el teléfono de su página.
+  const puntos = useMemo(() => puntosPublicados(datos.puntos.map((punto) => conDatosDeSede(punto))), [datos.puntos]);
   const contenedorRef = useRef(null);
   const mapaRef = useRef(null);
   const leafletRef = useRef(null);
@@ -355,8 +362,8 @@ function MapaPuntosVenta({ className }) {
   return (
     <div className={`${styles.seccion} ${className || ''}`}>
       <CabeceraSeccion
-        titleKey="puntosVenta.titulo"
-        descriptionKey="puntosVenta.intro"
+        title={textoCabecera('mapaTitulo')}
+        description={textoCabecera('mapaTexto')}
         alinear="start"
       />
 
@@ -382,7 +389,7 @@ function MapaPuntosVenta({ className }) {
       <div className={styles.layout}>
         <div ref={contenedorRef} className={styles.mapa} role="presentation" aria-hidden="true" />
 
-        <div className={styles.lista} aria-label={t('titulo')}>
+        <div className={styles.lista} aria-label={textoCabecera('mapaTitulo')}>
           {gruposVisibles.map((grupo) => (
             <section key={grupo.pais} className={styles.listaGrupo}>
               <h3 className={styles.listaGrupoTitulo}>

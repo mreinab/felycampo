@@ -106,6 +106,9 @@ function Portada({ h }) {
           etiqueta: 'Ciudad', largoRecomendado: 15, ayuda: 'El nombre grande de la portada. Sale también en las tarjetas «Atelier … & Showroom».',
         })}
       </div>
+      <div className={styles.filaCiudad}>
+        {h.texto(['subtitulo'], { etiqueta: 'Frase bajo la ciudad', largoRecomendado: 50 })}
+      </div>
       <div className={editorStyles.medioYCampos}>
       {h.medio(['heroMedio', 'src'], {
         etiqueta: esVideo ? 'Vídeo' : 'Foto', tipo: medio.tipo, detalle: 'Horizontal', proporcion: '16 / 9', orientacion: 'horizontal',

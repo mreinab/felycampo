@@ -1,25 +1,38 @@
 'use client';
 
 /* ============================================================
-   CITA — detalle, presentado como un folio A4 (y así se imprime con
-   "Imprimir": el menú y la barra del admin se ocultan en impresión,
-   ver layout.module.css). Todos los datos que la clienta envió desde
-   el formulario de cita del front, el punto más cercano según su
-   código postal/ciudad (ver ../puntoCercano.js — OpenStreetMap +
-   PUNTOS_VENTA del mapa), el atelier o boutique que se le asigna,
-   estado, historial y notas internas del equipo.
+   CITA — detalle. Arriba, fuera del documento, lo que se hace con la
+   cita: volver, contactar (copiar el email o el teléfono, escribir por
+   WhatsApp), imprimir y la gestión (estado y atelier asignado). Debajo,
+   la solicitud presentada como un folio A4 (y así se imprime con
+   «Imprimir»: el menú, la barra y los controles se ocultan en
+   impresión, ver layout.module.css y page.module.css), con los mismos
+   datos que envía el formulario de cita de la web
+   (/visita-fely-campo/cita → /api/cita): nombre, email, teléfono,
+   atelier elegido, fecha del evento (mes y año), mensaje, idioma y
+   privacidad; más el historial de estado y las notas internas.
+   La cita empieza asignada al atelier que eligió la clienta; se puede
+   pasar a otro atelier o a una boutique (puntoCercano.js).
    Datos de EJEMPLO (citasMock): cambiar estado/asignación y guardar
    notas solo muestran el aviso "(demo)" hasta que haya base de datos.
+   Sin «Responder por email» ni «Llamar»: los enlaces mailto:/tel: solo
+   hacen algo si el ordenador tiene un programa de correo o de llamadas
+   configurado; copiar y WhatsApp (WhatsApp Web) funcionan siempre.
    ============================================================ */
 
-import { use, useEffect, useState } from 'react';
+import { use, useState } from 'react';
 import { notFound } from 'next/navigation';
-import { Printer } from 'lucide-react';
+import { Copy, MessageCircle, Printer } from 'lucide-react';
 import { BotonVolver, useToast } from '@/components/admin';
 import { Boton } from '@/components/ui';
 import { citasMock, ESTADOS_CITA } from '@/components/admin/mockData';
-import { fechaCorta, fechaHora, nombreIdioma } from '../citasFormato';
-import { ATELIERES_PROPIOS, boutiquesPorPais, puntoMasCercano, puntoPorId } from '../puntoCercano';
+import { enlaceWhatsapp } from '@/lib/contacto';
+import {
+  fechaHora, mesAnio, nombreAtelier, nombreIdioma,
+} from '../citasFormato';
+import {
+  ATELIERES_PROPIOS, boutiquesPorPais, puntoDeSede, puntoPorId,
+} from '../puntoCercano';
 import styles from './page.module.css';
 
 function Dato({ etiqueta, children }) {
@@ -27,29 +40,6 @@ function Dato({ etiqueta, children }) {
     <div className={styles.dato}>
       <p className={styles.datoEtiqueta}>{etiqueta}</p>
       <div className={styles.datoValor}>{children}</div>
-    </div>
-  );
-}
-
-function SugerenciaPunto({ sugerencia }) {
-  if (sugerencia === undefined) return <p className={styles.sugerenciaAviso}>Buscando el punto más cercano…</p>;
-  if (sugerencia === null) {
-    return <p className={styles.sugerenciaAviso}>No se ha podido localizar el código postal o la ciudad. Elige el punto a mano.</p>;
-  }
-  if (sugerencia.error) {
-    return <p className={styles.sugerenciaAviso}>No se ha podido consultar el mapa ahora mismo. Elige el punto a mano.</p>;
-  }
-  const { punto, km, lugar } = sugerencia;
-  return (
-    <div className={styles.sugerencia}>
-      <p className={styles.sugerenciaNombre}>{punto.nombre}</p>
-      <p className={styles.sugerenciaDetalle}>
-        {punto.direccion.join(', ')} · {punto.pais}
-        {punto.telefono && <> · {punto.telefono}</>}
-      </p>
-      <p className={styles.sugerenciaDetalle}>
-        A unos {km} km en línea recta de {lugar.nombre}
-      </p>
     </div>
   );
 }
@@ -62,25 +52,10 @@ export default function DetalleCitaPage({ params }) {
   const [estado, setEstado] = useState(cita?.estado || 'Pendiente');
   const [notas, setNotas] = useState('');
   const [historial, setHistorial] = useState(
-    cita ? [{ estado: 'Pendiente', fecha: fechaHora(cita.recibida) }] : []
+    cita ? [{ estado: 'Pendiente', fecha: fechaHora(cita.recibida) }] : [],
   );
-  // undefined = buscando · null = no localizado · { error } = fallo de red
-  const [sugerencia, setSugerencia] = useState(undefined);
-  const [asignado, setAsignado] = useState('');
-
-  useEffect(() => {
-    if (!cita) return undefined;
-    let vigente = true;
-    puntoMasCercano(cita)
-      .then((resultado) => {
-        if (!vigente) return;
-        setSugerencia(resultado);
-        // Empieza con lo sugerido, salvo que ya se haya elegido otro.
-        if (resultado) setAsignado((actual) => actual || resultado.punto.id);
-      })
-      .catch(() => vigente && setSugerencia({ error: true }));
-    return () => { vigente = false; };
-  }, [cita]);
+  // Empieza asignada al atelier que eligió la clienta.
+  const [asignado, setAsignado] = useState(() => (cita && puntoDeSede(cita.ubicacion)?.id) || '');
 
   if (!cita) notFound();
 
@@ -99,30 +74,81 @@ export default function DetalleCitaPage({ params }) {
   function cambiarAsignado(nuevoId) {
     setAsignado(nuevoId);
     const punto = puntoPorId(nuevoId);
-    if (punto) mostrarToast(`Asignada a ${punto.nombre} (demo)`);
+    mostrarToast(punto ? `Asignada a ${punto.nombre} (demo)` : 'Sin asignar (demo)');
   }
 
-  function guardarNotas() {
-    mostrarToast('Notas internas guardadas (demo)');
+  async function copiar(texto, que) {
+    try {
+      await navigator.clipboard.writeText(texto);
+      mostrarToast(`${que} copiado: ${texto}`);
+    } catch {
+      mostrarToast(`No se ha podido copiar. ${que}: ${texto}`);
+    }
   }
 
-  const asuntoRespuesta = encodeURIComponent(cita.locale === 'en' ? 'Your appointment at Fely Campo' : 'Tu cita en Fely Campo');
-  const telefonoEnlace = `tel:${cita.telefono.replace(/\s/g, '')}`;
+  const saludo = cita.locale === 'en'
+    ? `Hello ${cita.nombre.split(' ')[0]}, this is Fely Campo about your appointment request.`
+    : `Hola ${cita.nombre.split(' ')[0]}, te escribimos de Fely Campo por tu solicitud de cita.`;
   const puntoAsignado = puntoPorId(asignado);
 
   return (
     <div>
-      <div className={styles.barra}>
-        <BotonVolver href="/admin/consultas" />
-        <div className={styles.barraAcciones}>
-          <Boton variante="contorno" href={`mailto:${cita.email}?subject=${asuntoRespuesta}`}>Responder por email</Boton>
-          <Boton variante="contorno" href={telefonoEnlace}>Llamar</Boton>
-          <Boton onClick={() => window.print()}>
-            <span className={styles.botonIcono}><Printer size={16} strokeWidth={1.5} aria-hidden="true" />Imprimir</span>
-          </Boton>
+      {/* ---------- Arriba, fuera del documento: acciones y gestión ---------- */}
+      <div className={styles.panel}>
+        <div className={styles.barra}>
+          <BotonVolver href="/admin/consultas" />
+          <div className={styles.barraAcciones}>
+            <Boton variante="contorno" onClick={() => copiar(cita.email, 'Email')}>
+              <span className={styles.botonIcono}><Copy size={16} strokeWidth={1.5} aria-hidden="true" />Copiar email</span>
+            </Boton>
+            <Boton variante="contorno" onClick={() => copiar(cita.telefono, 'Teléfono')}>
+              <span className={styles.botonIcono}><Copy size={16} strokeWidth={1.5} aria-hidden="true" />Copiar teléfono</span>
+            </Boton>
+            <Boton variante="contorno" href={enlaceWhatsapp(cita.telefono, saludo)} nuevaPestana>
+              <span className={styles.botonIcono}><MessageCircle size={16} strokeWidth={1.5} aria-hidden="true" />Escribir por WhatsApp</span>
+            </Boton>
+            <Boton onClick={() => window.print()}>
+              <span className={styles.botonIcono}><Printer size={16} strokeWidth={1.5} aria-hidden="true" />Imprimir</span>
+            </Boton>
+          </div>
         </div>
+
+        <section className={styles.gestion} aria-label="Gestión de la cita">
+          <div className={styles.gestionCampo}>
+            <p className={styles.datoEtiqueta}>Estado</p>
+            {/* Un clic = cambio de estado (queda en el historial). */}
+            <div className={styles.estados} role="group" aria-label="Estado de la cita">
+              {ESTADOS_CITA.map((opcion) => (
+                <button
+                  key={opcion}
+                  type="button"
+                  className={`${styles.estadoBoton} ${estado === opcion ? styles.estadoActivo : ''}`}
+                  aria-pressed={estado === opcion}
+                  onClick={() => cambiarEstado(opcion)}
+                >
+                  {opcion}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className={styles.gestionCampo}>
+            <label htmlFor="cita-asignado" className={styles.datoEtiqueta}>Atelier asignado</label>
+            <select id="cita-asignado" className={styles.selectInput} value={asignado} onChange={(e) => cambiarAsignado(e.target.value)}>
+              <option value="">Sin asignar</option>
+              <optgroup label="Ateliers Fely Campo">
+                {ATELIERES_PROPIOS.map((p) => <option key={p.id} value={p.id}>{p.nombre}</option>)}
+              </optgroup>
+              {boutiquesPorPais().map(([pais, boutiques]) => (
+                <optgroup key={pais} label={`Boutiques · ${pais}`}>
+                  {boutiques.map((p) => <option key={p.id} value={p.id}>{p.nombre} — {p.direccion.at(-1)}</option>)}
+                </optgroup>
+              ))}
+            </select>
+          </div>
+        </section>
       </div>
 
+      {/* ---------- El documento ---------- */}
       <div className={styles.mesa}>
         <article className={styles.folio}>
           <header className={styles.cabecera}>
@@ -138,11 +164,10 @@ export default function DetalleCitaPage({ params }) {
           <section className={styles.seccion}>
             <h2 className={styles.seccionTitulo}>Datos de la clienta</h2>
             <div className={styles.datos}>
-              <Dato etiqueta="Email"><a href={`mailto:${cita.email}`}>{cita.email}</a></Dato>
-              <Dato etiqueta="Teléfono"><a href={telefonoEnlace}>{cita.telefono}</a></Dato>
-              <Dato etiqueta="Fecha del evento">{fechaCorta(cita.fechaBoda)}</Dato>
-              <Dato etiqueta="Código postal">{cita.codigoPostal}</Dato>
-              <Dato etiqueta="Ciudad">{cita.ciudad}</Dato>
+              <Dato etiqueta="Email">{cita.email}</Dato>
+              <Dato etiqueta="Teléfono">{cita.telefono}</Dato>
+              <Dato etiqueta="Atelier elegido">{nombreAtelier(cita.ubicacion)}</Dato>
+              <Dato etiqueta="Fecha del evento">{mesAnio(cita.fechaEvento)}</Dato>
               <Dato etiqueta="Idioma">{nombreIdioma(cita.locale)}</Dato>
               <Dato etiqueta="Privacidad y términos">{cita.aceptaLegal ? 'Aceptados' : 'No aceptados'}</Dato>
             </div>
@@ -154,45 +179,10 @@ export default function DetalleCitaPage({ params }) {
           </section>
 
           <section className={styles.seccion}>
-            <h2 className={styles.seccionTitulo}>Punto más cercano (sugerencia)</h2>
-            <SugerenciaPunto sugerencia={sugerencia} />
-          </section>
-
-          <section className={styles.seccion}>
             <h2 className={styles.seccionTitulo}>Gestión</h2>
-            <div className={styles.estadoBloque}>
-              <p className={styles.datoEtiqueta}>Estado</p>
-              {/* Un clic = cambio de estado (queda en el historial). */}
-              <div className={`${styles.estados} ${styles.soloPantalla}`} role="group" aria-label="Estado de la cita">
-                {ESTADOS_CITA.map((opcion) => (
-                  <button
-                    key={opcion}
-                    type="button"
-                    className={`${styles.estadoBoton} ${estado === opcion ? styles.estadoActivo : ''}`}
-                    aria-pressed={estado === opcion}
-                    onClick={() => cambiarEstado(opcion)}
-                  >
-                    {opcion}
-                  </button>
-                ))}
-              </div>
-              <span className={`${styles.datoValor} ${styles.soloImpresion}`}>{estado}</span>
-            </div>
             <div className={styles.datos}>
-              <Dato etiqueta="Atelier asignado">
-                <select className={`${styles.selectInput} ${styles.soloPantalla}`} value={asignado} onChange={(e) => cambiarAsignado(e.target.value)}>
-                  <option value="">Sin asignar</option>
-                  <optgroup label="Ateliers Fely Campo">
-                    {ATELIERES_PROPIOS.map((p) => <option key={p.id} value={p.id}>{p.nombre}</option>)}
-                  </optgroup>
-                  {boutiquesPorPais().map(([pais, boutiques]) => (
-                    <optgroup key={pais} label={`Boutiques · ${pais}`}>
-                      {boutiques.map((p) => <option key={p.id} value={p.id}>{p.nombre} — {p.direccion.at(-1)}</option>)}
-                    </optgroup>
-                  ))}
-                </select>
-                <span className={styles.soloImpresion}>{puntoAsignado ? puntoAsignado.nombre : 'Sin asignar'}</span>
-              </Dato>
+              <Dato etiqueta="Estado">{estado}</Dato>
+              <Dato etiqueta="Atelier asignado">{puntoAsignado ? puntoAsignado.nombre : 'Sin asignar'}</Dato>
             </div>
           </section>
 
@@ -212,7 +202,7 @@ export default function DetalleCitaPage({ params }) {
             <h2 className={styles.seccionTitulo}>Notas internas</h2>
             <div className={styles.soloPantalla}>
               <textarea className={styles.notas} value={notas} onChange={(e) => setNotas(e.target.value)} placeholder="Solo las ve el equipo" />
-              <Boton variante="contorno" tamano="s" onClick={guardarNotas}>Guardar notas</Boton>
+              <Boton variante="contorno" tamano="s" onClick={() => mostrarToast('Notas internas guardadas (demo)')}>Guardar notas</Boton>
             </div>
             <p className={`${styles.notasImpresas} ${styles.soloImpresion}`}>{notas || 'Sin notas.'}</p>
           </section>

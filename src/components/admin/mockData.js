@@ -626,19 +626,36 @@ export const consultasMock = [
 export const ESTADOS_CITA = ['Pendiente', 'Contactada', 'Cita confirmada', 'Cerrada'];
 
 export const citasMock = [
+  // Misma forma que lo que envía el formulario de cita de la web
+  // (/visita-fely-campo/cita → /api/cita): nombre completo, email,
+  // teléfono, atelier elegido ("ubicacion"), fecha del evento (mes y año,
+  // "2027-06"), mensaje, idioma y la casilla de privacidad. "estado" lo
+  // pone el equipo.
+  {
+    id: 'cita-3',
+    recibida: '2026-11-05T11:15',
+    nombre: 'Carmen Ruiz Alonso',
+    email: 'carmen.ruiz@example.com',
+    telefono: '+34 611 223 344',
+    ubicacion: 'oviedo',
+    fechaEvento: '2027-09',
+    mensaje: 'Soy madrina en septiembre y busco un vestido largo en tonos verdes.',
+    locale: 'es',
+    aceptaLegal: true,
+    estado: 'Pendiente',
+  },
   {
     id: 'cita-2',
     recibida: '2026-10-26T18:42',
     nombre: 'Lucía Hernández Prieto',
     email: 'lucia.hernandez@example.com',
     telefono: '+34 600 112 233',
-    codigoPostal: '37008',
-    ciudad: 'Salamanca',
-    fechaBoda: '2027-06-12',
+    ubicacion: 'salamanca',
+    fechaEvento: '2027-06',
     mensaje: 'Me caso en junio y me gustaría ver vestidos de novia de corte sencillo, con algo de espalda.',
     locale: 'es',
     aceptaLegal: true,
-    estado: 'Pendiente',
+    estado: 'Contactada',
   },
   {
     id: 'cita-1',
@@ -646,13 +663,12 @@ export const citasMock = [
     nombre: 'Emma Wilson',
     email: 'emma.wilson@example.com',
     telefono: '+44 7700 900123',
-    codigoPostal: 'SW1A 1AA',
-    ciudad: 'London',
-    fechaBoda: '2027-07-03',
+    ubicacion: 'madrid',
+    fechaEvento: '2027-07',
     mensaje: 'I will be in Madrid in November and would love to try on bridal dresses.',
     locale: 'en',
     aceptaLegal: true,
-    estado: 'Contactada',
+    estado: 'Cita confirmada',
   },
 ];
 

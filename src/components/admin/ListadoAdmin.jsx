@@ -22,6 +22,24 @@ import {
 } from 'lucide-react';
 import styles from './ListadoAdmin.module.css';
 
+// Las dos pestañas de una sección con página propia: primero «Página de la
+// web (fotos y textos)», que es la que se abre al entrar ("pagina": su
+// dirección), y después el listado ("listado": { href, nombre, cuenta }).
+// "activa": 'pagina' | 'listado'. Igual que Colección Fiesta / Prêt-à-porter.
+export function PestanasPagina({
+  etiqueta, pagina, listado, activa,
+}) {
+  return (
+    <PestanasListado
+      etiqueta={etiqueta}
+      pestanas={[
+        { href: pagina, nombre: 'Página de la web (fotos y textos)', activa: activa === 'pagina' },
+        { ...listado, activa: activa === 'listado' },
+      ]}
+    />
+  );
+}
+
 export function PestanasListado({ pestanas, etiqueta = 'Secciones' }) {
   return (
     <nav className={styles.pestanas} aria-label={etiqueta}>

@@ -14,6 +14,13 @@ import { useCarrito } from '@/context/CarritoContext';
 import { useMiCuenta } from '@/context/MiCuentaContext';
 import NavbarPanelLateralContent from './NavbarPanelLateralContent';
 import NavbarPanelLateralCards from './NavbarPanelLateralCards';
+import { obtenerPiezasComunes } from '@/lib/piezasComunes';
+
+// Las fotos del menú salen de lib/piezasComunes.js (editables en el admin:
+// «Menú, Pedir cita y newsletter»). "portada" es la de cards[0], la que se
+// ve al abrir el desplegable.
+const FOTOS_MENU = obtenerPiezasComunes().menu;
+const FOTOS_MENU_MOVIL = FOTOS_MENU.movil;
 
 // Enlaces con submenú — coinciden con las categorías reales del
 // sitemap. El resto son enlaces simples, sin panel (ver "pedirCita" en
@@ -39,13 +46,13 @@ import NavbarPanelLateralCards from './NavbarPanelLateralCards';
 const SUBMENU_STRUCTURE = {
   atelier: {
     items: [
-      { key: 'salamanca', href: '/atelier-fiesta/salamanca', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
-      { key: 'madrid', href: '/atelier-fiesta/madrid', image: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-showroom.webp', imagePosition: 'center top' },
-      { key: 'oviedo', href: '/atelier-fiesta/oviedo', image: '/img/atelier/atelier-oviedo/fely-campo-atelier-oviedo-tienda-4-1.webp' },
+      { key: 'salamanca', href: '/atelier-fiesta/salamanca', image: FOTOS_MENU.atelier.salamanca },
+      { key: 'madrid', href: '/atelier-fiesta/madrid', image: FOTOS_MENU.atelier.madrid, imagePosition: 'center top' },
+      { key: 'oviedo', href: '/atelier-fiesta/oviedo', image: FOTOS_MENU.atelier.oviedo },
       // "separador": "Vosotras" no es una sede — un hueco de una fila
       // por encima (ver NavbarPanelLateralContent.jsx) la separa
       // visualmente de las 3 ciudades de arriba.
-      { key: 'vosotras', href: '/atelier/vosotras', separador: true, image: '/img/Clientes/CLIENTAS/finales/fely-campo-novias-reales-10.webp' },
+      { key: 'vosotras', href: '/atelier/vosotras', separador: true, image: FOTOS_MENU.atelier.vosotras },
     ],
     cardsVariante: 'horizontal',
     cards: [
@@ -54,8 +61,8 @@ const SUBMENU_STRUCTURE = {
       // cambiada a petición; antes ContacPage-Hero-FelyCampo.jpg) y
       // "Nuestro Atelier" en vez del nombre de una ciudad, para que la
       // tarjeta hable del atelier en general, no de Salamanca.
-      { key: 'salamanca', labelKey: 'nuestroAtelier', href: '/atelier-fiesta/salamanca', image: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-sala-pruebas.webp' },
-      { key: 'vosotras', href: '/atelier/vosotras', image: '/img/Clientes/CLIENTAS/finales/fely-campo-novias-reales-10.webp' },
+      { key: 'salamanca', labelKey: 'nuestroAtelier', href: '/atelier-fiesta/salamanca', image: FOTOS_MENU.atelier.portada },
+      { key: 'vosotras', href: '/atelier/vosotras', image: FOTOS_MENU.atelier.vosotras },
     ],
   },
   colecciones: {
@@ -63,40 +70,40 @@ const SUBMENU_STRUCTURE = {
     // categorías (tops/faldas/pantalones...) como antes — esas
     // siguen existiendo como páginas propias, solo no se listan aquí.
     items: [
-      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp' },
-      { key: 'novias', href: '/atelier/novias', image: '/img/landing/fely-campo-portada-hero-atelier-novia.webp' },
-      { key: 'pretaporter', href: '/pret-a-porter', image: '/img/fely-campo-menu-pret-a-porter.webp' },
-      { key: 'runway', href: '/colecciones-fely-campo', image: '/img/hero-pages/submenu/fely-campo-menu-pasarela.webp' },
+      { key: 'fiesta', href: '/atelier/fiesta', image: FOTOS_MENU.colecciones.fiesta },
+      { key: 'novias', href: '/atelier/novias', image: FOTOS_MENU.colecciones.novias },
+      { key: 'pretaporter', href: '/pret-a-porter', image: FOTOS_MENU.colecciones.pretaporter },
+      { key: 'runway', href: '/colecciones-fely-campo', image: FOTOS_MENU.colecciones.runway },
     ],
     cardsVariante: 'horizontal',
     cards: [
-      { key: 'novias', href: '/atelier/novias', image: '/img/landing/fely-campo-portada-hero-atelier-novia.webp' },
-      { key: 'fiesta', href: '/atelier/fiesta', image: '/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp' },
+      { key: 'novias', href: '/atelier/novias', image: FOTOS_MENU.colecciones.portada },
+      { key: 'fiesta', href: '/atelier/fiesta', image: FOTOS_MENU.colecciones.fiesta },
     ],
   },
   elMundoDeFely: {
     // "podcast" enlaza a /blog (antes /podcast — ver comentario de
     // cabecera en podcast/page.js para el porqué del cambio de URL).
     items: [
-      { key: 'historia', href: '/sobre-fely', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-conoce-a-disenadora.jpg' },
-      { key: 'podcast', href: '/blog', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
-      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp' },
+      { key: 'historia', href: '/sobre-fely', image: FOTOS_MENU.elMundoDeFely.historia },
+      { key: 'podcast', href: '/blog', image: FOTOS_MENU.elMundoDeFely.podcast },
+      { key: 'talleres', href: '/talleres-fely-campo', image: FOTOS_MENU.elMundoDeFely.talleres },
     ],
     cardsVariante: 'horizontal',
     cards: [
-      { key: 'podcast', href: '/blog', image: '/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp' },
-      { key: 'talleres', href: '/talleres-fely-campo', image: '/img/talleres/inhouse/ateliernovia-lamedida-felycampo-2.webp' },
+      { key: 'podcast', href: '/blog', image: FOTOS_MENU.elMundoDeFely.portada },
+      { key: 'talleres', href: '/talleres-fely-campo', image: FOTOS_MENU.elMundoDeFely.talleres },
     ],
   },
   puntosDeVenta: {
     items: [
-      { key: 'propios', href: '/visita-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-fiesta-3.webp' },
-      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
+      { key: 'propios', href: '/visita-fely-campo', image: FOTOS_MENU.puntosDeVenta.propios },
+      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: FOTOS_MENU.puntosDeVenta.externos },
     ],
     cardsVariante: 'horizontal',
     cards: [
-      { key: 'propios', href: '/visita-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-fiesta-3.webp' },
-      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: '/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp' },
+      { key: 'propios', href: '/visita-fely-campo', image: FOTOS_MENU.puntosDeVenta.portada },
+      { key: 'externos', href: '/puntos-de-venta-fely-campo', image: FOTOS_MENU.puntosDeVenta.externos },
     ],
   },
 };
@@ -159,7 +166,7 @@ function MobileMenuBanner({ locale, submenuKey, onNavegar }) {
   const card = submenuKey && SUBMENU_STRUCTURE[submenuKey].cards[0];
   const portada = card
     ? { href: card.href, image: card.image, imagePosition: card.imagePosition, label: t(`submenus.${submenuKey}.${card.labelKey || card.key}`) }
-    : { href: '/pret-a-porter', image: '/img/hero-pages/fely-campo-menu-pret-a-porter-portada.webp', label: t('links.tienda') };
+    : { href: '/pret-a-porter', image: FOTOS_MENU_MOVIL, label: t('links.tienda') };
 
   return (
     <a

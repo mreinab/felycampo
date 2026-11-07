@@ -9,8 +9,9 @@
    archivo y src/datos/ateliers.js) + MapaPuntosVenta al final.
    ============================================================ */
 
-import { getTranslations } from 'next-intl/server';
-import { MapaPuntosVenta, ProductHero } from '@/components/layout';
+import { MapaPuntosVenta } from '@/components/layout';
+import { CabeceraPagina, HeroCabecera } from '@/components/layout/CabeceraPagina';
+import { obtenerCabecera } from '@/lib/cabeceras';
 import ListadoUbicaciones from './ListadoUbicaciones';
 import styles from './page.module.css';
 import { metadataPagina } from '@/lib/seo';
@@ -22,17 +23,14 @@ export async function generateMetadata({ params }) {
 
 export default async function Pagina({ params }) {
   const { locale } = await params;
-  const t = await getTranslations();
 
   return (
     <>
+      {/* Cabecera e introducción: lib/cabeceras.js (editables en el admin,
+          Página Visítanos, con vista previa). */}
+      <CabeceraPagina id="visitanos" publicado={obtenerCabecera('visitanos')}>
       <section className="seccion">
-        <ProductHero
-          imagen="/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-fiesta-3.webp"
-          titulo={t('visitenos.titulo')}
-          subtitulo={t('heroPagina.atelierCiudad')}
-          className={styles.heroEncuadre}
-        />
+        <HeroCabecera producto className={styles.heroEncuadre} />
       </section>
 
       {/* .seccionUbicaciones (ver page.module.css): en mobile el hero de
@@ -51,6 +49,7 @@ export default async function Pagina({ params }) {
           <MapaPuntosVenta />
         </div>
       </section>
+      </CabeceraPagina>
     </>
   );
 }

@@ -32,6 +32,9 @@ import {
   Shirt,
   Store,
   MapPin,
+  Phone,
+  PanelTop,
+  Search,
   // Iconos de las secciones ocultas (GRUPOS_OCULTOS), para cuando vuelvan:
   // Palette, Star, Package, Layers, Boxes, Users, BarChart3,
   // Settings, SwatchBook,
@@ -73,6 +76,9 @@ const grupos = [
     titulo: 'Páginas de la web',
     items: [
       { href: '/admin/landing', label: 'Página de inicio', icono: LayoutTemplate },
+      // Lo que sale en todas las páginas: menú, «Pedir cita», newsletter.
+      { href: '/admin/paginas/piezas-comunes', label: 'Menú, Pedir cita y newsletter', icono: PanelTop },
+      { href: '/admin/paginas/textos-google', label: 'Textos de Google', icono: Search },
       { subgrupo: 'Sobre Fely' },
       { href: '/admin/paginas/sobre-fely', label: 'Historia de Fely', icono: BookOpen },
       {
@@ -82,23 +88,27 @@ const grupos = [
       { subgrupo: 'Atelier' },
       { href: '/admin/vosotras', label: 'Vosotras', icono: Images },
       { subgrupo: 'Colecciones' },
+      // Sin desplegable con el nombre de cada colección (a petición): ya
+      // están en la pestaña de colecciones de cada sección.
       {
-        href: '/admin/colecciones/fiesta', label: 'Colección Fiesta', icono: PartyPopper, tipo: 'fiesta',
+        href: '/admin/colecciones/fiesta', label: 'Colección Fiesta', icono: PartyPopper,
       },
       {
-        href: '/admin/colecciones/novia', label: 'Colección Novias', icono: Heart, tipo: 'novia',
+        href: '/admin/colecciones/novia', label: 'Colección Novias', icono: Heart,
       },
       // Prêt-à-porter: los productos de la tienda (sin venta online), en el
       // mismo sitio que en la navegación de la web.
       {
-        href: '/admin/productos/pret-a-porter', label: 'Prêt-à-porter', icono: Shirt, tipo: 'pret-a-porter',
+        href: '/admin/productos/pret-a-porter', label: 'Prêt-à-porter', icono: Shirt,
       },
       {
-        href: '/admin/colecciones/runway', label: 'Runway', icono: Archive, tipo: 'archivo',
+        href: '/admin/colecciones/runway', label: 'Runway', icono: Archive,
       },
       // Como «Dónde encontrar Fely Campo» en el menú de la web: los ateliers
       // propios (su página y su contacto) y el mapa de puntos de venta.
       { subgrupo: 'Dónde encontrarnos' },
+      { href: '/admin/contacto', label: 'Contacto y redes', icono: Phone },
+      { href: '/admin/paginas/visitanos', label: 'Página Visítanos', icono: LayoutTemplate },
       { href: '/admin/ateliers/salamanca', label: 'Atelier Salamanca', icono: Store },
       { href: '/admin/ateliers/madrid', label: 'Showroom Madrid', icono: Store },
       { href: '/admin/ateliers/oviedo', label: 'Atelier Oviedo', icono: Store },

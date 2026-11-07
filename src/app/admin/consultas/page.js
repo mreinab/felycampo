@@ -3,7 +3,8 @@
 /* ============================================================
    CITAS — listado. Las solicitudes del formulario de cita del front
    (/visita-fely-campo/cita), con los mismos campos que envía (ver
-   citasMock en mockData.js), de la más reciente a la más antigua.
+   citasMock en mockData.js, con los campos del formulario de cita de la
+   web), de la más reciente a la más antigua.
    Filtros por estado e idioma (el de la web desde la que se
    envió: ES/EN) + búsqueda por nombre, teléfono, email o ciudad.
    "Recibida" en dos líneas (fecha / hora) para que la columna sea
@@ -21,7 +22,10 @@ import { PageHeader, TablaAdmin, EstadoBadge, FiltroBar, FiltroSelector } from '
 import { BotonFila } from '@/components/admin/ListadoAdmin';
 import { Input } from '@/components/ui';
 import { citasMock, ESTADOS_CITA } from '@/components/admin/mockData';
-import { fechaCorta, IDIOMAS_CITA } from './citasFormato';
+import { ATELIERES_CITA } from '@/lib/citaAtelier';
+import {
+  fechaCorta, IDIOMAS_CITA, mesAnio, nombreAtelier,
+} from './citasFormato';
 import BanderaIdioma from './BanderaIdioma';
 import styles from './page.module.css';
 
@@ -30,6 +34,7 @@ function CitasContenido() {
   const [query, setQuery] = useState('');
   const [filtroEstado, setFiltroEstado] = useState(searchParams.get('estado') || 'Todos');
   const [filtroIdioma, setFiltroIdioma] = useState('Todos');
+  const [filtroAtelier, setFiltroAtelier] = useState('Todos');
 
   const filtradas = useMemo(() => {
     const texto = query.trim().toLowerCase();
@@ -37,19 +42,21 @@ function CitasContenido() {
       .filter((c) => {
         if (filtroEstado !== 'Todos' && c.estado !== filtroEstado) return false;
         if (filtroIdioma !== 'Todos' && c.locale !== filtroIdioma) return false;
-        if (texto && ![c.nombre, c.telefono, c.email, c.ciudad].some((campo) => campo.toLowerCase().includes(texto))) return false;
+        if (filtroAtelier !== 'Todos' && c.ubicacion !== filtroAtelier) return false;
+        if (texto && ![c.nombre, c.telefono, c.email].some((campo) => campo.toLowerCase().includes(texto))) return false;
         return true;
       })
       .sort((a, b) => b.recibida.localeCompare(a.recibida));
-  }, [filtroEstado, filtroIdioma, query]);
+  }, [filtroEstado, filtroIdioma, filtroAtelier, query]);
 
   const pendientes = citasMock.filter((c) => c.estado === 'Pendiente').length;
-  const hayFiltros = filtroEstado !== 'Todos' || filtroIdioma !== 'Todos' || query !== '';
+  const hayFiltros = filtroEstado !== 'Todos' || filtroIdioma !== 'Todos' || filtroAtelier !== 'Todos' || query !== '';
 
   function limpiarFiltros() {
     setQuery('');
     setFiltroEstado('Todos');
     setFiltroIdioma('Todos');
+    setFiltroAtelier('Todos');
   }
 
   return (
@@ -57,12 +64,18 @@ function CitasContenido() {
       <PageHeader titulo="Citas" subtitulo={`${filtradas.length} solicitudes · ${pendientes} pendientes`} />
 
       <FiltroBar onLimpiar={hayFiltros ? limpiarFiltros : undefined}>
-        <Input etiqueta="Buscar" placeholder="Nombre, teléfono, email o ciudad" valor={query} onChange={(e) => setQuery(e.target.value)} />
+        <Input etiqueta="Buscar" placeholder="Nombre, teléfono o email" valor={query} onChange={(e) => setQuery(e.target.value)} />
         <FiltroSelector
           etiqueta="Estado"
           valor={filtroEstado}
           onChange={(e) => setFiltroEstado(e.target.value)}
           opciones={[{ valor: 'Todos', etiqueta: 'Todos' }, ...ESTADOS_CITA.map((e) => ({ valor: e, etiqueta: e }))]}
+        />
+        <FiltroSelector
+          etiqueta="Atelier"
+          valor={filtroAtelier}
+          onChange={(e) => setFiltroAtelier(e.target.value)}
+          opciones={[{ valor: 'Todos', etiqueta: 'Todos' }, ...ATELIERES_CITA.map((a) => ({ valor: a.id, etiqueta: a.nombre }))]}
         />
         <FiltroSelector
           etiqueta="Idioma"
@@ -89,8 +102,8 @@ function CitasContenido() {
               <div className={styles.secundario}>{c.telefono || c.email}</div>
             </div>
           ) },
-          { clave: 'fechaBoda', etiqueta: 'Fecha del evento', render: (c) => fechaCorta(c.fechaBoda) },
-          { clave: 'ciudad', etiqueta: 'Ciudad' },
+          { clave: 'ubicacion', etiqueta: 'Atelier', render: (c) => nombreAtelier(c.ubicacion) },
+          { clave: 'fechaEvento', etiqueta: 'Fecha del evento', render: (c) => mesAnio(c.fechaEvento) },
           { clave: 'locale', etiqueta: 'Idioma', render: (c) => <BanderaIdioma locale={c.locale} /> },
           { clave: 'estado', etiqueta: 'Estado', render: (c) => <EstadoBadge estado={c.estado} /> },
         ]}

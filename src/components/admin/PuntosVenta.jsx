@@ -13,7 +13,7 @@
 import {
   createContext, useCallback, useContext, useState,
 } from 'react';
-import { limpiarPunto, obtenerPuntosVenta, slugPunto } from '@/lib/puntosVenta';
+import { limpiarPunto, puntosGuardados, slugPunto } from '@/lib/puntosVenta';
 
 const PuntosVentaContext = createContext(null);
 
@@ -30,7 +30,7 @@ export function conPunto(puntos, punto) {
 
 function PuntosVentaProvider({ children }) {
   // Copia profunda: el admin nunca muta los objetos que lee la web.
-  const [puntos, setPuntos] = useState(() => structuredClone(obtenerPuntosVenta()));
+  const [puntos, setPuntos] = useState(() => structuredClone(puntosGuardados()));
 
   // Guarda un punto y devuelve su id. Uno nuevo recibe su id a partir
   // del nombre.

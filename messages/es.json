@@ -78,7 +78,7 @@
     "origenDisenado": "Diseñado en: Salamanca, España",
     "origenFabricado": "Fabricado en: <talleres>nuestros talleres</talleres> de Salamanca, España",
     "sku": "Ref.",
-  "categorias": "Categorías",
+    "categorias": "Categorías",
     "porEncargoTitulo": "Producto por Encargo (PRE-ORDER)",
     "porEncargoTexto": "Esta prenda se realiza por encargo específicamente para cada pedido y cliente, por lo que no se admite realizar devolución una vez confirmado el pedido. Por ello puedes contactar con nosotros para más información y para hacer el pedido a través de nuestro botón de más información.",
     "envios": "Envíos y devoluciones",
@@ -104,7 +104,6 @@
   "visitenos": {
     "eyebrow": "Visita",
     "titulo": "Nuestros Ateliers",
-    "intro": "Nuestros ateliers y showroom, siempre con cita previa para atenderte con calma en nuestras ubicaciones en Salamanca, Madrid u Oviedo.",
     "pedirCita": "Pedir cita",
     "conoceMas": "Conoce más.",
     "whatsapp": "WhatsApp",
@@ -113,18 +112,11 @@
     "showroomNota": "Showroom con cita previa"
   },
   "puntosVenta": {
-    "tituloHero": "Boutiques selectas",
-    "subtituloHero": "Encuentra tu Fely Campo en nuestros puntos de venta.",
     "eyebrow": "Dónde encontrarnos",
-    "titulo": "Puntos de venta",
-    "intro": "Descubre nuestros ateliers y la red de boutique que trabajan con Fely Campo, en España y en el resto del mundo. Contamos con más de 200 puntos de venta. Encuentra tu punto de venta más cercano",
     "direcciones": "Cómo llegar",
     "buscarCpPlaceholder": "Código postal",
     "buscarCpBoton": "Buscar",
-    "buscarCpError": "Introduce un código postal español válido (5 dígitos).",
-    "internacionalTitulo": "Fely Campo y Guffanti: presencia internacional",
-    "showroomNombre": "Showroom Milán",
-    "showroomTexto": "Desde hace más de diez años, trabajamos con Guffanti, uno de nuestros representantes internacionales más importantes. Desde su showroom en Milán, distribuye las colecciones de Fely Campo a otros showrooms de Italia, consolidando la presencia de la firma en el mercado italiano."
+    "buscarCpError": "Introduce un código postal español válido (5 dígitos)."
   },
   "talleres": {
     "eyebrow": "Nuestro proceso",
@@ -150,8 +142,6 @@
     "episodio": "Episodio",
     "con": "Con",
     "shopHere": "Comprar aquí",
-    "introTitulo": "Podcast & Blog",
-    "introTexto": "Un espacio para conversar sin prisas. En el podcast, Fely Campo comparte con invitados del mundo de la moda, el arte y la artesanía las historias que hay detrás de cada creación; en el blog reunimos reflexiones, consejos para novias e invitadas y el día a día de nuestros ateliers. Palabras, telas y oficio, contados en primera persona.",
     "filtroTodo": "Ver todo",
     "filtroBlog": "Blog",
     "filtroPodcast": "Podcast"
@@ -161,7 +151,6 @@
     "emailLabel": "Email",
     "telefonoLabel": "Teléfono",
     "horarioLabel": "Horario",
-    "horario": "Lun - Vie: 8:00 - 16:00",
     "clickCollectLabel": "Click & Collect",
     "clickCollect": "Recogida en nuestro atelier de Salamanca.",
     "direccionLabel": "Atelier"
@@ -175,11 +164,10 @@
     "zona": "España y Unión Europea",
     "seguimientoLabel": "Seguimiento",
     "seguimiento": "Recibirás un email con el número de seguimiento en cuanto tu pedido salga del atelier.",
-    "dudasTexto": "¿Tienes alguna duda sobre tu envío? Escríbenos a <email>info@felycampo.com</email> o consulta <atencion>Atención al cliente</atencion>."
+    "dudasTexto": "¿Tienes alguna duda sobre tu envío? Escríbenos a <email>{correo}</email> o consulta <atencion>Atención al cliente</atencion>."
   },
   "whatsappFlotante": {
-    "label": "Escríbenos por WhatsApp",
-    "mensaje": "Hola, me gustaría recibir información sobre Fely Campo."
+    "label": "Escríbenos por WhatsApp"
   },
   "carrito": {
     "titulo": "Carrito",
@@ -235,9 +223,18 @@
     "disclaimer": "Las medidas se han tomado como referencia y pueden variar ligeramente según el material o la fabricación. Sirven como referencia al elegir la talla.",
     "comoMedir": "Cómo medir",
     "medidas": {
-      "pecho": { "etiqueta": "Pecho", "texto": "Rodea el busto por el punto más saliente." },
-      "cintura": { "etiqueta": "Cintura", "texto": "Envuelve la parte más estrecha del abdomen." },
-      "cadera": { "etiqueta": "Cadera", "texto": "Mide el contorno en el punto más ancho." }
+      "pecho": {
+        "etiqueta": "Pecho",
+        "texto": "Rodea el busto por el punto más saliente."
+      },
+      "cintura": {
+        "etiqueta": "Cintura",
+        "texto": "Envuelve la parte más estrecha del abdomen."
+      },
+      "cadera": {
+        "etiqueta": "Cadera",
+        "texto": "Mide el contorno en el punto más ancho."
+      }
     }
   },
   "solicitudAtelier": {
@@ -253,7 +250,7 @@
     "comentarioPlaceholder": "Cuéntanos cualquier detalle adicional…",
     "avisoDatos": "Completa tu nombre y email y acepta la política de privacidad para continuar.",
     "enviando": "Enviando…",
-    "errorEnvio": "No hemos podido enviar tu consulta. Inténtalo de nuevo o escríbenos a info@felycampo.com.",
+    "errorEnvio": "No hemos podido enviar tu consulta. Inténtalo de nuevo o escríbenos a {email}.",
     "enviar": "Enviar solicitud",
     "confirmacionTitulo": "¡Solicitud enviada!",
     "confirmacionTexto": "Gracias por tu interés en Fely Campo. Te hemos enviado un email con los datos de tu consulta y nuestro equipo te escribirá en breve con toda la información.",
@@ -304,7 +301,7 @@
     "tipoNovia": "Novia",
     "tipoInvitada": "Invitada",
     "enviando": "Enviando…",
-    "errorEnvio": "No hemos podido enviar tu solicitud. Inténtalo de nuevo o escríbenos a info@felycampo.com.",
+    "errorEnvio": "No hemos podido enviar tu solicitud. Inténtalo de nuevo o escríbenos a {email}.",
     "confirmacionNoviaTitulo": "¡Tu cita de novia está solicitada!",
     "confirmacionNoviaTexto": "Gracias por confiar en Fely Campo para tu vestido de novia. Te hemos enviado un email con los datos de tu solicitud y el equipo del atelier te escribirá para confirmar el día y la hora.",
     "confirmacionInvitadaTitulo": "¡Tu cita de invitada está solicitada!",
@@ -362,19 +359,12 @@
     "cerrar": "Cerrar"
   },
   "heroPagina": {
-    "podcast": "Entre telas y palabras.",
-    "runwayArchivo": "Todas nuestras colecciones de pasarela.",
     "atelierNovias": "Vestidos de novia hechos a medida en nuestro atelier.",
     "atelierFiesta": "Vestidos de fiesta e invitada, hechos a medida.",
     "pretAPorter": "Prendas para el día a día, con el cuidado del atelier.",
     "sobreFely": "Una vida entre telas",
     "runway": "Colección de pasarela",
     "atelierCiudad": "Visítanos siempre con cita previa."
-  },
-  "pedirCitaLanding": {
-    "titulo": "Te esperamos en nuestros ateliers",
-    "cta": "Pide tu cita",
-    "ctaAtelier": "Conoce más"
   },
   "citaFelyLanding": {
     "texto": "Lo que quiero transmitir con mis vestidos es <em>un sentimiento y una pasión</em> por lo que es mi oficio y mi profesión, <em>la moda</em>."
@@ -440,7 +430,6 @@
     "reservarCita": "Reserva tu cita"
   },
   "vosotras": {
-    "descripcion": "¿Y qué decir de vosotras? Si las palabras no son suficientes, que hablen las fotos.",
     "verGaleria": "Ver galería",
     "invitadas": "Invitadas",
     "novias": "Novias"
@@ -453,7 +442,6 @@
     "subtituloFelyCampo": "Fely Campo",
     "subtituloTienda": "Prêt-à-porter",
     "tituloTienda": "Prêt-à-porter",
-    "tituloColecciones": "Colecciones y desfiles",
     "tituloTops": "Tops y Camisetas"
   },
   "cuadriculaProductos": {
@@ -563,11 +551,9 @@
       "placeholder": "E-mail",
       "exito": "¡Gracias! Ya estás suscrita.",
       "error": "Algo ha ido mal. Inténtalo de nuevo."
-    }   
+    }
   },
   "newsletterPopup": {
-    "titulo": "Únete a Fely Campo",
-    "subtitulo": "Suscríbete a nuestra newsletter para tener acceso anticipado a ofertas especiales, novedades y estar conectada con nuestra comunidad.",
     "consentimiento": "Aceptas recibir comunicaciones comerciales.",
     "noGracias": "No, gracias",
     "cerrar": "Cerrar"
@@ -603,11 +589,26 @@
   "clientsReview": {
     "titulo": "Ellas te lo cuentan",
     "resenas": [
-      { "texto": "Muchísimas gracias Fely....me hiciste disfrutar del día más importante...y me hiciste la mujer más feliz....cuando tenga fotos de la fotógrafa profesional te mando por si las quieres publicar...te pondré la reseña que te mereces....Muchísimas gracias por todo y una suerte haberte conocido 🥰🥰", "nombre": "Marta G." },
-      { "texto": "La costura a medida marca la diferencia. Se nota en cada puntada.", "nombre": "Elena R." },
-      { "texto": "Un asesoramiento cercano y honesto, nunca me habían escuchado tanto en una tienda.", "nombre": "Carmen L." },
-      { "texto": "Calidad excepcional y un servicio que te hace sentir única.", "nombre": "Beatriz S." },
-      { "texto": "Volvería sin dudarlo. Fely Campo entiende lo que una mujer necesita.", "nombre": "Lucía M." }
+      {
+        "texto": "Muchísimas gracias Fely....me hiciste disfrutar del día más importante...y me hiciste la mujer más feliz....cuando tenga fotos de la fotógrafa profesional te mando por si las quieres publicar...te pondré la reseña que te mereces....Muchísimas gracias por todo y una suerte haberte conocido 🥰🥰",
+        "nombre": "Marta G."
+      },
+      {
+        "texto": "La costura a medida marca la diferencia. Se nota en cada puntada.",
+        "nombre": "Elena R."
+      },
+      {
+        "texto": "Un asesoramiento cercano y honesto, nunca me habían escuchado tanto en una tienda.",
+        "nombre": "Carmen L."
+      },
+      {
+        "texto": "Calidad excepcional y un servicio que te hace sentir única.",
+        "nombre": "Beatriz S."
+      },
+      {
+        "texto": "Volvería sin dudarlo. Fely Campo entiende lo que una mujer necesita.",
+        "nombre": "Lucía M."
+      }
     ]
   }
 }

@@ -33,7 +33,7 @@
   z-index: 0;
   background:
     linear-gradient(rgb(0 0 0 / 0.3), rgb(0 0 0 / 0.3)),
-    url('/img/atelier/showroom-madrid/fely-campo-atelier-madrid-sala-pruebas.webp') center / cover no-repeat;
+    var(--foto-pedir-cita) center / cover no-repeat;
   will-change: transform;
 }
 

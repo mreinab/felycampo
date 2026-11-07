@@ -28,7 +28,8 @@ const VELOCIDAD = 0.3;
 const MEDIA_ESCRITORIO = '(min-width: 1024px)';
 const MEDIA_SIN_MOVIMIENTO = '(prefers-reduced-motion: reduce)';
 
-function PedirCitaFondo() {
+// "imagen": la foto de fondo (lib/piezasComunes.js); el velo negro lo pone el CSS.
+function PedirCitaFondo({ imagen }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -73,7 +74,7 @@ function PedirCitaFondo() {
     };
   }, []);
 
-  return <div ref={ref} className={styles.fondo} aria-hidden="true" />;
+  return <div ref={ref} className={styles.fondo} style={{ '--foto-pedir-cita': `url('${imagen}')` }} aria-hidden="true" />;
 }
 
 export default PedirCitaFondo;

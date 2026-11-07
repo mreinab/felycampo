@@ -17,6 +17,7 @@
 import { getTranslations } from 'next-intl/server';
 import { ProductHero } from '@/components/layout';
 import styles from './page.module.css';
+import { obtenerContacto } from '@/lib/contacto';
 import { metadataPagina } from '@/lib/seo';
 
 export async function generateMetadata({ params }) {
@@ -55,7 +56,8 @@ export default async function Pagina({ params }) {
 
         <p className={styles.dudas}>
           {t.rich('dudasTexto', {
-            email: (chunks) => <a href="mailto:info@felycampo.com" className="enlace-texto">{chunks}</a>,
+            email: (chunks) => <a href={`mailto:${obtenerContacto().email}`} className="enlace-texto">{chunks}</a>,
+            correo: obtenerContacto().email,
             atencion: (chunks) => <a href={`/${locale}/ayuda/atencion-cliente`} className="enlace-texto">{chunks}</a>,
           })}
         </p>

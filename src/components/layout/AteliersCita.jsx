@@ -7,7 +7,8 @@
 // atelier (Boton sin href = <span>). Lo pinta [locale]/layout.js solo
 // donde hay intención de visitar un atelier (ver conAteliersCitaEn).
 
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
+import { obtenerPiezasComunes } from '@/lib/piezasComunes';
 import { Boton, EnVista } from '../ui';
 import { obtenerSede } from '@/lib/ateliers';
 import { textoEn } from '@/lib/previa';
@@ -16,24 +17,21 @@ import styles from './AteliersCita.module.css';
 // Foto = la del hero de su propia ficha (/atelier-fiesta/[id], ver
 // src/datos/ateliers.js) salvo que la entrada traiga la suya (Madrid, a
 // petición: su hero es vídeo).
-const ATELIERES_CITA = [
-  { id: 'salamanca' },
-  { id: 'madrid', imagen: '/img/atelier/showroom-madrid/fely-campo-atelier-madrid-foto-2.webp' },
-  { id: 'oviedo' },
-].map(({ id, imagen }) => ({
+// La foto de cada una: la de lib/piezasComunes.js (editable en el admin) o,
+// si está vacía, la de portada de su atelier.
+const ATELIERES_CITA = () => ['salamanca', 'madrid', 'oviedo'].map((id) => ({
   id,
-  imagen: imagen ?? obtenerSede(id).heroMedio.src,
+  imagen: obtenerPiezasComunes().ateliersCita[id] || obtenerSede(id).heroMedio.src,
 }));
 
 // "separado" (opcional): más aire en blanco encima (ver .separado en el
 // CSS) — en /atelier, para separar la sección de las fotos de arriba.
 export default async function AteliersCita({ separado = false }) {
   const locale = await getLocale();
-  const tPedirCita = await getTranslations('pedirCitaLanding');
 
   return (
     <section className={`${styles.ateliersCita} ${separado ? styles.separado : ''}`}>
-      {ATELIERES_CITA.map(({ id, imagen }) => (
+      {ATELIERES_CITA().map(({ id, imagen }) => (
         <EnVista
           key={id}
           as="a"
@@ -48,7 +46,7 @@ export default async function AteliersCita({ separado = false }) {
               {' '}<br className={styles.saltoMovil} />
               &amp; Showroom
             </p>
-            <Boton variante="texto" className={styles.atelierCitaCta}>{tPedirCita('ctaAtelier')}</Boton>
+            <Boton variante="texto" className={styles.atelierCitaCta}>{textoEn(obtenerPiezasComunes().ateliersCita.boton, locale)}</Boton>
           </div>
         </EnVista>
       ))}

@@ -16,6 +16,8 @@ import { CuadriculaProductos, HeroPagina } from '@/components/layout';
 import { coleccionesVisiblesFiesta, productosListadoFiesta } from '@/lib/catalogoFiesta';
 import { encontrarCategoria } from '@/components/layout/estiloSiluetaGrupos';
 import { parametrosCategoria, metadataCategoria, breadcrumbJsonLd } from '@/lib/atelierCategoriaSeo';
+import { obtenerEditorialFiesta } from '@/lib/atelierEditorial';
+import { textoEn } from '@/lib/previa';
 
 const ES_FIESTA = true;
 const SECCION_KEY = 'nav.submenus.atelier.fiesta';
@@ -43,6 +45,9 @@ export default async function Pagina({ params }) {
   if (!categoriaActiva) permanentRedirect(`/${locale}/atelier/fiesta`); // slug inexistente: al listado (ninguna URL en 404)
 
   const t = await getTranslations();
+  // Foto, frase y texto: editables en el admin (Colección Fiesta › Página
+  // de la web › Páginas de categoría).
+  const { categorias } = obtenerEditorialFiesta();
   const jsonLd = await breadcrumbJsonLd({ locale, seccionKey: SECCION_KEY, seccionHref: SECCION_HREF, categoriaActiva });
 
   return (
@@ -52,10 +57,10 @@ export default async function Pagina({ params }) {
           encima vía data-navbar-hero + velo degradado), sin la
           introducción editorial. */}
       <HeroPagina
-        imagen="/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp"
+        imagen={categorias.imagen}
         alt={t(SECCION_KEY)}
         titulo={[t(SECCION_KEY), t(`filtros.estiloYSilueta.grupos.${categoriaActiva.grupo}.opciones.${categoriaActiva.opcion}`)]}
-        subtitulo={t('heroPagina.atelierFiesta')}
+        subtitulo={textoEn(categorias.subtitulo, locale)}
       />
       <CuadriculaProductos
         productos={PRODUCTOS_FIESTA}
@@ -65,7 +70,7 @@ export default async function Pagina({ params }) {
         // (ocultarControles) — a petición.
         tituloKey="nav.links.atelier"
         coleccionKey={SECCION_KEY}
-        descriptionKey="cuadriculaTabs.descripcion"
+        description={textoEn(categorias.texto, locale)}
         ocultarControles
         ocultarPrecio
         colecciones={COLECCIONES_FIESTA}

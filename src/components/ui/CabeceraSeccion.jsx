@@ -56,6 +56,9 @@ import useEnVista from '@/hooks/useEnVista';
  * de una página concreta sin tocar el CSS compartido (ver
  * .cabeceraColumna en visita-fely-campo/page.module.css).
  *
+ * "title" (opcional): igual que "description" para el título — texto ya
+ * resuelto (lib/cabeceras.js, editable en el admin) en vez de "titleKey".
+ *
  * "description" (opcional): texto YA resuelto para el idioma actual,
  * en vez de una clave de traducción — para contenido largo/propio de
  * cada página que vive en un archivo de datos JS, no en
@@ -68,7 +71,7 @@ import useEnVista from '@/hooks/useEnVista';
  *     <Boton variante="flecha" href="/coleccion">Ver colección</Boton>
  *   </CabeceraSeccion>
  */
-function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, description, breadcrumbItems, children, before, alinear = 'end', enCuadricula = false, margenSuperiorAmplio = false, className }) {
+function CabeceraSeccion({ subtitleKey, titleKey, title, descriptionKey, description, breadcrumbItems, children, before, alinear = 'end', enCuadricula = false, margenSuperiorAmplio = false, className }) {
   const t = useTranslations();
   // Solo el texto (título/subtítulo/descripción) aparece con scroll —
   // ver .al-scroll/.en-vista en global.css — no toda la cabecera
@@ -96,7 +99,7 @@ function CabeceraSeccion({ subtitleKey, titleKey, descriptionKey, description, b
         ) : (
           subtitleKey && <p className={styles.subtitle}>{t(subtitleKey)}</p>
         )}
-        <h2 className={collectionTitleStyles.titulo}>{t(titleKey)}</h2>
+        <h2 className={collectionTitleStyles.titulo}>{title || t(titleKey)}</h2>
         {textoDescripcion && <p className={styles.descripcion}>{textoDescripcion}</p>}
       </div>
       {children}

@@ -26,7 +26,8 @@ import CampoLinea from './CampoLinea';
 import ConfirmarBorrado from './ConfirmarBorrado';
 import DragList from './DragList';
 import EditorPagina from './EditorPagina';
-import { FilaListado, PestanasListado } from './ListadoAdmin';
+import AdminCabecera from './AdminCabecera';
+import { FilaListado, PestanasListado, PestanasPagina } from './ListadoAdmin';
 import PageHeader from './PageHeader';
 import { useToast } from './Toast';
 import { conLook, conResena, useVosotras } from './Vosotras';
@@ -35,6 +36,9 @@ import listado from './ListadoAdmin.module.css';
 import styles from './AdminVosotras.module.css';
 
 const BASE = '/admin/vosotras';
+// Al entrar se abre la página (título y texto); los looks y las reseñas
+// están en sus pestañas.
+const INVITADAS = `${BASE}?pestana=invitadas`;
 const WEB = `/es${RUTA_WEB_VOSOTRAS}`;
 const NUEVO = 'nuevo';
 const DEMO = ' (demo: se guardará de verdad al conectar la base de datos)';
@@ -63,7 +67,7 @@ function Listado({ pestana }) {
 
   const pestanas = [
     ...PESTANAS_VOSOTRAS.map(({ id, nombre }) => ({
-      href: id === 'invitadas' ? BASE : `${BASE}?pestana=${id}`, nombre, cuenta: datos[id].length, activa: pestana === id,
+      href: `${BASE}?pestana=${id}`, nombre, cuenta: datos[id].length, activa: pestana === id,
     })),
     {
       href: `${BASE}?pestana=resenas`, nombre: 'Reseñas', cuenta: datos.resenas.length, activa: esResenas,
@@ -89,6 +93,8 @@ function Listado({ pestana }) {
           <Plus size={14} aria-hidden="true" /> {esResenas ? 'Nueva reseña' : 'Nuevo look'}
         </Boton>
       </PageHeader>
+
+      <PestanasPagina etiqueta="Vosotras" pagina={BASE} listado={{ href: INVITADAS, nombre: 'Fotos y reseñas', cuenta: datos.invitadas.length + datos.novias.length + datos.resenas.length }} activa="listado" />
 
       <PestanasListado etiqueta="Pestañas de Vosotras" pestanas={pestanas} />
 
@@ -242,7 +248,7 @@ function EditarLook({ lookId, pestanaInicial }) {
   const look = esNuevo ? vacio : pestanaActual && datos[pestanaActual].find((item) => item.id === lookId);
 
   if (!look) {
-    return <p className={listado.vacio}>Este look no existe. <Link href={BASE}>Volver a Vosotras</Link></p>;
+    return <p className={listado.vacio}>Este look no existe. <Link href={INVITADAS}>Volver a Vosotras</Link></p>;
   }
 
   const publicado = { ...look, pestana: pestanaActual };
@@ -264,7 +270,7 @@ function EditarLook({ lookId, pestanaInicial }) {
         router.replace(`${BASE}?look=${id}&pestana=${borrador.pestana}`);
       }}
       migas="Vosotras"
-      volver={pestanaActual === 'novias' ? `${BASE}?pestana=novias` : BASE}
+      volver={pestanaActual === 'novias' ? `${BASE}?pestana=novias` : INVITADAS}
       estadoPublicado={esNuevo ? 'Sin publicar' : (look.publicado ? 'Publicado' : 'Oculto en la web')}
       textoPublicado={esNuevo ? 'Look publicado' : 'Cambios publicados'}
       enLaWeb={!esNuevo}
@@ -410,6 +416,18 @@ function EditarResena({ resenaId, lookInicial }) {
 
 // ---------- Página ----------
 
+// La pestaña «Página de la web»: título y texto de /atelier/vosotras.
+function PaginaVosotras() {
+  const { datos } = useVosotras();
+  return (
+    <AdminCabecera
+      id="vosotras"
+      migas="Vosotras"
+      pestanas={<PestanasPagina etiqueta="Vosotras" pagina={BASE} listado={{ href: INVITADAS, nombre: 'Fotos y reseñas', cuenta: datos.invitadas.length + datos.novias.length + datos.resenas.length }} activa="pagina" />}
+    />
+  );
+}
+
 function AdminVosotras() {
   const params = useSearchParams();
   const look = params.get('look');
@@ -419,7 +437,8 @@ function AdminVosotras() {
   // Primero la reseña: «Añadir una reseña a este look» lleva ?resena=nuevo&look=<id>.
   if (resena) return <EditarResena resenaId={resena} lookInicial={look} />;
   if (look) return <EditarLook lookId={look} pestanaInicial={pestana} />;
-  return <Listado pestana={['novias', 'resenas'].includes(pestana) ? pestana : 'invitadas'} />;
+  if (pestana) return <Listado pestana={['novias', 'resenas'].includes(pestana) ? pestana : 'invitadas'} />;
+  return <PaginaVosotras />;
 }
 
 export default AdminVosotras;

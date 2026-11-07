@@ -1,8 +1,23 @@
 // citasFormato.js
 //
 // Formato compartido por el listado y el detalle de Citas
-// (/admin/consultas): fechas en español e idioma. Sin atelier: el
-// formulario ya no lo pregunta, lo decide el equipo al contactar.
+// (/admin/consultas): fechas en español, idioma y el atelier que eligió
+// la clienta en el formulario (lib/citaAtelier.js, ATELIERES_CITA).
+
+import { ATELIERES_CITA } from '@/lib/citaAtelier';
+
+export function nombreAtelier(ubicacion) {
+  const atelier = ATELIERES_CITA.find((a) => a.id === ubicacion);
+  return atelier ? `Atelier ${atelier.nombre}` : 'Sin elegir';
+}
+
+// La fecha del evento: el formulario pide mes y año. "2027-06" → "junio de 2027"
+export function mesAnio(fecha) {
+  if (!fecha) return '—';
+  const [anio, mes] = fecha.split('-');
+  if (!mes) return anio;
+  return new Date(Number(anio), Number(mes) - 1, 15).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+}
 
 // Idioma de la web desde la que se envió el formulario (locale).
 export const IDIOMAS_CITA = [

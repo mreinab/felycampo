@@ -10,10 +10,11 @@
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';
-import { HeroPagina } from '@/components/layout';
 import { articulosVisibles, episodiosVisibles } from '@/lib/blog';
 import ListadoPodcastBlog from './ListadoPodcastBlog';
 import styles from './page.module.css';
+import { CabeceraPagina, HeroCabecera } from '@/components/layout/CabeceraPagina';
+import { obtenerCabecera } from '@/lib/cabeceras';
 import { metadataPagina } from '@/lib/seo';
 
 export async function generateMetadata({ params }) {
@@ -24,8 +25,6 @@ export async function generateMetadata({ params }) {
 export default async function Pagina({ params }) {
   const { locale } = await params;
   const t = await getTranslations('blog');
-  const tNav = await getTranslations('nav');
-  const tHero = await getTranslations('heroPagina');
 
   // Entradas ya preparadas para ListadoPodcastBlog (componente cliente):
   // textos en el idioma, href y meta (duración del episodio o fecha del
@@ -56,16 +55,12 @@ export default async function Pagina({ params }) {
 
   return (
     <>
-    {/* Hero común (HeroPagina), con la misma foto que "Podcast" en el
-        submenú del Navbar. heroEncuadre: en mobile lleva el recorte a
-        la derecha, sobre Fely (ver page.module.css). */}
-    <HeroPagina
-      imagen="/img/about-felycampo/fely-campo-sobre-fely-campo-madrid-moda-capital-podcast.webp"
-      alt={tNav('submenus.elMundoDeFely.podcast')}
-      titulo={tNav('submenus.elMundoDeFely.podcast')}
-      subtitulo={tHero('podcast')}
-      className={styles.heroEncuadre}
-    />
+    {/* Cabecera e introducción: lib/cabeceras.js (editables en el admin,
+        Blog & Podcast › Página de la web, con vista previa).
+        heroEncuadre: en mobile lleva el recorte a la derecha, sobre Fely
+        (ver page.module.css). */}
+    <CabeceraPagina id="blog" publicado={obtenerCabecera('blog')}>
+    <HeroCabecera className={styles.heroEncuadre} />
     {/* Intro ("Podcast & Blog" + texto + filtros) y listado filtrable
         de episodios y artículos — ver ListadoPodcastBlog.jsx. */}
     <ListadoPodcastBlog
@@ -73,14 +68,13 @@ export default async function Pagina({ params }) {
       articulos={articulos}
       locale={locale}
       textos={{
-        introTitulo: t('introTitulo'),
-        introTexto: t('introTexto'),
         filtroTodo: t('filtroTodo'),
         filtroBlog: t('filtroBlog'),
         filtroPodcast: t('filtroPodcast'),
         escucharEpisodio: t('escucharEpisodio'),
       }}
     />
+    </CabeceraPagina>
     </>
   );
 }

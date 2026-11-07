@@ -89,3 +89,10 @@
   margin-bottom: var(--spacing-6);
 }
 
+
+/* Prêt-à-porter › Páginas de categoría: una foto por categoría, en rejilla. */
+.fotosCategorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-5);
+}

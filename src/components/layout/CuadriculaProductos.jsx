@@ -118,7 +118,8 @@ function familiaDeHex(hex) {
  *
  * "tituloKey" (opcional): activa la cabecera (CabeceraSeccion) —
  * subtítulo pequeño "tituloKey", título grande "coleccionKey" (si
- * falta, reusa tituloKey) y descripción opcional "descriptionKey". Sin
+ * falta, reusa tituloKey) y descripción opcional "descriptionKey" (o
+ * "description", el texto ya escrito: el editable desde el admin). Sin
  * tituloKey no se pinta cabecera — pensado para sitios que ya traen su
  * propio título encima. "verMasHref" es el destino del botón "flecha"
  * en la accion (y no pinta el botón si
@@ -137,7 +138,7 @@ function familiaDeHex(hex) {
  * carga 8 más, con tarjetas-esqueleto (.skeleton) mientras "llega"
  * (simulado con un timeout — aquí no hay backend real todavía).
  */
-function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase, estiloYSilueta = false, esFiesta = false, categoriaActiva = null, coleccionActiva = null, ocultarSubtitulo = false, ocultarControles = false }) {
+function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, descriptionKey, description, botonTextKey = 'cuadriculaProductos.shopNow', disposicion = 'fila', ocultarPrecio = false, colecciones = [], hrefBase, estiloYSilueta = false, esFiesta = false, categoriaActiva = null, coleccionActiva = null, ocultarSubtitulo = false, ocultarControles = false }) {
   const t = useTranslations();
   const locale = useLocale();
 
@@ -345,6 +346,7 @@ function CuadriculaProductos({ productos, verMasHref, tituloKey, coleccionKey, d
             { key: coleccionKey || tituloKey, href: `/${locale}/${hrefBase}` },
           ] : undefined}
           descriptionKey={descriptionKey}
+          description={description}
           alinear={esGrid ? 'start' : 'end'}
           enCuadricula
           before={ocultarControles ? undefined : filtrosBoton}

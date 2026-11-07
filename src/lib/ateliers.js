@@ -93,6 +93,9 @@ export function camposSede(datos) {
       bloque: 'portada', nombre: 'lo que va antes de la ciudad («Atelier»)', tipo: 'texto', valor: datos.etiqueta, requerido: true,
     },
     {
+      bloque: 'portada', nombre: 'la frase de la portada', tipo: 'texto', valor: datos.subtitulo, requerido: true,
+    },
+    {
       bloque: 'portada', nombre: 'la foto o el vídeo de portada', tipo: 'medio', valor: datos.heroMedio.src, requerido: true,
     },
     {

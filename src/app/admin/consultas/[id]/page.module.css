@@ -14,6 +14,42 @@
   margin-bottom: var(--spacing-5);
 }
 
+/* Arriba, fuera del documento: las acciones (barra) y la gestión de la
+   cita (estado y atelier asignado), siempre a mano sin bajar por el folio. */
+.panel {
+  margin-bottom: var(--spacing-5);
+}
+
+.panel .barra {
+  margin-bottom: var(--spacing-4);
+}
+
+/* «Volver» a la misma altura que los demás botones. */
+.panel .barra > a:first-child {
+  margin: 0;
+}
+
+.gestion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--spacing-4) var(--spacing-7);
+  padding: var(--spacing-4) var(--spacing-5);
+  border: var(--border-thin) solid var(--color-gris-200);
+  background: #fff;
+}
+
+.gestionCampo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.gestion .selectInput {
+  min-width: 320px;
+  max-width: 100%;
+}
+
 .barraAcciones {
   display: flex;
   flex-wrap: wrap;
@@ -244,6 +280,7 @@
     margin: 0;
   }
 
+  .panel,
   .barra,
   .soloPantalla {
     display: none !important;

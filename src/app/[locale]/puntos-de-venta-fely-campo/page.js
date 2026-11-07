@@ -20,10 +20,10 @@
    margin-bottom en la propia sección (ver .seccionMilan) para separar
    del Footer, que si no quedaba pegado justo debajo. */
 
-import { getTranslations } from 'next-intl/server';
-import { MapaPuntosVenta, ProductHero } from '@/components/layout';
-import { CabeceraSeccion, EnVista } from '@/components/ui';
-import styles from './page.module.css';
+import { MapaPuntosVenta } from '@/components/layout';
+import { CabeceraPagina, HeroCabecera } from '@/components/layout/CabeceraPagina';
+import { obtenerCabecera } from '@/lib/cabeceras';
+import PresenciaInternacional from './PresenciaInternacional';
 import { metadataPagina } from '@/lib/seo';
 
 export async function generateMetadata({ params }) {
@@ -32,16 +32,13 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Pagina() {
-  const t = await getTranslations('puntosVenta');
-
   return (
-    <>
+    <CabeceraPagina id="puntos-de-venta" publicado={obtenerCabecera('puntos-de-venta')}>
+      {/* Cabecera, textos del mapa y «presencia internacional»:
+          lib/cabeceras.js (editables en el admin, Puntos de venta › Página
+          de la web, con vista previa). */}
       <section className="seccion">
-        <ProductHero
-          imagen="/img/atelier/atelier-salamanca/fely-campo-atelier-salamanca-foto-4.webp"
-          titulo={t('tituloHero')}
-          subtitulo={t('subtituloHero')}
-        />
+        <HeroCabecera producto />
       </section>
 
       <section className="seccion" id="mapa-puntos-venta">
@@ -50,29 +47,7 @@ export default async function Pagina() {
         </div>
       </section>
 
-      <section className={`seccion ${styles.seccionMilan}`}>
-        <CabeceraSeccion
-          titleKey="puntosVenta.internacionalTitulo"
-          alinear="start"
-        />
-
-        <EnVista as="article" className={styles.tarjeta}>
-          <div className={styles.galeria}>
-            <img
-              src="/img/atelier/fely-campo-atelier-punto-venta-internacional-2.webp"
-              alt={t('showroomNombre')}
-              className={styles.foto}
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-
-          <div className={styles.fila}>
-            <p className={styles.nombre}>{t('showroomNombre')}</p>
-            <p className={styles.textoRelleno}>{t('showroomTexto')}</p>
-          </div>
-        </EnVista>
-      </section>
-    </>
+      <PresenciaInternacional />
+    </CabeceraPagina>
   );
 }

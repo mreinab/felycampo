@@ -19,12 +19,12 @@
 //     const { locale } = await params;
 //     return metadataPagina({ locale, ruta: '/sobre-fely' });
 //   }
-// Los textos de title/description salen de seoTextos.js por "ruta"; para
+// Los textos de title/description salen de datos/seoTextos.js por "ruta"; para
 // páginas dinámicas (producto, runway, blog) se pasan "titulo"/"descripcion"
 // ya resueltos en vez de buscarlos ahí.
 
 import { locales, defaultLocale } from '@/i18n';
-import { SEO_TEXTOS } from './seoTextos';
+import { obtenerSeoTextos } from './seoTextos';
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://felycampo.com').replace(/\/$/, '');
 export const SITIO_INDEXABLE = process.env.SITIO_INDEXABLE === 'true';
@@ -56,9 +56,12 @@ export function recortar(texto, max = 155) {
   return `${limpio.slice(0, limpio.lastIndexOf(' ', max - 1))}…`;
 }
 
+// { title, description, h1 } de una página fija en un idioma (datos en
+// src/datos/seoTextos.js, editables en el admin: «Textos de Google»).
 export function textosSeo(ruta, locale) {
-  const entrada = SEO_TEXTOS[ruta];
-  return entrada ? entrada[locale] || entrada[defaultLocale] : null;
+  const entrada = obtenerSeoTextos()[ruta];
+  if (!entrada) return null;
+  return Object.fromEntries(Object.entries(entrada).map(([campo, valor]) => [campo, valor[locale] || valor[defaultLocale]]));
 }
 
 /**

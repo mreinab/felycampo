@@ -22,7 +22,7 @@ import { PageHeader, TablaAdmin, EstadoBadge } from '@/components/admin';
 import { Boton } from '@/components/ui';
 import { citasMock, consultasPrecioMock, newsletterMock } from '@/components/admin/mockData';
 import { FOTOS_INVITADAS, FOTOS_NOVIAS, RESENAS_INTERCALADAS } from '@/components/layout/vosotrasFotos';
-import { fechaCorta, fechaHora } from './consultas/citasFormato';
+import { fechaHora, mesAnio, nombreAtelier } from './consultas/citasFormato';
 import BanderaIdioma from './consultas/BanderaIdioma';
 import styles from './page.module.css';
 
@@ -81,7 +81,8 @@ export default function AdminDashboard() {
             { clave: 'recibida', etiqueta: 'Recibida', render: (c) => fechaHora(c.recibida) },
             { clave: 'nombre', etiqueta: 'Clienta' },
             { clave: 'locale', etiqueta: 'Idioma', render: (c) => <BanderaIdioma locale={c.locale} /> },
-            { clave: 'fechaBoda', etiqueta: 'Fecha del evento', render: (c) => fechaCorta(c.fechaBoda) },
+            { clave: 'ubicacion', etiqueta: 'Atelier', render: (c) => nombreAtelier(c.ubicacion) },
+            { clave: 'fechaEvento', etiqueta: 'Fecha del evento', render: (c) => mesAnio(c.fechaEvento) },
             { clave: 'estado', etiqueta: 'Estado', render: (c) => <EstadoBadge estado={c.estado} /> },
           ]}
           filas={ultimasCitas}

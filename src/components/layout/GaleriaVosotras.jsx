@@ -57,6 +57,7 @@ import {
 import BarraPrevia from './BarraPrevia';
 import usePrevia from './usePrevia';
 import styles from './GaleriaVosotras.module.css';
+import { useTextoCabecera } from './CabeceraPagina';
 
 // Campos de las reseñas que pueden quedar vacíos a propósito en un
 // borrador del admin (para que la vista previa no los rellene con lo
@@ -128,8 +129,10 @@ function intercalarResenas(looks, resenas) {
 // "publicado": los datos de lib/vosotras.js (los mismos que edita
 // /admin/vosotras). Con ?previa=vosotras, el borrador del admin.
 function GaleriaVosotras({
-  subtitleKey, titleKey, descriptionKey, margenSuperiorAmplio, publicado = obtenerVosotras(),
+  subtitleKey, titleKey, descriptionKey, cabecera, margenSuperiorAmplio, publicado = obtenerVosotras(),
 }) {
+  // "cabecera": el título y el texto salen de lib/cabeceras.js (con vista previa).
+  const textoCabecera = useTextoCabecera(cabecera || 'vosotras');
   const t = useTranslations();
   const { datos, enPrevia } = usePrevia(ID_PREVIA_VOSOTRAS, publicado, OPCIONALES_PREVIA);
   // Pestañas Invitadas/Novias: mismo fundido+subida de entrada que el
@@ -251,7 +254,9 @@ function GaleriaVosotras({
       <CabeceraSeccion
         subtitleKey={subtitleKey}
         titleKey={titleKey}
+        title={cabecera ? textoCabecera('titulo') : undefined}
         descriptionKey={descriptionKey}
+        description={cabecera ? textoCabecera('texto') : undefined}
         margenSuperiorAmplio={margenSuperiorAmplio}
         className={styles.cabeceraSeccion}
       >

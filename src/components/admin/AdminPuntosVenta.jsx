@@ -20,16 +20,19 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { ExternalLink, Plus } from 'lucide-react';
 import { Boton, Input } from '@/components/ui';
 import {
-  EDITOR_PUNTOS, ID_PREVIA_PUNTOS, RUTA_WEB_PUNTOS, camposPunto, esAtelierPropio, nuevoPunto, paisesDe, validarExtraPunto,
+  EDITOR_PUNTOS, ID_PREVIA_PUNTOS, RUTA_WEB_PUNTOS, camposPunto, conDatosDeSede, esAtelierPropio, nuevoPunto, paisesDe, validarExtraPunto,
 } from '@/lib/puntosVenta';
+import { IDS_SEDES, editorSede, idPaginaSede } from '@/lib/ateliers';
 import CampoLinea from './CampoLinea';
 import ConfirmarBorrado from './ConfirmarBorrado';
 import EditorPagina from './EditorPagina';
 import FiltroBar, { Selector } from './FiltroBar';
-import { FilaListado } from './ListadoAdmin';
+import AdminCabecera from './AdminCabecera';
+import { FilaListado, PestanasPagina } from './ListadoAdmin';
 import PageHeader from './PageHeader';
 import { conPunto, usePuntosVenta } from './PuntosVenta';
 import SelectorUbicacion from './SelectorUbicacion';
+import { usePagina } from './Paginas';
 import { useToast } from './Toast';
 import editorStyles from './EditorPagina.module.css';
 import campos from './CamposEditor.module.css';
@@ -37,10 +40,21 @@ import listado from './ListadoAdmin.module.css';
 import styles from './AdminPuntosVenta.module.css';
 
 const BASE = EDITOR_PUNTOS;
+// Al entrar se abre la página (cabecera, textos del mapa y presencia
+// internacional); los puntos están en la segunda pestaña.
+const LISTADO = `${BASE}?vista=puntos`;
 const WEB = `/es${RUTA_WEB_PUNTOS}`;
 const NUEVO = 'nuevo';
 const OTRO_PAIS = '__otro__';
 const DEMO = ' (demo: se guardará de verdad al conectar la base de datos)';
+
+// Los ateliers propios toman la dirección y el teléfono de su página de
+// atelier: aquí, de lo publicado en el admin. (Siempre las 3 sedes, en el
+// mismo orden: así los hooks no cambian.)
+function useSedes() {
+  const publicadas = Object.fromEntries(IDS_SEDES.map((id) => [id, usePagina(idPaginaSede(id)).publicado]));
+  return (id) => publicadas[id];
+}
 
 // ---------- Listado ----------
 
@@ -50,7 +64,9 @@ const normalizar = (texto) => String(texto || '').normalize('NFD').replace(/[\u0
 function Listado({ pais }) {
   const router = useRouter();
   const { mostrarToast } = useToast();
-  const { puntos, alternar, borrar } = usePuntosVenta();
+  const { puntos: guardados, alternar, borrar } = usePuntosVenta();
+  const sedes = useSedes();
+  const puntos = guardados.map((punto) => conDatosDeSede(punto, sedes));
   const [porBorrar, setPorBorrar] = useState(null);
   const [busqueda, setBusqueda] = useState('');
   const paises = paisesDe(puntos);
@@ -63,7 +79,7 @@ function Listado({ pais }) {
   const grupos = paises
     .map(({ pais: nombre }) => ({ pais: nombre, puntos: lista.filter((punto) => punto.pais === nombre) }))
     .filter((grupo) => grupo.puntos.length > 0);
-  const elegirPais = (nombre) => router.replace(nombre ? `${BASE}?pais=${encodeURIComponent(nombre)}` : BASE);
+  const elegirPais = (nombre) => router.replace(nombre ? `${BASE}?pais=${encodeURIComponent(nombre)}` : LISTADO);
 
   const fila = (punto) => (
     <FilaListado
@@ -97,6 +113,8 @@ function Listado({ pais }) {
           <Plus size={14} aria-hidden="true" /> Nuevo punto de venta
         </Boton>
       </PageHeader>
+
+      <PestanasPagina etiqueta="Puntos de venta" pagina={BASE} listado={{ href: LISTADO, nombre: 'Puntos de venta', cuenta: puntos.length }} activa="listado" />
 
       <FiltroBar onLimpiar={pais || busqueda ? () => { setBusqueda(''); elegirPais(''); } : undefined}>
         <Input
@@ -180,6 +198,24 @@ const BLOQUES = [
   },
 ];
 
+// Un atelier propio: su dirección y su teléfono se ven, pero se cambian en
+// su página de atelier (una sola copia para la web, el mapa y la cita).
+function DatosDeSede({ punto, sede }) {
+  return (
+    <div className={styles.datosSede}>
+      <p className={styles.datosSedeTexto}>
+        <strong>{punto.direccion.join(', ')}</strong>
+        {punto.telefono && <><br />{punto.telefono}</>}
+      </p>
+      <p className={campos.ayuda}>
+        Es un atelier propio: su dirección y su teléfono se cambian en su página, «{sede.contacto.nombre}», y de ahí pasan solos al mapa.
+        Si cambia de calle, mueve también su punto aquí abajo, en «Dónde está».
+      </p>
+      <Link href={editorSede(sede.id)} className={styles.datosSedeEnlace}>Cambiar en «{sede.contacto.nombre}»</Link>
+    </div>
+  );
+}
+
 // El país: los que ya hay, o uno nuevo escrito a mano.
 function ElegirPais({ valor, paises, onChange }) {
   const [otro, setOtro] = useState(() => Boolean(valor) && !paises.includes(valor));
@@ -215,13 +251,14 @@ function ElegirPais({ valor, paises, onChange }) {
 function EditarPunto({ puntoId, paisInicial }) {
   const router = useRouter();
   const { puntos, guardar } = usePuntosVenta();
+  const sedes = useSedes();
   const esNuevo = puntoId === NUEVO;
   const paises = paisesDe(puntos).map(({ pais }) => pais);
   const [vacio] = useState(() => ({ ...nuevoPunto(), pais: paisInicial || 'España' }));
   const guardado = esNuevo ? vacio : puntos.find((punto) => punto.id === puntoId);
 
   if (!guardado) {
-    return <p className={listado.vacio}>Este punto de venta no existe. <Link href={BASE}>Volver a Puntos de venta</Link></p>;
+    return <p className={listado.vacio}>Este punto de venta no existe. <Link href={LISTADO}>Volver a Puntos de venta</Link></p>;
   }
 
   // En el editor, teléfono y email vacíos son '' (se guardan como null).
@@ -247,7 +284,7 @@ function EditarPunto({ puntoId, paisInicial }) {
         router.replace(`${BASE}?punto=${id}`);
       }}
       migas="Puntos de venta"
-      volver={BASE}
+      volver={LISTADO}
       estadoPublicado={esNuevo ? 'Sin publicar' : (guardado.publicado ? 'En el mapa' : 'Oculto en la web')}
       textoPublicado={esNuevo ? 'Punto de venta publicado' : 'Cambios publicados'}
       enLaWeb={!esNuevo}
@@ -262,24 +299,28 @@ function EditarPunto({ puntoId, paisInicial }) {
               <div className={editorStyles.fichaCampos}>
                 {linea(['nombre'], { etiqueta: 'Nombre de la tienda', placeholder: 'Boutique Tess' })}
                 <ElegirPais valor={h.borrador.pais} paises={paises} onChange={(pais) => h.cambiar(['pais'], pais)} />
-                <div className={editorStyles.dosColumnas}>
-                  {linea(['direccion', 0], { etiqueta: 'Calle y número', placeholder: 'C/ Marqués de Molins 14' })}
-                  {linea(['direccion', 1], { etiqueta: 'Ciudad y código postal', placeholder: 'Albacete 02001' })}
-                </div>
-                <div className={editorStyles.dosColumnas}>
-                  {linea(['telefono'], {
-                    etiqueta: 'Teléfono', opcional: true, placeholder: '+34 967 60 74 47', ayuda: 'Con el prefijo del país (+34…), para poder llamar desde el móvil.',
-                  })}
-                  {linea(['email'], {
-                    etiqueta: 'Email', opcional: true, tipo: 'email', placeholder: 'tienda@ejemplo.com',
-                  })}
-                </div>
+                {h.borrador.sede ? (
+                  <DatosDeSede punto={conDatosDeSede(h.borrador, sedes)} sede={sedes(h.borrador.sede)} />
+                ) : (
+                  <>
+                    <div className={editorStyles.dosColumnas}>
+                      {linea(['direccion', 0], { etiqueta: 'Calle y número', placeholder: 'C/ Marqués de Molins 14' })}
+                      {linea(['direccion', 1], { etiqueta: 'Ciudad y código postal', placeholder: 'Albacete 02001' })}
+                    </div>
+                    {linea(['telefono'], {
+                      etiqueta: 'Teléfono', opcional: true, placeholder: '+34 967 60 74 47', ayuda: 'Con el prefijo del país (+34…), para poder llamar desde el móvil.',
+                    })}
+                  </>
+                )}
+                {linea(['email'], {
+                  etiqueta: 'Email', opcional: true, tipo: 'email', placeholder: 'tienda@ejemplo.com',
+                })}
               </div>
             </div>
           );
         }
         if (bloque.id === 'ubicacion') {
-          const { direccion, pais } = h.borrador;
+          const { direccion, pais } = conDatosDeSede(h.borrador, sedes);
           return (
             <SelectorUbicacion
               lat={h.borrador.lat}
@@ -303,12 +344,18 @@ function EditarPunto({ puntoId, paisInicial }) {
 
 // ---------- Página ----------
 
+function PestanasPuntos() {
+  const { puntos } = usePuntosVenta();
+  return <PestanasPagina etiqueta="Puntos de venta" pagina={BASE} listado={{ href: LISTADO, nombre: 'Puntos de venta', cuenta: puntos.length }} activa="pagina" />;
+}
+
 function AdminPuntosVenta() {
   const params = useSearchParams();
   const punto = params.get('punto');
   const pais = params.get('pais');
   if (punto) return <EditarPunto puntoId={punto} paisInicial={pais} />;
-  return <Listado pais={pais} />;
+  if (pais || params.get('vista') === 'puntos') return <Listado pais={pais} />;
+  return <AdminCabecera id="puntos-de-venta" migas="Dónde encontrarnos" pestanas={<PestanasPuntos />} />;
 }
 
 export default AdminPuntosVenta;

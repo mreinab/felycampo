@@ -24,19 +24,22 @@ import { useTranslations } from 'next-intl';
 import { CabeceraSeccion, CarruselFotos, EnVista } from '@/components/ui';
 import { enlaceMapa, obtenerUbicaciones } from '@/lib/ateliers';
 import styles from './page.module.css';
+import { useTextoCabecera } from '@/components/layout/CabeceraPagina';
 
 // Fotos de cada sede: "fotos" de su contacto (src/datos/ateliers.js,
 // editables en el admin). Ciclan con cross-fade al hover vía
 // CarruselFotos (ui/) — ver .galeria/.marco en page.module.css.
 
 function ListadoUbicaciones({ locale }) {
+  // Título y texto de entrada: lib/cabeceras.js (con vista previa).
+  const textoCabecera = useTextoCabecera('visitanos');
   const t = useTranslations('visitenos');
 
   return (
     <>
       <CabeceraSeccion
-        titleKey="visitenos.titulo"
-        descriptionKey="visitenos.intro"
+        title={textoCabecera('introTitulo')}
+        description={textoCabecera('introTexto')}
         alinear="start"
         enCuadricula
         className={styles.cabeceraColumna}

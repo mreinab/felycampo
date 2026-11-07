@@ -19,6 +19,8 @@
    que la página la monte aparte. */
 
 import { GaleriaVosotras } from '@/components/layout';
+import { CabeceraPagina } from '@/components/layout/CabeceraPagina';
+import { obtenerCabecera } from '@/lib/cabeceras';
 import { metadataPagina, textosSeo } from '@/lib/seo';
 
 export async function generateMetadata({ params }) {
@@ -31,11 +33,11 @@ export default async function Pagina({ params }) {
   return (
     <section className="seccion">
       <h1 className="sr-only">{textosSeo('/atelier/vosotras', locale).h1}</h1>
-      <GaleriaVosotras
-        titleKey="nav.submenus.atelier.vosotras"
-        descriptionKey="vosotras.descripcion"
-        margenSuperiorAmplio
-      />
+      {/* Título y texto de entrada: lib/cabeceras.js (editables en el
+          admin, Vosotras › Página de la web, con vista previa). */}
+      <CabeceraPagina id="vosotras" publicado={obtenerCabecera('vosotras')}>
+        <GaleriaVosotras cabecera="vosotras" margenSuperiorAmplio />
+      </CabeceraPagina>
     </section>
   );
 }

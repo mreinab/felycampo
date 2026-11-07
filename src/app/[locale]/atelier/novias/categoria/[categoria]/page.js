@@ -30,6 +30,8 @@ import { CuadriculaProductos, ProductHero } from '@/components/layout';
 import { productosListadoNovias } from '@/lib/catalogoNovias';
 import { encontrarCategoria } from '@/components/layout/estiloSiluetaGrupos';
 import { parametrosCategoria, metadataCategoria, breadcrumbJsonLd } from '@/lib/atelierCategoriaSeo';
+import { obtenerEditorialNovias } from '@/lib/atelierEditorial';
+import { textoEn } from '@/lib/previa';
 
 const ES_FIESTA = false;
 const SECCION_KEY = 'nav.submenus.atelier.novias';
@@ -58,13 +60,16 @@ export default async function Pagina({ params }) {
   if (PRODUCTOS_BRIDE_27.length === 0) redirect(`/${locale}/atelier/novias`);
 
   const t = await getTranslations();
+  // Foto y texto: editables en el admin (Colección Novias › Página de la
+  // web › Páginas de categoría).
+  const { categorias } = obtenerEditorialNovias();
   const jsonLd = await breadcrumbJsonLd({ locale, seccionKey: SECCION_KEY, seccionHref: SECCION_HREF, categoriaActiva });
 
   return (
     <section className="seccion">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ProductHero
-        imagen="/img/fely-campo-web-novias-seccion-3.webp"
+        imagen={categorias.imagen}
         titulo={[t(SECCION_KEY), t(`filtros.estiloYSilueta.grupos.${categoriaActiva.grupo}.opciones.${categoriaActiva.opcion}`)]}
       />
       <CuadriculaProductos
@@ -72,7 +77,7 @@ export default async function Pagina({ params }) {
         disposicion="grid"
         tituloKey="nav.links.atelier"
         coleccionKey={SECCION_KEY}
-        descriptionKey="cuadriculaTabs.descripcion"
+        description={textoEn(categorias.texto, locale)}
         ocultarPrecio
         hrefBase={SECCION_HREF}
         estiloYSilueta

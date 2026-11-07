@@ -29,7 +29,8 @@ import ConfirmarBorrado from './ConfirmarBorrado';
 import DragList from './DragList';
 import EditorBloques from './EditorBloques';
 import EditorPagina from './EditorPagina';
-import { FilaListado, PestanasListado } from './ListadoAdmin';
+import AdminCabecera from './AdminCabecera';
+import { FilaListado, PestanasListado, PestanasPagina } from './ListadoAdmin';
 import PageHeader from './PageHeader';
 import { useToast } from './Toast';
 import editorStyles from './EditorPagina.module.css';
@@ -37,6 +38,9 @@ import listado from './ListadoAdmin.module.css';
 import styles from './AdminBlog.module.css';
 
 const BASE = '/admin/blog';
+// Al entrar se abre la página (cabecera y textos); los artículos y el
+// podcast están en sus pestañas.
+const ARTICULOS = `${BASE}?tipo=articulos`;
 const DEMO = ' (demo: se guardará de verdad al conectar la base de datos)';
 
 const formatoFecha = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -76,11 +80,13 @@ function Listado({ tipo }) {
         </Boton>
       </PageHeader>
 
+      <PestanasPagina etiqueta="Blog & Podcast" pagina={BASE} listado={{ href: ARTICULOS, nombre: 'Artículos y podcast', cuenta: articulos.length + episodios.length }} activa="listado" />
+
       <PestanasListado
         etiqueta="Blog o podcast"
         pestanas={[
           {
-            href: BASE, nombre: 'Artículos', cuenta: articulos.length, activa: !esPodcast,
+            href: ARTICULOS, nombre: 'Artículos', cuenta: articulos.length, activa: !esPodcast,
           },
           {
             href: `${BASE}?tipo=podcast`, nombre: 'Podcast', cuenta: episodios.length, activa: esPodcast,
@@ -203,7 +209,7 @@ function EditarArticulo({ slug }) {
   const articulo = esNuevo ? vacio : articulos.find((item) => item.slug === slug);
 
   if (!articulo) {
-    return <p className={listado.vacio}>Este artículo no existe. <Link href={BASE}>Volver al blog</Link></p>;
+    return <p className={listado.vacio}>Este artículo no existe. <Link href={ARTICULOS}>Volver al blog</Link></p>;
   }
 
   return (
@@ -220,7 +226,7 @@ function EditarArticulo({ slug }) {
         if (esNuevo) router.replace(`${BASE}?articulo=${guardado}`);
       }}
       migas="Blog & Podcast"
-      volver={BASE}
+      volver={ARTICULOS}
       estadoPublicado={esNuevo ? 'Sin publicar' : (articulo.publicado ? 'Publicado' : 'Oculto en la web')}
       textoPublicado={esNuevo ? 'Artículo publicado' : 'Cambios publicados'}
       enLaWeb={!esNuevo && articulo.publicado}
@@ -299,6 +305,18 @@ function EditarEpisodio({ slug }) {
 
 // ---------- Página ----------
 
+// La pestaña «Página de la web»: cabecera e introducción de /blog.
+function PaginaBlog() {
+  const { articulos, episodios } = useBlog();
+  return (
+    <AdminCabecera
+      id="blog"
+      migas="Blog & Podcast"
+      pestanas={<PestanasPagina etiqueta="Blog & Podcast" pagina={BASE} listado={{ href: ARTICULOS, nombre: 'Artículos y podcast', cuenta: articulos.length + episodios.length }} activa="pagina" />}
+    />
+  );
+}
+
 function AdminBlog() {
   const params = useSearchParams();
   const articulo = params.get('articulo');
@@ -306,7 +324,8 @@ function AdminBlog() {
 
   if (articulo) return <EditarArticulo slug={articulo} />;
   if (episodio) return <EditarEpisodio slug={episodio} />;
-  return <Listado tipo={params.get('tipo')} />;
+  if (params.get('tipo')) return <Listado tipo={params.get('tipo')} />;
+  return <PaginaBlog />;
 }
 
 export default AdminBlog;

@@ -39,6 +39,7 @@
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Modal, Boton, Input } from '../ui';
+import { obtenerContacto } from '@/lib/contacto';
 import styles from './ModalSolicitudAtelier.module.css';
 
 // "novias" | "fiesta" | "pretaporter" a partir de la URL de la ficha;
@@ -193,7 +194,7 @@ function ModalSolicitudAtelier({ abierto, onCerrar, imagen, producto, color, col
           </label>
 
           {avisoDatos && <p className={styles.aviso} role="alert">{t('avisoDatos')}</p>}
-          {errorEnvio && <p className={styles.aviso} role="alert">{t('errorEnvio')}</p>}
+          {errorEnvio && <p className={styles.aviso} role="alert">{t('errorEnvio', { email: obtenerContacto().email })}</p>}
 
           <Boton variante="solido" tamano="full" type="submit" desactivado={enviando}>
             {enviando ? t('enviando') : t('enviar')}

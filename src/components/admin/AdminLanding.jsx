@@ -29,7 +29,7 @@ const BLOQUES = [
     id: 'atelier',
     nombre: 'Bloque Atelier',
     resumen: 'Novias | Fiesta',
-    descripcion: 'Dos fotos, una junto a otra, debajo de la portada.',
+    descripcion: 'Dos fotos, una junto a otra, debajo de la portada. Es también la página «Atelier» (/atelier) entera: lo que cambies aquí sale en las dos.',
     datos: (d) => d.atelier,
   },
   {
