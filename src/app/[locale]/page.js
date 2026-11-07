@@ -66,7 +66,7 @@ import { obtenerLanding } from '@/lib/landing';
 // ];
 
 // Fotos y vídeo del hero y del bloque Atelier: se editan en /admin/landing
-// (ver lib/landing.js y docs/admin-landing.md).
+// (ver lib/landing.js y docs/ADMIN.md).
 const landing = obtenerLanding();
 
 export async function generateMetadata({ params }) {

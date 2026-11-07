@@ -11,7 +11,7 @@
      ?resena=<id>                            editar una reseña (resena=nuevo: crear;
                                              con &look=<id>, ya enlazada a ese look)
    Datos y reglas: Vosotras.jsx (estado) y lib/vosotras.js (lo mismo que
-   lee la web). Ver docs/admin-vosotras.md.
+   lee la web). Ver docs/ADMIN.md.
    ============================================================ */
 
 import { useState } from 'react';

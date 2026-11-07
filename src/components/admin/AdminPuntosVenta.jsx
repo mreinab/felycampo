@@ -11,7 +11,7 @@
      (sin parámetros) / ?pais=<país>   listado (todos, agrupados por país / un país)
      ?punto=<id>                       editar un punto (punto=nuevo: crear)
    Datos y reglas: PuntosVenta.jsx (estado) y lib/puntosVenta.js (lo
-   mismo que lee la web). Ver docs/admin-puntos-venta.md.
+   mismo que lee la web). Ver docs/ADMIN.md.
    ============================================================ */
 
 import { useState } from 'react';

@@ -6,7 +6,7 @@
 // «Página de la web» de cada sección, AdminCabecera.jsx).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerCabecera(). Ver docs/admin-cabeceras.md.
+// obtenerCabecera(). Ver docs/ADMIN.md.
 
 import { CABECERAS } from '@/datos/cabeceras';
 

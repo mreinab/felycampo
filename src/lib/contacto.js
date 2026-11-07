@@ -6,7 +6,7 @@
 // admin (/admin/contacto).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerContacto(). Ver docs/admin-contacto.md.
+// obtenerContacto(). Ver docs/ADMIN.md.
 
 import { CONTACTO } from '@/datos/contacto';
 

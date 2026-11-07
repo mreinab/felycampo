@@ -4,7 +4,7 @@
 // SUSTITUTO PROVISIONAL DE LA BASE DE DATOS (igual que datos/landing.js):
 // la web lo lee a través de lib/blog.js y el admin parte de aquí.
 // Migrado tal cual desde el antiguo app/[locale]/blog/blog.js (los
-// párrafos seguidos se juntaron en un bloque "texto"). Ver docs/admin-blog.md.
+// párrafos seguidos se juntaron en un bloque "texto"). Ver docs/ADMIN.md.
 // Textos siempre { es, en }. Un texto opcional vacío ("") no se pinta.
 //
 // ARTICULOS (el listado los ordena por fecha, del más reciente al más antiguo)

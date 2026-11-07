@@ -7,7 +7,7 @@
    las tarjetas «Atelier … & Showroom» y la ventana de la newsletter —
    con el editor común (EditorPagina.jsx). Sin vista previa: salen en
    todas las páginas; «Ver la página publicada» abre la de inicio.
-   Datos y reglas: lib/piezasComunes.js. Ver docs/admin-piezas-comunes.md.
+   Datos y reglas: lib/piezasComunes.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import Link from 'next/link';

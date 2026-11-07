@@ -4,7 +4,7 @@
    tarjeta del documental. El contenido (textos, fotos, pies y enlace)
    sale de lib/sobreFely.js y se edita en /admin/paginas/sobre-fely; lo
    pinta SobreFelyContenido.jsx (que también pinta la vista previa del
-   admin). Ver docs/admin-paginas.md.
+   admin). Ver docs/ADMIN.md.
    ============================================================ */
 
 import { obtenerSobreFely } from '@/lib/sobreFely';

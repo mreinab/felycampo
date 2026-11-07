@@ -1,6 +1,6 @@
 /* /admin/ateliers/<id> (salamanca, madrid, oviedo) — la página de cada
    atelier y sus datos de contacto, con los mismos datos que lee la web.
-   Ver components/admin/AdminAtelierSede.jsx y docs/admin-ateliers.md. */
+   Ver components/admin/AdminAtelierSede.jsx y docs/ADMIN.md. */
 
 import { notFound } from 'next/navigation';
 import AdminAtelierSede from '@/components/admin/AdminAtelierSede';

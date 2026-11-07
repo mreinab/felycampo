@@ -5,7 +5,7 @@
 // SUSTITUTO PROVISIONAL DE LA BASE DE DATOS: la web lo lee a través de
 // lib/runway.js y el admin parte de aquí. Migrado tal cual desde el
 // antiguo app/[locale]/colecciones-fely-campo/colecciones.js (ver
-// docs/admin-runway.md). En el orden del listado (la más reciente, primero).
+// docs/ADMIN.md). En el orden del listado (la más reciente, primero).
 //
 //   id, slug      su dirección: /runways-<slug>. No cambia una vez publicada.
 //   publicado     false = oculta: no sale en el listado y su URL lleva a él.

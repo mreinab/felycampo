@@ -19,7 +19,7 @@ export const CLAVE_TEMA_ADMIN = 'fc_admin_tema';
  *   data-admin-tema="claro" en <html> (ver los colores en
  *   app/admin/layout.module.css) y lo recuerda en este navegador.
  * - "Cerrar sesión", a la derecha del todo: todavía sin lógica de sesión
- *   real (el panel no tiene login, ver docs/adminpanel.md) — de momento
+ *   real (el panel no tiene login, ver docs/ADMIN.md) — de momento
  *   solo avisa con un toast (demo).
  */
 function AdminTopbar() {

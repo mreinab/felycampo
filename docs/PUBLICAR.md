@@ -1,4 +1,70 @@
-# Páginas de categoría guardadas
+# Publicar la web en felycampo.com y Google — guía para el programador
+
+**Estado (7 de noviembre de 2026).** Lo técnico de SEO está hecho y comprobado; falta lo del despliegue y Search Console (apartados 2 y 3). La web sustituye a la de WordPress en el mismo dominio.
+
+> Sustituye a `publicar-en-google.md`, `SEO-AUDITORIA-INFORME.md` (auditoría del 4/11, ya aplicada), `SEO-INFORME.md`, `textos-web-seo.md` y `categorias-guardadas.md` (ahora en el anexo). Todo lo del panel de administración está en `docs/ADMIN.md`.
+
+---
+
+## 1. Qué está hecho (y dónde)
+
+| Qué | Dónde |
+|---|---|
+| Title, description, canonical, hreflang (es / en / x-default), Open Graph y Twitter de cada página | `metadataPagina()` en `src/lib/seo.js`. Los textos de las páginas fijas están en `src/datos/seoTextos.js` y se editan en el admin («Textos de Google»); las fichas (looks, prendas, colecciones de Runway, artículos) los generan de sus propios datos en su `generateMetadata`. |
+| Indexar o no | `SITIO_INDEXABLE` (ver apartado 2). Sin ella: `noindex, nofollow` en todo y `robots.txt` = `Disallow: /`. Con ella: `index, follow, max-image-preview:large`. Siempre `noindex`: `/admin`, `/api`, las vistas previas (`?previa=`), las confirmaciones de cita y cualquier respuesta desde `*.netlify.app` (`next.config.mjs`). |
+| `robots.txt` y sitemap | `src/app/robots.js` y `src/app/sitemap.js` (páginas fijas de `seoTextos.js` + looks, prendas, colecciones de Runway y artículos publicados, en los dos idiomas). |
+| Datos estructurados (JSON-LD) | `src/lib/datosEstructurados.js`: Organization + WebSite en la home; ClothingStore (dirección y teléfono iguales a los visibles) en cada atelier; Product (sin precio) en looks y prendas; BlogPosting en artículos; BreadcrumbList. |
+| Verificación de Meta | `<meta name="facebook-domain-verification" content="52ua5uh83t9xk46o8js2214qt0aczn">` en todas las páginas (la misma que la web actual). |
+| Analítica con consentimiento | `components/layout/Analitica.jsx` + `CookieConsent.jsx`: Tag Manager con Consent Mode v2 («denied» por defecto); el Pixel de Meta, si se configura aquí, solo carga con el consentimiento de «Marketing». |
+| Redirecciones de la web de WordPress | Ver apartado 4. |
+
+---
+
+## 2. Antes de publicar
+
+1. **Compilar:** `npm run build` sin errores, y `npm start` para revisarla en local con las variables de abajo.
+2. **Proteger `/admin`.** No tiene inicio de sesión: cualquiera que escriba la dirección entra. Lleva `noindex` y `robots.txt` lo bloquea, pero eso no impide entrar. Ver `docs/ADMIN.md`, apartado 4.
+3. **Variables de entorno en Netlify (producción).** Plantilla en `.env.example`.
+
+| Variable | Valor | Por qué |
+|---|---|---|
+| `NEXT_PUBLIC_SITE_URL` | `https://felycampo.com` | Canonical, sitemap y Open Graph (por defecto ya es esta). |
+| `SITIO_INDEXABLE` | `true` | **Imprescindible.** Solo en producción, nunca en las previews. |
+| `NEXT_PUBLIC_GTM_ID` | `GTM-T2MJKZHT` | El mismo contenedor que usa hoy la web de WordPress (comprobado en su HTML). |
+| `NEXT_PUBLIC_META_PIXEL_ID` | **vacía** | La web actual no carga el Pixel directamente: va dentro del contenedor de Tag Manager. Si se rellena, la web nueva lo cargaría también y cada visita contaría dos veces. Dentro de GTM, la etiqueta del Pixel debe respetar el consentimiento. Si algún día se saca el Pixel de GTM, entonces sí se pone aquí. |
+| `RESEND_API_KEY`, `CITA_EMAIL_REMITENTE`, `CITA_EMAIL_EQUIPO` | las de Resend | Sin ellas, los formularios de cita y de consulta no envían los emails. |
+| `SUBSTACK_URL` | `https://felycampo.substack.com` | Solo cuando se conecte la newsletter (`docs/ADMIN.md`, apartado 5). |
+
+## 3. Al publicar
+
+1. **Comprobar en producción:**
+   - `https://felycampo.com/robots.txt` → `Allow: /`, `Disallow: /admin` y `/api/`, y la línea del sitemap.
+   - En el HTML de cualquier página: `<meta name="robots" content="index, follow, max-image-preview:large">`, no `noindex`.
+   - Unas cuantas URL antiguas → un solo 301 a su página nueva (por ejemplo `/aviso-legal/`, `/vestidos-de-madrina/`, `/categoria-producto/estilos-fiesta/minimal-estilos-fiesta/`, `/tienda/`).
+2. **Search Console:**
+   - La web de WordPress **no tiene** meta `google-site-verification`, así que la propiedad está verificada por DNS, por Tag Manager o con un archivo `google….html`. Mirarlo en Search Console › Configuración › Verificación de la propiedad. DNS y Tag Manager siguen valiendo con la web nueva (mismo dominio y mismo GTM); si es un archivo, copiarlo a `public/` antes de publicar o se pierde la verificación.
+   - Enviar `https://felycampo.com/sitemap.xml`.
+   - Las semanas siguientes, revisar «Páginas» (indexación) y los 404.
+3. **Google Business Profile:** que la ficha de cada atelier tenga la misma dirección y teléfono que la web (Salamanca: C/ Laguna Negra 17-19; Oviedo: C/ Gil de Jaz 15; ver `src/datos/ateliers.js`).
+
+---
+
+## 4. Redirecciones
+
+- **Web de WordPress → web nueva:** ~800 URL antiguas (páginas, artículos, productos, categorías, autores), cada una a su página nueva con un solo 301. Mapa en `src/lib/redirecciones301.js` (generado; la tabla legible con el criterio de cada una está en `docs/redirecciones-301.csv`), más reglas por prefijo (`REGLAS_PREFIJO`) en `src/proxy.js` para las que no estaban en el sitemap (`/producto/…`, `/category/…`, `/tienda`, `/carrito`…). Las URL antiguas no llevaban idioma, así que van a `/es`. La raíz `/` no se redirige: la resuelve el idioma del navegador.
+- **Páginas de esta web que se han quitado** (`RUTAS_ELIMINADAS` en `src/proxy.js`): `/podcast` → `/blog`; `/ayuda/contacto`, `/ayuda/envios`, `/ayuda/atencion-cliente`, `/ayuda/devoluciones` → Visítanos; `/responsabilidad` → Historia de Fely; `/carrito`, `/wishlist`, `/mi-cuenta` y las 5 categorías de Prêt-à-porter → Prêt-à-porter; las categorías de Fiesta y Novias (`/atelier/<seccion>/categoria/…`) → su sección. Las categorías de Atelier en camelCase (`/categoria/corteA`) van directas a su sección en `next.config.mjs`.
+- **Renombrar algo publicado** (un look, una prenda) no necesita tocar nada de esto: la propia página redirige su URL anterior (ver `docs/ADMIN.md`, apartado 3).
+
+## 5. Por confirmar con el cliente
+
+- **«Diseñada y confeccionada en Salamanca»** sale en la descripción de Google de cada prenda de Prêt-à-porter, y «Fabricado en: nuestros talleres de Salamanca» en su ficha. La página de talleres habla del atelier de Salamanca y de «dos pequeños talleres de la sierra». ¿Es correcto decir Salamanca para todo?
+- **Oviedo «a medida».** Su título en Google es «Atelier de novia y fiesta a medida en Oviedo». Novia y fiesta coinciden con su ficha; ¿también se hace a medida en Oviedo?
+
+(Resuelto: sin compra online, envíos ni devoluciones, y la web ya no lo promete en ningún texto; Salamanca sí tiene sección de prêt-à-porter, lo dice su ficha; Responsabilidad quitada; GTM y Pixel, arriba.)
+
+---
+
+## Anexo. Páginas de categoría quitadas (guardadas por si se recuperan)
 
 **Quitadas de la web el 2026-11-07** (a petición: ningún botón ni enlace de la web llevaba a ellas). Aquí queda todo lo que tenían escrito por si se vuelven a usar. El código completo de las páginas está en el commit `c9a1934` (`git show c9a1934:<ruta>`):
 
@@ -11,9 +77,9 @@
 
 **Redirecciones:** las direcciones antiguas que llevaban a cada categoría (de la web de WordPress) ahora van a la página general de su sección (Fiesta, Novias o Prêt-à-porter), y las propias direcciones de categoría también (`src/proxy.js`). Si se recuperan las páginas, hay que devolver esas redirecciones a su categoría (la lista está abajo, en cada una).
 
-## Atelier: cabecera común de las páginas de categoría
+### Atelier: cabecera común de las páginas de categoría
 
-### Fiesta
+#### Fiesta
 - Foto: `/img/landing/fely-campo-portada-hero-landing-3-mobile-atelier-3.webp`
 - Frase sobre la foto:
 - es: Vestidos de fiesta e invitada, hechos a medida.
@@ -22,17 +88,17 @@
 - es: Descubre nuestros vestidos de novia y de fiesta en el atelier. Reserva tu cita para recibir asesoramiento personalizado y encontrar la silueta, el tejido y los detalles que mejor encajan contigo.
 - en: Book your appointment and enjoy a unique day at the Atelier. Experience personalized guidance from our designer.
 
-### Novias
+#### Novias
 - Foto: `/img/fely-campo-web-novias-seccion-3.webp`
 - Texto encima de los looks:
 - es: Descubre nuestros vestidos de novia y de fiesta en el atelier. Reserva tu cita para recibir asesoramiento personalizado y encontrar la silueta, el tejido y los detalles que mejor encajan contigo.
 - en: Book your appointment and enjoy a unique day at the Atelier. Experience personalized guidance from our designer.
 
-### Textos de Google (los mismos para todas, con el nombre de la categoría y de la sección)
+#### Textos de Google (los mismos para todas, con el nombre de la categoría y de la sección)
 - Título: es «{categoria} · {seccion} · Atelier | Fely Campo» · en «{categoria} · {seccion} · Atelier | Fely Campo»
 - Descripción: es «Vestidos de estilo {categoria} en la colección {seccion} del Atelier de Fely Campo. Cita personalizada con nuestra diseñadora.» · en «{categoria} style dresses in the {seccion} Atelier collection by Fely Campo. Personalized fitting with our designer.»
 
-## Atelier: las categorías
+### Atelier: las categorías
 
 `/atelier/fiesta/categoria/<slug>` y `/atelier/novias/categoria/<slug>`. Las de «Ocasión» eran solo de Fiesta.
 
@@ -61,7 +127,7 @@
 | Detalles | Fluido / Flowy | `fluido` |  | `/categoria-producto/tendencias-fiesta/fluido-tendencias-fiesta → Fiesta`<br>`/categoria-producto/tendencias-novia/fluido → Novias` |
 | Detalles | Mangas / Manga / Sleeves | `mangas` |  | `/categoria-producto/tendencias-fiesta/mangas → Fiesta`<br>`/categoria-producto/tendencias-novia/manga → Novias` |
 
-## Prêt-à-porter
+### Prêt-à-porter
 
 Texto común encima de las prendas:
 - es: Piezas nuevas de temporada, pensadas para acompañar cada ocasión con la misma artesanía de siempre.

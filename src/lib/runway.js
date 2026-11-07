@@ -4,7 +4,7 @@
 // /runways-<slug>, el sitemap) y el admin (/admin/colecciones/runway).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerColeccionesRunway(). Ver docs/admin-runway.md.
+// obtenerColeccionesRunway(). Ver docs/ADMIN.md.
 
 import { productosEjemplo } from '@/components/layout/productosEjemplo';
 import { COLECCIONES_RUNWAY } from '@/datos/runway';

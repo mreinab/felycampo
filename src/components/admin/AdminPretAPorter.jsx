@@ -14,7 +14,7 @@
      ?producto=<id>                       editar (producto=nuevo: crear)
    "categoria" es el mismo parámetro que usa el submenú del menú lateral.
    Datos y reglas: PretAPorter.jsx (estado) y lib/pretAPorter.js (lo mismo
-   que lee la web). Ver docs/admin-pret-a-porter.md.
+   que lee la web). Ver docs/ADMIN.md.
    ============================================================ */
 
 import { useId, useState } from 'react';

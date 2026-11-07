@@ -4,7 +4,7 @@
 // banda «Pedir cita» (antes del pie), las tarjetas «Atelier … & Showroom»
 // (encima de esa banda, en algunas páginas) y la ventana de la newsletter.
 // Lo edita «Menú, Pedir cita y newsletter» en el admin. Lectura y reglas:
-// src/lib/piezasComunes.js. Ver docs/admin-piezas-comunes.md.
+// src/lib/piezasComunes.js. Ver docs/ADMIN.md.
 // Migrado tal cual de Navbar.jsx (SUBMENU_STRUCTURE), PedirCita.module.css,
 // AteliersCita.jsx, NewsletterModal.jsx y messages/*.json
 // (pedirCitaLanding, newsletterPopup.titulo / subtitulo).

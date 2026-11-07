@@ -5,7 +5,7 @@
 // (/admin/paginas/sobre-fely).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerSobreFely() para que lea de ella. Ver docs/admin-paginas.md.
+// obtenerSobreFely() para que lea de ella. Ver docs/ADMIN.md.
 
 import { SOBRE_FELY } from '@/datos/sobreFely';
 import { validarCampos } from './camposPagina';

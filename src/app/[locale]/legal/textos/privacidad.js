@@ -9,7 +9,7 @@
 //   sin publicidad (a petición: "con las clientas lo único que queremos es
 //   ponernos en contacto y solucionar sus dudas o que vengan al atelier").
 // - Newsletter: hoy simulada; se conectará con Substack
-//   (docs/newsletter-substack.md) — ya descrita aquí.
+//   (docs/ADMIN.md) — ya descrita aquí.
 // - WhatsApp (BotonWhatsapp.jsx), cookies (ver cookies.js).
 // - Hosting sin nombre a propósito ("nuestro proveedor de hosting"): hoy
 //   Netlify, pero se va a cambiar — así no hay que tocar la política.

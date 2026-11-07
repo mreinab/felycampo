@@ -9,7 +9,7 @@
        con su pie, reordenables)
      · Cierre: título y texto
      · Documental: foto, título, texto y enlace (YouTube)
-   Datos y reglas: lib/sobreFely.js. Ver docs/admin-paginas.md.
+   Datos y reglas: lib/sobreFely.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import {

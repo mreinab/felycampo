@@ -2,7 +2,7 @@
 
 /* /admin/puntos-de-venta — los puntos del mapa de la web, con los mismos
    datos que lee la web. Ver components/admin/AdminPuntosVenta.jsx y
-   docs/admin-puntos-venta.md. */
+   docs/ADMIN.md. */
 
 import AdminPuntosVenta from '@/components/admin/AdminPuntosVenta';
 

@@ -6,7 +6,7 @@
 // «Atelier Salamanca», «Showroom Madrid» y «Atelier Oviedo» del admin.
 // Migrado tal cual de los antiguos atelier-fiesta/atelieres.js (la página)
 // y visita-fely-campo/ubicaciones.js (el contacto). Reglas y lectura:
-// src/lib/ateliers.js. Ver docs/admin-ateliers.md.
+// src/lib/ateliers.js. Ver docs/ADMIN.md.
 //
 //   nombreCiudad    el nombre grande de la portada («Salamanca»); también en
 //                   las tarjetas «Atelier … & Showroom» del pie de algunas páginas.

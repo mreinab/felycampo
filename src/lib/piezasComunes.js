@@ -7,7 +7,7 @@
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
 // obtenerPiezasComunes() (ojo: el menú y la newsletter son componentes de
-// cliente). Ver docs/admin-piezas-comunes.md.
+// cliente). Ver docs/ADMIN.md.
 
 import { PIEZAS_COMUNES } from '@/datos/piezasComunes';
 

@@ -5,7 +5,7 @@
    carrusel. El contenido (textos, fotos y vídeos) sale de lib/talleres.js
    y se edita en /admin/paginas/talleres; lo pinta TalleresContenido.jsx
    (que también pinta la vista previa del admin). Solo "Ver todo" sigue en
-   messages (talleres.filtroTodo). Ver docs/admin-paginas.md.
+   messages (talleres.filtroTodo). Ver docs/ADMIN.md.
    ============================================================ */
 
 import { getTranslations } from 'next-intl/server';

@@ -7,7 +7,7 @@
 //
 // SUSTITUTO PROVISIONAL DE LA BASE DE DATOS: la web lo lee a través de
 // lib/pretAPorter.js y el admin parte de aquí. Migrado tal cual desde el
-// antiguo components/layout/tiendaProductos.js (ver docs/admin-pret-a-porter.md).
+// antiguo components/layout/tiendaProductos.js (ver docs/ADMIN.md).
 //
 //   id               identificador fijo (= la URL con la que se creó).
 //   publicado        false = oculto: no sale en ningún sitio de la web.

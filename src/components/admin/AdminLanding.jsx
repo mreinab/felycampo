@@ -8,7 +8,7 @@
         frase y botón (con su enlace)
      2. Bloque Atelier: Novias | Fiesta (foto, título, botón, enlace)
      3. Descubre a Fely (foto, título, cita, botón, enlace)
-   Datos y reglas: lib/landing.js. Ver docs/admin-landing.md.
+   Datos y reglas: lib/landing.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import {

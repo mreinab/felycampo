@@ -5,7 +5,7 @@
 // (admin/consultas/puntoCercano.js) y el admin (/admin/puntos-de-venta).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerPuntosVenta(). Ver docs/admin-puntos-venta.md.
+// obtenerPuntosVenta(). Ver docs/ADMIN.md.
 
 import { PUNTOS_VENTA } from '@/datos/puntosVenta';
 import { obtenerSede, ubicacionDe } from './ateliers';

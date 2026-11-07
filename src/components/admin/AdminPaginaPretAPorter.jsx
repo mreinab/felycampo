@@ -5,7 +5,7 @@
    La pestaña «Página de la web» de Prêt-à-porter: el carrusel de fotos de
    la portada de /pret-a-porter y la descripción bajo el título, con el
    editor común (EditorPagina.jsx). Los productos están en la otra pestaña.
-   Datos y reglas: lib/atelierEditorial.js. Ver docs/admin-atelier-editorial.md.
+   Datos y reglas: lib/atelierEditorial.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import { ID_PAGINA_PRET_A_PORTER, camposEditorialPretAPorter } from '@/lib/atelierEditorial';

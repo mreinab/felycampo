@@ -19,7 +19,7 @@
 //
 // 2026-11-07: las páginas de categoría de Atelier se quitaron; las 32
 // entradas que iban a una categoría van ahora a su sección (Fiesta o
-// Novias). Cuál iba a cuál: docs/categorias-guardadas.md.
+// Novias). Cuál iba a cuál: docs/PUBLICAR.md.
 
 export const REDIRECCIONES_301 = {
   "/vestidos-de-novia-los-suenos-se-hacen-realidad": "/es/blog/vestidos-de-novia-los-suenos-se-hacen-realidad",

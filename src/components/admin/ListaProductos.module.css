@@ -285,7 +285,7 @@ button.publicarBotonPublicada:disabled {
 }
 
 /* Mismo formato de badge que EstadoPedidoBadge.module.css .badge (fondo
-   -velo + texto -oscuro, ver regla de contraste en docs/adminpanel.md
+   -velo + texto -oscuro, ver regla de contraste en docs/ADMIN.md
    sección 2), posicionado como esquina sobre la imagen — código de
    temporada de una colección de Runway. AW en azul (frío/invierno), SS en
    naranja (cálido/verano) — mismo par de colores que ya usa

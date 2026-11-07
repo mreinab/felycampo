@@ -39,9 +39,11 @@ export function metadataProductoAtelier({ locale, slug, seccion }) {
   // "descripcion" real solo en algunas colecciones (ver noviaProductos.js)
   // y en español; en inglés solo si el look tiene "descripcionEn" (Fiesta,
   // escrita en el admin). Si no hay, queda el texto de cierre.
-  const descripcionPropia = locale === 'en'
+  // El texto automático de la ficha (looks sin descripción propia) no
+  // cuenta: sería el mismo en toda la colección; queda nombre + cierre.
+  const descripcionPropia = producto.descripcionAutomatica ? null : (locale === 'en'
     ? producto.descripcionEn || null
-    : (typeof producto.descripcion === 'string' ? producto.descripcion : null);
+    : (typeof producto.descripcion === 'string' ? producto.descripcion : null));
 
   return metadataPagina({
     locale,

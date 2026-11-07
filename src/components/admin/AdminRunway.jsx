@@ -11,7 +11,7 @@
      ?categoria=<id>          editar una colección (categoria=nueva: crear)
    "categoria" es el mismo parámetro que usa el submenú "Runway" del menú
    lateral. Datos y reglas: Runway.jsx (estado) y lib/runway.js (lo
-   mismo que lee la web). Ver docs/admin-runway.md.
+   mismo que lee la web). Ver docs/ADMIN.md.
    ============================================================ */
 
 import { useState } from 'react';

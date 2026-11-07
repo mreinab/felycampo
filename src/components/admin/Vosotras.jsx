@@ -8,7 +8,7 @@
    se mantiene al moverse por el admin. Sin base de datos todavía: se
    pierde al recargar.
    PARA EL PROGRAMADOR: cada acción de aquí es una llamada a la API
-   (ver docs/admin-vosotras.md).
+   (ver docs/ADMIN.md).
    ============================================================ */
 
 import {

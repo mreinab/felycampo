@@ -53,7 +53,7 @@ function extensionDeMime(mime) {
 // primer color elegido (si hay), y el tipo de producto en mayúsculas
 // haciendo de "categoría". Solo cambia el nombre del archivo (metadata),
 // no genera ni sube nada — ver aviso de imágenes 100% cliente en
-// docs/adminpanel.md sección 5.
+// docs/ADMIN.md sección 5.
 function nombreArchivoImagen({
   nombre, colorIds, tipo, posicion, total, mime,
 }) {

@@ -3,7 +3,7 @@
 //
 // SUSTITUTO PROVISIONAL DE LA BASE DE DATOS (igual que
 // datos/atelierFiesta.js): la web lee estos valores a través de
-// lib/landing.js, y el admin parte de ellos. Ver docs/admin-landing.md.
+// lib/landing.js, y el admin parte de ellos. Ver docs/ADMIN.md.
 //
 // Campos (los textos van siempre en { es, en }; los enlaces son rutas de
 // la web SIN idioma, "/sobre-fely", y la web les pone /es o /en delante;

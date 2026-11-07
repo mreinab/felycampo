@@ -17,7 +17,7 @@
        y en la cita
    La portada lleva además el nombre de la ciudad y lo que va antes
    («Atelier», «Atelier & Showroom»).
-   Datos y reglas: lib/ateliers.js. Ver docs/admin-ateliers.md.
+   Datos y reglas: lib/ateliers.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import {

@@ -10,7 +10,7 @@
 // base de datos. Al conectarla, cada colección es una fila de
 // "colecciones_fiesta" y cada look una fila de "looks_fiesta" (con su
 // coleccion_id y su posición), con exactamente estos campos — ver
-// docs/admin-atelier-fiesta.md. Basta con que las funciones de
+// docs/ADMIN.md. Basta con que las funciones de
 // catalogoFiesta.js lean de la base de datos en vez de de aquí.
 //
 // Generado el 2026-11-04 a partir de components/layout/fiestaProductos.js

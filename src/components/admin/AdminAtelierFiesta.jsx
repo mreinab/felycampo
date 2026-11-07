@@ -5,7 +5,7 @@
    /admin/colecciones/fiesta: la pantalla común de colecciones de
    Atelier (AdminColeccionesAtelier.jsx) con lo propio de Fiesta. Datos y
    reglas: AtelierFiesta.jsx (estado) y lib/catalogoFiesta.js (lo mismo
-   que usa la web). Ver docs/admin-atelier-fiesta.md.
+   que usa la web). Ver docs/ADMIN.md.
    ============================================================ */
 
 import {

@@ -2,7 +2,7 @@
 
 /* /admin/vosotras — fotos de clientas (looks) y reseñas de
    /atelier/vosotras, con los mismos datos que enseña la web (ver
-   components/admin/AdminVosotras.jsx y docs/admin-vosotras.md). Sustituye
+   components/admin/AdminVosotras.jsx y docs/ADMIN.md). Sustituye
    a la versión anterior (formulario en ventana emergente, sin publicar). */
 
 import { Suspense } from 'react';

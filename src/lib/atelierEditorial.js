@@ -8,7 +8,7 @@
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
 // obtenerEditorialNovias() / obtenerEditorialFiesta() /
 // obtenerEditorialPretAPorter(). Ver
-// docs/admin-atelier-editorial.md.
+// docs/ADMIN.md.
 
 import { EDITORIAL_FIESTA, EDITORIAL_NOVIAS, EDITORIAL_PRET_A_PORTER } from '@/datos/atelierEditorial';
 

@@ -4,7 +4,7 @@
 // /visita-fely-campo): los ateliers propios y las tiendas multimarca de
 // España, Europa y EE. UU. Lo edita «Puntos de venta» en el admin.
 // Migrado tal cual del antiguo components/layout/puntosVenta.js. Reglas y
-// lectura: src/lib/puntosVenta.js. Ver docs/admin-puntos-venta.md.
+// lectura: src/lib/puntosVenta.js. Ver docs/ADMIN.md.
 //
 //   lat / lng     dónde va el punto en el mapa (a nivel de calle o de ciudad).
 //   telefono / email   null si la tienda no los da.

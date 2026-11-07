@@ -5,7 +5,7 @@
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
 // obtenerArticulos() y obtenerEpisodios() para que lean de ella. Ver
-// docs/admin-blog.md.
+// docs/ADMIN.md.
 
 import { ARTICULOS, EPISODIOS } from '@/datos/blog';
 import { validarCampos } from './camposPagina';

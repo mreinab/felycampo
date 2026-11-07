@@ -7,7 +7,7 @@
 // lib/atelierEditorial.js. Migrado tal cual desde los antiguos
 // atelier/novias/noviaEditorial.js, atelier/fiesta/fiestaEditorial.js y la
 // frase de la portada de messages/*.json (heroPagina.atelierNovias /
-// atelierFiesta). Ver docs/admin-atelier-editorial.md.
+// atelierFiesta). Ver docs/ADMIN.md.
 //
 //   hero          imagen y subtitulo { es, en } de la portada (el título,
 //                 «Atelier Novias» / «Atelier Fiesta», es fijo).

@@ -7,7 +7,7 @@
    (CatalogoAtelier.jsx) con los datos de Novias
    (src/datos/atelierNovias.js, src/lib/catalogoNovias.js). Mantiene al
    día el submenú "Colección Novias" del menú lateral.
-   Ver docs/admin-atelier-novias.md.
+   Ver docs/ADMIN.md.
    ============================================================ */
 
 import { categoriasAdminNovias, obtenerColeccionesNovias } from '@/lib/catalogoNovias';

@@ -9,7 +9,7 @@
    de WhatsApp…); «Ver la página publicada» abre la de inicio.
    Los datos de cada atelier (dirección, teléfonos, WhatsApp) están en su
    página: Atelier Salamanca, Showroom Madrid, Atelier Oviedo.
-   Datos y reglas: lib/contacto.js. Ver docs/admin-contacto.md.
+   Datos y reglas: lib/contacto.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import Link from 'next/link';

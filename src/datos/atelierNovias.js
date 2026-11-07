@@ -7,7 +7,7 @@
 // de src/lib/catalogoNovias.js.
 //
 // PARA EL PROGRAMADOR: sustituto provisional de la base de datos, con la
-// misma forma que datos/atelierFiesta.js (ver docs/admin-atelier-novias.md).
+// misma forma que datos/atelierFiesta.js (ver docs/ADMIN.md).
 // Generado el 2026-11-06 a partir de components/layout/noviaProductos.js
 // (y sus -info.xlsx), sin cambiar nada de lo publicado: mismos nombres
 // (dan las URLs), referencias, fotos en el mismo orden y descripciones.

@@ -7,7 +7,7 @@
      · Portada: foto, título, frase e introducción
      · Un bloque por taller: carrusel de fotos y vídeos (reordenable),
        nombre, ubicación, quién lo lleva y texto
-   Datos y reglas: lib/talleres.js. Ver docs/admin-paginas.md.
+   Datos y reglas: lib/talleres.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import {

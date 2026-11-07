@@ -6,7 +6,7 @@
 // de cada página fija, por ruta (sin locale), cada uno en { es, en }.
 // Lo edita «Textos de Google» en el admin; lectura y reglas:
 // src/lib/seoTextos.js (y metadataPagina() en src/lib/seo.js). Ver
-// docs/admin-textos-google.md.
+// docs/ADMIN.md.
 //
 // Criterio:
 //   - title: ~50-60 caracteres, palabra clave primero y marca al final

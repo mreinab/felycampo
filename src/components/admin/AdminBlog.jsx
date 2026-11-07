@@ -12,7 +12,7 @@
    (EditorPagina.jsx): vista previa en vivo, Español | English y
    «Guardar y publicar». El cuerpo de un artículo, con EditorBloques.
    Datos y reglas: Blog.jsx (estado) y lib/blog.js (lo mismo que lee la
-   web). Ver docs/admin-blog.md.
+   web). Ver docs/ADMIN.md.
    ============================================================ */
 
 import { useState } from 'react';

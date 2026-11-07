@@ -5,7 +5,7 @@
 // (/admin/landing), así que no pueden desincronizarse.
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerLanding() para que lea de ella. Ver docs/admin-landing.md.
+// obtenerLanding() para que lea de ella. Ver docs/ADMIN.md.
 
 import { LANDING } from '@/datos/landing';
 import { coleccionesVisiblesFiesta } from './catalogoFiesta';

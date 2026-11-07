@@ -5,7 +5,7 @@
 // (/admin/paginas/talleres).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerTalleres() para que lea de ella. Ver docs/admin-paginas.md.
+// obtenerTalleres() para que lea de ella. Ver docs/ADMIN.md.
 
 import { TALLERES } from '@/datos/talleres';
 import { validarCampos } from './camposPagina';

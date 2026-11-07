@@ -6,7 +6,7 @@
 // (/admin/ateliers/<id>).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerSede() / obtenerSedes(). Ver docs/admin-ateliers.md.
+// obtenerSede() / obtenerSedes(). Ver docs/ADMIN.md.
 
 import { SEDES } from '@/datos/ateliers';
 

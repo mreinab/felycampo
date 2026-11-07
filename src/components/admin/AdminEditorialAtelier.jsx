@@ -10,7 +10,7 @@
      · Pestañas (solo Fiesta): «Así trabajamos» / «Colección fiesta»
      · Un bloque por cada foto (o vídeo) + texto, en zigzag
      · Galería final: fotos y vídeos, reordenables
-   Datos y reglas: lib/atelierEditorial.js. Ver docs/admin-atelier-editorial.md.
+   Datos y reglas: lib/atelierEditorial.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import { camposEditorial, esVideoEditorial, nuevoBloqueEditorial } from '@/lib/atelierEditorial';

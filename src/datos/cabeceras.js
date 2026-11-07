@@ -4,7 +4,7 @@
 // páginas que son sobre todo un listado: Blog & Podcast, Vosotras, Runway,
 // Visítanos y Puntos de venta. Se editan en la pestaña «Página de la web»
 // de cada sección del admin (Visítanos, en su propia página). Lectura y
-// reglas: src/lib/cabeceras.js. Ver docs/admin-cabeceras.md.
+// reglas: src/lib/cabeceras.js. Ver docs/ADMIN.md.
 // Migrado tal cual de las fotos que estaban fijas en cada page.js y de
 // messages/*.json (las claves de origen, en cada entrada).
 

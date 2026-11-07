@@ -4,7 +4,7 @@
 // SUSTITUTO PROVISIONAL DE LA BASE DE DATOS (igual que datos/landing.js):
 // la web lo lee a través de lib/talleres.js y el admin parte de aquí.
 // Migrado tal cual de app/[locale]/talleres-fely-campo/talleres.js y de
-// messages/*.json (título y entradilla). Ver docs/admin-paginas.md.
+// messages/*.json (título y entradilla). Ver docs/ADMIN.md.
 //
 // Textos siempre { es, en }; los párrafos, listas { es: [...], en: [...] }.
 //

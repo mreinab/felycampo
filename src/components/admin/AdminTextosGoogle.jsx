@@ -10,7 +10,7 @@
    web: estos textos no se ven en la página.
    Las fichas de producto, las categorías, las colecciones de Runway y los
    artículos del blog generan los suyos solos a partir de sus datos.
-   Datos y reglas: lib/seoTextos.js. Ver docs/admin-textos-google.md.
+   Datos y reglas: lib/seoTextos.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import {

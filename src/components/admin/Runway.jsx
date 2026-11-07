@@ -7,7 +7,7 @@
    el layout del panel. Mantiene al día el submenú "Runway" del menú
    lateral. Sin base de datos todavía: se pierde al recargar.
    PARA EL PROGRAMADOR: cada acción es una llamada a la API (ver
-   docs/admin-runway.md).
+   docs/ADMIN.md).
    ============================================================ */
 
 import {

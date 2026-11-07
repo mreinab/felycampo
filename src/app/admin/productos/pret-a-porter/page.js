@@ -3,7 +3,7 @@
 /* /admin/productos/pret-a-porter — los productos de la tienda, con los
    mismos datos que enseñan /pret-a-porter, sus categorías y la ficha de
    cada producto (ver components/admin/AdminPretAPorter.jsx y
-   docs/admin-pret-a-porter.md). Antes usaba ListaProductos (vista
+   docs/ADMIN.md). Antes usaba ListaProductos (vista
    genérica con datos de ejemplo). */
 
 import { Suspense } from 'react';

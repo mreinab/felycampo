@@ -7,7 +7,7 @@
    Atelier (CatalogoAtelier.jsx) con los datos de Fiesta
    (src/datos/atelierFiesta.js, src/lib/catalogoFiesta.js). Mantiene al
    día el submenú "Colección Fiesta" del menú lateral.
-   Ver docs/admin-atelier-fiesta.md.
+   Ver docs/ADMIN.md.
    ============================================================ */
 
 import { categoriasAdminFiesta, obtenerColeccionesFiesta } from '@/lib/catalogoFiesta';

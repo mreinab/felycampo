@@ -7,7 +7,7 @@
    panel, así que lo publicado se mantiene al moverse por el admin. Sin
    base de datos todavía: se pierde al recargar.
    PARA EL PROGRAMADOR: cada acción es una llamada a la API (ver
-   docs/admin-puntos-venta.md).
+   docs/ADMIN.md).
    ============================================================ */
 
 import {

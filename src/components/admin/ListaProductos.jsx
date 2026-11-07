@@ -169,7 +169,7 @@ function ListaProductosContenido({
 }) {
   // La URL de la ruta puede diferir del valor interno de `tipo` (p.ej.
   // Runway vive en /admin/colecciones/runway pero tipoFijo sigue siendo
-  // "archivo", ver docs/adminpanel.md sección 5) — rutaTipoProducto()
+  // "archivo", ver docs/ADMIN.md sección 5) — rutaTipoProducto()
   // sabe ese mapeo, único sitio que lo sabe.
   const rutaBase = rutaTipoProducto(tipoFijo);
   const { mostrarToast } = useToast();

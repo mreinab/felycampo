@@ -7,7 +7,7 @@
    sin página de colección en la web (las colecciones publicadas salen en
    las cuadrículas de las páginas de categoría). Datos y reglas:
    AtelierNovias.jsx (estado) y lib/catalogoNovias.js (lo mismo que usa
-   la web). Ver docs/admin-atelier-novias.md.
+   la web). Ver docs/ADMIN.md.
    ============================================================ */
 
 import {

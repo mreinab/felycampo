@@ -6,7 +6,7 @@
 // edita «Textos de Google» en el admin (AdminTextosGoogle.jsx).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerSeoTextos(). Ver docs/admin-textos-google.md.
+// obtenerSeoTextos(). Ver docs/ADMIN.md.
 
 import { SEO_TEXTOS } from '@/datos/seoTextos';
 

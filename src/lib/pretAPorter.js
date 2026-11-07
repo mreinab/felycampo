@@ -6,7 +6,7 @@
 // (/admin/productos/pret-a-porter).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerProductosPretAPorter(). Ver docs/admin-pret-a-porter.md.
+// obtenerProductosPretAPorter(). Ver docs/ADMIN.md.
 
 import { TALLAS_DISPONIBLES } from '@/components/ecommerce/guiaTallasData';
 import { PRODUCTOS_PRET_A_PORTER } from '@/datos/pretAPorter';

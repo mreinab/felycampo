@@ -9,7 +9,7 @@
    se mantiene al moverse por el admin. Sin base de datos todavía: se
    pierde al recargar.
    PARA EL PROGRAMADOR: guardar(id, datos) es la acción que debe llamar a
-   la API (ver docs/admin-paginas.md).
+   la API (ver docs/ADMIN.md).
    ============================================================ */
 
 import {

@@ -2,7 +2,7 @@
 //
 // Los datos de contacto generales de Fely Campo y sus redes sociales: un
 // único sitio para toda la web. Lo edita «Contacto y redes» en el admin.
-// Lectura y reglas: src/lib/contacto.js. Ver docs/admin-contacto.md.
+// Lectura y reglas: src/lib/contacto.js. Ver docs/ADMIN.md.
 // Migrado de donde estaban repartidos: el número de BotonWhatsapp.jsx, las
 // redes de Footer.jsx y lib/datosEstructurados.js, el email de la antigua
 // /ayuda/atencion-cliente y el mensaje de WhatsApp de messages/*.json

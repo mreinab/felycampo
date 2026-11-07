@@ -57,7 +57,7 @@ function destinoEliminada(pathname) {
   // /podcast y sus entradas pasaron a /blog (2026-11-04): mismo slug.
   if (resto[0] === 'podcast') return `/${locale}/blog${resto.length > 1 ? `/${resto.slice(1).join('/')}` : ''}`;
   // Páginas de categoría de Atelier (quitadas el 2026-11-07, ver
-  // docs/categorias-guardadas.md): a su sección.
+  // docs/PUBLICAR.md): a su sección.
   if (resto[0] === 'atelier' && ['fiesta', 'novias'].includes(resto[1]) && resto[2] === 'categoria') return `/${locale}/atelier/${resto[1]}`;
   const destino = RUTAS_ELIMINADAS[`/${resto.join('/')}`];
   return destino ? `/${locale}${destino}` : null;

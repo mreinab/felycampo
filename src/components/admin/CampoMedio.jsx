@@ -7,7 +7,7 @@
    archivo encima (el marco se resalta). Las fotos se comprimen en el
    navegador (comprimirImagen); los vídeos se usan tal cual. Igual que el
    resto del admin hasta que haya almacén de archivos, se guardan como
-   URL temporal (blob): ver docs/admin-landing.md.
+   URL temporal (blob): ver docs/ADMIN.md.
    Uso:
      <CampoMedio etiqueta="Escritorio" detalle="16:9" tipo="imagen"
        proporcion="16 / 9" valor={src} onChange={setSrc} opcional />

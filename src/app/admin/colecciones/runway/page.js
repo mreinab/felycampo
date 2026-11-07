@@ -2,7 +2,7 @@
 
 /* /admin/colecciones/runway — colecciones de pasarela, con los mismos
    datos que enseñan /colecciones-fely-campo y /runways-<slug> (ver
-   components/admin/AdminRunway.jsx y docs/admin-runway.md). Antes usaba
+   components/admin/AdminRunway.jsx y docs/ADMIN.md). Antes usaba
    ListaProductos (vista genérica con datos de ejemplo). */
 
 import { Suspense } from 'react';

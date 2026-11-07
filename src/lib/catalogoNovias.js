@@ -7,7 +7,7 @@
 // mientras se editan. Mismo planteamiento que catalogoFiesta.js.
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerColeccionesNovias(). Ver docs/admin-atelier-novias.md.
+// obtenerColeccionesNovias(). Ver docs/ADMIN.md.
 
 import { COLECCIONES_NOVIAS } from '@/datos/atelierNovias';
 import { ordenarLooks, slugLook } from './catalogoFiesta';
@@ -35,10 +35,16 @@ export function nombreSugeridoLookNovia(coleccion, numero) {
   return `Look ${numero}${resto}`;
 }
 
-// Texto de la ficha cuando el look no tiene descripción propia (el de siempre).
+// Texto de la ficha cuando el look no tiene descripción propia. (Hasta el
+// 2026-11-07 decía «(SKU …). Colores y tallas disponibles próximamente»,
+// de tienda online; la referencia ya sale aparte como «Ref.».)
 export function descripcionAutomaticaNovia(look, coleccion) {
-  const sku = (look.sku || '').trim();
-  return `Pieza de la colección ${coleccion.nombre}, Novias${sku ? ` (SKU ${sku})` : ''}. Colores y tallas disponibles próximamente.`;
+  return `Pieza de la colección ${coleccion.nombre}, Novias. Hecha a medida en nuestro atelier: pide tu cita para probártela.`;
+}
+
+// La misma, en inglés (la web inglesa no enseña el texto en español).
+export function descripcionAutomaticaNoviaEn(look, coleccion) {
+  return `A piece from the ${coleccion.nombre} bridal collection. Made to measure in our atelier: book an appointment to try it on.`;
 }
 
 // Un look → el "producto" que pintan la ficha, la tarjeta, los datos SEO
@@ -55,7 +61,11 @@ export function lookAProductoNovia(look, coleccion) {
     imagenHover: imagenes[1] || imagenes[0],
     imagenes,
     descripcion: descripcionEs || descripcionAutomaticaNovia(look, coleccion),
-    descripcionEn: descripcionEn || undefined,
+    // Sin descripción propia: el texto automático, también en inglés. Con
+    // la española pero sin la inglesa, en inglés se enseña la española.
+    descripcionEn: descripcionEn || (descripcionEs ? undefined : descripcionAutomaticaNoviaEn(look, coleccion)),
+    // Para Google: el texto automático no sirve de descripción (ver Fiesta).
+    descripcionAutomatica: !descripcionEs,
     tags: look.tags || [coleccion.nombre],
     coleccion: coleccion.nombre,
     slugsAnteriores: look.slugsAnteriores || [],

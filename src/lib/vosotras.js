@@ -4,7 +4,7 @@
 // (GaleriaVosotras.jsx) y el admin (/admin/vosotras).
 //
 // PARA EL PROGRAMADOR: al conectar la base de datos, solo hay que cambiar
-// obtenerVosotras() para que lea de ella. Ver docs/admin-vosotras.md.
+// obtenerVosotras() para que lea de ella. Ver docs/ADMIN.md.
 
 import { VOSOTRAS } from '@/datos/vosotras';
 import { validarCampos } from './camposPagina';

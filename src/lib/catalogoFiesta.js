@@ -10,7 +10,7 @@
 // sitio que hay que cambiar en la web: que obtenerColeccionesFiesta()
 // lea de la base de datos. El resto de funciones son puras (reciben las
 // colecciones y devuelven lo que pinta cada plantilla) y siguen valiendo.
-// Ver docs/admin-atelier-fiesta.md.
+// Ver docs/ADMIN.md.
 
 import { COLECCIONES_FIESTA } from '@/datos/atelierFiesta';
 import { slugify } from './slugify';
@@ -65,11 +65,16 @@ export function nombreSugeridoLook(coleccion, numero) {
   return numero ? `Look ${numero} ${nombreInternoColeccion(coleccion)}` : '';
 }
 
-// Texto que enseña la ficha cuando el look no tiene descripción propia
-// (el mismo de siempre).
+// Texto que enseña la ficha cuando el look no tiene descripción propia.
+// (Hasta el 2026-11-07 decía «(SKU …). Colores y tallas disponibles
+// próximamente», de tienda online; la referencia ya sale aparte como «Ref.».)
 export function descripcionAutomatica(look, coleccion) {
-  const sku = (look.sku || '').trim();
-  return `Pieza de la colección ${sinNumeroColeccion(nombreInternoColeccion(coleccion))}, Fiesta${sku ? ` (SKU ${sku})` : ''}. Colores y tallas disponibles próximamente.`;
+  return `Pieza de la colección ${sinNumeroColeccion(nombreInternoColeccion(coleccion))}, Fiesta. Hecha a medida en nuestro atelier: pide tu cita para probártela.`;
+}
+
+// La misma, en inglés (la web inglesa no enseña el texto en español).
+export function descripcionAutomaticaEn(look, coleccion) {
+  return `A piece from the ${sinNumeroColeccion(nombreInternoColeccion(coleccion))} evening collection. Made to measure in our atelier: book an appointment to try it on.`;
 }
 
 // Un look → el objeto "producto" que pintan TarjetaProducto, la ficha
@@ -93,7 +98,12 @@ export function lookAProducto(look, coleccion) {
     imagenHover: imagenes[1] || imagenes[0],
     imagenes,
     descripcion: descripcionEs || descripcionAutomatica(look, coleccion),
-    descripcionEn: descripcionEn || undefined,
+    // Sin descripción propia: el texto automático, también en inglés. Con
+    // la española pero sin la inglesa, en inglés se enseña la española.
+    descripcionEn: descripcionEn || (descripcionEs ? undefined : descripcionAutomaticaEn(look, coleccion)),
+    // Para Google: el texto automático no sirve de descripción (sería igual
+    // en todos los looks de la colección); se usa el nombre del look.
+    descripcionAutomatica: !descripcionEs,
     coleccion: nombreColeccion,
     slugsAnteriores: look.slugsAnteriores || [],
   };

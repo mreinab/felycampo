@@ -724,7 +724,7 @@ export const consultasPrecioMock = [
 // ---------- RESEÑAS ----------
 // `productoId` (FK real a productosMock) sustituye a la antigua
 // `productoRelacionado` (nombre en texto libre) — misma relación frágil
-// que ya se corrigió en otros sitios del panel (ver docs/adminpanel.md
+// que ya se corrigió en otros sitios del panel (ver docs/ADMIN.md
 // sección 7 punto 4). Con producto vinculado, la ficha/tabla puede
 // enseñar SKU + foto del producto, no solo el nombre.
 // `clienteId` (FK real a clientesMock) — todas las reseñas vienen de una

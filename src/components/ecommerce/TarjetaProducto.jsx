@@ -110,7 +110,7 @@ function TarjetaProducto({
   const tipoHoverActual = colorSeleccionado?.imagenHover ? colorSeleccionado.tipoHover || 'imagen' : tipoHover;
 
   const preciosBloque = !ocultarPrecio && (
-    <div className={`${styles.precios} ${esCarrusel ? styles.preciosCarrusel : ''}`}>
+    <div className={[styles.precios, esCarrusel && styles.preciosCarrusel].filter(Boolean).join(' ')}>
       {precioRebajado ? (
         <>
           <span className={styles.antes}>{precio}</span>
@@ -205,7 +205,7 @@ function TarjetaProducto({
               "nombre" — que sigue dando el slug del href (ver
               hrefProducto) — más una segunda línea más pequeña debajo
               (ej. Atelier > Fiesta: "Look 3" + "27_Eclat"). */}
-          <p className={`${styles.nombre} ${esCarrusel ? styles.nombreCarrusel : ''}`}>{titulo || nombre}</p>
+          <p className={[styles.nombre, esCarrusel && styles.nombreCarrusel].filter(Boolean).join(' ')}>{titulo || nombre}</p>
           {subtitulo && <p className={styles.subtitulo}>{subtitulo}</p>}
 
           {preciosBloque}

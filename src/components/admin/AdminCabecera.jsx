@@ -7,7 +7,7 @@
    cabecera y los textos de entrada, con el editor común (EditorPagina.jsx:
    vista previa en vivo, Español | English y «Guardar y publicar»).
    Qué bloques y campos tiene cada una: PAGINAS_CABECERA en
-   lib/cabeceras.js. Ver docs/admin-cabeceras.md.
+   lib/cabeceras.js. Ver docs/ADMIN.md.
    ============================================================ */
 
 import { PAGINAS_CABECERA, camposCabecera, idPaginaCabecera } from '@/lib/cabeceras';

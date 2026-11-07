@@ -4,7 +4,7 @@
 // SUSTITUTO PROVISIONAL DE LA BASE DE DATOS (igual que datos/blog.js): la
 // web lo lee a través de lib/vosotras.js y el admin parte de aquí.
 // Migrado tal cual desde el antiguo components/layout/vosotrasFotos.js
-// (ver docs/admin-vosotras.md). Las fotos están en
+// (ver docs/ADMIN.md). Las fotos están en
 // public/img/Clientes/CLIENTAS/ (y sus subcarpetas novias/ y finales/).
 //
 //   invitadas, novias   los "looks" de cada pestaña, en el orden de la

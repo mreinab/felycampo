@@ -7,7 +7,7 @@
    panel. Mantiene al día el submenú «Prêt-à-porter» del menú lateral (sus
    5 categorías). Sin base de datos todavía: se pierde al recargar.
    PARA EL PROGRAMADOR: cada acción es una llamada a la API (ver
-   docs/admin-pret-a-porter.md).
+   docs/ADMIN.md).
    ============================================================ */
 
 import {
